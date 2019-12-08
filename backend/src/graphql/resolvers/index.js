@@ -1,8 +1,8 @@
-import { mergeResolvers } from "merge-graphql-schemas";
+import { mergeResolvers } from 'merge-graphql-schemas'
 
-import Task from "./Task/";
-import User from "./User/";
+import User from './User/'
+import Collection from './Collection/'
 
-const resolvers = [Task, User];
+const resolvers = [User, Collection]
 
-export default mergeResolvers(resolvers);
+export default mergeResolvers(resolvers)
