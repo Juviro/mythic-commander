@@ -7,7 +7,6 @@ import CardSpinner from './CardSpinner'
 const CardsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin-top: 20px;
   position: relative;
   height: 100%;
 

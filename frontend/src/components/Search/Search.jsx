@@ -2,8 +2,8 @@ import React from 'react'
 import { getCards } from '../../network/mtgApi'
 import styled from 'styled-components'
 
-import Cards from './Cards'
-import Search from './SearchField'
+import Cards from '../Elements/Cards'
+import Search from '../Elements/SearchField'
 
 const StyledSearch = styled.div`
   padding: 19px;
@@ -11,10 +11,6 @@ const StyledSearch = styled.div`
 
 class App extends React.Component {
   state = { loading: false, cards: [] }
-
-  componentDidMount() {
-    // this.onSearch('re')
-  }
 
   onSearch = async searchString => {
     this.setState({ cards: [], loading: true })
@@ -29,7 +25,7 @@ class App extends React.Component {
 
     return (
       <StyledSearch>
-        <Search onSearch={this.onSearch} style={{ width: 400 }} />
+        <Search onSearch={this.onSearch} />
         <Cards cards={cards} loading={loading} />
       </StyledSearch>
     )

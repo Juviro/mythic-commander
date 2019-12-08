@@ -1,36 +1,27 @@
-import "@babel/polyfill";
-import { GraphQLServer, PubSub } from "graphql-yoga";
-import mongoose from "mongoose";
+import { ApolloServer, AuthenticationError } from 'apollo-server-koa'
 
-import schema from "./graphql";
-import { models } from "./graphql/models";
-import dbConfig from "./graphql/dbconfig";
+import schema from './graphql'
+import db from './database'
+import { validateToken } from './auth'
+import { UNAUTHORIZED } from 'http-status-codes'
 
-const options = {
-  port: process.env.PORT || "4000",
-  endpoint: "/api/graphql",
-  subscriptions: "/api/subscriptions",
-  playground: "/api/playground",
-};
-
-const context = {
-  models,
-  pubsub: new PubSub(),
-};
-
-mongoose
-  .connect(dbConfig.uri, {
-    useCreateIndex: true,
-    useNewUrlParser: true,
-  })
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.log(err));
-
-const server = new GraphQLServer({
+export default new ApolloServer({
   schema,
-  context,
-});
+  context: async ({ ctx }) => {
+    const header = ctx.request.header
 
-server.start(options, ({ port }) => {
-  console.log(`🚀 Server is running on hport ${port}`);
-});
+    let user
+    try {
+      user = await validateToken(header.authorization.split(' ')[1])
+    } catch {
+      throw new AuthenticationError('invalid token')
+    }
+
+    return { ...ctx, db, user }
+  },
+  formatError: error => {
+    console.error('error', error)
+    return error
+  },
+  playground: 'api/graphql',
+})
