@@ -1,0 +1,21 @@
+{
+  "extends": ["plugin:prettier/recommended", "react-app"],
+  "rules": {
+    "no-shadow": 2,
+    "no-console": 2,
+    "prefer-const": 2,
+    "semi": ["error", "never"],
+    "object-shorthand": ["error", "always"],
+    "max-len": [
+      "error",
+      {
+        "code": 120,
+        "tabWidth": 2,
+        "ignoreComments": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
+    ]
+  }
+}
