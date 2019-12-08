@@ -9,9 +9,17 @@ const CardsWrapper = styled.div`
   flex-wrap: wrap;
   margin-top: 20px;
   position: relative;
-  height: 200px;
+  height: 100%;
+
+  @media (max-width: 700px) {
+    justify-content: center;
+  }
 `
 
 export default ({ cards, loading }) => {
-  return <CardsWrapper>{loading ? <CardSpinner /> : cards.map(card => <Card {...card} key={card.id} />)}</CardsWrapper>
+  return (
+    <CardsWrapper>
+      {loading ? <CardSpinner hideBorder /> : cards.map(card => <Card {...card} key={card.id} />)}
+    </CardsWrapper>
+  )
 }

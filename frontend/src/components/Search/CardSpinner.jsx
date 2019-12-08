@@ -5,18 +5,19 @@ import { Spin } from 'antd'
 const StyledCardLoader = styled.div`
   width: 100%;
   height: 100%;
+  min-height: 100px;
   display: flex;
   position: absolute;
   background-color: white;
   border-radius: 10px;
   align-items: center;
   justify-content: center;
-  border: 1px solid #e3e3e3;
+  ${({ hideBorder }) => !hideBorder && 'border: 1px solid #e3e3e3;'}
 `
 
-export default () => {
+export default ({ hideBorder }) => {
   return (
-    <StyledCardLoader>
+    <StyledCardLoader hideBorder={hideBorder}>
       <Spin />
     </StyledCardLoader>
   )
