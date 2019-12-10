@@ -1,28 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 
 import { getCollection } from './query'
-import { getCardsById } from '../../network/mtgApi'
 
-import CardSpinner from '../Elements/CardSpinner'
+import CardSpinner from '../Elements/CardView/CardSpinner'
 import Overview from './Overview'
 
 export default () => {
-  const { data } = useQuery(getCollection)
-  const [cards, setCards] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const { data, loading } = useQuery(getCollection)
 
-  useEffect(() => {
-    if (!data) return
-
-    const loadCards = async () => {
-      const ids = data.collection.map(({ id }) => id)
-      const allCards = await getCardsById(ids)
-      setCards(allCards)
-      setIsLoading(false)
-    }
-    loadCards()
-  }, [data])
-
-  return isLoading ? <CardSpinner /> : <Overview cards={cards} />
+  return loading ? <CardSpinner /> : <Overview cards={data.collection} />
 }

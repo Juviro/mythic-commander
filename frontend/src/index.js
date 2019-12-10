@@ -8,12 +8,15 @@ import './index.css'
 
 import App from './components/App'
 import client from './network/graphqlClient'
+import { CardContextProvider } from './components/CardProvider/CardProvider'
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <CardContextProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </CardContextProvider>
   </ApolloProvider>,
   document.getElementById('root')
 )

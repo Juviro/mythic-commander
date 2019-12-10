@@ -2,17 +2,6 @@ import { Cards, CardIdentifier, Catalog } from 'scryfall-sdk'
 
 const MAX_CARDS = 60
 
-const test = async () => {
-  let start = Date.now()
-  const cards = await Catalog.cardNames()
-  console.log('fetched  cards in ' + (Date.now() - start) / 1000 + 's')
-  start = Date.now()
-
-  const filteredCards = cards.filter(card => card.indexOf('Hans') > -1)
-  console.log('filtered cards in ' + (Date.now() - start) / 1000 + 's ', filteredCards)
-}
-test()
-
 export const getAutoComplete = search => {
   return Cards.autoCompleteName(search)
 }
@@ -37,9 +26,22 @@ export const getCards = async search => {
 }
 
 export const getCardsById = async ids => {
-  const collection = ids.map(id => CardIdentifier.byId(id))
-  const cards = await Cards.collection(...collection).waitForAll()
+  return getCollection(ids, CardIdentifier.byId)
+}
 
-  console.log('cards', cards)
+export const getCardsByName = async names => {
+  return getCollection(names, CardIdentifier.byName)
+}
+
+const getCollection = async (collection, identifier) => {
+  if (!collection.length) return []
+
+  const cardCollection = collection.map(id => identifier(id))
+  const cards = await Cards.collection(...cardCollection).waitForAll()
+
   return cards
+}
+
+export const getAllCardNames = () => {
+  return Catalog.cardNames()
 }
