@@ -44,6 +44,15 @@ export default card => {
     setCurrentSide(currentSide ? 0 : 1)
     setIsLoading(true)
   }
+
+  if (!card.image_uris && !card.card_faces) {
+    return (
+      <CardWrapper>
+        <CardLoader />
+      </CardWrapper>
+    )
+  }
+
   const displayedCard = isTwoFaced ? card.card_faces[currentSide] : card
 
   return (

@@ -2,8 +2,8 @@ import React from 'react'
 import { getCards } from '../../network/mtgApi'
 import styled from 'styled-components'
 
-import Cards from '../Elements/Cards'
-import Search from '../Elements/SearchField'
+import Cards from '../Elements/CardView/ImageView'
+import Search from '../Elements/SearchField/SearchField'
 
 const StyledSearch = styled.div`
   padding: 19px;

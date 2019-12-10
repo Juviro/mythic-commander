@@ -1,8 +1,22 @@
 export default `
   type Collection {
     id: String!
-    isFoil: Boolean!
     set: String!
+    name: String!
+    image_uris: ImageUris
+    card_faces: [CardFace]
+    createdAt: String!
+    
+    isFoil: Boolean
+  }
+
+  type CardFace {
+    name: String!
+    image_uris: ImageUris!
+  }
+
+  type ImageUris {
+    normal: String
   }
 
   type Query {
@@ -10,12 +24,18 @@ export default `
   }
 
   type Mutation {
-    addToCollection(cards: [AddCardsInput]!): [Collection]!
+    addToCollectionById(cards: [AddCardsByIdInput]!): [Collection]!
+    addToCollectionByName(cards: [AddCardsByNameInput]!): [Collection]!
   }
 
-  input AddCardsInput {
+  input AddCardsByIdInput {
     id: String!
-    isFoil: Boolean!
-    set: String!
+    isFoil: Boolean
+    set: String
+  }
+
+  input AddCardsByNameInput {
+    name: String!
+    isFoil: Boolean
   }
 `

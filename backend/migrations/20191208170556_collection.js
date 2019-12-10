@@ -5,6 +5,7 @@ exports.up = async knex => {
     table.string('set')
     table.boolean('isFoil')
     table.integer('amount')
+    table.timestamp('createdAt').defaultTo(knex.fn.now())
 
     table.foreign('userId').references('users.id')
     table.primary(['id', 'userId', 'set', 'isFoil'])
