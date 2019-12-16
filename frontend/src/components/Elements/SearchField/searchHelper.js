@@ -1,23 +1,18 @@
-const MAX_FILES = 30
+const MAX_RESULTS = 30
 
 export const filterNames = (cardNames, searchString) => {
   const trimName = str => str.replace(/[\W]/g, '').toLowerCase()
 
   const cleanSearch = trimName(searchString)
-  const foundCards = []
+  const searchRegExp = new RegExp(cleanSearch.split('').join('.*'))
 
-  cardNames.find(name => {
-    const cleanCardName = trimName(name)
-    if (cleanCardName.indexOf(cleanSearch) > -1) {
-      foundCards.push(name)
-    }
-
-    return foundCards.length > MAX_FILES
-  })
+  const foundCards = cardNames.filter(name => searchRegExp.test(trimName(name)))
 
   const sortCards = (cardA, cardB) => {
     const cleanCardNameA = trimName(cardA)
     const cleanCardNameB = trimName(cardB)
+    if (!searchString) return cleanCardNameA > cleanCardNameB ? 1 : -1
+
     return cleanCardNameA === cleanSearch
       ? -1
       : cleanCardNameB === cleanSearch
@@ -26,9 +21,13 @@ export const filterNames = (cardNames, searchString) => {
       ? -1
       : cleanCardNameB.startsWith(cleanSearch)
       ? 1
+      : cleanCardNameA.indexOf(cleanSearch) > 0
+      ? -1
+      : cleanCardNameB.indexOf(cleanSearch) > 0
+      ? 1
       : cleanCardNameA > cleanCardNameB
       ? -1
       : 1
   }
-  return foundCards.sort(sortCards)
+  return foundCards.sort(sortCards).slice(0, MAX_RESULTS)
 }

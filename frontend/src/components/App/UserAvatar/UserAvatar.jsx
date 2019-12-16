@@ -3,7 +3,7 @@ import { Tooltip, Spin } from 'antd'
 import styled from 'styled-components'
 import { useQuery } from '@apollo/react-hooks'
 
-import { getUser } from './query'
+import { getUser } from '../../../queries'
 
 const StyledWrapper = styled.div`
   width: 30px;
@@ -25,7 +25,7 @@ export default props => {
   const { data, loading } = useQuery(getUser)
 
   const logOut = () => {
-    window.localStorage.setItem('token', null)
+    window.localStorage.setItem('sessionId', null)
     window.location.href = '/login'
   }
 

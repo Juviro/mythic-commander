@@ -9,3 +9,11 @@ export const getUser = gql`
     }
   }
 `
+
+export const login = gql`
+  mutation login($token: String!) {
+    login(token: $token) {
+      session
+    }
+  }
+`

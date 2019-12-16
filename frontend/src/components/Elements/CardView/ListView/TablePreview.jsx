@@ -1,45 +1,40 @@
-import React, { useState } from 'react'
-import { Icon } from 'antd'
+import React from 'react'
+import { Spin } from 'antd'
 import styled from 'styled-components'
 
-const StyledPreview = styled.div`
-  display: flex;
-  position: absolute;
-  max-width: 200px;
-`
-
 const StyledImage = styled.img`
-  max-width: 100%;
-  max-height: 100%;
+  height: 100%;
 `
 
-const IconWrapper = styled.div`
-  padding: 0px 7px;
+const StyledPreviewWrapper = styled.div`
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
-const CardPreview = ({ images, hidePreview }) => {
+const StyledImageWrapper = styled.div`
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  ${StyledImage}:nth-child(2) {
+    margin-left: 10px;
+  }
+`
+
+const CardPreview = ({ images }) => {
   return (
-    <StyledPreview onClick={hidePreview}>
+    <StyledImageWrapper>
       {images.map(image => (
-        <StyledImage src={image.normal} key={image} />
+        <StyledImage src={image.small} key={image.small} />
       ))}
-    </StyledPreview>
+    </StyledImageWrapper>
   )
 }
 
 export default ({ images }) => {
-  const [showPreview, setShowPreview] = useState(false)
-
+  const hasImageUrl = images[0].small
   return (
-    <div>
-      <IconWrapper
-        onMouseEnter={() => setShowPreview(true)}
-        onMouseLeave={() => setShowPreview(false)}
-        onClick={() => setShowPreview(true)}
-      >
-        <Icon type="camera" />
-      </IconWrapper>
-      {showPreview && <CardPreview images={images} hidePreview={() => setShowPreview(false)} />}
-    </div>
+    <StyledPreviewWrapper>{hasImageUrl ? <CardPreview images={images} size="small" /> : <Spin />}</StyledPreviewWrapper>
   )
 }

@@ -9,15 +9,26 @@ export default new ApolloServer({
   schema,
   context: async ({ ctx }) => {
     const header = ctx.request.header
+    const isLogin = ctx.response.request.body.operationName === 'login'
+    const sessionId = header.authorization.split(' ')[1]
 
-    let user
-    try {
-      user = await validateToken(header.authorization.split(' ')[1])
-    } catch {
-      throw new AuthenticationError('invalid token')
+    if (isLogin) {
+      return { db }
     }
 
-    return { ...ctx, db, user }
+    const [[user]] = await db.raw(
+      `SELECT users.* 
+      FROM users 
+      INNER JOIN sessions 
+        ON users.id = sessions.userId 
+        AND sessions.expires > NOW()
+        AND sessions.sessionId = ?`,
+      [sessionId]
+    )
+
+    if (!user) throw new AuthenticationError('invalid token')
+
+    return { db, user }
   },
   formatError: error => {
     console.error('error', error)

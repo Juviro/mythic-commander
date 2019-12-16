@@ -1,6 +1,8 @@
 import React from 'react'
 import GoogleLogin from 'react-google-login'
 import styled from 'styled-components'
+import { useMutation } from 'react-apollo'
+import { login } from '../../queries'
 
 const CLIENT_ID = '985753697547-184gkcavnrc8f4flq1tdjra30amuchgo.apps.googleusercontent.com'
 
@@ -13,14 +15,16 @@ const LoginWrapper = styled.div`
 `
 
 const onError = error => {
-  console.log('error', error)
+  console.error(error)
   alert('Error logging in. Check the console for further information')
 }
 
 export default ({ history }) => {
-  const onSuccess = response => {
-    window.localStorage.setItem('token', response.Zi.id_token)
-    history.push('/search')
+  const [mutate] = useMutation(login)
+  const onSuccess = async response => {
+    const { data } = await mutate({ variables: { token: response.Zi.id_token } })
+    window.localStorage.setItem('session', data.login.session)
+    history.push('/collection')
   }
 
   return (
