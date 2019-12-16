@@ -1,5 +1,6 @@
 import { getCardsByName } from '../../../cardApi/getCards'
 import populateCards from '../../../cardApi/populateCards'
+import { async } from 'rxjs/internal/scheduler/async'
 
 export default {
   Query: {
@@ -35,6 +36,12 @@ export default {
       )
 
       return cards.map(card => ({ ...card, isFoil: false, userId: user.id, createdAt: new Date() }))
+    },
+    deleteFromCollection: async (_, { cardId }, { user, db }) => {
+      await db('collection')
+        .where({ id: cardId })
+        .del()
+      return cardId
     },
   },
 }

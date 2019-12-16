@@ -9,11 +9,11 @@ import { SERVER_URL } from '../constants/network'
 const httpLink = new HttpLink({ uri: SERVER_URL })
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('token')
+  const session = localStorage.getItem('session')
 
-  const authorization = { authorization: `Bearer ${token}` }
+  const authorization = { authorization: `Bearer ${session}` }
   return {
-    token,
+    session,
     headers: { ...headers, ...authorization },
   }
 })
@@ -35,11 +35,12 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const retryLink = new RetryLink({
   attempts: {
-    max: 20,
+    max: 5,
     retryIf: error => {
       if (error.response) {
+        console.log('retry link - error:', error.response)
         // There was an actual response from the server. Unlikely that retrying will help.
-        return false
+        return error.response.status === 500
       }
 
       // No response == Network error
