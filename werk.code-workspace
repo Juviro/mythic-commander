@@ -29,6 +29,9 @@
     "eslint.packageManager": "yarn",
     "eslint.validate": ["javascript", "javascriptreact"],
     "telemetry.enableTelemetry": false,
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
   }
 }

@@ -21,7 +21,7 @@ const StyledAvatar = styled.img`
   cursor: pointer;
 `
 
-export default props => {
+export default () => {
   const { data, loading } = useQuery(getUser)
 
   const logOut = () => {

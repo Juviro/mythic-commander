@@ -1,6 +1,7 @@
 import { getCardsByName } from '../../../cardApi/getCards'
 import populateCards from '../../../cardApi/populateCards'
-import { async } from 'rxjs/internal/scheduler/async'
+
+const ON_DUPLICATE = 'ON DUPLICATE KEY UPDATE amount = amount + 1, createdAt = NOW()'
 
 export default {
   Query: {
@@ -13,12 +14,10 @@ export default {
     addToCollectionById: async (_, { cards }, { user, db }) => {
       const withUserId = cards.map(card => ({ ...card, userId: user.id, amount: 1 }))
 
-      const onDuplicate = 'ON DUPLICATE KEY UPDATE amount = amount + 1'
-
       await db.raw(
         db('collection')
           .insert(withUserId)
-          .toString() + onDuplicate
+          .toString() + ON_DUPLICATE
       )
 
       return populateCards(cards)
@@ -27,12 +26,10 @@ export default {
       const cards = await getCardsByName(cardNames.map(({ name }) => name))
       const withUserId = cards.map(({ id, set }) => ({ id, isFoil: false, set, userId: user.id, amount: 1 }))
 
-      const onDuplicate = 'ON DUPLICATE KEY UPDATE amount = amount + 1'
-
       await db.raw(
         db('collection')
           .insert(withUserId)
-          .toString() + onDuplicate
+          .toString() + ON_DUPLICATE
       )
 
       return cards.map(card => ({ ...card, isFoil: false, userId: user.id, createdAt: new Date() }))
