@@ -5,9 +5,9 @@ import Menu from './Menu'
 import Login from '../Login'
 import Search from '../Search'
 import Collection from '../Collection'
-import { GlobalStyle } from './GlobalStyle'
+import Decks from '../Decks'
 
-const dummy = () => <div>Hello</div>
+import { GlobalStyle } from './GlobalStyle'
 
 const App = () => {
   return (
@@ -17,7 +17,8 @@ const App = () => {
           <Route path="/login" component={Login} />
           <Route path="/search" component={Search} />
           <Route path="/collection" component={Collection} />
-          <Route path="/decks" component={dummy} />
+          <Route path="/decks" component={Decks} />
+          <Route path="/deck/:id" component={null} />
         </Menu>
       </Switch>
       <GlobalStyle />

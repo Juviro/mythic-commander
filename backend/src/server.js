@@ -2,8 +2,6 @@ import { ApolloServer, AuthenticationError } from 'apollo-server-koa'
 
 import schema from './graphql'
 import db from './database'
-import { validateToken } from './auth'
-import { UNAUTHORIZED } from 'http-status-codes'
 
 export default new ApolloServer({
   schema,

@@ -5,6 +5,16 @@ import CardContext from '../../CardProvider/CardProvider'
 
 const NO_CARD = 'NO_CARD'
 
+const PLACEHOLDER = `One card per line
+
+Possible Formats:
+Forest
+1 Forest
+1x Forest
+
+Ignore line with //
+`
+
 const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -76,6 +86,7 @@ export default class SearchField extends React.Component {
       const normalizedRow = normalize(row)
       return cardNames.find(name => normalize(name) === normalizedRow)
     })
+
     if (!shouldUpdate && newCardResult.length === prevState.value.split('\n').length) return
 
     const isValidInput = newCardResult.every(Boolean)
@@ -114,8 +125,13 @@ export default class SearchField extends React.Component {
           <Input.TextArea
             value={value}
             onChange={this.onChange}
-            autoSize={{ minRows: 4 }}
+            autoSize={{ minRows: 9 }}
             style={{ whiteSpace: 'pre' }}
+            onPressEnter={e => {
+              const isSubmit = e.metaKey || e.ctrlKey
+              isSubmit && isValidInput && this.onSubmit()
+            }}
+            placeholder={PLACEHOLDER}
           />
           <StyledStatus>
             {cardResults.map((name, index) => (

@@ -53,9 +53,6 @@ export default ({ isVisible, setIsVisible }) => {
       maskClosable={false}
       onClose={() => setIsVisible(false)}
       afterVisibleChange={afterVisibleChange}
-      style={{
-        transition: 'all 1.5s linear',
-      }}
     >
       <StyledWrapper>
         <StyledSearchSection>

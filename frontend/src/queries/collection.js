@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 import { addedCard, addedCards } from '../components/Notifications'
 import { getCardImageUri } from '../utils/card'
 
-const CARD_FIELDS = `
+export const CARD_FIELDS = `
   id
   set
   name
