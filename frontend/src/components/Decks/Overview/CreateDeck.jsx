@@ -26,6 +26,7 @@ const StyledPreview = styled.div`
   cursor: pointer;
   flex-direction: column;
   transition: all 0.1s linear;
+  box-shadow: 0 0 5px #8c8888;
 
   &:hover {
     box-shadow: 0px 2px 6px #8c8989;
@@ -37,12 +38,13 @@ const StyledPreview = styled.div`
   }
 `
 
-export default () => {
+export default ({ onOpenDeck }) => {
   const [mutate] = useMutation(createDeckMutation)
-  const onAddDeck = () => {
-    mutate({
+  const onAddDeck = async () => {
+    const { data } = await mutate({
       ...createDeckHelper,
     })
+    onOpenDeck(data.createDeck.id)
   }
   return (
     <StyledPreview onClick={onAddDeck}>

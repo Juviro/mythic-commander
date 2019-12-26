@@ -1,6 +1,7 @@
 // Update with your config settings.
 
 module.exports = {
+  // ################ Obsolete
   // development: {
   //   client: 'mysql',
   //   connection: {
@@ -13,17 +14,41 @@ module.exports = {
   //     directory: './migrations',
   //   },
   // },
+  // ################ Current
+  // development: {
+  //   client: 'mysql',
+  //   connection: {
+  //     user: 'xyC4GlLCtS',
+  //     database: 'xyC4GlLCtS',
+  //     password: 'u3UqHKq2Z4',
+  //     host: 'remotemysql.com',
+  //     connectionTimeout: 30000,
+  //   },
+  //   migrations: {
+  //     directory: './migrations',
+  //   },
+  // },
+  // ################ Local
+  // development: {
+  //   client: 'mysql',
+  //   connection: {
+  //     user: 'root',
+  //     database: 'mtg',
+  //     password: 'fnqi3jmv73ncowe9',
+  //     host: 'localhost',
+  //     connectionTimeout: 30000,
+  //   },
+  //   migrations: {
+  //     directory: './migrations',
+  //   },
+  // },
+  // ################ Postgresql Local
   development: {
-    client: 'mysql',
-    connection: {
-      user: 'xyC4GlLCtS',
-      database: 'xyC4GlLCtS',
-      password: 'u3UqHKq2Z4',
-      host: 'remotemysql.com',
-      connectionTimeout: 30000,
-    },
+    client: 'pg',
+    connection: 'postgres://localhost/mtg',
+    useNullAsDefault: true,
     migrations: {
-      directory: './migrations',
+      directory: './src/database/migrations',
     },
   },
 
@@ -36,7 +61,7 @@ module.exports = {
       host: 'remotemysql.com',
     },
     migrations: {
-      directory: './migrations',
+      directory: './src/database/migrations',
     },
   },
 }

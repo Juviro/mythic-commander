@@ -1,5 +1,4 @@
-const CITY_OF_BRASS_ART =
-  'https://img.scryfall.com/cards/art_crop/front/4/5/459042ef-0d5b-480f-9b8a-520e13ae9217.jpg?1561966887'
+const CITY_OF_BRASS_ART = 'https://img.scryfall.com/cards/art_crop/front/4/5/459042ef-0d5b-480f-9b8a-520e13ae9217.jpg'
 
 exports.up = async knex => {
   await knex.schema.createTable('decks', table => {

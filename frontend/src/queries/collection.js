@@ -99,8 +99,9 @@ export const addToCollectionHelper = {
       })
       cache.writeQuery({ query: getCollection, data: newData })
 
-      const isOptimisticResponse = addToCollectionByName[0].id.startsWith('optimistic_')
-      if (!isOptimisticResponse) {
+      const shouldShowNotification =
+        addToCollectionByName.length && !addToCollectionByName[0].id.startsWith('optimistic_')
+      if (shouldShowNotification) {
         const isMultiAdd = addToCollectionByName.length > 1
         if (isMultiAdd) {
           addedCards(addToCollectionByName.map(({ name }) => name))

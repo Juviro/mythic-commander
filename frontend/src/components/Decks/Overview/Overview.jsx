@@ -22,10 +22,17 @@ const StyledSpinnerWrapper = styled.div`
 
 const byLastEdit = (a, b) => b.lastEdit - a.lastEdit
 
-export default () => {
+export default ({ history }) => {
   const { data, isLoading } = useQuery(getDecks)
-  const decks = data && data.decks.sort(byLastEdit).map(deck => <DeckPreview key={deck.id} {...deck} />)
+  const decks =
+    data &&
+    data.decks
+      .sort(byLastEdit)
+      .map(deck => <DeckPreview key={deck.id} {...deck} onOpenDeck={() => onOpenDeck(deck.id)} />)
 
+  const onOpenDeck = id => {
+    history.push(`/deck/${id}`)
+  }
   return (
     <StyledOverview>
       {isLoading || !data ? (
@@ -33,7 +40,7 @@ export default () => {
           <Spin />
         </StyledSpinnerWrapper>
       ) : (
-        [<CreateDeck key={0} />, ...decks]
+        [<CreateDeck onOpenDeck={onOpenDeck} key={0} />, ...decks]
       )}
     </StyledOverview>
   )

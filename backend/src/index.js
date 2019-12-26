@@ -1,6 +1,6 @@
 import Koa from 'koa'
-import { ApolloServer, gql } from 'apollo-server-koa'
 import server from './server'
+import './cron'
 
 const app = new Koa()
 server.applyMiddleware({ app })

@@ -15,7 +15,6 @@
     "recommendations": [
       "apollographql.vscode-apollo",
       "dbaeumer.vscode-eslint",
-      "orta.vscode-jest",
       "jpoissonnier.vscode-styled-components",
       "redhat.vscode-yaml"
     ]
@@ -25,7 +24,6 @@
     "editor.rulers": [120],
     "javascript.preferences.importModuleSpecifier": "non-relative",
     "javascript.preferences.quoteStyle": "single",
-    "eslint.autoFixOnSave": true,
     "eslint.packageManager": "yarn",
     "eslint.validate": ["javascript", "javascriptreact"],
     "telemetry.enableTelemetry": false,

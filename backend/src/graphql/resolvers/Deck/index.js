@@ -1,7 +1,6 @@
-import { AuthenticationError, ValidationError } from 'apollo-server-koa'
+import { ValidationError } from 'apollo-server-koa'
 
-import { getCardsByName } from '../../../cardApi/getCards'
-import populateCards from '../../../cardApi/populateCards'
+import { populateCards } from '../../../cardApi/'
 
 export default {
   Query: {
@@ -9,15 +8,17 @@ export default {
       const decks = await db('decks').where({ userId: user.id })
       return decks
     },
-    deck: async (_, { deckId }, { user, db }) => {
-      const [deck] = await db('decks').where({ userId: user.id, id: deckId })
-      const cards = await db('cardsToDeck').where({ deckId: deck.id })
+    deck: async (_, { id }, { user, db }) => {
+      const [deck] = await db('decks').where({ userId: user.id, id })
+      const cards = await db('cardToDeck').where({ deckId: deck.id })
       return { ...deck, cards: populateCards(cards) }
     },
   },
   Mutation: {
     createDeck: async (_, _1, { user, db }) => {
-      const [deckId] = await db('decks').insert({ userId: user.id })
+      const [deckId] = await db('decks')
+        .insert({ userId: user.id })
+        .returning('id')
       const [deck] = await db('decks').where({ id: deckId })
       return deck
     },

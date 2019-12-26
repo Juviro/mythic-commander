@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=dev concurrently \"cd ./backend && yarn start\" \"cd ./frontend && yarn start\""
+    "start": "NODE_ENV=dev concurrently \"cd ./backend && yarn start\" \"cd ./frontend && yarn start\"",
+    "startDb": "brew services start postgresql",
+    "stopDb": "brew services stop postgresql"
   },
   "dependencies": {
     "is-builtin-module": "^3.0.0",

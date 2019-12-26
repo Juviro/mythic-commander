@@ -48,11 +48,11 @@ const StyledPreview = styled.div`
   font-weight: 900;
 `
 
-export default ({ imgSrc, name }) => {
+export default ({ imgSrc, name, onOpenDeck }) => {
   // TODO spin when img not loaded
   return (
     <StyledPreview>
-      <ImageWrapper>{imgSrc ? <StyledImage src={imgSrc} /> : <Spin />}</ImageWrapper>
+      <ImageWrapper>{imgSrc ? <StyledImage src={imgSrc} onClick={onOpenDeck} /> : <Spin />}</ImageWrapper>
       <b>{name}</b>
     </StyledPreview>
   )

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Button, Icon } from 'antd'
 import AddCardsDrawer from '../Add'
+import { useMutation } from 'react-apollo'
+import { addToCollectionByName, addToCollectionHelper, deleteFromCollection } from '../../../queries'
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -17,8 +19,26 @@ const AddCardsButtonWrapper = styled.div`
   align-items: center;
 `
 
+const addCards = (mutate, cards, undoAdd) => {
+  mutate({
+    variables: { cards },
+    optimisticResponse: addToCollectionHelper.optimisticResponse(cards),
+    update: addToCollectionHelper.update(undoAdd),
+  })
+}
+
 export default () => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false)
+  const [mutate] = useMutation(addToCollectionByName)
+  const [undoAdd] = useMutation(deleteFromCollection)
+  const onAddCards = cardNames => {
+    addCards(
+      mutate,
+      cardNames.map(name => ({ name })),
+      undoAdd
+    )
+  }
+
   return (
     <StyledHeader>
       <AddCardsButtonWrapper>
@@ -27,7 +47,7 @@ export default () => {
           {'Add Cards'}
         </Button>
       </AddCardsButtonWrapper>
-      <AddCardsDrawer isVisible={isDrawerVisible} setIsVisible={setIsDrawerVisible} />
+      <AddCardsDrawer onAddCards={onAddCards} isVisible={isDrawerVisible} setIsVisible={setIsDrawerVisible} />
     </StyledHeader>
   )
 }

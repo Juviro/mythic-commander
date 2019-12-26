@@ -1,0 +1,4 @@
+released_at: Date
+booster: boolean
+purchase_uris: jsonb
+reprint: boolean

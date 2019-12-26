@@ -6,6 +6,7 @@ import Login from '../Login'
 import Search from '../Search'
 import Collection from '../Collection'
 import Decks from '../Decks'
+import Deck from '../Decks/Deck'
 
 import { GlobalStyle } from './GlobalStyle'
 
@@ -18,7 +19,7 @@ const App = () => {
           <Route path="/search" component={Search} />
           <Route path="/collection" component={Collection} />
           <Route path="/decks" component={Decks} />
-          <Route path="/deck/:id" component={null} />
+          <Route path="/deck/:id" component={Deck} />
         </Menu>
       </Switch>
       <GlobalStyle />
