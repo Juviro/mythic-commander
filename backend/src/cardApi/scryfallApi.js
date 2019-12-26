@@ -1,5 +1,7 @@
 import { Cards, CardIdentifier } from 'scryfall-sdk'
 
+const sortByName = (a, b) => (a.name > b.name ? 1 : -1)
+
 const getCollection = async (collection, identifier) => {
   const start = Date.now()
   if (!collection.length) return []
@@ -16,4 +18,16 @@ export const getCardsById = async ids => {
 
 export const getCardsByName = async names => {
   return getCollection(names, CardIdentifier.byName)
+}
+
+export const populateCards = async (cards, sort) => {
+  const ids = cards.map(({ id }) => id)
+
+  const rawCards = await getCardsById(ids)
+  const populatedCards = rawCards.map((card, index) => ({
+    ...card,
+    ...cards[index],
+  }))
+
+  return populatedCards.sort(sort || sortByName)
 }

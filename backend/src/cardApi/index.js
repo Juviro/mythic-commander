@@ -1,8 +1,8 @@
-import { getCardsById, getCardsByName } from './getCards'
-import populateCards from './populateCards'
+import { getCardsByName, populateCards } from './internal'
+import { getCardsByName as getCardsByNameScryfall } from './scryfallApi'
 
-export default {
+module.exports = {
   populateCards,
-  getCardsById,
   getCardsByName,
+  getCardsByNameScryfall,
 }

@@ -20,6 +20,14 @@ export const getDecks = gql`
   }
 `
 
+export const getDeck = gql`
+  query deck($id: String!) {
+    deck(id: $id) {
+      ${DECK_FIELDS}
+    }
+  }
+`
+
 export const createDeck = gql`
   mutation createDeck {
     createDeck {

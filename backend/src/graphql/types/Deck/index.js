@@ -52,7 +52,7 @@ export default `
 
   type Query {
     decks: [Deck]!
-    deck(deckId: String!): Deck!
+    deck(id: String!): Deck!
   }
 
   type Mutation {

@@ -14,19 +14,22 @@ export default new ApolloServer({
       return { db }
     }
 
-    const [[user]] = await db.raw(
+    const {
+      rows: [user],
+    } = await db.raw(
       `SELECT users.* 
       FROM users 
       INNER JOIN sessions 
-        ON users.id = sessions.userId 
-        AND sessions.expires > NOW()
-        AND sessions.sessionId = ?`,
+      ON users.id = sessions."userId" 
+      AND sessions.expires > NOW()
+      AND sessions."sessionId" = ?`,
       [sessionId]
     )
 
     if (!user) throw new AuthenticationError('invalid token')
 
     return { db, user }
+    return
   },
   formatError: error => {
     console.error('error', error)

@@ -1,11 +1,9 @@
 import React from 'react'
 import { Drawer } from 'antd'
 import styled from 'styled-components'
-import { useMutation } from 'react-apollo'
 
 import SearchField from '../../Elements/SearchField/SearchField'
 import MultiInput from './MultiInput'
-import { addToCollectionByName, addToCollectionHelper, deleteFromCollection } from '../../../queries'
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -18,26 +16,9 @@ const StyledSearchSection = styled.div`
   display: block;
 `
 
-const addCards = (mutate, cards, undoAdd) => {
-  mutate({
-    variables: { cards },
-    optimisticResponse: addToCollectionHelper.optimisticResponse(cards),
-    update: addToCollectionHelper.update(undoAdd),
-  })
-}
-
-export default ({ isVisible, setIsVisible }) => {
+export default ({ isVisible, setIsVisible, onAddCards }) => {
   let searchInput = React.createRef()
-  const [mutate] = useMutation(addToCollectionByName)
-  const [undoAdd] = useMutation(deleteFromCollection)
 
-  const onAddCards = cardNames => {
-    addCards(
-      mutate,
-      cardNames.map(name => ({ name })),
-      undoAdd
-    )
-  }
   const afterVisibleChange = visible => {
     if (!visible) return
     searchInput.current.focus()
