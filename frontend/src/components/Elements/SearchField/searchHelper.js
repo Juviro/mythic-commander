@@ -1,17 +1,17 @@
-const MAX_RESULTS = 30
+const MAX_RESULTS = 30;
 
 export const filterNames = (cardNames, searchString) => {
-  const trimName = str => str.replace(/[\W]/g, '').toLowerCase()
+  const trimName = str => str.replace(/[\W]/g, '').toLowerCase();
 
-  const cleanSearch = trimName(searchString)
-  const searchRegExp = new RegExp(cleanSearch.split('').join('.*'))
+  const cleanSearch = trimName(searchString);
+  const searchRegExp = new RegExp(cleanSearch.split('').join('.*'));
 
-  const foundCards = cardNames.filter(name => searchRegExp.test(trimName(name)))
+  const foundCards = cardNames.filter(name => searchRegExp.test(trimName(name)));
 
   const sortCards = (cardA, cardB) => {
-    const cleanCardNameA = trimName(cardA)
-    const cleanCardNameB = trimName(cardB)
-    if (!searchString) return cleanCardNameA > cleanCardNameB ? 1 : -1
+    const cleanCardNameA = trimName(cardA);
+    const cleanCardNameB = trimName(cardB);
+    if (!searchString) return cleanCardNameA > cleanCardNameB ? 1 : -1;
 
     return cleanCardNameA === cleanSearch
       ? -1
@@ -27,7 +27,7 @@ export const filterNames = (cardNames, searchString) => {
       ? 1
       : cleanCardNameA > cleanCardNameB
       ? -1
-      : 1
-  }
-  return foundCards.sort(sortCards).slice(0, MAX_RESULTS)
-}
+      : 1;
+  };
+  return foundCards.sort(sortCards).slice(0, MAX_RESULTS);
+};

@@ -92,4 +92,4 @@ export const CARD_FIELDS = [
     key: 'rulings_uri',
     type: 'string',
   },
-]
+];

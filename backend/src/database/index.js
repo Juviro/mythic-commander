@@ -1,9 +1,9 @@
-import knex from 'knex'
-import knexfile from '../../knexfile'
+import knex from 'knex';
+import knexfile from '../../knexfile';
 
-const env = process.env.NODE_ENV || 'development'
-const configOptions = knexfile[env]
+const env = process.env.NODE_ENV || 'development';
+const configOptions = knexfile[env];
 
-const db = knex(configOptions)
+const db = knex(configOptions);
 
-export default db
+export default db;

@@ -81,4 +81,4 @@ export default `
     cardIds: [CardsType!]!
     deckId: String!
   }
-`
+`;

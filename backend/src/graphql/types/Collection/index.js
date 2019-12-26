@@ -60,4 +60,4 @@ export default `
     name: String!
     isFoil: Boolean
   }
-`
+`;

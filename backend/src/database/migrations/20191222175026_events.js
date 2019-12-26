@@ -3,11 +3,11 @@ exports.up = async knex => {
     table
       .string('key')
       .notNullable()
-      .primary()
-    table.string('value').notNullable()
-  })
-}
+      .primary();
+    table.string('value').notNullable();
+  });
+};
 
 exports.down = async knex => {
-  await knex.schema.dropTable('events')
-}
+  await knex.schema.dropTable('events');
+};

@@ -1,2 +1,2 @@
-import AddCardsDrawer from './AddCardsDrawer'
-export default AddCardsDrawer
+import AddCardsDrawer from './AddCardsDrawer';
+export default AddCardsDrawer;
