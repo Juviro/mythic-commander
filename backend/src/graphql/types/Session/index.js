@@ -13,4 +13,4 @@ export default `
     login(token: String): LoginResponse!
     logout: Boolean
   }
-`
+`;

@@ -1,2 +1,2 @@
-import UserAvatar from './UserAvatar'
-export default UserAvatar
+import UserAvatar from './UserAvatar';
+export default UserAvatar;

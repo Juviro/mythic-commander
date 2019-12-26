@@ -1,10 +1,10 @@
-import { mergeResolvers } from 'merge-graphql-schemas'
+import { mergeResolvers } from 'merge-graphql-schemas';
 
-import User from './User/'
-import Collection from './Collection/'
-import Session from './Session/'
-import Deck from './Deck/'
+import User from './User/';
+import Collection from './Collection/';
+import Session from './Session/';
+import Deck from './Deck/';
 
-const resolvers = [User, Collection, Session, Deck]
+const resolvers = [User, Collection, Session, Deck];
 
-export default mergeResolvers(resolvers)
+export default mergeResolvers(resolvers);

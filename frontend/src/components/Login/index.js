@@ -1,2 +1,2 @@
-import GoogleLogin from './GoogleLogin'
-export default GoogleLogin
+import GoogleLogin from './GoogleLogin';
+export default GoogleLogin;

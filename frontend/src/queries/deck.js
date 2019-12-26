@@ -1,5 +1,5 @@
-import gql from 'graphql-tag'
-import { CARD_FIELDS } from './collection'
+import gql from 'graphql-tag';
+import { CARD_FIELDS } from './collection';
 
 const DECK_FIELDS = `
     id
@@ -10,7 +10,7 @@ const DECK_FIELDS = `
     cards {
       ${CARD_FIELDS}
     }
-`
+`;
 
 export const getDecks = gql`
   query decks {
@@ -18,7 +18,7 @@ export const getDecks = gql`
       ${DECK_FIELDS}
     }
   }
-`
+`;
 
 export const getDeck = gql`
   query deck($id: String!) {
@@ -26,7 +26,7 @@ export const getDeck = gql`
       ${DECK_FIELDS}
     }
   }
-`
+`;
 
 export const createDeck = gql`
   mutation createDeck {
@@ -34,7 +34,7 @@ export const createDeck = gql`
         ${DECK_FIELDS}
     }
   }
-`
+`;
 
 export const createDeckHelper = {
   optimisticResponse: () => ({
@@ -50,11 +50,11 @@ export const createDeckHelper = {
     },
   }),
   update: (cache, { data: { createDeck } }) => {
-    const newData = cache.readQuery({ query: getDecks })
+    const newData = cache.readQuery({ query: getDecks });
 
     if (createDeck && newData) {
-      newData.decks.push(createDeck)
-      cache.writeQuery({ query: getDecks, data: newData })
+      newData.decks.push(createDeck);
+      cache.writeQuery({ query: getDecks, data: newData });
     }
   },
-}
+};

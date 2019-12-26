@@ -1,2 +1,2 @@
-import updateCards from './updateCards'
-export default updateCards
+import updateCards from './updateCards';
+export default updateCards;
