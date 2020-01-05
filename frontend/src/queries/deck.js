@@ -49,11 +49,11 @@ export const createDeckHelper = {
       __typename: 'Deck',
     },
   }),
-  update: (cache, { data: { createDeck } }) => {
+  update: (cache, { data: { createDeck: createdDeck } }) => {
     const newData = cache.readQuery({ query: getDecks });
 
-    if (createDeck && newData) {
-      newData.decks.push(createDeck);
+    if (createdDeck && newData) {
+      newData.decks.push(createdDeck);
       cache.writeQuery({ query: getDecks, data: newData });
     }
   },

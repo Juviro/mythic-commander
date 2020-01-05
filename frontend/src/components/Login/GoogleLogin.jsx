@@ -29,7 +29,7 @@ export default ({ history }) => {
 
   return (
     <LoginWrapper>
-      <GoogleLogin clientId={CLIENT_ID} onSuccess={onSuccess} onFailure={onError} cookiePolicy={'single_host_origin'} />
+      <GoogleLogin clientId={CLIENT_ID} onSuccess={onSuccess} onFailure={onError} cookiePolicy="single_host_origin" />
     </LoginWrapper>
   );
 };

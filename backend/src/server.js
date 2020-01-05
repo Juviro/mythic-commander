@@ -10,8 +10,13 @@ export default new ApolloServer({
     const isLogin = ctx.response.request.body.operationName === 'login';
     const sessionId = header.authorization.split(' ')[1];
 
+    const context = {
+      db,
+      session: { id: sessionId },
+    };
+
     if (isLogin) {
-      return { db };
+      return context;
     }
 
     const {
@@ -28,8 +33,7 @@ export default new ApolloServer({
 
     if (!user) throw new AuthenticationError('invalid token');
 
-    return { db, user };
-    return;
+    return { ...context, user };
   },
   formatError: error => {
     console.error('error', error);

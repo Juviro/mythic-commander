@@ -1,14 +1,14 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Icon } from 'antd'
-import { useMutation } from 'react-apollo'
-import { createDeck as createDeckMutation, createDeckHelper } from '../../../queries'
+import React from 'react';
+import styled from 'styled-components';
+import { Icon } from 'antd';
+import { useMutation } from 'react-apollo';
+import { createDeck as createDeckMutation, createDeckHelper } from '../../../queries';
 
 const StyledIcon = styled(Icon)`
   font-size: 70px;
   margin-bottom: 20px;
   cursor: pointer;
-`
+`;
 
 const StyledPreview = styled.div`
   flex: 1;
@@ -36,20 +36,20 @@ const StyledPreview = styled.div`
     box-shadow: 0px 2px 6px #8c8989;
     transform: scale(1.03);
   }
-`
+`;
 
 export default ({ onOpenDeck }) => {
-  const [mutate] = useMutation(createDeckMutation)
+  const [mutate] = useMutation(createDeckMutation);
   const onAddDeck = async () => {
     const { data } = await mutate({
       ...createDeckHelper,
-    })
-    onOpenDeck(data.createDeck.id)
-  }
+    });
+    onOpenDeck(data.createDeck.id);
+  };
   return (
     <StyledPreview onClick={onAddDeck}>
       <StyledIcon type="plus" />
       <b>Add new Deck</b>
     </StyledPreview>
-  )
-}
+  );
+};

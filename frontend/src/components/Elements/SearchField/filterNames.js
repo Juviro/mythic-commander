@@ -1,6 +1,6 @@
 const MAX_RESULTS = 30;
 
-export const filterNames = (cardNames, searchString) => {
+export default (cardNames, searchString) => {
   const trimName = str => str.replace(/[\W]/g, '').toLowerCase();
 
   const cleanSearch = trimName(searchString);

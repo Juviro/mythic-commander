@@ -1,26 +1,26 @@
-import React from 'react'
-import styled from 'styled-components'
-import { notification, Button } from 'antd'
-import { getCollection } from '../../queries'
+import React from 'react';
+import styled from 'styled-components';
+import { notification, Button } from 'antd';
+import { getCollection } from '../../queries';
 
 const StyledContent = styled.div`
   display: flex;
   flex-direction: column;
-`
+`;
 
 const StyledImageWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-`
+`;
 
 const StyledImage = styled.img`
   width: 200px;
-`
+`;
 
 const NotificationBody = ({ id, imageUrl, name, undoAdd }) => {
   const onUndo = () => {
-    notification.close(id)
+    notification.close(id);
     undoAdd({
       variables: { cardId: id },
       optimisticResponse: {
@@ -28,12 +28,12 @@ const NotificationBody = ({ id, imageUrl, name, undoAdd }) => {
         deleteFromCollection: id,
       },
       update: (cache, { data: { deleteFromCollection } }) => {
-        const newData = cache.readQuery({ query: getCollection })
-        const collection = newData.collection.filter(({ id }) => id !== deleteFromCollection)
-        cache.writeQuery({ query: getCollection, data: { collection } })
+        const newData = cache.readQuery({ query: getCollection });
+        const collection = newData.collection.filter(({ id }) => id !== deleteFromCollection);
+        cache.writeQuery({ query: getCollection, data: { collection } });
       },
-    })
-  }
+    });
+  };
 
   return (
     <StyledContent>
@@ -52,14 +52,14 @@ const NotificationBody = ({ id, imageUrl, name, undoAdd }) => {
         Undo
       </Button>
     </StyledContent>
-  )
-}
+  );
+};
 
 const NotificationHeader = ({ name }) => (
   <span>
     Added <b>{name}</b>!
   </span>
-)
+);
 
 export default (id, imageUrl, name, undoAdd) => {
   notification.open({
@@ -67,5 +67,5 @@ export default (id, imageUrl, name, undoAdd) => {
     message: <NotificationHeader name={name} />,
     description: <NotificationBody id={id} imageUrl={imageUrl} name={name} undoAdd={undoAdd} />,
     style: { backgroundColor: '#f6ffed', border: '1px solid #b7eb8f', width: 250 },
-  })
-}
+  });
+};

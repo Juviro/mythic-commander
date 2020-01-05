@@ -27,10 +27,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "eject": "react-scripts eject",
+    "lint": "eslint --fix src"
   },
   "browserslist": [
     ">0.2%",
@@ -40,12 +38,15 @@
   ],
   "devDependencies": {
     "@babel/preset-env": "^7.7.6",
+    "babel-eslint": "^10.0.3",
     "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.9.0",
     "eslint-loader": "^3.0.3",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.17.0",
+    "prettier": "^1.19.1",
     "prop-types": "^15.7.2",
     "react-scripts": "^3.3.0"
   }
