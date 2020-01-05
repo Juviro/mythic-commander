@@ -1,28 +1,28 @@
-import React from 'react'
-import { Drawer } from 'antd'
-import styled from 'styled-components'
+import React from 'react';
+import { Drawer } from 'antd';
+import styled from 'styled-components';
 
-import SearchField from '../../Elements/SearchField/SearchField'
-import MultiInput from './MultiInput'
+import SearchField from '../SearchField';
+import MultiInput from './MultIinput';
 
 const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-`
+`;
 
 const StyledSearchSection = styled.div`
   height: 100%;
   display: block;
-`
+`;
 
 export default ({ isVisible, setIsVisible, onAddCards }) => {
-  let searchInput = React.createRef()
+  const searchInput = React.createRef();
 
   const afterVisibleChange = visible => {
-    if (!visible) return
-    searchInput.current.focus()
-  }
+    if (!visible) return;
+    searchInput.current.focus();
+  };
 
   return (
     <Drawer
@@ -42,5 +42,5 @@ export default ({ isVisible, setIsVisible, onAddCards }) => {
         </StyledSearchSection>
       </StyledWrapper>
     </Drawer>
-  )
-}
+  );
+};

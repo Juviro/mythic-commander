@@ -1,49 +1,54 @@
-import React from 'react'
-import { AutoComplete } from 'antd'
-import CardContext from '../../CardProvider/CardProvider'
-import { filterNames } from './searchHelper'
+import React from 'react';
+import { AutoComplete } from 'antd';
+import CardContext from '../../CardProvider/CardProvider';
+import filterNames from './filterNames';
 
 const renderOption = (searchString, option) => {
+  let currentSearchString = searchString;
   const highlightedOption = option.split('').map((char, index) => {
-    if (!searchString.length || char.toLowerCase() !== searchString[0].toLowerCase()) {
-      return char
+    if (!currentSearchString.length || char.toLowerCase() !== currentSearchString[0].toLowerCase()) {
+      return char;
     }
-    searchString = searchString.substr(1)
-    return <b key={index}>{char}</b>
-  })
+    currentSearchString = currentSearchString.substr(1);
+    return <b key={index}>{char}</b>;
+  });
 
   return (
     <AutoComplete.Option key={option} text={option}>
       {highlightedOption}
     </AutoComplete.Option>
-  )
-}
+  );
+};
 
 export default class SearchField extends React.Component {
-  static contextType = CardContext
-  inputRef = React.createRef()
+  static contextType = CardContext;
+
+  inputRef = React.createRef();
+
   state = {
     searchString: '',
-  }
+  };
 
   setSearch = searchString => {
-    this.setState({ searchString })
-  }
+    this.setState({ searchString });
+  };
+
   focus = () => {
-    this.inputRef.current.focus()
-  }
+    this.inputRef.current.focus();
+  };
 
   onSubmit = value => {
-    const { onSearch, resetSearch } = this.props
-    onSearch(value || this.state.searchString)
-    resetSearch && this.setState({ searchString: '' })
-  }
+    const { onSearch, resetSearch } = this.props;
+    const { searchString } = this.state;
+    onSearch(value || searchString);
+    if (resetSearch) this.setState({ searchString: '' });
+  };
 
   render() {
-    const { defaultActiveFirstOption } = this.props
-    const { searchString } = this.state
-    const { cardNames } = this.context
-    const dataSource = filterNames(cardNames, searchString)
+    const { defaultActiveFirstOption } = this.props;
+    const { searchString } = this.state;
+    const { cardNames } = this.context;
+    const dataSource = filterNames(cardNames, searchString);
 
     return (
       <AutoComplete
@@ -59,6 +64,6 @@ export default class SearchField extends React.Component {
         tabIndex={0}
         style={{ width: 250 }}
       />
-    )
+    );
   }
 }

@@ -12,13 +12,9 @@ const getCollection = async (collection, identifier) => {
   return cards;
 };
 
-export const getCardsById = async ids => {
-  return getCollection(ids, CardIdentifier.byId);
-};
+export const getCardsById = async ids => getCollection(ids, CardIdentifier.byId);
 
-export const getCardsByName = async names => {
-  return getCollection(names, CardIdentifier.byName);
-};
+export const getCardsByName = async names => getCollection(names, CardIdentifier.byName);
 
 export const populateCards = async (cards, sort) => {
   const ids = cards.map(({ id }) => id);

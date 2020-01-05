@@ -1,4 +1,4 @@
-exports.up = async knex => {
+export const up = async knex => {
   await knex.schema.createTable('events', table => {
     table
       .string('key')
@@ -8,6 +8,6 @@ exports.up = async knex => {
   });
 };
 
-exports.down = async knex => {
+export const down = async knex => {
   await knex.schema.dropTable('events');
 };

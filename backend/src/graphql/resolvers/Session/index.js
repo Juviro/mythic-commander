@@ -18,13 +18,13 @@ export default {
 
       return { session: session.sessionId };
     },
-    logout: async (_, _1, { user }) => {
+    logout: async (_, _1, { user, db, session }) => {
       // TODO ?
       await db('sessions')
         .where({ id: user.id })
         .del();
 
-      return { session: session.sessionId };
+      return session;
     },
   },
 };

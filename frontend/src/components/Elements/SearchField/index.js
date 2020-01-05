@@ -1,1 +1,3 @@
-export { SearchField as default } from './SearchField';
+import SearchField from './SearchField';
+
+export default SearchField;

@@ -1,4 +1,4 @@
-export const CARD_FIELDS = [
+export const CARD_FIELDS_INITIAL = [
   {
     key: 'id',
     type: 'string',
@@ -93,3 +93,24 @@ export const CARD_FIELDS = [
     type: 'string',
   },
 ];
+
+export const CARD_FIELDS_ADDITION_1 = [
+  {
+    key: 'released_at',
+    type: 'date',
+  },
+  {
+    key: 'booster',
+    type: 'boolean',
+  },
+  {
+    key: 'purchase_uris',
+    type: 'jsonb',
+  },
+  {
+    key: 'reprint',
+    type: 'boolean',
+  },
+];
+
+export const ALL_CARD_FIELDS = [CARD_FIELDS_INITIAL, CARD_FIELDS_ADDITION_1].flat();

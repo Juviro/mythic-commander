@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import { addedCard, addedCards } from '../components/Notifications';
-import { getCardImageUri } from '../utils/card';
+import getCardImageUri from '../utils/getCardImageUri';
 
 export const CARD_FIELDS = `
   id
@@ -83,10 +83,10 @@ export const addToCollectionHelper = {
       isFoil: false,
     })),
   }),
-  update: undoAdd => (cache, { data: { addToCollectionByName } }) => {
+  update: undoAdd => (cache, { data: { addToCollectionByName: addedElements } }) => {
     const newData = cache.readQuery({ query: getCollection });
-    if (addToCollectionByName && newData) {
-      addToCollectionByName.forEach(card => {
+    if (addedElements && newData) {
+      addedElements.forEach(card => {
         const cardIndex = newData.collection.findIndex(({ name }) => name === card.name);
         if (cardIndex > -1) {
           const duplicateCard = newData.collection[cardIndex];
@@ -99,14 +99,13 @@ export const addToCollectionHelper = {
       });
       cache.writeQuery({ query: getCollection, data: newData });
 
-      const shouldShowNotification =
-        addToCollectionByName.length && !addToCollectionByName[0].id.startsWith('optimistic_');
+      const shouldShowNotification = addedElements.length && !addedElements[0].id.startsWith('optimistic_');
       if (shouldShowNotification) {
-        const isMultiAdd = addToCollectionByName.length > 1;
+        const isMultiAdd = addedElements.length > 1;
         if (isMultiAdd) {
-          addedCards(addToCollectionByName.map(({ name }) => name));
+          addedCards(addedElements.map(({ name }) => name));
         } else {
-          const [card] = addToCollectionByName;
+          const [card] = addedElements;
           addedCard(card.id, getCardImageUri(card), card.name, undoAdd);
         }
       }

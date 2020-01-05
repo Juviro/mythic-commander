@@ -21,7 +21,7 @@ const authLink = setContext((_, { headers }) => {
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     const isUnauthenticated = graphQLErrors.some(error => error.extensions.code === 'UNAUTHENTICATED');
-    console.log('isUnauthenticated, graphQLErrors', isUnauthenticated, graphQLErrors);
+    console.info('isUnauthenticated, graphQLErrors', isUnauthenticated, graphQLErrors);
     if (isUnauthenticated) {
       const next = decodeURIComponent(window.location.href);
       window.location.href = `/login?next=${next}`;
@@ -38,7 +38,7 @@ const retryLink = new RetryLink({
     max: 5,
     retryIf: error => {
       if (error.response) {
-        console.log('retry link - error:', error.response);
+        console.error('retry link - error:', error.response);
         // There was an actual response from the server. Unlikely that retrying will help.
         return error.response.status === 500;
       }
