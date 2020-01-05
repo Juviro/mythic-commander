@@ -1,6 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Spin } from 'antd'
+import React from 'react';
+import styled from 'styled-components';
+import { Spin } from 'antd';
 
 const ImageWrapper = styled.div`
   height: 183px;
@@ -26,7 +26,7 @@ const ImageWrapper = styled.div`
     box-shadow: 0px 2px 6px #8c8989;
     transform: scale(1.02);
   }
-`
+`;
 
 const StyledImage = styled.img`
   width: 100%;
@@ -37,7 +37,7 @@ const StyledImage = styled.img`
     transition: all 1s ease-out;
     transform: scale(1.15);
   }
-`
+`;
 
 const StyledPreview = styled.div`
   display: flex;
@@ -46,7 +46,7 @@ const StyledPreview = styled.div`
   align-items: center;
   font-size: 17px;
   font-weight: 900;
-`
+`;
 
 export default ({ imgSrc, name, onOpenDeck }) => {
   // TODO spin when img not loaded
@@ -55,5 +55,5 @@ export default ({ imgSrc, name, onOpenDeck }) => {
       <ImageWrapper>{imgSrc ? <StyledImage src={imgSrc} onClick={onOpenDeck} /> : <Spin />}</ImageWrapper>
       <b>{name}</b>
     </StyledPreview>
-  )
-}
+  );
+};

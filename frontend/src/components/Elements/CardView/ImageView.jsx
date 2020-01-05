@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
-import Card from './Card'
-import CardSpinner from './CardSpinner'
+import Card from './Card';
+import CardSpinner from './CardSpinner';
 
 const CardsWrapper = styled.div`
   display: flex;
@@ -13,14 +13,14 @@ const CardsWrapper = styled.div`
   @media (max-width: 700px) {
     justify-content: center;
   }
-`
+`;
 
 export default ({ cards, loading }) => {
-  const byDate = (a, b) => Number(b.createdAt) - Number(a.createdAt)
+  const byDate = (a, b) => Number(b.createdAt) - Number(a.createdAt);
 
   return (
     <CardsWrapper>
       {loading ? <CardSpinner hideBorder /> : cards.sort(byDate).map(card => <Card {...card} key={card.id} />)}
     </CardsWrapper>
-  )
-}
+  );
+};

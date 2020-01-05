@@ -1,21 +1,21 @@
-import React from 'react'
+import React from 'react';
 
-import { Table } from 'antd'
-import TablePreview from './TablePreview'
-import Actions from './Actions'
+import { Table } from 'antd';
+import TablePreview from './TablePreview';
+import Actions from './Actions';
 
-const sortByName = (a, b) => (a.name > b.name ? 1 : -1)
-const sortByDate = (a, b) => Number(a.createdAt) - Number(b.createdAt)
-const sortByPrice = (a, b) => Number(a.prices.usd || a.prices.usd_foil) - Number(b.prices.usd || b.prices.usd_foil)
+const sortByName = (a, b) => (a.name > b.name ? 1 : -1);
+const sortByDate = (a, b) => Number(a.createdAt) - Number(b.createdAt);
+const sortByPrice = (a, b) => Number(a.prices.usd || a.prices.usd_foil) - Number(b.prices.usd || b.prices.usd_foil);
 const dollarToFormattedEuro = dollar =>
   (Number(dollar) * 0.9).toLocaleString('de-DE', {
     style: 'currency',
     maximumFractionDigits: 2,
     minimumFractionDigits: 2,
     currency: 'EUR',
-  })
+  });
 
-const getPrice = price => (price.usd || price.usd_foil ? dollarToFormattedEuro(price.usd || price.usd_foil) : '-')
+const getPrice = price => (price.usd || price.usd_foil ? dollarToFormattedEuro(price.usd || price.usd_foil) : '-');
 
 const columns = [
   {
@@ -45,16 +45,16 @@ const columns = [
     width: 100,
     render: card => <Actions card={card} />,
   },
-]
+];
 
 export default ({ cards, loading, setHighlightedCard }) => {
   const dataSource = cards
     .map(card => {
-      const images = card.image_uris ? [card.image_uris] : card.card_faces.map(({ image_uris }) => image_uris)
-      return { ...card, key: card.id, images }
+      const images = card.image_uris ? [card.image_uris] : card.card_faces.map(({ image_uris }) => image_uris);
+      return { ...card, key: card.id, images };
     })
     .sort(sortByDate)
-    .reverse()
+    .reverse();
 
   return (
     <div style={{ width: 'calc(100% - 300px)' }}>
@@ -70,5 +70,5 @@ export default ({ cards, loading, setHighlightedCard }) => {
         })}
       />
     </div>
-  )
-}
+  );
+};

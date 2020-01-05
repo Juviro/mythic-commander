@@ -18,7 +18,7 @@ const StyledImage = styled.img`
   width: 200px;
 `;
 
-const NotificationBody = ({ id, imageUrl, name, undoAdd }) => {
+const NotificationBody = ({ id, imageUrl, undoAdd }) => {
   const onUndo = () => {
     notification.close(id);
     undoAdd({
@@ -29,7 +29,7 @@ const NotificationBody = ({ id, imageUrl, name, undoAdd }) => {
       },
       update: (cache, { data: { deleteFromCollection } }) => {
         const newData = cache.readQuery({ query: getCollection });
-        const collection = newData.collection.filter(({ id }) => id !== deleteFromCollection);
+        const collection = newData.collection.filter(card => card.id !== deleteFromCollection);
         cache.writeQuery({ query: getCollection, data: { collection } });
       },
     });
