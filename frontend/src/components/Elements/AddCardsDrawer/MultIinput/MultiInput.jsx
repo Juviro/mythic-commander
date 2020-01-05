@@ -100,7 +100,7 @@ export default class SearchField extends React.Component {
             style={{ whiteSpace: 'pre' }}
             onPressEnter={e => {
               const isSubmit = e.metaKey || e.ctrlKey;
-              isSubmit && isValidInput && this.onSubmit();
+              if (isSubmit && isValidInput) this.onSubmit();
             }}
             placeholder={PLACEHOLDER}
           />

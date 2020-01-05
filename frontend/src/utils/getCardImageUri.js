@@ -1,7 +1,6 @@
 export default (card, { returnAll = false, size = 'normal' } = {}) => {
   const isTwoFaced = !card.image_uris;
   if (returnAll) {
-    // eslint-disable-next-line camelcase
     return isTwoFaced ? card.card_faces.map(({ image_uris }) => image_uris[size]) : [card.image_uris[size]];
   }
 

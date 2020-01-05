@@ -1,14 +1,14 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useMutation } from 'react-apollo'
-import { getCollection, deleteFromCollection } from '../../../../queries'
+import React from 'react';
+import styled from 'styled-components';
+import { useMutation } from 'react-apollo';
+import { getCollection, deleteFromCollection } from '../../../../queries';
 
 const StyledCardPreview = styled.div`
   display: flex;
-`
+`;
 
 export default ({ card }) => {
-  const [onDelete] = useMutation(deleteFromCollection)
+  const [onDelete] = useMutation(deleteFromCollection);
 
   const options = [
     {
@@ -20,23 +20,24 @@ export default ({ card }) => {
             __typename: 'Mutation',
             deleteFromCollection: card.id,
           },
-          update: (cache, { data: { deleteFromCollection } }) => {
-            const newData = cache.readQuery({ query: getCollection })
-            const collection = newData.collection.filter(({ id }) => id !== deleteFromCollection)
-            cache.writeQuery({ query: getCollection, data: { collection } })
+          update: (cache, { data: { deleteFromCollection: deleteFromCollectionId } }) => {
+            const newData = cache.readQuery({ query: getCollection });
+            const collection = newData.collection.filter(({ id }) => id !== deleteFromCollectionId);
+            cache.writeQuery({ query: getCollection, data: { collection } });
           },
         }),
     },
-  ]
+  ];
 
   return (
     <StyledCardPreview>
-      {options.map((option, index) => (
+      {options.map(option => (
         <div key={option.name}>
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          {/* TODO a11y */}
+          {/* eslint-disable-next-line */}
           <a onClick={option.onClick}>{option.name}</a>
         </div>
       ))}
     </StyledCardPreview>
-  )
-}
+  );
+};

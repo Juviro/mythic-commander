@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button, Icon } from 'antd';
-import AddCardsDrawer from '../../Elements/AddCardsDrawer';
 import { useMutation } from 'react-apollo';
+import AddCardsDrawer from '../../Elements/AddCardsDrawer';
 import { addToCollectionByName, addToCollectionHelper, deleteFromCollection } from '../../../queries';
 
 const StyledHeader = styled.div`
@@ -44,7 +44,7 @@ export default () => {
       <AddCardsButtonWrapper>
         <Button type="primary" onClick={() => setIsDrawerVisible(true)}>
           <Icon type="plus" />
-          {'Add Cards'}
+          Add Cards
         </Button>
       </AddCardsButtonWrapper>
       <AddCardsDrawer onAddCards={onAddCards} isVisible={isDrawerVisible} setIsVisible={setIsDrawerVisible} />

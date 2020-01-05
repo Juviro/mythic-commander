@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb", "prettier"],
+  "extends": ["airbnb", "prettier/react", "prettier"],
   "plugins": ["prettier", "react", "jsx-a11y"],
   "parser": "babel-eslint",
   "rules": {
@@ -9,6 +9,9 @@
     "react/sort-comp": 0,
     "react/prop-types": 0,
     "no-nested-ternary": 0,
+    "camelcase": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/no-did-update-set-state": 0,
     "import/prefer-default-export": 0,
     "react/static-property-placement": 0,
     "react/no-array-index-key": 1

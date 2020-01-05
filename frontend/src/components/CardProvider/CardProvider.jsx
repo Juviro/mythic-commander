@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { getCardsFromCache } from './cardCache'
+import React, { useState } from 'react';
+import { getCardsFromCache } from './cardCache';
 
-const CardContext = React.createContext({})
+const CardContext = React.createContext({});
 
 // const getSettings = () => {
 //   const get = key => localStorage.getItem(key)
@@ -19,20 +19,20 @@ const CardContext = React.createContext({})
 // }
 
 export const CardContextProvider = ({ children }) => {
-  const [cardNames, setCardNames] = useState([])
+  const [cardNames, setCardNames] = useState([]);
   const value = {
     cardNames,
     // settings: getSettings(),
     // setSetting,
-  }
+  };
 
   const getCardNames = async () => {
-    const allCardNames = await getCardsFromCache()
-    setCardNames(allCardNames)
-  }
-  if (!cardNames.length) getCardNames()
+    const allCardNames = await getCardsFromCache();
+    setCardNames(allCardNames);
+  };
+  if (!cardNames.length) getCardNames();
 
-  return <CardContext.Provider value={value}>{children}</CardContext.Provider>
-}
+  return <CardContext.Provider value={value}>{children}</CardContext.Provider>;
+};
 
-export default CardContext
+export default CardContext;

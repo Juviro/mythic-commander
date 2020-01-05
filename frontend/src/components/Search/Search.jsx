@@ -1,6 +1,6 @@
 import React from 'react';
-import { getCards } from '../../network/mtgApi';
 import styled from 'styled-components';
+import { getCards } from '../../network/mtgApi';
 
 import Cards from '../Elements/CardView/ImageView';
 import Search from '../Elements/SearchField/SearchField';

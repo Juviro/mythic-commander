@@ -1,13 +1,13 @@
-import React from 'react'
-import { Menu, Icon } from 'antd'
-import styled from 'styled-components'
-import { Link } from 'react-router-dom'
-import UserAvatar from './UserAvatar'
+import React from 'react';
+import { Menu, Icon } from 'antd';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import UserAvatar from './UserAvatar';
 
 const StyledApp = styled.div`
   width: 100%;
   height: 100%;
-`
+`;
 
 const StyledMenu = styled.div`
   width: 100%;
@@ -15,7 +15,7 @@ const StyledMenu = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #e8e8e8;
-`
+`;
 
 const MENU_ENTRIES = [
   {
@@ -33,16 +33,16 @@ const MENU_ENTRIES = [
     href: '/decks',
     icon: 'appstore',
   },
-]
+];
 
 export default class MainMenu extends React.Component {
   render() {
     const {
       children,
       location: { pathname },
-    } = this.props
+    } = this.props;
 
-    if (pathname === '/login') return children
+    if (pathname === '/login') return children;
 
     return (
       <StyledApp>
@@ -61,6 +61,6 @@ export default class MainMenu extends React.Component {
         </StyledMenu>
         {children}
       </StyledApp>
-    )
+    );
   }
 }

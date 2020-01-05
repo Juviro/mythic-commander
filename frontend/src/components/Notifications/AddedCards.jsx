@@ -17,7 +17,7 @@ const NotificationBody = ({ names }) => {
   );
 };
 
-const NotificationHeader = ({ length }) => <span>Added {length} Cards</span>;
+const NotificationHeader = ({ length }) => <span>Added{length} Cards</span>;
 
 export default names => {
   notification.open({
