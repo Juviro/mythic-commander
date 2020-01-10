@@ -1,6 +1,10 @@
 import { ValidationError } from 'apollo-server-koa';
 
-import { populateCards } from '../../../cardApi/';
+import { populateCards, getCardsByName } from '../../../cardApi/';
+
+const DEFAULT_ZONE = 'MAINBOARD';
+
+const ON_DUPLICATE = ` ON CONFLICT ("deckId", "cardId") DO UPDATE SET zone='${DEFAULT_ZONE}'`;
 
 export default {
   Query: {
@@ -11,7 +15,7 @@ export default {
     deck: async (_, { id }, { user, db }) => {
       const [deck] = await db('decks').where({ userId: user.id, id });
       const cards = await db('cardToDeck').where({ deckId: deck.id });
-      return { ...deck, cards: populateCards(cards) };
+      return { ...deck, cards: populateCards(cards.map(({ cardId: id, ...rest }) => ({ id, ...rest }))) };
     },
   },
   Mutation: {
@@ -34,17 +38,23 @@ export default {
 
       return updatedDeck;
     },
-    addCardsToDeck: async (_, { cards, deckId }, { user, db }) => {
+    addCardsToDeck: async (_, { input: { cards: cardNames, deckId } }, { user, db }) => {
       const isAuthenticated = (await db('decks').where({ userId: user.id, id: deckId })).length;
       if (!isAuthenticated) throw new ValidationError('Deck not found');
 
-      const cardsToInsert = cards.map(({ cardId, zone }) => ({ deckId, cardId, zone }));
+      const cards = await getCardsByName(cardNames);
+
+      const cardsToInsert = cards.map(({ id: cardId }) => ({ deckId, cardId, zone: DEFAULT_ZONE }));
       const query = db('cardToDeck')
         .insert(cardsToInsert)
         .toString();
 
-      await db.raw(query.replace(/^insert/i, 'insert ignore'));
-      return cardsToInsert;
+      await db.raw(query + ON_DUPLICATE);
+
+      return {
+        cards: populateCards(cards.map(({ cardId: id, ...rest }) => ({ id, ...rest, zone: DEFAULT_ZONE }))),
+        deckId,
+      };
     },
   },
 };

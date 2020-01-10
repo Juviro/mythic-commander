@@ -14,11 +14,15 @@ export default `
     name: String!
     image_uris: ImageUris
     card_faces: [CardFace]
-    createdAt: String!
+    createdAt: String
     prices: Prices!
+    rarity: String
     legalities: Legalities!
     purchase_uris: PurchaseUris
     isFoil: Boolean
+    primaryTypes: [String]
+    subTypes: [String]
+    flipTypes: [String]
     
     zone: String!
   }
@@ -68,17 +72,12 @@ export default `
   }
 
   input AddCardsToDeckInputType {
-    cards: [AddCardsType!]!
+    cards: [String]!
     deckId: String!
   }
 
-  input AddCardsType {
-    id: String!
-    zone: String!
-  }
-
   type AddCardsToDeckReturnType {
-    cardIds: [CardsType!]!
+    cards: [CardsType!]!
     deckId: String!
   }
 `;

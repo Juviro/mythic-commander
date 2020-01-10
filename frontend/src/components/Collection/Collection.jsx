@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 import { getCollection } from '../../queries';
 
-import CardView from '../Elements/CardView/CardView';
+import ListView from './ListView';
 import Header from './Header';
 
 export default () => {
@@ -13,7 +13,7 @@ export default () => {
   return (
     <>
       <Header />
-      <CardView cards={cards} loading={loading} />
+      <ListView cards={cards} loading={loading} />
     </>
   );
 };

@@ -1,11 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Affix } from 'antd';
 import Card from '../../Card';
-import CardInfo from './CardInfo';
 
 const StyledCardPreview = styled.div`
-  width: 300px;
   display: flex;
   flex-direction: column;
 `;
@@ -28,21 +25,16 @@ const getCardInfo = card => {
     : [{ name, image: card.image_uris.normal }];
 };
 
-export default ({ highlightedCard, onHideCard }) => {
+export default ({ highlightedCard }) => {
   if (!highlightedCard) return <StyledCardPreview />;
 
   const cardInfos = getCardInfo(highlightedCard);
 
   return (
-    <Affix offsetTop={10}>
-      <StyledCardPreview onClick={onHideCard}>
-        <ImageWrapper>
-          {cardInfos.map(card => (
-            <Card key={card.image} {...card} size={cardInfos.length === 1 ? 'normal' : 'small'} />
-          ))}
-        </ImageWrapper>
-        <CardInfo card={highlightedCard} />
-      </StyledCardPreview>
-    </Affix>
+    <ImageWrapper>
+      {cardInfos.map(card => (
+        <Card key={card.image} {...card} size={cardInfos.length === 1 ? 'normal' : 'small'} />
+      ))}
+    </ImageWrapper>
   );
 };

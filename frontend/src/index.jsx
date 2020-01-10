@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
+import { QueryParamProvider } from 'use-query-params';
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -14,7 +15,9 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <CardContextProvider>
       <BrowserRouter>
-        <App />
+        <QueryParamProvider ReactRouterRoute={Route}>
+          <App />
+        </QueryParamProvider>
       </BrowserRouter>
     </CardContextProvider>
   </ApolloProvider>,

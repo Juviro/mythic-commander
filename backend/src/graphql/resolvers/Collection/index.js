@@ -1,4 +1,4 @@
-import { getCardsByNameScryfall, populateCards } from '../../../cardApi/';
+import { populateCards, getCardsByName } from '../../../cardApi/';
 
 const ON_DUPLICATE =
   ' ON CONFLICT (id, "isFoil", set, "userId") DO UPDATE SET amount = collection.amount + 1, "createdAt" = NOW()';
@@ -25,7 +25,7 @@ export default {
       return populateCards(cards);
     },
     addToCollectionByName: async (_, { cards: cardNames }, { user, db }) => {
-      const cards = await getCardsByNameScryfall(cardNames.map(({ name }) => name));
+      const cards = await getCardsByName(cardNames.map(({ name }) => name));
       const withoutDuplicates = cards.filter(({ id }, index) => index === cards.findIndex(card => card.id === id));
       const withUserId = withoutDuplicates.map(({ id, set }) => ({
         id,

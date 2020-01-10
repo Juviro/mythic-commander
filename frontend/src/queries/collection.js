@@ -6,6 +6,7 @@ export const CARD_FIELDS = `
   id
   set
   name
+  rarity
   createdAt
   image_uris {
     small

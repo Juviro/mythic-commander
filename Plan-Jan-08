@@ -1,0 +1,14 @@
+Next:
+
+* Add Columns: 
+    * options:
+        * type (ramp, removal, ...)
+        * commander?
+
+* Implement delete from deck
+* Add option to change amount of cards. (Allow for all cards, because shadowboard Apostle etc)
+
+...
+
+* Implement sidepanels
+* make table columns hidable?
