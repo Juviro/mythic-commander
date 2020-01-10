@@ -14,7 +14,9 @@
     "react/no-did-update-set-state": 0,
     "import/prefer-default-export": 0,
     "react/static-property-placement": 0,
-    "react/no-array-index-key": 1
+    "react/no-array-index-key": 1,
+    "jsx-a11y/accessible-emoji": 0,
+    "no-unused-vars": ["error", { "varsIgnorePattern": "^_" }]
   },
   "env": {
     "browser": true

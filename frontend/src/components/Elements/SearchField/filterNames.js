@@ -1,12 +1,25 @@
 const MAX_RESULTS = 30;
 
-export default (cardNames, searchString) => {
-  const trimName = str => str.replace(/[\W]/g, '').toLowerCase();
+const trimName = str => {
+  return str.replace(/[,';"().]/g, '').toLowerCase();
+};
 
+export const filterCards = (cards, searchString = '') => {
   const cleanSearch = trimName(searchString);
   const searchRegExp = new RegExp(cleanSearch.split('').join('.*'));
 
-  const foundCards = cardNames.filter(name => searchRegExp.test(trimName(name)));
+  return cards.filter(({ name }) => {
+    const cardParts = searchString.includes('/') ? [name] : name.split(' // ');
+    return cardParts.some(cardPart => searchRegExp.test(trimName(cardPart)));
+  });
+};
+
+export default (cardNames, searchString) => {
+  const cleanSearch = trimName(searchString);
+  const foundCards = filterCards(
+    cardNames.map(name => ({ name })),
+    searchString
+  ).map(({ name }) => name);
 
   const sortCards = (cardA, cardB) => {
     const cleanCardNameA = trimName(cardA);

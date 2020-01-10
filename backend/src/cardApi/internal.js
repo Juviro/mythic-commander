@@ -3,6 +3,13 @@ import db from '../database';
 const sortByName = (a, b) => (a.name > b.name ? 1 : -1);
 const sortById = (a, b) => (a.id > b.id ? 1 : -1);
 
+const addTypeline = ({ type_line, ...rest }) => {
+  const [mainTypes, flipTypes] = type_line.split(' // ');
+  const [primaryTypes, subTypes] = mainTypes.split(' — ').map(part => part.split(' '));
+
+  return { type_line, primaryTypes, subTypes, flipTypes: flipTypes && flipTypes.split(' '), ...rest };
+};
+
 export const populateCards = async cards => {
   const sortedCards = cards.sort(sortById);
   const ids = sortedCards.map(({ id }) => id);
@@ -11,10 +18,12 @@ export const populateCards = async cards => {
     .whereIn('id', ids)
     .orderBy('id', 'ASC');
 
-  const populatedCards = rawCards.map((card, index) => ({
-    ...card,
-    ...cards[index],
-  }));
+  const populatedCards = rawCards
+    .map((card, index) => ({
+      ...card,
+      ...cards[index],
+    }))
+    .map(addTypeline);
 
   return populatedCards.sort(sortByName);
 };

@@ -3,19 +3,19 @@ import { AutoComplete } from 'antd';
 import CardContext from '../../CardProvider/CardProvider';
 import filterNames from './filterNames';
 
-const renderOption = (searchString, option) => {
+const renderOption = (searchString, suggestion) => {
   let currentSearchString = searchString;
-  const highlightedOption = option.split('').map((char, index) => {
+  const highlightedSuggestion = suggestion.split('').map(char => {
     if (!currentSearchString.length || char.toLowerCase() !== currentSearchString[0].toLowerCase()) {
       return char;
     }
     currentSearchString = currentSearchString.substr(1);
-    return <b key={index}>{char}</b>;
+    return <b key={Math.random()}>{char}</b>;
   });
 
   return (
-    <AutoComplete.Option key={option} text={option}>
-      {highlightedOption}
+    <AutoComplete.Option key={suggestion} text={suggestion}>
+      {highlightedSuggestion}
     </AutoComplete.Option>
   );
 };
@@ -48,15 +48,16 @@ export default class SearchField extends React.Component {
     const { defaultActiveFirstOption } = this.props;
     const { searchString } = this.state;
     const { cardNames } = this.context;
-    const dataSource = filterNames(cardNames, searchString);
+    const suggestions = filterNames(cardNames, searchString);
+    const dataSource =
+      suggestions[0] === searchString ? suggestions : suggestions.map(option => renderOption(searchString, option));
 
     return (
       <AutoComplete
         autoFocus
-        backfill
         ref={this.inputRef}
         value={searchString}
-        dataSource={dataSource.map(option => renderOption(searchString, option))}
+        dataSource={dataSource}
         placeholder="Search for a card"
         defaultActiveFirstOption={defaultActiveFirstOption}
         onChange={val => this.setSearch(val)}

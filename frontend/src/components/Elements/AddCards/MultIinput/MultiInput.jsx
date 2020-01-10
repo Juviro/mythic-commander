@@ -37,7 +37,7 @@ export default class SearchField extends React.Component {
     value: '',
   };
 
-  contextType = CardContext;
+  static contextType = CardContext;
 
   componentDidUpdate(_, prevState) {
     // checks for rows that need to be updated

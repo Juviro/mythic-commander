@@ -1,8 +1,8 @@
 import { randomBytes } from 'crypto';
 import { OAuth2Client } from 'google-auth-library';
 
+const TOKEN_EXPIRATION = 365 * 24 * 60 * 60 * 1000;
 const CLIENT_ID = '985753697547-184gkcavnrc8f4flq1tdjra30amuchgo.apps.googleusercontent.com';
-const TOKEN_EXPIRATION = 24 * 60 * 60 * 1000;
 
 const client = new OAuth2Client(CLIENT_ID);
 

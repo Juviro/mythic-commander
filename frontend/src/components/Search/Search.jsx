@@ -9,8 +9,6 @@ const StyledSearch = styled.div`
   padding: 19px;
 `;
 
-// TODO: BUG
-// pasting "Daghatar the Adamant" into the search filed will fill the field with object object
 class App extends React.Component {
   state = { loading: false, cards: [] };
 

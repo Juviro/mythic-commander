@@ -7,6 +7,7 @@ export default `
     card_faces: [CardFace]
     createdAt: String!
     prices: Prices!
+    rarity: String
     legalities: Legalities!
     purchase_uris: PurchaseUris
     
