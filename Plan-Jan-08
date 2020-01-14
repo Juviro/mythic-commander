@@ -1,14 +1,32 @@
+* When adding cards to deck or collection by name, pick the cheapest card, consider prefering cards in new design
+
 Next:
+
+* ENABLE SHORTCUTS:
+    * cmd + f -> filter (+ focus field)
+    * cmd + n -> add (+ focus field)
+    * cmd + s -> stats
+    * cmd + o -> overview
+    * cmd + r -> resources
+    
+    * cmd + a -> select all
 
 * Add Columns: 
     * options:
         * type (ramp, removal, ...)
         * commander?
 
-* Implement delete from deck
+* Add options column to table:
+    * delete deck
+    * change set
+    * promote to copmmander (?)
+    
 * Add option to change amount of cards. (Allow for all cards, because shadowboard Apostle etc)
+* add to filter: rarity, type, cmc?, 
 
 ...
 
-* Implement sidepanels
+* When adding cards to deck or collection by name, pick the cheapest card, consider prefering cards in new design
 * make table columns hidable?
+* check commander identity, mark non-matching cards in table 
+* add check on server start: if cards empty, fetch them and display message to users

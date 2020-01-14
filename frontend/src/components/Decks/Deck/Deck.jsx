@@ -11,8 +11,8 @@ import DeckOverview from './DeckOverview';
 const StyledDeck = styled.div`
   display: flex;
   flex-direction: row;
-  height: calc(100% - 49px);
   justify-content: flex-start;
+  height: calc(100% - 49px);
 `;
 
 export default () => {
@@ -21,7 +21,7 @@ export default () => {
 
   return (
     <StyledDeck>
-      <LeftSidebar deckId={id} />
+      <LeftSidebar deck={data && data.deck} />
       <DeckOverview deck={data && data.deck} loading={loading} />
     </StyledDeck>
   );

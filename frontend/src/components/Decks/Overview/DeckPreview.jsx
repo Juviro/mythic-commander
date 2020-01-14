@@ -16,6 +16,7 @@ const ImageWrapper = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 80px;
+  display: block;
   box-shadow: 0 0 5px #8c8888;
 
   &:hover {
@@ -30,7 +31,6 @@ const ImageWrapper = styled.div`
 
 const StyledImage = styled.img`
   width: 100%;
-  height: 100%;
   transition: all 0.2s ease-out;
 
   &:hover {

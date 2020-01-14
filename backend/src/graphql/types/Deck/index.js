@@ -23,8 +23,11 @@ export default `
     primaryTypes: [String]
     subTypes: [String]
     flipTypes: [String]
+    colors: [String]
+    color_identity: [String]
     
     zone: String!
+    owned: Boolean
   }
 
   type PurchaseUris {
@@ -45,6 +48,7 @@ export default `
   }
 
   type CardFace {
+    colors: [String]
     name: String!
     image_uris: ImageUris
   }
@@ -52,6 +56,7 @@ export default `
   type ImageUris {
     normal: String
     small: String
+    art_crop: String
   }
 
   type Query {
@@ -61,12 +66,11 @@ export default `
 
   type Mutation {
     createDeck: Deck!
-    editDeck(input: EditDeckInput): Deck!
+    editDeck(deckId: String!, newProperties: EditDeckFieldsInput!): Deck!
     addCardsToDeck(input: AddCardsToDeckInputType): AddCardsToDeckReturnType
   }
-
-  input EditDeckInput {
-    deckId: String!
+  
+  input EditDeckFieldsInput {
     name: String
     imgSrc: String
   }

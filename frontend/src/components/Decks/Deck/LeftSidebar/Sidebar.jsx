@@ -1,49 +1,61 @@
 import React from 'react';
 import { Collapse, Icon } from 'antd';
+
 import AddCards from './AddCards';
 import Filter from '../../../Elements/Filter';
+import FilterHeader from './FilterHeader';
+import DeckProfile from './DeckProfile';
 
 const { Panel } = Collapse;
 
-export default ({ deckId }) => {
+export default ({ deck }) => {
+  if (!deck) return null;
   const panels = [
     {
-      title: 'Search',
-      icon: 'search',
+      header: 'Overview',
+      icon: 'home',
+      component: <DeckProfile deck={deck} />,
+    },
+    {
+      key: 'filter',
+      header: <FilterHeader />,
       component: <Filter />,
     },
     {
-      title: 'Add Cards',
+      header: 'Add Cards',
       icon: 'plus',
-      component: <AddCards deckId={deckId} />,
+      component: <AddCards deckId={deck.id} />,
     },
     {
-      title: 'Stats',
+      header: 'Stats',
       icon: 'line-chart',
       component: <div>Money, Amount, cmc stats, cards per type : (Owned, Unowned, Total) </div>,
     },
     {
-      title: 'Settings',
-      icon: 'setting',
-      component: <div>Set the commander and deck image here</div>,
-    },
-    {
-      title: 'Resource Overview',
+      header: 'Resource Overview',
       icon: 'unordered-list',
       component: <div>Number or ramp, carddraw, removal etc</div>,
     },
+    {
+      header: 'Actions',
+      icon: 'ellipsis',
+      component: <div>Add deck to Collection; Delete Deck; </div>,
+    },
   ];
   return (
-    <Collapse
-      bordered={false}
-      defaultActiveKey={panels[0].title}
-      style={{ width: 300, fontSize: '14px', fontWeight: 900 }}
-    >
-      {panels.map(({ title, component, icon }) => (
-        <Panel header={title} key={title} extra={<Icon type={icon} />}>
-          {component}
-        </Panel>
-      ))}
-    </Collapse>
+    <div style={{ width: 300 }}>
+      <Collapse
+        bordered={false}
+        defaultActiveKey={panels[0].icon}
+        // defaultActiveKey={panels.map(panel => panel.icon || panel.key)}
+        style={{ width: 300, fontSize: '14px', fontWeight: 900 }}
+      >
+        {panels.map(({ header, component, icon, key }) => (
+          <Panel header={header} key={icon || key} extra={icon && <Icon type={icon} />}>
+            {component}
+          </Panel>
+        ))}
+      </Collapse>
+    </div>
   );
 };

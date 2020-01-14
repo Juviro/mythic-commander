@@ -11,13 +11,16 @@ export const CARD_FIELDS = `
   image_uris {
     small
     normal
+    art_crop
   }
   card_faces {
     name
     image_uris {
       small
       normal
+      art_crop
     }
+    colors
   }
   prices {
     eur
@@ -66,6 +69,7 @@ export const addToCollectionHelper = {
       image_uris: {
         normal: '',
         small: '',
+        art_crop: null,
         __typename: 'ImageUris',
       },
       legalities: {
@@ -81,6 +85,7 @@ export const addToCollectionHelper = {
         __typename: 'prices',
       },
       card_faces: null,
+      rarity: null,
       isFoil: false,
     })),
   }),

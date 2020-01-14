@@ -40,8 +40,14 @@ const StyledCommanderTag = styled.span`
 const CardPreview = ({ card }) => {
   const { images } = card;
 
+  const onDragStart = e => {
+    const imgSrc = (card.card_faces ? card.card_faces[0] : card).image_uris.art_crop;
+    e.dataTransfer.setData('imgSrc', imgSrc);
+    e.dataTransfer.effectAllowed = 'copyMove';
+  };
+
   return (
-    <StyledImageWrapper>
+    <StyledImageWrapper draggable onDragStart={onDragStart}>
       {images.map((image, index) => (
         <Popover
           placement="right"

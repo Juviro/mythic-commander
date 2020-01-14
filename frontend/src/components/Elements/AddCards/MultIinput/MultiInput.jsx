@@ -23,10 +23,10 @@ Forest
 Ignore line with //
 `;
 
-const getIconStyles = name => ({
-  type: name ? 'check-circle' : 'exclamation-circle',
+const getIconStyles = isValid => ({
+  type: isValid ? 'check-circle' : 'exclamation-circle',
   style: {
-    color: name ? 'green' : 'red',
+    color: isValid ? 'green' : 'red',
   },
 });
 

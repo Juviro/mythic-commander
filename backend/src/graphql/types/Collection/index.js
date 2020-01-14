@@ -34,6 +34,7 @@ export default `
   type CardFace {
     name: String!
     image_uris: ImageUris
+    colors: [String]
   }
 
   type ImageUris {
