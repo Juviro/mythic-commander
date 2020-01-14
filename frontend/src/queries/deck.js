@@ -7,6 +7,9 @@ const DECK_CARD_FIELDS = `
   subTypes
   flipTypes
   zone
+  owned
+  colors
+  color_identity
 `;
 
 const DECK_FIELDS = `
@@ -39,6 +42,14 @@ export const getDeck = gql`
 export const createDeck = gql`
   mutation createDeck {
     createDeck {
+        ${DECK_FIELDS}
+    }
+  }
+`;
+
+export const editDeck = gql`
+  mutation editDeck($deckId: String!, $newProperties: EditDeckFieldsInput!) {
+    editDeck(deckId: $deckId, newProperties: $newProperties) {
         ${DECK_FIELDS}
     }
   }
@@ -92,6 +103,7 @@ export const addToDeckHelper = {
         image_uris: {
           normal: '',
           small: '',
+          art_crop: '',
           __typename: 'ImageUris',
         },
         legalities: {
@@ -113,6 +125,9 @@ export const addToDeckHelper = {
         subTypes: null,
         flipTypes: null,
         zone: null,
+        owned: 'true',
+        colors: null,
+        color_identity: null,
       })),
       __typename: 'Deck',
     },

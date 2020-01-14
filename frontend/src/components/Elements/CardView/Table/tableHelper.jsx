@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from 'antd';
 
 import TablePreview from './RowElements/TablePreview';
 import Actions from './RowElements/Actions';
@@ -41,6 +42,9 @@ const sortByRarity = (a, b) => {
   return raritySorting.indexOf(b.rarity) - raritySorting.indexOf(a.rarity);
 };
 
+const sortByOwned = (a, b) => {
+  return b.owned ? 1 : a.owned ? -1 : 0;
+};
 const getPrice = price => (price.usd || price.usd_foil ? dollarToFormattedEuro(price.usd || price.usd_foil) : '-');
 
 export const getColumns = (type, displayedColumns) => {
@@ -83,6 +87,19 @@ export const getColumns = (type, displayedColumns) => {
       sorter: sortByPrice,
       width: 80,
       render: getPrice,
+    },
+    {
+      title: 'Owned',
+      dataIndex: 'owned',
+      key: 'owned',
+      sorter: sortByOwned,
+      width: 80,
+      render: owned =>
+        owned ? (
+          <Icon type="check-circle" style={{ color: 'green' }} />
+        ) : (
+          <Icon type="exclamation-circle" style={{ color: 'red' }} />
+        ),
     },
     {
       title: 'Actions',

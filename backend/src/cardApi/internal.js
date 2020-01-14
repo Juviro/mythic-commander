@@ -3,13 +3,22 @@ import db from '../database';
 const sortByName = (a, b) => (a.name > b.name ? 1 : -1);
 const sortById = (a, b) => (a.id > b.id ? 1 : -1);
 
-const addTypeline = ({ type_line, ...rest }) => {
+export const addAdditionalProperties = ({ type_line, owned, ...rest }) => {
   const [mainTypes, flipTypes] = type_line.split(' // ');
   const [primaryTypes, subTypes] = mainTypes.split(' — ').map(part => part.split(' '));
+  const showAsOwned = Boolean(owned || primaryTypes.includes('Basic'));
 
-  return { type_line, primaryTypes, subTypes, flipTypes: flipTypes && flipTypes.split(' '), ...rest };
+  return {
+    type_line,
+    primaryTypes,
+    subTypes,
+    flipTypes: flipTypes && flipTypes.split(' '),
+    owned: showAsOwned,
+    ...rest,
+  };
 };
 
+// TODO try to deprecate this
 export const populateCards = async cards => {
   const sortedCards = cards.sort(sortById);
   const ids = sortedCards.map(({ id }) => id);
@@ -23,7 +32,7 @@ export const populateCards = async cards => {
       ...card,
       ...cards[index],
     }))
-    .map(addTypeline);
+    .map(addAdditionalProperties);
 
   return populatedCards.sort(sortByName);
 };

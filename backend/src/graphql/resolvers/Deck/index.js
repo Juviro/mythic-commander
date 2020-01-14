@@ -1,10 +1,26 @@
 import { ValidationError } from 'apollo-server-koa';
 
-import { populateCards, getCardsByName } from '../../../cardApi/';
+import { getCardsByName } from '../../../cardApi/';
+import { addAdditionalProperties } from '../../../cardApi/internal';
 
 const DEFAULT_ZONE = 'MAINBOARD';
 
-const ON_DUPLICATE = ` ON CONFLICT ("deckId", "cardId") DO UPDATE SET zone='${DEFAULT_ZONE}'`;
+const ON_DUPLICATE = ` ON CONFLICT ("deckId", "oracle_id") DO UPDATE SET "cardId"=EXCLUDED."cardId"`;
+
+const getPopulatedCards = async (db, deckId) => {
+  const { rows: populatedCards } = await db.raw(
+    `
+  SELECT "cardToDeck".zone, cards.*, CASE WHEN owned.oracle_id IS NULL THEN NULL ELSE 1 END AS owned
+    FROM "cardToDeck" 
+  LEFT JOIN cards 
+    ON "cardToDeck"."cardId" = cards.id 
+  LEFT JOIN (SELECT DISTINCT oracle_id FROM collection LEFT JOIN cards ON collection.id = cards.id) owned
+    ON cards.oracle_id = owned.oracle_id
+  WHERE "deckId" = ?`,
+    deckId
+  );
+  return populatedCards.map(addAdditionalProperties);
+};
 
 export default {
   Query: {
@@ -14,8 +30,9 @@ export default {
     },
     deck: async (_, { id }, { user, db }) => {
       const [deck] = await db('decks').where({ userId: user.id, id });
-      const cards = await db('cardToDeck').where({ deckId: deck.id });
-      return { ...deck, cards: populateCards(cards.map(({ cardId: id, ...rest }) => ({ id, ...rest }))) };
+      const populatedCards = await getPopulatedCards(db, deck.id);
+
+      return { ...deck, cards: populatedCards };
     },
   },
   Mutation: {
@@ -26,17 +43,18 @@ export default {
       const [deck] = await db('decks').where({ id: deckId });
       return deck;
     },
-    editDeck: async (_, { imgSrc, name, deckId }, { user, db }) => {
+    editDeck: async (_, { newProperties: { imgSrc, name }, deckId }, { user, db }) => {
       await db('decks')
         .where({ userId: user.id, id: deckId })
         .update({
-          imgSrc: imgSrc || undefined,
-          name: name || undefined,
+          imgSrc,
+          name,
           lastEdit: new Date(),
         });
       const [updatedDeck] = await db('decks').where({ id: deckId });
+      const populatedCards = await getPopulatedCards(db, deckId);
 
-      return updatedDeck;
+      return { ...updatedDeck, cards: populatedCards };
     },
     addCardsToDeck: async (_, { input: { cards: cardNames, deckId } }, { user, db }) => {
       const isAuthenticated = (await db('decks').where({ userId: user.id, id: deckId })).length;
@@ -44,15 +62,22 @@ export default {
 
       const cards = await getCardsByName(cardNames);
 
-      const cardsToInsert = cards.map(({ id: cardId }) => ({ deckId, cardId, zone: DEFAULT_ZONE }));
+      const cardsToInsert = cards.map(({ id: cardId, oracle_id }) => ({
+        deckId,
+        cardId,
+        oracle_id,
+        zone: DEFAULT_ZONE,
+      }));
       const query = db('cardToDeck')
         .insert(cardsToInsert)
         .toString();
 
       await db.raw(query + ON_DUPLICATE);
 
+      const populatedCards = await getPopulatedCards(db, deckId);
+
       return {
-        cards: populateCards(cards.map(({ cardId: id, ...rest }) => ({ id, ...rest, zone: DEFAULT_ZONE }))),
+        cards: populatedCards,
         deckId,
       };
     },

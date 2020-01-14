@@ -1,3 +1,3 @@
-import Overview from './DeckOverview/Overview';
+import Overview from './Overview/Overview';
 
 export default Overview;

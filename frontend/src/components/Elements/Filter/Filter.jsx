@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Input } from 'antd';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
 import { StringParam, useQueryParams } from 'use-query-params';
 
+import ColorSelection from './ColorSelection';
+
 const FilterWrapper = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;
@@ -12,27 +15,23 @@ const FilterWrapper = styled.div`
 const Filter = () => {
   const [filter, setFilter] = useQueryParams({
     search: StringParam,
+    colors: StringParam,
   });
 
-  const [state, setState] = useState({
-    ...filter,
-  });
-
-  const onChange = key => e => {
-    const { value } = e.target;
-    setState({ ...state, [key]: value });
+  const onChange = key => value => {
     setFilter({ [key]: value });
   };
 
   return (
     <FilterWrapper>
       <Input.Search
-        value={state.search}
+        value={filter.search}
         autoFocus
         placeholder="Filter by name"
-        onChange={onChange('search')}
+        onChange={e => onChange('search')(e.target.value)}
         style={{ width: 250 }}
       />
+      <ColorSelection onSetColors={onChange('colors')} selectedColors={filter.colors} />
     </FilterWrapper>
   );
 };
