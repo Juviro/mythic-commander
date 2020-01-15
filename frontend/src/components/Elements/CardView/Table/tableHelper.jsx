@@ -1,24 +1,31 @@
 import React from 'react';
-import { Icon } from 'antd';
 
 import TablePreview from './RowElements/TablePreview';
-import Actions from './RowElements/Actions';
 import TypeTags from './RowElements/TypeTags';
 import Rarity from './RowElements/Rarity';
+import Owned from './RowElements/Owned';
 
 const TYPE_SORTING_INNER = ['Land', 'Creature', 'Enchantment', 'Artifact', 'Instant', 'Sorcery', 'Planeswalker'];
 const TYPE_SORTING_OUTER = ['Creature', 'Enchantment', 'Artifact', 'Instant', 'Sorcery', 'Planeswalker', 'Land'];
 
-const sortByName = (a, b) => (a.name < b.name ? 1 : -1);
-const sortByDate = (a, b) => Number(a.createdAt) - Number(b.createdAt);
-const sortByPrice = (a, b) => Number(a.prices.usd || a.prices.usd_foil) - Number(b.prices.usd || b.prices.usd_foil);
-const dollarToFormattedEuro = dollar =>
-  (Number(dollar) * 0.9).toLocaleString('de-DE', {
-    style: 'currency',
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 2,
-    currency: 'EUR',
-  });
+const sortByName = (a, b) => (a.name > b.name ? 1 : -1);
+const sortByDate = (a, b) => Number(b.createdAt) - Number(a.createdAt);
+
+const getEuroPrice = ({ eur, usd, usd_foil }) => Number(eur) || Number(usd || usd_foil) * 0.9;
+const sortByPrice = (a, b) => getEuroPrice(a.prices) - getEuroPrice(b.prices);
+
+const getPriceLabel = price => {
+  const formatPrice = amount =>
+    Number(amount).toLocaleString('de-DE', {
+      style: 'currency',
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2,
+      currency: 'EUR',
+    });
+
+  const amountInEuro = getEuroPrice(price);
+  return amountInEuro ? formatPrice(amountInEuro) : '-';
+};
 
 const sortAndFilterCardTypes = types =>
   types
@@ -26,11 +33,11 @@ const sortAndFilterCardTypes = types =>
     .filter(type => TYPE_SORTING_OUTER.includes(type));
 
 const sortByTypeAndCommander = (a, b) => {
-  if (a.zone === 'COMMANDER') return 1;
-  if (b.zone === 'COMMANDER') return -1;
+  if (a.zone === 'COMMANDER') return -1;
+  if (b.zone === 'COMMANDER') return 1;
 
   const findIndex = primaryTypes => TYPE_SORTING_OUTER.findIndex(type => primaryTypes[0] === type);
-  const indexDifference = findIndex(b.primaryTypes) - findIndex(a.primaryTypes);
+  const indexDifference = findIndex(a.primaryTypes) - findIndex(b.primaryTypes);
 
   return !indexDifference && (a.primaryTypes.length || b.primaryTypes.length)
     ? sortByTypeAndCommander({ primaryTypes: a.primaryTypes.slice(1) }, { primaryTypes: b.primaryTypes.slice(1) })
@@ -45,9 +52,8 @@ const sortByRarity = (a, b) => {
 const sortByOwned = (a, b) => {
   return b.owned ? 1 : a.owned ? -1 : 0;
 };
-const getPrice = price => (price.usd || price.usd_foil ? dollarToFormattedEuro(price.usd || price.usd_foil) : '-');
 
-export const getColumns = (type, displayedColumns) => {
+export const getColumns = (displayedColumns, Actions) => {
   const allColumns = [
     {
       title: 'Type',
@@ -60,7 +66,7 @@ export const getColumns = (type, displayedColumns) => {
       title: 'Rarity',
       key: 'rarity',
       dataIndex: 'rarity',
-      width: 60,
+      width: 75,
       sorter: sortByRarity,
       render: rarity => <Rarity rarity={rarity} />,
     },
@@ -86,45 +92,38 @@ export const getColumns = (type, displayedColumns) => {
       key: 'prices',
       sorter: sortByPrice,
       width: 80,
-      render: getPrice,
+      render: getPriceLabel,
     },
     {
       title: 'Owned',
       dataIndex: 'owned',
       key: 'owned',
       sorter: sortByOwned,
-      width: 80,
-      render: owned =>
-        owned ? (
-          <Icon type="check-circle" style={{ color: 'green' }} />
-        ) : (
-          <Icon type="exclamation-circle" style={{ color: 'red' }} />
-        ),
+      width: 85,
+      render: owned => <Owned owned={owned} />,
     },
     {
       title: 'Actions',
       key: 'actions',
       width: 100,
-      render: (_, card) => <Actions card={card} type={type} />,
+      render: card => <Actions card={card} />,
     },
   ];
 
-  return allColumns.filter(({ key, displayDefault }) => displayDefault || displayedColumns.includes(key));
+  return allColumns.filter(({ key, displayDefault }) =>
+    key === 'actions' ? Boolean(Actions) : displayDefault || displayedColumns.includes(key)
+  );
 };
 
 export const getSortedCards = (cards, type) => {
-  return (
-    cards
-      .map(card => {
-        const images = card.image_uris ? [card.image_uris] : card.card_faces.map(({ image_uris }) => image_uris);
-        const primaryTypes = sortAndFilterCardTypes(card.primaryTypes || []);
-        const isBasicLand = card.primaryTypes && card.primaryTypes.includes('Basic');
-        const rarity = isBasicLand ? 'land' : card.rarity;
-        return { ...card, key: card.id, images, primaryTypes, rarity };
-      })
-      .sort(sortByName)
-      .sort(type === 'deck' ? sortByTypeAndCommander : sortByDate)
-      // TODO remove this reverse() as it will screw with the collection
-      .reverse()
-  );
+  return cards
+    .map(card => {
+      const images = card.image_uris ? [card.image_uris] : card.card_faces.map(({ image_uris }) => image_uris);
+      const primaryTypes = sortAndFilterCardTypes(card.primaryTypes || []);
+      const isBasicLand = card.primaryTypes && card.primaryTypes.includes('Basic');
+      const rarity = isBasicLand ? 'land' : card.rarity;
+      return { ...card, key: card.id, images, primaryTypes, rarity };
+    })
+    .sort(sortByName)
+    .sort(type === 'deck' ? sortByTypeAndCommander : sortByDate);
 };
