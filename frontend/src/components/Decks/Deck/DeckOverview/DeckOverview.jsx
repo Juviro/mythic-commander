@@ -5,9 +5,9 @@ import { StringParam, useQueryParams } from 'use-query-params';
 import Table from '../../../Elements/CardView/Table';
 import FullscreenSpinner from '../../../Elements/Spinner/FullscreenSpinner';
 import { filterCards } from './cardFilter';
+import Actions from './Actions';
 
 const OverviewWrapper = styled.div`
-  width: calc(100% - 300px);
   max-height: 100%;
   overflow-y: auto;
   display: flex;
@@ -21,7 +21,6 @@ export default ({ deck, loading }) => {
   });
   if (loading || !deck.cards) return <FullscreenSpinner />;
 
-  console.log('TCL: deck.cards', deck.cards);
   const commander = deck.cards.find(({ zone }) => zone === 'COMMANDER');
   const filteredCards = filterCards(deck.cards, filter);
 
@@ -30,6 +29,7 @@ export default ({ deck, loading }) => {
       <Table
         cards={filteredCards}
         commander={commander}
+        Actions={Actions}
         displayedColumns={['types', 'prices', 'images', 'rarity', 'owned']}
         type="deck"
         noPagination

@@ -1,7 +1,7 @@
 const MAX_RESULTS = 30;
 
 const trimName = str => {
-  return str.replace(/[,';"().]/g, '').toLowerCase();
+  return str.replace(/[,';"().\s]+/g, '').toLowerCase();
 };
 
 export const filterCards = (cards, searchString = '') => {
@@ -38,7 +38,11 @@ export default (cardNames, searchString) => {
       ? -1
       : cleanCardNameB.indexOf(cleanSearch) > 0
       ? 1
-      : cleanCardNameA > cleanCardNameB
+      : cleanCardNameA[0] === cleanSearch[0]
+      ? -1
+      : cleanCardNameB[0] === cleanSearch[0]
+      ? 1
+      : cleanCardNameA < cleanCardNameB
       ? -1
       : 1;
   };

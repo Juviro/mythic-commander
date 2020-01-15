@@ -1,6 +1,9 @@
-* When adding cards to deck or collection by name, pick the cheapest card, consider prefering cards in new design
+* Add actions column to table:
+    * delete deck
+    * change set
+    * promote to copmmander or remove as commander. Multiple or no commanders can exists at once
 
-Next:
+* Move price calculation to backend to easily reuse it across components
 
 * ENABLE SHORTCUTS:
     * cmd + f -> filter (+ focus field)
@@ -15,11 +18,6 @@ Next:
     * options:
         * type (ramp, removal, ...)
         * commander?
-
-* Add options column to table:
-    * delete deck
-    * change set
-    * promote to copmmander (?)
     
 * Add option to change amount of cards. (Allow for all cards, because shadowboard Apostle etc)
 * add to filter: rarity, type, cmc?, 
@@ -28,5 +26,8 @@ Next:
 
 * When adding cards to deck or collection by name, pick the cheapest card, consider prefering cards in new design
 * make table columns hidable?
-* check commander identity, mark non-matching cards in table 
-* add check on server start: if cards empty, fetch them and display message to users
+* add check on server start: if cards empty, fetch them and display message to users on console
+* on click on notOwned indicator in deck overview -> add option to add to collection
+
+* add support for multiple commanders to commander color identity etc (low prio)
+* Add loading spinner for deck image change

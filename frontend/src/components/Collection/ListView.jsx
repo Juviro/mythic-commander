@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import Actions from './Actions';
 import Sidebar from './Sidebar/Sidebar';
 import Table from '../Elements/CardView/Table/Table';
 import { deleteFromCollection } from '../../queries';
@@ -19,11 +20,13 @@ export default ({ cards, loading = false }) => {
         onHideCard={() => setHighlightedCard(null)}
       />
       <Table
+        type="collection"
         cards={cards}
         loading={loading}
+        Actions={Actions}
         setHighlightedCard={setHighlightedCard}
         deleteMutation={deleteFromCollection}
-        displayedColumns={['actions', 'prices', 'images']}
+        displayedColumns={['prices', 'images']}
       />
     </ListViewWrapper>
   );

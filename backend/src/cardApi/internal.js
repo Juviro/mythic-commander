@@ -37,13 +37,17 @@ export const populateCards = async cards => {
   return populatedCards.sort(sortByName);
 };
 
-// finds for each cardname in *names* the latest card
+// finds for each cardname in *names* the cheapest card
 export const getCardsByName = async names => {
-  const cards = await db('cards')
+  const query = db('cards')
     .whereIn('name', names)
-    .orderBy('oracle_id');
+    .toString();
+  const orderClause = ` ORDER BY oracle_id, (prices->>'eur')::float`;
+  const { rows: cards } = await db.raw(query + orderClause);
+
   const filteredCards = cards.filter(
-    (card, index) => !cards[index + 1] || card.oracle_id !== cards[index + 1].oracle_id
+    (card, index) => !cards[index - 1] || card.oracle_id !== cards[index - 1].oracle_id
   );
+
   return filteredCards;
 };

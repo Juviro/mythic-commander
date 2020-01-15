@@ -147,7 +147,6 @@ export const addToDeckHelper = {
         if (cardIndex > -1) {
           const duplicateCard = newData.deck.cards[cardIndex];
           newData.deck.cards.splice(cardIndex, 1);
-          // TODO increase amount if used
           newData.deck.cards.push({ ...duplicateCard, createdAt: new Date() });
         } else {
           newData.deck.cards.push(card);
