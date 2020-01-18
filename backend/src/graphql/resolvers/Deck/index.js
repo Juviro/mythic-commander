@@ -1,4 +1,5 @@
 import { ValidationError } from 'apollo-server-koa';
+import { pick } from 'lodash';
 
 import { getCardsByName } from '../../../cardApi/';
 import { addAdditionalProperties } from '../../../cardApi/internal';
@@ -10,10 +11,12 @@ const ON_DUPLICATE = ` ON CONFLICT ("deckId", "oracle_id") DO UPDATE SET "cardId
 const getPopulatedCards = async (db, deckId) => {
   const { rows: populatedCards } = await db.raw(
     `
-  SELECT "cardToDeck".zone, cards.*, CASE WHEN owned.oracle_id IS NULL THEN NULL ELSE 1 END AS owned
+  SELECT "cardToDeck".zone, cards.*, "cardsBySet".all_sets, CASE WHEN owned.oracle_id IS NULL THEN NULL ELSE 1 END AS owned
     FROM "cardToDeck" 
   LEFT JOIN cards 
     ON "cardToDeck"."cardId" = cards.id 
+  LEFT JOIN "cardsBySet" 
+    ON "cardToDeck"."oracle_id" = "cardsBySet".oracle_id 
   LEFT JOIN (SELECT DISTINCT oracle_id FROM collection LEFT JOIN cards ON collection.id = cards.id) owned
     ON cards.oracle_id = owned.oracle_id
   WHERE "deckId" = ?`,
@@ -58,7 +61,7 @@ export default {
     },
     addCardsToDeck: async (_, { input: { cards: cardNames, deckId } }, { user, db }) => {
       const isAuthenticated = (await db('decks').where({ userId: user.id, id: deckId })).length;
-      if (!isAuthenticated) throw new ValidationError('Deck not found');
+      if (!isAuthenticated) throw new ValidationError('Not authenticated');
 
       const cards = await getCardsByName(cardNames);
 
@@ -75,11 +78,71 @@ export default {
       await db.raw(query + ON_DUPLICATE);
 
       const populatedCards = await getPopulatedCards(db, deckId);
+      const [deck] = await db('decks').where({ id: deckId });
 
       return {
+        ...deck,
         cards: populatedCards,
-        deckId,
       };
+    },
+    editDeckCard: async (_, { cardOracleId, deckId, newProps }, { user, db }) => {
+      // TODO: create authentication method to unify errors
+      const isAuthenticated = (await db('decks').where({ userId: user.id, id: deckId })).length;
+      if (!isAuthenticated) throw new ValidationError('Not authenticated');
+
+      const updatedProps = pick(newProps, ['zone', 'amount']);
+      if (newProps.set) {
+        const [{ id }] = await db('cards')
+          .where({ oracle_id: cardOracleId, set: newProps.set })
+          .select('id');
+        updatedProps.cardId = id;
+      }
+
+      if (Object.prototype.hasOwnProperty.call(newProps, 'owned')) {
+        const { owned } = newProps;
+        const [deckCard] = await db('cardToDeck').where({ deckId, oracle_id: cardOracleId });
+        if (!owned) {
+          await db('collection')
+            .where({ id: deckCard.cardId })
+            .del();
+        } else {
+          const [{ set }] = await db('cards')
+            .where({ id: deckCard.cardId })
+            .select('set');
+          await db('collection').insert({
+            id: deckCard.cardId,
+            isFoil: false,
+            set,
+            userId: user.id,
+            amount: 1,
+          });
+        }
+      }
+
+      if (Object.keys(updatedProps).length) {
+        await db('cardToDeck')
+          .where({ oracle_id: cardOracleId, deckId })
+          .update(updatedProps);
+      }
+
+      const [deck] = await db('decks').where({ userId: user.id, id: deckId });
+      const populatedCards = await getPopulatedCards(db, deck.id);
+
+      return { ...deck, cards: populatedCards };
+    },
+    deleteFromDeck: async (_, { cardId, deckId }, { user, db }) => {
+      // TODO: create authentication method to unify errors
+      const isAuthenticated = (await db('decks').where({ userId: user.id, id: deckId })).length;
+      if (!isAuthenticated) throw new ValidationError('Not authenticated');
+
+      await db('cardToDeck')
+        .where({ cardId, deckId })
+        .del();
+
+      const [deck] = await db('decks').where({ userId: user.id, id: deckId });
+      const populatedCards = await getPopulatedCards(db, deck.id);
+
+      return { ...deck, cards: populatedCards };
     },
   },
 };

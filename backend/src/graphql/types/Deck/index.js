@@ -10,6 +10,7 @@ export default `
 
   type CardsType {
     id: String!
+    oracle_id: String!
     set: String!
     name: String!
     image_uris: ImageUris
@@ -25,6 +26,8 @@ export default `
     flipTypes: [String]
     colors: [String]
     color_identity: [String]
+    all_sets: [String!]
+    amount: Int
     
     zone: String!
     owned: Boolean
@@ -67,7 +70,16 @@ export default `
   type Mutation {
     createDeck: Deck!
     editDeck(deckId: String!, newProperties: EditDeckFieldsInput!): Deck!
-    addCardsToDeck(input: AddCardsToDeckInputType): AddCardsToDeckReturnType
+    addCardsToDeck(input: AddCardsToDeckInputType): Deck!
+    editDeckCard(cardOracleId: String!, deckId: String!, newProps: EditCardsPropsInput!): Deck!
+    deleteFromDeck(cardId: String!, deckId: String!): Deck!
+  }
+
+  input EditCardsPropsInput {
+    set: String
+    zone: String
+    amount: Int
+    owned: Boolean
   }
   
   input EditDeckFieldsInput {
@@ -77,11 +89,6 @@ export default `
 
   input AddCardsToDeckInputType {
     cards: [String]!
-    deckId: String!
-  }
-
-  type AddCardsToDeckReturnType {
-    cards: [CardsType!]!
     deckId: String!
   }
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
 import AddCards from '../../../Elements/AddCards';
-import { addCardsToDeck, addToDeckHelper } from '../../../../queries/deck';
+import { addCardsToDeck } from '../../../../queries/deck';
 
 export default ({ deckId }) => {
   const [mutate] = useMutation(addCardsToDeck);
@@ -12,8 +12,6 @@ export default ({ deckId }) => {
         deckId,
         cards,
       },
-      optimisticResponse: addToDeckHelper.optimisticResponse(cards, deckId),
-      update: addToDeckHelper.update,
     });
   };
   return <AddCards onAddCards={onAddCards} />;

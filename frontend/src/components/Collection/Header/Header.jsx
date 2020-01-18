@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Button, Icon } from 'antd';
 import { useMutation } from 'react-apollo';
 import { Drawer as AddCardsDrawer } from '../../Elements/AddCards';
-import { addToCollectionByName, addToCollectionHelper, deleteFromCollection } from '../../../queries';
+import { addToCollectionByName } from '../../../queries';
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -19,24 +19,13 @@ const AddCardsButtonWrapper = styled.div`
   align-items: center;
 `;
 
-const addCards = (mutate, cards, undoAdd) => {
-  mutate({
-    variables: { cards },
-    optimisticResponse: addToCollectionHelper.optimisticResponse(cards),
-    update: addToCollectionHelper.update(undoAdd),
-  });
-};
-
 export default () => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [mutate] = useMutation(addToCollectionByName);
-  const [undoAdd] = useMutation(deleteFromCollection);
   const onAddCards = cardNames => {
-    addCards(
-      mutate,
-      cardNames.map(name => ({ name })),
-      undoAdd
-    );
+    mutate({
+      variables: { cards: cardNames.map(name => ({ name })) },
+    });
   };
 
   return (

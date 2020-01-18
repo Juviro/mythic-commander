@@ -1,4 +1,4 @@
-import { Cards, Catalog } from 'scryfall-sdk';
+import { Catalog, Cards, Sets } from 'scryfall-sdk';
 
 const MAX_CARDS = 60;
 
@@ -22,4 +22,18 @@ export const getCards = async search => {
 };
 export const getAllCardNames = () => {
   return Catalog.cardNames();
+};
+
+export const getAllSets = async () => {
+  const sets = await Sets.all();
+
+  return sets.reduce((acc, { code, name, icon_svg_uri }) => {
+    return {
+      ...acc,
+      [code]: {
+        name,
+        icon_svg_uri,
+      },
+    };
+  }, {});
 };

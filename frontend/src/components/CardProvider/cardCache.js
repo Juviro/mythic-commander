@@ -1,6 +1,8 @@
-import { getAllCardNames } from '../../network/mtgApi';
+import { getAllCardNames, getAllSets } from '../../network/mtgApi';
 
-// Special cases for the two cards named
+const REFRESH_PERIOD = 24 * 60 * 60 * 1000;
+
+// Special cases for the three cards named
 // "Our Market Research Shows That Players Like Really Long Card Names So We Made this Card to Have the Absolute Longest Card Name Ever Elemental"
 // and
 // "The Ultimate Nightmare of Wizards of the Coast® Customer Service"
@@ -16,20 +18,34 @@ const filterProblematicCards = cardName => {
   return !tooLong && !crashesDb;
 };
 
-export const getCardsFromCache = async () => {
-  const lastUpdate = localStorage.getItem('lastUpdate');
-  const shouldUpdate = true || !lastUpdate || Date.now() - lastUpdate > 24 * 60 * 60 * 1000;
-  const cachedCards = localStorage.getItem('allCards');
+const getCardnames = async () => {
+  const allCardNames = await getAllCardNames();
+  return allCardNames.filter(filterProblematicCards);
+};
 
-  if (!shouldUpdate && cachedCards) {
-    return JSON.parse(cachedCards);
+const getSets = async () => {
+  const sets = await getAllSets();
+  return sets;
+};
+
+export const getCollectionFromCache = async type => {
+  const lastUpdateKey = `lastUpdate-${type}`;
+  const collectionKey = `collection-${type}`;
+
+  const lastUpdate = localStorage.getItem(lastUpdateKey);
+  const shouldUpdate = !lastUpdate || Date.now() - lastUpdate > REFRESH_PERIOD;
+  const cachedCollection = localStorage.getItem(collectionKey);
+
+  if (!shouldUpdate && cachedCollection) {
+    return JSON.parse(cachedCollection);
   }
 
-  const allCardNames = await getAllCardNames();
-  const filteredCardNames = allCardNames.filter(filterProblematicCards);
+  const getCollection = type === 'cardNames' ? getCardnames : getSets;
 
-  localStorage.setItem('allCards', JSON.stringify(filteredCardNames));
-  localStorage.setItem('lastUpdate', Date.now());
+  const collection = await getCollection();
 
-  return filteredCardNames;
+  localStorage.setItem(collectionKey, JSON.stringify(collection));
+  localStorage.setItem(lastUpdateKey, Date.now());
+
+  return collection;
 };

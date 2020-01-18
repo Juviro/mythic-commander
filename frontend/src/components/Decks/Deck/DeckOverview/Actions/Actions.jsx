@@ -1,81 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Menu, Dropdown, Icon } from 'antd';
-import { useMutation } from 'react-apollo';
-import { getCollection, deleteFromCollection } from '../../../../../queries';
 
-const StyledCardPreview = styled.div`
+import ActionDelete from './ActionDelete';
+import ActionChangeSet from './ActionChangeSet';
+import ActionChangeZone from './ActionChangeZone';
+import ActionAddOrRemoveFromCollection from './ActionAddOrRemoveFromCollection';
+
+const StyledActions = styled.div`
   padding-left: 20px;
 `;
 
-const getOptions = (card, onDelete) => {
-  return [
-    {
-      name: 'DeleteFromDeck',
-      onClick: () =>
-        onDelete({
-          variables: { cardId: card.id },
-          optimisticResponse: {
-            __typename: 'Mutation',
-            deleteFromCollection: card.id,
-          },
-          update: (cache, { data: { deleteFromCollection: cardId } }) => {
-            const newData = cache.readQuery({ query: getCollection });
-            const updatedData = newData.collection.filter(({ id }) => id !== cardId);
-            cache.writeQuery({ query: getCollection, data: { collection: updatedData } });
-          },
-        }),
-    },
-  ];
-};
-
 export default ({ card }) => {
-  const [onDelete] = useMutation(deleteFromCollection);
-  // const options = getOptions(card, onDelete);
-
-  const options = [
-    {
-      name: 'Change Version',
-      icon: 'swap',
-    },
-    {
-      name: 'Add to collection',
-      icon: 'plus',
-    },
-    {
-      name: 'Make Commander',
-      icon: 'star',
-    },
-    {
-      name: 'divider1',
-      isDivider: true,
-    },
-    {
-      name: 'Delete',
-      icon: 'delete',
-    },
-  ];
+  const [isVisible, setIsVisible] = useState(false);
 
   const menu = (
     <Menu>
-      {options.map(({ name, icon, isDivider }) =>
-        isDivider ? (
-          <Menu.Divider key={name} />
-        ) : (
-          <Menu.Item key={name}>
-            <Icon type={icon} />
-            <span>{name}</span>
-          </Menu.Item>
-        )
-      )}
+      <ActionAddOrRemoveFromCollection card={card} setIsVisible={setIsVisible} />
+      <ActionChangeSet card={card} setIsVisible={setIsVisible} />
+      <ActionChangeZone card={card} setIsVisible={setIsVisible} />
+      <Menu.Divider />
+      <ActionDelete card={card} setIsVisible={setIsVisible} />
     </Menu>
   );
 
   return (
-    <StyledCardPreview>
-      <Dropdown overlay={menu} trigger={['click']}>
+    <StyledActions>
+      <Dropdown overlay={menu} placement="bottomLeft" trigger={['click']}>
         <Icon type="ellipsis" />
       </Dropdown>
-    </StyledCardPreview>
+    </StyledActions>
   );
 };

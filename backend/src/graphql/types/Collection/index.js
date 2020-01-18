@@ -1,6 +1,11 @@
 export default `
   type Collection {
     id: String!
+    cards: [Card!]!
+  }
+
+  type Card {
+    id: String!
     set: String!
     name: String!
     image_uris: ImageUris
@@ -43,13 +48,13 @@ export default `
   }
 
   type Query {
-    collection: [Collection]!
+    collection: Collection!
   }
 
   type Mutation {
-    addToCollectionById(cards: [AddCardsByIdInput]!): [Collection]!
-    addToCollectionByName(cards: [AddCardsByNameInput]!): [Collection]!
-    deleteFromCollection(cardId: String!): String!
+    addToCollectionById(cards: [AddCardsByIdInput]!): Collection!
+    addToCollectionByName(cards: [AddCardsByNameInput]!): Collection!
+    deleteFromCollection(cardIds: [String]!): Collection!
   }
 
   input AddCardsByIdInput {

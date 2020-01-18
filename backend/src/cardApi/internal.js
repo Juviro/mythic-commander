@@ -37,10 +37,9 @@ export const populateCards = async cards => {
   return populatedCards.sort(sortByName);
 };
 
-// finds for each cardname in *names* the cheapest card
-export const getCardsByName = async names => {
+export const getCards = async (selector, value) => {
   const query = db('cards')
-    .whereIn('name', names)
+    .whereIn(selector, value)
     .toString();
   const orderClause = ` ORDER BY oracle_id, (prices->>'eur')::float`;
   const { rows: cards } = await db.raw(query + orderClause);
@@ -51,3 +50,7 @@ export const getCardsByName = async names => {
 
   return filteredCards;
 };
+
+export const getCardsByName = async names => getCards('name', names);
+
+export const getCardsById = async ids => getCards('id', ids);
