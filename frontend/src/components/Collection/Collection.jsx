@@ -8,7 +8,7 @@ import Header from './Header';
 
 export default () => {
   const { data, loading } = useQuery(getCollection);
-  const cards = (data && data.collection) || [];
+  const cards = data ? data.collection.cards : [];
 
   return (
     <>

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Icon } from 'antd';
 import { useMutation } from 'react-apollo';
-import { createDeck as createDeckMutation, createDeckHelper } from '../../../queries';
+import { createDeck as createDeckMutation } from '../../../queries';
 
 const StyledIcon = styled(Icon)`
   font-size: 70px;
@@ -41,9 +41,7 @@ const StyledPreview = styled.div`
 export default ({ onOpenDeck }) => {
   const [mutate] = useMutation(createDeckMutation);
   const onAddDeck = async () => {
-    const { data } = await mutate({
-      ...createDeckHelper,
-    });
+    const { data } = await mutate();
     onOpenDeck(data.createDeck.id);
   };
   return (

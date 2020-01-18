@@ -13,7 +13,6 @@ export default ({
   displayedColumns = [],
   markNonLegal,
   Actions = null,
-  setHighlightedCard = () => {},
 }) => {
   const dataSource = getSortedCards(cards.lenght ? [cards[0]] : cards, type);
 
@@ -28,9 +27,6 @@ export default ({
       dataSource={dataSource}
       rowClassName={card => markNonLegal && (isCardLegal(card, commander) ? '' : 'not-legal')}
       pagination={noPagination ? false : { pageSize: 20 }}
-      onRow={record => ({
-        onMouseEnter: () => setHighlightedCard(record.name),
-      })}
     />
   );
 };

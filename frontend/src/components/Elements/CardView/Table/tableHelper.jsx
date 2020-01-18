@@ -28,15 +28,16 @@ const getPriceLabel = price => {
 };
 
 const sortAndFilterCardTypes = types =>
-  types
-    .sort((a, b) => TYPE_SORTING_INNER.indexOf(a) - TYPE_SORTING_INNER.indexOf(b))
-    .filter(type => TYPE_SORTING_OUTER.includes(type));
+  types.sort((a, b) => TYPE_SORTING_INNER.indexOf(a) - TYPE_SORTING_INNER.indexOf(b));
 
 const sortByTypeAndCommander = (a, b) => {
   if (a.zone === 'COMMANDER') return -1;
   if (b.zone === 'COMMANDER') return 1;
 
-  const findIndex = primaryTypes => TYPE_SORTING_OUTER.findIndex(type => primaryTypes[0] === type);
+  const findIndex = primaryTypes =>
+    TYPE_SORTING_OUTER.findIndex(
+      type => primaryTypes.filter(typeName => TYPE_SORTING_OUTER.includes(typeName))[0] === type
+    );
   const indexDifference = findIndex(a.primaryTypes) - findIndex(b.primaryTypes);
 
   return !indexDifference && (a.primaryTypes.length || b.primaryTypes.length)

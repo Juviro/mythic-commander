@@ -10,6 +10,8 @@ const DECK_CARD_FIELDS = `
   owned
   colors
   color_identity
+  all_sets
+  oracle_id
 `;
 
 const DECK_FIELDS = `
@@ -58,101 +60,23 @@ export const editDeck = gql`
 export const addCardsToDeck = gql`
   mutation addCardsToDeck($cards: [String]!, $deckId: String!) {
     addCardsToDeck(input: { cards: $cards, deckId: $deckId }) {
-      cards {
-        ${DECK_CARD_FIELDS}
-      }
-      deckId
+      ${DECK_FIELDS}
     }
   }
 `;
 
-export const createDeckHelper = {
-  optimisticResponse: () => ({
-    __typename: 'Mutation',
-    createDeck: {
-      id: Date.now(),
-      name: 'loading...',
-      imgSrc: null,
-      lastEdit: Date.now(),
-      createdAt: Date.now(),
-      cards: [],
-      __typename: 'Deck',
-    },
-  }),
-  update: (cache, { data: { createDeck: createdDeck } }) => {
-    const newData = cache.readQuery({ query: getDecks });
+export const deleteFromDeck = gql`
+  mutation deleteFromDeck($cardId: String!, $deckId: String!) {
+    deleteFromDeck(cardId: $cardId, deckId: $deckId) {
+      ${DECK_FIELDS}
+    }
+  }
+`;
 
-    if (createdDeck && newData) {
-      newData.decks.push(createdDeck);
-      cache.writeQuery({ query: getDecks, data: newData });
+export const editDeckCard = gql`
+  mutation editDeckCard($cardOracleId: String!, $deckId: String! $newProps: EditCardsPropsInput!) {
+    editDeckCard(cardOracleId: $cardOracleId, deckId: $deckId, newProps: $newProps) {
+      ${DECK_FIELDS}
     }
-  },
-};
-
-export const addToDeckHelper = {
-  optimisticResponse: (cards, deckId) => ({
-    __typename: 'Mutation',
-    addCardsToDeck: {
-      deckId,
-      cards: cards.map(name => ({
-        __typename: 'CardsType',
-        id: `optimistic_${name}`,
-        name,
-        createdAt: Date.now(),
-        set: '',
-        image_uris: {
-          normal: '',
-          small: '',
-          art_crop: '',
-          __typename: 'ImageUris',
-        },
-        legalities: {
-          standard: null,
-          modern: null,
-          commander: null,
-          __typename: 'legalities',
-        },
-        prices: {
-          eur: null,
-          usd: null,
-          usd_foil: null,
-          __typename: 'prices',
-        },
-        card_faces: null,
-        isFoil: false,
-        rarity: null,
-        primaryTypes: null,
-        subTypes: null,
-        flipTypes: null,
-        zone: null,
-        owned: 'true',
-        colors: null,
-        color_identity: null,
-      })),
-      __typename: 'Deck',
-    },
-  }),
-  update: (
-    cache,
-    {
-      data: {
-        addCardsToDeck: { cards, deckId },
-      },
-    }
-  ) => {
-    const newData = cache.readQuery({ query: getDeck, variables: { id: deckId } });
-    if (cards && newData) {
-      cards.forEach(card => {
-        const cardIndex = newData.deck.cards.findIndex(({ name }) => name === card.name);
-        if (cardIndex > -1) {
-          const duplicateCard = newData.deck.cards[cardIndex];
-          newData.deck.cards.splice(cardIndex, 1);
-          newData.deck.cards.push({ ...duplicateCard, createdAt: new Date() });
-        } else {
-          newData.deck.cards.push(card);
-        }
-      });
-      cache.writeQuery({ query: getDeck, data: newData });
-    }
-  },
-};
+  }
+`;

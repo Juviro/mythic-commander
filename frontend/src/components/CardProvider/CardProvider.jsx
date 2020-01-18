@@ -1,36 +1,27 @@
 import React, { useState } from 'react';
-import { getCardsFromCache } from './cardCache';
+import { getCollectionFromCache } from './cardCache';
 
 const CardContext = React.createContext({});
 
-// const getSettings = () => {
-//   const get = key => localStorage.getItem(key)
-//   return {
-//     display: {
-//       collection: {
-//         listView: get('display.collection.listView') || 'LIST',
-//       },
-//     },
-//   }
-// }
-
-// const setSetting = (key, value) => {
-//   localStorage.setItem(key, value)
-// }
-
 export const CardContextProvider = ({ children }) => {
-  const [cardNames, setCardNames] = useState([]);
+  const [cardNames, setCardNames] = useState();
+  const [sets, setSets] = useState();
   const value = {
     cardNames,
-    // settings: getSettings(),
-    // setSetting,
+    sets,
   };
 
   const getCardNames = async () => {
-    const allCardNames = await getCardsFromCache();
+    const allCardNames = await getCollectionFromCache('cardNames');
     setCardNames(allCardNames);
   };
-  if (!cardNames.length) getCardNames();
+  if (!cardNames) getCardNames();
+
+  const getSets = async () => {
+    const allSets = await getCollectionFromCache('sets');
+    setSets(allSets);
+  };
+  if (!sets) getSets();
 
   return <CardContext.Provider value={value}>{children}</CardContext.Provider>;
 };
