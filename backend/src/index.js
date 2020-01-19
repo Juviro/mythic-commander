@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import Koa from 'koa';
 import server from './server';
 import './cron';
