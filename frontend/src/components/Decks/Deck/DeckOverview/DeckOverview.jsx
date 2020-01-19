@@ -22,7 +22,6 @@ export default ({ deck, loading }) => {
   if (loading || !deck.cards) return <FullscreenSpinner />;
 
   const commander = deck.cards.find(({ zone }) => zone === 'COMMANDER');
-  console.log('deck.cards :', deck.cards);
   const filteredCards = filterCards(deck.cards, filter);
 
   return (

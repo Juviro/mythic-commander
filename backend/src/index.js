@@ -3,5 +3,7 @@ import server from './server';
 import './cron';
 
 const app = new Koa();
+const port = process.env.PORT || '4000';
+
 server.applyMiddleware({ app });
-app.listen({ port: 4000 }, () => console.info(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`));
+app.listen({ port }, () => console.info(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`));
