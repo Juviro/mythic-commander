@@ -39,5 +39,6 @@ export default new ApolloServer({
     console.error('error', error);
     return error;
   },
-  playground: 'api/graphql',
+  playground: '/api/graphql',
+  endpoint: '/api/graphql',
 });

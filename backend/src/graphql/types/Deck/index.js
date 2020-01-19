@@ -74,6 +74,7 @@ export default `
     editDeckCard(cardOracleId: String!, deckId: String!, newProps: EditCardsPropsInput!): Deck!
     deleteFromDeck(cardId: String!, deckId: String!): Deck!
     deleteDeck(deckId: String!): Boolean
+    duplicateDeck(deckId: String!): String!
   }
 
   input EditCardsPropsInput {

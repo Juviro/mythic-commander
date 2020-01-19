@@ -25,13 +25,13 @@ export default ({ card: { owned, oracle_id } }) => {
   };
 
   return (
-    <OwnedWrapper onClick={onToggleOwned} style={{ cursor: 'pointer' }}>
+    <OwnedWrapper>
       <Tooltip title={owned ? 'Remove from collection' : 'Add to collection'}>
-        {owned ? (
-          <Icon type="check-circle" style={{ color: 'green' }} />
-        ) : (
-          <Icon type="close-circle" style={{ color: 'red' }} />
-        )}
+        <Icon
+          type={owned ? 'check-circle' : 'close-circle'}
+          onClick={onToggleOwned}
+          style={{ cursor: 'pointer', color: owned ? 'green' : 'red' }}
+        />
       </Tooltip>
     </OwnedWrapper>
   );
