@@ -31,6 +31,7 @@ const ImageWrapper = styled.div`
 
 const StyledImage = styled.img`
   width: 100%;
+  min-height: 100%;
   transition: all 0.2s ease-out;
 
   &:hover {

@@ -73,6 +73,7 @@ export default `
     addCardsToDeck(input: AddCardsToDeckInputType): Deck!
     editDeckCard(cardOracleId: String!, deckId: String!, newProps: EditCardsPropsInput!): Deck!
     deleteFromDeck(cardId: String!, deckId: String!): Deck!
+    deleteDeck(deckId: String!): Boolean
   }
 
   input EditCardsPropsInput {

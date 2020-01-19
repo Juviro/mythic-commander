@@ -6,7 +6,8 @@
     "no-new": 0,
     "no-process-exit": 0,
     "no-console": ["error", { "allow": ["warn", "error", "info"] }],
-    "import/no-nodejs-modules": 0
+    "import/no-nodejs-modules": 0,
+    "import/prefer-default-export": 0
   },
   "env": {
     "es6": true
