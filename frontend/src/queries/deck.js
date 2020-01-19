@@ -86,3 +86,9 @@ export const deleteDeck = gql`
     deleteDeck(deckId: $deckId)
   }
 `;
+
+export const duplicateDeck = gql`
+  mutation duplicateDeck($deckId: String!) {
+    duplicateDeck(deckId: $deckId)
+  }
+`;

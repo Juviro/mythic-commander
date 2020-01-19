@@ -109,9 +109,18 @@ export default {
         const { owned } = newProps;
         const [deckCard] = await db('cardToDeck').where({ deckId, oracle_id: cardOracleId });
         if (!owned) {
-          await db('collection')
-            .where({ id: deckCard.cardId })
-            .del();
+          await db.raw(
+            `
+          DELETE FROM collection 
+          WHERE id IN(
+            SELECT id FROM cards WHERE oracle_id = (
+              SELECT oracle_id FROM cards 
+                WHERE id=?
+              )
+            )
+          `,
+            deckCard.cardId
+          );
         } else {
           const [{ set }] = await db('cards')
             .where({ id: deckCard.cardId })
@@ -161,6 +170,35 @@ export default {
         .del();
 
       return true;
+    },
+    duplicateDeck: async (_, { deckId }, { user, db }) => {
+      await canAccessDeck(user.id, deckId);
+
+      const {
+        rows: [{ id: newDeckId }],
+      } = await db.raw(
+        `
+        INSERT INTO decks 
+          ("userId", name, "imgSrc", "lastEdit", "createdAt") 
+        SELECT 
+          "userId", CONCAT(name, ' - Copy'), "imgSrc", NOW() as "lastEdit", NOW() as "createdAt" 
+        FROM decks WHERE id=? RETURNING id
+        `,
+        deckId
+      );
+
+      await db.raw(
+        `
+        INSERT INTO "cardToDeck" 
+          ("deckId", "cardId", zone, amount, oracle_id) 
+        SELECT 
+          ? as "deckId", "cardId", zone, amount, oracle_id
+        FROM "cardToDeck" WHERE "deckId"=?
+        `,
+        [newDeckId, deckId]
+      );
+
+      return newDeckId;
     },
   },
 };
