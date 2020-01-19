@@ -30,7 +30,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --fix --ext .jsx --ext .js src"
+    "lint": "eslint --fix --ext .jsx --ext .js src",
+    "install-prod": "yarn install --production=false"
   },
   "browserslist": [
     ">0.2%",
