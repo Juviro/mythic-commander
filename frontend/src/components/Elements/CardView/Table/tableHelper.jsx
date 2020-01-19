@@ -97,11 +97,10 @@ export const getColumns = (displayedColumns, Actions) => {
     },
     {
       title: 'Owned',
-      dataIndex: 'owned',
       key: 'owned',
       sorter: sortByOwned,
       width: 85,
-      render: owned => <Owned owned={owned} />,
+      render: card => <Owned card={card} />,
     },
     {
       title: 'Actions',

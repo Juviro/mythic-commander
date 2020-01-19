@@ -80,3 +80,9 @@ export const editDeckCard = gql`
     }
   }
 `;
+
+export const deleteDeck = gql`
+  mutation deleteDeck($deckId: String!) {
+    deleteDeck(deckId: $deckId)
+  }
+`;

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Collapse, Icon } from 'antd';
 
-import AddCards from './AddCards';
+import FilterHeader from './Filter/FilterHeader';
 import Filter from '../../../Elements/Filter';
-import FilterHeader from './FilterHeader';
+import AddCards from './AddCards';
 import DeckProfile from './DeckProfile';
+import Actions from './Actions';
 
 const { Panel } = Collapse;
 
@@ -24,7 +25,7 @@ export default ({ deck }) => {
     {
       header: 'Add Cards',
       icon: 'plus',
-      component: <AddCards deckId={deck.id} />,
+      component: <AddCards />,
     },
     {
       header: 'Stats',
@@ -39,7 +40,7 @@ export default ({ deck }) => {
     {
       header: 'Actions',
       icon: 'ellipsis',
-      component: <div>Add deck to Collection; Delete Deck; </div>,
+      component: <Actions />,
     },
   ];
   return (
@@ -47,7 +48,7 @@ export default ({ deck }) => {
       <Collapse
         bordered={false}
         defaultActiveKey={panels[0].icon}
-        // defaultActiveKey={panels.map(panel => panel.icon || panel.key)}
+        // defaultActiveKey={panels.map(({icon, key}) => icon || key)}
         style={{ width: 300, fontSize: '14px', fontWeight: 900 }}
       >
         {panels.map(({ header, component, icon, key }) => (

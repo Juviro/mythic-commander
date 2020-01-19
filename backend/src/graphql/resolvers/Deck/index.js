@@ -3,6 +3,7 @@ import { pick } from 'lodash';
 
 import { getCardsByName } from '../../../cardApi/';
 import { addAdditionalProperties } from '../../../cardApi/internal';
+import { canAccessDeck } from '../../../auth/authenticateUser';
 
 const DEFAULT_ZONE = 'MAINBOARD';
 
@@ -24,6 +25,13 @@ const getPopulatedCards = async (db, deckId) => {
   );
   return populatedCards.map(addAdditionalProperties);
 };
+
+const updateLastEdit = (deckId, db) =>
+  db('decks')
+    .where({ id: deckId })
+    .update({
+      lastEdit: new Date(),
+    });
 
 export default {
   Query: {
@@ -76,6 +84,7 @@ export default {
         .toString();
 
       await db.raw(query + ON_DUPLICATE);
+      await updateLastEdit(deckId, db);
 
       const populatedCards = await getPopulatedCards(db, deckId);
       const [deck] = await db('decks').where({ id: deckId });
@@ -86,9 +95,7 @@ export default {
       };
     },
     editDeckCard: async (_, { cardOracleId, deckId, newProps }, { user, db }) => {
-      // TODO: create authentication method to unify errors
-      const isAuthenticated = (await db('decks').where({ userId: user.id, id: deckId })).length;
-      if (!isAuthenticated) throw new ValidationError('Not authenticated');
+      await canAccessDeck(user.id, deckId);
 
       const updatedProps = pick(newProps, ['zone', 'amount']);
       if (newProps.set) {
@@ -125,24 +132,35 @@ export default {
           .update(updatedProps);
       }
 
+      await updateLastEdit(deckId, db);
+
       const [deck] = await db('decks').where({ userId: user.id, id: deckId });
       const populatedCards = await getPopulatedCards(db, deck.id);
 
       return { ...deck, cards: populatedCards };
     },
     deleteFromDeck: async (_, { cardId, deckId }, { user, db }) => {
-      // TODO: create authentication method to unify errors
-      const isAuthenticated = (await db('decks').where({ userId: user.id, id: deckId })).length;
-      if (!isAuthenticated) throw new ValidationError('Not authenticated');
+      await canAccessDeck(user.id, deckId);
 
       await db('cardToDeck')
         .where({ cardId, deckId })
         .del();
 
+      await updateLastEdit(deckId, db);
+
       const [deck] = await db('decks').where({ userId: user.id, id: deckId });
       const populatedCards = await getPopulatedCards(db, deck.id);
 
       return { ...deck, cards: populatedCards };
+    },
+    deleteDeck: async (_, { deckId }, { user, db }) => {
+      await canAccessDeck(user.id, deckId);
+
+      await db('decks')
+        .where({ id: deckId })
+        .del();
+
+      return true;
     },
   },
 };
