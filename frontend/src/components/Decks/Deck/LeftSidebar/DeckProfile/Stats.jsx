@@ -7,6 +7,7 @@ const StyledStats = styled.div`
   flex-direction: column;
   font-size: 10px;
   font-weight: 600;
+  width: 80px;
 `;
 
 const StyledStatWrapper = styled.div`
