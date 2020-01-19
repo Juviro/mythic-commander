@@ -6,7 +6,7 @@
     "start": "NODE_ENV=dev concurrently \"cd ./backend && yarn start\" \"cd ./frontend && yarn start\"",
     "startDb": "brew services start postgresql",
     "stopDb": "brew services stop postgresql",
-    "deploy": "(rm -rf /var/www/virtual/hauke/html/* && cd /home/hauke/packages/mtg/frontend && yarn && yarn build && mv /home/hauke/packages/mtg/frontend/build/* /var/www/virtual/hauke/html/ && cd /home/hauke/packages/mtg/backend && yarn && yarn build && supervisorctl restart mtg)"
+    "deploy": "(rm -rf /var/www/virtual/hauke/html/* && cd /home/hauke/packages/mtg/frontend && yarn install --production=false && yarn build && mv /home/hauke/packages/mtg/frontend/build/* /var/www/virtual/hauke/html/ && cd /home/hauke/packages/mtg/backend && yarn install --production=false && yarn build && supervisorctl restart mtg)"
   },
   "dependencies": {
     "is-builtin-module": "^3.0.0",
