@@ -58,7 +58,7 @@ const updateCards = async (showLogs = false) => {
       .where(eventOptions)
       .then(rows => rows.map(({ value }) => Number(value)));
 
-    if (showLogs) console.log('updating page', currentPage);
+    if (showLogs) console.info('updating page', currentPage);
     if (currentPage === undefined || isNaN(currentPage)) {
       await knex('events').insert({ ...eventOptions, value: '0' });
     }
