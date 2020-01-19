@@ -7,8 +7,8 @@ import { login } from '../../queries';
 const CLIENT_ID = '985753697547-184gkcavnrc8f4flq1tdjra30amuchgo.apps.googleusercontent.com';
 
 const LoginWrapper = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;

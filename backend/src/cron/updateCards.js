@@ -47,7 +47,7 @@ const addCardsFromPage = async page => {
   return hasNext;
 };
 
-const updateCards = async () => {
+const updateCards = async (showLogs = false) => {
   const start = Date.now();
   console.info('Starting to update cards at', new Date().toLocaleString('de', { timeStyle: 'short' }));
   let hasNext = true;
@@ -57,6 +57,7 @@ const updateCards = async () => {
     const [currentPage] = await knex('events')
       .where(eventOptions)
       .then(rows => rows.map(({ value }) => Number(value)));
+    if (showLogs) console.log('updating page', currentPage);
     if (currentPage === undefined) {
       await knex('events').insert({ ...eventOptions, value: '0' });
     }
