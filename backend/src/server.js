@@ -6,9 +6,11 @@ import db from './database';
 export default new ApolloServer({
   schema,
   context: async ({ ctx }) => {
-    const header = ctx.request.header;
     const isLogin = ctx.response.request.body.operationName === 'login';
-    const sessionId = header.authorization.split(' ')[1];
+
+    const authorization = ctx.request.header.authorization;
+    if (!authorization) throw new AuthenticationError('invalid token');
+    const sessionId = authorization.split(' ')[1];
 
     const context = {
       db,
