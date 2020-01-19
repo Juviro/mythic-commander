@@ -1,7 +1,7 @@
 import updateCards from './updateCards';
 
 const update = async () => {
-  await updateCards();
+  await updateCards(true);
   process.exit(0);
 };
 
