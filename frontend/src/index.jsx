@@ -7,7 +7,7 @@ import { QueryParamProvider } from 'use-query-params';
 import 'antd/dist/antd.css';
 import './index.css';
 
-import App from './components/App';
+import App from './components';
 import client from './network/graphqlClient';
 import { CardContextProvider } from './components/CardProvider/CardProvider';
 
