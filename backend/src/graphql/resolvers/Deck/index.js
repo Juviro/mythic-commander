@@ -10,6 +10,7 @@ const DEFAULT_ZONE = 'MAINBOARD';
 const ON_DUPLICATE = ` ON CONFLICT ("deckId", "oracle_id") DO UPDATE SET "cardId"=EXCLUDED."cardId"`;
 
 const getPopulatedCards = async (db, deckId) => {
+  // TODO: this can now be simplified as cardToDeck now features the column oracle_id
   const { rows: populatedCards } = await db.raw(
     `
   SELECT "cardToDeck".zone, cards.*, "cardsBySet".all_sets, CASE WHEN owned.oracle_id IS NULL THEN NULL ELSE 1 END AS owned
