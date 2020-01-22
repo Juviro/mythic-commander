@@ -4,9 +4,10 @@ import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { useQuery } from 'react-apollo';
 
-import { getDeck } from '../../../queries/deck';
-import CardList from './CardList/CardList';
+import DeckImage from './DeckImage';
 import DeckHeader from './DeckHeader';
+import CardList from './CardList/CardList';
+import { getDeck } from '../../../queries/deck';
 
 const StyledDeck = styled.div`
   width: 100%;
@@ -20,7 +21,6 @@ const StyledDeck = styled.div`
 export default () => {
   const { id } = useParams();
   const { data, loading } = useQuery(getDeck, { variables: { id } });
-  console.log('deck :', data && data.deck);
 
   return (
     <StyledDeck>
@@ -28,6 +28,7 @@ export default () => {
         <Spin />
       ) : (
         <>
+          <DeckImage deck={data.deck} />
           <DeckHeader deck={data.deck} />
           <CardList deck={data.deck} />
         </>

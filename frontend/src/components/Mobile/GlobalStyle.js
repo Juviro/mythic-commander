@@ -5,13 +5,13 @@ export default createGlobalStyle`
   .transparent input {
     background-color: rgba(45, 45, 45, 0.6);
     border: none;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.7);
     
     &::placeholder {
-      color: #fff;
+      color: rgba(255, 255, 255, 0.7);
     }
   }
   .transparent span svg {
-    color: #fff;
+    color: rgba(255, 255, 255, 0.7);
   }
 `;

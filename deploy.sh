@@ -11,4 +11,3 @@ cp -r /home/hauke/packages/mtg/frontend/build/* /var/www/virtual/hauke/html/
 
 echo -e "\e[44mrestarting backend\e[0m"
 supervisorctl restart mtg
-echo -e "\e[44mDone!\e[0m"
