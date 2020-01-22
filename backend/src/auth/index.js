@@ -14,7 +14,7 @@ export async function validateToken(token) {
   const payload = ticket.getPayload();
 
   const id = payload.sub;
-  const name = payload.given_name;
+  const name = payload.name;
   const email = payload.email;
   const avatar = payload.picture;
 

@@ -37,7 +37,10 @@ const updateLastEdit = (deckId, db) =>
 export default {
   Query: {
     decks: async (_, _1, { user, db }) => {
-      const decks = await db('decks').where({ userId: user.id });
+      const decks = await db('decks')
+        .where({ userId: user.id })
+        .orderBy('lastEdit', 'DESC');
+
       return decks;
     },
     deck: async (_, { id }, { user, db }) => {
@@ -140,9 +143,8 @@ export default {
         await db('cardToDeck')
           .where({ oracle_id: cardOracleId, deckId })
           .update(updatedProps);
+        await updateLastEdit(deckId, db);
       }
-
-      await updateLastEdit(deckId, db);
 
       const [deck] = await db('decks').where({ userId: user.id, id: deckId });
       const populatedCards = await getPopulatedCards(db, deck.id);

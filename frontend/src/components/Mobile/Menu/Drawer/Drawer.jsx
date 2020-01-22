@@ -20,7 +20,7 @@ export default ({ isVisible, onCloseDrawer }) => {
         justifyContent: 'space-between',
       }}
     >
-      <Navigation />
+      <Navigation onCloseDrawer={onCloseDrawer} />
       <Logout />
     </Drawer>
   );

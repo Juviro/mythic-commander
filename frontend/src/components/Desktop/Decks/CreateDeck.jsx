@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Icon } from 'antd';
 import { useMutation } from 'react-apollo';
-import { createDeck as createDeckMutation } from '../../../../queries';
+import { createDeck as createDeckMutation } from '../../../queries';
 
 const StyledIcon = styled(Icon)`
   font-size: 70px;

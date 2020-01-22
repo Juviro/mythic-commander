@@ -118,11 +118,10 @@ export const getColumns = (displayedColumns, Actions) => {
 export const getSortedCards = (cards, type) => {
   return cards
     .map(card => {
-      const images = card.image_uris ? [card.image_uris] : card.card_faces.map(({ image_uris }) => image_uris);
       const primaryTypes = sortAndFilterCardTypes(card.primaryTypes || []);
       const isBasicLand = card.primaryTypes && card.primaryTypes.includes('Basic');
       const rarity = isBasicLand ? 'land' : card.rarity;
-      return { ...card, key: card.id, images, primaryTypes, rarity };
+      return { ...card, key: card.id, primaryTypes, rarity };
     })
     .sort(sortByName)
     .sort(type === 'deck' ? sortByTypeAndCommander : sortByDate);

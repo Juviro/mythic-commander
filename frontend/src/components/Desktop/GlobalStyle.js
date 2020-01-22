@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-export const GlobalStyle = createGlobalStyle`
+export default createGlobalStyle`
   /* makes sure that the table border is always areound all columns */
   .ant-table-small {
     display: inline-block;

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Card from '../../Card/Card';
+import Card from '../Card';
 
 const StyledCardPreview = styled.div`
   display: flex;
@@ -25,15 +25,15 @@ const getCardInfo = card => {
     : [{ name, image: card.image_uris.normal }];
 };
 
-export default ({ highlightedCard }) => {
-  if (!highlightedCard) return <StyledCardPreview />;
+export default ({ card }) => {
+  if (!card) return <StyledCardPreview />;
 
-  const cardInfos = getCardInfo(highlightedCard);
+  const cardInfos = getCardInfo(card);
 
   return (
     <ImageWrapper>
-      {cardInfos.map(card => (
-        <Card key={card.image} {...card} size={cardInfos.length === 1 ? 'normal' : 'small'} />
+      {cardInfos.map(cardInfo => (
+        <Card key={cardInfo.image} {...cardInfo} size={cardInfos.length === 1 ? 'normal' : 'small'} />
       ))}
     </ImageWrapper>
   );
