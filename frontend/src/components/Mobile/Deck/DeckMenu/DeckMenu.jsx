@@ -8,9 +8,6 @@ const StyledMenuItem = styled(Menu.Item)`
   display: flex !important;
   justify-content: center;
 `;
-const StyledAffix = styled(Affix)`
-  width: 100%;
-`;
 
 const DeckList = ({ deck }) => {
   return (
