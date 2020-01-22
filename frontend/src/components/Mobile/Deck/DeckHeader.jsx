@@ -1,24 +1,27 @@
 import React from 'react';
-import { Affix } from 'antd';
+import { Affix, Menu } from 'antd';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
 
 const StyledHeader = styled.div`
   width: 100%;
-  display: flex;
-  flex-direction: column;
 `;
 
-const StyledHeaderImage = styled.img`
-  width: 100%;
-  height: 100%;
+const StyledMenuItem = styled(Menu.Item)`
+  width: 33.33%;
+  display: flex !important;
+  justify-content: center;
 `;
 
 const DeckList = ({ deck }) => {
   return (
     <StyledHeader>
-      <Affix offsetTop={-180}>
-        <StyledHeaderImage src={deck.imgSrc} />
+      <Affix offsetTop={50}>
+        <Menu defaultSelectedKeys="cards" mode="horizontal" style={{ display: 'flex' }}>
+          <StyledMenuItem key="cards">Cards</StyledMenuItem>
+          <StyledMenuItem key="stats">Stats</StyledMenuItem>
+          <StyledMenuItem key="edit">Edit</StyledMenuItem>
+        </Menu>
       </Affix>
     </StyledHeader>
   );
