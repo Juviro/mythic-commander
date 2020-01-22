@@ -7,7 +7,7 @@ import Collection from './Collection';
 import Decks from './Decks';
 import Deck from './Deck';
 
-import { GlobalStyle } from './GlobalStyle';
+import GlobalStyle from './GlobalStyle';
 import MobileRedirect from './MobileRedirect';
 
 const App = () => {

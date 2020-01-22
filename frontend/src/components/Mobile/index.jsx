@@ -2,24 +2,21 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Menu from './Menu';
+import Decks from './Decks';
+import Deck from './Deck';
 
-// import Search from '../Search';
-// import Collection from '../Collection';
-// import Decks from '../Decks';
-// import Deck from '../Deck';
+import GlobalStyle from './GlobalStyle';
 
 const App = () => {
   return (
     <>
       <Switch>
         <Menu>
-          <div>Hello World</div>
-          {/* <Route path="/search" component={Search} />
-          <Route path="/collection" component={Collection} />
-          <Route path="/decks" component={Decks} />
-          <Route path="/deck/:id" component={Deck} /> */}
+          <Route path="/m/decks" component={Decks} />
+          <Route path="/m/deck/:id" component={Deck} />
         </Menu>
       </Switch>
+      <GlobalStyle />
     </>
   );
 };

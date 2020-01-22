@@ -2,12 +2,8 @@ import React from 'react';
 import { List } from 'antd';
 import { Link } from 'react-router-dom';
 
-export default () => {
+export default ({ onCloseDrawer }) => {
   const options = [
-    {
-      href: '/m/search',
-      title: 'Search',
-    },
     {
       href: '/m/decks',
       title: 'Decks',
@@ -21,7 +17,7 @@ export default () => {
     <List>
       {options.map(({ href, title }) => (
         <List.Item key={title}>
-          <Link to={href} style={{ color: 'rgba(0, 0, 0, 0.85)' }}>
+          <Link to={href} style={{ color: 'rgba(0, 0, 0, 0.85)' }} onClick={onCloseDrawer}>
             {title}
           </Link>
         </List.Item>

@@ -1,29 +1,14 @@
 import React from 'react';
-import { Spin, Popover, Tooltip } from 'antd';
+import { Tooltip } from 'antd';
 import styled from 'styled-components';
-import CardPreviewPopover from './CardPreview';
 
-const StyledImage = styled.img`
-  height: 36px;
-  width: 26px;
-  margin-top: -6px;
-  position: absolute;
-  ${({ shouldClip }) =>
-    shouldClip && `clip-path: polygon(${shouldClip === 'top' ? '0 0, 0' : '100% 100%, 0'} 100%, 100% 0)`}
-`;
+import DraggablePreview from '../../Card/Preview/DraggablePreview';
 
 const StyledPreviewWrapper = styled.div`
   height: 22px;
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-`;
-
-const StyledImageWrapper = styled.div`
-  display: flex;
-  height: 100%;
-  width: 100%;
   justify-content: center;
 `;
 
@@ -37,32 +22,6 @@ const StyledCommanderTag = styled.span`
   -webkit-text-fill-color: transparent;
 `;
 
-const CardPreview = ({ card }) => {
-  const { images } = card;
-
-  const onDragStart = e => {
-    const imgSrc = (card.card_faces ? card.card_faces[0] : card).image_uris.art_crop;
-    e.dataTransfer.setData('imgSrc', imgSrc);
-    e.dataTransfer.effectAllowed = 'copyMove';
-  };
-
-  return (
-    <StyledImageWrapper draggable onDragStart={onDragStart}>
-      {images.map((image, index) => (
-        <Popover
-          placement="right"
-          key={image.small}
-          arrowPointAtCenter
-          autoAdjustOverflow
-          content={<CardPreviewPopover highlightedCard={card} />}
-        >
-          <StyledImage src={image.small} shouldClip={images.length === 1 ? false : index ? 'bottom' : 'top'} />
-        </Popover>
-      ))}
-    </StyledImageWrapper>
-  );
-};
-
 const CommanderTag = () => {
   return (
     <Tooltip title="Commander">
@@ -72,13 +31,12 @@ const CommanderTag = () => {
 };
 
 export default ({ card }) => {
-  const hasImageUrl = card.images[0].small;
   const isCommander = card.zone === 'COMMANDER';
 
   return (
     <StyledPreviewWrapper>
       {isCommander && <CommanderTag />}
-      {hasImageUrl ? <CardPreview card={card} size="small" /> : <Spin />}
+      <DraggablePreview card={card} size="small" />
     </StyledPreviewWrapper>
   );
 };
