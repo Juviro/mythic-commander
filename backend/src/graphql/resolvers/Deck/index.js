@@ -62,7 +62,7 @@ export default {
         .returning('id');
       const [deck] = await db('decks').where({ id: deckId });
 
-      return populateDeck(deck);
+      return populateDeck(deck, db);
     },
     editDeck: async (_, { newProperties: { imgSrc, name }, deckId }, { user, db }) => {
       await db('decks')
