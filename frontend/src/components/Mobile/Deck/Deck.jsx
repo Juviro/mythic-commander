@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Spin } from 'antd';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
@@ -6,7 +6,7 @@ import { useQuery } from 'react-apollo';
 
 import DeckHeader from './DeckHeader';
 import DeckMenu from './DeckMenu';
-import CardList from './CardList/CardList';
+import DeckBody from './DeckBody/DeckBody';
 import { getDeck } from '../../../queries/deck';
 
 const StyledDeck = styled.div`
@@ -22,6 +22,7 @@ export default () => {
   const { id } = useParams();
   const { data, loading } = useQuery(getDeck, { variables: { id } });
   console.log('data :', data && data.deck);
+  const [currentTab, setCurrentTab] = useState('cards');
 
   return (
     <StyledDeck>
@@ -30,8 +31,8 @@ export default () => {
       ) : (
         <>
           <DeckHeader deck={data.deck} />
-          <DeckMenu deck={data.deck} />
-          <CardList deck={data.deck} />
+          <DeckMenu deck={data.deck} currentTab={currentTab} onSetTab={setCurrentTab} />
+          <DeckBody deck={data.deck} currentTab={currentTab} />
         </>
       )}
     </StyledDeck>

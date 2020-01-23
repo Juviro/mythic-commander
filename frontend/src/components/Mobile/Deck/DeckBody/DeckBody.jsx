@@ -14,6 +14,7 @@ const StyledDeck = styled.div`
 `;
 
 export default ({ deck, currentTab }) => {
+  console.log('currentTab :', currentTab);
   return (
     <Tabs activeKey={currentTab} style={{ width: '100%' }} tabBarStyle={{ display: 'none' }}>
       <Tabs.TabPane tab="Tab 1" key="cards">
