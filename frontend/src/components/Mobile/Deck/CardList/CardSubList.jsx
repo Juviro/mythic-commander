@@ -19,10 +19,12 @@ const Left = styled.div`
 `;
 
 export default ({ cards, type }) => {
+  if (!cards || !cards.length) return null;
+  const dataSource = cards.sort((a, b) => (a.name < b.name ? -1 : 1));
   return (
     <List
       header={<SublistHeader type={type} numberOfCards={cards.length} />}
-      dataSource={cards || []}
+      dataSource={dataSource}
       style={{ width: '100%' }}
       renderItem={card => (
         <StyledListItem>

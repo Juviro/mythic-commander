@@ -20,6 +20,7 @@ const DECK_FIELDS = `
     createdAt
     lastEdit
     imgSrc
+    numberOfCards
     cards {
      ${DECK_CARD_FIELDS}
     }

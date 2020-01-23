@@ -27,6 +27,12 @@ const getPopulatedCards = async (db, deckId) => {
   return populatedCards.map(addAdditionalProperties);
 };
 
+const populateDeck = async (deck, db) => {
+  const populatedCards = await getPopulatedCards(db, deck.id);
+  const numberOfCards = populatedCards.reduce((acc, val) => acc + (Number(val.amount) || 1), 0);
+  return { ...deck, numberOfCards, cards: populatedCards };
+};
+
 const updateLastEdit = (deckId, db) =>
   db('decks')
     .where({ id: deckId })
@@ -41,13 +47,12 @@ export default {
         .where({ userId: user.id })
         .orderBy('lastEdit', 'DESC');
 
-      return decks;
+      return decks.map(deck => ({ ...deck, cards: [] }));
     },
     deck: async (_, { id }, { user, db }) => {
       const [deck] = await db('decks').where({ userId: user.id, id });
-      const populatedCards = await getPopulatedCards(db, deck.id);
 
-      return { ...deck, cards: populatedCards };
+      return populateDeck(deck, db);
     },
   },
   Mutation: {
@@ -67,9 +72,8 @@ export default {
           lastEdit: new Date(),
         });
       const [updatedDeck] = await db('decks').where({ id: deckId });
-      const populatedCards = await getPopulatedCards(db, deckId);
 
-      return { ...updatedDeck, cards: populatedCards };
+      return populateDeck(updatedDeck, db);
     },
     addCardsToDeck: async (_, { input: { cards: cardNames, deckId } }, { user, db }) => {
       const isAuthenticated = (await db('decks').where({ userId: user.id, id: deckId })).length;
@@ -90,13 +94,9 @@ export default {
       await db.raw(query + ON_DUPLICATE);
       await updateLastEdit(deckId, db);
 
-      const populatedCards = await getPopulatedCards(db, deckId);
       const [deck] = await db('decks').where({ id: deckId });
 
-      return {
-        ...deck,
-        cards: populatedCards,
-      };
+      return populateDeck(deck, db);
     },
     editDeckCard: async (_, { cardOracleId, deckId, newProps }, { user, db }) => {
       await canAccessDeck(user.id, deckId);
@@ -147,9 +147,8 @@ export default {
       }
 
       const [deck] = await db('decks').where({ userId: user.id, id: deckId });
-      const populatedCards = await getPopulatedCards(db, deck.id);
 
-      return { ...deck, cards: populatedCards };
+      return populateDeck(deck, db);
     },
     deleteFromDeck: async (_, { cardId, deckId }, { user, db }) => {
       await canAccessDeck(user.id, deckId);
@@ -161,9 +160,8 @@ export default {
       await updateLastEdit(deckId, db);
 
       const [deck] = await db('decks').where({ userId: user.id, id: deckId });
-      const populatedCards = await getPopulatedCards(db, deck.id);
 
-      return { ...deck, cards: populatedCards };
+      return populateDeck(deck, db);
     },
     deleteDeck: async (_, { deckId }, { user, db }) => {
       await canAccessDeck(user.id, deckId);

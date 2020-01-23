@@ -52,7 +52,7 @@ export default class SearchField extends React.Component {
       if (!row.replace(/[\s]+/g, '') || row.startsWith('//') || row.startsWith('SB')) {
         return NO_CARD;
       }
-      // Remove sideboard indicators (CURRENTLY FILTERED), amount in front of name (number or number with x) and second half of a two faced name
+      // Remove sideboard indicators (currently filtered by the function above), amount in front of name (number or number with x) and second half of a two faced name
       const normalize = str => str.toLowerCase().replace(/(^[sb:\s]*[\d]+x*|\/\/.+$|[.,'\s]+)/g, '');
       const normalizedRow = normalize(row);
       return cardNames.find(name => normalize(name) === normalizedRow);
@@ -105,8 +105,8 @@ export default class SearchField extends React.Component {
             placeholder={PLACEHOLDER}
           />
           <StyledStatus>
-            {cardResults.map((name, index) => (
-              <IconWrapper key={`${index}${name}`}>
+            {cardResults.map(name => (
+              <IconWrapper key={Math.random()}>
                 {name !== NO_CARD && (
                   <Tooltip placement="right" title={name}>
                     <StyledIcon {...getIconStyles(name)} />

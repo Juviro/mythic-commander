@@ -5,7 +5,8 @@ export default `
     createdAt: String!
     lastEdit: String!
     imgSrc: String
-    cards: [CardsType]
+    numberOfCards: Int
+    cards: [CardsType]!
   }
 
   type CardsType {

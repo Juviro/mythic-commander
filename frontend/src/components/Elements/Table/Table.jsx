@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Table } from 'antd';
+import { isCardLegal } from '../../../utils/cardStats';
 import { getColumns, getSortedCards } from './tableHelper';
-import { isCardLegal } from '../../Desktop/Deck/LeftSidebar/DeckProfile/Stats';
 
 export default ({
   cards,
