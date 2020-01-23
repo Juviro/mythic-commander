@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Icon } from 'antd';
+import { isDeckLegal, isDeckOwned } from '../../../../../utils/cardStats';
 
 const StyledStats = styled.div`
   display: flex;
@@ -24,30 +25,10 @@ const StyledTitle = styled.span`
   margin-left: 5px;
 `;
 
-export const isCardLegal = (card, commander) => {
-  const { color_identity, legalities } = card;
-  const isLegal = !legalities.commander || legalities.commander === 'legal';
-  if (!commander) return isLegal;
-
-  const rightColorIdentity = !color_identity || color_identity.every(color => commander.color_identity.includes(color));
-
-  return rightColorIdentity && isLegal;
-};
-
-const isDeckLegal = cards => {
-  const commander = cards.find(({ zone }) => zone === 'COMMANDER');
-
-  return cards.every(card => isCardLegal(card, commander));
-};
-
-const isDeckOwned = ({ cards }) => {
-  return cards.every(({ owned }) => owned);
-};
-
 export default ({ deck }) => {
   if (!deck.cards) return null;
 
-  const isLegal = isDeckLegal(deck.cards);
+  const isLegal = isDeckLegal(deck);
   const isOwned = isDeckOwned(deck);
 
   const stats = [
