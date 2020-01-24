@@ -7,8 +7,11 @@ import { editDeckCard } from '../../../../../queries';
 
 const StyledHeader = styled.span`
   margin-bottom: 8px;
+  display: flex;
+  align-self: flex-start;
 `;
 
+// TODO: unify this with ChangeImage as they share a lot of code
 export default ({ deck }) => {
   // TODO: Add support for partner commanders
   const [editMutation] = useMutation(editDeckCard);
@@ -33,7 +36,7 @@ export default ({ deck }) => {
   };
 
   return (
-    <List.Item style={{ padding: 16 }}>
+    <List.Item style={{ padding: 16, display: 'flex', flexDirection: 'column' }}>
       <StyledHeader>Your Commander:</StyledHeader>
       <Select defaultValue={currentCommander.oracle_id} style={{ width: '100%' }} onSelect={onSetCommander}>
         {possibleCommanders.map(card => (

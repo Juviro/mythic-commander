@@ -7,6 +7,8 @@ import { editDeck } from '../../../../../queries';
 
 const StyledHeader = styled.span`
   margin-bottom: 8px;
+  display: flex;
+  align-self: flex-start;
 `;
 
 const byName = (a, b) => (a.name > b.name ? 1 : -1);
@@ -36,7 +38,7 @@ export default ({ deck }) => {
   };
 
   return (
-    <List.Item style={{ padding: 16 }}>
+    <List.Item style={{ padding: 16, display: 'flex', flexDirection: 'column' }}>
       <StyledHeader>Deck Image:</StyledHeader>
       <Select defaultValue={getImgSrc(currentImage)} style={{ width: '100%' }} onSelect={onChangeImage}>
         {deck.cards.sort(byName).map(card => (

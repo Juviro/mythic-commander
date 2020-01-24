@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
-  /* makes sure that the table border is always areound all columns */
+  /* makes sure that the table border is always around all columns */
   .ant-table-small {
     display: inline-block;
   }
@@ -11,11 +11,5 @@ export default createGlobalStyle`
     display: flex;
     width: 100%;
     justify-content: space-between;
-  }
-
-  /* Highlight non-legal cards in table */
-  .not-legal {
-    margin: 5px;
-    background-color: #ffcfcf;
   }
 `;

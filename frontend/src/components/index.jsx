@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Desktop from './Desktop';
 import Mobile from './Mobile';
 import Login from './Elements/Login';
+import GlobalStyle from './GlobalStyle';
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route path="/m/" component={Mobile} />
         <Route component={Desktop} />
       </Switch>
+      <GlobalStyle />
     </>
   );
 };
