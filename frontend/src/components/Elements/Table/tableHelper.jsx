@@ -11,7 +11,7 @@ const TYPE_SORTING_OUTER = ['Creature', 'Enchantment', 'Artifact', 'Instant', 'S
 const sortByName = (a, b) => (a.name > b.name ? 1 : -1);
 const sortByDate = (a, b) => Number(b.createdAt) - Number(a.createdAt);
 
-const getEuroPrice = ({ eur, usd, usd_foil }) => Number(eur) || Number(usd || usd_foil) * 0.9;
+const getEuroPrice = ({ eur, usd, usd_foil }) => Number(eur) || Number(usd || usd_foil) * 0.9 || 0;
 const sortByPrice = (a, b) => getEuroPrice(a.prices) - getEuroPrice(b.prices);
 
 const getPriceLabel = price => {

@@ -70,6 +70,7 @@ export default class SearchField extends React.Component {
   };
 
   onSubmit = () => {
+    // TODO: use the amount fro cards
     const { onAddCards } = this.props;
     const { cardResults } = this.state;
 

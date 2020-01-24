@@ -27,6 +27,8 @@ const StyledStat = styled.div`
 `;
 
 export default ({ deck }) => {
+  const commander = deck.cards.find(({ zone }) => zone === 'COMMANDER');
+
   return (
     <>
       <StyledInfoBox>
@@ -35,6 +37,7 @@ export default ({ deck }) => {
           <NotLegalWarning deck={deck} />
         </StyledHeader>
         <StyledStat>{`${deck.numberOfCards} cards`}</StyledStat>
+        <StyledStat>{(commander && commander.name) || ' '}</StyledStat>
       </StyledInfoBox>
     </>
   );

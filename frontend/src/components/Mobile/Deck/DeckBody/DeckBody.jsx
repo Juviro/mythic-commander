@@ -1,30 +1,21 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import { Tabs } from 'antd';
 import CardList from './CardList';
-
-const StyledDeck = styled.div`
-  width: 100%;
-  display: flex;
-  min-height: 300px;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-`;
+import EditDeck from './EditDeck';
 
 export default ({ deck, currentTab }) => {
-  console.log('currentTab :', currentTab);
+  // TODO: try to only use these tabs instead of the current menu, wrap tab headers in affix
   return (
     <Tabs activeKey={currentTab} style={{ width: '100%' }} tabBarStyle={{ display: 'none' }}>
-      <Tabs.TabPane tab="Tab 1" key="cards">
+      <Tabs.TabPane tab="1" key="cards">
         <CardList deck={deck} />
       </Tabs.TabPane>
-      <Tabs.TabPane tab="Tab 2" key="stats">
+      <Tabs.TabPane tab="2" key="stats">
         <CardList deck={deck} />
       </Tabs.TabPane>
-      <Tabs.TabPane tab="Tab 3" key="edit">
-        <CardList deck={deck} />
+      <Tabs.TabPane tab="3" key="edit">
+        <EditDeck deck={deck} />
       </Tabs.TabPane>
     </Tabs>
   );

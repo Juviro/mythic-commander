@@ -3,7 +3,7 @@ import { Affix, Menu } from 'antd';
 import styled from 'styled-components';
 
 const StyledMenuItem = styled(Menu.Item)`
-  width: 33.33%;
+  flex-grow: 1;
   display: flex !important;
   justify-content: center;
 `;
@@ -15,9 +15,9 @@ export default ({ onSetTab, currentTab }) => {
         <StyledMenuItem key="cards" onClick={() => onSetTab('cards')}>
           Cards
         </StyledMenuItem>
-        <StyledMenuItem key="stats" onClick={() => onSetTab('stats')}>
+        {/* <StyledMenuItem key="stats" onClick={() => onSetTab('stats')}>
           Stats
-        </StyledMenuItem>
+        </StyledMenuItem> */}
         <StyledMenuItem key="edit" onClick={() => onSetTab('edit')}>
           Edit
         </StyledMenuItem>
