@@ -9,17 +9,24 @@ const StyledMenu = styled.div`
   padding: 8px;
   display: flex;
   flex-direction: row;
+  z-index: 99;
+  position: fixed;
+  background-color: white;
 
   ${({ transparent }) =>
     transparent
       ? `
-            z-index: 99;
-            position: fixed;
-            background-color: transparent;
-            `
+          background-color: transparent;
+        `
       : `
-            box-shadow: 0px 1px 8px #dedede;
+          box-shadow: 0px 1px 8px #dedede;
       `}
+`;
+
+const StyledInvisibleWrapper = styled.div`
+  height: 50px;
+  width: 100%;
+  background-color: transparent;
 `;
 
 const StyledIcon = styled(Icon)`
@@ -45,10 +52,13 @@ const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
     : {};
 
   return (
-    <StyledMenu transparent={transparentSearchBar}>
-      <StyledIcon onClick={onClickIcon} type={previousUrl ? 'arrow-left' : 'menu'} style={iconStyle} />
-      <Input.Search placeholder="Search for something" className={transparentSearchBar && 'transparent'} />
-    </StyledMenu>
+    <>
+      <StyledMenu transparent={transparentSearchBar}>
+        <StyledIcon onClick={onClickIcon} type={previousUrl ? 'arrow-left' : 'menu'} style={iconStyle} />
+        <Input.Search placeholder="Search for something" className={transparentSearchBar && 'transparent'} />
+      </StyledMenu>
+      {!transparentSearchBar && <StyledInvisibleWrapper />}
+    </>
   );
 };
 

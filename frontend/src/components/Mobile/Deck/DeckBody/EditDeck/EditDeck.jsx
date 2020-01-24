@@ -2,6 +2,7 @@ import React from 'react';
 import { List } from 'antd';
 import styled from 'styled-components';
 
+import ChangeName from './ChangeName';
 import DeleteDeck from './DeleteDeck';
 import DuplicateDeck from './DuplicateDeck';
 import ChangeImage from './ChangeImage';
@@ -20,14 +21,12 @@ export default ({ deck }) => {
   return (
     <StyledWrapper>
       <List style={{ width: '100%' }}>
-        <ChangeCommander deck={deck} />
+        <ChangeName deck={deck} />
         <ChangeImage deck={deck} />
+        <ChangeCommander deck={deck} />
         <DuplicateDeck />
         <DeleteDeck />
       </List>
     </StyledWrapper>
   );
 };
-//   <div>Duplicate Deck</div>
-//   <div>Change Commander (dropdown with all legendary creatures)</div>
-//   <div>Delete Deck</div>

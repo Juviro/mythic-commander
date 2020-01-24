@@ -1,7 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const typeToPlural = type => (type === 'Sorcery' ? 'Sorceries' : `${type}s`);
+const typeMap = {
+  Sorcery: 'Sorceries',
+  Commander: 'Commander',
+};
+
+const typeToPlural = type => typeMap[type] || `${type}s`;
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -12,5 +17,7 @@ const StyledHeader = styled.div`
 `;
 
 export default ({ type, numberOfCards }) => {
-  return <StyledHeader type={type}>{`${typeToPlural(type)} (${numberOfCards})`}</StyledHeader>;
+  const nameSuffix = type !== 'Commander' ? ` (${numberOfCards})` : '';
+
+  return <StyledHeader type={type}>{typeToPlural(type) + nameSuffix}</StyledHeader>;
 };
