@@ -13,7 +13,7 @@ const getPopulatedCards = async (db, deckId) => {
   // TODO: this can now be simplified as cardToDeck now features the column oracle_id
   const { rows: populatedCards } = await db.raw(
     `
-  SELECT "cardToDeck".zone, cards.*, "cardsBySet".all_sets, CASE WHEN owned.oracle_id IS NULL THEN NULL ELSE 1 END AS owned
+  SELECT "cardToDeck".zone, "cardToDeck".amount, cards.*, "cardsBySet".all_sets, CASE WHEN owned.oracle_id IS NULL THEN NULL ELSE 1 END AS owned
     FROM "cardToDeck" 
   LEFT JOIN cards 
     ON "cardToDeck"."cardId" = cards.id 

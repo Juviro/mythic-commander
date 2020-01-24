@@ -20,7 +20,7 @@ const StyledDeck = styled.div`
 
 export default () => {
   const { id } = useParams();
-  const [currentTab, setCurrentTab] = useState('edit');
+  const [currentTab, setCurrentTab] = useState('cards');
   const { data, loading } = useQuery(getDeck, { variables: { id } });
   console.log('data :', data && data.deck);
 
