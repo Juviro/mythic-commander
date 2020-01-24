@@ -28,6 +28,8 @@ const StyledStat = styled.div`
 
 export default ({ deck }) => {
   const commander = deck.cards.find(({ zone }) => zone === 'COMMANDER');
+  const numberOfUnowned = deck.cards.filter(({ owned }) => !owned).length;
+  const numberOfCards = `${deck.numberOfCards} cards ${numberOfUnowned ? `(${numberOfUnowned} not owned)` : ''}`;
 
   return (
     <>
@@ -36,7 +38,7 @@ export default ({ deck }) => {
           <StyledTitle>{deck.name}</StyledTitle>
           <NotLegalWarning deck={deck} />
         </StyledHeader>
-        <StyledStat>{`${deck.numberOfCards} cards`}</StyledStat>
+        <StyledStat>{numberOfCards}</StyledStat>
         <StyledStat>{commander && commander.name}</StyledStat>
       </StyledInfoBox>
     </>

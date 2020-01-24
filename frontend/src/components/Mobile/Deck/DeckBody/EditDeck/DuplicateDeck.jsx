@@ -17,7 +17,7 @@ const DuplicateDeck = ({ history }) => {
         deckId,
       },
     });
-    history.push(`/deck/${id}`);
+    history.push(`/m/deck/${id}`);
   };
   return (
     <List.Item onClick={onDuplicateDeck} style={{ color: '#1890ff', padding: 16 }}>

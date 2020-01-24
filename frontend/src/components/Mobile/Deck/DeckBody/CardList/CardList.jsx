@@ -19,11 +19,12 @@ const DeckList = ({ deck }) => {
     type,
     cards: cardWithMainType.filter(card => card.mainType === type),
   }));
+  const commander = cards.find(({ zone }) => zone === 'COMMANDER');
 
   return (
     <>
       {cardsByType.map(byType => (
-        <CardSubList {...byType} key={byType.type} />
+        <CardSubList {...byType} key={byType.type} commander={commander} />
       ))}
     </>
   );

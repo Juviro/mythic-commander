@@ -3,6 +3,7 @@ import { List, Typography } from 'antd';
 import styled from 'styled-components';
 import CardIcon from '../../../../Elements/Card/Preview/CardIcon';
 import SublistHeader from './SublistHeader';
+import { isCardLegal } from '../../../../../utils/cardStats';
 
 const StyledListItem = styled(List.Item)`
   display: flex;
@@ -18,7 +19,7 @@ const Left = styled.div`
   width: 90%;
 `;
 
-export default ({ cards, type }) => {
+export default ({ cards, type, commander }) => {
   if (!cards || !cards.length) return null;
   const dataSource = cards.sort((a, b) => (a.name < b.name ? -1 : 1));
 
@@ -28,7 +29,7 @@ export default ({ cards, type }) => {
       dataSource={dataSource}
       style={{ width: '100%' }}
       renderItem={card => (
-        <StyledListItem>
+        <StyledListItem className={isCardLegal(card, commander) ? '' : 'not-legal'}>
           <Left>
             <CardIcon card={card} />
             <Typography.Text ellipsis style={{ fontSize: 14, width: '100%', marginLeft: 16 }}>

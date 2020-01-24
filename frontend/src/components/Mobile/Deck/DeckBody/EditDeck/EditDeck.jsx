@@ -22,8 +22,8 @@ export default ({ deck }) => {
     <StyledWrapper>
       <List style={{ width: '100%' }}>
         <ChangeName deck={deck} />
-        <ChangeImage deck={deck} />
         <ChangeCommander deck={deck} />
+        <ChangeImage deck={deck} />
         <DuplicateDeck />
         <DeleteDeck />
       </List>
