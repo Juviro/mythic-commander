@@ -21,6 +21,7 @@ const Left = styled.div`
 export default ({ cards, type }) => {
   if (!cards || !cards.length) return null;
   const dataSource = cards.sort((a, b) => (a.name < b.name ? -1 : 1));
+
   return (
     <List
       header={<SublistHeader type={type} numberOfCards={cards.length} />}
@@ -34,6 +35,7 @@ export default ({ cards, type }) => {
               {card.name}
             </Typography.Text>
           </Left>
+          {card.amount > 1 && <span>{`${card.amount}x`}</span>}
         </StyledListItem>
       )}
     />

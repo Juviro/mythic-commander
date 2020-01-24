@@ -37,7 +37,7 @@ export default ({ deck }) => {
           <NotLegalWarning deck={deck} />
         </StyledHeader>
         <StyledStat>{`${deck.numberOfCards} cards`}</StyledStat>
-        <StyledStat>{(commander && commander.name) || ' '}</StyledStat>
+        <StyledStat>{commander && commander.name}</StyledStat>
       </StyledInfoBox>
     </>
   );

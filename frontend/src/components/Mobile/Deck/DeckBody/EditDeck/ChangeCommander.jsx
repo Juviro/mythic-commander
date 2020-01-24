@@ -13,6 +13,7 @@ export default ({ deck }) => {
   // TODO: Add support for partner commanders
   const [editMutation] = useMutation(editDeckCard);
 
+  // TODO: Add support for plainswalker commanders
   const possibleCommanders = deck.cards.filter(card =>
     ['Legendary', 'Creature'].every(type => card.primaryTypes.includes(type))
   );
@@ -33,7 +34,7 @@ export default ({ deck }) => {
 
   return (
     <List.Item style={{ padding: 16 }}>
-      <StyledHeader>Pick your Commander:</StyledHeader>
+      <StyledHeader>Your Commander:</StyledHeader>
       <Select defaultValue={currentCommander.oracle_id} style={{ width: '100%' }} onSelect={onSetCommander}>
         {possibleCommanders.map(card => (
           <Select.Option value={card.oracle_id} key={card.id}>

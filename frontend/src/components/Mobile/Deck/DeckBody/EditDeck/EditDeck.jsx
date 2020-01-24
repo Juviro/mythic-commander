@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import DeleteDeck from './DeleteDeck';
 import DuplicateDeck from './DuplicateDeck';
+import ChangeImage from './ChangeImage';
 import ChangeCommander from './ChangeCommander';
 
 const StyledWrapper = styled.div`
@@ -20,6 +21,7 @@ export default ({ deck }) => {
     <StyledWrapper>
       <List style={{ width: '100%' }}>
         <ChangeCommander deck={deck} />
+        <ChangeImage deck={deck} />
         <DuplicateDeck />
         <DeleteDeck />
       </List>
