@@ -40,13 +40,13 @@ const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
     else onToggleDrawer();
   };
 
+  const iconStyle = transparentSearchBar
+    ? { color: '#fff', filter: 'drop-shadow( 0px 0px 1px rgba(0, 0, 0, .7))' }
+    : {};
+
   return (
     <StyledMenu transparent={transparentSearchBar}>
-      <StyledIcon
-        onClick={onClickIcon}
-        type={previousUrl ? 'arrow-left' : 'menu'}
-        style={{ color: transparentSearchBar ? '#fff' : undefined }}
-      />
+      <StyledIcon onClick={onClickIcon} type={previousUrl ? 'arrow-left' : 'menu'} style={iconStyle} />
       <Input.Search placeholder="Search for something" className={transparentSearchBar && 'transparent'} />
     </StyledMenu>
   );
