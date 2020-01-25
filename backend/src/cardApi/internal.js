@@ -3,10 +3,30 @@ import db from '../database';
 const sortByName = (a, b) => (a.name > b.name ? 1 : -1);
 const sortById = (a, b) => (a.id > b.id ? 1 : -1);
 
+// TODO: evaluate which of these functions is more accurate
+// const getEuroPrice = ({ usd, usd_foil }) => Number(usd || usd_foil) * 0.9 || 0;
+
+// Prices in euro are a bit deflated
+const getEuroPrice = ({ eur, usd, usd_foil }) => Number(eur) * 1.1 || Number(usd || usd_foil) * 0.9 || 0;
+
+const getPriceLabel = amountInEuro => {
+  const formatPrice = amount =>
+    Number(amount).toLocaleString('de-DE', {
+      style: 'currency',
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2,
+      currency: 'EUR',
+    });
+
+  return amountInEuro ? formatPrice(amountInEuro) : '-';
+};
+
 export const addAdditionalProperties = ({ type_line, owned, ...rest }) => {
   const [mainTypes, flipTypes] = type_line.split(' // ');
   const [primaryTypes, subTypes] = mainTypes.split(' — ').map(part => part.split(' '));
   const showAsOwned = Boolean(owned || primaryTypes.includes('Basic'));
+  const priceInEuro = getEuroPrice(rest.prices);
+  const priceLabel = getPriceLabel(priceInEuro);
 
   return {
     type_line,
@@ -14,6 +34,8 @@ export const addAdditionalProperties = ({ type_line, owned, ...rest }) => {
     subTypes,
     flipTypes: flipTypes && flipTypes.split(' '),
     owned: showAsOwned,
+    priceInEuro,
+    priceLabel,
     ...rest,
   };
 };

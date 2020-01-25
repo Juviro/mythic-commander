@@ -13,6 +13,8 @@ const DECK_CARD_FIELDS = `
   all_sets
   oracle_id
   amount
+  priceInEuro
+  priceLabel
 `;
 
 const DECK_FIELDS = `
