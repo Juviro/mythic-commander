@@ -1,5 +1,5 @@
-import React from 'react';
-import { List, Typography } from 'antd';
+import React, { useState } from 'react';
+import { List, Typography, Modal } from 'antd';
 import styled from 'styled-components';
 
 import { isCardLegal } from '../../../../../../utils/cardStats';
@@ -8,6 +8,10 @@ const StyledListItem = styled(List.Item)`
   padding: 2px 4px;
   margin: 2px 4px;
   border-radius: 4px;
+`;
+
+const StyledItemWrapper = styled.div`
+  width: 100%;
   ${({ isLegal }) => (!isLegal ? 'background-color: #ffcfcf;' : '')}
 `;
 
@@ -25,7 +29,7 @@ const StyledCardWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const StyledName = styled(Typography.Text)`
+const StyledCardNameWrapper = styled.div`
   left: 46px;
   font-size: 14;
   position: absolute;
@@ -49,26 +53,52 @@ const StyledCard = styled.img`
   }}
 `;
 
+const StyledFullscreenCard = styled.img`
+  width: 100%;
+  border-radius: 16px;
+`;
+
 const CardImage = ({ card, isOpen }) => {
+  const [cardPreviewOpen, setCardPreviewOpen] = useState(false);
   const images = card.image_uris ? [card.image_uris] : card.card_faces.map(({ image_uris }) => image_uris);
 
-  return <StyledCard src={images[0].normal} isLarge={isOpen} />;
+  const onChangeIsOpen = previewVisible => event => {
+    event.stopPropagation();
+    setCardPreviewOpen(previewVisible);
+  };
+
+  return (
+    <>
+      <StyledCard src={images[0].normal} isLarge={isOpen} onClick={onChangeIsOpen(true)} />
+      <Modal
+        footer={null}
+        closeIcon={<div />}
+        visible={cardPreviewOpen}
+        bodyStyle={{ padding: 1, backgroundColor: '#17140f' }}
+        onCancel={onChangeIsOpen(false)}
+      >
+        <StyledFullscreenCard src={images[0].normal} onClick={onChangeIsOpen(false)} />
+      </Modal>
+    </>
+  );
 };
 
 export default ({ card, commander, setOpenCardId, isOpen }) => {
   const toggleIsOpen = () => setOpenCardId(isOpen ? null : card.id);
 
   return (
-    <StyledListItem isLegal={isCardLegal(card, commander)}>
-      <StyledCardWrapper onClick={toggleIsOpen}>
-        <Left>
-          <CardImage card={card} isOpen={isOpen} />
-          <StyledName ellipsis isOpen={isOpen}>
-            {card.name}
-          </StyledName>
-        </Left>
-        {card.amount > 1 && <span>{`${card.amount}x`}</span>}
-      </StyledCardWrapper>
+    <StyledListItem>
+      <StyledItemWrapper isLegal={isCardLegal(card, commander)} onClick={toggleIsOpen}>
+        <StyledCardWrapper>
+          <Left>
+            <CardImage card={card} isOpen={isOpen} />
+            <StyledCardNameWrapper isOpen={isOpen}>
+              <Typography.Text ellipsis>{card.name}</Typography.Text>
+            </StyledCardNameWrapper>
+          </Left>
+          {card.amount > 1 && <span>{`${card.amount}x`}</span>}
+        </StyledCardWrapper>
+      </StyledItemWrapper>
     </StyledListItem>
   );
 };
