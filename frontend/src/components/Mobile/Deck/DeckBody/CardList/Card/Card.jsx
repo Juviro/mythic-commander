@@ -1,38 +1,37 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { List, Typography } from 'antd';
 import styled from 'styled-components';
 
 import { isCardLegal } from '../../../../../../utils/cardStats';
 
 const StyledListItem = styled(List.Item)`
-  padding: 4px 8px;
+  padding: 2px 4px;
+  margin: 2px 4px;
+  border-radius: 4px;
+  ${({ isLegal }) => (!isLegal ? 'background-color: #ffcfcf;' : '')}
 `;
 
 const Left = styled.div`
   display: flex;
   flex-direction: row;
   width: 90%;
-  line-height: 36px;
 `;
 
 const StyledCardWrapper = styled.div`
   display: flex;
   width: 100%;
-  align-items: center;
+  line-height: 36px;
   flex-direction: row;
   justify-content: space-between;
-
-  ${({ isLegal }) => (!isLegal ? 'background-color: #ffcfcf;' : '')}
 `;
 
 const StyledName = styled(Typography.Text)`
-  /* top: 6px; */
   left: 46px;
-  width: 100%;
   font-size: 14;
   position: absolute;
   transition: all 0.2s;
-  ${({ isOpen }) => (isOpen ? 'left: 16px' : '')}
+  width: calc(100% - 90px);
+  ${({ isOpen }) => (isOpen ? 'left: 12px' : '')}
 `;
 
 const StyledCard = styled.img`
@@ -52,19 +51,16 @@ const StyledCard = styled.img`
 
 const CardImage = ({ card, isOpen }) => {
   const images = card.image_uris ? [card.image_uris] : card.card_faces.map(({ image_uris }) => image_uris);
-  console.log('images :', images);
-  // if(!images[0].small) return null;
 
   return <StyledCard src={images[0].normal} isLarge={isOpen} />;
 };
 
-export default ({ card, commander }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleIsOpen = () => setIsOpen(!isOpen);
+export default ({ card, commander, setOpenCardId, isOpen }) => {
+  const toggleIsOpen = () => setOpenCardId(isOpen ? null : card.id);
 
   return (
-    <StyledListItem>
-      <StyledCardWrapper onClick={toggleIsOpen} isLegal={isCardLegal(card, commander)}>
+    <StyledListItem isLegal={isCardLegal(card, commander)}>
+      <StyledCardWrapper onClick={toggleIsOpen}>
         <Left>
           <CardImage card={card} isOpen={isOpen} />
           <StyledName ellipsis isOpen={isOpen}>
