@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router';
 import CardSubList from './CardSubList';
 
@@ -13,6 +13,7 @@ const addMainType = card => {
 };
 
 const DeckList = ({ deck }) => {
+  const [openCardId, setOpenCardId] = useState(null);
   const cards = deck.cards || [];
   const cardWithMainType = cards.map(addMainType);
   const cardsByType = CARD_TYPES.map(type => ({
@@ -24,7 +25,13 @@ const DeckList = ({ deck }) => {
   return (
     <>
       {cardsByType.map(byType => (
-        <CardSubList {...byType} key={byType.type} commander={commander} />
+        <CardSubList
+          {...byType}
+          key={byType.type}
+          commander={commander}
+          setOpenCardId={setOpenCardId}
+          openCardId={openCardId}
+        />
       ))}
     </>
   );

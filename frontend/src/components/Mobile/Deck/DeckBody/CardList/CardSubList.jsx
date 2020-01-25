@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { List } from 'antd';
 import SublistHeader from './SublistHeader';
 import Card from './Card';
 
-export default ({ cards, type, commander }) => {
-  const [openCardId, setOpenCardId] = useState(null);
+export default ({ cards, type, commander, openCardId, setOpenCardId }) => {
   if (!cards || !cards.length) return null;
   const dataSource = cards.sort((a, b) => (a.name < b.name ? -1 : 1));
 
