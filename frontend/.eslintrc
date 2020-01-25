@@ -16,6 +16,8 @@
     "react/static-property-placement": 0,
     "react/no-array-index-key": 1,
     "jsx-a11y/accessible-emoji": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
     "no-unused-vars": ["error", { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }]
   },
   "env": {

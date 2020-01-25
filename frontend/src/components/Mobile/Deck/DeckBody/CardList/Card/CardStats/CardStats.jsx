@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Statistic } from 'antd';
+import SetPicker from './SetPicker';
 
 const StyledStatsWrapper = styled.div`
   height: 0;
@@ -17,7 +18,7 @@ const StyledStatsWrapper = styled.div`
 const StyledInnerStatsWrapper = styled.div`
   height: 0;
   display: flex;
-  margin-top: 28px;
+  margin-top: 32px;
   margin-left: -50vw;
   overflow: hidden;
   position: absolute;
@@ -29,7 +30,7 @@ const StyledInnerStatsWrapper = styled.div`
     if (!isVisible) return '';
     return `
       height: auto;
-      margin-left: 16px;
+      margin-left: 8px;
     `;
   }}
 `;
@@ -38,7 +39,8 @@ export default ({ card, isVisible }) => {
   return (
     <StyledStatsWrapper isVisible={isVisible}>
       <StyledInnerStatsWrapper isVisible={isVisible}>
-        <Statistic title="Available from" value={card.priceLabel} />
+        <Statistic title="Available from" value={card.priceLabel} valueStyle={{ fontSize: 16, marginTop: -5 }} />
+        <Statistic title="Set" value={card} formatter={() => <SetPicker card={card} />} />
 
         {/* <span>Set + change</span>
         <span>is commander + change</span>
