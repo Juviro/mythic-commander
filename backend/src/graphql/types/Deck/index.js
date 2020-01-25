@@ -29,6 +29,8 @@ export default `
     color_identity: [String]
     all_sets: [String!]
     amount: Int
+    priceInEuro: String
+    priceLabel: String
     
     zone: String!
     owned: Boolean
