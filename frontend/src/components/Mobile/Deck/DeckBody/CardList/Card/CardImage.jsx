@@ -14,7 +14,7 @@ const StyledCard = styled.img`
     if (!isLarge) return '';
     return `
       width: 50vw;
-      margin-top: 32px;
+      margin-top: 36px;
     `;
   }}
 `;
