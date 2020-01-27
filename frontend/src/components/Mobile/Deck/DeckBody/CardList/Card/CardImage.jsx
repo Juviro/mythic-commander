@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const StyledCard = styled.img`
   height: auto;
   width: 26px;
-  transition: all 0.4s;
+  transition: all 0.3s;
   z-index: 5;
 
   ${({ isLarge }) => {
