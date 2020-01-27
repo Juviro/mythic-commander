@@ -15,6 +15,8 @@ export default `
     rarity: String
     legalities: Legalities!
     purchase_uris: PurchaseUris
+    priceInEuro: Float
+    priceLabel: String
     
     isFoil: Boolean
   }

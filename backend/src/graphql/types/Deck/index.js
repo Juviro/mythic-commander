@@ -29,7 +29,7 @@ export default `
     color_identity: [String]
     all_sets: [String!]
     amount: Int
-    priceInEuro: String
+    priceInEuro: Float
     priceLabel: String
     
     zone: String!
