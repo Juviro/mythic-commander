@@ -28,7 +28,7 @@ const StyledBody = styled.div`
 const StyledCardNameWrapper = styled.div`
   font-size: 14;
   position: absolute;
-  transition: all 0.3s;
+  transition: all 0.2s;
   left: 46px;
 
   width: calc(100% - ${({ isOpen }) => (isOpen ? '60px' : '90px')});
@@ -36,7 +36,7 @@ const StyledCardNameWrapper = styled.div`
 `;
 
 const StyledIconWrapper = styled.div`
-  transition: all 0.3s;
+  transition: all 0.2s;
   position: absolute;
   right: 16px;
 
@@ -49,7 +49,7 @@ const StyledSeparator = styled.div`
   position: absolute;
   margin-top: 32px;
   background-color: rgba(100, 100, 100, 0.3);
-  transition: all 0.3s;
+  transition: all 0.2s;
 
   ${({ isVisible }) => {
     if (isVisible) return 'left:  0;';

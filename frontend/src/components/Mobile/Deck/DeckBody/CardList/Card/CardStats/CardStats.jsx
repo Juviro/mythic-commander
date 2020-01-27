@@ -11,7 +11,7 @@ const StyledInnerStatsWrapper = styled.div`
   overflow: hidden;
   position: absolute;
   flex-direction: column;
-  transition: all 0.3s;
+  transition: all 0.2s;
   width: calc(50vw - 16px);
 
   ${({ isVisible }) => {
