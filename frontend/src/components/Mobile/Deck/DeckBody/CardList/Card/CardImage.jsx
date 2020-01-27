@@ -5,15 +5,13 @@ import styled from 'styled-components';
 const StyledCard = styled.img`
   height: auto;
   width: 26px;
-  max-width: 350px;
-  max-height: 480px;
-  transition: all 0.2s;
+  transition: all 0.4s;
   z-index: 5;
 
   ${({ isLarge }) => {
     if (!isLarge) return '';
     return `
-      width: 50vw;
+      width: calc(50vw - 8px);
       margin-top: 36px;
     `;
   }}
