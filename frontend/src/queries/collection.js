@@ -31,7 +31,8 @@ export const CARD_FIELDS = `
     commander
   }
   isFoil
-
+  priceInEuro
+  priceLabel
 `;
 
 const COLLECTION_FIELDS = `
