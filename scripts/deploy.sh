@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 echo -e "\e[44mBuilding frontend\e[0m"
 cd /home/hauke/packages/mtg/frontend && yarn install --production=false && rm -rf /home/hauke/packages/mtg/frontend/build && yarn build
 

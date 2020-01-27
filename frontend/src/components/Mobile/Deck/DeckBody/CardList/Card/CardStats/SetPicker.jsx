@@ -72,7 +72,7 @@ export default ({ card }) => {
         defaultValue={cardSet.setKey}
         style={{ width: '40vw' }}
         onSelect={onChangeSet}
-        // onBlur={() => setIsEditing(false)}
+        onBlur={() => setIsEditing(false)}
       >
         {allCardSets.map(({ name, setKey, icon_svg_uri }) => (
           <Select.Option value={setKey} key={setKey}>
