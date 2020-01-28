@@ -1,18 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
 import { List, Icon } from 'antd';
 import { useMutation } from 'react-apollo';
 import { useParams } from 'react-router';
+
 import { editDeckCard, deleteFromDeck } from '../../../../../../../queries';
 
-const StyledStatWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-export default ({ card, isLegal }) => {
+export default ({ card }) => {
   const { owned } = card;
   const { id: deckId } = useParams();
   const [onDeleteMutation] = useMutation(deleteFromDeck);

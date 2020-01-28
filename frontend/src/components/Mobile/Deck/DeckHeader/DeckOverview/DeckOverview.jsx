@@ -43,6 +43,7 @@ export default ({ deck }) => {
   const numberOfUnowned = deck.cards.filter(({ owned }) => !owned).length;
   const numberOfCards = `${deck.numberOfCards} cards ${numberOfUnowned ? `(${numberOfUnowned} not owned)` : ''}`;
   const totalValue = (deck.cards || []).reduce((acc, val) => acc + val.priceInEuro, 0);
+  const unownedValue = (deck.cards || []).reduce((acc, val) => (val.owned ? acc : acc + val.priceInEuro), 0);
 
   return (
     <>
@@ -53,7 +54,9 @@ export default ({ deck }) => {
         </StyledHeader>
         <StyledStat>{numberOfCards}</StyledStat>
         <StyledStat>{commander && commander.name}</StyledStat>
-        <StyledStat>{`Total value: ${getPriceLabel(totalValue)}`}</StyledStat>
+        <StyledStat>{`Total value: ${getPriceLabel(totalValue)}${
+          unownedValue ? ` (${getPriceLabel(unownedValue)} not owned)` : ''
+        }`}</StyledStat>
       </StyledInfoBox>
     </>
   );

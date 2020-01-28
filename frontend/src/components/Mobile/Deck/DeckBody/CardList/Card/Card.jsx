@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { isCardLegal } from '../../../../../../utils/cardStats';
 import CardMenu from './CardMenu';
 import CardImage from './CardImage';
+import NotLegalWarning from './Warning';
 
 const StyledListItem = styled(List.Item)`
   padding: 2px 4px;
@@ -45,9 +46,9 @@ const StyledIconWrapper = styled.div`
 `;
 
 export default ({ card, commander, setOpenCardId, isOpen }) => {
-  // TODO: show attention icon for non legal cards
   const isLegal = isCardLegal(card, commander);
   const cardName = `${card.name}${card.amount > 1 ? ` x${card.amount}` : ''}`;
+  const showWarning = !isLegal || !card.owned;
 
   return (
     <StyledListItem onClick={!isOpen ? () => setOpenCardId(card.oracle_id) : undefined}>
@@ -58,6 +59,7 @@ export default ({ card, commander, setOpenCardId, isOpen }) => {
             {cardName}
           </Typography.Text>
         </StyledCardNameWrapper>
+        {showWarning && <NotLegalWarning card={card} isOpen={isOpen} isLegal={isLegal} />}
         <StyledIconWrapper isOpen={isOpen} onClick={() => setOpenCardId(null)}>
           <Icon type="up" />
         </StyledIconWrapper>

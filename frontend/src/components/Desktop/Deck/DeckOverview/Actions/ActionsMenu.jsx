@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { Menu, Icon } from 'antd';
 import styled from 'styled-components';
-import { useMutation } from 'react-apollo';
+import { Menu, Icon } from 'antd';
 import { useParams } from 'react-router';
-import { deleteFromDeck, editDeckCard } from '../../../../../queries';
+import { useMutation } from 'react-apollo';
 
 import CardContext from '../../../../CardProvider/CardProvider';
+import { deleteFromDeck, editDeckCard } from '../../../../../queries';
 
 const StyledSetIcon = styled.img`
   height: 16px;
