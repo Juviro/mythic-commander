@@ -29,6 +29,7 @@ const StyledNameWrapper = styled.span`
   white-space: nowrap;
   text-overflow: ellipsis;
   margin-right: 4px;
+  color: #1890ff;
   max-width: calc(50vw - 36px);
 `;
 
