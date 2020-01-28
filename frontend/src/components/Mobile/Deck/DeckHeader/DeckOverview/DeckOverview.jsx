@@ -53,7 +53,7 @@ export default ({ deck }) => {
         </StyledHeader>
         <StyledStat>{numberOfCards}</StyledStat>
         <StyledStat>{commander && commander.name}</StyledStat>
-        <StyledStat>{`Total Value: ${getPriceLabel(totalValue)}`}</StyledStat>
+        <StyledStat>{`Total value: ${getPriceLabel(totalValue)}`}</StyledStat>
       </StyledInfoBox>
     </>
   );

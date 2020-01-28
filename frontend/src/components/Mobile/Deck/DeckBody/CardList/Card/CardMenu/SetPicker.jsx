@@ -14,7 +14,6 @@ const StyledSetIcon = styled.img`
 
 const StyledSetWrapper = styled.div`
   width: 100%;
-  margin-left: 4px;
   display: flex;
   overflow: hidden;
   white-space: nowrap;
@@ -30,7 +29,7 @@ const StyledNameWrapper = styled.span`
   white-space: nowrap;
   text-overflow: ellipsis;
   margin-right: 4px;
-  max-width: calc(50vw - 66px);
+  max-width: calc(50vw - 36px);
 `;
 
 export default ({ card }) => {
