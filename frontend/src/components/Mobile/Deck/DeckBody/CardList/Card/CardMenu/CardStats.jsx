@@ -4,24 +4,6 @@ import SetPicker from './SetPicker';
 
 const getChecked = isChecked => (isChecked ? '✓' : '✗');
 
-const StyledInnerStatsWrapper = styled.div`
-  display: flex;
-  margin-top: 32px;
-  margin-left: -100vw;
-  overflow: hidden;
-  position: absolute;
-  flex-direction: column;
-  transition: all 0.2s;
-  width: calc(50vw - 16px);
-
-  ${({ isVisible }) => {
-    if (!isVisible) return '';
-    return `
-      margin-left: 8px;
-    `;
-  }}
-`;
-
 const StyledStatWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -40,21 +22,24 @@ const StyledStat = styled.span`
 const Stat = ({ label, value }) => {
   return (
     <StyledStatWrapper>
-      <StyledStatLabel>{`${label}: `}</StyledStatLabel>
+      {label && <StyledStatLabel>{`${label}: `}</StyledStatLabel>}
       <StyledStat>{value}</StyledStat>
     </StyledStatWrapper>
   );
 };
 
-export default ({ card, isVisible, isLegal }) => {
+export default ({ card, isLegal }) => {
+  // TODO: move isAllowed to warning icon in header
   return (
-    <div>
-      <StyledInnerStatsWrapper isVisible={isVisible}>
-        <Stat label="Set" value={<SetPicker card={card} />} />
+    <>
+      <div>
         <Stat label="Average cost" value={card.priceLabel} />
-        <Stat label="In your Collection" value={getChecked(card.owned)} />
+        <Stat label="In your collection" value={getChecked(card.owned)} />
         <Stat label="Allowed in this deck" value={getChecked(isLegal)} />
-      </StyledInnerStatsWrapper>
-    </div>
+      </div>
+      <div>
+        <Stat value={<SetPicker card={card} />} />
+      </div>
+    </>
   );
 };

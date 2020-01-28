@@ -3,7 +3,7 @@ import { List, Typography, Icon } from 'antd';
 import styled from 'styled-components';
 
 import { isCardLegal } from '../../../../../../utils/cardStats';
-import CardStats from './CardStats';
+import CardMenu from './CardMenu';
 import CardImage from './CardImage';
 
 const StyledListItem = styled(List.Item)`
@@ -41,23 +41,7 @@ const StyledIconWrapper = styled.div`
   right: 16px;
 
   transform: rotate(${({ isOpen }) => (isOpen ? '180deg' : '270deg')});
-`;
-
-const StyledSeparator = styled.div`
-  width: 100vw;
-  height: 1px;
-  position: absolute;
-  margin-top: 32px;
-  background-color: rgba(100, 100, 100, 0.3);
-  transition: all 0.2s;
-
-  ${({ isVisible }) => {
-    if (isVisible) return 'left:  0;';
-    return `
-      left: -100vw;
-      transition: none;
-    `;
-  }};
+  opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
 `;
 
 export default ({ card, commander, setOpenCardId, isOpen }) => {
@@ -77,8 +61,7 @@ export default ({ card, commander, setOpenCardId, isOpen }) => {
         <StyledIconWrapper isOpen={isOpen} onClick={() => setOpenCardId(null)}>
           <Icon type="up" />
         </StyledIconWrapper>
-        <StyledSeparator isVisible={isOpen} />
-        <CardStats card={card} isVisible={isOpen} isLegal={isLegal} />
+        <CardMenu card={card} isVisible={isOpen} isLegal={isLegal} />
       </StyledBody>
     </StyledListItem>
   );
