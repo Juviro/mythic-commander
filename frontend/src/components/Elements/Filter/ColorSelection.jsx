@@ -1,28 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Checkbox } from 'antd';
-import icons from '../../../assets/icons';
+import { colors as colorIcons } from '../../../assets/icons';
 
 const colors = [
   {
     letter: 'w',
-    key: 'white',
+    key: 'W',
   },
   {
     letter: 'u',
-    key: 'blue',
+    key: 'U',
   },
   {
     letter: 'b',
-    key: 'black',
+    key: 'B',
   },
   {
     letter: 'r',
-    key: 'red',
+    key: 'R',
   },
   {
     letter: 'g',
-    key: 'green',
+    key: 'G',
   },
 ];
 
@@ -91,7 +91,7 @@ export default ({ onSetColors, selectedColors = '' }) => {
       {colors.map(({ letter, key }) => (
         <StyledColorTag
           key={key}
-          src={icons.colors[key]}
+          src={colorIcons[key]}
           isSelected={isColorSelected(letter)}
           onClick={() => onSelectColor(letter)}
         />

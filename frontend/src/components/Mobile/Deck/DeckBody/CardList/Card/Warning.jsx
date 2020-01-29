@@ -41,7 +41,7 @@ export default ({ card, isOpen, isLegal }) => {
     <div onClick={e => e.stopPropagation()}>
       <Popover
         placement="bottomRight"
-        title="This card may not be played in this deck:"
+        title="There is a problem with this card:"
         content={renderIssues}
         trigger="click"
       >
