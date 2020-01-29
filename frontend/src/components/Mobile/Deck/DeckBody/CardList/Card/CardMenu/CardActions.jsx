@@ -6,6 +6,7 @@ import { useParams } from 'react-router';
 import { editDeckCard, deleteFromDeck } from '../../../../../../../queries';
 
 export default ({ card }) => {
+  // TODO: add option to change amount. Maybe for now just for basics.
   const { owned } = card;
   const { id: deckId } = useParams();
   const [onDeleteMutation] = useMutation(deleteFromDeck);

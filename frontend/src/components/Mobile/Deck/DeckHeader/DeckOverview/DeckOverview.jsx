@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import NotLegalWarning from './NotLegalWarning';
+import DeckName from './DeckName';
 
 const StyledInfoBox = styled.div`
   width: 100%;
@@ -12,14 +13,6 @@ const StyledHeader = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-`;
-
-const StyledTitle = styled.div`
-  font-size: 16px;
-  font-weight: 600;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 `;
 
 const StyledStat = styled.div`
@@ -49,7 +42,7 @@ export default ({ deck }) => {
     <>
       <StyledInfoBox>
         <StyledHeader>
-          <StyledTitle>{deck.name}</StyledTitle>
+          <DeckName name={deck.name} commander={commander} />
           <NotLegalWarning deck={deck} />
         </StyledHeader>
         <StyledStat>{numberOfCards}</StyledStat>
