@@ -14,7 +14,7 @@ const StyledIconWrapper = styled.div`
   position: absolute;
   line-height: 36px;
   transition: all 0.2s;
-  z-index: 99;
+  z-index: 9;
   right: ${({ isOpen }) => (isOpen ? '36px' : '16px')};
 `;
 
