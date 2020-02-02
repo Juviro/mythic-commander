@@ -7,23 +7,26 @@ const StyledButton = styled.div`
   position: fixed;
   bottom: 20px;
   right: 20px;
+  z-index: 1050;
 `;
 
 export default () => {
   const [isAdding, setIsAdding] = useState(false);
 
   return (
-    <StyledButton>
+    <>
       <AddCardDrawer isVisible={isAdding} onClose={() => setIsAdding(false)} />
-      {!isAdding && (
-        <Button
-          icon="plus"
-          size="large"
-          type="primary"
-          shape="circle"
-          onClick={() => setIsAdding(true)}
-        />
-      )}
-    </StyledButton>
+      <StyledButton>
+        {!isAdding && (
+          <Button
+            icon="plus"
+            size="large"
+            type="primary"
+            shape="circle"
+            onClick={() => setIsAdding(true)}
+          />
+        )}
+      </StyledButton>
+    </>
   );
 };
