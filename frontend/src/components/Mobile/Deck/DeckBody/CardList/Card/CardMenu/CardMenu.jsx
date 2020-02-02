@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import CardStats from './CardStats';
-import CardActions from './CardActions';
+import { Icon } from 'antd';
+import CardInfo from './CardInfo';
+import CardEdit from './CardEdit';
 
 const StyledInnerStatsWrapper = styled.div`
   display: flex;
@@ -12,7 +13,6 @@ const StyledInnerStatsWrapper = styled.div`
   flex-direction: column;
   transition: all 0.2s;
   width: calc(50vw - 16px);
-  justify-content: space-between;
   height: calc((50vw * 1.35));
 
   ${({ isVisible }) => {
@@ -23,12 +23,27 @@ const StyledInnerStatsWrapper = styled.div`
   }}
 `;
 
+const StyledIconWrapper = styled.div`
+  display: flex;
+  align-self: flex-end;
+  transition: all 0.2s;
+  flex-direction: row;
+  align-items: center;
+
+  margin-right: ${({ isEditing }) => (isEditing ? '0' : '-100px')};
+`;
+
 export default ({ card, isVisible, isLegal }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const onToggleEdit = () => setIsEditing(!isEditing);
   return (
     <div>
       <StyledInnerStatsWrapper isVisible={isVisible}>
-        <CardStats card={card} isLegal={isLegal} />
-        <CardActions card={card} />
+        <StyledIconWrapper onClick={onToggleEdit} isEditing={isEditing}>
+          <Icon type="edit" style={{ color: '#1890ff', marginRight: 4 }} />
+          <span>Edit your card...</span>
+        </StyledIconWrapper>
+        {!isEditing ? <CardInfo card={card} isLegal={isLegal} /> : <CardEdit card={card} />}
       </StyledInnerStatsWrapper>
     </div>
   );

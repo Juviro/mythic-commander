@@ -1,18 +1,26 @@
 import React from 'react';
-import styled from 'styled-components';
-import SetPicker from './SetPicker';
+import styled, { keyframes } from 'styled-components';
+import CardSet from './CardSet';
 
 const getChecked = isChecked => (isChecked ? '✓' : '✗');
+
+const blendIn = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
 
 const StyledStatWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`;
-
-const StyledStatLabel = styled.span`
   color: rgba(0, 0, 0, 0.45);
+  animation: ${blendIn} 0.5s linear;
 `;
 
 const StyledStat = styled.span`
@@ -22,23 +30,20 @@ const StyledStat = styled.span`
 const Stat = ({ label, value }) => {
   return (
     <StyledStatWrapper>
-      {label && <StyledStatLabel>{`${label}: `}</StyledStatLabel>}
+      {label && <span>{`${label}: `}</span>}
       <StyledStat>{value}</StyledStat>
     </StyledStatWrapper>
   );
 };
 
 export default ({ card, isLegal }) => {
-  // TODO: move isAllowed to warning icon in header
   return (
     <>
       <div>
         <Stat label="Average cost" value={card.priceLabel} />
         <Stat label="In your collection" value={getChecked(card.owned)} />
         <Stat label="Allowed in this deck" value={getChecked(isLegal)} />
-      </div>
-      <div>
-        <Stat value={<SetPicker card={card} />} />
+        <Stat value={<CardSet card={card} />} />
       </div>
     </>
   );

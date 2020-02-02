@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb", "prettier/react", "prettier"],
+  "extends": ["airbnb", "prettier/react", "plugin:prettier/recommended"],
   "plugins": ["prettier", "react", "jsx-a11y"],
   "parser": "babel-eslint",
   "rules": {
@@ -8,6 +8,7 @@
     "no-console": ["error", { "allow": ["warn", "error", "info"] }],
     "react/sort-comp": 0,
     "react/prop-types": 0,
+    "max-len": [2, 80, 4, { "ignoreUrls": true }],
     "no-nested-ternary": 0,
     "camelcase": 0,
     "react/jsx-props-no-spreading": 0,
