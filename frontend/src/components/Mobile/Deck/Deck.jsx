@@ -31,7 +31,11 @@ export default () => {
       ) : (
         <>
           <DeckHeader deck={data.deck} />
-          <DeckMenu deck={data.deck} currentTab={currentTab} onSetTab={setCurrentTab} />
+          <DeckMenu
+            deck={data.deck}
+            currentTab={currentTab}
+            onSetTab={setCurrentTab}
+          />
           <DeckBody deck={data.deck} currentTab={currentTab} />
         </>
       )}

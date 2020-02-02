@@ -5,9 +5,13 @@ import styled from 'styled-components';
 const StyledImage = styled.img`
   height: 100%;
   ${({ shouldClip }) =>
-    shouldClip && `clip-path: polygon(${shouldClip === 'top' ? '0 0, 0' : '100% 100%, 0'} 100%, 100% 0);`}
+    shouldClip &&
+    `clip-path: polygon(${
+      shouldClip === 'top' ? '0 0, 0' : '100% 100%, 0'
+    } 100%, 100% 0);`}
 
-  ${({ shouldClip }) => (shouldClip === 'bottom' ? 'transform: translateX(-26px);' : '')}
+  ${({ shouldClip }) =>
+    shouldClip === 'bottom' ? 'transform: translateX(-26px);' : ''}
 `;
 
 const StyledImageWrapper = styled.div`
@@ -24,7 +28,9 @@ const StyledIconWrapper = styled.div`
 `;
 
 export default ({ card, displayBothSides }) => {
-  const images = card.image_uris ? [card.image_uris] : card.card_faces.map(({ image_uris }) => image_uris);
+  const images = card.image_uris
+    ? [card.image_uris]
+    : card.card_faces.map(({ image_uris }) => image_uris);
   const hasImageUrl = images[0].small;
 
   if (hasImageUrl && !displayBothSides) {
@@ -41,7 +47,12 @@ export default ({ card, displayBothSides }) => {
         images.map((image, index) => (
           <StyledIconWrapper key={image.small}>
             <StyledImageWrapper>
-              <StyledImage src={image.small} shouldClip={images.length === 1 ? false : index ? 'bottom' : 'top'} />
+              <StyledImage
+                src={image.small}
+                shouldClip={
+                  images.length === 1 ? false : index ? 'bottom' : 'top'
+                }
+              />
             </StyledImageWrapper>
           </StyledIconWrapper>
         ))

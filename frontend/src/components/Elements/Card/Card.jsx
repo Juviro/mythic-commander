@@ -25,7 +25,13 @@ export default ({ image, name }) => {
 
   return (
     <CardWrapper>
-      {image && <StyledImage alt={name} src={image} onLoad={() => setIsLoading(false)} />}
+      {image && (
+        <StyledImage
+          alt={name}
+          src={image}
+          onLoad={() => setIsLoading(false)}
+        />
+      )}
       {(isLoading || !image) && <CardLoader />}
     </CardWrapper>
   );

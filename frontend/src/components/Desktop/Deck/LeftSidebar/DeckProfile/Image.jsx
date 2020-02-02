@@ -29,9 +29,18 @@ export default ({ onChangeImage, deck }) => {
   };
 
   return (
-    <Tooltip title="Drag a card image here to change the deck cover" placement="right">
+    <Tooltip
+      title="Drag a card image here to change the deck cover"
+      placement="right"
+    >
       <ImageWrapper>
-        <StyledDeckImage src={deck.imgSrc} alt={deck.name} onDragOver={onDragOver} onDrop={onDrop} draggable={false} />
+        <StyledDeckImage
+          src={deck.imgSrc}
+          alt={deck.name}
+          onDragOver={onDragOver}
+          onDrop={onDrop}
+          draggable={false}
+        />
       </ImageWrapper>
     </Tooltip>
   );

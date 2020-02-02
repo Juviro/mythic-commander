@@ -14,7 +14,12 @@ export default ({ cards, type, commander, openCardId, setOpenCardId }) => {
       dataSource={dataSource}
       style={{ width: '100%' }}
       renderItem={card => (
-        <Card card={card} setOpenCardId={setOpenCardId} commander={commander} isOpen={card.oracle_id === openCardId} />
+        <Card
+          card={card}
+          setOpenCardId={setOpenCardId}
+          commander={commander}
+          isOpen={card.oracle_id === openCardId}
+        />
       )}
     />
   );

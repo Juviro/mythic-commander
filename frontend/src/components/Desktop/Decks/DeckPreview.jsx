@@ -53,7 +53,9 @@ export default ({ imgSrc, name, onOpenDeck }) => {
   // TODO spin when img not loaded
   return (
     <StyledPreview>
-      <ImageWrapper>{imgSrc ? <StyledImage src={imgSrc} onClick={onOpenDeck} /> : <Spin />}</ImageWrapper>
+      <ImageWrapper>
+        {imgSrc ? <StyledImage src={imgSrc} onClick={onOpenDeck} /> : <Spin />}
+      </ImageWrapper>
       <b>{name}</b>
     </StyledPreview>
   );

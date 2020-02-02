@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Select } from 'antd';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
@@ -12,27 +12,6 @@ const StyledSetIcon = styled.img`
   margin-right: 4px;
 `;
 
-const StyledSetWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  flex-direction: row;
-  align-items: center;
-
-  justify-content: space-between;
-`;
-
-const StyledNameWrapper = styled.span`
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  margin-right: 4px;
-  color: #1890ff;
-  max-width: calc(50vw - 36px);
-`;
-
 export default ({ card }) => {
   const { id: deckId } = useParams();
   const { sets } = useContext(CardContext);
@@ -40,7 +19,9 @@ export default ({ card }) => {
   if (!sets) return null;
 
   const onChangeSet = set => {
-    editMutation({ variables: { cardOracleId: card.oracle_id, deckId, newProps: { set } } });
+    editMutation({
+      variables: { cardOracleId: card.oracle_id, deckId, newProps: { set } },
+    });
   };
 
   const allCardSets = card.all_sets
@@ -50,7 +31,12 @@ export default ({ card }) => {
 
   return (
     <div onClick={e => e.stopPropagation()}>
-      <Select size="small" defaultValue={cardSet.setKey} style={{ width: '40vw' }} onSelect={onChangeSet}>
+      <Select
+        size="small"
+        defaultValue={cardSet.setKey}
+        style={{ width: '40vw' }}
+        onSelect={onChangeSet}
+      >
         {allCardSets.map(({ name, setKey, icon_svg_uri }) => (
           <Select.Option value={setKey} key={setKey}>
             <StyledSetIcon src={icon_svg_uri} alt={name} />

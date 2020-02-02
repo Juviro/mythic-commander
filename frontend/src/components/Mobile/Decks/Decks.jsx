@@ -17,5 +17,9 @@ const StyledWrapper = styled.div`
 
 export default () => {
   const { data, loading } = useQuery(getDecks);
-  return <StyledWrapper>{loading ? <Spin /> : <DeckList decks={data.decks} />}</StyledWrapper>;
+  return (
+    <StyledWrapper>
+      {loading ? <Spin /> : <DeckList decks={data.decks} />}
+    </StyledWrapper>
+  );
 };

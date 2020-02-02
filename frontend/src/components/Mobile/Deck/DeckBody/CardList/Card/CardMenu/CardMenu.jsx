@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Icon } from 'antd';
 import CardInfo from './CardInfo';
@@ -36,6 +36,11 @@ const StyledIconWrapper = styled.div`
 export default ({ card, isVisible, isLegal }) => {
   const [isEditing, setIsEditing] = useState(false);
   const onToggleEdit = () => setIsEditing(!isEditing);
+
+  useEffect(() => {
+    if (!isVisible && isEditing) setIsEditing(false);
+  }, [isVisible, isEditing]);
+
   return (
     <div>
       <StyledInnerStatsWrapper isVisible={isVisible}>
@@ -43,7 +48,11 @@ export default ({ card, isVisible, isLegal }) => {
           <Icon type="edit" style={{ color: '#1890ff', marginRight: 4 }} />
           <span>Edit your card...</span>
         </StyledIconWrapper>
-        {!isEditing ? <CardInfo card={card} isLegal={isLegal} /> : <CardEdit card={card} />}
+        {!isEditing ? (
+          <CardInfo card={card} isLegal={isLegal} />
+        ) : (
+          <CardEdit card={card} />
+        )}
       </StyledInnerStatsWrapper>
     </div>
   );

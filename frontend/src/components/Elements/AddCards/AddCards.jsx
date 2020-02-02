@@ -19,7 +19,12 @@ export default ({ onAddCards, searchInputRef }) => {
   return (
     <StyledWrapper>
       <StyledSearchSection>
-        <SearchField ref={searchInputRef} onSearch={card => onAddCards([card])} defaultActiveFirstOption resetSearch />
+        <SearchField
+          ref={searchInputRef}
+          onSearch={card => onAddCards([card])}
+          defaultActiveFirstOption
+          resetSearch
+        />
         <MultiInput onAddCards={onAddCards} />
       </StyledSearchSection>
     </StyledWrapper>

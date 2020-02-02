@@ -49,16 +49,27 @@ export default class SearchField extends React.Component {
     const newCardResult = value.split('\n').map((row, index) => {
       if (row === oldValues[index]) return cardResults[index];
       shouldUpdate = true;
-      if (!row.replace(/[\s]+/g, '') || row.startsWith('//') || row.startsWith('SB')) {
+      if (
+        !row.replace(/[\s]+/g, '') ||
+        row.startsWith('//') ||
+        row.startsWith('SB')
+      ) {
         return NO_CARD;
       }
-      // Remove sideboard indicators (currently filtered by the function above), amount in front of name (number or number with x) and second half of a two faced name
-      const normalize = str => str.toLowerCase().replace(/(^[sb:\s]*[\d]+x*|\/\/.+$|[.,'\s]+)/g, '');
+      // Remove sideboard indicators (currently filtered by the function above)
+      // , amount in front of name (number or number with x) and second half of
+      // a two faced name
+      const normalize = str =>
+        str.toLowerCase().replace(/(^[sb:\s]*[\d]+x*|\/\/.+$|[.,'\s]+)/g, '');
       const normalizedRow = normalize(row);
       return cardNames.find(name => normalize(name) === normalizedRow);
     });
 
-    if (!shouldUpdate && newCardResult.length === prevState.value.split('\n').length) return;
+    if (
+      !shouldUpdate &&
+      newCardResult.length === prevState.value.split('\n').length
+    )
+      return;
 
     const isValidInput = newCardResult.every(Boolean);
     this.setState({ cardResults: newCardResult, isValidInput });
@@ -88,7 +99,11 @@ export default class SearchField extends React.Component {
       <StyledWrapper>
         <StyledButtonWrapper>
           {Boolean(cardResults.length) && (
-            <Button type="primary" onClick={this.onSubmit} disabled={!isValidInput || !value}>
+            <Button
+              type="primary"
+              onClick={this.onSubmit}
+              disabled={!isValidInput || !value}
+            >
               Send
             </Button>
           )}

@@ -27,10 +27,10 @@ const StyledBody = styled.div`
 `;
 
 const StyledCardNameWrapper = styled.div`
-  font-size: 14;
   position: absolute;
   transition: all 0.2s;
   left: 46px;
+  display: flex;
 
   width: calc(100% - ${({ isOpen }) => (isOpen ? '60px' : '90px')});
   left: ${({ isOpen }) => (isOpen ? '12px' : '46px')};
@@ -47,19 +47,33 @@ const StyledIconWrapper = styled.div`
 
 export default ({ card, commander, setOpenCardId, isOpen }) => {
   const isLegal = isCardLegal(card, commander);
-  const cardName = `${card.name}${card.amount > 1 ? ` x${card.amount}` : ''}`;
   const showWarning = !isLegal || !card.owned;
 
   return (
-    <StyledListItem onClick={!isOpen ? () => setOpenCardId(card.oracle_id) : undefined}>
+    <StyledListItem
+      onClick={!isOpen ? () => setOpenCardId(card.oracle_id) : undefined}
+    >
       <StyledBody>
         <CardImage card={card} isOpen={isOpen} />
-        <StyledCardNameWrapper isOpen={isOpen} onClick={isOpen ? () => setOpenCardId(null) : undefined}>
+        <StyledCardNameWrapper
+          isOpen={isOpen}
+          onClick={isOpen ? () => setOpenCardId(null) : undefined}
+        >
           <Typography.Text style={{ display: 'block' }} ellipsis>
-            {cardName}
+            {card.name}
           </Typography.Text>
+          {card.amount > 1 && (
+            <Typography.Text
+              style={{ display: 'block', marginLeft: 4 }}
+              ellipsis
+            >
+              {`x${card.amount}`}
+            </Typography.Text>
+          )}
         </StyledCardNameWrapper>
-        {showWarning && <NotLegalWarning card={card} isOpen={isOpen} isLegal={isLegal} />}
+        {showWarning && (
+          <NotLegalWarning card={card} isOpen={isOpen} isLegal={isLegal} />
+        )}
         <StyledIconWrapper isOpen={isOpen} onClick={() => setOpenCardId(null)}>
           <Icon type="up" />
         </StyledIconWrapper>

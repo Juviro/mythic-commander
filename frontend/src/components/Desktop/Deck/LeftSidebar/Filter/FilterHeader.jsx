@@ -17,7 +17,9 @@ const StyledText = styled.span`
 const filterAttrs = ['search', 'colors'];
 
 export default () => {
-  const [filter, setFilter] = useQueryParams(filterAttrs.reduce((acc, val) => ({ ...acc, [val]: StringParam }), {}));
+  const [filter, setFilter] = useQueryParams(
+    filterAttrs.reduce((acc, val) => ({ ...acc, [val]: StringParam }), {})
+  );
 
   const onResetSearch = e => {
     e.stopPropagation();
@@ -33,7 +35,11 @@ export default () => {
       </div>
       <div>
         {canResetSearch && (
-          <Button onClick={onResetSearch} type="link" style={{ height: 15, lineHeight: 1, color: '#d20000' }}>
+          <Button
+            onClick={onResetSearch}
+            type="link"
+            style={{ height: 15, lineHeight: 1, color: '#d20000' }}
+          >
             reset Search
           </Button>
         )}

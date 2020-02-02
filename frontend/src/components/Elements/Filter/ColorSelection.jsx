@@ -28,7 +28,8 @@ const colors = [
 
 const addColor = (currentColors, newColor) => {
   if (!currentColors) return newColor;
-  const findColorIndex = colorLetter => colors.findIndex(({ letter }) => letter === colorLetter);
+  const findColorIndex = colorLetter =>
+    colors.findIndex(({ letter }) => letter === colorLetter);
 
   return currentColors
     .concat(newColor)
@@ -73,10 +74,13 @@ const StyledColorTag = styled.img`
 `;
 
 export default ({ onSetColors, selectedColors = '' }) => {
-  const isColorSelected = letter => selectedColors && selectedColors.includes(letter);
+  const isColorSelected = letter =>
+    selectedColors && selectedColors.includes(letter);
   const onSelectColor = letter => {
     const isSelected = isColorSelected(letter);
-    const newColors = isSelected ? selectedColors.replace(letter, '') : addColor(selectedColors, letter);
+    const newColors = isSelected
+      ? selectedColors.replace(letter, '')
+      : addColor(selectedColors, letter);
     onSetColors(newColors);
   };
   const onSetExcluded = symbol => e => {

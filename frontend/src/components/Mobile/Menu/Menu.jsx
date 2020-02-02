@@ -19,7 +19,10 @@ const Menu = ({ children }) => {
   return (
     <StyledWrapper>
       <SearchBar onToggleDrawer={onToggleDrawer} />
-      <Drawer isVisible={isDrawerOpen} onCloseDrawer={() => setIsDrawerOpen(false)} />
+      <Drawer
+        isVisible={isDrawerOpen}
+        onCloseDrawer={() => setIsDrawerOpen(false)}
+      />
       {children}
     </StyledWrapper>
   );

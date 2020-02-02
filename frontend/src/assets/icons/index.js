@@ -14,4 +14,13 @@ import planeswalker from './planeswalker.svg';
 import multiple_types from './multiple_types.svg';
 
 export const colors = { R: red, U: blue, G: green, B: black, W: white };
-export const types = { land, instant, sorcery, artifact, creature, enchantment, planeswalker, multiple_types };
+export const types = {
+  land,
+  instant,
+  sorcery,
+  artifact,
+  creature,
+  enchantment,
+  planeswalker,
+  multiple_types,
+};

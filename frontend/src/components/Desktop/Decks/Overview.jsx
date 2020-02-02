@@ -32,7 +32,13 @@ export default ({ history }) => {
     data &&
     data.decks
       .sort(byLastEdit)
-      .map(deck => <DeckPreview key={deck.id} {...deck} onOpenDeck={() => onOpenDeck(deck.id)} />);
+      .map(deck => (
+        <DeckPreview
+          key={deck.id}
+          {...deck}
+          onOpenDeck={() => onOpenDeck(deck.id)}
+        />
+      ));
 
   return (
     <StyledOverview>
