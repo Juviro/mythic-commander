@@ -41,6 +41,7 @@ const StyledActionWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  font-size: 12px;
 `;
 
 const StyledAction = ({ icon, label }) => (
