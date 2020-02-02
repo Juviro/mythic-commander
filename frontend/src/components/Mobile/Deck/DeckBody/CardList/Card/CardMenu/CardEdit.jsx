@@ -71,7 +71,7 @@ export default ({ card }) => {
 
   return (
     <StyledWrapper>
-      <StyledItem onClick={onToggleOwned}>
+      <StyledItem>
         <StyledLabel>Set</StyledLabel>
         <SetPicker card={card} />
       </StyledItem>
@@ -79,7 +79,7 @@ export default ({ card }) => {
         <StyledLabel>Amount</StyledLabel>
         <AmountPicker card={card} />
       </StyledItem>
-      <StyledItem>
+      <StyledItem onClick={onToggleOwned}>
         <StyledAction
           icon={owned ? 'minus' : 'plus'}
           label={owned ? 'Remove from collection' : 'Add to collection'}
