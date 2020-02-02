@@ -10,7 +10,7 @@ const StyledButton = styled.div`
 `;
 
 export default () => {
-  const [isAdding, setIsAdding] = useState(true);
+  const [isAdding, setIsAdding] = useState(false);
 
   return (
     <StyledButton>
