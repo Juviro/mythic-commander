@@ -2,6 +2,8 @@ import React from 'react';
 import { List, Typography, Icon } from 'antd';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
+import { useMutation } from 'react-apollo';
+import { createDeck as createDeckMutation } from '../../../queries';
 
 const StyledImage = styled.img`
   margin: 0 16px 0 0;
@@ -11,6 +13,18 @@ const StyledImage = styled.img`
   min-width: 63px;
   max-width: 63px;
   display: block;
+`;
+
+const StyledAddIcon = styled(Icon)`
+  margin: 0 16px 0 0;
+  border-radius: 3px;
+  height: 46px;
+  width: 63px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #eaeaea;
+  font-size: 24px;
 `;
 
 const StyledHeader = styled.div`
@@ -29,29 +43,47 @@ const Left = styled.div`
   align-items: center;
 `;
 
+const DeckListItem = ({ onClick, image, name, showRightIcon }) => (
+  <StyledListItem onClick={onClick}>
+    <Left>
+      {image}
+      <Typography.Text ellipsis strong style={{ fontSize: 16 }}>
+        {name}
+      </Typography.Text>
+    </Left>
+    {showRightIcon && <Icon type="right" />}
+  </StyledListItem>
+);
+
 const DeckList = ({ decks, history }) => {
+  const [mutate] = useMutation(createDeckMutation);
   const onOpenDeck = id => {
     history.push(`/m/deck/${id}`);
   };
+  const onAddDeck = async () => {
+    const { data } = await mutate();
+    onOpenDeck(data.createDeck.id);
+  };
+
+  const deckComponents = decks.map(deck => (
+    <DeckListItem
+      showRightIcon
+      name={deck.name}
+      onClick={() => onOpenDeck(deck.id)}
+      image={<StyledImage src={deck.imgSrc} alt={`${deck.name} cover`} />}
+    />
+  ));
+
+  const addDeckComponent = (
+    <DeckListItem name="Create deck" onClick={onAddDeck} image={<StyledAddIcon type="plus" />} />
+  );
 
   return (
     <List
       header={<StyledHeader>Your Decks</StyledHeader>}
-      dataSource={decks}
+      dataSource={[addDeckComponent, ...deckComponents]}
       style={{ width: '100%' }}
-      renderItem={deck => (
-        <StyledListItem onClick={() => onOpenDeck(deck.id)}>
-          <Left>
-            <StyledImage src={deck.imgSrc} alt={`${deck.name} cover`} />
-            <Typography.Text ellipsis strong style={{ fontSize: 16 }}>
-              {deck.name}
-            </Typography.Text>
-          </Left>
-          <div>
-            <Icon type="right" />
-          </div>
-        </StyledListItem>
-      )}
+      renderItem={deck => deck}
     />
   );
 };

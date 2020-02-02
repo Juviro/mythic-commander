@@ -81,8 +81,8 @@ export default ({ onSetColors, selectedColors = '' }) => {
   };
   const onSetExcluded = symbol => e => {
     const isExclude = e.target.checked;
-    const withoutMinues = selectedColors.replace(new RegExp(symbol, 'g'), '');
-    const newColors = isExclude ? symbol.concat(withoutMinues) : withoutMinues;
+    const withoutSymbol = selectedColors.replace(new RegExp(symbol, 'g'), '');
+    const newColors = isExclude ? symbol.concat(withoutSymbol) : withoutSymbol;
     onSetColors(newColors);
   };
 

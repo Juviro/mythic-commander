@@ -37,11 +37,9 @@ export default ({ card }) => {
   const { id: deckId } = useParams();
   const { sets } = useContext(CardContext);
   const [editMutation] = useMutation(editDeckCard);
-  const [isEditing, setIsEditing] = useState(false);
   if (!sets) return null;
 
   const onChangeSet = set => {
-    setIsEditing(false);
     editMutation({ variables: { cardOracleId: card.oracle_id, deckId, newProps: { set } } });
   };
 
@@ -50,30 +48,9 @@ export default ({ card }) => {
     .sort((a, b) => (a.name > b.name ? 1 : -1));
   const cardSet = { ...sets[card.set], setKey: card.set };
 
-  const onClickIcon = e => {
-    e.stopPropagation();
-    setIsEditing(true);
-  };
-
-  if (!isEditing) {
-    return (
-      <StyledSetWrapper onClick={onClickIcon}>
-        <StyledSetIcon src={cardSet.icon_svg_uri} alt={cardSet.name} />
-        <StyledNameWrapper>{cardSet.name}</StyledNameWrapper>
-      </StyledSetWrapper>
-    );
-  }
-
   return (
     <div onClick={e => e.stopPropagation()}>
-      <Select
-        defaultOpen
-        size="small"
-        defaultValue={cardSet.setKey}
-        style={{ width: '40vw' }}
-        onSelect={onChangeSet}
-        onBlur={() => setIsEditing(false)}
-      >
+      <Select size="small" defaultValue={cardSet.setKey} style={{ width: '40vw' }} onSelect={onChangeSet}>
         {allCardSets.map(({ name, setKey, icon_svg_uri }) => (
           <Select.Option value={setKey} key={setKey}>
             <StyledSetIcon src={icon_svg_uri} alt={name} />
