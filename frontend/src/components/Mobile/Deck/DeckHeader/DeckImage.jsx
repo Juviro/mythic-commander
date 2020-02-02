@@ -2,6 +2,7 @@ import React from 'react';
 import { Affix } from 'antd';
 import styled from 'styled-components';
 import { Parallax } from 'react-parallax';
+import { useWindowSize } from '../../../Hooks';
 
 const StyledAffix = styled(Affix)`
   width: 100%;
@@ -11,6 +12,8 @@ const StyledAffix = styled(Affix)`
 
 export default ({ imgSrc }) => {
   const imageHeight = window.innerHeight * 0.2 + window.innerWidth * 0.2;
+  useWindowSize();
+
   return (
     <>
       <StyledAffix offsetTop={50 - imageHeight}>
