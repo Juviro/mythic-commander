@@ -9,6 +9,7 @@ import {
   StyledIcon,
 } from './StyledMultiInput';
 
+import { splitAmountAndName } from '../../SearchField/SearchField';
 import CardContext from '../../../CardProvider/CardProvider';
 
 const NO_CARD = 'NO_CARD';
@@ -54,15 +55,18 @@ export default class SearchField extends React.Component {
         row.startsWith('//') ||
         row.startsWith('SB')
       ) {
-        return NO_CARD;
+        return { name: NO_CARD };
       }
       // Remove sideboard indicators (currently filtered by the function above)
-      // , amount in front of name (number or number with x) and second half of
-      // a two faced name
+      // and second half of a two faced name
+      const { amount, name } = splitAmountAndName(row);
       const normalize = str =>
         str.toLowerCase().replace(/(^[sb:\s]*[\d]+x*|\/\/.+$|[.,'\s]+)/g, '');
-      const normalizedRow = normalize(row);
-      return cardNames.find(name => normalize(name) === normalizedRow);
+      const normalizedRow = normalize(name);
+      const foundName = cardNames.find(
+        cardName => normalize(cardName) === normalizedRow
+      );
+      return { name: foundName, amount };
     });
 
     if (
@@ -71,7 +75,7 @@ export default class SearchField extends React.Component {
     )
       return;
 
-    const isValidInput = newCardResult.every(Boolean);
+    const isValidInput = newCardResult.every(({ name }) => name);
     this.setState({ cardResults: newCardResult, isValidInput });
   }
 
@@ -81,11 +85,10 @@ export default class SearchField extends React.Component {
   };
 
   onSubmit = () => {
-    // TODO: use the amount fro cards
     const { onAddCards } = this.props;
     const { cardResults } = this.state;
 
-    onAddCards(cardResults.filter(name => name && name !== NO_CARD));
+    onAddCards(cardResults.filter(({ name }) => name && name !== NO_CARD));
 
     this.setState({
       value: '',
@@ -121,7 +124,7 @@ export default class SearchField extends React.Component {
             placeholder={PLACEHOLDER}
           />
           <StyledStatus>
-            {cardResults.map(name => (
+            {cardResults.map(({ name }) => (
               <IconWrapper key={Math.random()}>
                 {name !== NO_CARD && (
                   <Tooltip placement="right" title={name}>

@@ -22,9 +22,9 @@ const AddCardsButtonWrapper = styled.div`
 export default () => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [mutate] = useMutation(addToCollectionByName);
-  const onAddCards = cardNames => {
+  const onAddCards = cards => {
     mutate({
-      variables: { cards: cardNames.map(name => ({ name })) },
+      variables: { cards },
     });
   };
 

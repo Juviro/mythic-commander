@@ -93,7 +93,12 @@ export default `
   }
 
   input AddCardsToDeckInputType {
-    cards: [String]!
+    cards: [CardInputType]!
     deckId: String!
+  }
+
+  input CardInputType {
+    name: String!
+    amount: Int
   }
 `;

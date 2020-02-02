@@ -67,6 +67,7 @@ export default `
 
   input AddCardsByNameInput {
     name: String!
+    amount: Int
     isFoil: Boolean
   }
 `;
