@@ -2,7 +2,9 @@ import { Cards } from 'scryfall-sdk';
 import { ALL_CARD_FIELDS } from '../database/cardFields';
 import knex from '../database';
 
-const updateClause = ALL_CARD_FIELDS.map(({ key }) => `${key} = EXCLUDED.${key}`).join(', ');
+const updateClause = ALL_CARD_FIELDS.map(
+  ({ key }) => `${key} = EXCLUDED.${key}`
+).join(', ');
 
 const ON_DUPLICATE = ` ON CONFLICT (id) DO UPDATE SET ${updateClause}, "lastUpdate" = NOW()`;
 
@@ -49,7 +51,10 @@ const addCardsFromPage = async page => {
 
 const updateCards = async (showLogs = false) => {
   const start = Date.now();
-  console.info('Starting to update cards at', new Date().toLocaleString('de', { timeStyle: 'short' }));
+  console.info(
+    'Starting to update cards at',
+    new Date().toLocaleString('de', { timeStyle: 'short' })
+  );
   let hasNext = true;
   const eventOptions = { key: 'currentScryfallPage' };
 
@@ -69,7 +74,11 @@ const updateCards = async (showLogs = false) => {
       .where(eventOptions)
       .update({ value: hasNext ? String(currentPage + 1) : '0' });
   }
-  console.info('Finished updating cards after', Math.round((Date.now() - start) / (1000 * 60)), 'minutes');
+  console.info(
+    'Finished updating cards after',
+    Math.round((Date.now() - start) / (1000 * 60)),
+    'minutes'
+  );
 };
 
 export default updateCards;

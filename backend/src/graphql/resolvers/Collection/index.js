@@ -1,19 +1,25 @@
-import { populateCards, getCardsByName, getCardsById } from '../../../cardApi/';
+import {
+  populateCards,
+  populateCardsByName,
+  populateCardsById,
+} from '../../../cardApi/';
 
 const ON_DUPLICATE =
-  ' ON CONFLICT (id, "isFoil", set, "userId") DO UPDATE SET amount = collection.amount + 1, "createdAt" = NOW()';
+  ' ON CONFLICT (id, "isFoil", set, "userId") DO UPDATE SET amount = collection.amount + EXCLUDED.amount, "createdAt" = NOW()';
 
 const addToCollection = async (cards, userId, db) => {
-  const withoutDuplicates = cards.filter(({ id }, index) => index === cards.findIndex(card => card.id === id));
-  const withUserId = withoutDuplicates.map(({ id, set }) => ({
+  const withoutDuplicates = cards.filter(
+    ({ id }, index) => index === cards.findIndex(card => card.id === id)
+  );
+  const withUserId = withoutDuplicates.map(({ id, set, amount = 1 }) => ({
     id,
     isFoil: false,
     set,
     userId,
-    amount: 1,
+    amount,
   }));
 
-  if (!withUserId) return [];
+  if (!withUserId.length) return;
 
   await db.raw(
     db('collection')
@@ -34,15 +40,15 @@ export default {
     collection: async (_, _1, { user, db }) => getCollection(user.id, db),
   },
   Mutation: {
-    addToCollectionById: async (_, { cards: cardIds }, { user, db }) => {
-      const cards = await getCardsById(cardIds.map(({ id }) => id));
-      await addToCollection(cards, user.id, db);
+    addToCollectionById: async (_, { cards }, { user, db }) => {
+      const populatedCards = await populateCardsById(cards);
+      await addToCollection(populatedCards, user.id, db);
 
       return getCollection(user.id, db);
     },
-    addToCollectionByName: async (_, { cards: cardNames }, { user, db }) => {
-      const cards = await getCardsByName(cardNames.map(({ name }) => name));
-      await addToCollection(cards, user.id, db);
+    addToCollectionByName: async (_, { cards }, { user, db }) => {
+      const populatedCards = await populateCardsByName(cards);
+      await addToCollection(populatedCards, user.id, db);
 
       return getCollection(user.id, db);
     },

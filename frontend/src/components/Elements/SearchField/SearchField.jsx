@@ -3,9 +3,17 @@ import { AutoComplete } from 'antd';
 import CardContext from '../../CardProvider/CardProvider';
 import filterNames from './filterNames';
 
-const renderOption = (searchString, suggestion) => {
+export const splitAmountAndName = query => {
+  const match = query.match(/^(\d*)x{0,1}\s{0,1}(.*)/);
+  if (!match) return { name: query, amount: 1 };
+  const [, possibleAmount, name] = match;
+  const amount = Number(possibleAmount) || 1;
+  return { amount, name };
+};
+
+const renderOption = (searchString, option) => {
   let currentSearchString = searchString;
-  const highlightedSuggestion = suggestion.split('').map(char => {
+  const highlightedoption = option.split('').map(char => {
     if (
       !currentSearchString.length ||
       char.toLowerCase() !== currentSearchString[0].toLowerCase()
@@ -17,10 +25,22 @@ const renderOption = (searchString, suggestion) => {
   });
 
   return (
-    <AutoComplete.Option key={suggestion} text={suggestion}>
-      {highlightedSuggestion}
+    <AutoComplete.Option key={option} text={option}>
+      {highlightedoption}
     </AutoComplete.Option>
   );
+};
+
+const getDropdownAlign = alignTop => {
+  if (!alignTop) return undefined;
+  return {
+    points: ['bl', 'tl'],
+    offset: [0, -4],
+    overflow: {
+      adjustX: 0,
+      adjustY: 0,
+    },
+  };
 };
 
 export default class SearchField extends React.Component {
@@ -43,19 +63,29 @@ export default class SearchField extends React.Component {
   onSubmit = value => {
     const { onSearch, resetSearch } = this.props;
     const { searchString } = this.state;
-    onSearch(value || searchString);
+    const card = splitAmountAndName(searchString);
+    onSearch({ ...card, name: value });
     if (resetSearch) this.setState({ searchString: '' });
   };
 
   render() {
-    const { defaultActiveFirstOption } = this.props;
+    const {
+      width = 250,
+      alignTop = false,
+      defaultActiveFirstOption,
+    } = this.props;
     const { searchString } = this.state;
-    const { cardNames } = this.context;
-    const suggestions = filterNames(cardNames, searchString);
+    const { cardNames = [] } = this.context;
+
+    const searchStringWithoutAmount = splitAmountAndName(searchString).name;
+
+    const suggestions = filterNames(cardNames, searchStringWithoutAmount);
     const dataSource =
       suggestions[0] === searchString
         ? suggestions
-        : suggestions.map(option => renderOption(searchString, option));
+        : suggestions.map(option =>
+            renderOption(searchStringWithoutAmount, option)
+          );
 
     return (
       <AutoComplete
@@ -68,7 +98,8 @@ export default class SearchField extends React.Component {
         onChange={val => this.setSearch(val)}
         onSelect={this.onSubmit}
         tabIndex={0}
-        style={{ width: 250 }}
+        style={{ width }}
+        dropdownAlign={getDropdownAlign(alignTop)}
       />
     );
   }

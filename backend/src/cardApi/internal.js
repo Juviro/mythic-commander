@@ -3,11 +3,14 @@ import db from '../database';
 const sortByName = (a, b) => (a.name > b.name ? 1 : -1);
 const sortById = (a, b) => (a.id > b.id ? 1 : -1);
 
+// TODO: split up into multiple files
+
 // TODO: evaluate which of these functions is more accurate
 // const getEuroPrice = ({ usd, usd_foil }) => Number(usd || usd_foil) * 0.9 || 0;
 
 // Prices in euro are a bit deflated
-const getEuroPrice = ({ eur, usd, usd_foil }) => Number(eur) * 1.1 || Number(usd || usd_foil) * 0.9 || 0;
+const getEuroPrice = ({ eur, usd, usd_foil }) =>
+  Number(eur) * 1.1 || Number(usd || usd_foil) * 0.9 || 0;
 
 const getPriceLabel = amountInEuro => {
   const formatPrice = amount =>
@@ -23,7 +26,9 @@ const getPriceLabel = amountInEuro => {
 
 export const addAdditionalProperties = ({ type_line, owned, ...rest }) => {
   const [mainTypes, flipTypes] = type_line.split(' // ');
-  const [primaryTypes, subTypes] = mainTypes.split(' — ').map(part => part.split(' '));
+  const [primaryTypes, subTypes] = mainTypes
+    .split(' — ')
+    .map(part => part.split(' '));
   const showAsOwned = Boolean(owned || primaryTypes.includes('Basic'));
   const priceInEuro = getEuroPrice(rest.prices);
   const priceLabel = getPriceLabel(priceInEuro);
@@ -59,20 +64,39 @@ export const populateCards = async cards => {
   return populatedCards.sort(sortByName);
 };
 
-export const getCards = async (selector, value) => {
+export const populateCardsBySelector = async (selector, cards) => {
   const query = db('cards')
-    .whereIn(selector, value)
+    .whereIn(
+      selector,
+      cards.map(card => card[selector])
+    )
     .toString();
   const orderClause = ` ORDER BY oracle_id, (prices->>'eur')::float`;
-  const { rows: cards } = await db.raw(query + orderClause);
+  const { rows: dbCards } = await db.raw(query + orderClause);
 
-  const filteredCards = cards.filter(
-    (card, index) => !cards[index - 1] || card.oracle_id !== cards[index - 1].oracle_id
+  const filteredCards = dbCards.filter(
+    (card, index) =>
+      !cards[index - 1] || card.oracle_id !== cards[index - 1].oracle_id
   );
 
-  return filteredCards;
+  const cardMap = filteredCards.reduce(
+    (acc, card) => ({
+      ...acc,
+      [card[selector]]: card,
+    }),
+    {}
+  );
+
+  const populatedCards = cards.map(card => ({
+    ...card,
+    ...cardMap[card[selector]],
+  }));
+
+  return populatedCards;
 };
 
-export const getCardsByName = async names => getCards('name', names);
+export const populateCardsByName = async cards =>
+  populateCardsBySelector('name', cards);
 
-export const getCardsById = async ids => getCards('id', ids);
+export const populateCardsById = async cards =>
+  populateCardsBySelector('id', cards);

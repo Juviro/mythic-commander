@@ -6,7 +6,8 @@ import { useQuery } from 'react-apollo';
 
 import DeckHeader from './DeckHeader';
 import DeckMenu from './DeckMenu';
-import DeckBody from './DeckBody/DeckBody';
+import DeckBody from './DeckBody';
+import AddCard from './AddCard';
 import { getDeck } from '../../../queries/deck';
 
 const StyledDeck = styled.div`
@@ -39,6 +40,7 @@ export default () => {
           <DeckBody deck={data.deck} currentTab={currentTab} />
         </>
       )}
+      <AddCard />
     </StyledDeck>
   );
 };

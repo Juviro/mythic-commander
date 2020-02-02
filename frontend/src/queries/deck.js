@@ -62,7 +62,7 @@ export const editDeck = gql`
 `;
 
 export const addCardsToDeck = gql`
-  mutation addCardsToDeck($cards: [String]!, $deckId: String!) {
+  mutation addCardsToDeck($cards: [CardInputType]!, $deckId: String!) {
     addCardsToDeck(input: { cards: $cards, deckId: $deckId }) {
       ${DECK_FIELDS}
     }
