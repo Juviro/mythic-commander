@@ -5,13 +5,30 @@ import TypeTags from './RowElements/TypeTags';
 import Rarity from './RowElements/Rarity';
 import Owned from './RowElements/Owned';
 
-const TYPE_SORTING_INNER = ['Land', 'Creature', 'Enchantment', 'Artifact', 'Instant', 'Sorcery', 'Planeswalker'];
-const TYPE_SORTING_OUTER = ['Creature', 'Enchantment', 'Artifact', 'Instant', 'Sorcery', 'Planeswalker', 'Land'];
+const TYPE_SORTING_INNER = [
+  'Land',
+  'Creature',
+  'Enchantment',
+  'Artifact',
+  'Instant',
+  'Sorcery',
+  'Planeswalker',
+];
+const TYPE_SORTING_OUTER = [
+  'Creature',
+  'Enchantment',
+  'Artifact',
+  'Instant',
+  'Sorcery',
+  'Planeswalker',
+  'Land',
+];
 
 const sortByName = (a, b) => (a.name > b.name ? 1 : -1);
 const sortByDate = (a, b) => Number(b.createdAt) - Number(a.createdAt);
 
-const getEuroPrice = ({ eur, usd, usd_foil }) => Number(eur) || Number(usd || usd_foil) * 0.9 || 0;
+const getEuroPrice = ({ eur, usd, usd_foil }) =>
+  Number(eur) || Number(usd || usd_foil) * 0.9 || 0;
 const sortByPrice = (a, b) => getEuroPrice(a.prices) - getEuroPrice(b.prices);
 
 const getPriceLabel = price => {
@@ -28,7 +45,9 @@ const getPriceLabel = price => {
 };
 
 const sortAndFilterCardTypes = types =>
-  types.sort((a, b) => TYPE_SORTING_INNER.indexOf(a) - TYPE_SORTING_INNER.indexOf(b));
+  types.sort(
+    (a, b) => TYPE_SORTING_INNER.indexOf(a) - TYPE_SORTING_INNER.indexOf(b)
+  );
 
 const sortByTypeAndCommander = (a, b) => {
   if (a.zone === 'COMMANDER') return -1;
@@ -36,12 +55,18 @@ const sortByTypeAndCommander = (a, b) => {
 
   const findIndex = primaryTypes =>
     TYPE_SORTING_OUTER.findIndex(
-      type => primaryTypes.filter(typeName => TYPE_SORTING_OUTER.includes(typeName))[0] === type
+      type =>
+        primaryTypes.filter(typeName =>
+          TYPE_SORTING_OUTER.includes(typeName)
+        )[0] === type
     );
   const indexDifference = findIndex(a.primaryTypes) - findIndex(b.primaryTypes);
 
   return !indexDifference && (a.primaryTypes.length || b.primaryTypes.length)
-    ? sortByTypeAndCommander({ primaryTypes: a.primaryTypes.slice(1) }, { primaryTypes: b.primaryTypes.slice(1) })
+    ? sortByTypeAndCommander(
+        { primaryTypes: a.primaryTypes.slice(1) },
+        { primaryTypes: b.primaryTypes.slice(1) }
+      )
     : indexDifference;
 };
 
@@ -61,7 +86,9 @@ export const getColumns = (displayedColumns, Actions) => {
       key: 'types',
       width: 200,
       sorter: sortByTypeAndCommander,
-      render: ({ primaryTypes, flipTypes }) => <TypeTags primaryTypes={primaryTypes} flipTypes={flipTypes} />,
+      render: ({ primaryTypes, flipTypes }) => (
+        <TypeTags primaryTypes={primaryTypes} flipTypes={flipTypes} />
+      ),
     },
     {
       title: 'Rarity',
@@ -111,7 +138,9 @@ export const getColumns = (displayedColumns, Actions) => {
   ];
 
   return allColumns.filter(({ key, displayDefault }) =>
-    key === 'actions' ? Boolean(Actions) : displayDefault || displayedColumns.includes(key)
+    key === 'actions'
+      ? Boolean(Actions)
+      : displayDefault || displayedColumns.includes(key)
   );
 };
 
@@ -119,7 +148,8 @@ export const getSortedCards = (cards, type) => {
   return cards
     .map(card => {
       const primaryTypes = sortAndFilterCardTypes(card.primaryTypes || []);
-      const isBasicLand = card.primaryTypes && card.primaryTypes.includes('Basic');
+      const isBasicLand =
+        card.primaryTypes && card.primaryTypes.includes('Basic');
       const rarity = isBasicLand ? 'land' : card.rarity;
       return { ...card, key: card.id, primaryTypes, rarity };
     })

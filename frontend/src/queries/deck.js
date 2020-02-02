@@ -78,8 +78,16 @@ export const deleteFromDeck = gql`
 `;
 
 export const editDeckCard = gql`
-  mutation editDeckCard($cardOracleId: String!, $deckId: String! $newProps: EditCardsPropsInput!) {
-    editDeckCard(cardOracleId: $cardOracleId, deckId: $deckId, newProps: $newProps) {
+  mutation editDeckCard(
+    $cardOracleId: String!, 
+    $deckId: String! 
+    $newProps: EditCardsPropsInput!
+  ) {
+    editDeckCard(
+      cardOracleId: $cardOracleId, 
+      deckId: $deckId, 
+      newProps: $newProps
+    ) {
       ${DECK_FIELDS}
     }
   }

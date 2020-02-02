@@ -14,7 +14,8 @@ const DraggableWrapper = styled.div`
 
 export default ({ card }) => {
   const onDragStart = e => {
-    const imgSrc = (card.card_faces ? card.card_faces[0] : card).image_uris.art_crop;
+    const imgSrc = (card.card_faces ? card.card_faces[0] : card).image_uris
+      .art_crop;
     e.dataTransfer.setData('imgSrc', imgSrc);
     e.dataTransfer.effectAllowed = 'copyMove';
   };

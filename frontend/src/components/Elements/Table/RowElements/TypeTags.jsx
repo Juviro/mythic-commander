@@ -12,7 +12,15 @@ const StyledSeparator = styled.span`
   }
 `;
 
-const TYPE_SORTING = ['Creature', 'Enchantment', 'Artifact', 'Instant', 'Sorcery', 'Planeswalker', 'Land'];
+const TYPE_SORTING = [
+  'Creature',
+  'Enchantment',
+  'Artifact',
+  'Instant',
+  'Sorcery',
+  'Planeswalker',
+  'Land',
+];
 
 const filterTypes = type => TYPE_SORTING.includes(type);
 
@@ -39,7 +47,11 @@ export default ({ primaryTypes, flipTypes }) => {
         <>
           <StyledSeparator />
           {flipTypes.filter(filterTypes).map(type => (
-            <Tag color={typeToColor[type]} key={type} style={{ color: '#4a4a4a' }}>
+            <Tag
+              color={typeToColor[type]}
+              key={type}
+              style={{ color: '#4a4a4a' }}
+            >
               {type}
             </Tag>
           ))}

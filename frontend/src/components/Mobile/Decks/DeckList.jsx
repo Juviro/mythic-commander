@@ -75,7 +75,11 @@ const DeckList = ({ decks, history }) => {
   ));
 
   const addDeckComponent = (
-    <DeckListItem name="Create deck" onClick={onAddDeck} image={<StyledAddIcon type="plus" />} />
+    <DeckListItem
+      name="Create deck"
+      onClick={onAddDeck}
+      image={<StyledAddIcon type="plus" />}
+    />
   );
 
   return (

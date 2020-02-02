@@ -33,7 +33,11 @@ export default ({ card }) => {
   return (
     <ImageWrapper>
       {cardInfos.map(cardInfo => (
-        <Card key={cardInfo.image} {...cardInfo} size={cardInfos.length === 1 ? 'normal' : 'small'} />
+        <Card
+          key={cardInfo.image}
+          {...cardInfo}
+          size={cardInfos.length === 1 ? 'normal' : 'small'}
+        />
       ))}
     </ImageWrapper>
   );

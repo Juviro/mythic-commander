@@ -3,7 +3,7 @@ import { getAllCardNames, getAllSets } from '../../network/mtgApi';
 const REFRESH_PERIOD = 24 * 60 * 60 * 1000;
 
 // Special cases for the three cards named
-// "Our Market Research Shows That Players Like Really Long Card Names So We Made this Card to Have the Absolute Longest Card Name Ever Elemental"
+// "Our Market Research Shows That Players Like Really Long bla bla bla"
 // and
 // "The Ultimate Nightmare of Wizards of the Coast® Customer Service"
 // and

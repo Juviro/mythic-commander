@@ -20,7 +20,8 @@ export default ({ deck }) => {
   const possibleCommanders = deck.cards.filter(card =>
     ['Legendary', 'Creature'].every(type => card.primaryTypes.includes(type))
   );
-  const currentCommander = deck.cards.find(card => card.zone === 'COMMANDER') || {};
+  const currentCommander =
+    deck.cards.find(card => card.zone === 'COMMANDER') || {};
 
   const onSetCommander = async oracleId => {
     const changeZone = (cardOracleId, zone) => {
@@ -36,9 +37,15 @@ export default ({ deck }) => {
   };
 
   return (
-    <List.Item style={{ padding: 16, display: 'flex', flexDirection: 'column' }}>
+    <List.Item
+      style={{ padding: 16, display: 'flex', flexDirection: 'column' }}
+    >
       <StyledHeader>Your Commander:</StyledHeader>
-      <Select defaultValue={currentCommander.oracle_id} style={{ width: '100%' }} onSelect={onSetCommander}>
+      <Select
+        defaultValue={currentCommander.oracle_id}
+        style={{ width: '100%' }}
+        onSelect={onSetCommander}
+      >
         {possibleCommanders.map(card => (
           <Select.Option value={card.oracle_id} key={card.id}>
             {card.name}

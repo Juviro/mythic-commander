@@ -14,7 +14,11 @@ export default ({ imgSrc }) => {
   return (
     <>
       <StyledAffix offsetTop={50 - imageHeight}>
-        <Parallax strength={400} bgImage={imgSrc} bgImageStyle={{ width: '100%', height: 'auto', top: 50 }}>
+        <Parallax
+          strength={400}
+          bgImage={imgSrc}
+          bgImageStyle={{ width: '100%', height: 'auto', top: 50 }}
+        >
           <div style={{ height: 'calc(20vh + 20vw)' }} />
         </Parallax>
       </StyledAffix>

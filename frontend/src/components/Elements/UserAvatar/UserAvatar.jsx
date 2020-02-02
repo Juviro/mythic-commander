@@ -23,6 +23,12 @@ export default () => {
   const { data, loading } = useQuery(getUser);
 
   return (
-    <StyledWrapper>{loading ? <Spin /> : <StyledAvatar src={data.user.avatar} alt="profile image" />}</StyledWrapper>
+    <StyledWrapper>
+      {loading ? (
+        <Spin />
+      ) : (
+        <StyledAvatar src={data.user.avatar} alt="profile image" />
+      )}
+    </StyledWrapper>
   );
 };

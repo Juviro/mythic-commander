@@ -34,9 +34,17 @@ const getPriceLabel = amountInEuro => {
 export default ({ deck }) => {
   const commander = deck.cards.find(({ zone }) => zone === 'COMMANDER');
   const numberOfUnowned = deck.cards.filter(({ owned }) => !owned).length;
-  const numberOfCards = `${deck.numberOfCards} cards ${numberOfUnowned ? `(${numberOfUnowned} not owned)` : ''}`;
-  const totalValue = (deck.cards || []).reduce((acc, val) => acc + val.priceInEuro, 0);
-  const unownedValue = (deck.cards || []).reduce((acc, val) => (val.owned ? acc : acc + val.priceInEuro), 0);
+  const numberOfCards = `${deck.numberOfCards} cards ${
+    numberOfUnowned ? `(${numberOfUnowned} not owned)` : ''
+  }`;
+  const totalValue = (deck.cards || []).reduce(
+    (acc, val) => acc + val.priceInEuro,
+    0
+  );
+  const unownedValue = (deck.cards || []).reduce(
+    (acc, val) => (val.owned ? acc : acc + val.priceInEuro),
+    0
+  );
 
   return (
     <>

@@ -25,7 +25,9 @@ export default ({
       tableLayout="fixed"
       columns={filteredColumns}
       dataSource={dataSource}
-      rowClassName={card => markNonLegal && (isCardLegal(card, commander) ? '' : 'not-legal')}
+      rowClassName={card =>
+        markNonLegal && (isCardLegal(card, commander) ? '' : 'not-legal')
+      }
       pagination={noPagination ? false : { pageSize: 20 }}
     />
   );

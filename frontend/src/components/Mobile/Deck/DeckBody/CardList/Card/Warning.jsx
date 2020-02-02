@@ -20,12 +20,14 @@ const StyledIconWrapper = styled.div`
 
 export default ({ card, isOpen, isLegal }) => {
   const { legalities } = card;
-  const isCommanderLegal = !legalities.commander || legalities.commander === 'legal';
+  const isCommanderLegal =
+    !legalities.commander || legalities.commander === 'legal';
 
   const isLegalWarning = isLegal
     ? ''
     : isCommanderLegal
-    ? "• The color identity of this card is not a subset of the commander's color identiy."
+    ? `• The color identity of this card is not 
+        a subset of the commander's color identiy.`
     : '• This card is not legal in commander.';
 
   const isOwnedWarning = card.owned ? '' : '• You do not own this card';

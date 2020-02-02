@@ -30,7 +30,11 @@ export default ({ deck }) => {
     {
       header: 'Stats',
       icon: 'line-chart',
-      component: <div>Money, Amount, cmc stats, cards per type : (Owned, Unowned, Total) </div>,
+      component: (
+        <div>
+          Money, Amount, cmc stats, cards per type : (Owned, Unowned, Total)
+        </div>
+      ),
     },
     {
       header: 'Resource Overview',
@@ -52,7 +56,11 @@ export default ({ deck }) => {
         style={{ width: 300, fontSize: '14px', fontWeight: 900 }}
       >
         {panels.map(({ header, component, icon, key }) => (
-          <Panel header={header} key={icon || key} extra={icon && <Icon type={icon} />}>
+          <Panel
+            header={header}
+            key={icon || key}
+            extra={icon && <Icon type={icon} />}
+          >
             {component}
           </Panel>
         ))}

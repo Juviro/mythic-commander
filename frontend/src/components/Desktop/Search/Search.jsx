@@ -15,7 +15,9 @@ class App extends React.Component {
   onSearch = async searchString => {
     this.setState({ cards: [], loading: true });
     const data = await getCards(searchString);
-    const sortedCards = data.sort(card => (card.name.toLowerCase() === searchString.toLowerCase() ? -1 : 1));
+    const sortedCards = data.sort(card =>
+      card.name.toLowerCase() === searchString.toLowerCase() ? -1 : 1
+    );
 
     this.setState({ cards: sortedCards, loading: false });
   };

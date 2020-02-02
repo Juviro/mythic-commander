@@ -6,7 +6,10 @@ const filterByColor = (colorString = '') => card => {
   const isExact = colorString.includes('x');
 
   const cardFaces = card.card_faces || [card];
-  const allCardColors = cardFaces.reduce((acc, val) => acc.concat(val.color_identity), []);
+  const allCardColors = cardFaces.reduce(
+    (acc, val) => acc.concat(val.color_identity),
+    []
+  );
 
   const checkForColor = color => color && colors.includes(color.toLowerCase());
   const someMatches = !colors || allCardColors.some(checkForColor);
@@ -14,7 +17,9 @@ const filterByColor = (colorString = '') => card => {
     ? !allCardColors.length
     : allCardColors.length && allCardColors.every(checkForColor);
 
-  const hasAllColors = colors.split('').every(cardColor => allCardColors.includes(cardColor.toUpperCase()));
+  const hasAllColors = colors
+    .split('')
+    .every(cardColor => allCardColors.includes(cardColor.toUpperCase()));
 
   if (isExact) return hasAllColors && onlySelected;
   if (isExclude) return onlySelected;

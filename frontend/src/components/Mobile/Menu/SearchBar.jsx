@@ -34,7 +34,8 @@ const StyledIcon = styled(Icon)`
 `;
 
 const getSearchBarProps = (pathname = '') => {
-  if (pathname.match(/^\/m\/deck\/[0-9]+$/)) return { previousUrl: '/m/decks', transparentSearchBar: true };
+  if (pathname.match(/^\/m\/deck\/[0-9]+$/))
+    return { previousUrl: '/m/decks', transparentSearchBar: true };
 
   return {};
 };
@@ -54,8 +55,15 @@ const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
   return (
     <>
       <StyledMenu transparent={transparentSearchBar}>
-        <StyledIcon onClick={onClickIcon} type={previousUrl ? 'arrow-left' : 'menu'} style={iconStyle} />
-        <Input.Search placeholder="Search for something" className={transparentSearchBar && 'transparent'} />
+        <StyledIcon
+          onClick={onClickIcon}
+          type={previousUrl ? 'arrow-left' : 'menu'}
+          style={iconStyle}
+        />
+        <Input.Search
+          placeholder="Search for something"
+          className={transparentSearchBar && 'transparent'}
+        />
       </StyledMenu>
       {!transparentSearchBar && <StyledInvisibleWrapper />}
     </>

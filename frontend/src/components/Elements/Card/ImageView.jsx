@@ -20,7 +20,11 @@ export default ({ cards, loading }) => {
 
   return (
     <CardsWrapper>
-      {loading ? <CardSpinner hideBorder /> : cards.sort(byDate).map(card => <Card {...card} key={card.id} />)}
+      {loading ? (
+        <CardSpinner hideBorder />
+      ) : (
+        cards.sort(byDate).map(card => <Card {...card} key={card.id} />)
+      )}
     </CardsWrapper>
   );
 };

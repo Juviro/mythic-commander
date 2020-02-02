@@ -11,7 +11,11 @@ const StyledActions = styled.div`
 export default ({ card }) => {
   return (
     <StyledActions>
-      <Dropdown overlay={<ActionsMenu card={card} />} placement="bottomLeft" trigger={['click']}>
+      <Dropdown
+        overlay={<ActionsMenu card={card} />}
+        placement="bottomLeft"
+        trigger={['click']}
+      >
         <Icon type="ellipsis" />
       </Dropdown>
     </StyledActions>

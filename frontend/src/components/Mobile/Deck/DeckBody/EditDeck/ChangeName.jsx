@@ -30,7 +30,13 @@ export default ({ deck }) => {
       <Typography.Paragraph
         ellipsis
         editable={{ onChange: val => onChangeName(val || 'My Deck') }}
-        style={{ marginTop: 10, fontSize: 14, width: '100%', display: 'flex', justifyContent: 'space-between' }}
+        style={{
+          marginTop: 10,
+          fontSize: 14,
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
       >
         {deck.name}
       </Typography.Paragraph>

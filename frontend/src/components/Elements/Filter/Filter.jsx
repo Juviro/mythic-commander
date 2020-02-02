@@ -31,7 +31,10 @@ const Filter = () => {
         onChange={e => onChange('search')(e.target.value)}
         style={{ width: 250 }}
       />
-      <ColorSelection onSetColors={onChange('colors')} selectedColors={filter.colors} />
+      <ColorSelection
+        onSetColors={onChange('colors')}
+        selectedColors={filter.colors}
+      />
     </FilterWrapper>
   );
 };

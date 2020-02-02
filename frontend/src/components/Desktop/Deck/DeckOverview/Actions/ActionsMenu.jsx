@@ -35,11 +35,17 @@ export default ({ card, ...rest }) => {
     });
   };
   const onChangeSet = set => {
-    editMutation({ variables: { cardOracleId: card.oracle_id, deckId, newProps: { set } } });
+    editMutation({
+      variables: { cardOracleId: card.oracle_id, deckId, newProps: { set } },
+    });
   };
   const onChangeZone = () => {
     editMutation({
-      variables: { cardOracleId: card.oracle_id, deckId, newProps: { zone: isCommander ? 'MAINBOARD' : 'COMMANDER' } },
+      variables: {
+        cardOracleId: card.oracle_id,
+        deckId,
+        newProps: { zone: isCommander ? 'MAINBOARD' : 'COMMANDER' },
+      },
     });
   };
 
@@ -55,7 +61,9 @@ export default ({ card, ...rest }) => {
     </span>
   );
 
-  const displayCommanderChange = ['Legendary', 'Creature'].every(type => card.primaryTypes.includes(type));
+  const displayCommanderChange = ['Legendary', 'Creature'].every(type =>
+    card.primaryTypes.includes(type)
+  );
   const canChangeSet = Boolean(cardSets.length);
 
   return (

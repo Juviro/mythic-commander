@@ -15,9 +15,12 @@ const byName = (a, b) => (a.name > b.name ? 1 : -1);
 
 export default ({ deck }) => {
   const [editMutation] = useMutation(editDeck);
-  const getImgSrc = card => card.id && (card.card_faces ? card.card_faces[0] : card).image_uris.art_crop;
+  const getImgSrc = card =>
+    card.id &&
+    (card.card_faces ? card.card_faces[0] : card).image_uris.art_crop;
 
-  const currentImage = deck.cards.find(card => getImgSrc(card) === deck.imgSrc) || {};
+  const currentImage =
+    deck.cards.find(card => getImgSrc(card) === deck.imgSrc) || {};
 
   const onChangeImage = async imgSrc => {
     editMutation({
@@ -38,9 +41,15 @@ export default ({ deck }) => {
   };
 
   return (
-    <List.Item style={{ padding: 16, display: 'flex', flexDirection: 'column' }}>
+    <List.Item
+      style={{ padding: 16, display: 'flex', flexDirection: 'column' }}
+    >
       <StyledHeader>Deck Image:</StyledHeader>
-      <Select defaultValue={getImgSrc(currentImage)} style={{ width: '100%' }} onSelect={onChangeImage}>
+      <Select
+        defaultValue={getImgSrc(currentImage)}
+        style={{ width: '100%' }}
+        onSelect={onChangeImage}
+      >
         {deck.cards.sort(byName).map(card => (
           <Select.Option value={getImgSrc(card)} key={card.id}>
             {card.name}

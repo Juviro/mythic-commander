@@ -36,7 +36,11 @@ export default () => {
           Add Cards
         </Button>
       </AddCardsButtonWrapper>
-      <AddCardsDrawer onAddCards={onAddCards} isVisible={isDrawerVisible} setIsVisible={setIsDrawerVisible} />
+      <AddCardsDrawer
+        onAddCards={onAddCards}
+        isVisible={isDrawerVisible}
+        setIsVisible={setIsDrawerVisible}
+      />
     </StyledHeader>
   );
 };

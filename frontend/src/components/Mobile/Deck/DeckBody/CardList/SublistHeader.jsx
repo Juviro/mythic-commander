@@ -19,5 +19,7 @@ const StyledHeader = styled.div`
 export default ({ type, numberOfCards }) => {
   const nameSuffix = type !== 'Commander' ? ` (${numberOfCards})` : '';
 
-  return <StyledHeader type={type}>{typeToPlural(type) + nameSuffix}</StyledHeader>;
+  return (
+    <StyledHeader type={type}>{typeToPlural(type) + nameSuffix}</StyledHeader>
+  );
 };

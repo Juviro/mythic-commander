@@ -2,10 +2,22 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router';
 import CardSubList from './CardSubList';
 
-const CARD_TYPES = ['Commander', 'Creature', 'Enchantment', 'Artifact', 'Instant', 'Sorcery', 'Planeswalker', 'Land'];
+const CARD_TYPES = [
+  'Commander',
+  'Creature',
+  'Enchantment',
+  'Artifact',
+  'Instant',
+  'Sorcery',
+  'Planeswalker',
+  'Land',
+];
 
 const addMainType = card => {
-  const mainType = card.zone === 'COMMANDER' ? 'Commander' : CARD_TYPES.find(type => card.primaryTypes.includes(type));
+  const mainType =
+    card.zone === 'COMMANDER'
+      ? 'Commander'
+      : CARD_TYPES.find(type => card.primaryTypes.includes(type));
   return {
     ...card,
     mainType,

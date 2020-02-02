@@ -14,7 +14,12 @@ const StyledPreviewWrapper = styled.div`
 
 const StyledCommanderTag = styled.span`
   position: absolute;
-  background: linear-gradient(45deg, rgb(118, 98, 55), rgb(230, 205, 140), rgb(118, 98, 55));
+  background: linear-gradient(
+    45deg,
+    rgb(118, 98, 55),
+    rgb(230, 205, 140),
+    rgb(118, 98, 55)
+  );
   font-size: 25px;
   margin-left: -35px;
   background-clip: text;
