@@ -34,7 +34,7 @@ export default ({ card }) => {
       <Select
         size="small"
         defaultValue={cardSet.setKey}
-        style={{ width: '40vw' }}
+        style={{ width: '100%' }}
         onSelect={onChangeSet}
       >
         {allCardSets.map(({ name, setKey, icon_svg_uri }) => (

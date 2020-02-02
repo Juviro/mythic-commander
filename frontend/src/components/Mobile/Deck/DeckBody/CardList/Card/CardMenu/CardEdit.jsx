@@ -51,8 +51,6 @@ const StyledAction = ({ icon, label }) => (
 );
 
 export default ({ card }) => {
-  // TODO: add option to change amount.
-  // Maybe for now just for basics. Maybe search text for info?
   const { owned } = card;
   const { id: deckId } = useParams();
   const [onDeleteMutation] = useMutation(deleteFromDeck);
@@ -82,14 +80,12 @@ export default ({ card }) => {
         <AmountPicker card={card} />
       </StyledItem>
       <StyledItem>
-        <StyledLabel>Collection</StyledLabel>
         <StyledAction
           icon={owned ? 'minus' : 'plus'}
           label={owned ? 'Remove from collection' : 'Add to collection'}
         />
       </StyledItem>
       <StyledItem onClick={onDelete}>
-        <StyledLabel>Delete</StyledLabel>
         <StyledAction icon="delete" label="Remove from deck" />
       </StyledItem>
     </StyledWrapper>

@@ -23,7 +23,8 @@ export default ({ card }) => {
     <InputNumber
       min={1}
       max={99}
-      style={{ marginTop: 4 }}
+      size="small"
+      style={{ marginTop: 4, width: '100%' }}
       defaultValue={card.amount}
       onBlur={onSetAmount}
       onPressEnter={onSetAmount}
