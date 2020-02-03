@@ -1,9 +1,27 @@
+Search:  "Bla"
+
+In this deck:
+    * Black Lotus
+Decks:
+    * Blaubeersmoothie
+Cards:
+    * Blacker Lotus
+    * Blaubeermann
+
+
+Click on any Card => 
+    * Open dedicated card view
+    * All card infos inc. rules
+
+
+
+
+
+
 * Add actions column to table:
     * delete deck
     * change set
     * promote to copmmander or remove as commander. Multiple or no commanders can exists at once
-
-* Move price calculation to backend to easily reuse it across components
 
 * ENABLE SHORTCUTS:
     * cmd + f -> filter (+ focus field)
@@ -14,20 +32,18 @@
     
     * cmd + a -> select all
 
-* Add Columns: 
+* Add Columns:
     * options:
         * type (ramp, removal, ...)
         * commander?
     
-* Add option to change amount of cards. (Allow for all cards, because shadowboard Apostle etc)
 * add to filter: rarity, type, cmc?, 
 
 ...
 
 * When adding cards to deck or collection by name, pick the cheapest card, consider prefering cards in new design
 * make table columns hidable?
-* add check on server start: if cards empty, fetch them and display message to users on console
-* on click on notOwned indicator in deck overview -> add option to add to collection
+* add check on server start: if cards empty, fetch them and display message to users (developers) on console
 
 * add support for multiple commanders to commander color identity etc (low prio)
 * Add loading spinner for deck image change
