@@ -23,6 +23,7 @@ const StyledFullscreenCard = styled.img`
 `;
 
 export default ({ card, isOpen }) => {
+  // TODO: make card flippable
   const [cardPreviewOpen, setCardPreviewOpen] = useState(false);
   const images = card.image_uris
     ? [card.image_uris]

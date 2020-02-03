@@ -32,7 +32,11 @@ const DECK_FIELDS = `
 export const getDecks = gql`
   query decks {
     decks {
-      ${DECK_FIELDS}
+      id
+      name
+      createdAt
+      lastEdit
+      imgSrc
     }
   }
 `;

@@ -38,13 +38,11 @@ const Stat = ({ label, value }) => {
 
 export default ({ card, isLegal }) => {
   return (
-    <>
-      <div>
-        <Stat label="Average cost" value={card.priceLabel} />
-        <Stat label="In your collection" value={getChecked(card.owned)} />
-        <Stat label="Allowed in this deck" value={getChecked(isLegal)} />
-        <Stat value={<CardSet card={card} />} />
-      </div>
-    </>
+    <div>
+      <Stat value={<CardSet card={card} />} />
+      <Stat label="Average cost" value={card.priceLabel} />
+      <Stat label="In your collection" value={getChecked(card.owned)} />
+      <Stat label="Allowed in this deck" value={getChecked(isLegal)} />
+    </div>
   );
 };
