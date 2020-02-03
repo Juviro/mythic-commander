@@ -45,7 +45,7 @@ const StyledIconWrapper = styled.div`
   opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
 `;
 
-export default ({ card, commander, setOpenCardId, isOpen }) => {
+const Card = ({ card, commander, setOpenCardId, isOpen }) => {
   const isLegal = isCardLegal(card, commander);
   const showWarning = !isLegal || !card.owned;
 
@@ -82,3 +82,15 @@ export default ({ card, commander, setOpenCardId, isOpen }) => {
     </StyledListItem>
   );
 };
+
+const areEqual = (prevProps, nextProps) => {
+  if (prevProps.isOpen !== nextProps.isOpen) return false;
+  if (prevProps.commander.oracle_id !== nextProps.commander.oracle_id) {
+    return false;
+  }
+  return ['id', 'set', 'zone', 'owned', 'amount'].every(key => {
+    return prevProps.card[key] === nextProps.card[key];
+  });
+};
+
+export default React.memo(Card, areEqual);
