@@ -33,6 +33,7 @@ export const CARD_FIELDS = `
   isFoil
   priceInEuro
   priceLabel
+  oracle_id
 `;
 
 const COLLECTION_FIELDS = `

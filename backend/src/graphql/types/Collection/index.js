@@ -17,6 +17,7 @@ export default `
     purchase_uris: PurchaseUris
     priceInEuro: Float
     priceLabel: String
+    oracle_id: String!
     
     isFoil: Boolean
   }

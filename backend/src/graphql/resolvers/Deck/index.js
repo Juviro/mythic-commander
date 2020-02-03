@@ -9,21 +9,27 @@ const DEFAULT_ZONE = 'MAINBOARD';
 
 const ON_DUPLICATE = ` ON CONFLICT ("deckId", "oracle_id") DO UPDATE SET amount = "cardToDeck".amount + EXCLUDED.amount, "cardId"=EXCLUDED."cardId"`;
 
-const getPopulatedCards = async (db, deckId) => {
+const getPopulatedCards = async (db, deckId, cardOracleId) => {
   // TODO: this can now be simplified as cardToDeck now features the column oracle_id
-  const { rows: populatedCards } = await db.raw(
-    `
-  SELECT "cardToDeck".zone, "cardToDeck".amount, cards.*, "cardsBySet".all_sets, CASE WHEN owned.oracle_id IS NULL THEN NULL ELSE 1 END AS owned
-    FROM "cardToDeck" 
-  LEFT JOIN cards 
-    ON "cardToDeck"."cardId" = cards.id 
-  LEFT JOIN "cardsBySet" 
-    ON "cardToDeck"."oracle_id" = "cardsBySet".oracle_id 
-  LEFT JOIN (SELECT DISTINCT oracle_id FROM collection LEFT JOIN cards ON collection.id = cards.id) owned
-    ON cards.oracle_id = owned.oracle_id
-  WHERE "deckId" = ?`,
-    deckId
-  );
+  let query = `
+    SELECT "cardToDeck".zone, "cardToDeck".amount, cards.*, "cardsBySet".all_sets, CASE WHEN owned.oracle_id IS NULL THEN NULL ELSE 1 END AS owned
+      FROM "cardToDeck" 
+    LEFT JOIN cards 
+      ON "cardToDeck"."cardId" = cards.id 
+    LEFT JOIN "cardsBySet" 
+      ON "cardToDeck"."oracle_id" = "cardsBySet".oracle_id 
+    LEFT JOIN (SELECT DISTINCT oracle_id FROM collection LEFT JOIN cards ON collection.id = cards.id) owned
+      ON cards.oracle_id = owned.oracle_id
+    WHERE "deckId" = ?
+  `;
+  const params = [deckId];
+
+  if (cardOracleId) {
+    query += ` AND "cardToDeck".oracle_id = ?`;
+    params.push(cardOracleId);
+  }
+
+  const { rows: populatedCards } = await db.raw(query, params);
   return populatedCards.map(addAdditionalProperties);
 };
 
@@ -167,9 +173,9 @@ export default {
         await updateLastEdit(deckId, db);
       }
 
-      const [deck] = await db('decks').where({ userId: user.id, id: deckId });
+      const [populatedCard] = await getPopulatedCards(db, deckId, cardOracleId);
 
-      return populateDeck(deck, db);
+      return populatedCard;
     },
     deleteFromDeck: async (_, { cardId, deckId }, { user, db }) => {
       await canAccessDeck(user.id, deckId);
