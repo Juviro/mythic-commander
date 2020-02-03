@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Input, Icon } from 'antd';
+import { Icon } from 'antd';
 
 import { withRouter } from 'react-router';
+import SearchBar from './SearchBar';
 
 const StyledMenu = styled.div`
   width: 100%;
@@ -60,10 +61,7 @@ const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
           type={previousUrl ? 'arrow-left' : 'menu'}
           style={iconStyle}
         />
-        <Input.Search
-          placeholder="Search for something"
-          className={transparentSearchBar && 'transparent'}
-        />
+        <SearchBar transparentSearchBar={transparentSearchBar} />
       </StyledMenu>
       {!transparentSearchBar && <StyledInvisibleWrapper />}
     </>
