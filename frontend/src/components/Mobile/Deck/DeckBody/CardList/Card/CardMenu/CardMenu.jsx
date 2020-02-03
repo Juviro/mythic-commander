@@ -30,7 +30,11 @@ const StyledIconWrapper = styled.div`
   flex-direction: row;
   align-items: center;
 
-  margin-right: ${({ isEditing }) => (isEditing ? '0' : '-100px')};
+  margin-right: ${({ isEditing }) => (isEditing ? '0' : '-31px')};
+`;
+
+const StyledLabel = styled.span`
+  font-weight: 500;
 `;
 
 export default ({ card, isVisible, isLegal }) => {
@@ -45,8 +49,11 @@ export default ({ card, isVisible, isLegal }) => {
     <div>
       <StyledInnerStatsWrapper isVisible={isVisible}>
         <StyledIconWrapper onClick={onToggleEdit} isEditing={isEditing}>
-          <Icon type="edit" style={{ color: '#1890ff', marginRight: 4 }} />
-          <span>Edit your card...</span>
+          <Icon
+            type={isEditing ? 'save' : 'edit'}
+            style={{ color: '#1890ff', marginRight: 4 }}
+          />
+          <StyledLabel>Save</StyledLabel>
         </StyledIconWrapper>
         {!isEditing ? (
           <CardInfo card={card} isLegal={isLegal} />

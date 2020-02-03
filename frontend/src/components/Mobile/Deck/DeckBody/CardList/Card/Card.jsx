@@ -8,10 +8,10 @@ import CardImage from './CardImage';
 import NotLegalWarning from './Warning';
 
 const StyledListItem = styled(List.Item)`
-  padding: 2px 4px;
-  margin: 2px 4px;
   width: 100%;
   display: flex;
+  margin: 2px 4px;
+  padding: 2px 4px;
   min-height: 36px;
   align-items: end;
   line-height: 36px;
@@ -85,11 +85,14 @@ const Card = ({ card, commander, setOpenCardId, isOpen }) => {
 
 const areEqual = (prevProps, nextProps) => {
   if (prevProps.isOpen !== nextProps.isOpen) return false;
-  if (prevProps.commander.oracle_id !== nextProps.commander.oracle_id) {
+  if (
+    (prevProps.commander || {}).oracle_id !==
+    (nextProps.commander || {}).oracle_id
+  ) {
     return false;
   }
-  return ['id', 'set', 'zone', 'owned', 'amount'].every(key => {
-    return prevProps.card[key] === nextProps.card[key];
+  return ['id', 'set', 'zone', 'owned', 'amount'].every(propKey => {
+    return prevProps.card[propKey] === nextProps.card[propKey];
   });
 };
 
