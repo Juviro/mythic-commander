@@ -92,7 +92,7 @@ export const editDeckCard = gql`
       deckId: $deckId, 
       newProps: $newProps
     ) {
-      ${DECK_FIELDS}
+      ${DECK_CARD_FIELDS}
     }
   }
 `;

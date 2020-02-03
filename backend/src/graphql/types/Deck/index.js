@@ -6,10 +6,10 @@ export default `
     lastEdit: String!
     imgSrc: String
     numberOfCards: Int
-    cards: [CardsType]!
+    cards: [DeckCard]!
   }
 
-  type CardsType {
+  type DeckCard {
     id: String!
     oracle_id: String!
     set: String!
@@ -74,7 +74,7 @@ export default `
     createDeck: Deck!
     editDeck(deckId: String!, newProperties: EditDeckFieldsInput!): Deck!
     addCardsToDeck(input: AddCardsToDeckInputType): Deck!
-    editDeckCard(cardOracleId: String!, deckId: String!, newProps: EditCardsPropsInput!): Deck!
+    editDeckCard(cardOracleId: String!, deckId: String!, newProps: EditCardsPropsInput!): DeckCard!
     deleteFromDeck(cardId: String!, deckId: String!): Deck!
     deleteDeck(deckId: String!): Boolean
     duplicateDeck(deckId: String!): String!
