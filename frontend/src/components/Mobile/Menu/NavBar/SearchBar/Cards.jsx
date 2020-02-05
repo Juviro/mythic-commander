@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AutoComplete } from 'antd';
+import { AutoComplete, Icon } from 'antd';
 
 import OptionGroupHeader from './OptionGroupHeader';
 import {
@@ -8,12 +8,23 @@ import {
   sortCards,
 } from '../../../../Elements/SearchField/filterNames';
 import CardIcon from '../../../../Elements/Card/Preview/CardIcon';
+import client from '../../../../../network/graphqlClient';
+import { getCardByName } from '../../../../../queries';
 
-const StyledDeck = styled.div`
+const StyledCard = styled.div`
   display: flex;
   flex-direction: row;
   padding-left: 3px;
-  margin: -4px 0;
+  height: 36px;
+  align-items: center;
+  margin: -2px 0;
+`;
+
+const CardImageWrapper = styled.div`
+  width: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StyledName = styled.span`
@@ -24,52 +35,68 @@ const renderCard = onClick => card => {
   const { name, id } = card;
   return (
     <AutoComplete.Option key={id} onClick={onClick} value={`${name};${id}`}>
-      <StyledDeck>
-        {card.id && <CardIcon card={card} />}
+      <StyledCard>
+        <CardImageWrapper>
+          {card.id ? (
+            <CardIcon card={card} />
+          ) : (
+            <Icon type="file-image" style={{ fontSize: 24 }} />
+          )}
+        </CardImageWrapper>
         <StyledName>{name}</StyledName>
-      </StyledDeck>
+      </StyledCard>
     </AutoComplete.Option>
   );
 };
 
 export const getCards = (
   collectionData,
-  query = '',
+  query,
   history,
   maxResults,
   cardNames
 ) => {
-  const collection = (collectionData && collectionData.collection.cards) || [];
-  const cardListCollection = filterCards(collection, query).sort(
-    sortCards(query)
-  );
-  const totalResultsCollection = cardListCollection.length;
-  const onClickCollection = ({ key }) => {
-    const id = key.split(';')[1];
-  };
-  const onShowAllCollection = () => {
-    history.push(`/m/collection?query=${query}`);
-  };
+  if (!query) return [];
+  const collection = filterCards(
+    (collectionData && collectionData.collection.cards) || [],
+    query
+  ).sort(sortCards(query));
 
-  const cardListCards = filterCards(
+  const cards = filterCards(
     cardNames.map(name => ({ name, id: '' })),
     query
   )
     .filter(
       ({ name }) =>
-        !cardListCollection.some(collectionCard => collectionCard.name === name)
+        !collection.some(collectionCard => collectionCard.name === name)
     )
     .sort(sortCards(query));
-  const totalResultsCards = cardListCards.length;
-  const onClickCards = ({ key }) => {
-    console.log('TCL: onClickCards -> key', key);
+
+  const totalResultsCollection = collection.length;
+  const totalResultsCards = cards.length;
+
+  const onClick = async ({ key }) => {
+    // eslint-disable-next-line prefer-const
+    let [name, id] = key.split(';');
+    if (!id) {
+      const result = await client.query({
+        query: getCardByName,
+        variables: { name },
+      });
+      id = result && result.data.getCardByName.id;
+    }
+    history.push(`/m/cards/${id}?query=${name}`);
+  };
+
+  const onShowAllCollection = () => {
+    history.push(`/m/collection?query=${query}`);
   };
   const onShowAllCards = () => {
-    history.push(`/m/search?query=${query}`);
+    history.push(`/m/cards?query=${query}`);
   };
 
   return [
-    cardListCollection.length && (
+    collection.length && (
       <AutoComplete.OptGroup
         key="collection"
         label={
@@ -83,17 +110,15 @@ export const getCards = (
           />
         }
       >
-        {cardListCollection
-          .slice(0, maxResults)
-          .map(renderCard(onClickCollection))}
+        {collection.slice(0, maxResults).map(renderCard(onClick))}
       </AutoComplete.OptGroup>
     ),
-    cardListCards.length && (
+    cards.length && (
       <AutoComplete.OptGroup
         key="cards"
         label={
           <OptionGroupHeader
-            title="Cards"
+            title="Other Cards"
             showMoreButton={{
               onClick: onShowAllCards,
               visible: totalResultsCards > maxResults,
@@ -102,7 +127,7 @@ export const getCards = (
           />
         }
       >
-        {cardListCards.slice(0, maxResults).map(renderCard(onClickCards))}
+        {cards.slice(0, maxResults).map(renderCard(onClick))}
       </AutoComplete.OptGroup>
     ),
   ];
