@@ -5,6 +5,8 @@ import Desktop from './Desktop';
 import Mobile from './Mobile';
 import Login from './Elements/Login';
 import GlobalStyle from './GlobalStyle';
+// import { getCards } from '../queries';
+// import client from '../network/graphqlClient';
 
 const App = () => {
   return (
@@ -20,3 +22,9 @@ const App = () => {
 };
 
 export default App;
+
+// const test = async () => {
+//   const result = await client.query({ query: getCards });
+//   console.log('result :', result);
+// };
+// test();

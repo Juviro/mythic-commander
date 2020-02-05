@@ -12,12 +12,13 @@ import { getDecks } from './Decks';
 import { getCards } from './Cards';
 import CardContext from '../../../../CardProvider/CardProvider';
 
-const MAX_RESULTS = 5;
+const MAX_RESULTS = 4;
 
 const Menu = ({ history, transparentSearchBar }) => {
   const [{ query }, setQuery] = useQueryParams({
     query: StringParam,
   });
+
   const { data: decksData } = useQuery(getDecksQuery);
   const { data: collectionData } = useQuery(getCollection);
   const { cardNames } = useContext(CardContext);
@@ -31,13 +32,14 @@ const Menu = ({ history, transparentSearchBar }) => {
 
   return (
     <AutoComplete
+      backfill
       value={query}
+      onChange={onSetSearch}
       dataSource={dataSource}
       dropdownMatchSelectWidth={false}
       placeholder="Search for something"
-      onChange={onSetSearch}
-      dropdownMenuStyle={{ maxHeight: '90vh' }}
       style={{ width: 'calc(100% - 16px)' }}
+      dropdownMenuStyle={{ maxHeight: '95vh' }}
       className={transparentSearchBar && 'transparent'}
     >
       <Input className="no-border" />

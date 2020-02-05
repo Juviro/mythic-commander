@@ -1,4 +1,5 @@
 export { getUser, login } from './user';
+export { getCards, getCard, getCardByName } from './cards';
 export {
   getCollection,
   addToCollectionByName,

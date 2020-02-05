@@ -4,26 +4,31 @@ import { getCollectionFromCache } from './cardCache';
 const CardContext = React.createContext({});
 
 export const CardContextProvider = ({ children }) => {
-  const [cardNames, setCardNames] = useState([]);
-  const [sets, setSets] = useState([]);
-  const value = {
-    cardNames,
-    sets,
-  };
+  const [cardNames, setCardNames] = useState();
+  const [sets, setSets] = useState();
 
   const getCardNames = async () => {
     const allCardNames = await getCollectionFromCache('cardNames');
     setCardNames(allCardNames);
   };
-  if (!cardNames.length) getCardNames();
+  if (!cardNames) getCardNames();
 
   const getSets = async () => {
     const allSets = await getCollectionFromCache('sets');
     setSets(allSets);
   };
-  if (!Object.keys(sets).length) getSets();
+  if (!sets) getSets();
 
-  return <CardContext.Provider value={value}>{children}</CardContext.Provider>;
+  return (
+    <CardContext.Provider
+      value={{
+        cardNames: cardNames || [],
+        sets: sets || {},
+      }}
+    >
+      {children}
+    </CardContext.Provider>
+  );
 };
 
 export default CardContext;

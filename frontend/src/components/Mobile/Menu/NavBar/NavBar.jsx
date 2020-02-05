@@ -35,7 +35,7 @@ const StyledIcon = styled(Icon)`
 `;
 
 const getSearchBarProps = (pathname = '') => {
-  if (pathname.match(/^\/m\/deck\/[0-9]+$/))
+  if (pathname.match(/^\/m\/decks\/[0-9]+$/))
     return { previousUrl: '/m/decks', transparentSearchBar: true };
 
   return {};

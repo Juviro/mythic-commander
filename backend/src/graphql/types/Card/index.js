@@ -1,25 +1,16 @@
 export default `
-  type Collection {
-    id: String!
-    cards: [CollectionCard!]!
-  }
-
-  type CollectionCard {
+  type Card {
     id: String!
     set: String!
     name: String!
     image_uris: ImageUris
-    card_faces: [CardFace]
+    card_faces: [CardFace!]
     createdAt: String!
     prices: Prices!
     rarity: String
     legalities: Legalities!
     purchase_uris: PurchaseUris
-    priceInEuro: Float
-    priceLabel: String
     oracle_id: String!
-    
-    isFoil: Boolean
   }
 
   type PurchaseUris {
@@ -51,24 +42,8 @@ export default `
   }
 
   type Query {
-    collection: Collection!
-  }
-
-  type Mutation {
-    addToCollectionById(cards: [AddCardsByIdInput]!): Collection!
-    addToCollectionByName(cards: [AddCardsByNameInput]!): Collection!
-    deleteFromCollection(cardIds: [String]!): Collection!
-  }
-
-  input AddCardsByIdInput {
-    id: String!
-    isFoil: Boolean
-    set: String
-  }
-
-  input AddCardsByNameInput {
-    name: String!
-    amount: Int
-    isFoil: Boolean
+    cards: [Card!]!
+    card(id: String!): Card
+    getCardByName(name: String!): Card
   }
 `;

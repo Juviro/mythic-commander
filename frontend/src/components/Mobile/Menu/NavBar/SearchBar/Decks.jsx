@@ -30,12 +30,13 @@ const renderDeck = onClick => ({ name, id, imgSrc }) => {
   );
 };
 
-export const getDecks = (decksData, query = '', history, maxResults) => {
+export const getDecks = (decksData, query, history, maxResults) => {
+  if (!query) return null;
   const decks = (decksData && decksData.decks) || [];
 
   const onOpenDeck = ({ key }) => {
     const id = key.split(';')[1];
-    history.push(`/m/deck/${id}`);
+    history.push(`/m/decks/${id}`);
   };
 
   const onShowAll = () => {
