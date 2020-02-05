@@ -17,7 +17,7 @@ const DuplicateDeck = ({ history }) => {
         deckId,
       },
     });
-    history.push(`/m/deck/${id}`);
+    history.push(`/m/decks/${id}`);
   };
   return (
     <List.Item
