@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { Input, AutoComplete } from 'antd';
 import { withRouter } from 'react-router';
 import { useQueryParams, StringParam } from 'use-query-params';
@@ -15,6 +15,8 @@ import CardContext from '../../../../CardProvider/CardProvider';
 const MAX_RESULTS = 4;
 
 const Menu = ({ history, transparentSearchBar }) => {
+  const inputEl = useRef(null);
+
   const [{ query }, setQuery] = useQueryParams({
     query: StringParam,
   });
@@ -23,18 +25,26 @@ const Menu = ({ history, transparentSearchBar }) => {
   const { data: collectionData } = useQuery(getCollection);
   const { cardNames } = useContext(CardContext);
 
-  const onSetSearch = value => setQuery({ query: value.split(';')[0] });
+  const onSetSearch = value => {
+    console.log('value :', value);
+    setQuery({ query: value.split(';')[0] });
+  };
 
   const dataSource = [
     getDecks(decksData, query, history, MAX_RESULTS),
     ...getCards(collectionData, query, history, MAX_RESULTS, cardNames),
   ].filter(Boolean);
 
+  const onSelect = () => {
+    inputEl.current.blur();
+  };
+
   return (
     <AutoComplete
-      backfill
       value={query}
+      ref={inputEl}
       onChange={onSetSearch}
+      onSelect={onSelect}
       dataSource={dataSource}
       dropdownMatchSelectWidth={false}
       placeholder="Search for something"
