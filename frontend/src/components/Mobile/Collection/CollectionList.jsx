@@ -8,7 +8,7 @@ export default ({ cards }) => {
 
   return (
     <List
-      header="Header"
+      header="Collection"
       dataSource={cards}
       style={{ width: '100%' }}
       renderItem={card => (
