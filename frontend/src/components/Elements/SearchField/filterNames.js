@@ -14,37 +14,41 @@ export const filterCards = (cards, searchString = '') => {
   });
 };
 
-export default (cardNames, searchString) => {
+export const sortCards = searchString => ({ name: cardA }, { name: cardB }) => {
   const cleanSearch = trimName(searchString);
+  const cleanCardNameA = trimName(cardA);
+  const cleanCardNameB = trimName(cardB);
+  if (!cleanSearch) return cleanCardNameA > cleanCardNameB ? 1 : -1;
+
+  return cleanCardNameA === cleanSearch
+    ? -1
+    : cleanCardNameB === cleanSearch
+    ? 1
+    : cleanCardNameA.startsWith(cleanSearch)
+    ? -1
+    : cleanCardNameB.startsWith(cleanSearch)
+    ? 1
+    : cleanCardNameA.indexOf(cleanSearch) > 0
+    ? -1
+    : cleanCardNameB.indexOf(cleanSearch) > 0
+    ? 1
+    : cleanCardNameA[0] === cleanSearch[0]
+    ? -1
+    : cleanCardNameB[0] === cleanSearch[0]
+    ? 1
+    : cleanCardNameA < cleanCardNameB
+    ? -1
+    : 1;
+};
+
+export default (cardNames, searchString, maxResults = MAX_RESULTS) => {
   const foundCards = filterCards(
     cardNames.map(name => ({ name })),
     searchString
-  ).map(({ name }) => name);
+  );
 
-  const sortCards = (cardA, cardB) => {
-    const cleanCardNameA = trimName(cardA);
-    const cleanCardNameB = trimName(cardB);
-    if (!searchString) return cleanCardNameA > cleanCardNameB ? 1 : -1;
-
-    return cleanCardNameA === cleanSearch
-      ? -1
-      : cleanCardNameB === cleanSearch
-      ? 1
-      : cleanCardNameA.startsWith(cleanSearch)
-      ? -1
-      : cleanCardNameB.startsWith(cleanSearch)
-      ? 1
-      : cleanCardNameA.indexOf(cleanSearch) > 0
-      ? -1
-      : cleanCardNameB.indexOf(cleanSearch) > 0
-      ? 1
-      : cleanCardNameA[0] === cleanSearch[0]
-      ? -1
-      : cleanCardNameB[0] === cleanSearch[0]
-      ? 1
-      : cleanCardNameA < cleanCardNameB
-      ? -1
-      : 1;
-  };
-  return foundCards.sort(sortCards).slice(0, MAX_RESULTS);
+  return foundCards
+    .sort(sortCards(searchString))
+    .slice(0, maxResults)
+    .map(({ name }) => name);
 };

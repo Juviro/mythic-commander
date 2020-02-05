@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { AutoComplete } from 'antd';
 
+import OptionGroupHeader from './OptionGroupHeader';
+
 const StyledDeck = styled.div`
   display: flex;
   flex-direction: row;
@@ -28,7 +30,7 @@ const renderDeck = onClick => ({ name, id, imgSrc }) => {
   );
 };
 
-export const getDecks = (decksData, query = '', history) => {
+export const getDecks = (decksData, query = '', history, maxResults) => {
   const decks = (decksData && decksData.decks) || [];
 
   const onOpenDeck = ({ key }) => {
@@ -36,15 +38,32 @@ export const getDecks = (decksData, query = '', history) => {
     history.push(`/m/deck/${id}`);
   };
 
+  const onShowAll = () => {
+    history.push(`/m/decks?query=${query}`);
+  };
+
   const deckList = decks
     .filter(({ name }) => name.toLowerCase().includes(query.toLowerCase()))
-    .map(renderDeck(onOpenDeck));
+    .sort((a, b) => (a.name < b.name ? -1 : 1));
+  const totalResults = deckList.length;
 
-  if (!deckList.length) return null;
+  if (!totalResults) return null;
 
   return (
-    <AutoComplete.OptGroup key="decks" label="Decks">
-      {deckList}
+    <AutoComplete.OptGroup
+      key="decks"
+      label={
+        <OptionGroupHeader
+          title="Decks"
+          showMoreButton={{
+            onClick: onShowAll,
+            visible: totalResults > maxResults,
+            totalResults,
+          }}
+        />
+      }
+    >
+      {deckList.slice(0, maxResults).map(renderDeck(onOpenDeck))}
     </AutoComplete.OptGroup>
   );
 };
