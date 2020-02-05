@@ -26,7 +26,6 @@ const Menu = ({ history, transparentSearchBar }) => {
   const { cardNames } = useContext(CardContext);
 
   const onSetSearch = value => {
-    console.log('value :', value);
     setQuery({ query: value.split(';')[0] });
   };
 
