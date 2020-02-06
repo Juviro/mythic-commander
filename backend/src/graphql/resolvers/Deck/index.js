@@ -10,15 +10,15 @@ const DEFAULT_ZONE = 'MAINBOARD';
 const ON_DUPLICATE = ` ON CONFLICT ("deckId", "oracle_id") DO UPDATE SET amount = "cardToDeck".amount + EXCLUDED.amount, "cardId"=EXCLUDED."cardId"`;
 
 const getPopulatedCards = async (db, deckId, cardOracleId) => {
-  // TODO: this can now be simplified as cardToDeck now features the column oracle_id
+  // TODO: improve performance of this query
   let query = `
     SELECT "cardToDeck".zone, "cardToDeck".amount, cards.*, "cardsBySet".all_sets, CASE WHEN collection.oracle_id IS NULL THEN NULL ELSE 1 END AS owned
       FROM "cardToDeck" 
-    LEFT JOIN cards 
-      ON "cardToDeck"."cardId" = cards.id 
+    LEFT JOIN "cards" 
+      ON "cardToDeck"."cardId" = cards.id
     LEFT JOIN "cardsBySet" 
       ON "cardToDeck"."oracle_id" = "cardsBySet".oracle_id 
-    LEFT JOIN collection
+    LEFT JOIN (SELECT COUNT(*) as owned, oracle_id FROM collection GROUP BY oracle_id) collection
       ON cards.oracle_id = collection.oracle_id
     WHERE "deckId" = ?
   `;
