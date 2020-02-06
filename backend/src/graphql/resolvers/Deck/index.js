@@ -20,7 +20,7 @@ const getPopulatedCards = async (db, deckId, cardOracleId) => {
       ON "cardToDeck"."oracle_id" = "cardsBySet".oracle_id 
     LEFT JOIN collection
       ON cards.oracle_id = collection.oracle_id
-    WHERE "deckId" = ?;
+    WHERE "deckId" = ?
   `;
   const params = [deckId];
 
