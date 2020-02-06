@@ -113,7 +113,23 @@ export const CARD_FIELDS_ADDITION_1 = [
   },
 ];
 
+export const CARD_FIELDS_ADDITION_2 = [
+  {
+    key: 'layout',
+    type: 'string',
+  },
+  {
+    key: 'games',
+    type: 'jsonb',
+  },
+  {
+    key: 'full_art',
+    type: 'boolean',
+  },
+];
+
 export const ALL_CARD_FIELDS = [
   CARD_FIELDS_INITIAL,
   CARD_FIELDS_ADDITION_1,
+  CARD_FIELDS_ADDITION_2,
 ].flat();

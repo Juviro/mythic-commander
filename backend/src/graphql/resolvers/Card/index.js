@@ -8,6 +8,10 @@ export default {
       const [card] = await db('cards').where({ name });
       return card;
     },
+    search: async (_, { query }, { db }) => {
+      const cards = db('cards').where({ name: query });
+      return cards;
+    },
     cards: (_, _1, { db }) => db('cards'),
   },
 };
