@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Input, AutoComplete } from 'antd';
+import { Input, AutoComplete, Spin } from 'antd';
 import { withRouter } from 'react-router';
 import { useQueryParams, StringParam } from 'use-query-params';
 import { useQuery } from 'react-apollo';
@@ -55,16 +55,24 @@ const renderOption = onClick => element => {
   );
 };
 
+const loadingOption = [
+  <AutoComplete.Option key="spinner">
+    <Spin style={{ display: 'flex', justifyContent: 'center' }} />
+  </AutoComplete.Option>,
+];
+
 const Menu = ({ history, transparentSearchBar }) => {
   const inputEl = useRef(null);
 
   const [{ query = '' }, setQuery] = useQueryParams({
     query: StringParam,
   });
-  const { data } = useQuery(search, {
+  const { data, loading } = useQuery(search, {
     variables: { query, limit: MAX_RESULTS },
   });
   const onSetSearch = value => {
+    // TODO: fix this hack
+    if (value === 'spinner') return;
     setQuery({ query: value.split(';')[0] });
   };
   const onSelect = () => {
@@ -101,7 +109,7 @@ const Menu = ({ history, transparentSearchBar }) => {
     },
   ];
 
-  const dataSource = optionCategories
+  const results = optionCategories
     .filter(({ options }) => options && options.length)
     .map(({ name, options, onClick, onShowAll }) => (
       <AutoComplete.OptGroup
@@ -120,6 +128,8 @@ const Menu = ({ history, transparentSearchBar }) => {
       </AutoComplete.OptGroup>
     ));
 
+  const dataSource = loading ? loadingOption : results;
+
   return (
     <AutoComplete
       value={query}
@@ -130,7 +140,7 @@ const Menu = ({ history, transparentSearchBar }) => {
       dropdownMatchSelectWidth={false}
       placeholder="Search for something"
       style={{ width: 'calc(100% - 16px)' }}
-      dropdownMenuStyle={{ maxHeight: 400 }}
+      dropdownMenuStyle={{ maxHeight: 550 }}
       className={transparentSearchBar && 'transparent'}
     >
       <Input className="no-border" />
