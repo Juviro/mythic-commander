@@ -9,7 +9,7 @@ export default ({
     {title}
     {visible && (
       <Button type="link" style={{ float: 'right' }} onClick={onClick}>
-        {`show all ${totalResults}`}
+        {`show all ${totalResults || ''}`}
       </Button>
     )}
   </span>

@@ -44,7 +44,7 @@ export default `
   type Query {
     cards: [Card!]!
     card(id: String!): Card
-    search(query: String!): [Card]!
+    search(query: String!): [Card!]!
     getCardByName(name: String!): Card
   }
 `;

@@ -120,7 +120,7 @@ export const CARD_FIELDS_ADDITION_2 = [
   },
   {
     key: 'games',
-    type: 'jsonb',
+    specificType: 'TEXT[]',
   },
   {
     key: 'full_art',
