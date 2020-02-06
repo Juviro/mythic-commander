@@ -140,7 +140,7 @@ const Menu = ({ history, transparentSearchBar }) => {
       dropdownMatchSelectWidth={false}
       placeholder="Search for something"
       style={{ width: 'calc(100% - 16px)' }}
-      dropdownMenuStyle={{ maxHeight: 550 }}
+      dropdownMenuStyle={{ maxHeight: '90vw' }}
       className={transparentSearchBar && 'transparent'}
     >
       <Input className="no-border" />
