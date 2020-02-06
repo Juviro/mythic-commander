@@ -1,5 +1,6 @@
 
-
+* Move spinner to searchbar, don't block prev results
+* Remove emblems, tokens etc from distinctCards
 
 * ENABLE SHORTCUTS:
     * cmd + f -> filter (+ focus field)

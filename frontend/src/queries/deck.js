@@ -27,7 +27,6 @@ export const DECK_FIELDS = `
   createdAt
   lastEdit
   imgSrc
-  numberOfCards
 `;
 
 const DECK_FIELDS_WITH_CARDS = `

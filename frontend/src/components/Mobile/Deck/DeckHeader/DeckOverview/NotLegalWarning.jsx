@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Icon, Popover } from 'antd';
 import { isDeckLegal, isDeckOwned } from '../../../../../utils/cardStats';
+import { getNumberOfCards } from '../../../../../utils/deck';
 
 const StyledIssuesBox = styled.div`
   padding: 8px;
@@ -19,7 +20,7 @@ const messages = {
 export default ({ deck }) => {
   const isLegal = isDeckLegal(deck);
   const isOwned = isDeckOwned(deck);
-  const has100Cards = deck.numberOfCards === 100;
+  const has100Cards = getNumberOfCards(deck.cards) === 100;
   const showWarning = !isLegal || !isOwned || !has100Cards;
 
   if (!showWarning) return null;
