@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-const CARD_FIELDS = `
+export const CARD_FIELDS = `
   id
   set
   name
@@ -55,6 +55,14 @@ export const getCardByName = gql`
 export const getCard = gql`
   query getCard($id: String!) {
       card(id: $id) {
+        ${CARD_FIELDS}
+      }
+    }
+`;
+
+export const searchCard = gql`
+  query searchCard($query: String, $limit: Int) {
+    searchCard(query: $query,limit: $limit) {
         ${CARD_FIELDS}
       }
     }

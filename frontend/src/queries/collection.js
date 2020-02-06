@@ -1,45 +1,18 @@
 import gql from 'graphql-tag';
+import { CARD_FIELDS } from './cards';
 
-export const CARD_FIELDS = `
-  id
-  set
-  name
-  rarity
+export const COLLECTION_CARD_FIELDS = `
   createdAt
-  image_uris {
-    small
-    normal
-    art_crop
-  }
-  card_faces {
-    name
-    image_uris {
-      small
-      normal
-      art_crop
-    }
-    colors
-  }
-  prices {
-    eur
-    usd
-    usd_foil
-  }
-  legalities {
-    standard
-    modern
-    commander
-  }
   isFoil
   priceInEuro
   priceLabel
-  oracle_id
+  ${CARD_FIELDS}
 `;
 
 const COLLECTION_FIELDS = `
   id
   cards {
-    ${CARD_FIELDS}
+    ${COLLECTION_CARD_FIELDS}
   }
 `;
 

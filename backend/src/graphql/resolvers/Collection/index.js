@@ -5,21 +5,20 @@ import {
 } from '../../../cardApi/';
 
 const ON_DUPLICATE =
-  ' ON CONFLICT (id, "isFoil", set, "userId") DO UPDATE SET amount = collection.amount + EXCLUDED.amount, "createdAt" = NOW()';
+  ' ON CONFLICT (id, "isFoil", "userId") DO UPDATE SET amount = collection.amount + EXCLUDED.amount, "createdAt" = NOW()';
 
 const addToCollection = async (cards, userId, db) => {
+  if (!cards.length) return;
   const withoutDuplicates = cards.filter(
     ({ id }, index) => index === cards.findIndex(card => card.id === id)
   );
-  const withUserId = withoutDuplicates.map(({ id, set, amount = 1 }) => ({
+  const withUserId = withoutDuplicates.map(({ id, oracle_id, amount = 1 }) => ({
     id,
     isFoil: false,
-    set,
+    oracle_id,
     userId,
     amount,
   }));
-
-  if (!withUserId.length) return;
 
   await db.raw(
     db('collection')

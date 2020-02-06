@@ -8,10 +8,13 @@ export default {
       const [card] = await db('cards').where({ name });
       return card;
     },
-    search: async (_, { query }, { db }) => {
-      const { rows: cards } = await db.raw(
-        `SELECT * FROM "distinctCards" WHERE name ILIKE '%?%';`,
-        query
+    searchCard: async (_, { query, limit = null }, { db }) => {
+      if (!query) return [];
+      const {
+        rows: cards,
+      } = await db.raw(
+        `SELECT * FROM "distinctCards" WHERE name ILIKE ? LIMIT ? `,
+        [`%${query}%`, limit]
       );
       return cards;
     },

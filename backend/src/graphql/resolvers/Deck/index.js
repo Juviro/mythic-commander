@@ -12,15 +12,15 @@ const ON_DUPLICATE = ` ON CONFLICT ("deckId", "oracle_id") DO UPDATE SET amount 
 const getPopulatedCards = async (db, deckId, cardOracleId) => {
   // TODO: this can now be simplified as cardToDeck now features the column oracle_id
   let query = `
-    SELECT "cardToDeck".zone, "cardToDeck".amount, cards.*, "cardsBySet".all_sets, CASE WHEN owned.oracle_id IS NULL THEN NULL ELSE 1 END AS owned
+    SELECT "cardToDeck".zone, "cardToDeck".amount, cards.*, "cardsBySet".all_sets, CASE WHEN collection.oracle_id IS NULL THEN NULL ELSE 1 END AS owned
       FROM "cardToDeck" 
     LEFT JOIN cards 
       ON "cardToDeck"."cardId" = cards.id 
     LEFT JOIN "cardsBySet" 
       ON "cardToDeck"."oracle_id" = "cardsBySet".oracle_id 
-    LEFT JOIN (SELECT DISTINCT oracle_id FROM collection LEFT JOIN cards ON collection.id = cards.id) owned
-      ON cards.oracle_id = owned.oracle_id
-    WHERE "deckId" = ?
+    LEFT JOIN collection
+      ON cards.oracle_id = collection.oracle_id
+    WHERE "deckId" = ?;
   `;
   const params = [deckId];
 
@@ -33,7 +33,7 @@ const getPopulatedCards = async (db, deckId, cardOracleId) => {
   return populatedCards.map(addAdditionalProperties);
 };
 
-const populateDeck = async (deck, db) => {
+export const populateDeck = async (deck, db) => {
   const populatedCards = await getPopulatedCards(db, deck.id);
   const numberOfCards = populatedCards.reduce(
     (acc, val) => acc + (Number(val.amount) || 1),

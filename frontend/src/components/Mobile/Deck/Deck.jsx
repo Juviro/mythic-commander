@@ -24,6 +24,7 @@ export default () => {
   const [currentTab, setCurrentTab] = useState('cards');
   const { data, loading } = useQuery(getDeck, { variables: { id } });
   console.log('data :', data && data.deck);
+  if (!loading && !data) return null;
 
   return (
     <StyledDeck>
