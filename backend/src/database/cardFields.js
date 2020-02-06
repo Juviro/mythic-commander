@@ -126,6 +126,14 @@ export const CARD_FIELDS_ADDITION_2 = [
     key: 'full_art',
     type: 'boolean',
   },
+  {
+    key: 'frame',
+    type: 'string',
+  },
+  {
+    key: 'frame_effects',
+    type: 'string',
+  },
 ];
 
 export const ALL_CARD_FIELDS = [
