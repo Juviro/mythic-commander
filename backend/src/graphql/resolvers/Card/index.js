@@ -9,7 +9,10 @@ export default {
       return card;
     },
     search: async (_, { query }, { db }) => {
-      const cards = db('cards').where({ name: query });
+      const { rows: cards } = await db.raw(
+        `SELECT * FROM "distinctCards" WHERE name ILIKE '%?%';`,
+        query
+      );
       return cards;
     },
     cards: (_, _1, { db }) => db('cards'),
