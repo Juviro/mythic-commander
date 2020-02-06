@@ -35,11 +35,7 @@ const getPopulatedCards = async (db, deckId, cardOracleId) => {
 
 export const populateDeck = async (deck, db) => {
   const populatedCards = await getPopulatedCards(db, deck.id);
-  const numberOfCards = populatedCards.reduce(
-    (acc, val) => acc + (Number(val.amount) || 1),
-    0
-  );
-  return { ...deck, numberOfCards, cards: populatedCards };
+  return { ...deck, cards: populatedCards };
 };
 
 const updateLastEdit = (deckId, db) =>

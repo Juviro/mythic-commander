@@ -5,7 +5,6 @@ export default `
     createdAt: String!
     lastEdit: String!
     imgSrc: String
-    numberOfCards: Int
     cards: [DeckCard]!
   }
 

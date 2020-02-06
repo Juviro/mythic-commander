@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import NotLegalWarning from './NotLegalWarning';
 import DeckName from './DeckName';
+import { getNumberOfCards } from '../../../../../utils/deck';
 
 const StyledInfoBox = styled.div`
   width: 100%;
@@ -34,7 +35,7 @@ const getPriceLabel = amountInEuro => {
 export default ({ deck }) => {
   const commander = deck.cards.find(({ zone }) => zone === 'COMMANDER');
   const numberOfUnowned = deck.cards.filter(({ owned }) => !owned).length;
-  const numberOfCards = `${deck.numberOfCards} cards ${
+  const numberOfCards = `${getNumberOfCards(deck.cards)} cards ${
     numberOfUnowned ? `(${numberOfUnowned} not owned)` : ''
   }`;
   const totalValue = (deck.cards || []).reduce(
