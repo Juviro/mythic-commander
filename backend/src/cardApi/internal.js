@@ -3,7 +3,7 @@ import db from '../database';
 const sortByName = (a, b) => (a.name > b.name ? 1 : -1);
 const sortById = (a, b) => (a.id > b.id ? 1 : -1);
 
-// TODO: split up into multiple files
+// TODO: try to deprecate as much from this folder as possible
 
 // TODO: evaluate which of these functions is more accurate
 // const getEuroPrice = ({ usd, usd_foil }) => Number(usd || usd_foil) * 0.9 || 0;
@@ -65,21 +65,12 @@ export const populateCards = async cards => {
 };
 
 export const populateCardsBySelector = async (selector, cards) => {
-  const query = db('cards')
-    .whereIn(
-      selector,
-      cards.map(card => card[selector])
-    )
-    .toString();
-  const orderClause = ` ORDER BY oracle_id, (prices->>'eur')::float`;
-  const { rows: dbCards } = await db.raw(query + orderClause);
-
-  const filteredCards = dbCards.filter(
-    (card, index) =>
-      !cards[index - 1] || card.oracle_id !== cards[index - 1].oracle_id
+  const dbCards = await db('distinctCards').whereIn(
+    selector,
+    cards.map(card => card[selector])
   );
 
-  const cardMap = filteredCards.reduce(
+  const cardMap = dbCards.reduce(
     (acc, card) => ({
       ...acc,
       [card[selector]]: card,

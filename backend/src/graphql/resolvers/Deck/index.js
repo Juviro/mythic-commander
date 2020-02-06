@@ -153,13 +153,10 @@ export default {
             deckCard.cardId
           );
         } else {
-          const [{ set }] = await db('cards')
-            .where({ id: deckCard.cardId })
-            .select('set');
           await db('collection').insert({
             id: deckCard.cardId,
             isFoil: false,
-            set,
+            oracle_id: cardOracleId,
             userId: user.id,
             amount: 1,
           });
