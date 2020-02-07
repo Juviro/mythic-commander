@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import NotLegalWarning from './NotLegalWarning';
 import DeckName from './DeckName';
-import { getNumberOfCards } from '../../../../../utils/deck';
+import { getNumberOfCards, getPriceLabel } from '../../../../../utils/deck';
 
 const StyledInfoBox = styled.div`
   width: 100%;
@@ -19,18 +19,6 @@ const StyledHeader = styled.div`
 const StyledStat = styled.div`
   font-size: 12px;
 `;
-
-const getPriceLabel = amountInEuro => {
-  const formatPrice = amount =>
-    Number(amount).toLocaleString('de-DE', {
-      style: 'currency',
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2,
-      currency: 'EUR',
-    });
-
-  return amountInEuro ? formatPrice(amountInEuro) : '-';
-};
 
 export default ({ deck }) => {
   const commander = deck.cards.find(({ zone }) => zone === 'COMMANDER');

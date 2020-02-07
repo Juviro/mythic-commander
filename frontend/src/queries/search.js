@@ -1,19 +1,31 @@
 import gql from 'graphql-tag';
-import { CARD_FIELDS } from './cards';
-import { DECK_FIELDS } from './deck';
-import { COLLECTION_CARD_FIELDS } from './collection';
+
+const SEARCH_CARD_FIELDS = `
+  name
+  id
+  card_faces {
+    image_uris {
+      small
+    }
+  }
+  image_uris {
+    small
+  }
+`;
 
 export const search = gql`
   query search($query: String, $limit: Int) {
     search(query: $query,limit: $limit) {
-        cards {
-          ${CARD_FIELDS}
-        }
         decks {
-          ${DECK_FIELDS}
+          id
+          name
+          imgSrc
+        }
+        cards {
+          ${SEARCH_CARD_FIELDS}
         }
         collection {
-          ${COLLECTION_CARD_FIELDS}
+          ${SEARCH_CARD_FIELDS}
         }
       }
     }
