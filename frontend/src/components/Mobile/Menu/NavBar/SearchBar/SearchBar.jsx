@@ -29,6 +29,10 @@ const CardImageWrapper = styled.div`
 
 const StyledName = styled.span`
   margin-left: 11px;
+  max-width: calc(100vw - 130px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const StyledImage = styled.img`
@@ -39,6 +43,12 @@ const StyledImage = styled.img`
   min-width: 32px;
   max-width: 32px;
   display: block;
+`;
+
+const StyledLoadingWrapper = styled.div`
+  position: absolute;
+  right: 16px;
+  top: 14px;
 `;
 
 const renderOption = onClick => element => {
@@ -55,12 +65,11 @@ const renderOption = onClick => element => {
   );
 };
 
-const loadingOption = [
-  <AutoComplete.Option key="spinner">
+const loadingIndicator = (
+  <StyledLoadingWrapper>
     <Spin style={{ display: 'flex', justifyContent: 'center' }} />
-  </AutoComplete.Option>,
-];
-
+  </StyledLoadingWrapper>
+);
 const Menu = ({ history, transparentSearchBar }) => {
   const inputEl = useRef(null);
 
@@ -71,8 +80,6 @@ const Menu = ({ history, transparentSearchBar }) => {
     variables: { query, limit: MAX_RESULTS },
   });
   const onSetSearch = value => {
-    // TODO: fix this hack
-    if (value === 'spinner') return;
     setQuery({ query: value.split(';')[0] });
   };
   const onSelect = () => {
@@ -109,7 +116,7 @@ const Menu = ({ history, transparentSearchBar }) => {
     },
   ];
 
-  const results = optionCategories
+  const dataSource = optionCategories
     .filter(({ options }) => options && options.length)
     .map(({ name, options, onClick, onShowAll }) => (
       <AutoComplete.OptGroup
@@ -124,27 +131,32 @@ const Menu = ({ history, transparentSearchBar }) => {
           />
         }
       >
-        {options.map(renderOption(onClick))}
+        {options
+          .filter(({ name: optionName }) =>
+            optionName.toLowerCase().includes(query.toLowerCase())
+          )
+          .map(renderOption(onClick))}
       </AutoComplete.OptGroup>
     ));
 
-  const dataSource = loading ? loadingOption : results;
-
   return (
-    <AutoComplete
-      value={query}
-      ref={inputEl}
-      onChange={onSetSearch}
-      onSelect={onSelect}
-      dataSource={dataSource}
-      dropdownMatchSelectWidth={false}
-      placeholder="Search for something"
-      style={{ width: 'calc(100% - 16px)' }}
-      dropdownMenuStyle={{ maxHeight: '90vw' }}
-      className={transparentSearchBar && 'transparent'}
-    >
-      <Input className="no-border" />
-    </AutoComplete>
+    <>
+      <AutoComplete
+        value={query}
+        ref={inputEl}
+        onChange={onSetSearch}
+        onSelect={onSelect}
+        dataSource={dataSource}
+        dropdownMatchSelectWidth={false}
+        placeholder="Search for something"
+        style={{ width: 'calc(100% - 16px)' }}
+        dropdownMenuStyle={{ maxHeight: '90vw' }}
+        className={transparentSearchBar && 'transparent'}
+      >
+        <Input className="no-border" />
+      </AutoComplete>
+      {loading && loadingIndicator}
+    </>
   );
 };
 
