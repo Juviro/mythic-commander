@@ -1,23 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { List } from 'antd';
 import Card from './Card';
 
 export default ({ cards }) => {
-  const [openCardId, setOpenCardId] = useState(null);
   if (!cards || !cards.length) return null;
 
   return (
     <List
-      header="Collection"
+      header={
+        <span style={{ marginLeft: 8, fontWeight: 600 }}>Your Collection</span>
+      }
       dataSource={cards}
       style={{ width: '100%' }}
-      renderItem={card => (
-        <Card
-          card={card}
-          setOpenCardId={setOpenCardId}
-          isOpen={card.oracle_id === openCardId}
-        />
-      )}
+      renderItem={card => <Card card={card} />}
     />
   );
 };

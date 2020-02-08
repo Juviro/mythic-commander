@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, useState } from 'react';
 import { Input, AutoComplete } from 'antd';
 import { withRouter } from 'react-router';
 import { useQueryParams, StringParam } from 'use-query-params';
@@ -11,6 +11,19 @@ import CardContext from '../../../../CardProvider/CardProvider';
 import filterNames from '../../../../Elements/SearchField/filterNames';
 
 const MAX_RESULTS = 4;
+
+const StyledBackground = styled.div`
+  top: 48px;
+  left: 0;
+  width: 100vw;
+  height: calc(100% - 50px);
+  position: fixed;
+  transition: opacity 0.3s;
+  background-color: #1e1e1e;
+
+  opacity: ${({ isVisible }) => (isVisible ? 0.7 : 0)};
+  ${({ isVisible }) => (!isVisible ? 'pointer-events: none;' : '')};
+`;
 
 const StyledCard = styled.div`
   display: flex;
@@ -79,6 +92,7 @@ const renderOption = onClick => element => {
 
 const Menu = ({ history, transparentSearchBar }) => {
   const inputEl = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
   const { cards } = useContext(CardContext);
   const { data: decksData } = useQuery(getDecks);
   const { data: collectionData } = useQuery(getCollection);
@@ -154,11 +168,14 @@ const Menu = ({ history, transparentSearchBar }) => {
     <>
       <AutoComplete
         allowClear
+        open={isOpen}
         value={query}
         ref={inputEl}
         onChange={onSetSearch}
         onSelect={onSelect}
         dataSource={dataSource}
+        onBlur={() => setIsOpen(false)}
+        onFocus={() => setIsOpen(true)}
         dropdownMatchSelectWidth={false}
         placeholder="Search for something"
         style={{ width: 'calc(100% - 16px)' }}
@@ -167,6 +184,7 @@ const Menu = ({ history, transparentSearchBar }) => {
       >
         <Input className="no-border" />
       </AutoComplete>
+      <StyledBackground isVisible={isOpen} />
     </>
   );
 };
