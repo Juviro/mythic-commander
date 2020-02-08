@@ -88,7 +88,7 @@ const Menu = ({ history, transparentSearchBar }) => {
   const [{ query = '' }, setQuery] = useQueryParams({
     query: StringParam,
   });
-  const onSetSearch = value => {
+  const onSetSearch = (value = '') => {
     setQuery({ query: value.split(';')[0] });
   };
   const onSelect = () => {
@@ -153,6 +153,7 @@ const Menu = ({ history, transparentSearchBar }) => {
   return (
     <>
       <AutoComplete
+        allowClear
         value={query}
         ref={inputEl}
         onChange={onSetSearch}

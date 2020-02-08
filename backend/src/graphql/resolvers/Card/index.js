@@ -28,7 +28,17 @@ export default {
       return cards;
     },
     cachedCards: async (_, _1, { db }) => {
-      const cards = await db('distinctCards');
+      const { rows: cards } = await db.raw(`
+      SELECT *  FROM "distinctCards" 
+      WHERE layout <> ALL ( ARRAY[
+        'token', 
+        'double_faced_token', 
+        'emblem',
+        'planar',
+        'vanguard',
+        'scheme'
+      ]);
+      `);
       return cards.map(({ name, id, ...rest }) => ({
         s: getImageUri(rest),
         n: name,
