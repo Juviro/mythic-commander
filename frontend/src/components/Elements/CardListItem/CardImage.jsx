@@ -6,17 +6,12 @@ const ANIMATION_TIME = 200;
 
 const StyledCard = styled.img`
   height: auto;
-  width: 26px;
   transition: all ${ANIMATION_TIME}ms;
   z-index: 5;
+  will-change: width, margin-top;
 
-  ${({ isLarge }) => {
-    if (!isLarge) return '';
-    return `
-      width: calc(50vw - 8px);
-      margin-top: 36px;
-    `;
-  }}
+  width: ${({ isLarge }) => (isLarge ? 'calc(50vw - 8px)' : '26px')};
+  margin-top: ${({ isLarge }) => (isLarge ? 36 : 0)}px;
 `;
 
 const StyledFullscreenCard = styled.img`

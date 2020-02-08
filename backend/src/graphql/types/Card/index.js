@@ -41,8 +41,14 @@ export default `
     small: String
   }
 
+  type CachedCard {
+    i: String!
+    n: String!
+    s: String
+  }
+
   type Query {
-    cards: [Card!]!
+    cachedCards: [CachedCard!]!
     card(id: String!): Card
     searchCard(query: String, limit: Int): [Card!]!
     getCardByName(name: String!): Card

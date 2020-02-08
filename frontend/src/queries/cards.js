@@ -32,14 +32,12 @@ export const CARD_FIELDS = `
   oracle_id
 `;
 
-export const getCards = gql`
-  query getCards {
-    cards {
-      id
-      name
-      image_uris {
-        small
-      }
+export const cachedCards = gql`
+  query cachedCards {
+    cachedCards {
+      i
+      n
+      s
     }
   }
 `;
