@@ -1,12 +1,10 @@
 import React from 'react';
-import { Icon } from 'antd';
-import { useMutation } from 'react-apollo';
-import { useParams } from 'react-router';
 
 import styled, { keyframes } from 'styled-components';
 import SetPicker from './SetPicker';
-import { editDeckCard, deleteFromDeck } from '../../../../../../../queries';
 import AmountPicker from './AmountPicker';
+import OwnedToggle from './OwnedToggle';
+import Delete from './Delete';
 
 const blendIn = keyframes`
   from {
@@ -37,39 +35,8 @@ const StyledLabel = styled.span`
   line-height: 30px;
   margin-bottom: -10px;
 `;
-const StyledActionWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  font-size: 12px;
-`;
-
-const StyledAction = ({ icon, label }) => (
-  <StyledActionWrapper>
-    <Icon type={icon} style={{ marginRight: 4 }} />
-    {label}
-  </StyledActionWrapper>
-);
 
 export default ({ card }) => {
-  const { owned } = card;
-  const { id: deckId } = useParams();
-  const [onDeleteMutation] = useMutation(deleteFromDeck);
-  const [editMutation] = useMutation(editDeckCard);
-
-  const onToggleOwned = () => {
-    editMutation({
-      variables: {
-        deckId,
-        cardOracleId: card.oracle_id,
-        newProps: { owned: !owned },
-      },
-    });
-  };
-  const onDelete = () => {
-    onDeleteMutation({ variables: { cardId: card.id, deckId } });
-  };
-
   return (
     <StyledWrapper>
       <StyledItem>
@@ -80,14 +47,11 @@ export default ({ card }) => {
         <StyledLabel>Amount</StyledLabel>
         <AmountPicker card={card} />
       </StyledItem>
-      <StyledItem onClick={onToggleOwned}>
-        <StyledAction
-          icon={owned ? 'minus' : 'plus'}
-          label={owned ? 'Remove from collection' : 'Add to collection'}
-        />
+      <StyledItem>
+        <OwnedToggle card={card} />
       </StyledItem>
-      <StyledItem onClick={onDelete}>
-        <StyledAction icon="delete" label="Remove from deck" />
+      <StyledItem>
+        <Delete card={card} />
       </StyledItem>
     </StyledWrapper>
   );
