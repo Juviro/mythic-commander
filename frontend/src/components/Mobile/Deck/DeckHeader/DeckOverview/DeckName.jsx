@@ -25,6 +25,8 @@ const StyledColorIcon = styled.img`
 export default ({ commander, name }) => {
   if (!name) return '';
   const colorIdentity = (commander && commander.color_identity) || [];
+  // Colorless symbol for colorless commanders
+  if (commander && !colorIdentity.length) colorIdentity.push('C');
 
   return (
     <StyledNameWrapepr>

@@ -4,11 +4,37 @@ import styled from 'styled-components';
 
 const ANIMATION_TIME = 200;
 
-const StyledCard = styled.img`
-  height: auto;
+const opacity = 0.3;
+
+const StyledCard = styled.div`
+  height: ${({ isLarge }) => (isLarge ? '280' : '36')}px;
   width: 26px;
   transition: all ${ANIMATION_TIME}ms;
   z-index: 5;
+
+  ${({ isLarge, img }) => {
+    const multiplier = isLarge ? 10 : 1;
+    return `
+    background: repeating-linear-gradient(
+      -45deg,
+      rgba(255, 0, 0, ${opacity}) 0,
+      rgba(255, 125, 0, ${opacity}) ${5 * multiplier}px,
+      rgba(125, 125, 0, ${opacity}) ${10 * multiplier}px,
+      rgba(125, 255, 0, ${opacity}) ${15 * multiplier}px,
+      rgba(0, 255, 0, ${opacity}) ${20 * multiplier}px,
+      rgba(0, 0, 255, ${opacity}) ${25 * multiplier}px,
+      rgba(125, 125, 255, ${opacity}) ${30 * multiplier}px,
+      rgba(255, 0, 255, ${opacity}) ${35 * multiplier}px,
+      rgba(255, 0, 0, ${opacity}) ${40 * multiplier}px
+    ),
+    url(${img});
+  `;
+  }}
+
+  background-blend-mode: overlay;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
 
   ${({ isLarge }) => {
     if (!isLarge) return '';
@@ -54,7 +80,7 @@ export default ({ card, isOpen }) => {
   return (
     <>
       <StyledCard
-        src={images[0][showLargeImage ? 'normal' : 'small']}
+        img={images[0][showLargeImage ? 'normal' : 'small']}
         isLarge={isOpen}
         onClick={onChangeIsOpen(true)}
       />
