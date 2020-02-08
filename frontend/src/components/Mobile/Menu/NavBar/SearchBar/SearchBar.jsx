@@ -117,6 +117,14 @@ const Menu = ({ history, transparentSearchBar }) => {
   ];
 
   const dataSource = optionCategories
+    .map(({ options, ...rest }) => ({
+      options:
+        options &&
+        options.filter(({ name: optionName }) =>
+          optionName.toLowerCase().includes(query.toLowerCase())
+        ),
+      ...rest,
+    }))
     .filter(({ options }) => options && options.length)
     .map(({ name, options, onClick, onShowAll }) => (
       <AutoComplete.OptGroup
@@ -131,11 +139,7 @@ const Menu = ({ history, transparentSearchBar }) => {
           />
         }
       >
-        {options
-          .filter(({ name: optionName }) =>
-            optionName.toLowerCase().includes(query.toLowerCase())
-          )
-          .map(renderOption(onClick))}
+        {options.map(renderOption(onClick))}
       </AutoComplete.OptGroup>
     ));
 
