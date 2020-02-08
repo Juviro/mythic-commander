@@ -9,6 +9,7 @@ import { getDecks, getCollection } from '../../../../../queries';
 import OptionGroupHeader from './OptionGroupHeader';
 import CardContext from '../../../../CardProvider/CardProvider';
 import filterNames from '../../../../Elements/SearchField/filterNames';
+import renderOption from './renderOption';
 
 const MAX_RESULTS = 4;
 
@@ -16,7 +17,7 @@ const StyledBackground = styled.div`
   top: 48px;
   left: 0;
   width: 100vw;
-  height: calc(100% - 50px);
+  height: calc(100% - 48px);
   position: fixed;
   transition: opacity 0.3s;
   background-color: #1e1e1e;
@@ -24,71 +25,6 @@ const StyledBackground = styled.div`
   opacity: ${({ isVisible }) => (isVisible ? 0.7 : 0)};
   ${({ isVisible }) => (!isVisible ? 'pointer-events: none;' : '')};
 `;
-
-const StyledCard = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding-left: 3px;
-  height: 36px;
-  align-items: center;
-  margin: -2px 0;
-`;
-
-const CardImageWrapper = styled.div`
-  width: 26px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledName = styled.span`
-  margin-left: 11px;
-  max-width: calc(100vw - ${({ isShort }) => (isShort ? 170 : 130)}px);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-`;
-const StyledOwnedTag = styled.span`
-  right: 16px;
-  color: #1fb31f;
-  font-size: 12px;
-  position: absolute;
-`;
-
-const StyledDeckImage = styled.img`
-  margin: 0 8px 0 0;
-  border-radius: 2px;
-  overflow: hidden;
-  height: 23px;
-  min-width: 32px;
-  max-width: 32px;
-  display: block;
-`;
-
-const StyledCardImage = styled.img`
-  height: 36px;
-  width: 26px;
-  display: flex;
-`;
-
-const renderOption = onClick => element => {
-  const { name, id, imgSrc, img, owned } = element;
-  return (
-    <AutoComplete.Option key={id} onClick={onClick} value={`${name};${id}`}>
-      <StyledCard>
-        <CardImageWrapper>
-          {imgSrc ? (
-            <StyledDeckImage src={imgSrc} />
-          ) : (
-            <StyledCardImage src={img} />
-          )}
-        </CardImageWrapper>
-        <StyledName isShort={owned}>{name}</StyledName>
-        <StyledOwnedTag>{owned && 'owned'}</StyledOwnedTag>
-      </StyledCard>
-    </AutoComplete.Option>
-  );
-};
 
 const Menu = ({ history, transparentSearchBar }) => {
   const inputEl = useRef(null);
@@ -179,7 +115,7 @@ const Menu = ({ history, transparentSearchBar }) => {
         dropdownMatchSelectWidth={false}
         placeholder="Search for something"
         style={{ width: 'calc(100% - 16px)' }}
-        dropdownMenuStyle={{ maxHeight: '90vw' }}
+        dropdownMenuStyle={{ maxHeight: '90vh' }}
         className={transparentSearchBar && 'transparent'}
       >
         <Input className="no-border" />
