@@ -1,3 +1,12 @@
+const getImageUri = card => {
+  const fullUrl = card.image_uris
+    ? card.image_uris.small
+    : card.card_faces[0].image_uris.small;
+  return fullUrl
+    .replace('https://img.scryfall.com/cards/small/front/', '')
+    .replace(/\.jpg\?\d+$/, '');
+};
+
 export default {
   Query: {
     card: async (_, { id }, { db }) => {
@@ -18,6 +27,13 @@ export default {
       );
       return cards;
     },
-    cards: (_, _1, { db }) => db('cards'),
+    cachedCards: async (_, _1, { db }) => {
+      const cards = await db('distinctCards');
+      return cards.map(({ name, id, ...rest }) => ({
+        s: getImageUri(rest),
+        n: name,
+        i: id,
+      }));
+    },
   },
 };

@@ -70,6 +70,7 @@ const loadingIndicator = (
     <Spin style={{ display: 'flex', justifyContent: 'center' }} />
   </StyledLoadingWrapper>
 );
+
 const Menu = ({ history, transparentSearchBar }) => {
   const inputEl = useRef(null);
 

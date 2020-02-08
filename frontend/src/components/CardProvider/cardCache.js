@@ -1,4 +1,6 @@
 import { getAllCardNames, getAllSets } from '../../network/mtgApi';
+import client from '../../network/graphqlClient';
+import { cachedCards } from '../../queries/cards';
 
 const REFRESH_PERIOD = 24 * 60 * 60 * 1000;
 
@@ -11,16 +13,16 @@ const REFRESH_PERIOD = 24 * 60 * 60 * 1000;
 // that kind of break the search
 // and the card "_____"
 // that can't be found by the scryfall api
-const filterProblematicCards = cardName => {
-  const tooLong = cardName.length > 60;
-  const crashesDb = cardName.startsWith('___');
+const filterProblematicCards = ({ n }) => {
+  const tooLong = n.length > 60;
+  const crashesDb = n.startsWith('___');
 
   return !tooLong && !crashesDb;
 };
 
-const getCardnames = async () => {
-  const allCardNames = await getAllCardNames();
-  return allCardNames.filter(filterProblematicCards);
+const getCards = async () => {
+  const { data } = await client.query({ query: cachedCards });
+  return data.cachedCards.filter(filterProblematicCards) || [];
 };
 
 const getSets = async () => {
@@ -40,7 +42,12 @@ export const getCollectionFromCache = async type => {
     return JSON.parse(cachedCollection);
   }
 
-  const getCollection = type === 'cardNames' ? getCardnames : getSets;
+  const deleteMe = {
+    sets: getSets,
+    cards: getCards,
+  };
+
+  const getCollection = deleteMe[type];
 
   const collection = await getCollection();
 

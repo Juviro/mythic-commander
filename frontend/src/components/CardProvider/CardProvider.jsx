@@ -5,25 +5,35 @@ const CardContext = React.createContext({});
 
 export const CardContextProvider = ({ children }) => {
   const [cardNames, setCardNames] = useState();
+  const [cards, setCards] = useState();
   const [sets, setSets] = useState();
 
-  const getCardNames = async () => {
-    const allCardNames = await getCollectionFromCache('cardNames');
-    setCardNames(allCardNames);
-  };
-  if (!cardNames) getCardNames();
-
   const getSets = async () => {
+    setSets({});
     const allSets = await getCollectionFromCache('sets');
     setSets(allSets);
   };
   if (!sets) getSets();
 
+  const getCards = async () => {
+    setCards([]);
+    const allCards = await getCollectionFromCache('cards');
+    const fullCards = allCards.map(({ i, n, s }) => ({
+      id: i,
+      name: n,
+      img: `https://img.scryfall.com/cards/small/front/${s}.jpg`,
+    }));
+    setCards(fullCards);
+    setCardNames(fullCards.map(({ name }) => name));
+  };
+  if (!cards) getCards();
+
   return (
     <CardContext.Provider
       value={{
-        cardNames: cardNames || [],
-        sets: sets || {},
+        cardNames,
+        cards,
+        sets,
       }}
     >
       {children}
