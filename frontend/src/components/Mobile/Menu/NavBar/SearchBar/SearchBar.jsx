@@ -1,13 +1,14 @@
-import React, { useRef } from 'react';
-import { Input, AutoComplete, Spin } from 'antd';
+import React, { useRef, useContext } from 'react';
+import { Input, AutoComplete } from 'antd';
 import { withRouter } from 'react-router';
 import { useQueryParams, StringParam } from 'use-query-params';
 import { useQuery } from 'react-apollo';
 
 import styled from 'styled-components';
-import { search } from '../../../../../queries';
+import { getDecks, getCollection } from '../../../../../queries';
 import OptionGroupHeader from './OptionGroupHeader';
-import CardIcon from '../../../../Elements/Card/Preview/CardIcon';
+import CardContext from '../../../../CardProvider/CardProvider';
+import filterNames from '../../../../Elements/SearchField/filterNames';
 
 const MAX_RESULTS = 4;
 
@@ -29,13 +30,19 @@ const CardImageWrapper = styled.div`
 
 const StyledName = styled.span`
   margin-left: 11px;
-  max-width: calc(100vw - 130px);
+  max-width: calc(100vw - ${({ isShort }) => (isShort ? 170 : 130)}px);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 `;
+const StyledOwnedTag = styled.span`
+  right: 16px;
+  color: #1fb31f;
+  font-size: 12px;
+  position: absolute;
+`;
 
-const StyledImage = styled.img`
+const StyledDeckImage = styled.img`
   margin: 0 8px 0 0;
   border-radius: 2px;
   overflow: hidden;
@@ -45,40 +52,41 @@ const StyledImage = styled.img`
   display: block;
 `;
 
-const StyledLoadingWrapper = styled.div`
-  position: absolute;
-  right: 16px;
-  top: 14px;
+const StyledCardImage = styled.img`
+  height: 36px;
+  width: 26px;
+  display: flex;
 `;
 
 const renderOption = onClick => element => {
-  const { name, id, imgSrc } = element;
+  const { name, id, imgSrc, img, owned } = element;
   return (
     <AutoComplete.Option key={id} onClick={onClick} value={`${name};${id}`}>
       <StyledCard>
         <CardImageWrapper>
-          {imgSrc ? <StyledImage src={imgSrc} /> : <CardIcon card={element} />}
+          {imgSrc ? (
+            <StyledDeckImage src={imgSrc} />
+          ) : (
+            <StyledCardImage src={img} />
+          )}
         </CardImageWrapper>
-        <StyledName>{name}</StyledName>
+        <StyledName isShort={owned}>{name}</StyledName>
+        <StyledOwnedTag>{owned && 'owned'}</StyledOwnedTag>
       </StyledCard>
     </AutoComplete.Option>
   );
 };
 
-const loadingIndicator = (
-  <StyledLoadingWrapper>
-    <Spin style={{ display: 'flex', justifyContent: 'center' }} />
-  </StyledLoadingWrapper>
-);
-
 const Menu = ({ history, transparentSearchBar }) => {
   const inputEl = useRef(null);
+  const { cards } = useContext(CardContext);
+  const { data: decksData } = useQuery(getDecks);
+  const { data: collectionData } = useQuery(getCollection);
+  const decks = (decksData && decksData.decks) || [];
+  const collection = (collectionData && collectionData.collection.cards) || [];
 
   const [{ query = '' }, setQuery] = useQueryParams({
     query: StringParam,
-  });
-  const { data, loading } = useQuery(search, {
-    variables: { query, limit: MAX_RESULTS },
   });
   const onSetSearch = value => {
     setQuery({ query: value.split(';')[0] });
@@ -92,11 +100,23 @@ const Menu = ({ history, transparentSearchBar }) => {
     history.push(`/m/cards/${id}?query=${query}`);
   };
 
-  const { collection, decks, cards } = (data && data.search) || {};
+  const filteredCards = filterNames(cards, query, MAX_RESULTS).map(card => ({
+    ...card,
+    owned: collection.some(({ name }) => name === card.name),
+  }));
+  const filteredDecks = decks
+    .filter(({ name }) =>
+      name
+        .toLowerCase()
+        .replace(/\s/g, '')
+        .includes(query.toLowerCase().replace(/\s/g, ''))
+    )
+    .slice(0, MAX_RESULTS);
+
   const optionCategories = [
     {
       name: 'Decks',
-      options: decks,
+      options: filteredDecks,
       onClick: ({ key }) => {
         const id = key.split(';')[1];
         history.push(`/m/decks/${id}`);
@@ -104,28 +124,14 @@ const Menu = ({ history, transparentSearchBar }) => {
       onShowAll: () => history.push(`/m/decks?query=${query}`),
     },
     {
-      name: 'Collection',
-      options: collection,
-      onClick: onOpenCardView,
-      onShowAll: () => history.push(`/m/collection?query=${query}`),
-    },
-    {
       name: 'Cards',
-      options: cards,
+      options: filteredCards,
       onClick: onOpenCardView,
       onShowAll: () => history.push(`/m/cards?query=${query}`),
     },
   ];
 
   const dataSource = optionCategories
-    .map(({ options, ...rest }) => ({
-      options:
-        options &&
-        options.filter(({ name: optionName }) =>
-          optionName.toLowerCase().includes(query.toLowerCase())
-        ),
-      ...rest,
-    }))
     .filter(({ options }) => options && options.length)
     .map(({ name, options, onClick, onShowAll }) => (
       <AutoComplete.OptGroup
@@ -160,7 +166,6 @@ const Menu = ({ history, transparentSearchBar }) => {
       >
         <Input className="no-border" />
       </AutoComplete>
-      {loading && loadingIndicator}
     </>
   );
 };

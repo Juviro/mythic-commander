@@ -21,7 +21,7 @@ const StyledFullscreenCard = styled.img`
 
 export default ({ card, isOpen }) => {
   const [cardPreviewOpen, setCardPreviewOpen] = useState(false);
-  const [showLargeImage, setShowLargeImage] = useState(false);
+  const [showHighResImage, setShowHighResImage] = useState(false);
   const images = card.image_uris
     ? [card.image_uris]
     : card.card_faces.map(({ image_uris }) => image_uris);
@@ -35,9 +35,9 @@ export default ({ card, isOpen }) => {
 
   useEffect(() => {
     if (isOpen) {
-      setTimeout(() => setShowLargeImage(true), ANIMATION_TIME);
+      setTimeout(() => setShowHighResImage(true), ANIMATION_TIME);
     } else {
-      setShowLargeImage(false);
+      setShowHighResImage(false);
     }
   }, [isOpen]);
 
@@ -49,7 +49,7 @@ export default ({ card, isOpen }) => {
   return (
     <>
       <StyledCard
-        src={images[0][showLargeImage ? 'normal' : 'small']}
+        src={images[0][showHighResImage ? 'normal' : 'small']}
         isLarge={isOpen}
         onClick={onChangeIsOpen(true)}
       />

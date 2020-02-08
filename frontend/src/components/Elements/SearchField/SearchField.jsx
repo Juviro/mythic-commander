@@ -79,7 +79,10 @@ export default class SearchField extends React.Component {
 
     const searchStringWithoutAmount = splitAmountAndName(searchString).name;
 
-    const suggestions = filterNames(cardNames, searchStringWithoutAmount);
+    const suggestions = filterNames(
+      cardNames.map(name => ({ name })),
+      searchStringWithoutAmount
+    ).map(({ name }) => name);
     const dataSource =
       suggestions[0] === searchString
         ? suggestions
