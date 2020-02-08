@@ -16,4 +16,8 @@ export default createGlobalStyle`
   .transparent span svg {
     color: rgba(255, 255, 255, 0.7);
   }
+
+  .transparent .ant-select-selection__clear {
+    background-color: transparent;
+  }
 `;
