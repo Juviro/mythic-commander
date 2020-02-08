@@ -41,14 +41,8 @@ export const sortCards = searchString => ({ name: cardA }, { name: cardB }) => {
     : 1;
 };
 
-export default (cardNames, searchString, maxResults = MAX_RESULTS) => {
-  const foundCards = filterCards(
-    cardNames.map(name => ({ name })),
-    searchString
-  );
-
-  return foundCards
+export default (cards, searchString, maxResults = MAX_RESULTS) => {
+  return filterCards(cards, searchString)
     .sort(sortCards(searchString))
-    .slice(0, maxResults)
-    .map(({ name }) => name);
+    .slice(0, maxResults);
 };

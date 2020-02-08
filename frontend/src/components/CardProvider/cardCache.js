@@ -1,4 +1,4 @@
-import { getAllCardNames, getAllSets } from '../../network/mtgApi';
+import { getAllSets } from '../../network/mtgApi';
 import client from '../../network/graphqlClient';
 import { cachedCards } from '../../queries/cards';
 
