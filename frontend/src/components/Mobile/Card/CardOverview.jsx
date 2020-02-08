@@ -8,10 +8,7 @@ const StyledCardImage = styled.img`
 `;
 
 export default ({ card }) => {
-  //   console.log('card :', card);
-  const imgSrc = (card.card_faces ? card.card_faces[0] : card).image_uris
-    .normal;
-  //   console.log('imgSrc :', imgSrc);
+  const imgSrc = (card.image_uris || card.card_faces[0].image_uris).normal;
 
   return (
     <>

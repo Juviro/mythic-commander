@@ -1,34 +1,52 @@
-import React from 'react';
-import { Spin } from 'antd';
+import React, { useContext, useState } from 'react';
+import { List, Button } from 'antd';
 import styled from 'styled-components';
-import { useQuery } from 'react-apollo';
 
 import { useQueryParams, StringParam } from 'use-query-params';
-import { getDecks } from '../../../queries';
-import DeckList from './DeckList';
+import CardContext from '../../CardProvider/CardProvider';
+import { filterCards } from '../../Elements/SearchField/filterNames';
+import Card from '../Collection/Card';
 
-const StyledWrapper = styled.div`
+const CARDS_PER_PAGE = 20;
+
+const StyledButtonWrapper = styled.div`
   width: 100%;
   display: flex;
-  min-height: 100px;
   align-items: center;
-  flex-direction: column;
+  margin: 24px 0;
   justify-content: center;
 `;
 
 export default () => {
-  const { data, loading } = useQuery(getDecks);
+  const { cards } = useContext(CardContext);
   const [{ query: searchQuery = '' }] = useQueryParams({
     query: StringParam,
   });
+  const [numberOfDisplayedCards, setNumberOfDisplayedCards] = useState(
+    CARDS_PER_PAGE
+  );
 
-  const decks = ((data && data.decks) || []).filter(({ name }) =>
-    name.toLowerCase().includes(searchQuery.toLowerCase())
+  const onLoadMore = () => {
+    setNumberOfDisplayedCards(numberOfDisplayedCards + CARDS_PER_PAGE);
+  };
+
+  const filteredCards = filterCards(cards, searchQuery).slice(
+    0,
+    numberOfDisplayedCards
   );
 
   return (
-    <StyledWrapper>
-      {loading ? <Spin /> : <DeckList decks={decks} />}
-    </StyledWrapper>
+    <List
+      loadMore={
+        <StyledButtonWrapper>
+          <Button type="primary" onClick={onLoadMore}>
+            Load more
+          </Button>
+        </StyledButtonWrapper>
+      }
+      dataSource={filteredCards}
+      style={{ width: '100%' }}
+      renderItem={card => <Card card={card} />}
+    />
   );
 };

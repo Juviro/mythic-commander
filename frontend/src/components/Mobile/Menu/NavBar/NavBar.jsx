@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Icon } from 'antd';
 
@@ -34,18 +34,34 @@ const StyledIcon = styled(Icon)`
   padding: 10px 15px 10px 10px;
 `;
 
-const getSearchBarProps = (pathname = '') => {
+const isCardsUrl = pathname => Boolean(pathname.match(/^\/m\/cards\/[\w-]+$/));
+
+const getSearchBarProps = (pathname = '', previousUrl) => {
   if (pathname.match(/^\/m\/decks\/[0-9]+$/))
-    return { previousUrl: '/m/decks', transparentSearchBar: true };
+    return { goBackUrl: '/m/decks', transparentSearchBar: true };
+  if (isCardsUrl(pathname)) {
+    return { goBackUrl: previousUrl };
+  }
 
   return {};
 };
 
 const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
-  const { previousUrl, transparentSearchBar } = getSearchBarProps(pathname);
+  const [previousUrl, setPreviousUrl] = useState('');
+
+  const { goBackUrl, transparentSearchBar } = getSearchBarProps(
+    pathname,
+    previousUrl
+  );
+
+  useEffect(() => {
+    if (!isCardsUrl(pathname)) {
+      setPreviousUrl(pathname);
+    }
+  }, [pathname]);
 
   const onClickIcon = () => {
-    if (previousUrl) history.push(previousUrl);
+    if (goBackUrl) history.push(goBackUrl);
     else onToggleDrawer();
   };
 
@@ -58,7 +74,7 @@ const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
       <StyledMenu transparent={transparentSearchBar}>
         <StyledIcon
           onClick={onClickIcon}
-          type={previousUrl ? 'arrow-left' : 'menu'}
+          type={goBackUrl ? 'arrow-left' : 'menu'}
           style={iconStyle}
         />
         <SearchBar transparentSearchBar={transparentSearchBar} />
