@@ -3,6 +3,7 @@ import blue from './blue.svg';
 import green from './green.svg';
 import black from './black.svg';
 import white from './white.svg';
+import colorless from './colorless.svg';
 
 import land from './land.svg';
 import instant from './instant.svg';
@@ -13,7 +14,14 @@ import enchantment from './enchantment.svg';
 import planeswalker from './planeswalker.svg';
 import multiple_types from './multiple_types.svg';
 
-export const colors = { R: red, U: blue, G: green, B: black, W: white };
+export const colors = {
+  R: red,
+  U: blue,
+  G: green,
+  B: black,
+  W: white,
+  C: colorless,
+};
 export const types = {
   land,
   instant,
