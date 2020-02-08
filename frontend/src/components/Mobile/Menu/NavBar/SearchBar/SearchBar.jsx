@@ -17,7 +17,7 @@ const StyledBackground = styled.div`
   top: 48px;
   left: 0;
   width: 100vw;
-  height: calc(100% - 50px);
+  height: calc(100% - 48px);
   position: fixed;
   transition: opacity 0.3s;
   background-color: #1e1e1e;
@@ -115,7 +115,7 @@ const Menu = ({ history, transparentSearchBar }) => {
         dropdownMatchSelectWidth={false}
         placeholder="Search for something"
         style={{ width: 'calc(100% - 16px)' }}
-        dropdownMenuStyle={{ maxHeight: '90vw' }}
+        dropdownMenuStyle={{ maxHeight: '90vh' }}
         className={transparentSearchBar && 'transparent'}
       >
         <Input className="no-border" />
