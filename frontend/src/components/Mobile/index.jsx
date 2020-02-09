@@ -8,14 +8,12 @@ import Card from './Card';
 import Cards from './Cards';
 
 import GlobalStyle from './GlobalStyle';
-import Collection from './Collection';
 
 const App = () => {
   return (
     <>
       <Switch>
         <Menu>
-          <Route path="/m/collection" component={Collection} />
           <Route path="/m/decks/:id" component={Deck} />
           <Route path="/m/decks" exact component={Decks} />
           <Route path="/m/cards/:id" component={Card} />
