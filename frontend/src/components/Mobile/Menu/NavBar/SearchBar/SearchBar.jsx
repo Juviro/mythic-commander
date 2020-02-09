@@ -111,14 +111,21 @@ const Menu = ({ history, transparentSearchBar }) => {
         onSelect={onSelect}
         dataSource={dataSource}
         onBlur={() => setIsOpen(false)}
-        onFocus={() => setIsOpen(true)}
         dropdownMatchSelectWidth={false}
         placeholder="Search for something"
         style={{ width: 'calc(100% - 16px)' }}
         dropdownMenuStyle={{ maxHeight: '90vh' }}
         className={transparentSearchBar && 'transparent'}
       >
-        <Input className="no-border" />
+        <Input
+          className="no-border"
+          onFocus={event => {
+            // FIXME: workaround for chrome context menu appearing in dev mode when selecting text
+            if (window.location.href.indexOf('http://localhost:3000/') === -1)
+              event.target.select();
+            setIsOpen(true);
+          }}
+        />
       </AutoComplete>
       <StyledBackground isVisible={isOpen} />
     </>

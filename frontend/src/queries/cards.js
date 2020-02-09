@@ -30,6 +30,11 @@ export const CARD_FIELDS = `
     commander
   }
   oracle_id
+  all_sets {
+    id
+    set
+  }
+  rulings_uri
 `;
 
 export const cachedCards = gql`
@@ -42,14 +47,6 @@ export const cachedCards = gql`
   }
 `;
 
-export const getCardByName = gql`
-  query getCard($name: String!) {
-    getCardByName(name: $name) {
-        ${CARD_FIELDS}
-      }
-    }
-`;
-
 export const getCard = gql`
   query getCard($id: String!) {
       card(id: $id) {
@@ -60,7 +57,7 @@ export const getCard = gql`
 
 export const searchCard = gql`
   query searchCard($query: String, $limit: Int) {
-    searchCard(query: $query,limit: $limit) {
+    searchCard(query: $query, limit: $limit) {
         ${CARD_FIELDS}
       }
     }

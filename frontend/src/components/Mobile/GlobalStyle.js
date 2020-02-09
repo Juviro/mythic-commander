@@ -20,4 +20,10 @@ export default createGlobalStyle`
   .transparent .ant-select-selection__clear {
     background-color: transparent;
   }
+
+  /* center items in Select component horizontally */
+  .ant-select-selection-selected-value {
+    display: flex !important;
+    align-items: center;
+  }
 `;

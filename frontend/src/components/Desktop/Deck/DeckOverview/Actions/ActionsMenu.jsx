@@ -50,6 +50,7 @@ export default ({ card, ...rest }) => {
   };
 
   const cardSets = card.all_sets
+    .map(({ set }) => set)
     .filter(setKey => setKey !== card.set)
     .map(setKey => ({ setKey, ...sets[setKey] }))
     .sort((a, b) => (a.name > b.name ? 1 : -1));

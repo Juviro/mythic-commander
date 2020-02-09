@@ -122,11 +122,8 @@ export default {
       await canAccessDeck(user.id, deckId);
 
       const updatedProps = pick(newProps, ['zone', 'amount']);
-      if (newProps.set) {
-        const [{ id }] = await db('cards')
-          .where({ oracle_id: cardOracleId, set: newProps.set })
-          .select('id');
-        updatedProps.cardId = id;
+      if (newProps.id) {
+        updatedProps.cardId = newProps.id;
       }
 
       if (Object.prototype.hasOwnProperty.call(newProps, 'owned')) {

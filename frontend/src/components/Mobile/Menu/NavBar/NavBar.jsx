@@ -40,7 +40,7 @@ const getSearchBarProps = (pathname = '', previousUrl) => {
   if (pathname.match(/^\/m\/decks\/[0-9]+$/))
     return { goBackUrl: '/m/decks', transparentSearchBar: true };
   if (isCardsUrl(pathname)) {
-    return { goBackUrl: previousUrl };
+    return { goBackUrl: previousUrl || '/m/cards' };
   }
 
   return {};
