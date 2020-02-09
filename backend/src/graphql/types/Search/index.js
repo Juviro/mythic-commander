@@ -2,7 +2,7 @@ export default `
   type SearchType {
     cards: [Card!]!
     decks: [Deck!]!
-    collection: [CollectionCard!]!
+    collection: [Card!]!
   }
 
   type Query {

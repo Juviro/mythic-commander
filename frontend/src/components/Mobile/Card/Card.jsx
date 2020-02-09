@@ -4,10 +4,15 @@ import { useQuery } from 'react-apollo';
 
 import { useParams } from 'react-router';
 import { getCard } from '../../../queries';
-import CardOverview from './CardOverview';
+
+import CardSets from './CardSets';
+import CardRules from './CardRules';
+import CollectionOverview from './CollectionOverview';
+import LazyLoadCard from '../../Elements/LazyLoadCard/LazyLoadCard';
 
 const StyledWrapper = styled.div`
   width: 100%;
+  padding: 0 5vw;
   display: flex;
   min-height: 100px;
   align-items: center;
@@ -22,7 +27,10 @@ export default () => {
 
   return (
     <StyledWrapper>
-      <CardOverview card={card} loading={loading} />
+      <LazyLoadCard card={card} />
+      <CardSets card={card} loading={loading} />
+      <CollectionOverview card={card} />
+      <CardRules card={card} />
     </StyledWrapper>
   );
 };

@@ -28,7 +28,11 @@ const addToCollection = async (cards, userId, db) => {
 };
 
 const getCollection = async (userId, db) => {
-  const collection = await db('collection').where({ userId });
+  const collection = await db('collection')
+    .leftJoin('cardsBySet', {
+      'collection.oracle_id': 'cardsBySet.oracle_id ',
+    })
+    .where({ userId });
   const cards = await populateCards(collection);
 
   return { id: userId, cards };

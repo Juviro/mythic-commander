@@ -10,7 +10,6 @@ const DECK_CARD_FIELDS = `
   owned
   colors
   color_identity
-  all_sets
   oracle_id
   amount
   priceInEuro

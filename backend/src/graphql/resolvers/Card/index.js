@@ -10,19 +10,21 @@ const getImageUri = card => {
 export default {
   Query: {
     card: async (_, { id }, { db }) => {
-      const [card] = await db('cards').where({ id });
-      return card;
-    },
-    getCardByName: async (_, { name }, { db }) => {
-      const [card] = await db('cards').where({ name });
+      const [card] = await db('cards')
+        .leftJoin('cardsBySet', {
+          'cards.oracle_id': 'cardsBySet.oracle_id ',
+        })
+        .where({ id });
       return card;
     },
     searchCard: async (_, { query, limit = null }, { db }) => {
       if (!query) return [];
-      const {
-        rows: cards,
-      } = await db.raw(
-        `SELECT * FROM "distinctCards" WHERE name ILIKE ? LIMIT ? `,
+      const { rows: cards } = await db.raw(
+        `SELECT * 
+         FROM "distinctCards" 
+         LEFT JOIN "cardsBySet" 
+          ON "distinctCards"."oracle_id" = "cardsBySet".oracle_id 
+         WHERE name ILIKE ? LIMIT ? `,
         [`%${query}%`, limit]
       );
       return cards;

@@ -36,27 +36,30 @@ export default () => {
   };
 
   const filteredCards = [];
-  // TODO: solve more elegant
   let showMoreButton = false;
 
   filterCards(cards, searchQuery).some(card => {
-    if (filteredCards.length === numberOfDisplayedCards) {
-      showMoreButton = true;
-      return true;
-    }
+    let shouldInclude = false;
     const cardWithOwned = {
       ...card,
       owned: collection.some(({ name }) => name === card.name),
     };
     if (owned === true) {
-      if (cardWithOwned.owned) filteredCards.push(cardWithOwned);
+      if (cardWithOwned.owned) shouldInclude = true;
     } else if (owned === false) {
       if (!collection.length && collectionLoading) return true;
-      if (!cardWithOwned.owned) filteredCards.push(cardWithOwned);
+      if (!cardWithOwned.owned) shouldInclude = true;
     } else {
-      filteredCards.push(cardWithOwned);
+      shouldInclude = true;
     }
 
+    if (shouldInclude) {
+      if (filteredCards.length === numberOfDisplayedCards) {
+        showMoreButton = true;
+        return true;
+      }
+      filteredCards.push(cardWithOwned);
+    }
     return false;
   });
 

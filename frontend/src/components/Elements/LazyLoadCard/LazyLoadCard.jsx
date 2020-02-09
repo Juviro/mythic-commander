@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import CardSpinner from '../Card/CardSpinner';
 
@@ -11,6 +11,7 @@ const CardWrapper = styled.div`
   border-radius: 11px;
   align-items: center;
   justify-content: center;
+  ${({ hidden }) => (hidden ? 'height: 0;' : '')}
 `;
 
 const StyledImage = styled.img`
@@ -22,29 +23,30 @@ export default ({ card }) => {
   const cardImages = card
     ? card.image_uris || card.card_faces[0].image_uris
     : {};
-  const [currentImageSize, setCurrentImageSize] = useState('small');
+  const [isLargeImageLoaded, setIsLargeImageLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    if (!cardImages.normal) return;
-    const img = new Image();
-    img.onload = () => {
-      setCurrentImageSize('normal');
-      setIsLoading(false);
-    };
+  const alt = (card && card.name) || 'card image';
 
-    img.src = cardImages.normal;
-  }, [cardImages.normal]);
-
-  const imgSrc = cardImages[currentImageSize];
+  const { small, normal } = cardImages;
 
   return (
     <CardWrapper>
-      <StyledImage
-        src={imgSrc}
-        alt={card && card.name}
-        onLoad={() => setIsLoading(false)}
-      />
+      {!isLargeImageLoaded && small && (
+        <StyledImage alt={alt} src={small} onLoad={() => setIsLoading(false)} />
+      )}
+      {normal && (
+        <StyledImage
+          alt={alt}
+          src={normal}
+          hidden={!isLargeImageLoaded}
+          onLoad={() => {
+            setIsLoading(false);
+            setIsLargeImageLoaded(true);
+          }}
+          onError={() => setIsLoading(false)}
+        />
+      )}
       {isLoading && <CardSpinner />}
     </CardWrapper>
   );

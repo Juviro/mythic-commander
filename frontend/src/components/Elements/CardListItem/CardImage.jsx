@@ -10,6 +10,7 @@ const StyledCard = styled.img`
   z-index: 5;
   will-change: width, margin-top;
 
+  height: ${({ isLarge }) => (isLarge ? '70vw' : '36px')};
   width: ${({ isLarge }) => (isLarge ? 'calc(50vw - 8px)' : '26px')};
   margin-top: ${({ isLarge }) => (isLarge ? 36 : 0)}px;
 `;

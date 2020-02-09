@@ -1,6 +1,6 @@
 export { getUser, login } from './user';
 export { search } from './search';
-export { cachedCards, getCard, getCardByName, searchCard } from './cards';
+export { cachedCards, getCard, searchCard } from './cards';
 export {
   getCollection,
   addToCollectionByName,
