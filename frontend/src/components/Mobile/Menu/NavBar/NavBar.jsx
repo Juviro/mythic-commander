@@ -46,7 +46,7 @@ const getSearchBarProps = (pathname = '', previousUrl) => {
   return {};
 };
 
-const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
+const Menu = ({ onToggleDrawer, location: { pathname, search }, history }) => {
   const [previousUrl, setPreviousUrl] = useState('');
 
   const { goBackUrl, transparentSearchBar } = getSearchBarProps(
@@ -56,9 +56,9 @@ const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
 
   useEffect(() => {
     if (!isCardsUrl(pathname)) {
-      setPreviousUrl(pathname);
+      setPreviousUrl(pathname + search);
     }
-  }, [pathname]);
+  }, [pathname, search]);
 
   const onClickIcon = () => {
     if (goBackUrl) history.push(goBackUrl);
