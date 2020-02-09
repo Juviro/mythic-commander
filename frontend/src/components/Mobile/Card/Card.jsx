@@ -23,6 +23,7 @@ const StyledWrapper = styled.div`
 export default () => {
   const { id } = useParams();
   const { data, loading } = useQuery(getCard, { variables: { id } });
+  console.log('loading :', loading);
   const card = data && data.card;
 
   return (

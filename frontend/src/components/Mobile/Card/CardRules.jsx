@@ -20,12 +20,13 @@ export default ({ card = {} }) => {
       .then(response => response.json())
       .then(({ data }) => setRules(data));
     // Don't refetch when set is changed
+    // eslint-disable-next-line
   }, [oracle_id]);
 
   const hasRules = rules && rules.length;
   const buttonText = rules
     ? hasRules
-      ? 'Show rules for this card'
+      ? 'Show Rulings for this card'
       : 'No rules found'
     : null;
 
