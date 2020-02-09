@@ -19,3 +19,7 @@ export const isDeckLegal = ({ cards = [] }) => {
 export const isDeckOwned = ({ cards = [] }) => {
   return cards.every(({ owned }) => owned);
 };
+
+export const getImageUris = card => {
+  return card.image_uris ? card.image_uris : card.card_faces[0].image_uris;
+};

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Spin } from 'antd';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 
@@ -19,10 +18,11 @@ const StyledWrapper = styled.div`
 export default () => {
   const { id } = useParams();
   const { data, loading } = useQuery(getCard, { variables: { id } });
+  const card = data && data.card;
 
   return (
     <StyledWrapper>
-      {loading ? <Spin /> : <CardOverview card={data.card} />}
+      <CardOverview card={card} loading={loading} />
     </StyledWrapper>
   );
 };

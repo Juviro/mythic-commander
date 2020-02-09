@@ -8,7 +8,6 @@ const StyledCardLoader = styled.div`
   min-height: 100px;
   display: flex;
   position: absolute;
-  background-color: white;
   border-radius: 10px;
   align-items: center;
   justify-content: center;

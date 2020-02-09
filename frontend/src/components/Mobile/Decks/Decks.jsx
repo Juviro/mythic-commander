@@ -28,7 +28,7 @@ export default () => {
 
   return (
     <StyledWrapper>
-      {loading ? <Spin /> : <DeckList decks={decks} />}
+      {loading && !decks.length ? <Spin /> : <DeckList decks={decks} />}
     </StyledWrapper>
   );
 };

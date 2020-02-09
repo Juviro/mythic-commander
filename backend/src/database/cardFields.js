@@ -135,9 +135,16 @@ export const CARD_FIELDS_ADDITION_2 = [
     type: 'string',
   },
 ];
+export const CARD_FIELDS_ADDITION_3 = [
+  {
+    key: 'multiverse_ids',
+    specificType: 'TEXT[]',
+  },
+];
 
 export const ALL_CARD_FIELDS = [
   CARD_FIELDS_INITIAL,
   CARD_FIELDS_ADDITION_1,
   CARD_FIELDS_ADDITION_2,
+  CARD_FIELDS_ADDITION_3,
 ].flat();
