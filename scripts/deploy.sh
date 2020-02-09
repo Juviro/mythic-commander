@@ -8,7 +8,7 @@ echo -e "\e[44mBuilding backend\e[0m"
 cd /home/hauke/packages/mtg/backend && yarn install --production=false && yarn build
 
 echo -e "\e[44mMigrating Database\e[0m"
-cd yarn migrate
+yarn migrate
 
 echo -e "\e[44mdeploying frontend\e[0m"
 rm -rf /var/www/virtual/hauke/html/* 
