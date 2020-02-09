@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Skeleton } from 'antd';
 import { withRouter } from 'react-router';
 import { useQueryParams, StringParam } from 'use-query-params';
 
-import CardContext from '../../CardProvider/CardProvider';
 import SetPicker from '../../Elements/SetPicker/SetPicker';
 
 const StyledSetWrapper = styled.div`
@@ -18,8 +17,6 @@ const CardSets = ({ card, loading, history }) => {
   const [{ query: searchQuery = '' }] = useQueryParams({
     query: StringParam,
   });
-  const { sets } = useContext(CardContext);
-  if (!card || !sets) return null;
 
   const onSelectSet = id => {
     history.replace(
