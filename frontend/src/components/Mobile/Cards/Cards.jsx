@@ -62,7 +62,9 @@ export default () => {
 
   return (
     <List
-      loading={collectionLoading && typeof owned === 'boolean'}
+      loading={
+        collectionLoading && typeof owned === 'boolean' && !collection.length
+      }
       loadMore={
         showMoreButton && (
           <StyledButtonWrapper>
