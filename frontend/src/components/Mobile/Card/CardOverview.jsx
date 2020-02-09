@@ -1,7 +1,7 @@
 import React from 'react';
 import LazyLoadCard from '../../Elements/LazyLoadCard/LazyLoadCard';
 
-export default ({ card }) => {
+export default ({ card, loading }) => {
   return (
     <>
       <LazyLoadCard card={card} />

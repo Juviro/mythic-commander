@@ -23,21 +23,21 @@ export default () => {
   const { id } = useParams();
   const [currentTab, setCurrentTab] = useState('cards');
   const { data, loading } = useQuery(getDeck, { variables: { id } });
-  if (!loading && !data) return null;
+  const deck = data && data.deck;
 
   return (
     <StyledDeck>
-      {loading ? (
+      {loading && !deck ? (
         <Spin />
       ) : (
         <>
-          <DeckHeader deck={data.deck} />
+          <DeckHeader deck={deck} />
           <DeckMenu
-            deck={data.deck}
+            deck={deck}
             currentTab={currentTab}
             onSetTab={setCurrentTab}
           />
-          <DeckBody deck={data.deck} currentTab={currentTab} />
+          <DeckBody deck={deck} currentTab={currentTab} />
         </>
       )}
       <AddCard />

@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 
 import styled from 'styled-components';
 import { List, Typography } from 'antd';
+import { getImageUris } from '../../../utils/cardStats';
 
 const StyledListItem = styled(List.Item)`
   width: 100%;
@@ -23,12 +24,7 @@ const StyledPreview = styled.img`
 `;
 
 const Card = ({ card, history }) => {
-  // TODO: unify this function
-  const image =
-    card.img ||
-    (card.image_uris
-      ? card.image_uris.small
-      : card.card_faces[0].image_uris.small);
+  const image = card.img || getImageUris(card).small;
   const onClick = () => {
     history.push(`/m/cards/${card.id}`);
   };

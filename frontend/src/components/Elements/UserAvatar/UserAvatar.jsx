@@ -14,9 +14,10 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledAvatar = styled.img`
-  border-radius: 50%;
   width: 100%;
+  border-radius: 50%;
   cursor: pointer;
+  font-size: 8px;
 `;
 
 export default () => {
@@ -27,7 +28,7 @@ export default () => {
       {loading ? (
         <Spin />
       ) : (
-        <StyledAvatar src={data.user.avatar} alt="profile image" />
+        <StyledAvatar src={data.user.avatar} alt="avatar" />
       )}
     </StyledWrapper>
   );
