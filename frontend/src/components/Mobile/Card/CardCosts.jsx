@@ -61,7 +61,6 @@ const renderSet = allSets => set => {
 const renderPurchaseIcons = name => () => {
   const encodedName = encodeURI(name);
   const cardmarketUri = `https://www.cardmarket.com/en/Magic/Products/Search?searchString=${encodedName}`;
-  console.log('cardmarketUri :', cardmarketUri);
   const cardkingdomUri = `https://www.cardkingdom.com/catalog/search?search=header&filter%5Bname%5D=${encodedName}`;
   return (
     <StyledPurchaseIcons>
