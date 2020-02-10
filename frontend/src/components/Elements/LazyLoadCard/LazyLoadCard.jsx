@@ -19,16 +19,22 @@ const StyledImage = styled.img`
   width: 100%;
 `;
 
-export default ({ card }) => {
-  const cardImages = card
-    ? card.image_uris || card.card_faces[0].image_uris
-    : {};
+export default ({ name, cardImages, loading }) => {
   const [isLargeImageLoaded, setIsLargeImageLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  // TODO: implement
+  const [currentSide] = useState(0);
 
-  const alt = (card && card.name) || 'card image';
+  if (loading)
+    return (
+      <CardWrapper>
+        <CardSpinner />
+      </CardWrapper>
+    );
 
-  const { small, normal } = cardImages;
+  const alt = name || 'card image';
+
+  const { small, normal } = cardImages ? cardImages[currentSide] : {};
 
   return (
     <CardWrapper>

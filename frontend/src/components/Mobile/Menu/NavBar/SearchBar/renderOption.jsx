@@ -50,9 +50,13 @@ const StyledCardImage = styled.img`
 `;
 
 export default onClick => element => {
-  const { name, id, imgSrc, img, owned } = element;
+  const { name, id, oracle_id, imgSrc, img, owned } = element;
   return (
-    <AutoComplete.Option key={id} onClick={onClick} value={`${name};${id}`}>
+    <AutoComplete.Option
+      key={id}
+      onClick={onClick}
+      value={`${name};${oracle_id || id}`}
+    >
       <StyledCard>
         <CardImageWrapper>
           {imgSrc ? (

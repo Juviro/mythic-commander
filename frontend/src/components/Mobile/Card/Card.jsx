@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 
-import { useParams } from 'react-router';
-import { getCard } from '../../../queries';
+import { useParams, withRouter } from 'react-router';
+import { getCardByOracleId } from '../../../queries';
 
 import CardSets from './CardSets';
 import CardRules from './CardRules';
-import CardStats from './CardStats';
-import CollectionOverview from './CollectionOverview';
+import CardCosts from './CardCosts';
 import LazyLoadCard from '../../Elements/LazyLoadCard/LazyLoadCard';
 
 const StyledWrapper = styled.div`
@@ -21,18 +20,47 @@ const StyledWrapper = styled.div`
   justify-content: center;
 `;
 
-export default () => {
-  const { id } = useParams();
-  const { data, loading } = useQuery(getCard, { variables: { id } });
-  const card = data && data.card;
+const sortByPrice = (a, b) => {
+  if (!a.prices.eur) return 1;
+  if (!b.prices.eur) return -1;
+  return a.prices.eur > b.prices.eur ? 1 : -1;
+};
+
+const Card = ({ history }) => {
+  const { oracle_id, set } = useParams();
+  const { data, loading } = useQuery(getCardByOracleId, {
+    variables: { oracle_id },
+  });
+
+  const card = data && data.cardsByOracleId;
+  const sortedCards = card && [...card.all_sets].sort(sortByPrice);
+  const currentCard =
+    card &&
+    (set
+      ? sortedCards.find(({ set: cardSet }) => cardSet === set)
+      : sortedCards[0]);
+  const fallbackSet = loading ? null : currentCard.set;
+  const cardImages = currentCard && currentCard.image_uris;
+
+  useEffect(() => {
+    if (!set && fallbackSet) {
+      history.replace(`${history.location.pathname}/${fallbackSet}`);
+    }
+  }, [set, fallbackSet, history]);
 
   return (
     <StyledWrapper>
-      <LazyLoadCard card={card} />
-      <CardSets card={card} loading={loading} />
-      <CardStats card={card} />
-      <CollectionOverview card={card} />
-      <CardRules card={card} />
+      <LazyLoadCard
+        name={card && card.name}
+        cardImages={cardImages}
+        loading={loading}
+      />
+      <CardSets card={card} loading={loading} set={set} />
+      <CardCosts card={card} loading={loading} />
+      {/* <CollectionOverview card={card} /> */}
+      <CardRules card={card} loading={loading} />
     </StyledWrapper>
   );
 };
+
+export default withRouter(Card);

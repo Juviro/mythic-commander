@@ -14,7 +14,7 @@ const StyledSetIcon = styled.img`
 const sortSets = (a, b) =>
   a.name > b.name ? 1 : a.name < b.name ? -1 : a.id > b.id ? 1 : -1;
 
-export default ({ card, onClick }) => {
+export default ({ card, onClick, defaultSet }) => {
   const { sets } = useContext(CardContext);
 
   const allCardSets = card.all_sets
@@ -33,10 +33,14 @@ export default ({ card, onClick }) => {
     };
   });
 
+  const defaultValue = defaultSet
+    ? card.all_sets.find(({ set }) => set === defaultSet).id
+    : allCardSets[0].id;
+
   return (
     <Select
       size="small"
-      defaultValue={card.id}
+      defaultValue={defaultValue}
       style={{ width: '100%' }}
       onSelect={onClick}
       disabled={allCardSets.length <= 1}

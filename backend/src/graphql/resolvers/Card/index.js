@@ -1,3 +1,5 @@
+import { pick } from 'lodash';
+
 const getImageUri = card => {
   const fullUrl = card.image_uris
     ? card.image_uris.small
@@ -16,6 +18,27 @@ export default {
         })
         .where({ id });
       return card;
+    },
+    cardsByOracleId: async (_, { oracle_id }, { db }) => {
+      const cards = await db('cards').where({ oracle_id });
+      if (!cards.length) return null;
+
+      const minimalCards = cards.map(card => ({
+        ...pick(card, ['id', 'set', 'prices', 'purchase_uris']),
+        image_uris: card.image_uris
+          ? [card.image_uris]
+          : card.card_faces.map(({ image_uris }) => image_uris),
+      }));
+      const sharedStats = pick(cards[0], [
+        'name',
+        'oracle_id',
+        'legalities',
+        'rulings_uri',
+      ]);
+      return {
+        ...sharedStats,
+        all_sets: minimalCards,
+      };
     },
     searchCard: async (_, { query, limit = null }, { db }) => {
       if (!query) return [];
@@ -41,10 +64,11 @@ export default {
         'scheme'
       ]);
       `);
-      return cards.map(({ name, id, ...rest }) => ({
+      return cards.map(({ name, id, oracle_id, ...rest }) => ({
         s: getImageUri(rest),
         n: name,
         i: id,
+        o: oracle_id,
       }));
     },
   },

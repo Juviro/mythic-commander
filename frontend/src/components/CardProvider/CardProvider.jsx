@@ -18,8 +18,9 @@ export const CardContextProvider = ({ children }) => {
   const getCards = async () => {
     setCards([]);
     const allCards = await getCollectionFromCache('cards');
-    const fullCards = allCards.map(({ i, n, s }) => ({
+    const fullCards = allCards.map(({ i, n, s, o }) => ({
       id: i,
+      oracle_id: o,
       name: n,
       img: `https://img.scryfall.com/cards/small/front/${s}.jpg`,
     }));
