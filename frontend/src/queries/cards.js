@@ -71,10 +71,6 @@ const CARD_BY_ORACLE_ID_FIELDS = `
       small
       normal
     }
-    purchase_uris {
-      tcgplayer
-      cardmarket
-    }
   }
 `;
 
