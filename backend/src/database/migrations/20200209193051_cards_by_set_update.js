@@ -9,7 +9,10 @@ export const up = async knex => {
                 oracle_id, 
                 json_build_object(
                     'id',  id,
-                    'set',  set
+                    'set',  set,
+                    'prices',  prices,
+                    'image_uris',  image_uris,
+                    'card_faces',  card_faces
                     ) AS  sets
             FROM cards
             WHERE 'paper' = ANY(games)
