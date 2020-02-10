@@ -5,7 +5,7 @@ export default `
     name: String!
     image_uris: ImageUris
     card_faces: [CardFace!]
-    createdAt: String!
+    createdAt: String
     prices: Prices!
     rarity: String!
     legalities: Legalities!
