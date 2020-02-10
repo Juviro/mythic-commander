@@ -46,8 +46,8 @@ const Menu = ({ history, transparentSearchBar }) => {
   };
 
   const onOpenCardView = ({ key }) => {
-    const id = key.split(';')[1];
-    history.push(`/m/cards/${id}?query=${query}`);
+    const oracle_id = key.split(';')[1];
+    history.push(`/m/cards/${oracle_id}?query=${query}`);
   };
 
   const filteredCards = filterNames(cards, query, MAX_RESULTS).map(card => ({

@@ -26,7 +26,7 @@ const StyledPreview = styled.img`
 const Card = ({ card, history }) => {
   const image = card.img || getImageUris(card).small;
   const onClick = () => {
-    history.push(`/m/cards/${card.id}`);
+    history.push(`/m/cards/${card.oracle_id}`);
   };
   return (
     <StyledListItem onClick={onClick}>

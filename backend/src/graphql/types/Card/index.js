@@ -31,6 +31,9 @@ export default `
   type Set {
     id: String!
     set: String!
+    prices: Prices!
+    image_uris: ImageUris
+    card_faces: [CardFace!]
   }
 
   type PurchaseUris {
@@ -65,12 +68,31 @@ export default `
   type CachedCard {
     i: String!
     n: String!
+    o: String!
     s: String
   }
 
+  type CardsByOracle {
+    name: String!
+    oracle_id: String!
+    rulings_uri: String!
+    legalities: Legalities!
+    
+    all_sets: [OracleCard!]!
+  }
+  
+  type OracleCard {
+    id: String!
+    set: String!
+    prices: Prices!
+    image_uris: [ImageUris]!
+    purchase_uris: PurchaseUris!
+  }
+
   type Query {
-    cachedCards: [CachedCard!]!
     card(id: String!): Card
+    cachedCards: [CachedCard!]!
+    cardsByOracleId(oracle_id: String!): CardsByOracle
     searchCard(query: String, limit: Int): [Card!]!
   }
 `;
