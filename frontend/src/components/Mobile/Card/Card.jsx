@@ -7,6 +7,7 @@ import { getCard } from '../../../queries';
 
 import CardSets from './CardSets';
 import CardRules from './CardRules';
+import CardStats from './CardStats';
 import CollectionOverview from './CollectionOverview';
 import LazyLoadCard from '../../Elements/LazyLoadCard/LazyLoadCard';
 
@@ -23,13 +24,13 @@ const StyledWrapper = styled.div`
 export default () => {
   const { id } = useParams();
   const { data, loading } = useQuery(getCard, { variables: { id } });
-  console.log('loading :', loading);
   const card = data && data.card;
 
   return (
     <StyledWrapper>
       <LazyLoadCard card={card} />
       <CardSets card={card} loading={loading} />
+      <CardStats card={card} />
       <CollectionOverview card={card} />
       <CardRules card={card} />
     </StyledWrapper>

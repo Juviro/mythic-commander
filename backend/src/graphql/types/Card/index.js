@@ -5,7 +5,6 @@ export default `
     name: String!
     image_uris: ImageUris
     card_faces: [CardFace!]
-    createdAt: String
     prices: Prices!
     rarity: String!
     legalities: Legalities!
@@ -15,6 +14,7 @@ export default `
     colors: [String]
     color_identity: [String]
 
+    createdAt: String
     zone: String
     owned: Boolean
     amount: Int

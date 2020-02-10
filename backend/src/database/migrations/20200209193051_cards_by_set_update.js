@@ -12,6 +12,7 @@ export const up = async knex => {
                     'set',  set
                     ) AS  sets
             FROM cards
+            WHERE 'paper' = ANY(games)
         )
         SELECT oracle_id, ARRAY_AGG(sets) as all_sets from grouped GROUP BY oracle_id;
     `);
