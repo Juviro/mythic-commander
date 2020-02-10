@@ -10,6 +10,7 @@ import Deck from './Deck';
 import GlobalStyle from './GlobalStyle';
 import MobileRedirect from './MobileRedirect';
 
+// TODO: remove Menu from switch, add redirect
 const App = () => {
   return (
     <MobileRedirect>

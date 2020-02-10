@@ -1,7 +1,3 @@
-
-* Move spinner to searchbar, don't block prev results
-* Remove emblems, tokens etc from distinctCards
-
 * ENABLE SHORTCUTS:
     * cmd + f -> filter (+ focus field)
     * cmd + n -> add (+ focus field)
@@ -18,10 +14,8 @@
     
 * add to filter: rarity, type, cmc?, 
 
-...
+---
 
-* When adding cards to deck or collection by name, pick the cheapest card, consider prefering cards in new design
-* make table columns hidable?
 * add check on server start: if cards empty, fetch them and display message to users (developers) on console
 
 * add support for multiple commanders to commander color identity etc (low prio)

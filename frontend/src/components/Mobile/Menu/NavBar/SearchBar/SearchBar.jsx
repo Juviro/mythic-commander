@@ -120,7 +120,8 @@ const Menu = ({ history, transparentSearchBar }) => {
         <Input
           className="no-border"
           onFocus={event => {
-            // FIXME: workaround for chrome context menu appearing in dev mode when selecting text
+            // FIXME: workaround for chrome context menu
+            // appearing in dev mode when selecting text
             if (window.location.href.indexOf('http://localhost:3000/') === -1)
               event.target.select();
             setIsOpen(true);

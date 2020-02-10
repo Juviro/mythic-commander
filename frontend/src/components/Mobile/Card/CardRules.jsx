@@ -19,7 +19,7 @@ export default ({ card = {} }) => {
     fetch(rulings_uri)
       .then(response => response.json())
       .then(({ data }) => setRules(data));
-    // Don't refetch when set is changed
+    // Don't refetch when only set is changed
     // eslint-disable-next-line
   }, [oracle_id]);
 

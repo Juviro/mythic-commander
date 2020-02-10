@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Menu from './Menu';
 import Deck from './Deck';
@@ -12,14 +12,15 @@ import GlobalStyle from './GlobalStyle';
 const App = () => {
   return (
     <>
-      <Switch>
-        <Menu>
+      <Menu>
+        <Switch>
           <Route path="/m/decks/:id" component={Deck} />
           <Route path="/m/decks" exact component={Decks} />
           <Route path="/m/cards/:id" component={Card} />
           <Route path="/m/cards" exact component={Cards} />
-        </Menu>
-      </Switch>
+          <Redirect from="*" to="/m/decks" />
+        </Switch>
+      </Menu>
       <GlobalStyle />
     </>
   );
