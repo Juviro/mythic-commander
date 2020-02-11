@@ -42,7 +42,12 @@ const Card = ({ history }) => {
 
   useEffect(() => {
     if (!cardId && fallbackId) {
-      history.replace(`${history.location.pathname}/${fallbackId}`);
+      const shouldIncludeDash = !history.location.pathname.endsWith('/');
+      history.replace(
+        `${history.location.pathname}${
+          shouldIncludeDash ? '/' : ''
+        }${fallbackId}`
+      );
     }
   }, [cardId, fallbackId, history]);
 
