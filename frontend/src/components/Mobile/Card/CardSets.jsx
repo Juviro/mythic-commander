@@ -13,16 +13,14 @@ const StyledSetWrapper = styled.div`
   align-items: center;
 `;
 
-const CardSets = ({ card, loading, history, set }) => {
+const CardSets = ({ card, loading, history, cardId }) => {
   const [{ query: searchQuery = '' }] = useQueryParams({
     query: StringParam,
   });
 
   const onSelectSet = id => {
-    const newCard = card.all_sets.find(({ id: cardId }) => id === cardId);
-    if (!newCard) return;
     history.replace(
-      `/m/cards/${card.oracle_id}/${newCard.set}${
+      `/m/cards/${card.oracle_id}/${id}${
         searchQuery ? `?query=${searchQuery}` : ''
       }`
     );
@@ -30,10 +28,10 @@ const CardSets = ({ card, loading, history, set }) => {
 
   return (
     <StyledSetWrapper isLoading={loading}>
-      {loading || !set ? (
+      {loading || !cardId ? (
         <Skeleton active paragraph={null} />
       ) : (
-        <SetPicker card={card} onClick={onSelectSet} defaultSet={set} />
+        <SetPicker card={card} onClick={onSelectSet} defaultCardId={cardId} />
       )}
     </StyledSetWrapper>
   );

@@ -1,5 +1,14 @@
 import { pick } from 'lodash';
 
+const sortSets = (a, b) =>
+  a.set_name > b.set_name
+    ? 1
+    : a.set_name < b.set_name
+    ? -1
+    : a.id > b.id
+    ? 1
+    : -1;
+
 const getImageUri = card => {
   const fullUrl = card.image_uris
     ? card.image_uris.small
@@ -23,12 +32,14 @@ export default {
       const cards = await db('cards').where({ oracle_id });
       if (!cards.length) return null;
 
-      const minimalCards = cards.map(card => ({
-        ...pick(card, ['id', 'set', 'prices', 'purchase_uris']),
-        image_uris: card.image_uris
-          ? [card.image_uris]
-          : card.card_faces.map(({ image_uris }) => image_uris),
-      }));
+      const minimalCards = cards
+        .map(card => ({
+          ...card,
+          image_uris: card.image_uris
+            ? [card.image_uris]
+            : card.card_faces.map(({ image_uris }) => image_uris),
+        }))
+        .sort(sortSets);
       const sharedStats = pick(cards[0], [
         'name',
         'oracle_id',

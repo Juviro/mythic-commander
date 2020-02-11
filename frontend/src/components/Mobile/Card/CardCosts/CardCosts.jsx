@@ -25,6 +25,7 @@ const StyledPurchaseIcons = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
 `;
 
 const PurchaseIcons = ({ name }) => {
@@ -48,18 +49,21 @@ const PurchaseIcons = ({ name }) => {
   return (
     <StyledPurchaseIcons>
       {options.map(({ icon, uri, name: serviceName }) => (
-        <div style={{ width: '50%' }}>
-          <a href={uri} target="_blank" rel="noopener noreferrer">
-            <StyledPurchaseIcon src={icon} />
-            <span>{serviceName}</span>
-          </a>
-        </div>
+        <a
+          href={uri}
+          target="_blank"
+          rel="noopener noreferrer"
+          key={serviceName}
+        >
+          <StyledPurchaseIcon src={icon} />
+          <span>{serviceName}</span>
+        </a>
       ))}
     </StyledPurchaseIcons>
   );
 };
 
-export default ({ card, loading }) => {
+export default ({ card, loading, cardId }) => {
   const { sets } = useContext(CardContext);
 
   if (!card) {
@@ -74,11 +78,15 @@ export default ({ card, loading }) => {
       {card && !loading ? (
         <>
           <Table
-            dataSource={card.all_sets.map(set => ({ ...set, key: set.id }))}
+            dataSource={card.all_sets.map(cardSet => ({
+              ...cardSet,
+              key: cardSet.id,
+            }))}
             columns={columns}
             pagination={false}
             size="small"
             style={{ width: '100%' }}
+            rowClassName={row => (row.id === cardId ? 'table-active' : '')}
           />
           <PurchaseIcons name={card.name} />
         </>

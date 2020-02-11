@@ -27,7 +27,7 @@ const sortByPrice = (a, b) => {
 };
 
 const Card = ({ history }) => {
-  const { oracle_id, set } = useParams();
+  const { oracle_id, cardId } = useParams();
   const { data, loading } = useQuery(getCardByOracleId, {
     variables: { oracle_id },
   });
@@ -36,17 +36,15 @@ const Card = ({ history }) => {
   const sortedCards = card && [...card.all_sets].sort(sortByPrice);
   const currentCard =
     card &&
-    (set
-      ? sortedCards.find(({ set: cardSet }) => cardSet === set)
-      : sortedCards[0]);
-  const fallbackSet = loading ? null : currentCard.set;
+    (cardId ? sortedCards.find(({ id }) => id === cardId) : sortedCards[0]);
+  const fallbackId = loading || !currentCard ? null : currentCard.id;
   const cardImages = currentCard && currentCard.image_uris;
 
   useEffect(() => {
-    if (!set && fallbackSet) {
-      history.replace(`${history.location.pathname}/${fallbackSet}`);
+    if (!cardId && fallbackId) {
+      history.replace(`${history.location.pathname}/${fallbackId}`);
     }
-  }, [set, fallbackSet, history]);
+  }, [cardId, fallbackId, history]);
 
   return (
     <StyledWrapper>
@@ -55,8 +53,8 @@ const Card = ({ history }) => {
         cardImages={cardImages}
         loading={loading}
       />
-      <CardSets card={card} loading={loading} set={set} />
-      <CardCosts card={card} loading={loading} />
+      <CardSets card={card} loading={loading} cardId={cardId} />
+      <CardCosts card={card} loading={loading} cardId={cardId} />
       {/* <CollectionOverview card={card} /> */}
       <CardRules card={card} loading={loading} />
     </StyledWrapper>

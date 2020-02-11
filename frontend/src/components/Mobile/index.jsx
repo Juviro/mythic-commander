@@ -16,7 +16,7 @@ const App = () => {
         <Switch>
           <Route path="/m/decks/:id" component={Deck} />
           <Route path="/m/decks" exact component={Decks} />
-          <Route path="/m/cards/:oracle_id/:set" component={Card} />
+          <Route path="/m/cards/:oracle_id/:cardId" component={Card} />
           <Route path="/m/cards/:oracle_id/" component={Card} />
           <Route path="/m/cards" exact component={Cards} />
           <Redirect from="*" to="/m/decks" />
