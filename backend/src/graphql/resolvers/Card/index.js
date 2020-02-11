@@ -5,7 +5,7 @@ const sortSets = (a, b) =>
     ? 1
     : a.set_name < b.set_name
     ? -1
-    : a.id > b.id
+    : a.promo > b.promo
     ? 1
     : -1;
 

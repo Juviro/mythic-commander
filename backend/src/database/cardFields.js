@@ -141,10 +141,25 @@ export const CARD_FIELDS_ADDITION_3 = [
     specificType: 'TEXT[]',
   },
 ];
+export const CARD_FIELDS_ADDITION_4 = [
+  {
+    key: 'promo',
+    type: 'boolean',
+  },
+  {
+    key: 'oversized',
+    type: 'boolean',
+  },
+  {
+    key: 'related_uris',
+    type: 'jsonb',
+  },
+];
 
 export const ALL_CARD_FIELDS = [
   CARD_FIELDS_INITIAL,
   CARD_FIELDS_ADDITION_1,
   CARD_FIELDS_ADDITION_2,
   CARD_FIELDS_ADDITION_3,
+  CARD_FIELDS_ADDITION_4,
 ].flat();

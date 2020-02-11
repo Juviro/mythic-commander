@@ -1,3 +1,6 @@
+EVALUATE MOVE COLLECTION TO PROVIDER
+
+
 * ENABLE SHORTCUTS:
     * cmd + f -> filter (+ focus field)
     * cmd + n -> add (+ focus field)
@@ -16,7 +19,4 @@
 
 ---
 
-* add check on server start: if cards empty, fetch them and display message to users (developers) on console
-
 * add support for multiple commanders to commander color identity etc (low prio)
-* Add loading spinner for deck image change
