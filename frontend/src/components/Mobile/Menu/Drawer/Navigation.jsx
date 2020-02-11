@@ -16,8 +16,15 @@ export default ({ onCloseDrawer }) => {
   return (
     <List>
       {options.map(({ href, title }) => (
-        <List.Item key={title} onClick={onCloseDrawer}>
-          <Link to={href} style={{ color: 'rgba(0, 0, 0, 0.85)' }}>
+        <List.Item key={title} onClick={onCloseDrawer} style={{ padding: 0 }}>
+          <Link
+            to={href}
+            style={{
+              color: 'rgba(0, 0, 0, 0.85)',
+              width: '100%',
+              padding: '12px 0',
+            }}
+          >
             {title}
           </Link>
         </List.Item>
