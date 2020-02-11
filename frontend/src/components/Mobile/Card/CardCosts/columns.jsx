@@ -18,7 +18,7 @@ const StyledName = styled.div`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 30vw;
+  max-width: 35vw;
 `;
 
 const renderPrice = unit => price => (price ? `${price}${unit}` : '-');
