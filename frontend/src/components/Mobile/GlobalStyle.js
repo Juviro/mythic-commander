@@ -26,4 +26,9 @@ export default createGlobalStyle`
     display: flex !important;
     align-items: center;
   }
+
+  /* disable hover color for table to avoid confusion */
+  .ant-table-tbody > tr:hover > td {
+    background: none !important;
+  }
 `;

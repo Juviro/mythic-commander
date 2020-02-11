@@ -84,6 +84,7 @@ export default `
   type OracleCard {
     id: String!
     set: String!
+    set_name: String
     prices: Prices!
     image_uris: [ImageUris]!
     purchase_uris: PurchaseUris!

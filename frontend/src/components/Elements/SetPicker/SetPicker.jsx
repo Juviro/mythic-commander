@@ -10,16 +10,14 @@ const StyledSetIcon = styled.img`
   margin-right: 4px;
 `;
 
-// Sort cards by id so all cards retain their version nummer if duplicated
-const sortSets = (a, b) =>
-  a.name > b.name ? 1 : a.name < b.name ? -1 : a.id > b.id ? 1 : -1;
-
-export default ({ card, onClick, defaultSet }) => {
+export default ({ card, onClick, defaultCardId }) => {
   const { sets } = useContext(CardContext);
 
-  const allCardSets = card.all_sets
-    .map(({ set: setKey, id }) => ({ id, setKey, ...sets[setKey] }))
-    .sort(sortSets);
+  const allCardSets = card.all_sets.map(({ set: setKey, id }) => ({
+    id,
+    setKey,
+    ...sets[setKey],
+  }));
 
   const setsWithVersion = allCardSets.map(set => {
     const cardsWithSameSet = allCardSets.filter(
@@ -33,14 +31,10 @@ export default ({ card, onClick, defaultSet }) => {
     };
   });
 
-  const defaultValue = defaultSet
-    ? card.all_sets.find(({ set }) => set === defaultSet).id
-    : allCardSets[0].id;
-
   return (
     <Select
       size="small"
-      defaultValue={defaultValue}
+      defaultValue={defaultCardId}
       style={{ width: '100%' }}
       onSelect={onClick}
       disabled={allCardSets.length <= 1}

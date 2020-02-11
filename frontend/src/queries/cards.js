@@ -63,6 +63,7 @@ const CARD_BY_ORACLE_ID_FIELDS = `
   all_sets {
     id
     set
+    set_name
     prices {
       eur
       usd

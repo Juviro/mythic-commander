@@ -11,6 +11,7 @@ export const up = async knex => {
                     'id',  id,
                     'set',  set,
                     'prices',  prices,
+                    'set_name',  set_name,
                     'image_uris',  image_uris,
                     'card_faces',  card_faces
                     ) AS  sets
