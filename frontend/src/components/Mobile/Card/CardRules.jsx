@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Skeleton, List, Modal, Button } from 'antd';
 import styled from 'styled-components';
-import { StyledTitle } from './CardCosts';
+import { StyledTitle } from './CardCosts/CardCosts';
 
 const StyledRulesWrapper = styled.div`
   width: 100%;
