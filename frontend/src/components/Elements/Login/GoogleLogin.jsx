@@ -24,7 +24,7 @@ export default ({ history }) => {
   const [mutate] = useMutation(login);
   const onSuccess = async response => {
     const { data } = await mutate({
-      variables: { token: response.Zi.id_token },
+      variables: { token: response.tokenId },
     });
     window.localStorage.setItem('session', data.login.session);
     // TODO: redirect to next in params
