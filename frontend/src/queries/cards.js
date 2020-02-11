@@ -67,6 +67,7 @@ const CARD_BY_ORACLE_ID_FIELDS = `
     prices {
       eur
       usd
+      usd_foil
     }
     image_uris {
       small

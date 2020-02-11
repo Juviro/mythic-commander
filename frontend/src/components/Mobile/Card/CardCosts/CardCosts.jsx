@@ -7,13 +7,6 @@ import CardContext from '../../../CardProvider/CardProvider';
 import mkmIcon from '../../../../assets/purchaseIcons/mkm.png';
 import ckIcon from '../../../../assets/purchaseIcons/ck.ico';
 
-export const StyledTitle = styled.div`
-  font-weight: 600;
-  margin: 16px 0;
-  display: flex;
-  align-self: start;
-  color: black;
-`;
 const StyledPurchaseIcon = styled.img`
   width: 18px;
   height: 18px;
@@ -74,7 +67,7 @@ export default ({ card, loading, cardId }) => {
 
   return (
     <>
-      <StyledTitle>Buy</StyledTitle>
+      {/* <StyledTitle>Buy</StyledTitle> */}
       {card && !loading ? (
         <>
           <Table
@@ -85,7 +78,12 @@ export default ({ card, loading, cardId }) => {
             columns={columns}
             pagination={false}
             size="small"
-            style={{ width: '100%' }}
+            style={{
+              width: '100%',
+              maxHeight: 325,
+              overflowX: 'hidden',
+              overflowY: 'auto',
+            }}
             rowClassName={row => (row.id === cardId ? 'table-active' : '')}
           />
           <PurchaseIcons name={card.name} />

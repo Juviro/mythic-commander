@@ -34,7 +34,7 @@ const StyledIcon = styled(Icon)`
   padding: 10px 15px 10px 10px;
 `;
 
-const isCardsUrl = pathname => Boolean(pathname.match(/^\/m\/cards\/[\w-]+$/));
+const isCardsUrl = pathname => Boolean(pathname.match(/^\/m\/cards\/[\w-/]+$/));
 
 const getSearchBarProps = (pathname = '', previousUrl) => {
   if (pathname.match(/^\/m\/decks\/[0-9]+$/))
