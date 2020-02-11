@@ -30,11 +30,13 @@ export default ({ card, onClick, defaultCardId }) => {
       name: `${set.name} (Version ${version})`,
     };
   });
+  const defaultValue =
+    defaultCardId || (allCardSets.length && allCardSets[0].id);
 
   return (
     <Select
       size="small"
-      defaultValue={defaultCardId}
+      defaultValue={defaultValue}
       style={{ width: '100%' }}
       onSelect={onClick}
       disabled={allCardSets.length <= 1}
