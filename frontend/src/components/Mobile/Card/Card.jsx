@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 
 import { useParams, withRouter } from 'react-router';
+import { Divider } from 'antd';
 import { getCardByOracleId } from '../../../queries';
 
 import CardSets from './CardSets';
 import CardRules from './CardRules';
 import CardCosts from './CardCosts';
-import LazyLoadCard from '../../Elements/LazyLoadCard/LazyLoadCard';
+import FlippableCard from '../../Elements/FlippableCard/FlippableCard';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -53,14 +54,12 @@ const Card = ({ history }) => {
 
   return (
     <StyledWrapper>
-      <LazyLoadCard
-        name={card && card.name}
-        cardImages={cardImages}
-        loading={loading}
-      />
+      <FlippableCard cardImages={cardImages} loading={loading} />
       <CardSets card={card} loading={loading} cardId={cardId} />
+      <Divider>Buy</Divider>
       <CardCosts card={card} loading={loading} cardId={cardId} />
       {/* <CollectionOverview card={card} /> */}
+      <Divider>Rules</Divider>
       <CardRules card={card} loading={loading} />
     </StyledWrapper>
   );

@@ -21,8 +21,6 @@ const StyledName = styled.div`
   max-width: 35vw;
 `;
 
-const renderPrice = unit => price => (price ? `${price}${unit}` : '-');
-
 const renderSet = allSets => set => {
   const { name, icon_svg_uri } = allSets[set];
   return (
@@ -44,12 +42,13 @@ export default sets => [
     key: '2',
     title: 'EUR',
     dataIndex: 'prices.eur',
-    render: renderPrice('€'),
+    render: price => (price ? `${price}€` : '-'),
   },
   {
     key: '3',
     title: 'USD',
-    dataIndex: 'prices.usd',
-    render: renderPrice('$'),
+    dataIndex: 'prices',
+    render: ({ usd, usd_foil }) =>
+      usd || usd_foil ? `${usd || usd_foil}$` : '-',
   },
 ];

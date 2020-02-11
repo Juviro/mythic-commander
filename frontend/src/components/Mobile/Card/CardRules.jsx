@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Skeleton, List, Modal, Button } from 'antd';
 import styled from 'styled-components';
-import { StyledTitle } from './CardCosts/CardCosts';
 
 const StyledRulesWrapper = styled.div`
   width: 100%;
   height: 32px;
-  margin: 16px 0;
+  margin: 12px 0 32px;
 `;
 
 export default ({ card = {}, loading }) => {
@@ -33,7 +32,6 @@ export default ({ card = {}, loading }) => {
 
   return (
     <>
-      <StyledTitle>Rules</StyledTitle>
       <StyledRulesWrapper showBorder={Boolean(rules)} hasRules={hasRules}>
         {buttonText && !loading ? (
           <Button block onClick={() => setIsOpen(true)} disabled={!hasRules}>
