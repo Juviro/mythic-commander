@@ -10,6 +10,7 @@ import CardSets from './CardSets';
 import CardRules from './CardRules';
 import CardCosts from './CardCosts';
 import CardImage from './CardImage';
+import CollectionOverview from './CollectionOverview';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -69,7 +70,7 @@ const Card = ({ history }) => {
         <CardSets card={card} loading={loading} cardId={cardId} />
         <Divider>Buy</Divider>
         <CardCosts card={card} loading={loading} cardId={cardId} />
-        {/* <CollectionOverview card={card} /> */}
+        <CollectionOverview card={card} />
         <Divider>Rules</Divider>
         <CardRules card={card} loading={loading} />
       </StyledBodyWrapper>
