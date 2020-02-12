@@ -23,7 +23,7 @@ const StyledBodyWrapper = styled.div`
   width: 100%;
   display: flex;
   z-index: 1;
-  padding: 50px 5vw;
+  padding: 10px 5vw;
   min-height: 100px;
   align-items: center;
   flex-direction: column;
