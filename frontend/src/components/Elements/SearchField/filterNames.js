@@ -4,11 +4,12 @@ const trimName = str => {
   return str.replace(/[,';"().\s]+/g, '').toLowerCase();
 };
 
-export const filterCards = (cards, searchString = '') => {
+export const filterByName = (cards, searchString = '') => {
   const cleanSearch = trimName(searchString);
   const searchRegExp = new RegExp(cleanSearch.split('').join('.*'));
 
-  return cards.filter(({ name }) => {
+  return cards.filter(card => {
+    const name = typeof card === 'string' ? card : card.name;
     const cardParts = searchString.includes('/') ? [name] : name.split(' // ');
     return cardParts.some(cardPart => searchRegExp.test(trimName(cardPart)));
   });
@@ -42,7 +43,7 @@ export const sortCards = searchString => ({ name: cardA }, { name: cardB }) => {
 };
 
 export default (cards, searchString, maxResults = MAX_RESULTS) => {
-  return filterCards(cards, searchString)
+  return filterByName(cards, searchString)
     .sort(sortCards(searchString))
     .slice(0, maxResults);
 };

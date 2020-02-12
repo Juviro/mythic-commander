@@ -49,7 +49,23 @@ const StyledCardImage = styled.img`
   display: flex;
 `;
 
-export default onClick => element => {
+const highlightText = (searchString, option) => {
+  let currentSearchString = searchString;
+  const highlightedoption = option.split('').map(char => {
+    if (
+      !currentSearchString.length ||
+      char.toLowerCase() !== currentSearchString[0].toLowerCase()
+    ) {
+      return char;
+    }
+    currentSearchString = currentSearchString.substr(1);
+    return <b key={Math.random()}>{char}</b>;
+  });
+
+  return highlightedoption;
+};
+
+export default (onClick, searchString) => element => {
   const { name, id, oracle_id, imgSrc, img, owned } = element;
   return (
     <AutoComplete.Option
@@ -65,7 +81,9 @@ export default onClick => element => {
             <StyledCardImage src={img} />
           )}
         </CardImageWrapper>
-        <StyledName isShort={owned}>{name}</StyledName>
+        <StyledName isShort={owned}>
+          {highlightText(searchString, name)}
+        </StyledName>
         <StyledOwnedTag>{owned && 'owned'}</StyledOwnedTag>
       </StyledCard>
     </AutoComplete.Option>

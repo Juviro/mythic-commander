@@ -8,7 +8,9 @@ import styled from 'styled-components';
 import { getDecks, getCollection } from '../../../../../queries';
 import OptionGroupHeader from './OptionGroupHeader';
 import CardContext from '../../../../CardProvider/CardProvider';
-import filterNames from '../../../../Elements/SearchField/filterNames';
+import filterNames, {
+  filterByName,
+} from '../../../../Elements/SearchField/filterNames';
 import renderOption from './renderOption';
 
 const MAX_RESULTS = 4;
@@ -31,6 +33,7 @@ const sortDecks = query => (a, b) => {
   return Number(b.lastEdit) - Number(a.lastEdit);
 };
 
+// TODO: optimize re-rendering of this component
 const Menu = ({ history, transparentSearchBar }) => {
   const inputEl = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -59,13 +62,7 @@ const Menu = ({ history, transparentSearchBar }) => {
     ...card,
     owned: collection.some(({ name }) => name === card.name),
   }));
-  const filteredDecks = decks
-    .filter(({ name }) =>
-      name
-        .toLowerCase()
-        .replace(/\s/g, '')
-        .includes(query.toLowerCase().replace(/\s/g, ''))
-    )
+  const filteredDecks = filterByName(decks, query)
     .slice(0, MAX_RESULTS)
     .sort(sortDecks(query));
 
@@ -102,7 +99,7 @@ const Menu = ({ history, transparentSearchBar }) => {
           />
         }
       >
-        {options.map(renderOption(onClick))}
+        {options.map(renderOption(onClick, query))}
       </AutoComplete.OptGroup>
     ));
 
