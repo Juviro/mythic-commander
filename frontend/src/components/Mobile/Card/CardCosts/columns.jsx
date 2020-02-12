@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styled from 'styled-components';
+import { Icon, Tooltip } from 'antd';
 
 const StyledSetIcon = styled.img`
   height: 16px;
@@ -24,10 +25,28 @@ const StyledName = styled.div`
 const renderSet = allSets => set => {
   const { name, icon_svg_uri } = allSets[set];
   return (
-    <StyledSet>
-      <StyledSetIcon src={icon_svg_uri} alt={name} />
-      <StyledName>{name}</StyledName>
-    </StyledSet>
+    <Tooltip title={name}>
+      <StyledSet>
+        <StyledSetIcon src={icon_svg_uri} alt={name} />
+        <StyledName>{name}</StyledName>
+      </StyledSet>
+    </Tooltip>
+  );
+};
+
+const renderUsd = ({ usd, usd_foil }) => {
+  return (
+    <>
+      {!usd && usd_foil && (
+        <Icon
+          style={{ marginLeft: '-20px', marginRight: '1px' }}
+          type="star"
+          theme="twoTone"
+          twoToneColor="#d4af37"
+        />
+      )}
+      {usd || usd_foil ? `${usd || usd_foil}$` : '-'}
+    </>
   );
 };
 
@@ -48,7 +67,6 @@ export default sets => [
     key: '3',
     title: 'USD',
     dataIndex: 'prices',
-    render: ({ usd, usd_foil }) =>
-      usd || usd_foil ? `${usd || usd_foil}$` : '-',
+    render: renderUsd,
   },
 ];

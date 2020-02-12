@@ -67,7 +67,6 @@ export default ({ card, loading, cardId }) => {
 
   return (
     <>
-      {/* <StyledTitle>Buy</StyledTitle> */}
       {card && !loading ? (
         <>
           <Table
