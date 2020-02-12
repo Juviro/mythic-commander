@@ -5,7 +5,7 @@ import { useQueryParams, StringParam, BooleanParam } from 'use-query-params';
 
 import { useQuery } from 'react-apollo';
 import CardContext from '../../CardProvider/CardProvider';
-import { filterCards } from '../../Elements/SearchField/filterNames';
+import { filterByName } from '../../Elements/SearchField/filterNames';
 import Card from './Card';
 import { getCollection } from '../../../queries';
 
@@ -38,7 +38,7 @@ export default () => {
   const filteredCards = [];
   let showMoreButton = false;
 
-  filterCards(cards, searchQuery).some(card => {
+  filterByName(cards, searchQuery).some(card => {
     let shouldInclude = false;
     const cardWithOwned = {
       ...card,

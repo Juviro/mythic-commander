@@ -1,4 +1,4 @@
-import { filterCards as filterByName } from '../../../Elements/SearchField/filterNames';
+import { filterByName } from '../../../Elements/SearchField/filterNames';
 
 const filterByColor = (colorString = '') => card => {
   const [colors] = colorString.match(/(w|u|b|r|g)+$/) || [''];
