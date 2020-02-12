@@ -110,6 +110,7 @@ const Menu = ({ history, transparentSearchBar }) => {
         onChange={onSetSearch}
         onSelect={onSelect}
         dataSource={dataSource}
+        defaultActiveFirstOption={false}
         onBlur={() => setIsOpen(false)}
         dropdownMatchSelectWidth={false}
         placeholder="Search for something"
