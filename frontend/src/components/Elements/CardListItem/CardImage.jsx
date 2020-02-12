@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import styled from 'styled-components';
+import FlippableCard from '../FlippableCard/FlippableCard';
 
 const ANIMATION_TIME = 200;
 
@@ -15,9 +16,15 @@ const StyledCard = styled.img`
   margin-top: ${({ isLarge }) => (isLarge ? 36 : 0)}px;
 `;
 
-const StyledFullscreenCard = styled.img`
+const StyledFlipWrapper = styled.div`
+  display: flex;
+  position: relative;
   width: 100%;
-  border-radius: 16px;
+  height: 133vw;
+
+  @media (min-width: 554px) {
+    height: 724px;
+  }
 `;
 
 export default ({ card, isOpen }) => {
@@ -58,13 +65,15 @@ export default ({ card, isOpen }) => {
         footer={null}
         closeIcon={<div />}
         visible={cardPreviewOpen}
-        bodyStyle={{ padding: 1, backgroundColor: '#17140f' }}
+        bodyStyle={{
+          padding: 0,
+        }}
+        wrapClassName="transparent-modal"
         onCancel={onChangeIsOpen(false)}
       >
-        <StyledFullscreenCard
-          src={images[0].normal}
-          onClick={onChangeIsOpen(false)}
-        />
+        <StyledFlipWrapper onClick={onChangeIsOpen(false)}>
+          <FlippableCard cardImages={images} />
+        </StyledFlipWrapper>
       </Modal>
     </>
   );

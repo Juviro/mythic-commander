@@ -6,9 +6,9 @@ import './index.css';
 
 const StyledImageWrapper = styled.div`
   display: flex;
-  width: 90vw;
-  height: 120vw;
-  margin-top: 12vw;
+  width: 100%;
+  height: 100%;
+  position: relative;
   justify-content: center;
   align-items: center;
 `;
@@ -56,6 +56,11 @@ export default ({ loading, cardImages }) => {
     };
   }, [frontLargeSrc]);
 
+  const onFlipCard = e => {
+    e.stopPropagation();
+    setFlipped(state => !state);
+  };
+
   const frontImgSrc =
     cardImages &&
     (showHighResImage ? cardImages[0].normal : cardImages[0].small);
@@ -69,10 +74,10 @@ export default ({ loading, cardImages }) => {
             type="sync"
             size="large"
             shape="circle"
-            onClick={() => setFlipped(state => !state)}
+            onClick={onFlipCard}
           />
           <a.div
-            className="c front"
+            className="flippable-card "
             style={{
               opacity,
               transform: transform.interpolate(t => `${t} rotateY(-180deg)`),
@@ -83,7 +88,7 @@ export default ({ loading, cardImages }) => {
       )}
       {!loading && (
         <a.div
-          className="c back"
+          className="flippable-card"
           style={{
             opacity: opacity.interpolate(o => 1 - o),
             transform,
