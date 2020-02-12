@@ -26,6 +26,11 @@ const StyledBackground = styled.div`
   ${({ isVisible }) => (!isVisible ? 'pointer-events: none;' : '')};
 `;
 
+const sortDecks = query => (a, b) => {
+  if (query) return a.name > b.name ? 1 : -1;
+  return Number(b.lastEdit) - Number(a.lastEdit);
+};
+
 const Menu = ({ history, transparentSearchBar }) => {
   const inputEl = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -61,7 +66,8 @@ const Menu = ({ history, transparentSearchBar }) => {
         .replace(/\s/g, '')
         .includes(query.toLowerCase().replace(/\s/g, ''))
     )
-    .slice(0, MAX_RESULTS);
+    .slice(0, MAX_RESULTS)
+    .sort(sortDecks(query));
 
   const optionCategories = [
     {
@@ -110,7 +116,7 @@ const Menu = ({ history, transparentSearchBar }) => {
         onChange={onSetSearch}
         onSelect={onSelect}
         dataSource={dataSource}
-        defaultActiveFirstOption={false}
+        // defaultActiveFirstOption={false}
         onBlur={() => setIsOpen(false)}
         dropdownMatchSelectWidth={false}
         placeholder="Search for something"

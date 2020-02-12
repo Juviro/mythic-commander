@@ -36,7 +36,7 @@ export const sortCards = searchString => ({ name: cardA }, { name: cardB }) => {
     ? -1
     : cleanCardNameB[0] === cleanSearch[0]
     ? 1
-    : cleanCardNameA < cleanCardNameB
+    : cardA > cardB
     ? -1
     : 1;
 };
