@@ -49,7 +49,6 @@ export default ({
   cardBody = null,
   additionalIcon = null,
 }) => {
-  // TODO: make card flippable
   return (
     <StyledListItem
       onClick={!isOpen ? () => setOpenCardId(card.oracle_id) : undefined}

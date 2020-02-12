@@ -9,16 +9,26 @@ import { getCardByOracleId } from '../../../queries';
 import CardSets from './CardSets';
 import CardRules from './CardRules';
 import CardCosts from './CardCosts';
-import FlippableCard from '../../Elements/FlippableCard/FlippableCard';
+import CardImage from './CardImage';
 
 const StyledWrapper = styled.div`
   width: 100%;
-  padding: 0 5vw;
   display: flex;
   min-height: 100px;
   align-items: center;
   flex-direction: column;
   justify-content: center;
+`;
+const StyledBodyWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  z-index: 1;
+  padding: 50px 5vw;
+  min-height: 100px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
 `;
 
 const sortByPrice = (a, b) => {
@@ -54,13 +64,15 @@ const Card = ({ history }) => {
 
   return (
     <StyledWrapper>
-      <FlippableCard cardImages={cardImages} loading={loading} />
-      <CardSets card={card} loading={loading} cardId={cardId} />
-      <Divider>Buy</Divider>
-      <CardCosts card={card} loading={loading} cardId={cardId} />
-      {/* <CollectionOverview card={card} /> */}
-      <Divider>Rules</Divider>
-      <CardRules card={card} loading={loading} />
+      <CardImage cardImages={cardImages} loading={loading} />
+      <StyledBodyWrapper>
+        <CardSets card={card} loading={loading} cardId={cardId} />
+        <Divider>Buy</Divider>
+        <CardCosts card={card} loading={loading} cardId={cardId} />
+        {/* <CollectionOverview card={card} /> */}
+        <Divider>Rules</Divider>
+        <CardRules card={card} loading={loading} />
+      </StyledBodyWrapper>
     </StyledWrapper>
   );
 };
