@@ -29,9 +29,25 @@ export default {
       return card;
     },
     cardsByOracleId: async (_, { oracle_id }, { db }) => {
-      const cards = await db('cards')
-        .whereRaw("'paper' = ANY(games)")
-        .andWhere({ oracle_id });
+      // const cards = await db('cards')
+      //   .whereRaw("'paper' = ANY(games)")
+      //   .andWhere({ oracle_id });
+
+      const { rows: cards } = await db.raw(
+        `
+      SELECT 
+        cards.*, 
+        coalesce(collection.amount,0) as amount, 
+        coalesce(collection."foilAmount",0) as "amountFoil" 
+      FROM cards 
+      LEFT JOIN collection
+        ON collection.id = cards.id
+      WHERE cards.oracle_id = ? 
+      AND 'paper' = ANY(games);
+      `,
+        oracle_id
+      );
+
       if (!cards.length) return null;
 
       const minimalCards = cards
@@ -42,6 +58,20 @@ export default {
             : card.card_faces.map(({ image_uris }) => image_uris),
         }))
         .sort(sortSets);
+
+      const minimalCardsWithVersion = minimalCards.map(card => {
+        const cardsWithSameSet = minimalCards.filter(
+          ({ set }) => set === card.set
+        );
+        if (cardsWithSameSet.length === 1) return card;
+        const version =
+          cardsWithSameSet.findIndex(({ id }) => id === card.id) + 1;
+        return {
+          ...card,
+          set_name: `${card.set_name} (Version ${version})`,
+        };
+      });
+
       const sharedStats = pick(cards[0], [
         'name',
         'oracle_id',
@@ -50,7 +80,7 @@ export default {
       ]);
       return {
         ...sharedStats,
-        all_sets: minimalCards,
+        all_sets: minimalCardsWithVersion,
       };
     },
     searchCard: async (_, { query, limit = null }, { db }) => {

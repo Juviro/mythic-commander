@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Table, Skeleton } from 'antd';
 import styled from 'styled-components';
 
-import getColumns from './columns';
-import CardContext from '../../../CardProvider/CardProvider';
+import columns from './columns';
 import mkmIcon from '../../../../assets/purchaseIcons/mkm.png';
 import ckIcon from '../../../../assets/purchaseIcons/ck.ico';
 
@@ -56,14 +55,10 @@ const PurchaseIcons = ({ name }) => {
   );
 };
 
-export default ({ card, loading, cardId }) => {
-  const { sets } = useContext(CardContext);
-
+export default ({ card, loading, selectedCardId }) => {
   if (!card) {
     return <Skeleton active paragraph={4} />;
   }
-
-  const columns = getColumns(sets);
 
   return (
     <>
@@ -83,7 +78,9 @@ export default ({ card, loading, cardId }) => {
               overflowX: 'hidden',
               overflowY: 'auto',
             }}
-            rowClassName={row => (row.id === cardId ? 'table-active' : '')}
+            rowClassName={row =>
+              row.id === selectedCardId ? 'table-active' : ''
+            }
           />
           <PurchaseIcons name={card.name} />
         </>

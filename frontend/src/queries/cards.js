@@ -64,6 +64,10 @@ const CARD_BY_ORACLE_ID_FIELDS = `
     id
     set
     set_name
+    foil
+    nonfoil
+    amount
+    amountFoil
     prices {
       eur
       usd

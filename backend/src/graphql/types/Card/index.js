@@ -84,10 +84,19 @@ export default `
   type OracleCard {
     id: String!
     set: String!
-    set_name: String
+    set_name: String!
     prices: Prices!
+    amount: Int!
+    amountFoil: Int!
+    foil: Boolean!
+    nonfoil: Boolean!
     image_uris: [ImageUris]!
     purchase_uris: PurchaseUris!
+  }
+
+  type Owned {
+    foil: Int!
+    nonfoil: Int!
   }
 
   type Query {
