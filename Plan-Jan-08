@@ -1,3 +1,8 @@
+Refactor backend:
+    * Unify card type, all should be the same 
+      except for maybe amount etc, but maybe even that
+
+
 EVALUATE MOVE COLLECTION TO PROVIDER
 
 

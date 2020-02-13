@@ -13,23 +13,13 @@ const StyledSetIcon = styled.img`
 export default ({ card, onClick, defaultCardId }) => {
   const { sets } = useContext(CardContext);
 
-  const allCardSets = card.all_sets.map(({ set: setKey, id }) => ({
+  const allCardSets = card.all_sets.map(({ set: setKey, id, set_name }) => ({
     id,
     setKey,
     ...sets[setKey],
+    name: set_name || sets[setKey].name,
   }));
 
-  const setsWithVersion = allCardSets.map(set => {
-    const cardsWithSameSet = allCardSets.filter(
-      ({ setKey }) => setKey === set.setKey
-    );
-    if (cardsWithSameSet.length === 1) return set;
-    const version = cardsWithSameSet.findIndex(({ id }) => id === set.id) + 1;
-    return {
-      ...set,
-      name: `${set.name} (Version ${version})`,
-    };
-  });
   const defaultValue =
     defaultCardId || (allCardSets.length && allCardSets[0].id);
 
@@ -41,7 +31,7 @@ export default ({ card, onClick, defaultCardId }) => {
       onSelect={onClick}
       disabled={allCardSets.length <= 1}
     >
-      {setsWithVersion.map(({ name, icon_svg_uri, id }) => (
+      {allCardSets.map(({ name, icon_svg_uri, id }) => (
         <Select.Option value={id} key={id}>
           <StyledSetIcon src={icon_svg_uri} alt={name} />
           {name}

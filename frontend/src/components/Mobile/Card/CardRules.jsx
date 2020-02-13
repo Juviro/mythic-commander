@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Skeleton, List, Modal, Button } from 'antd';
+import { Skeleton, List, Modal, Button, Typography } from 'antd';
 import styled from 'styled-components';
+import Linkify from 'react-linkify';
 
 const StyledRulesWrapper = styled.div`
   width: 100%;
@@ -49,7 +50,13 @@ export default ({ card = {}, loading }) => {
           }
           dataSource={rules}
           onClick={() => setIsOpen(false)}
-          renderItem={({ comment }) => <List.Item>{comment}</List.Item>}
+          renderItem={({ comment }) => (
+            <List.Item>
+              <Typography.Text style={{ width: '100%' }}>
+                <Linkify>{comment}</Linkify>
+              </Typography.Text>
+            </List.Item>
+          )}
         />
       </Modal>
     </>

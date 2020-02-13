@@ -1,36 +1,17 @@
 import React from 'react';
 
-import styled from 'styled-components';
-import { Icon, Tooltip } from 'antd';
+import { Icon } from 'antd';
+import Set from '../../../Elements/Set/Set';
 
-const StyledSetIcon = styled.img`
-  height: 16px;
-  width: 16px;
-  margin-right: 4px;
-`;
-
-const StyledSet = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-`;
-
-const StyledName = styled.div`
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  max-width: 35vw;
-`;
-
-const renderSet = allSets => set => {
-  const { name, icon_svg_uri } = allSets[set];
+const renderSet = card => {
   return (
-    <Tooltip title={name}>
-      <StyledSet>
-        <StyledSetIcon src={icon_svg_uri} alt={name} />
-        <StyledName>{name}</StyledName>
-      </StyledSet>
-    </Tooltip>
+    <Set
+      setKey={card.set}
+      name={card.set_name}
+      style={{
+        maxWidth: '50vw',
+      }}
+    />
   );
 };
 
@@ -50,12 +31,11 @@ const renderUsd = ({ usd, usd_foil }) => {
   );
 };
 
-export default sets => [
+export default [
   {
     key: '1',
     title: 'Set',
-    dataIndex: 'set',
-    render: renderSet(sets),
+    render: renderSet,
   },
   {
     key: '2',

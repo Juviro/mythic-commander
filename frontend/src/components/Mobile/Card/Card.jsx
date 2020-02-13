@@ -68,9 +68,14 @@ const Card = ({ history }) => {
       <CardImage cardImages={cardImages} loading={loading} />
       <StyledBodyWrapper>
         <CardSets card={card} loading={loading} cardId={cardId} />
+        <Divider>Collected</Divider>
+        <CollectionOverview
+          card={card}
+          loading={loading}
+          selectedCardId={cardId}
+        />
         <Divider>Buy</Divider>
-        <CardCosts card={card} loading={loading} cardId={cardId} />
-        <CollectionOverview card={card} />
+        <CardCosts card={card} loading={loading} selectedCardId={cardId} />
         <Divider>Rules</Divider>
         <CardRules card={card} loading={loading} />
       </StyledBodyWrapper>
