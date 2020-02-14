@@ -49,33 +49,41 @@ const Card = ({ history }) => {
   const currentCard =
     card &&
     (cardId ? sortedCards.find(({ id }) => id === cardId) : sortedCards[0]);
+
   const fallbackId = loading || !currentCard ? null : currentCard.id;
   const cardImages = currentCard && currentCard.image_uris;
 
+  const onChangeSet = id => history.replace(`/m/cards/${oracle_id}/${id}`);
+
   useEffect(() => {
-    if (!cardId && fallbackId) {
-      const shouldIncludeDash = !history.location.pathname.endsWith('/');
-      history.replace(
-        `${history.location.pathname}${
-          shouldIncludeDash ? '/' : ''
-        }${fallbackId}`
-      );
-    }
-  }, [cardId, fallbackId, history]);
+    if (!cardId && fallbackId) onChangeSet(fallbackId);
+    // eslint-disable-next-line
+  }, [cardId, fallbackId]);
 
   return (
     <StyledWrapper>
       <CardImage cardImages={cardImages} loading={loading} />
       <StyledBodyWrapper>
-        <CardSets card={card} loading={loading} cardId={cardId} />
+        <CardSets
+          card={card}
+          loading={loading}
+          cardId={cardId}
+          onChangeSet={onChangeSet}
+        />
         <Divider>Collected</Divider>
         <CollectionOverview
           card={card}
           loading={loading}
           selectedCardId={cardId}
+          onChangeSet={onChangeSet}
         />
         <Divider>Buy</Divider>
-        <CardCosts card={card} loading={loading} selectedCardId={cardId} />
+        <CardCosts
+          card={card}
+          loading={loading}
+          selectedCardId={cardId}
+          onChangeSet={onChangeSet}
+        />
         <Divider>Rules</Divider>
         <CardRules card={card} loading={loading} />
       </StyledBodyWrapper>

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Skeleton, List, Icon } from 'antd';
+import { Skeleton, List } from 'antd';
 import CollectionListItem from './CollectionListItem';
+import EditIcon from '../../../Elements/EditIcon';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -9,46 +10,33 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
-const StyledEditWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-`;
-
-export default ({ card, selectedCardId, loading }) => {
-  // TODO: on edit, don't show all version
-  // show plus button that adds new row with set picker
-  // show delete button for each row
-
+export default ({ card, selectedCardId, loading, onChangeSet }) => {
   // TODO: on click of row, switch card to clicked one
-  // do the same for card costs list items
 
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(true);
   if (!card || loading) return <Skeleton />;
   const { all_sets } = card;
-  const displayedSets = isEditing
-    ? all_sets
-    : all_sets.filter(({ amount, amountFoil }) => amount + amountFoil);
+  const displayedSets = all_sets.filter(
+    ({ amount, amountFoil }) => amount + amountFoil
+  );
 
   return (
-    <StyledWrapper onBlur={() => setIsEditing(false)}>
-      <StyledEditWrapper>
-        {/* <Icon
-          type="edit"
-          style={{ color: '#1890ff', marginBottom: 8, marginRight: 4 }}
-          onClick={() => setIsEditing(true)}
-        /> */}
-      </StyledEditWrapper>
+    <StyledWrapper>
+      <EditIcon
+        onClick={() => setIsEditing(!isEditing)}
+        isEditing={isEditing}
+      />
       {Boolean(displayedSets.length) && (
         <List
           bordered
           size="small"
+          style={{ fontSize: 12 }}
           dataSource={displayedSets}
           renderItem={({ id, ...rest }) => (
             <List.Item
               key={id}
               className={id === selectedCardId ? 'table-active ' : ''}
+              onClick={isEditing ? undefined : () => onChangeSet(id)}
             >
               <CollectionListItem {...rest} isEditing={isEditing} />
             </List.Item>
