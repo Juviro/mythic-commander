@@ -55,7 +55,7 @@ const PurchaseIcons = ({ name }) => {
   );
 };
 
-export default ({ card, loading, selectedCardId }) => {
+const CardCosts = ({ card, loading, selectedCardId, onChangeSet }) => {
   if (!card) {
     return <Skeleton active paragraph={4} />;
   }
@@ -70,13 +70,16 @@ export default ({ card, loading, selectedCardId }) => {
               key: cardSet.id,
             }))}
             columns={columns}
+            onRow={({ id }) => ({
+              onClick: () => onChangeSet(id),
+            })}
             pagination={false}
             size="small"
             style={{
               width: '100%',
-              maxHeight: 325,
               overflowX: 'hidden',
               overflowY: 'auto',
+              maxHeight: 400,
             }}
             rowClassName={row =>
               row.id === selectedCardId ? 'table-active' : ''
@@ -90,3 +93,11 @@ export default ({ card, loading, selectedCardId }) => {
     </>
   );
 };
+
+const areEqual = (prevProps, nextProps) => {
+  if (prevProps.selectedCardId !== nextProps.selectedCardId) return false;
+  if (prevProps.loading !== nextProps.loading) return false;
+  return true;
+};
+
+export default React.memo(CardCosts, areEqual);
