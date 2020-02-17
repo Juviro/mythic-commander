@@ -3,7 +3,7 @@ import { CARD_FIELDS } from './cards';
 
 export const COLLECTION_CARD_FIELDS = `
   createdAt
-  isFoil
+  amount
   priceInEuro
   priceLabel
   ${CARD_FIELDS}

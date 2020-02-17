@@ -40,7 +40,7 @@ const Card = ({ card, history }) => {
 
 const areEqual = (prevProps, nextProps) => {
   if (prevProps.isOpen !== nextProps.isOpen) return false;
-  return ['id', 'amount', 'isFoil'].every(propKey => {
+  return ['id', 'amount', 'amountFoil'].every(propKey => {
     return prevProps.card[propKey] === nextProps.card[propKey];
   });
 };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Skeleton, List, Icon } from 'antd';
+import { Skeleton, List } from 'antd';
 import CollectionListItem from './CollectionListItem';
 
 const StyledWrapper = styled.div`
