@@ -6,11 +6,10 @@ import { useParams, withRouter } from 'react-router';
 import { Divider } from 'antd';
 import { getCardByOracleId } from '../../../queries';
 
-import CardSets from './CardSets';
 import CardRules from './CardRules';
-import CardCosts from './CardCosts';
 import CardImage from './CardImage';
-import CollectionOverview from './CollectionOverview';
+import CardOwned from './CardOwned';
+import CardOverview from './CardOverview';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -64,21 +63,9 @@ const Card = ({ history }) => {
     <StyledWrapper>
       <CardImage cardImages={cardImages} loading={loading} />
       <StyledBodyWrapper>
-        <CardSets
-          card={card}
-          loading={loading}
-          cardId={cardId}
-          onChangeSet={onChangeSet}
-        />
-        <Divider>Collected</Divider>
-        <CollectionOverview
-          card={card}
-          loading={loading}
-          selectedCardId={cardId}
-          onChangeSet={onChangeSet}
-        />
-        <Divider>Buy</Divider>
-        <CardCosts
+        <CardOwned card={card} loading={loading} />
+        <Divider>Overview</Divider>
+        <CardOverview
           card={card}
           loading={loading}
           selectedCardId={cardId}

@@ -34,6 +34,6 @@ export default createGlobalStyle`
 
   /* add small margin to bottom of tables. Original value is "0 8px" */
   .ant-table-small > .ant-table-content > .ant-table-body {
-    margin: 0 8px 8px;
+    margin: 0 8px 2px;
   }
 `;
