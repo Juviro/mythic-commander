@@ -15,7 +15,7 @@ const DECK_CARD_FIELDS = `
   priceInEuro
   priceLabel
   createdAt
-  isFoil
+  amount
   priceInEuro
   priceLabel
 `;

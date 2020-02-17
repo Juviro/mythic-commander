@@ -16,13 +16,11 @@ export default `
 
   input AddCardsByIdInput {
     id: String!
-    isFoil: Boolean
     set: String
   }
 
   input AddCardsByNameInput {
     name: String!
     amount: Int
-    isFoil: Boolean
   }
 `;
