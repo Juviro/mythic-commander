@@ -148,7 +148,6 @@ export default {
         } else {
           await db('collection').insert({
             id: deckCard.cardId,
-            isFoil: false,
             oracle_id: cardOracleId,
             userId: user.id,
             amount: 1,

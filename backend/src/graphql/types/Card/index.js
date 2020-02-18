@@ -18,7 +18,6 @@ export default `
     zone: String
     owned: Boolean
     amount: Int
-    isFoil: Boolean
     priceInEuro: Float
     priceLabel: String
     all_sets: [Set!]

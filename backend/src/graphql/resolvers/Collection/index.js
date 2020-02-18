@@ -5,7 +5,7 @@ import {
 } from '../../../cardApi/';
 
 const ON_DUPLICATE =
-  ' ON CONFLICT (id, "isFoil", "userId") DO UPDATE SET amount = collection.amount + EXCLUDED.amount, "createdAt" = NOW()';
+  ' ON CONFLICT (id, "userId") DO UPDATE SET amount = collection.amount + EXCLUDED.amount, "createdAt" = NOW()';
 
 const addToCollection = async (cards, userId, db) => {
   if (!cards.length) return;
@@ -14,7 +14,6 @@ const addToCollection = async (cards, userId, db) => {
   );
   const withUserId = withoutDuplicates.map(({ id, oracle_id, amount = 1 }) => ({
     id,
-    isFoil: false,
     oracle_id,
     userId,
     amount,
