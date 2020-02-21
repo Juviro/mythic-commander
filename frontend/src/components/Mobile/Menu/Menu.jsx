@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Drawer from './Drawer/Drawer';
 import NavBar from './NavBar';
 
-const Menu = ({ children }) => {
+const Menu = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const onToggleDrawer = () => {
@@ -17,7 +17,6 @@ const Menu = ({ children }) => {
         isVisible={isDrawerOpen}
         onCloseDrawer={() => setIsDrawerOpen(false)}
       />
-      {children}
     </>
   );
 };
