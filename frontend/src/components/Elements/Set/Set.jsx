@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 
 import styled from 'styled-components';
-import { Tooltip } from 'antd';
 import CardContext from '../../CardProvider/CardProvider';
 
 const StyledSetIcon = styled.img`
@@ -27,11 +26,9 @@ export default ({ setKey, style = {}, name: overwriteName }) => {
   const { name, icon_svg_uri } = sets[setKey];
   const setName = overwriteName || name;
   return (
-    <Tooltip title={setName}>
-      <StyledSet style={style}>
-        <StyledSetIcon src={icon_svg_uri} alt={setName} />
-        <StyledName>{setName}</StyledName>
-      </StyledSet>
-    </Tooltip>
+    <StyledSet style={style}>
+      <StyledSetIcon src={icon_svg_uri} alt={setName} />
+      <StyledName>{setName}</StyledName>
+    </StyledSet>
   );
 };

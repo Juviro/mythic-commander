@@ -6,8 +6,8 @@ import filterNames from './filterNames';
 export const splitAmountAndName = query => {
   const match = query.match(/^(\d*)x{0,1}\s{0,1}(.*)/);
   if (!match) return { name: query, amount: 1 };
-  const [, possibleAmount, name] = match;
-  const amount = Number(possibleAmount) || 1;
+  const [, matchedAmount, name] = match;
+  const amount = Number(matchedAmount) || 1;
   return { amount, name };
 };
 
