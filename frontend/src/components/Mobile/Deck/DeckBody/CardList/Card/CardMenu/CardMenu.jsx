@@ -13,12 +13,13 @@ const StyledInnerStatsWrapper = styled.div`
   flex-direction: column;
   transition: all 0.2s;
   width: calc(50vw - 16px);
-  height: calc((50vw * 1.35));
+  height: 0;
 
   ${({ isVisible }) => {
     if (!isVisible) return '';
     return `
       margin-left: 8px;
+      height: calc((50vw * 1.35));
     `;
   }}
 `;
