@@ -45,7 +45,7 @@ export default [
   },
   {
     key: '2',
-    title: 'Regular',
+    title: 'Basic',
     dataIndex: 'prices.usd',
     sorter: sortByPrice('usd'),
     render: renderPrice,
