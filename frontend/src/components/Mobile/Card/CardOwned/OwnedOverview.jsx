@@ -52,6 +52,7 @@ export default ({ cards, onChangeSet, selectedCardId }) => {
               display: 'flex',
               alignItems: 'center',
               marginBottom: 6,
+              padding: '2px 0',
               backgroundColor: selectedCardId === id ? '#e4f0ff' : '',
             }}
           >
