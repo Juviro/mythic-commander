@@ -28,6 +28,7 @@ export default ({ card, loading, onChangeSet, selectedCardId }) => {
       <Collapse.Panel
         header={totalOwned ? `${totalOwned}x collected` : 'Not yet collected'}
         key="1"
+        disabled={!totalOwned}
       >
         <OwnedOverview
           cards={card.all_sets}
