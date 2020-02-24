@@ -6,11 +6,10 @@ import { useParams, withRouter } from 'react-router';
 import { Divider } from 'antd';
 import { getCardByOracleId } from '../../../queries';
 
-import CardSets from './CardSets';
 import CardRules from './CardRules';
-import CardCosts from './CardCosts';
 import CardImage from './CardImage';
-import CollectionOverview from './CollectionOverview';
+import CardOwned from './CardOwned';
+import CardOverview from './CardOverview';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -49,33 +48,34 @@ const Card = ({ history }) => {
   const currentCard =
     card &&
     (cardId ? sortedCards.find(({ id }) => id === cardId) : sortedCards[0]);
+
   const fallbackId = loading || !currentCard ? null : currentCard.id;
   const cardImages = currentCard && currentCard.image_uris;
 
+  const onChangeSet = id => history.replace(`/m/cards/${oracle_id}/${id}`);
+
   useEffect(() => {
-    if (!cardId && fallbackId) {
-      const shouldIncludeDash = !history.location.pathname.endsWith('/');
-      history.replace(
-        `${history.location.pathname}${
-          shouldIncludeDash ? '/' : ''
-        }${fallbackId}`
-      );
-    }
-  }, [cardId, fallbackId, history]);
+    if (!cardId && fallbackId) onChangeSet(fallbackId);
+    // eslint-disable-next-line
+  }, [cardId, fallbackId]);
 
   return (
     <StyledWrapper>
       <CardImage cardImages={cardImages} loading={loading} />
       <StyledBodyWrapper>
-        <CardSets card={card} loading={loading} cardId={cardId} />
-        <Divider>Collected</Divider>
-        <CollectionOverview
+        <CardOwned
+          card={card}
+          loading={loading}
+          onChangeSet={onChangeSet}
+          selectedCardId={cardId}
+        />
+        <Divider>Overview</Divider>
+        <CardOverview
           card={card}
           loading={loading}
           selectedCardId={cardId}
+          onChangeSet={onChangeSet}
         />
-        <Divider>Buy</Divider>
-        <CardCosts card={card} loading={loading} selectedCardId={cardId} />
         <Divider>Rules</Divider>
         <CardRules card={card} loading={loading} />
       </StyledBodyWrapper>

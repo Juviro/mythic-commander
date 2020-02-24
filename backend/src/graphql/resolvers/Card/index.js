@@ -29,10 +29,6 @@ export default {
       return card;
     },
     cardsByOracleId: async (_, { oracle_id }, { db }) => {
-      // const cards = await db('cards')
-      //   .whereRaw("'paper' = ANY(games)")
-      //   .andWhere({ oracle_id });
-
       const { rows: cards } = await db.raw(
         `
       SELECT 
