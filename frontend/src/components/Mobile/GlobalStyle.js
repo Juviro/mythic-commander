@@ -37,7 +37,7 @@ export default createGlobalStyle`
     margin: 0 8px 2px;
   }
 
-  /*  */
+  /* single card view owned styling for collapse */
   .collapse-owned > .ant-collapse-item {
     border: 1px solid #e4e2e2;
     border-radius: 8px !important;
