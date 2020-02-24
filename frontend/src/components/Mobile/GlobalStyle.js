@@ -34,6 +34,13 @@ export default createGlobalStyle`
 
   /* add small margin to bottom of tables. Original value is "0 8px" */
   .ant-table-small > .ant-table-content > .ant-table-body {
-    margin: 0 8px 8px;
+    margin: 0 8px 2px;
+  }
+
+  /* single card view owned styling for collapse */
+  .collapse-owned > .ant-collapse-item {
+    border: 1px solid #e4e2e2;
+    border-radius: 8px !important;
+    background-color: white;
   }
 `;
