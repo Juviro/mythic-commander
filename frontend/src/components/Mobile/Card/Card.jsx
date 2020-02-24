@@ -63,7 +63,12 @@ const Card = ({ history }) => {
     <StyledWrapper>
       <CardImage cardImages={cardImages} loading={loading} />
       <StyledBodyWrapper>
-        <CardOwned card={card} loading={loading} />
+        <CardOwned
+          card={card}
+          loading={loading}
+          onChangeSet={onChangeSet}
+          selectedCardId={cardId}
+        />
         <Divider>Overview</Divider>
         <CardOverview
           card={card}

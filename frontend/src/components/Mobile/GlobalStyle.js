@@ -36,4 +36,11 @@ export default createGlobalStyle`
   .ant-table-small > .ant-table-content > .ant-table-body {
     margin: 0 8px 2px;
   }
+
+  /*  */
+  .collapse-owned > .ant-collapse-item {
+    border: 1px solid #e4e2e2;
+    border-radius: 8px !important;
+    background-color: white;
+  }
 `;
