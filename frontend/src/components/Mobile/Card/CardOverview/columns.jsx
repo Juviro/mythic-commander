@@ -1,5 +1,4 @@
 import React from 'react';
-import { Icon } from 'antd';
 import styled from 'styled-components';
 
 import Set from '../../../Elements/Set/Set';
@@ -17,49 +16,45 @@ const renderSet = card => {
       setKey={card.set}
       name={card.set_name}
       style={{
-        maxWidth: 'calc(100vw - 180px)',
+        maxWidth: 'calc(100vw - 200px)',
         fontSize: 12,
       }}
     />
   );
 };
 
-const renderUsd = ({ usd, usd_foil }) => {
-  return (
-    <StyledPriceWrapper>
-      {!usd && usd_foil && (
-        <Icon
-          style={{ marginRight: '1px', marginLeft: '-20px' }}
-          type="star"
-          theme="twoTone"
-          twoToneColor="#d4af37"
-        />
-      )}
-      {usd || usd_foil ? `${usd || usd_foil}$` : '-'}
-    </StyledPriceWrapper>
-  );
+const renderPrice = price => (
+  <StyledPriceWrapper>{price ? `$${price}` : '-'}</StyledPriceWrapper>
+);
+
+const sortByPrice = priceKey => (a, b) => {
+  const getPrice = card => card.prices[priceKey] || 0;
+  return getPrice(a) - getPrice(b);
 };
 
-const renderEur = price => (
-  <StyledPriceWrapper>{price ? `${price}€` : '-'}</StyledPriceWrapper>
-);
+const sortByName = (a, b) => {
+  return a.set_name > b.set_name ? 1 : -1;
+};
 
 export default [
   {
     key: '1',
     title: 'Set',
+    sorter: sortByName,
     render: renderSet,
   },
   {
     key: '2',
-    title: 'EUR',
-    dataIndex: 'prices.eur',
-    render: renderEur,
+    title: 'Regular',
+    dataIndex: 'prices.usd',
+    sorter: sortByPrice('usd'),
+    render: renderPrice,
   },
   {
     key: '3',
-    title: 'USD',
-    dataIndex: 'prices',
-    render: renderUsd,
+    title: 'Foil',
+    dataIndex: 'prices.usd_foil',
+    sorter: sortByPrice('usd_foil'),
+    render: renderPrice,
   },
 ];
