@@ -3,6 +3,7 @@ export { search } from './search';
 export { cachedCards, getCard, searchCard, getCardByOracleId } from './cards';
 export {
   getCollection,
+  getCollectionName,
   addToCollectionByName,
   addToCollectionById,
   deleteFromCollection,

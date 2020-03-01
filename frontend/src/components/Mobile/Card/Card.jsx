@@ -9,6 +9,7 @@ import { getCardByOracleId } from '../../../queries';
 import CardRules from './CardRules';
 import CardImage from './CardImage';
 import CardOwned from './CardOwned';
+import CardSetName from './CardSetName';
 import CardOverview from './CardOverview';
 
 const StyledWrapper = styled.div`
@@ -25,6 +26,7 @@ const StyledBodyWrapper = styled.div`
   z-index: 1;
   padding: 10px 5vw;
   min-height: 100px;
+  margin-top: 16px;
   align-items: center;
   flex-direction: column;
   justify-content: center;
@@ -62,6 +64,7 @@ const Card = ({ history }) => {
   return (
     <StyledWrapper>
       <CardImage cardImages={cardImages} loading={loading} />
+      <CardSetName card={card} selectedCardId={cardId} loading={loading} />
       <StyledBodyWrapper>
         <CardOwned
           card={card}

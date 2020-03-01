@@ -22,6 +22,16 @@ export const getCollection = gql`
     }
   }
 `;
+export const getCollectionName = gql`
+  query getCollectionName {
+    collection {
+      id
+      cards {
+        name
+      }
+    }
+  }
+`;
 
 export const addToCollectionByName = gql`
   mutation addToCollectionByName($cards: [AddCardsByNameInput]!) {

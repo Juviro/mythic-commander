@@ -5,7 +5,7 @@ import { useQueryParams, StringParam } from 'use-query-params';
 import { useQuery } from 'react-apollo';
 
 import styled from 'styled-components';
-import { getDecks, getCollection } from '../../../../../queries';
+import { getDecks, getCollectionName } from '../../../../../queries';
 import OptionGroupHeader from './OptionGroupHeader';
 import CardContext from '../../../../CardProvider/CardProvider';
 import filterNames, {
@@ -39,7 +39,7 @@ const Menu = ({ history, transparentSearchBar }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { cards } = useContext(CardContext);
   const { data: decksData } = useQuery(getDecks);
-  const { data: collectionData } = useQuery(getCollection);
+  const { data: collectionData } = useQuery(getCollectionName);
   const decks = (decksData && decksData.decks) || [];
   const collection = (collectionData && collectionData.collection.cards) || [];
 
@@ -50,6 +50,7 @@ const Menu = ({ history, transparentSearchBar }) => {
     setQuery({ query: value.split(';')[0] });
   };
   const onSelect = () => {
+    setQuery({ query: '' });
     inputEl.current.blur();
   };
 
@@ -68,6 +69,12 @@ const Menu = ({ history, transparentSearchBar }) => {
 
   const optionCategories = [
     {
+      name: 'Cards',
+      options: filteredCards,
+      onClick: onOpenCardView,
+      onShowAll: () => history.push(`/m/cards?query=${query}`),
+    },
+    {
       name: 'Decks',
       options: filteredDecks,
       onClick: ({ key }) => {
@@ -75,12 +82,6 @@ const Menu = ({ history, transparentSearchBar }) => {
         history.push(`/m/decks/${id}`);
       },
       onShowAll: () => history.push(`/m/decks?query=${query}`),
-    },
-    {
-      name: 'Cards',
-      options: filteredCards,
-      onClick: onOpenCardView,
-      onShowAll: () => history.push(`/m/cards?query=${query}`),
     },
   ];
 
@@ -115,21 +116,12 @@ const Menu = ({ history, transparentSearchBar }) => {
         dataSource={dataSource}
         onBlur={() => setIsOpen(false)}
         dropdownMatchSelectWidth={false}
-        placeholder="Search for something"
+        placeholder="Search for card or deck"
         style={{ width: 'calc(100% - 16px)' }}
         dropdownMenuStyle={{ maxHeight: '90vh' }}
         className={transparentSearchBar && 'transparent'}
       >
-        <Input
-          className="no-border"
-          onFocus={event => {
-            // FIXME: workaround for chrome context menu
-            // appearing in dev mode when selecting text
-            if (window.location.href.indexOf('http://localhost:3000/') === -1)
-              event.target.select();
-            setIsOpen(true);
-          }}
-        />
+        <Input className="no-border" onFocus={() => setIsOpen(true)} />
       </AutoComplete>
       <StyledBackground isVisible={isOpen} />
     </>

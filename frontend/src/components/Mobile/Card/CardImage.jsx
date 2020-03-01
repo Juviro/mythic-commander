@@ -6,7 +6,7 @@ import FlippableCard from '../../Elements/FlippableCard/FlippableCard';
 const StyledWrapper = styled.div`
   width: 90vw;
   height: 125vw;
-  margin: 5vw 0;
+  margin: 5vw 0 0;
 `;
 
 export default ({ cardImages, loading }) => {
