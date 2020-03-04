@@ -28,20 +28,21 @@ export default {
         .where({ id });
       return card;
     },
-    cardsByOracleId: async (_, { oracle_id }, { db }) => {
+    cardsByOracleId: async (_, { oracle_id }, { db, user: { id: userId } }) => {
       const { rows: cards } = await db.raw(
         `
       SELECT 
         cards.*, 
         coalesce(collection.amount,0) as amount, 
-        coalesce(collection."foilAmount",0) as "amountFoil" 
+        coalesce(collection."amountFoil",0) as "amountFoil" 
       FROM cards 
       LEFT JOIN collection
         ON collection.id = cards.id
+        AND collection."userId" = ?
       WHERE cards.oracle_id = ? 
       AND 'paper' = ANY(games);
       `,
-        oracle_id
+        [userId, oracle_id]
       );
 
       if (!cards.length) return null;

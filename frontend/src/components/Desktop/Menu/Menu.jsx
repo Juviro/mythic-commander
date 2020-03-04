@@ -2,7 +2,7 @@ import React from 'react';
 import { Menu, Icon } from 'antd';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import UserAvatar from '../../Elements/UserAvatar';
+import { UserAvatar } from '../../Elements';
 
 const StyledApp = styled.div`
   width: 100%;

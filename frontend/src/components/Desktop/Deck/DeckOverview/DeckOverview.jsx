@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { StringParam, useQueryParams } from 'use-query-params';
 
-import Table from '../../../Elements/Table';
-import FullscreenSpinner from '../../../Elements/Spinner/FullscreenSpinner';
+import { Table, Spinner } from '../../../Elements';
+
 import { filterCards } from './cardFilter';
 import Actions from './Actions';
 
@@ -19,7 +19,7 @@ export default ({ deck, loading }) => {
     search: StringParam,
     colors: StringParam,
   });
-  if (loading || !deck.cards) return <FullscreenSpinner />;
+  if (loading || !deck.cards) return <Spinner />;
 
   const commander = deck.cards.find(({ zone }) => zone === 'COMMANDER');
   const filteredCards = filterCards(deck.cards, filter);

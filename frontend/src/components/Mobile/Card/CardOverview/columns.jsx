@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Set from '../../../Elements/Set/Set';
+import { Set } from '../../../Elements';
 
 const StyledPriceWrapper = styled.div`
   display: flex;
