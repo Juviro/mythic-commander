@@ -47,7 +47,6 @@ export default class MainMenu extends React.Component {
     } = this.props;
 
     if (pathname === '/login') return children;
-
     return (
       <StyledApp>
         <StyledMenu>
