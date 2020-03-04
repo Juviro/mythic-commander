@@ -56,3 +56,13 @@ export const deleteFromCollection = gql`
     }
   }
 `;
+
+export const changeCollection = gql`
+  mutation changeCollection(
+    $added: [ChangeCollectionInput!]
+    $edited: [ChangeCollectionInput!]
+    $deleted: [String!]
+  ) {
+    changeCollection(added: $added, edited: $edited, deleted: $deleted)
+  }
+`;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
-import UserAvatar from '../../../Elements/UserAvatar';
+import { UserAvatar } from '../../../Elements';
 import { getUser } from '../../../../queries';
 
 const StyledHeader = styled.div`

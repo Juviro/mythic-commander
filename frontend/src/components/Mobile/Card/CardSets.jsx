@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Skeleton } from 'antd';
 
-import SetPicker from '../../Elements/SetPicker/SetPicker';
+import { SetPicker } from '../../Elements';
 
 const StyledSetWrapper = styled.div`
   display: flex;

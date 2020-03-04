@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import CardInfo from './CardInfo';
 import CardEdit from './CardEdit';
-import EditIcon from '../../../../../../Elements/EditIcon';
+import { EditIcon } from '../../../../../../Elements';
 
 const StyledInnerStatsWrapper = styled.div`
   display: flex;
