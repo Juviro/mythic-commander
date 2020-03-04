@@ -1,6 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Icon } from 'antd';
+import { Icon, Typography } from 'antd';
+
+const StyledWrapper = styled.div`
+  display: flex;
+  margin-bottom: 8px;
+  align-items: center;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+`;
 
 const StyledIconWrapper = styled.div`
   display: flex;
@@ -9,7 +17,6 @@ const StyledIconWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   overflow: hidden;
-  margin-bottom: 8px;
 
   width: ${({ isEditing }) => (isEditing ? '50px' : '16px')};
 `;
@@ -18,14 +25,31 @@ const StyledLabel = styled.span`
   font-weight: 500;
 `;
 
-export default ({ onClick, isEditing }) => {
+export default ({
+  onClick,
+  isEditing,
+  editingText = 'Back',
+  editingIcon = 'right',
+  onDiscard,
+}) => {
   return (
-    <StyledIconWrapper onClick={onClick} isEditing={isEditing}>
-      <Icon
-        type={isEditing ? 'right' : 'edit'}
-        style={{ color: '#1890ff', marginRight: 4 }}
-      />
-      <StyledLabel>Back</StyledLabel>
-    </StyledIconWrapper>
+    <StyledWrapper>
+      <StyledIconWrapper onClick={onClick} isEditing={isEditing}>
+        <Icon
+          type={isEditing ? editingIcon : 'edit'}
+          style={{ color: '#1890ff', marginRight: 4 }}
+        />
+        <StyledLabel>{editingText}</StyledLabel>
+      </StyledIconWrapper>
+      {onDiscard && isEditing && (
+        <Typography.Text
+          type="danger"
+          style={{ fontSize: 13 }}
+          onClick={onDiscard}
+        >
+          discard changes
+        </Typography.Text>
+      )}
+    </StyledWrapper>
   );
 };

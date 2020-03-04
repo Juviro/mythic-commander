@@ -3,7 +3,7 @@ import React from 'react';
 import { isCardLegal } from '../../../../../../utils/cardStats';
 import CardMenu from './CardMenu';
 import NotLegalWarning from './Warning';
-import CardListItem from '../../../../../Elements/CardListItem';
+import { CardListItem } from '../../../../../Elements';
 
 const Card = ({ card, commander, setOpenCardId, isOpen }) => {
   const isLegal = isCardLegal(card, commander);

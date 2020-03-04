@@ -12,6 +12,13 @@ export default `
     addToCollectionById(cards: [AddCardsByIdInput]!): Collection!
     addToCollectionByName(cards: [AddCardsByNameInput]!): Collection!
     deleteFromCollection(cardIds: [String]!): Collection!
+    changeCollection(added: [ChangeCollectionInput!], edited: [ChangeCollectionInput!], deleted: [String!]): Boolean
+  }
+
+  input ChangeCollectionInput {
+    id: String!
+    amount: Int
+    amountFoil: Int
   }
 
   input AddCardsByIdInput {
