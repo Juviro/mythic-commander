@@ -11,7 +11,6 @@ const ON_DUPLICATE =
 // which might be queried when inserting.
 // otherwise, consider a collection view that has that id
 const addToCollection = async (cards, userId, db) => {
-  console.log('cards :', cards);
   if (!cards.length) return;
   const withoutDuplicates = cards.filter(
     ({ id }, index) => index === cards.findIndex(card => card.id === id)
@@ -25,7 +24,6 @@ const addToCollection = async (cards, userId, db) => {
       amountFoil,
     })
   );
-  console.log('withUserId :', withUserId);
 
   await db.raw(
     db('collection')
