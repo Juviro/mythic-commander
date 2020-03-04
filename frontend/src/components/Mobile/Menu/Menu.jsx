@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Drawer from './Drawer/Drawer';
+import Drawer from './Drawer';
 import NavBar from './NavBar';
 
 const Menu = () => {
