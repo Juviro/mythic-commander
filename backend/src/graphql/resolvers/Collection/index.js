@@ -11,6 +11,7 @@ const ON_DUPLICATE =
 // which might be queried when inserting.
 // otherwise, consider a collection view that has that id
 const addToCollection = async (cards, userId, db) => {
+  console.log('cards :', cards);
   if (!cards.length) return;
   const withoutDuplicates = cards.filter(
     ({ id }, index) => index === cards.findIndex(card => card.id === id)
@@ -24,6 +25,7 @@ const addToCollection = async (cards, userId, db) => {
       amountFoil,
     })
   );
+  console.log('withUserId :', withUserId);
 
   await db.raw(
     db('collection')
@@ -75,10 +77,20 @@ export default {
         promises.push(promise);
       });
 
-      if (added.length) {
-        const populatedCards = await populateCardsById(added);
-        promises.push(addToCollection(populatedCards, user.id, db));
-      }
+      added.forEach(({ id, amount, amountFoil }) => {
+        const promise = db.raw(
+          `
+            INSERT INTO collection 
+              (id, "userId", amount, "amountFoil", oracle_id) 
+            VALUES 
+              (?, ?, ?, ?, (SELECT oracle_id FROM cards WHERE id = ?))
+            ${ON_DUPLICATE};
+        `,
+          [id, user.id, amount, amountFoil, id]
+        );
+
+        promises.push(promise);
+      });
 
       if (deleted.length) {
         const promise = db('collection')
@@ -90,8 +102,6 @@ export default {
 
       await Promise.all(promises);
 
-      // TODO: this should probably return a CardsByOracle type
-      // TODO: refactor AAAAAAALLLLL the backend
       return false;
     },
     deleteFromCollection: async (_, { cardIds }, { user, db }) => {
