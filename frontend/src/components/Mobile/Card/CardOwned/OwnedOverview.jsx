@@ -29,6 +29,7 @@ export default ({ cards, onChangeSet, selectedCardId }) => {
   const onResetEditing = () => {
     setIsEditing(false);
     setEditedMap({});
+    setAddedMap({});
   };
 
   const onSaveChanges = async () => {
@@ -112,26 +113,30 @@ export default ({ cards, onChangeSet, selectedCardId }) => {
           New
         </Divider>
       )}
-      {Object.keys(addedMap).map(key => {
-        const baseCardProps = cards.find(({ id }) => id === key);
-        const card = {
-          ...baseCardProps,
-          ...addedMap[key],
-          id: key,
-        };
+      {isEditing && (
+        <>
+          {Object.keys(addedMap).map(key => {
+            const baseCardProps = cards.find(({ id }) => id === key);
+            const card = {
+              ...baseCardProps,
+              ...addedMap[key],
+              id: key,
+            };
 
-        return (
-          <CardRow
-            key={key}
-            card={card}
-            isEditing={isEditing}
-            onChangeSet={onChangeSet}
-            selectedCardId={selectedCardId}
-            onChangeAmount={onChangeAmount(false)}
-          />
-        );
-      })}
-      <AddCard cards={unlistedSets} onAddCard={onAddCard} />
+            return (
+              <CardRow
+                key={key}
+                card={card}
+                isEditing={isEditing}
+                onChangeSet={onChangeSet}
+                selectedCardId={selectedCardId}
+                onChangeAmount={onChangeAmount(false)}
+              />
+            );
+          })}
+          <AddCard cards={unlistedSets} onAddCard={onAddCard} />
+        </>
+      )}
     </StyledWrapper>
   );
 };
