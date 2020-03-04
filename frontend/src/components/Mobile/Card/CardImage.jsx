@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import FlippableCard from '../../Elements/FlippableCard/FlippableCard';
+import { FlippableCard } from '../../Elements';
 
 const StyledWrapper = styled.div`
   width: 90vw;

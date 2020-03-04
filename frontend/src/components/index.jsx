@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Desktop from './Desktop';
 import Mobile from './Mobile';
-import Login from './Elements/Login';
+import { Login } from './Elements';
 import GlobalStyle from './GlobalStyle';
 
 const App = () => {

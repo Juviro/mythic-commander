@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Actions from './Actions';
-import Table from '../../Elements/Table';
+import { Table } from '../../Elements';
 
 const ListViewWrapper = styled.div`
   display: flex;

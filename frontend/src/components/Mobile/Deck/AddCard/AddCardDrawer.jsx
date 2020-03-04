@@ -2,7 +2,7 @@ import React from 'react';
 import { Drawer } from 'antd';
 import { useParams } from 'react-router';
 import { useMutation } from 'react-apollo';
-import SearchField from '../../../Elements/SearchField';
+import { SearchField } from '../../../Elements';
 import { addCardsToDeck } from '../../../../queries/deck';
 
 export default ({ isVisible, onClose }) => {

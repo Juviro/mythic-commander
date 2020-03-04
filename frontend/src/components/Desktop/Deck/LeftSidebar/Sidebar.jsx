@@ -2,7 +2,7 @@ import React from 'react';
 import { Collapse, Icon } from 'antd';
 
 import FilterHeader from './Filter/FilterHeader';
-import Filter from '../../../Elements/Filter';
+import { Filter } from '../../../Elements';
 import AddCards from './AddCards';
 import DeckProfile from './DeckProfile';
 import Actions from './Actions';
