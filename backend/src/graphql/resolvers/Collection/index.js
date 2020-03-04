@@ -16,9 +16,8 @@ const addToCollection = async (cards, userId, db) => {
     ({ id }, index) => index === cards.findIndex(card => card.id === id)
   );
   const withUserId = withoutDuplicates.map(
-    ({ id, oracle_id, amount = 1, amountFoil = 0 }) => ({
+    ({ id, amount = 1, amountFoil = 0 }) => ({
       id,
-      oracle_id,
       userId,
       amount,
       amountFoil,
@@ -33,9 +32,9 @@ const addToCollection = async (cards, userId, db) => {
 };
 
 const getCollection = async (userId, db) => {
-  const collection = await db('collection')
+  const collection = await db('collectionWithOracle')
     .leftJoin('cardsBySet', {
-      'collection.oracle_id': 'cardsBySet.oracle_id ',
+      'collectionWithOracle.oracle_id': 'cardsBySet.oracle_id ',
     })
     .where({ userId });
   const cards = await populateCards(collection);
