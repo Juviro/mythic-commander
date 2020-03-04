@@ -20,7 +20,6 @@ export default ({ isVisible, onClose }) => {
       variables: { cards: [card], deckId },
     });
   };
-
   return (
     <Drawer
       height={100}

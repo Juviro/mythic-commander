@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button, Icon } from 'antd';
 import { useMutation } from 'react-apollo';
-import { Drawer as AddCardsDrawer } from '../../../Elements/AddCards';
+import { Drawer as AddCardsDrawer } from '../../../Elements';
 import { addToCollectionByName } from '../../../../queries';
 
 const StyledHeader = styled.div`
