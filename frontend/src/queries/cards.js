@@ -106,11 +106,3 @@ export const getCardByOracleId = gql`
       }
     }
 `;
-
-export const searchCard = gql`
-  query searchCard($query: String, $limit: Int) {
-    searchCard(query: $query, limit: $limit) {
-        ${CARD_FIELDS}
-      }
-    }
-`;

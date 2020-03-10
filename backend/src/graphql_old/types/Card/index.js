@@ -102,6 +102,5 @@ export default `
     card(id: String!): Card
     cachedCards: [CachedCard!]!
     cardsByOracleId(oracle_id: String!): CardsByOracle
-    searchCard(query: String, limit: Int): [Card!]!
   }
 `;

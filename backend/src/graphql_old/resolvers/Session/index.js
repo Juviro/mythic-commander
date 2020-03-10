@@ -11,15 +11,13 @@ export default {
         await db('users').insert(user);
       }
 
-      // TODO delete old sessions
-
       const session = getSession(user.id);
       await db('sessions').insert(session);
 
-      return { session: session.sessionId };
+      // TODO: this should also return the user I guess
+      return { session: session.sessionId, user };
     },
-    logout: async (_, _1, { user, db, session }) => {
-      // TODO ?
+    logout: async (_, __, { user, db, session }) => {
       await db('sessions')
         .where({ id: user.id })
         .del();

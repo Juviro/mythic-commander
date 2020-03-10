@@ -1,8 +1,4 @@
-import {
-  populateCards,
-  populateCardsByName,
-  populateCardsById,
-} from '../../../cardApi/';
+import { populateCards, populateCardsByName } from '../../../cardApi/';
 
 const ON_DUPLICATE =
   ' ON CONFLICT (id, "userId") DO UPDATE SET amount = collection.amount + EXCLUDED.amount, "createdAt" = NOW()';
@@ -47,12 +43,6 @@ export default {
     collection: async (_, _1, { user, db }) => getCollection(user.id, db),
   },
   Mutation: {
-    addToCollectionById: async (_, { cards }, { user, db }) => {
-      const populatedCards = await populateCardsById(cards);
-      await addToCollection(populatedCards, user.id, db);
-
-      return getCollection(user.id, db);
-    },
     addToCollectionByName: async (_, { cards }, { user, db }) => {
       const populatedCards = await populateCardsByName(cards);
       await addToCollection(populatedCards, user.id, db);
