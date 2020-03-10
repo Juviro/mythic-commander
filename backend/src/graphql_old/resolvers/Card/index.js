@@ -80,18 +80,6 @@ export default {
         all_sets: minimalCardsWithVersion,
       };
     },
-    searchCard: async (_, { query, limit = null }, { db }) => {
-      if (!query) return [];
-      const { rows: cards } = await db.raw(
-        `SELECT * 
-         FROM "distinctCards" 
-         LEFT JOIN "cardsBySet" 
-          ON "distinctCards"."oracle_id" = "cardsBySet".oracle_id 
-         WHERE name ILIKE ? LIMIT ? `,
-        [`%${query}%`, limit]
-      );
-      return cards;
-    },
     cachedCards: async (_, _1, { db }) => {
       const { rows: cards } = await db.raw(`
       SELECT *  FROM "distinctCards" 

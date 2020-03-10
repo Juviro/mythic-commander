@@ -41,4 +41,11 @@ export default new ApolloServer({
     console.error('error', error);
     return error;
   },
+  tracing: true,
+  playground: {
+    settings: {
+      'editor.reuseHeaders': true,
+      'tracing.hideTracingResponse': true,
+    },
+  },
 });

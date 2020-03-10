@@ -41,14 +41,6 @@ export const addToCollectionByName = gql`
   }
 `;
 
-export const addToCollectionById = gql`
-  mutation addToCollectionById($cards: [AddCardsByIdInput]!) {
-    addToCollectionById(cards: $cards) {
-      ${COLLECTION_FIELDS}
-    }
-  }
-`;
-
 export const deleteFromCollection = gql`
   mutation deleteFromCollection($cardIds: [String]!) {
     deleteFromCollection(cardIds: $cardIds) {

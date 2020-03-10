@@ -1,0 +1,190 @@
+################################# Card #################################
+
+type Card {
+  # Core card fields
+  id: String!
+  set: String!
+  name: String!
+  image_uris: ImageUris
+  card_faces: [CardFace!]
+  prices: Prices!
+  rarity: String!
+  legalities: Legalities!
+  purchase_uris: PurchaseUris!
+  oracle_id: String!
+  rulings_uri: String!
+  colors: [String]
+  color_identity: [String]
+
+  # Additional card fields
+  owned: Boolean!
+  allSets: [CardSet!]!
+
+  # Deck specific fields
+  amount: Int!
+  zone: String!
+}
+
+type CardSet {
+  id: String!
+  set: String!
+  set_name: String!
+  prices: Prices!
+  amount: Int!
+  amountFoil: Int!
+  foil: Boolean!
+  nonfoil: Boolean!
+  image_uris: [ImageUris]!
+  purchase_uris: PurchaseUris!
+}
+
+type Set {
+  id: String!
+  set: String!
+  prices: Prices!
+  image_uris: ImageUris
+  card_faces: [CardFace!]
+}
+
+type PurchaseUris {
+  tcgplayer: String
+  cardmarket: String
+}
+
+type Prices {
+  eur: String
+  usd: String
+  usd_foil: String
+}
+
+type Legalities {
+  standard: String
+  modern: String
+  commander: String
+}
+
+type CardFace {
+  name: String!
+  image_uris: ImageUris
+  colors: [String]
+}
+
+type ImageUris {
+  small: String
+  normal: String
+  art_crop: String
+}
+
+type CachedCard {
+  i: String!
+  n: String!
+  o: String!
+  s: String
+}
+
+################################# Deck #################################
+
+type Deck {
+  id: String!
+  name: String!
+  createdAt: String!
+  lastEdit: String!
+  imgSrc: String!
+  cards: [Card!]!
+}
+################################# Collection #################################
+
+type Collection {
+  id: String!
+  cards: [Card!]!
+}
+
+################################# User #################################
+
+type User {
+  id: String!
+  name: String!
+  avatar: String!
+  email: String!
+}
+
+################################# Queries #################################
+
+type Query {
+  user: User!
+
+  deck(id: String!): Deck!
+  decks: [Deck!]!
+
+  collection: Collection!
+
+  card(id: String!): Card!
+  cachedCards: [CachedCard!]!
+}
+
+################################# Mutations #################################
+
+type Mutation {
+  ########## Deck ##########
+  createDeck: Deck!
+  addCardsToDeck(deckId: String!, cards: [CardInputType]!): Deck!
+  editDeck(deckId: String!, newProperties: EditDeckFieldsInput!): Deck!
+  editDeckCard(
+    cardId: String!
+    deckId: String!
+    newProps: EditCardsPropsInput!
+  ): Card!
+  deleteDeck(deckId: String!): Boolean
+  deleteFromDeck(cardId: String!, deckId: String!): Deck!
+  duplicateDeck(deckId: String!): String!
+
+  ########## Collection ##########
+  addToCollectionByName(cards: [AddCardsByNameInput]!): [Card!]!
+  changeCollection(
+    added: [ChangeCollectionInput!]
+    edited: [ChangeCollectionInput!]
+    deleted: [String!]
+  ): Boolean
+  deleteFromCollection(cardIds: [String]!): Collection!
+
+  ########## Session ##########
+  login(token: String): LoginResponse!
+  logout: Boolean
+}
+
+################################# Deck #################################
+
+input EditDeckFieldsInput {
+  name: String
+  imgSrc: String
+}
+
+input CardInputType {
+  id: String!
+  amount: Int
+}
+
+input EditCardsPropsInput {
+  id: String
+  zone: String
+  amount: Int
+}
+
+################################# Collection #################################
+
+input AddCardsByNameInput {
+  name: String!
+  amount: Int
+}
+
+input ChangeCollectionInput {
+  id: String!
+  amount: Int
+  amountFoil: Int
+}
+
+################################# Session #################################
+
+type LoginResponse {
+  session: String!
+}

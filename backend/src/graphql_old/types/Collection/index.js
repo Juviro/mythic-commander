@@ -9,7 +9,6 @@ export default `
   }
 
   type Mutation {
-    addToCollectionById(cards: [AddCardsByIdInput]!): Collection!
     addToCollectionByName(cards: [AddCardsByNameInput]!): Collection!
     deleteFromCollection(cardIds: [String]!): Collection!
     changeCollection(added: [ChangeCollectionInput!], edited: [ChangeCollectionInput!], deleted: [String!]): Boolean
