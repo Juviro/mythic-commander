@@ -3,7 +3,7 @@ const ON_DUPLICATE =
 
 export default async (
   _,
-  { added = [], edited = [], deleted = [] },
+  { cardOracleId, added = [], edited = [], deleted = [] },
   { user, db }
 ) => {
   const promises = [];
@@ -20,12 +20,12 @@ export default async (
     const promise = db.raw(
       `
         INSERT INTO collection 
-          (id, "userId", amount, "amountFoil", oracle_id) 
+          (id, "userId", amount, "amountFoil") 
         VALUES 
-          (?, ?, ?, ?, (SELECT oracle_id FROM cards WHERE id = ?))
+          (?, ?, ?, ?)
         ${ON_DUPLICATE};
     `,
-      [id, user.id, amount, amountFoil, id]
+      [id, user.id, amount, amountFoil]
     );
 
     promises.push(promise);
@@ -41,5 +41,7 @@ export default async (
 
   await Promise.all(promises);
 
-  return false;
+  return db('cards')
+    .where({ oracle_id: cardOracleId })
+    .first();
 };

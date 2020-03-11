@@ -30,7 +30,7 @@ export const CARD_FIELDS = `
     commander
   }
   oracle_id
-  all_sets {
+  allSets {
     id
     set
     prices {
@@ -60,7 +60,7 @@ const CARD_BY_ORACLE_ID_FIELDS = `
     commander
   }
 
-  all_sets {
+  allSets {
     id
     set
     set_name

@@ -12,6 +12,11 @@ const resolver = {
       .where({ id })
       .first();
   },
+  cardsByOracleId(_, { oracle_id }, { db }) {
+    return db('cards')
+      .where({ oracle_id })
+      .first();
+  },
 
   deck(_, { id }, { user, db }) {
     return db('decks')

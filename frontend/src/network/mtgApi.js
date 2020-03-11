@@ -1,5 +1,6 @@
-import { Catalog, Cards, Sets } from 'scryfall-sdk';
+import { Cards, Sets } from 'scryfall-sdk';
 
+// TODO: deprecate this file? I think most is unused
 const MAX_CARDS = 60;
 
 export const getCards = async search => {
@@ -19,9 +20,6 @@ export const getCards = async search => {
         resolve(cards);
       });
   });
-};
-export const getAllCardNames = () => {
-  return Catalog.cardNames();
 };
 
 export const getAllSets = async () => {

@@ -5,6 +5,7 @@ const resolver = {
     const cards = await db('cardToDeck')
       .leftJoin('cards', { 'cards.id': 'cardToDeck.id' })
       .where({ deckId });
+
     return cards.map(toDeckCard);
   },
 };

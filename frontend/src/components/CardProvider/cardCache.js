@@ -1,6 +1,6 @@
 import { getAllSets } from '../../network/mtgApi';
 import client from '../../network/graphqlClient';
-import { cachedCards } from '../../queries/cards';
+import { cachedCards } from '../../queries';
 
 const REFRESH_PERIOD = 24 * 60 * 60 * 1000;
 

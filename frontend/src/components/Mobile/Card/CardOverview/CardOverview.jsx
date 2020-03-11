@@ -65,7 +65,7 @@ const CardCosts = ({ card, loading, selectedCardId, onChangeSet }) => {
       {card && !loading ? (
         <>
           <Table
-            dataSource={card.all_sets.map(cardSet => ({
+            dataSource={card.allSets.map(cardSet => ({
               ...cardSet,
               key: cardSet.id,
             }))}

@@ -10,7 +10,7 @@ const OwnedWrapper = styled.div`
   margin-left: 20px;
 `;
 
-export default ({ card: { owned, oracle_id } }) => {
+export default ({ card: { owned, id } }) => {
   const { id: deckId } = useParams();
   const [editMutation] = useMutation(editDeckCard);
 
@@ -18,7 +18,7 @@ export default ({ card: { owned, oracle_id } }) => {
     editMutation({
       variables: {
         deckId,
-        cardOracleId: oracle_id,
+        cardId: id,
         newProps: { owned: !owned },
       },
     });
