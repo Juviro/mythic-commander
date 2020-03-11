@@ -24,6 +24,9 @@ type Card {
   # Deck specific fields
   amount: Int!
   zone: String!
+
+  # Collectiom specific fields
+  createdAt: String
 }
 
 type CardSet {
@@ -143,7 +146,7 @@ type Mutation {
   duplicateDeck(deckId: String!): String!
 
   ########## Collection ##########
-  addToCollectionByName(cards: [AddCardsByNameInput]!): [Card!]!
+  addToCollection(cards: [AddToCollectionInput]!): Collection!
   changeCollection(
     cardOracleId: String!
     added: [ChangeCollectionInput!]
@@ -177,8 +180,8 @@ input EditCardsPropsInput {
 
 ################################# Collection #################################
 
-input AddCardsByNameInput {
-  name: String!
+input AddToCollectionInput {
+  id: String!
   amount: Int
 }
 

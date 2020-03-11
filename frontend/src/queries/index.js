@@ -1,9 +1,9 @@
 export { getUser, login } from './user';
 export { cachedCards, getCardByOracleId } from './cards';
 export {
+  addToCollection,
   getCollection,
   getCollectionName,
-  addToCollectionByName,
   deleteFromCollection,
 } from './collection';
 export {

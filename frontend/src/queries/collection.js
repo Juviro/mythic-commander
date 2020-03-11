@@ -4,6 +4,7 @@ import { CARD_FIELDS } from './cards';
 const COLLECTION_FIELDS = `
   id
   cards {
+    createdAt
     ${CARD_FIELDS}
   }
 `;
@@ -26,9 +27,9 @@ export const getCollectionName = gql`
   }
 `;
 
-export const addToCollectionByName = gql`
-  mutation addToCollectionByName($cards: [AddCardsByNameInput]!) {
-    addToCollectionByName(cards: $cards) {
+export const addToCollection = gql`
+  mutation addToCollection($cards: [AddToCollectionInput]!) {
+    addToCollection(cards: $cards) {
       ${COLLECTION_FIELDS}
     }
   }

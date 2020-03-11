@@ -1,9 +1,9 @@
-import addToCollectionByName from './addToCollectionByName';
+import addToCollection from './addToCollection';
 import changeCollection from './changeCollection';
 import deleteFromCollection from './deleteFromCollection';
 
 export default {
-  addToCollectionByName,
+  addToCollection,
   changeCollection,
   deleteFromCollection,
 };
