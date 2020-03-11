@@ -7,6 +7,5 @@
 
 ---
 
-* Don't show desktop version for a second before switching to mobile
 * Don't show app skeleton when user is not authenticated yet?
 * add support for multiple commanders to commander color identity etc (low prio)
