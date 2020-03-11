@@ -1,11 +1,15 @@
 import { makeExecutableSchema } from 'graphql-tools';
+import { readFileSync } from 'fs';
+import gql from 'graphql-tag';
 
-import typeDefs from './types/';
-import resolvers from './resolvers/';
+import resolvers from './resolvers';
 
-const schema = makeExecutableSchema({
-  typeDefs,
+const schema = readFileSync(`${__dirname}/schema.graphql`).toString();
+
+export default makeExecutableSchema({
+  typeDefs: gql([schema]),
   resolvers,
+  resolverValidationOptions: {
+    requireResolversForResolveType: false,
+  },
 });
-
-export default schema;

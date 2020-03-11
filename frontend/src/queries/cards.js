@@ -30,7 +30,7 @@ export const CARD_FIELDS = `
     commander
   }
   oracle_id
-  all_sets {
+  allSets {
     id
     set
     prices {
@@ -60,7 +60,7 @@ const CARD_BY_ORACLE_ID_FIELDS = `
     commander
   }
 
-  all_sets {
+  allSets {
     id
     set
     set_name
@@ -103,14 +103,6 @@ export const getCardByOracleId = gql`
   query cardsByOracleId($oracle_id: String!) {
     cardsByOracleId(oracle_id: $oracle_id) {
         ${CARD_BY_ORACLE_ID_FIELDS}
-      }
-    }
-`;
-
-export const searchCard = gql`
-  query searchCard($query: String, $limit: Int) {
-    searchCard(query: $query, limit: $limit) {
-        ${CARD_FIELDS}
       }
     }
 `;

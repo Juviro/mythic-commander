@@ -11,7 +11,7 @@ export default ({ card }) => {
 
   const onChangeSet = id => {
     editMutation({
-      variables: { cardOracleId: card.oracle_id, deckId, newProps: { id } },
+      variables: { cardId: card.id, deckId, newProps: { id } },
       update: (cache, { data }) => {
         if (!data) return;
         const { editDeckCard: editedCard } = data;
@@ -22,7 +22,7 @@ export default ({ card }) => {
         if (!existing) return;
         const cards = [
           ...existing.deck.cards.filter(
-            ({ oracle_id }) => oracle_id !== editedCard.oracle_id
+            existingCard => existingCard.id !== card.id
           ),
           editedCard,
         ];
@@ -36,5 +36,7 @@ export default ({ card }) => {
     });
   };
 
-  return <SetPicker card={card} onClick={onChangeSet} />;
+  return (
+    <SetPicker defaultCardId={card.id} card={card} onClick={onChangeSet} />
+  );
 };

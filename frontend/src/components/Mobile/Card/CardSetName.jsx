@@ -35,7 +35,7 @@ export default ({ card, loading, selectedCardId }) => {
     );
   }
 
-  const { set, set_name } = card.all_sets.find(
+  const { set, set_name } = card.allSets.find(
     ({ id }) => id === selectedCardId
   );
 

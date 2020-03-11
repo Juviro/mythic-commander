@@ -13,7 +13,7 @@ const StyledSetIcon = styled.img`
 export default ({ card, onClick, defaultCardId }) => {
   const { sets } = useContext(CardContext);
 
-  const allCardSets = card.all_sets.map(({ set: setKey, id, set_name }) => ({
+  const allCardSets = card.allSets.map(({ set: setKey, id, set_name }) => ({
     id,
     setKey,
     ...sets[setKey],

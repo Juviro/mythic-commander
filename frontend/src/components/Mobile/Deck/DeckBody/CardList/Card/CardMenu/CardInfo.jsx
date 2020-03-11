@@ -3,6 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import CardSet from './CardSet';
+import { getPriceLabel, getPrice } from '../../../../../../../utils/cardStats';
 
 const getChecked = isChecked => (isChecked ? '✓' : '✗');
 
@@ -44,7 +45,7 @@ export default ({ card, isLegal }) => {
   return (
     <div>
       <Stat value={<CardSet card={card} />} />
-      <Stat label="Average cost" value={card.priceLabel} />
+      <Stat label="Average cost" value={getPriceLabel(getPrice(card))} />
       <Stat label="In your collection" value={getChecked(card.owned)} />
       <Stat label="Allowed in this deck" value={getChecked(isLegal)} />
       <Link to={detailsUrl}>Details</Link>

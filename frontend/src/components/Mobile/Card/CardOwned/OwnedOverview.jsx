@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Divider } from 'antd';
+import { Divider, message } from 'antd';
 import { useMutation } from 'react-apollo';
 
 import { EditIcon } from '../../../Elements';
@@ -16,7 +16,7 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
-export default ({ cards, onChangeSet, selectedCardId }) => {
+export default ({ cardOracleId, cards, onChangeSet, selectedCardId }) => {
   const [mutate] = useMutation(changeCollection);
   const [isEditing, setIsEditing] = useState(false);
   const [editedMap, setEditedMap] = useState({});
@@ -43,11 +43,12 @@ export default ({ cards, onChangeSet, selectedCardId }) => {
     }));
     mutate({
       variables: {
+        cardOracleId,
         edited,
         added,
       },
-      refetchQueries: ['cardsByOracleId'],
     });
+    message.success('Updated your collection!');
     onResetEditing();
   };
 

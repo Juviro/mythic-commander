@@ -1,17 +1,11 @@
 import gql from 'graphql-tag';
 import { CARD_FIELDS } from './cards';
 
-export const COLLECTION_CARD_FIELDS = `
-  createdAt
-  priceInEuro
-  priceLabel
-  ${CARD_FIELDS}
-`;
-
 const COLLECTION_FIELDS = `
   id
   cards {
-    ${COLLECTION_CARD_FIELDS}
+    createdAt
+    ${CARD_FIELDS}
   }
 `;
 
@@ -33,17 +27,9 @@ export const getCollectionName = gql`
   }
 `;
 
-export const addToCollectionByName = gql`
-  mutation addToCollectionByName($cards: [AddCardsByNameInput]!) {
-    addToCollectionByName(cards: $cards) {
-      ${COLLECTION_FIELDS}
-    }
-  }
-`;
-
-export const addToCollectionById = gql`
-  mutation addToCollectionById($cards: [AddCardsByIdInput]!) {
-    addToCollectionById(cards: $cards) {
+export const addToCollection = gql`
+  mutation addToCollection($cards: [AddToCollectionInput]!) {
+    addToCollection(cards: $cards) {
       ${COLLECTION_FIELDS}
     }
   }
@@ -59,9 +45,21 @@ export const deleteFromCollection = gql`
 
 export const changeCollection = gql`
   mutation changeCollection(
+    $cardOracleId: String!
     $added: [ChangeCollectionInput!]
     $edited: [ChangeCollectionInput!]
   ) {
-    changeCollection(added: $added, edited: $edited)
+    changeCollection(
+      cardOracleId: $cardOracleId
+      added: $added
+      edited: $edited
+    ) {
+      id
+      allSets {
+        id
+        amount
+        amountFoil
+      }
+    }
   }
 `;
