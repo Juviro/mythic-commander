@@ -23,7 +23,6 @@ export default () => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [mutate] = useMutation(addToCollection);
   const onAddCards = cards => {
-    console.log('cards :', cards);
     mutate({
       variables: { cards },
     });
