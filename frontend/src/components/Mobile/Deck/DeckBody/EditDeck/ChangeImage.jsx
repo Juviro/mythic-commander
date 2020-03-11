@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, List } from 'antd';
+import { Select, List, message } from 'antd';
 import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
 
@@ -22,7 +22,8 @@ export default ({ deck }) => {
   const currentImage =
     deck.cards.find(card => getImgSrc(card) === deck.imgSrc) || {};
 
-  const onChangeImage = async imgSrc => {
+  const onChangeImage = imgSrc => {
+    message.success('Title image changed!');
     editMutation({
       variables: {
         deckId: deck.id,

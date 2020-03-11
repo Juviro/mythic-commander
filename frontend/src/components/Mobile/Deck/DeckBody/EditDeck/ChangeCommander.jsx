@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, List } from 'antd';
+import { Select, List, message } from 'antd';
 import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
 
@@ -34,6 +34,7 @@ export default ({ deck }) => {
     if (currentCommander.id) {
       await changeZone(currentCommander.id, 'MAINBOARD');
     }
+    message.success('Commander changed!');
   };
 
   return (

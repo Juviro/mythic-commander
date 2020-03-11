@@ -1,26 +1,10 @@
-Refactor backend:
-    * Unify card type, all should be the same 
-      except for maybe amount etc, but maybe even that
-
+* Move queries to components, only query what's actually necessary
+* Implement Collection view
+    * Add dedicated collection view
+    * Improve list
+    * Add filter
 
 EVALUATE MOVE COLLECTION TO PROVIDER
-
-
-* ENABLE SHORTCUTS:
-    * cmd + f -> filter (+ focus field)
-    * cmd + n -> add (+ focus field)
-    * cmd + s -> stats
-    * cmd + o -> overview
-    * cmd + r -> resources
-    
-    * cmd + a -> select all
-
-* Add Columns:
-    * options:
-        * type (ramp, removal, ...)
-        * commander?
-    
-* add to filter: rarity, type, cmc?, 
 
 ---
 
