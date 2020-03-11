@@ -24,7 +24,6 @@ export default async (_, { cards }, { user: { id: userId }, db }) => {
       newCardIds.map(({ id }) => id)
     )
     .andWhere({ userId });
-  console.log('newCards :', newCards);
 
   return {
     id: userId,
