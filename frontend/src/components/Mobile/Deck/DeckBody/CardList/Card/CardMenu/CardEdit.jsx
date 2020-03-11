@@ -3,7 +3,6 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import SetPicker from './SetPicker';
 import AmountPicker from './AmountPicker';
-import OwnedToggle from './OwnedToggle';
 import Delete from './Delete';
 
 const blendIn = keyframes`
@@ -46,9 +45,6 @@ export default ({ card }) => {
       <StyledItem>
         <StyledLabel>Amount</StyledLabel>
         <AmountPicker card={card} />
-      </StyledItem>
-      <StyledItem>
-        <OwnedToggle card={card} />
       </StyledItem>
       <StyledItem>
         <Delete card={card} />

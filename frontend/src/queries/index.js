@@ -1,11 +1,9 @@
 export { getUser, login } from './user';
-export { search } from './search';
-export { cachedCards, getCard, searchCard, getCardByOracleId } from './cards';
+export { cachedCards, getCardByOracleId } from './cards';
 export {
+  addToCollection,
   getCollection,
   getCollectionName,
-  addToCollectionByName,
-  addToCollectionById,
   deleteFromCollection,
 } from './collection';
 export {

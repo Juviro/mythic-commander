@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Button, Icon } from 'antd';
 import { useMutation } from 'react-apollo';
 import { Drawer as AddCardsDrawer } from '../../../Elements';
-import { addToCollectionByName } from '../../../../queries';
+import { addToCollection } from '../../../../queries';
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -21,7 +21,7 @@ const AddCardsButtonWrapper = styled.div`
 
 export default () => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
-  const [mutate] = useMutation(addToCollectionByName);
+  const [mutate] = useMutation(addToCollection);
   const onAddCards = cards => {
     mutate({
       variables: { cards },

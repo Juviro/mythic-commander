@@ -1,12 +1,7 @@
-import { mergeResolvers } from 'merge-graphql-schemas';
+import * as queries from './queries';
+import mutations from './mutations';
 
-import User from './User/';
-import Collection from './Collection/';
-import Session from './Session/';
-import Deck from './Deck/';
-import Search from './Search/';
-import Card from './Card/';
-
-const resolvers = [User, Collection, Session, Deck, Search, Card];
-
-export default mergeResolvers(resolvers);
+export default {
+  ...queries,
+  Mutation: mutations,
+};

@@ -4,7 +4,7 @@ import { Skeleton, Collapse } from 'antd';
 import OwnedOverview from './OwnedOverview';
 
 const getOwnedAmount = card => {
-  return card.all_sets.reduce(
+  return card.allSets.reduce(
     ({ ownedNonfoil: onf, ownedFoil: of }, { amount, amountFoil }) => ({
       ownedNonfoil: onf + amount,
       ownedFoil: of + amountFoil,
@@ -31,7 +31,8 @@ export default ({ card, loading, onChangeSet, selectedCardId }) => {
         header={totalOwned ? `${totalOwned}x collected` : 'Not yet collected'}
       >
         <OwnedOverview
-          cards={card.all_sets}
+          cardOracleId={card.oracle_id}
+          cards={card.allSets}
           onChangeSet={onChangeSet}
           selectedCardId={selectedCardId}
         />
