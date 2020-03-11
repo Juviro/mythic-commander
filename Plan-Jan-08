@@ -3,9 +3,10 @@
     * Add dedicated collection view
     * Improve list
     * Add filter
-
-EVALUATE MOVE COLLECTION TO PROVIDER
+* evaluate moving collection to provider, just updating it
 
 ---
 
+* Don't show desktop version for a second before switching to mobile
+* Don't show app skeleton when user is not authenticated yet?
 * add support for multiple commanders to commander color identity etc (low prio)
