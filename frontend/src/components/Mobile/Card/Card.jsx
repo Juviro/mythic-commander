@@ -8,6 +8,7 @@ import { getCardByOracleId } from '../../../queries';
 
 import CardRules from './CardRules';
 import CardImage from './CardImage';
+import CardLegal from './CardLegal';
 import CardOwned from './CardOwned';
 import CardSetName from './CardSetName';
 import CardOverview from './CardOverview';
@@ -80,6 +81,7 @@ const Card = ({ history }) => {
           onChangeSet={onChangeSet}
         />
         <Divider>Rules</Divider>
+        <CardLegal card={card} />
         <CardRules card={card} loading={loading} />
       </StyledBodyWrapper>
     </StyledWrapper>
