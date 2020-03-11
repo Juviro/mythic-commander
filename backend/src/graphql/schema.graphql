@@ -19,6 +19,7 @@ type Card {
   # Additional card fields
   owned: Boolean!
   allSets: [CardSet!]!
+  primaryTypes: [String]
 
   # Deck specific fields
   amount: Int!
@@ -36,6 +37,8 @@ type CardSet {
   nonfoil: Boolean!
   image_uris: [ImageUris]!
   purchase_uris: PurchaseUris!
+
+  card_faces: [CardFace!]
 }
 
 type Set {
@@ -119,6 +122,7 @@ type Query {
   collection: Collection!
 
   card(id: String!): Card!
+  cardsByOracleId(oracle_id: String!): Card!
   cachedCards: [CachedCard!]!
 }
 
@@ -127,7 +131,7 @@ type Query {
 type Mutation {
   ########## Deck ##########
   createDeck: Deck!
-  addCardsToDeck(deckId: String!, cards: [CardInputType]!): Deck!
+  addCardsToDeck(deckId: String!, cards: [CardInputType!]!): Deck!
   editDeck(deckId: String!, newProperties: EditDeckFieldsInput!): Deck!
   editDeckCard(
     cardId: String!
@@ -141,10 +145,11 @@ type Mutation {
   ########## Collection ##########
   addToCollectionByName(cards: [AddCardsByNameInput]!): [Card!]!
   changeCollection(
+    cardOracleId: String!
     added: [ChangeCollectionInput!]
     edited: [ChangeCollectionInput!]
     deleted: [String!]
-  ): Boolean
+  ): Card!
   deleteFromCollection(cardIds: [String]!): Collection!
 
   ########## Session ##########

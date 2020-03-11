@@ -4,23 +4,16 @@ import { CARD_FIELDS } from './cards';
 const DECK_CARD_FIELDS = `
   ${CARD_FIELDS}
   primaryTypes
-  subTypes
-  flipTypes
   zone
   owned
   colors
   color_identity
   oracle_id
   amount
-  priceInEuro
-  priceLabel
-  createdAt
   amount
-  priceInEuro
-  priceLabel
 `;
 
-export const DECK_FIELDS = `
+const DECK_FIELDS = `
   id
   name
   createdAt
@@ -72,8 +65,8 @@ export const editDeck = gql`
 `;
 
 export const addCardsToDeck = gql`
-  mutation addCardsToDeck($cards: [CardInputType]!, $deckId: String!) {
-    addCardsToDeck(input: { cards: $cards, deckId: $deckId }) {
+  mutation addCardsToDeck($cards: [CardInputType!]!, $deckId: String!) {
+    addCardsToDeck(cards: $cards, deckId: $deckId) {
       ${DECK_FIELDS_WITH_CARDS}
     }
   }
@@ -89,12 +82,12 @@ export const deleteFromDeck = gql`
 
 export const editDeckCard = gql`
   mutation editDeckCard(
-    $cardOracleId: String!, 
+    $cardId: String!, 
     $deckId: String! 
     $newProps: EditCardsPropsInput!
   ) {
     editDeckCard(
-      cardOracleId: $cardOracleId, 
+      cardId: $cardId, 
       deckId: $deckId, 
       newProps: $newProps
     ) {

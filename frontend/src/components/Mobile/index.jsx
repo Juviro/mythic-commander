@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
+import { message } from 'antd';
 import Menu from './Menu';
 import Deck from './Deck';
 import Decks from './Decks';
@@ -10,6 +11,12 @@ import Cards from './Cards';
 import GlobalStyle from './GlobalStyle';
 
 const App = () => {
+  message.config({
+    top: 55,
+    duration: 3,
+    maxCount: 3,
+  });
+
   return (
     <>
       <Menu />

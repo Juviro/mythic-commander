@@ -13,7 +13,7 @@ export default ({ card }) => {
     editMutation({
       variables: {
         deckId,
-        cardOracleId: card.oracle_id,
+        cardId: card.id,
         newProps: { amount },
       },
     });

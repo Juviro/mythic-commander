@@ -46,7 +46,7 @@ const Card = ({ history }) => {
   });
 
   const card = data && data.cardsByOracleId;
-  const sortedCards = card && [...card.all_sets].sort(sortByPrice);
+  const sortedCards = card && [...card.allSets].sort(sortByPrice);
   const currentCard =
     card &&
     (cardId ? sortedCards.find(({ id }) => id === cardId) : sortedCards[0]);

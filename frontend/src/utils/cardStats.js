@@ -23,3 +23,20 @@ export const isDeckOwned = ({ cards = [] }) => {
 export const getImageUris = card => {
   return card.image_uris ? card.image_uris : card.card_faces[0].image_uris;
 };
+
+export const getPrice = ({ prices: { usd, usd_foil } }) => {
+  const price = usd || usd_foil;
+  return Number(price) || 0;
+};
+
+export const getPriceLabel = amountInUsd => {
+  const formatPrice = amount =>
+    Number(amount).toLocaleString('de-DE', {
+      style: 'currency',
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2,
+      currency: 'USD',
+    });
+
+  return amountInUsd ? formatPrice(amountInUsd) : '-';
+};

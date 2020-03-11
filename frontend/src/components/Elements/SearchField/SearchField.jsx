@@ -11,9 +11,9 @@ export const splitAmountAndName = query => {
   return { amount, name };
 };
 
-const renderOption = (searchString, option) => {
+const getHighlightedOption = (searchString, cardName) => {
   let currentSearchString = searchString;
-  const highlightedoption = option.split('').map(char => {
+  const highlightedOption = cardName.split('').map(char => {
     if (
       !currentSearchString.length ||
       char.toLowerCase() !== currentSearchString[0].toLowerCase()
@@ -24,11 +24,7 @@ const renderOption = (searchString, option) => {
     return <b key={Math.random()}>{char}</b>;
   });
 
-  return (
-    <AutoComplete.Option key={option} text={option}>
-      {highlightedoption}
-    </AutoComplete.Option>
-  );
+  return highlightedOption;
 };
 
 const getDropdownAlign = alignTop => {
@@ -60,11 +56,11 @@ export default class SearchField extends React.Component {
     this.inputRef.current.focus();
   };
 
-  onSubmit = value => {
+  onSubmit = id => {
     const { onSearch, resetSearch } = this.props;
     const { searchString } = this.state;
-    const card = splitAmountAndName(searchString);
-    onSearch({ ...card, name: value });
+    const { amount } = splitAmountAndName(searchString);
+    onSearch({ amount, id });
     if (resetSearch) this.setState({ searchString: '' });
   };
 
@@ -74,28 +70,19 @@ export default class SearchField extends React.Component {
       alignTop = false,
       defaultActiveFirstOption,
     } = this.props;
+
     const { searchString } = this.state;
-    const { cardNames = [] } = this.context;
+    const { cards = [] } = this.context;
 
     const searchStringWithoutAmount = splitAmountAndName(searchString).name;
 
-    const suggestions = filterNames(
-      cardNames.map(name => ({ name })),
-      searchStringWithoutAmount
-    ).map(({ name }) => name);
-    const dataSource =
-      suggestions[0] === searchString
-        ? suggestions
-        : suggestions.map(option =>
-            renderOption(searchStringWithoutAmount, option)
-          );
+    const suggestions = filterNames(cards, searchStringWithoutAmount);
 
     return (
       <AutoComplete
         autoFocus
         ref={this.inputRef}
         value={searchString}
-        dataSource={dataSource}
         placeholder="Search for a card"
         defaultActiveFirstOption={defaultActiveFirstOption}
         onChange={val => this.setSearch(val)}
@@ -103,7 +90,13 @@ export default class SearchField extends React.Component {
         tabIndex={0}
         style={{ width }}
         dropdownAlign={getDropdownAlign(alignTop)}
-      />
+      >
+        {suggestions.map(option => (
+          <AutoComplete.Option text={option.name} key={option.id}>
+            {getHighlightedOption(searchString, option.name)}
+          </AutoComplete.Option>
+        ))}
+      </AutoComplete>
     );
   }
 }
