@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Typography } from 'antd';
+import { List, Typography, message } from 'antd';
 import { useMutation } from 'react-apollo';
 
 import { editDeck } from '../../../../../queries';
@@ -8,6 +8,7 @@ export default ({ deck }) => {
   const [editDeckMutation] = useMutation(editDeck);
 
   const onChangeName = async name => {
+    message.success('Deck name changed!');
     editDeckMutation({
       variables: {
         deckId: deck.id,

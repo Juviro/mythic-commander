@@ -1,5 +1,5 @@
 import React from 'react';
-import { Drawer } from 'antd';
+import { Drawer, message } from 'antd';
 import { useParams } from 'react-router';
 import { useMutation } from 'react-apollo';
 import { SearchField } from '../../../Elements';
@@ -15,11 +15,17 @@ export default ({ isVisible, onClose }) => {
     searchInputRef.current.focus();
   };
 
-  const onAddCard = card => {
+  const onAddCard = (card, name) => {
+    message.success(
+      <span>
+        Added <b>{name}</b> to your deck!
+      </span>
+    );
     mutate({
       variables: { cards: [card], deckId },
     });
   };
+
   return (
     <Drawer
       height={100}

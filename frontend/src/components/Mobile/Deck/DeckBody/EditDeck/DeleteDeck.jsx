@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { List, Modal } from 'antd';
+import { List, Modal, message } from 'antd';
 import { useMutation } from 'react-apollo';
 import { useParams, withRouter } from 'react-router';
 
@@ -16,6 +16,7 @@ const DeleteDeck = ({ history }) => {
         deckId,
       },
     });
+    message.success('Deck deleted!');
     history.push(`/m/decks`);
   };
 
