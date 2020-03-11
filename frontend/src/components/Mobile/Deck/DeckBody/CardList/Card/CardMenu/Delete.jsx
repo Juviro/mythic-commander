@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from 'antd';
+import { Icon, message } from 'antd';
 import { useParams } from 'react-router';
 import { useMutation } from 'react-apollo';
 import styled from 'styled-components';
@@ -22,6 +22,11 @@ export default ({ card }) => {
   const [onDeleteMutation] = useMutation(deleteFromDeck);
 
   const onDelete = () => {
+    message.success(
+      <span>
+        Deleted <b>{card.name}</b> from your deck!
+      </span>
+    );
     onDeleteMutation({ variables: { cardId: card.id, deckId } });
   };
 
