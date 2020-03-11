@@ -31,9 +31,7 @@ export default async (_, { cards, deckId }, { user, db }) => {
       zone: DEFAULT_ZONE,
     }));
 
-  await db('cardToDeck')
-    .insert(cardsToInsert)
-    .toString();
+  await db('cardToDeck').insert(cardsToInsert);
 
   await updateLastEdit(deckId, db);
 

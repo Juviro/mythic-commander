@@ -1,8 +1,10 @@
 import React from 'react';
+import FullscreenSpinner from '../Elements/Spinner';
 
 const MIN_SIZE = 764;
 
 export default ({ children }) => {
+  const [isRedirecting, setIsRedirecting] = React.useState(false);
   React.useEffect(() => {
     const { orientation, screen, location } = window;
     const isMobileDevice =
@@ -12,9 +14,10 @@ export default ({ children }) => {
       isMobileDevice && (screen.height < MIN_SIZE || screen.width < MIN_SIZE);
 
     if (isMobile) {
+      setIsRedirecting(true);
       location.href = `/m${location.pathname}`;
     }
   }, []);
 
-  return children;
+  return isRedirecting ? <FullscreenSpinner /> : children;
 };

@@ -56,11 +56,12 @@ export default class SearchField extends React.Component {
     this.inputRef.current.focus();
   };
 
-  onSubmit = id => {
+  onSubmit = idAndName => {
+    const [id, name] = idAndName.split(';');
     const { onSearch, resetSearch } = this.props;
     const { searchString } = this.state;
     const { amount } = splitAmountAndName(searchString);
-    onSearch({ amount, id });
+    onSearch({ amount, id }, name);
     if (resetSearch) this.setState({ searchString: '' });
   };
 
@@ -92,7 +93,10 @@ export default class SearchField extends React.Component {
         dropdownAlign={getDropdownAlign(alignTop)}
       >
         {suggestions.map(option => (
-          <AutoComplete.Option text={option.name} key={option.id}>
+          <AutoComplete.Option
+            text={option.name}
+            key={`${option.id};${option.name}`}
+          >
             {getHighlightedOption(searchString, option.name)}
           </AutoComplete.Option>
         ))}
