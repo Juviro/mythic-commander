@@ -16,8 +16,8 @@ export const getCollection = gql`
     }
   }
 `;
-export const getCollectionName = gql`
-  query getCollectionName {
+export const getCollectionNames = gql`
+  query getCollectionNames {
     collection {
       id
       cards {
