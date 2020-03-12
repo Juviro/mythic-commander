@@ -30,18 +30,7 @@ const getSets = async () => {
   return sets;
 };
 
-export const getCollectionFromCache = async type => {
-  const lastUpdateKey = `lastUpdate-${type}`;
-  const collectionKey = `stored-${type}`;
-
-  const lastUpdate = localStorage.getItem(lastUpdateKey);
-  const shouldUpdate = !lastUpdate || Date.now() - lastUpdate > REFRESH_PERIOD;
-  const cachedCollection = localStorage.getItem(collectionKey);
-
-  if (!shouldUpdate && cachedCollection) {
-    return JSON.parse(cachedCollection);
-  }
-
+const updateCollection = async (type, collectionKey, lastUpdateKey) => {
   const getter = {
     sets: getSets,
     cards: getCards,
@@ -53,4 +42,28 @@ export const getCollectionFromCache = async type => {
   localStorage.setItem(lastUpdateKey, Date.now());
 
   return stored;
+};
+
+export const getCollectionFromCache = async type => {
+  const lastUpdateKey = `lastUpdate-${type}`;
+  const collectionKey = `stored-${type}`;
+
+  // TODO: remove
+  localStorage.removeItem('collection-sets');
+  localStorage.removeItem('collection-cards');
+
+  const lastUpdate = localStorage.getItem(lastUpdateKey);
+  const shouldUpdate = !lastUpdate || Date.now() - lastUpdate > REFRESH_PERIOD;
+  const cachedCollection = localStorage.getItem(collectionKey);
+
+  if (!shouldUpdate && cachedCollection) {
+    return JSON.parse(cachedCollection);
+  }
+
+  if (cachedCollection) {
+    updateCollection(type, collectionKey, lastUpdateKey);
+    return JSON.parse(cachedCollection);
+  }
+
+  return updateCollection(type, collectionKey, lastUpdateKey);
 };
