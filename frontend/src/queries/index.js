@@ -3,7 +3,7 @@ export { cachedCards, getCardByOracleId } from './cards';
 export {
   addToCollection,
   getCollection,
-  getCollectionName,
+  getCollectionNames,
   deleteFromCollection,
 } from './collection';
 export {
