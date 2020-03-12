@@ -1,13 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { List, Button } from 'antd';
 import styled from 'styled-components';
-import { useQueryParams, StringParam, BooleanParam } from 'use-query-params';
+import { useQueryParams, StringParam } from 'use-query-params';
 
-import { useQuery } from 'react-apollo';
 import CardContext from '../../CardProvider/CardProvider';
 import { filterByName } from '../../Elements/SearchField/filterNames';
 import Card from './Card';
-import { getCollection } from '../../../queries';
 
 const CARDS_PER_PAGE = 20;
 
@@ -21,53 +19,25 @@ const StyledButtonWrapper = styled.div`
 
 export default () => {
   const { cards } = useContext(CardContext);
-  const { data, loading: collectionLoading } = useQuery(getCollection);
-  const [{ query: searchQuery = '', owned }] = useQueryParams({
+  const [{ query: searchQuery = '' }] = useQueryParams({
     query: StringParam,
-    owned: BooleanParam,
   });
   const [numberOfDisplayedCards, setNumberOfDisplayedCards] = useState(
     CARDS_PER_PAGE
   );
-  const collection = (data && data.collection && data.collection.cards) || [];
 
   const onLoadMore = () => {
     setNumberOfDisplayedCards(numberOfDisplayedCards + CARDS_PER_PAGE);
   };
 
-  const filteredCards = [];
-  let showMoreButton = false;
-
-  filterByName(cards, searchQuery).some(card => {
-    let shouldInclude = false;
-    const cardWithOwned = {
-      ...card,
-      owned: collection.some(({ name }) => name === card.name),
-    };
-    if (owned === true) {
-      if (cardWithOwned.owned) shouldInclude = true;
-    } else if (owned === false) {
-      if (!collection.length && collectionLoading) return true;
-      if (!cardWithOwned.owned) shouldInclude = true;
-    } else {
-      shouldInclude = true;
-    }
-
-    if (shouldInclude) {
-      if (filteredCards.length === numberOfDisplayedCards) {
-        showMoreButton = true;
-        return true;
-      }
-      filteredCards.push(cardWithOwned);
-    }
-    return false;
-  });
+  const showMoreButton = numberOfDisplayedCards < cards.length;
+  const filteredCards = filterByName(cards, searchQuery).slice(
+    0,
+    numberOfDisplayedCards
+  );
 
   return (
     <List
-      loading={
-        collectionLoading && typeof owned === 'boolean' && !collection.length
-      }
       loadMore={
         showMoreButton && (
           <StyledButtonWrapper>

@@ -32,7 +32,7 @@ const getSets = async () => {
 
 export const getCollectionFromCache = async type => {
   const lastUpdateKey = `lastUpdate-${type}`;
-  const collectionKey = `collection-${type}`;
+  const collectionKey = `stored-${type}`;
 
   const lastUpdate = localStorage.getItem(lastUpdateKey);
   const shouldUpdate = !lastUpdate || Date.now() - lastUpdate > REFRESH_PERIOD;
@@ -42,17 +42,15 @@ export const getCollectionFromCache = async type => {
     return JSON.parse(cachedCollection);
   }
 
-  const deleteMe = {
+  const getter = {
     sets: getSets,
     cards: getCards,
   };
 
-  const getCollection = deleteMe[type];
+  const stored = await getter[type]();
 
-  const collection = await getCollection();
-
-  localStorage.setItem(collectionKey, JSON.stringify(collection));
+  localStorage.setItem(collectionKey, JSON.stringify(stored));
   localStorage.setItem(lastUpdateKey, Date.now());
 
-  return collection;
+  return stored;
 };
