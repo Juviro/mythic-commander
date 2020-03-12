@@ -4,6 +4,7 @@ const trimName = str => {
   return str.replace(/[,';"().\s]+/g, '').toLowerCase();
 };
 
+// @Params card: string[] | { name: string }[]
 export const filterByName = (cards, searchString = '') => {
   const cleanSearch = trimName(searchString);
   const searchRegExp = new RegExp(cleanSearch.split('').join('.*'));

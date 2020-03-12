@@ -91,14 +91,6 @@ export const cachedCards = gql`
   }
 `;
 
-export const getCard = gql`
-  query getCard($id: String!) {
-      card(id: $id) {
-        ${CARD_FIELDS}
-      }
-    }
-`;
-
 export const getCardByOracleId = gql`
   query cardsByOracleId($oracle_id: String!) {
     cardsByOracleId(oracle_id: $oracle_id) {
