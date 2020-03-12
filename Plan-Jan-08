@@ -3,7 +3,15 @@
     * Add dedicated collection view
     * Improve list
     * Add filter
-* evaluate moving collection to provider, just updating it
+
+
+* on card overview, show which decks include that card
+* add set view: display all cards from a set, allow search/filter. Maybe just add this as a filter to *all cards* view
+
+REFACTORINGS:
+
+* Add Skeleton component that wraps around other components ?
+* evaluate moving collection to provider, just updating it - CURRENTLY NOT NECESSARY (collection is unused)
 
 ---
 
