@@ -3,33 +3,12 @@ import styled from 'styled-components';
 import { Checkbox } from 'antd';
 import { colors as colorIcons } from '../../../assets/icons';
 
-const colors = [
-  {
-    letter: 'w',
-    key: 'W',
-  },
-  {
-    letter: 'u',
-    key: 'U',
-  },
-  {
-    letter: 'b',
-    key: 'B',
-  },
-  {
-    letter: 'r',
-    key: 'R',
-  },
-  {
-    letter: 'g',
-    key: 'G',
-  },
-];
+const colors = ['w', 'u', 'b', 'r', 'g'];
 
 const addColor = (currentColors, newColor) => {
   if (!currentColors) return newColor;
   const findColorIndex = colorLetter =>
-    colors.findIndex(({ letter }) => letter === colorLetter);
+    colors.findIndex(letter => letter === colorLetter);
 
   return currentColors
     .concat(newColor)
@@ -92,10 +71,10 @@ export default ({ onSetColors, selectedColors = '' }) => {
 
   return (
     <ColorSelectionWrapper>
-      {colors.map(({ letter, key }) => (
+      {colors.map(letter => (
         <StyledColorTag
-          key={key}
-          src={colorIcons[key]}
+          key={letter}
+          src={colorIcons[letter.toUpperCase()]}
           isSelected={isColorSelected(letter)}
           onClick={() => onSelectColor(letter)}
         />

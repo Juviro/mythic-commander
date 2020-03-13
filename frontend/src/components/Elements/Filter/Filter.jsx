@@ -29,7 +29,8 @@ const Filter = () => {
         autoFocus
         placeholder="Filter by name"
         onChange={e => onChange('search')(e.target.value)}
-        style={{ width: 250 }}
+        style={{ width: '100%' }}
+        size="small"
       />
       <ColorSelection
         onSetColors={onChange('colors')}

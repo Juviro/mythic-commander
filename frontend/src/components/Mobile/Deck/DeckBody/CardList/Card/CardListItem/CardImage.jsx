@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import styled from 'styled-components';
-import FlippableCard from '../FlippableCard/FlippableCard';
+import { FlippableCard } from '../../../../../../Elements';
 
 const ANIMATION_TIME = 200;
 

@@ -1,6 +1,6 @@
 export { default as AddCards, Drawer } from './AddCards';
 export { default as Card } from './Card';
-export { default as CardListItem } from './CardListItem';
+export { default as CardList } from './CardList';
 export { default as EditIcon } from './EditIcon';
 export { default as Filter } from './Filter';
 export { default as FlippableCard } from './FlippableCard';
@@ -9,6 +9,7 @@ export { default as Login } from './Login';
 export { default as SearchField } from './SearchField';
 export { default as Set } from './Set';
 export { default as SetPicker } from './SetPicker';
+export { default as CustomSkeleton } from './CustomSkeleton';
 export { default as Spinner } from './Spinner';
 export { default as Table } from './Table';
 export { default as UserAvatar } from './UserAvatar';
