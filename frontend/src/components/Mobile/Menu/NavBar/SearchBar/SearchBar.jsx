@@ -5,7 +5,7 @@ import { useQueryParams, StringParam } from 'use-query-params';
 import { useQuery } from 'react-apollo';
 
 import styled from 'styled-components';
-import { getDecks, getCollectionName } from '../../../../../queries';
+import { getDecks, getCollectionNames } from '../../../../../queries';
 import OptionGroupHeader from './OptionGroupHeader';
 import CardContext from '../../../../CardProvider/CardProvider';
 import filterNames, {
@@ -39,7 +39,7 @@ const Menu = ({ history, transparentSearchBar }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { cards } = useContext(CardContext);
   const { data: decksData } = useQuery(getDecks);
-  const { data: collectionData } = useQuery(getCollectionName);
+  const { data: collectionData } = useQuery(getCollectionNames);
   const decks = (decksData && decksData.decks) || [];
   const collection = (collectionData && collectionData.collection.cards) || [];
 
