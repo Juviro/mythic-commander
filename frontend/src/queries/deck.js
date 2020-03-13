@@ -33,7 +33,6 @@ export const getDecks = gql`
     decks {
       id
       name
-      createdAt
       lastEdit
       imgSrc
     }
