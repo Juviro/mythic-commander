@@ -15,6 +15,7 @@ type Card {
   rulings_uri: String!
   colors: [String]
   color_identity: [String]
+  previewImg: String
 
   # Additional card fields
   owned: Boolean!

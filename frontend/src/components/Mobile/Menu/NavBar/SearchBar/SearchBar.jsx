@@ -34,7 +34,7 @@ const sortDecks = query => (a, b) => {
 };
 
 // TODO: optimize re-rendering of this component
-const Menu = ({ history, transparentSearchBar }) => {
+const SearchBar = ({ history, transparentSearchBar }) => {
   const inputEl = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const { cards } = useContext(CardContext);
@@ -128,4 +128,4 @@ const Menu = ({ history, transparentSearchBar }) => {
   );
 };
 
-export default withRouter(Menu);
+export default withRouter(SearchBar);

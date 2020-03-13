@@ -9,7 +9,7 @@ export default ({ onCloseDrawer }) => {
       title: 'Decks',
     },
     {
-      href: '/m/cards?owned=1',
+      href: '/m/collection',
       title: 'Collection',
     },
   ];

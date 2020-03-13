@@ -11,6 +11,7 @@
 REFACTORINGS:
 
 * Add Skeleton component that wraps around other components ?
+* Check query fetching in search bar
 * evaluate moving collection to provider, just updating it - CURRENTLY NOT NECESSARY (collection is unused)
 
 ---

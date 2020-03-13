@@ -1,4 +1,4 @@
-import { getAllSets } from './helper';
+import { getAllSets, getPreviewImg } from './helper';
 
 const getTypes = ({ type_line }) => {
   const [mainTypes, flipTypes] = type_line.split(' // ');
@@ -22,6 +22,9 @@ const resolver = {
   },
   primaryTypes(card) {
     return getTypes(card).primaryTypes;
+  },
+  previewImg(card) {
+    return getPreviewImg(card);
   },
 };
 

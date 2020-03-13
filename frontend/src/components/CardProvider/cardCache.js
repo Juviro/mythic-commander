@@ -48,10 +48,6 @@ export const getCollectionFromCache = async type => {
   const lastUpdateKey = `lastUpdate-${type}`;
   const collectionKey = `stored-${type}`;
 
-  // TODO: remove
-  localStorage.removeItem('collection-sets');
-  localStorage.removeItem('collection-cards');
-
   const lastUpdate = localStorage.getItem(lastUpdateKey);
   const shouldUpdate = !lastUpdate || Date.now() - lastUpdate > REFRESH_PERIOD;
   const cachedCollection = localStorage.getItem(collectionKey);

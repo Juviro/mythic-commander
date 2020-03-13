@@ -7,6 +7,7 @@ import Deck from './Deck';
 import Decks from './Decks';
 import Card from './Card';
 import Cards from './Cards';
+import Collection from './Collection';
 
 import GlobalStyle from './GlobalStyle';
 
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/m/cards/:oracle_id/:cardId" component={Card} />
         <Route path="/m/cards/:oracle_id/" component={Card} />
         <Route path="/m/cards" exact component={Cards} />
+        <Route path="/m/collection" exact component={Collection} />
         <Redirect from="*" to="/m/decks" />
       </Switch>
       <GlobalStyle />

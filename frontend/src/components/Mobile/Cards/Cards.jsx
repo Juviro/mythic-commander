@@ -1,55 +1,10 @@
-import React, { useContext, useState } from 'react';
-import { List, Button } from 'antd';
-import styled from 'styled-components';
-import { useQueryParams, StringParam } from 'use-query-params';
+import React, { useContext } from 'react';
 
 import CardContext from '../../CardProvider/CardProvider';
-import { filterByName } from '../../Elements/SearchField/filterNames';
-import Card from './Card';
-
-const CARDS_PER_PAGE = 20;
-
-const StyledButtonWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  margin: 24px 0;
-  justify-content: center;
-`;
+import CardList from '../../Elements/CardList';
 
 export default () => {
   const { cards } = useContext(CardContext);
-  const [{ query: searchQuery = '' }] = useQueryParams({
-    query: StringParam,
-  });
-  const [numberOfDisplayedCards, setNumberOfDisplayedCards] = useState(
-    CARDS_PER_PAGE
-  );
 
-  const onLoadMore = () => {
-    setNumberOfDisplayedCards(numberOfDisplayedCards + CARDS_PER_PAGE);
-  };
-
-  const showMoreButton = numberOfDisplayedCards < cards.length;
-  const filteredCards = filterByName(cards, searchQuery).slice(
-    0,
-    numberOfDisplayedCards
-  );
-
-  return (
-    <List
-      loadMore={
-        showMoreButton && (
-          <StyledButtonWrapper>
-            <Button type="primary" onClick={onLoadMore}>
-              Load more
-            </Button>
-          </StyledButtonWrapper>
-        )
-      }
-      dataSource={filteredCards}
-      style={{ width: '100%' }}
-      renderItem={card => <Card card={card} />}
-    />
-  );
+  return <CardList cards={cards} />;
 };
