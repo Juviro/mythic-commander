@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Button, Icon } from 'antd';
 import { useMutation } from 'react-apollo';
 import { Drawer as AddCardsDrawer } from '../../../Elements';
-import { addToCollection } from '../../../../queries';
+import { addToCollection, getCollection } from '../../../../queries';
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -25,6 +25,27 @@ export default () => {
   const onAddCards = cards => {
     mutate({
       variables: { cards },
+      update: (cache, { data }) => {
+        if (!data) return;
+        const { addToCollection: newCards } = data;
+        const existing = cache.readQuery({
+          query: getCollection,
+        });
+
+        const existingCards = existing.collection.cards.filter(
+          ({ id }) => !newCards.some(card => card.id === id)
+        );
+
+        cache.writeQuery({
+          query: getCollection,
+          data: {
+            collection: {
+              ...existing.collection,
+              cards: existingCards.concat(newCards),
+            },
+          },
+        });
+      },
     });
   };
 

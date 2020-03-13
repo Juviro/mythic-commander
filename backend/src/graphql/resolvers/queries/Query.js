@@ -28,7 +28,7 @@ const resolver = {
   },
 
   collection(_, __, { user: { id } }) {
-    return { id, cards: [] };
+    return { id };
   },
 
   cachedCards: (_, __, { db }) => getCachedCards(db),
