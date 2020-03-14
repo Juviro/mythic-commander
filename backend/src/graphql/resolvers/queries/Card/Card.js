@@ -1,13 +1,4 @@
-import { getAllSets, getPreviewImg } from './helper';
-
-const getTypes = ({ type_line }) => {
-  const [mainTypes, flipTypes] = type_line.split(' // ');
-  const [primaryTypes, subTypes] = mainTypes
-    .split(' — ')
-    .map(part => part.split(' '));
-
-  return { mainTypes, flipTypes, primaryTypes, subTypes };
-};
+import { getAllSets, getPreviewImg, getTypes } from './helper';
 
 const resolver = {
   async owned({ oracle_id }, _, { db, user: { id: userId } }) {

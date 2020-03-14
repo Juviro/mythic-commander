@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { Button, Icon } from 'antd';
 import { useMutation } from 'react-apollo';
 import { Drawer as AddCardsDrawer } from '../../../Elements';
-import { addToCollection, getCollection } from '../../../../queries';
+import { addToCollection } from '../../../../queries';
+import { getCollectionDesktop } from '../queries';
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -29,7 +30,7 @@ export default () => {
         if (!data) return;
         const { addToCollection: newCards } = data;
         const existing = cache.readQuery({
-          query: getCollection,
+          query: getCollectionDesktop,
         });
 
         const existingCards = existing.collection.cards.filter(
@@ -37,7 +38,7 @@ export default () => {
         );
 
         cache.writeQuery({
-          query: getCollection,
+          query: getCollectionDesktop,
           data: {
             collection: {
               ...existing.collection,

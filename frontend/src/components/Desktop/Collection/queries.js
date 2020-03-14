@@ -10,7 +10,6 @@ export const getCollectionDesktop = gql`
         rarity
         oracle_id
         createdAt
-        primaryTypes
         image_uris {
           small
           normal
