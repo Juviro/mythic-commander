@@ -154,7 +154,7 @@ type Mutation {
     edited: [ChangeCollectionInput!]
     deleted: [String!]
   ): Card!
-  deleteFromCollection(cardIds: [String]!): Collection!
+  deleteFromCollection(cardIds: [String]!): Boolean!
 
   ########## Session ##########
   login(token: String): LoginResponse!

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Button } from 'antd';
 import { useMutation } from 'react-apollo';
 import { deleteFromCollection } from '../../../../queries';
+import { getCollectionDesktop } from '../queries';
 
 const StyledCardPreview = styled.div`
   display: flex;
@@ -15,6 +16,22 @@ const getOptions = (card, onDelete) => {
       onClick: () =>
         onDelete({
           variables: { cardIds: [card.id] },
+          update: cache => {
+            const existing = cache.readQuery({
+              query: getCollectionDesktop,
+            });
+
+            const updatedCards = existing.collection.cards.filter(
+              ({ id }) => id !== card.id
+            );
+
+            cache.writeQuery({
+              query: getCollectionDesktop,
+              data: {
+                collection: { ...existing.collection, cards: updatedCards },
+              },
+            });
+          },
         }),
     },
   ];

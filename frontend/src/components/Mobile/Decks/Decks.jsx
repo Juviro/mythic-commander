@@ -3,7 +3,6 @@ import { Spin } from 'antd';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 
-import { useQueryParams, StringParam } from 'use-query-params';
 import { getDecks } from '../../../queries';
 import DeckList from './DeckList';
 
