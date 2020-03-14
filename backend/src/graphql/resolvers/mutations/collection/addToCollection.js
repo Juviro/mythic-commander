@@ -17,16 +17,11 @@ export default async (_, { cards }, { user: { id: userId }, db }) => {
   const { rows: newCardIds } = await db.raw(
     query + ON_CONFLICT + ' returning id'
   );
-  const newCards = await db('collection')
+  return await db('collection')
     .leftJoin('cards', { 'cards.id': 'collection.id' })
     .whereIn(
       'collection.id',
       newCardIds.map(({ id }) => id)
     )
     .andWhere({ userId });
-
-  return {
-    id: userId,
-    cards: newCards,
-  };
 };
