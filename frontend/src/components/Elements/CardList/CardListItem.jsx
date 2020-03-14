@@ -45,4 +45,4 @@ const areEqual = (prevProps, nextProps) => {
   });
 };
 
-export default React.memo(withRouter(CardListItem, areEqual));
+export default withRouter(React.memo(CardListItem, areEqual));

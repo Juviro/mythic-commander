@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Icon, Popover } from 'antd';
+import { Popover } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const StyledIssuesBox = styled.div`
   padding: 8px;
@@ -48,7 +49,7 @@ export default ({ card, isOpen, isLegal }) => {
         trigger="click"
       >
         <StyledIconWrapper isOpen={isOpen}>
-          <Icon type="exclamation-circle" />
+          <ExclamationCircleOutlined />
         </StyledIconWrapper>
       </Popover>
     </div>

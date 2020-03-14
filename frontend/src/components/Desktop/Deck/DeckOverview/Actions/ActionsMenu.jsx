@@ -1,9 +1,15 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { Menu, Icon } from 'antd';
+import { Menu } from 'antd';
 import { useParams } from 'react-router';
 import { useMutation } from 'react-apollo';
 
+import {
+  MinusOutlined,
+  PlusOutlined,
+  StarOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
 import CardContext from '../../../../CardProvider/CardProvider';
 import { deleteFromDeck, editDeckCard } from '../../../../../queries';
 
@@ -70,12 +76,12 @@ export default ({ card, ...rest }) => {
   return (
     <Menu {...rest}>
       <Menu.Item key="toggleOwned" onClick={onToggleOwned}>
-        <Icon type={owned ? 'minus' : 'plus'} />
+        {owned ? <MinusOutlined /> : <PlusOutlined />}
         <span>{owned ? 'Remove from Collection' : 'Add to Collection'}</span>
       </Menu.Item>
       {displayCommanderChange && (
         <Menu.Item key="changeZone" onClick={onChangeZone}>
-          <Icon type="star" />
+          <StarOutlined />
           <span>{isCommander ? 'Remove as Commander' : 'Make Commander'}</span>
         </Menu.Item>
       )}
@@ -91,7 +97,7 @@ export default ({ card, ...rest }) => {
       )}
       <Menu.Divider />
       <Menu.Item key="delete" onClick={onDelete}>
-        <Icon type="delete" />
+        <DeleteOutlined />
         <span>Delete from Deck</span>
       </Menu.Item>
     </Menu>

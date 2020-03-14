@@ -1,7 +1,12 @@
 import React from 'react';
-import { Menu, Icon } from 'antd';
+import { Menu } from 'antd';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import {
+  AppstoreOutlined,
+  SearchOutlined,
+  TableOutlined,
+} from '@ant-design/icons';
 import { UserAvatar } from '../../Elements';
 
 const StyledApp = styled.div`
@@ -25,17 +30,17 @@ const MENU_ENTRIES = [
   {
     title: 'Search',
     href: '/search',
-    icon: 'search',
+    icon: <SearchOutlined />,
   },
   {
     title: 'Collection',
     href: '/collection',
-    icon: 'table',
+    icon: <TableOutlined />,
   },
   {
     title: 'Decks',
     href: '/decks',
-    icon: 'appstore',
+    icon: <AppstoreOutlined />,
   },
 ];
 
@@ -54,7 +59,7 @@ export default class MainMenu extends React.Component {
             {MENU_ENTRIES.map(({ title, href, icon }) => (
               <Menu.Item key={href}>
                 <Link to={href}>
-                  <Icon type={icon} />
+                  {icon}
                   {title}
                 </Link>
               </Menu.Item>

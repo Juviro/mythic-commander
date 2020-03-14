@@ -2,21 +2,19 @@ import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
   /* transparent search field for deck view */
-  .transparent > div {
-    background-color: rgba(45, 45, 45, 0.6);
+  .transparent  .ant-select-clear {
+    border-radius: 50%;
   }
   .transparent input {
     border: none;
-    color: rgba(255, 255, 255, 0.7);
+    color: white;
+    background-color: rgba(45,45,45,0.6);
     
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.7);
+  }
+  .transparent .ant-select-selection-placeholder {
+      color: white;
+      opacity: 0.7;
     }
-  }
-  .transparent span svg {
-    color: rgba(255, 255, 255, 0.7);
-  }
-
   .transparent .ant-select-selection__clear {
     background-color: transparent;
   }

@@ -8,6 +8,7 @@ type Card {
   image_uris: ImageUris
   card_faces: [CardFace!]
   prices: Prices!
+  minPrice: Float!
   rarity: String!
   legalities: Legalities!
   purchase_uris: PurchaseUris!

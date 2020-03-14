@@ -26,10 +26,10 @@ export const sortCards = searchString => ({ name: cardA }, { name: cardB }) => {
     ? -1
     : cleanCardNameB === cleanSearch
     ? 1
-    : cleanCardNameA.startsWith(cleanSearch)
-    ? -1
     : cleanCardNameB.startsWith(cleanSearch)
     ? 1
+    : cleanCardNameA.startsWith(cleanSearch)
+    ? -1
     : cleanCardNameB.indexOf(cleanSearch) > 0
     ? 1
     : cleanCardNameA.indexOf(cleanSearch) > 0

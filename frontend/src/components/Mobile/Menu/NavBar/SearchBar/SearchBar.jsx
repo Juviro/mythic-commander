@@ -22,6 +22,7 @@ const StyledBackground = styled.div`
   height: calc(100% - 48px);
   position: fixed;
   transition: opacity 0.3s;
+
   background-color: #1e1e1e;
 
   opacity: ${({ isVisible }) => (isVisible ? 0.7 : 0)};
@@ -33,7 +34,6 @@ const sortDecks = query => (a, b) => {
   return Number(b.lastEdit) - Number(a.lastEdit);
 };
 
-// TODO: optimize re-rendering of this component
 const SearchBar = ({ history, transparentSearchBar }) => {
   const inputEl = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -49,14 +49,16 @@ const SearchBar = ({ history, transparentSearchBar }) => {
   const onSetSearch = (value = '') => {
     setQuery({ query: value.split(';')[0] });
   };
-  const onSelect = () => {
+  const onSelect = val => {
+    const { type, id } = JSON.parse(val);
     setQuery({ query: '' });
     inputEl.current.blur();
-  };
 
-  const onOpenCardView = ({ key }) => {
-    const oracle_id = key.split(';')[1];
-    history.push(`/m/cards/${oracle_id}?query=${query}`);
+    if (type === 'DECK') {
+      history.push(`/m/decks/${id}`);
+    } else {
+      history.push(`/m/cards/${id}?query=${query}`);
+    }
   };
 
   const filteredCards = filterNames(cards, query, MAX_RESULTS).map(card => ({
@@ -71,38 +73,29 @@ const SearchBar = ({ history, transparentSearchBar }) => {
     {
       name: 'Cards',
       options: filteredCards,
-      onClick: onOpenCardView,
       onShowAll: () => history.push(`/m/cards?query=${query}`),
     },
     {
       name: 'Decks',
       options: filteredDecks,
-      onClick: ({ key }) => {
-        const id = key.split(';')[1];
-        history.push(`/m/decks/${id}`);
-      },
       onShowAll: () => history.push(`/m/decks?query=${query}`),
     },
   ];
 
   const dataSource = optionCategories
     .filter(({ options }) => options && options.length)
-    .map(({ name, options, onClick, onShowAll }) => (
-      <AutoComplete.OptGroup
-        key={name}
-        label={
-          <OptionGroupHeader
-            title={name}
-            onShowAll={() => {
-              onShowAll();
-              onSelect();
-            }}
-          />
-        }
-      >
-        {options.map(renderOption(onClick, query))}
-      </AutoComplete.OptGroup>
-    ));
+    .map(({ name, options, onShowAll }) => ({
+      label: (
+        <OptionGroupHeader
+          title={name}
+          onShowAll={() => {
+            onShowAll();
+            onSelect();
+          }}
+        />
+      ),
+      options: options.map(renderOption(query)),
+    }));
 
   return (
     <>
@@ -113,19 +106,31 @@ const SearchBar = ({ history, transparentSearchBar }) => {
         ref={inputEl}
         onChange={onSetSearch}
         onSelect={onSelect}
-        dataSource={dataSource}
+        options={dataSource}
+        defaultActiveFirstOption
         onBlur={() => setIsOpen(false)}
         dropdownMatchSelectWidth={false}
         placeholder="Search for card or deck"
         style={{ width: 'calc(100% - 16px)' }}
-        dropdownMenuStyle={{ maxHeight: '90vh' }}
         className={transparentSearchBar && 'transparent'}
       >
-        <Input className="no-border" onFocus={() => setIsOpen(true)} />
+        <Input
+          className="no-border"
+          onClick={() => setIsOpen(true)}
+          onInput={() => setIsOpen(true)}
+        />
       </AutoComplete>
       <StyledBackground isVisible={isOpen} />
     </>
   );
 };
 
-export default withRouter(SearchBar);
+const areEqual = (prevProps, nextProps) => {
+  if (prevProps.transparentSearchBar !== nextProps.transparentSearchBar)
+    return false;
+  if (prevProps.location.search !== nextProps.location.search) return false;
+
+  return true;
+};
+
+export default withRouter(React.memo(SearchBar, areEqual));

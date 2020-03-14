@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
 import styled from 'styled-components';
+import { PlusOutlined } from '@ant-design/icons';
 import AddCardDrawer from './AddCardDrawer';
 
 const StyledButton = styled.div`
@@ -19,7 +20,7 @@ export default () => {
       <StyledButton>
         {!isAdding && (
           <Button
-            icon="plus"
+            icon={<PlusOutlined />}
             size="large"
             type="primary"
             shape="circle"

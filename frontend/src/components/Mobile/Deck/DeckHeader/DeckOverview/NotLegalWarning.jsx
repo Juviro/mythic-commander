@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Icon, Popover } from 'antd';
+import { Popover } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { isDeckLegal, isDeckOwned } from '../../../../../utils/cardStats';
 import { getNumberOfCards } from '../../../../../utils/deck';
 
@@ -40,10 +41,7 @@ export default ({ deck }) => {
       content={renderIssues}
       trigger="click"
     >
-      <Icon
-        type="exclamation-circle"
-        style={{ color: 'orange', fontSize: 16 }}
-      />
+      <ExclamationCircleOutlined style={{ color: 'orange', fontSize: 16 }} />
     </Popover>
   );
 };

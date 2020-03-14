@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSpring, animated as a } from 'react-spring';
+import { SyncOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import { Icon } from 'antd';
 import './index.css';
 
 const StyledImageWrapper = styled.div`
@@ -13,7 +13,7 @@ const StyledImageWrapper = styled.div`
   align-items: center;
 `;
 
-const StyledFlipIcon = styled(Icon)`
+const StyledFlipIcon = styled(SyncOutlined)`
   z-index: 10;
   right: -35%;
   top: -10%;
@@ -70,12 +70,7 @@ export default ({ loading, cardImages }) => {
       {!showHighResImage && <StyledPlaceholder />}
       {cardImages && cardImages.length > 1 && (
         <>
-          <StyledFlipIcon
-            type="sync"
-            size="large"
-            shape="circle"
-            onClick={onFlipCard}
-          />
+          <StyledFlipIcon size="large" shape="circle" onClick={onFlipCard} />
           <a.div
             className="flippable-card "
             style={{

@@ -1,10 +1,9 @@
 import React from 'react';
-import { Icon } from 'antd';
+import { StarTwoTone } from '@ant-design/icons';
 
 export default () => (
-  <Icon
+  <StarTwoTone
     style={{ marginLeft: '4px' }}
-    type="star"
     theme="twoTone"
     twoToneColor="#d4af37"
   />

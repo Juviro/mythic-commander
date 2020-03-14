@@ -1,12 +1,15 @@
 import React from 'react';
 import { Input, Tooltip, Button } from 'antd';
 import {
+  CheckCircleOutlined,
+  ExclamationCircleOutlined,
+} from '@ant-design/icons';
+import {
   StyledWrapper,
   StyledButtonWrapper,
   StyledInputWrapper,
   StyledStatus,
   IconWrapper,
-  StyledIcon,
 } from './StyledMultiInput';
 
 import { splitAmountAndName } from '../../SearchField/SearchField';
@@ -23,13 +26,6 @@ Forest
 
 Ignore line with //
 `;
-
-const getIconStyles = isValid => ({
-  type: isValid ? 'check-circle' : 'exclamation-circle',
-  style: {
-    color: isValid ? 'green' : 'red',
-  },
-});
 
 export default class SearchField extends React.Component {
   state = {
@@ -128,7 +124,15 @@ export default class SearchField extends React.Component {
               <IconWrapper key={Math.random()}>
                 {name !== NO_CARD && (
                   <Tooltip placement="right" title={name}>
-                    <StyledIcon {...getIconStyles(name)} />
+                    {name ? (
+                      <CheckCircleOutlined
+                        style={{ color: 'green', marginLeft: 16 }}
+                      />
+                    ) : (
+                      <ExclamationCircleOutlined
+                        style={{ color: 'red', marginLeft: 16 }}
+                      />
+                    )}
                   </Tooltip>
                 )}
               </IconWrapper>

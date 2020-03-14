@@ -14,8 +14,12 @@ const resolver = {
   primaryTypes(card) {
     return getTypes(card).primaryTypes;
   },
+
   previewImg(card) {
     return getPreviewImg(card);
+  },
+  minPrice({ prices: { usd = 0, usd_foil = 0 } }) {
+    return Math.min(usd, usd_foil);
   },
 };
 

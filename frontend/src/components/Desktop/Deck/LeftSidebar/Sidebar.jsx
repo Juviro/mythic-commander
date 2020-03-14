@@ -1,6 +1,13 @@
 import React from 'react';
-import { Collapse, Icon } from 'antd';
+import { Collapse } from 'antd';
 
+import {
+  HomeOutlined,
+  PlusOutlined,
+  LineChartOutlined,
+  UnorderedListOutlined,
+  EllipsisOutlined,
+} from '@ant-design/icons';
 import FilterHeader from './Filter/FilterHeader';
 import { Filter } from '../../../Elements';
 import AddCards from './AddCards';
@@ -13,8 +20,9 @@ export default ({ deck }) => {
   if (!deck) return null;
   const panels = [
     {
+      key: 'overview',
       header: 'Overview',
-      icon: 'home',
+      icon: <HomeOutlined />,
       component: <DeckProfile deck={deck} />,
     },
     {
@@ -23,13 +31,15 @@ export default ({ deck }) => {
       component: <Filter />,
     },
     {
+      key: 'addCards',
       header: 'Add Cards',
-      icon: 'plus',
+      icon: <PlusOutlined />,
       component: <AddCards />,
     },
     {
+      key: 'stats',
       header: 'Stats',
-      icon: 'line-chart',
+      icon: <LineChartOutlined />,
       component: (
         <div>
           Money, Amount, cmc stats, cards per type : (Owned, Unowned, Total)
@@ -37,13 +47,15 @@ export default ({ deck }) => {
       ),
     },
     {
+      key: 'resourceOverview',
       header: 'Resource Overview',
-      icon: 'unordered-list',
+      icon: <UnorderedListOutlined />,
       component: <div>Number or ramp, carddraw, removal etc</div>,
     },
     {
+      key: 'actions',
       header: 'Actions',
-      icon: 'ellipsis',
+      icon: <EllipsisOutlined />,
       component: <Actions />,
     },
   ];
@@ -51,16 +63,11 @@ export default ({ deck }) => {
     <div style={{ width: 300 }}>
       <Collapse
         bordered={false}
-        defaultActiveKey={panels[0].icon}
-        // defaultActiveKey={panels.map(({icon, key}) => icon || key)}
+        defaultActiveKey={panels[0].key}
         style={{ width: 300, fontSize: '14px', fontWeight: 900 }}
       >
         {panels.map(({ header, component, icon, key }) => (
-          <Panel
-            header={header}
-            key={icon || key}
-            extra={icon && <Icon type={icon} />}
-          >
+          <Panel header={header} key={key} extra={icon}>
             {component}
           </Panel>
         ))}
