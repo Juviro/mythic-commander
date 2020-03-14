@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
-import { getCollection } from '../../../queries';
+import { getCollectionDesktop as getCollection } from './queries';
 
 import ListView from './ListView';
 import Header from './Header';

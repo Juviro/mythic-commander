@@ -38,9 +38,7 @@ export const addToCollection = gql`
 
 export const deleteFromCollection = gql`
   mutation deleteFromCollection($cardIds: [String]!) {
-    deleteFromCollection(cardIds: $cardIds) {
-      ${COLLECTION_FIELDS}
-    }
+    deleteFromCollection(cardIds: $cardIds)
   }
 `;
 
