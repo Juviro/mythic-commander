@@ -1,5 +1,4 @@
 import React from 'react';
-import { AutoComplete } from 'antd';
 
 import styled from 'styled-components';
 
@@ -9,7 +8,6 @@ const StyledCard = styled.div`
   padding-left: 3px;
   height: 36px;
   align-items: center;
-  margin: -2px 0;
 `;
 
 const CardImageWrapper = styled.div`
@@ -65,14 +63,16 @@ const highlightText = (searchString, option) => {
   return highlightedoption;
 };
 
-export default (onClick, searchString) => element => {
+export default searchString => element => {
   const { name, id, oracle_id, imgSrc, img, owned } = element;
-  return (
-    <AutoComplete.Option
-      key={id}
-      onClick={onClick}
-      value={`${name};${oracle_id || id}`}
-    >
+
+  const value = oracle_id
+    ? { type: 'CARD', id: oracle_id }
+    : { type: 'DECK', id };
+
+  return {
+    value: JSON.stringify(value),
+    label: (
       <StyledCard>
         <CardImageWrapper>
           {imgSrc ? (
@@ -86,6 +86,6 @@ export default (onClick, searchString) => element => {
         </StyledName>
         <StyledOwnedTag>{owned && 'owned'}</StyledOwnedTag>
       </StyledCard>
-    </AutoComplete.Option>
-  );
+    ),
+  };
 };

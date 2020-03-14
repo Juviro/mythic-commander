@@ -1,13 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
+import { Divider } from 'antd';
 import { getMinimalCollection } from './queries';
-import CardList from '../../Elements/CardList';
-import CollectionFilter from './CollectionFilter';
+
+import { CardList } from '../../Elements';
+import CollectionOverview from './CollectionOverview';
+import CollapsableFilter from '../../Elements/Filter/CollapsableFilter';
 
 const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
+  padding: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,7 +23,9 @@ export default () => {
   const cards = data && data.collection.cards;
   return (
     <StyledWrapper>
-      <CollectionFilter />
+      <CollapsableFilter />
+      <CollectionOverview cards={cards} />
+      <Divider />
       <CardList cards={cards} />
     </StyledWrapper>
   );

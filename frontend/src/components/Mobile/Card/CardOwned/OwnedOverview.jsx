@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Divider, message } from 'antd';
 import { useMutation } from 'react-apollo';
 
+import { SaveOutlined } from '@ant-design/icons';
 import { EditIcon } from '../../../Elements';
 import { changeCollection } from '../../../../queries/collection';
 import AddCard from './AddCard';
@@ -86,7 +87,7 @@ export default ({ cardOracleId, cards, onChangeSet, selectedCardId }) => {
     <StyledWrapper>
       <EditIcon
         editingText={hasChanges ? 'Save' : 'Back'}
-        editingIcon="save"
+        editingIcon={SaveOutlined}
         onDiscard={hasChanges ? onResetEditing : undefined}
         isEditing={isEditing}
         onClick={() => {

@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Icon } from 'antd';
 import { useMutation } from 'react-apollo';
+import { PlusOutlined } from '@ant-design/icons';
 import { createDeck as createDeckMutation } from '../../../queries';
 
-const StyledIcon = styled(Icon)`
+const StyledIcon = styled(PlusOutlined)`
   font-size: 70px;
   margin-bottom: 20px;
   cursor: pointer;
@@ -46,7 +46,7 @@ export default ({ onOpenDeck }) => {
   };
   return (
     <StyledPreview onClick={onAddDeck}>
-      <StyledIcon type="plus" />
+      <StyledIcon />
       <b>Add new Deck</b>
     </StyledPreview>
   );

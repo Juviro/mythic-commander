@@ -1,8 +1,9 @@
 import React from 'react';
-import { List, Typography, Icon } from 'antd';
+import { List, Typography } from 'antd';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
 import { useMutation } from 'react-apollo';
+import { PlusOutlined, RightOutlined } from '@ant-design/icons';
 import { createDeck as createDeckMutation } from '../../../queries';
 
 const StyledImage = styled.img`
@@ -15,7 +16,7 @@ const StyledImage = styled.img`
   display: block;
 `;
 
-const StyledAddIcon = styled(Icon)`
+const StyledAddIcon = styled(PlusOutlined)`
   margin: 0 16px 0 0;
   border-radius: 3px;
   height: 46px;
@@ -51,7 +52,7 @@ const DeckListItem = ({ onClick, image, name, showRightIcon }) => (
         {name}
       </Typography.Text>
     </Left>
-    {showRightIcon && <Icon type="right" />}
+    {showRightIcon && <RightOutlined />}
   </StyledListItem>
 );
 
@@ -78,7 +79,7 @@ const DeckList = ({ decks, history }) => {
     <DeckListItem
       name="Create deck"
       onClick={onAddDeck}
-      image={<StyledAddIcon type="plus" />}
+      image={<StyledAddIcon />}
     />
   );
 

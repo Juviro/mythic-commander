@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Dropdown, Icon } from 'antd';
+import { Dropdown } from 'antd';
 
+import { EllipsisOutlined } from '@ant-design/icons';
 import ActionsMenu from './ActionsMenu';
 
 const StyledActions = styled.div`
@@ -16,7 +17,7 @@ export default ({ card }) => {
         placement="bottomLeft"
         trigger={['click']}
       >
-        <Icon type="ellipsis" />
+        <EllipsisOutlined />
       </Dropdown>
     </StyledActions>
   );

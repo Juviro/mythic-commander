@@ -23,8 +23,10 @@ const renderSet = card => {
   );
 };
 
-const renderPrice = price => (
-  <StyledPriceWrapper>{price ? `$${price}` : '-'}</StyledPriceWrapper>
+const renderPrice = priceKey => price => (
+  <StyledPriceWrapper>
+    {price[priceKey] ? `$${price[priceKey]}` : '-'}
+  </StyledPriceWrapper>
 );
 
 const sortByPrice = priceKey => (a, b) => {
@@ -46,15 +48,15 @@ export default [
   {
     key: '2',
     title: 'Basic',
-    dataIndex: 'prices.usd',
+    dataIndex: 'prices',
     sorter: sortByPrice('usd'),
-    render: renderPrice,
+    render: renderPrice('usd'),
   },
   {
     key: '3',
     title: 'Foil',
-    dataIndex: 'prices.usd_foil',
+    dataIndex: 'prices',
     sorter: sortByPrice('usd_foil'),
-    render: renderPrice,
+    render: renderPrice('usd_foil'),
   },
 ];

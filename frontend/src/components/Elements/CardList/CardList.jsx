@@ -10,7 +10,7 @@ const CARDS_PER_PAGE = 50;
 const StyledButtonWrapper = styled.div`
   width: 100%;
   display: flex;
-  margin: 24px 0;
+  /* margin: 24px 0; */
   align-items: center;
   flex-direction: column;
   justify-content: center;

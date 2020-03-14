@@ -29,14 +29,17 @@ export const getPrice = ({ prices: { usd, usd_foil } }) => {
   return Number(price) || 0;
 };
 
-export const getPriceLabel = amountInUsd => {
+export const getPriceLabel = (amountInUsd, { round = false } = {}) => {
+  const numberOfDigits = round ? 0 : 2;
   const formatPrice = amount =>
     Number(amount).toLocaleString('de-DE', {
       style: 'currency',
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2,
+      maximumFractionDigits: numberOfDigits,
+      minimumFractionDigits: numberOfDigits,
       currency: 'USD',
     });
+
+  // const roundedAmount = round ? Math.round(amountInUsd) : amountInUsd;
 
   return amountInUsd ? formatPrice(amountInUsd) : '-';
 };

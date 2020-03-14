@@ -1,8 +1,9 @@
 import React from 'react';
-import { Icon, message } from 'antd';
+import { message } from 'antd';
 import { useParams } from 'react-router';
 import { useMutation } from 'react-apollo';
 import styled from 'styled-components';
+import { DeleteOutlined } from '@ant-design/icons';
 import { deleteFromDeck } from '../../../../../../../queries';
 
 const StyledActionWrapper = styled.div`
@@ -32,11 +33,7 @@ export default ({ card }) => {
 
   return (
     <StyledActionWrapper onClick={onDelete}>
-      <Icon
-        type="delete"
-        style={{ marginRight: 4, fontSize: 14 }}
-        theme="filled"
-      />
+      <DeleteOutlined style={{ marginRight: 4, fontSize: 14 }} theme="filled" />
       <span>Remove</span>
     </StyledActionWrapper>
   );

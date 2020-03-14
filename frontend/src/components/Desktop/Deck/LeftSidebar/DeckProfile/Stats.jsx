@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Icon } from 'antd';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { isDeckLegal, isDeckOwned } from '../../../../../utils/cardStats';
 
 const StyledStats = styled.div`
@@ -51,7 +51,7 @@ export default ({ deck }) => {
       {stats.map(({ title, isValid }) => (
         <StyledStatWrapper key={title} isValid={isValid}>
           <StyledTitle>{title}</StyledTitle>
-          <Icon type={isValid ? 'check' : 'close'} />
+          {isValid ? <CheckOutlined /> : <CloseOutlined />} />
         </StyledStatWrapper>
       ))}
     </StyledStats>

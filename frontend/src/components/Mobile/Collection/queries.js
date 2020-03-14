@@ -5,8 +5,10 @@ export const getMinimalCollection = gql`
     collection {
       id
       cards {
-        oracle_id
         name
+        amount
+        minPrice
+        oracle_id
         previewImg
       }
     }

@@ -1,6 +1,7 @@
 import React from 'react';
-import { List, Typography, Icon } from 'antd';
 import styled from 'styled-components';
+import { List, Typography } from 'antd';
+import { UpOutlined } from '@ant-design/icons';
 
 import CardImage from './CardImage';
 
@@ -73,7 +74,7 @@ export default ({
         </StyledCardNameWrapper>
         {additionalIcon}
         <StyledIconWrapper isOpen={isOpen} onClick={() => setOpenCardId(null)}>
-          <Icon type="up" />
+          <UpOutlined />
         </StyledIconWrapper>
         {cardBody}
       </StyledBody>

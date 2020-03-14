@@ -25,8 +25,6 @@ export const CARD_FIELDS = `
     usd_foil
   }
   legalities {
-    standard
-    modern
     commander
   }
   oracle_id

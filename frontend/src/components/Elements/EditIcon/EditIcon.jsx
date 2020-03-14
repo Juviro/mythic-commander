@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Icon, Typography } from 'antd';
+import { Typography } from 'antd';
+import { EditOutlined, RightOutlined } from '@ant-design/icons';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -29,16 +30,17 @@ export default ({
   onClick,
   isEditing,
   editingText = 'Back',
-  editingIcon = 'right',
+  BackIcon = RightOutlined,
   onDiscard,
 }) => {
   return (
     <StyledWrapper>
       <StyledIconWrapper onClick={onClick} isEditing={isEditing}>
-        <Icon
-          type={isEditing ? editingIcon : 'edit'}
-          style={{ color: '#1890ff', marginRight: 4 }}
-        />
+        {isEditing ? (
+          <BackIcon style={{ color: '#1890ff', marginRight: 4 }} />
+        ) : (
+          <EditOutlined style={{ color: '#1890ff', marginRight: 4 }} />
+        )}
         <StyledLabel>{editingText}</StyledLabel>
       </StyledIconWrapper>
       {onDiscard && isEditing && (

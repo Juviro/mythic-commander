@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Icon } from 'antd';
 
 export const StyledWrapper = styled.div`
   width: 100%;
@@ -33,9 +32,4 @@ export const StyledStatus = styled.div`
 export const IconWrapper = styled.div`
   height: 21.1px;
   width: 100%;
-`;
-
-export const StyledIcon = styled(Icon)`
-  display: flex;
-  justify-content: flex-end;
 `;

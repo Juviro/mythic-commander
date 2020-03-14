@@ -1,9 +1,10 @@
 import React from 'react';
-import { Icon, Tooltip } from 'antd';
+import { Tooltip } from 'antd';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { useMutation } from 'react-apollo';
 
+import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { editDeckCard } from '../../../../queries';
 
 const OwnedWrapper = styled.div`
@@ -24,11 +25,12 @@ export default ({ card: { owned, id } }) => {
     });
   };
 
+  const Icon = owned ? CheckCircleOutlined : CloseCircleOutlined;
+
   return (
     <OwnedWrapper>
       <Tooltip title={owned ? 'Remove from collection' : 'Add to collection'}>
         <Icon
-          type={owned ? 'check-circle' : 'close-circle'}
           onClick={onToggleOwned}
           style={{ cursor: 'pointer', color: owned ? 'green' : 'red' }}
         />

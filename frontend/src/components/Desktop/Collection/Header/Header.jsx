@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Button, Icon } from 'antd';
+import { Button } from 'antd';
 import { useMutation } from 'react-apollo';
+import { PlusOutlined } from '@ant-design/icons';
 import { Drawer as AddCardsDrawer } from '../../../Elements';
 import { addToCollection } from '../../../../queries';
 import { getCollectionDesktop } from '../queries';
@@ -54,7 +55,7 @@ export default () => {
     <StyledHeader>
       <AddCardsButtonWrapper>
         <Button type="primary" onClick={() => setIsDrawerVisible(true)}>
-          <Icon type="plus" />
+          <PlusOutlined />
           Add Cards
         </Button>
       </AddCardsButtonWrapper>

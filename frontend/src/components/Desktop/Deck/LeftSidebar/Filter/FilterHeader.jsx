@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, Icon } from 'antd';
+import { Button } from 'antd';
 import styled from 'styled-components';
 import { StringParam, useQueryParams } from 'use-query-params';
+import { FilterOutlined } from '@ant-design/icons';
 
 const StyledHeader = styled.div`
   display: flex;
@@ -43,7 +44,7 @@ export default () => {
             reset Search
           </Button>
         )}
-        <Icon type="filter" />
+        <FilterOutlined />
       </div>
     </StyledHeader>
   );

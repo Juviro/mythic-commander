@@ -7,7 +7,6 @@ export const getCollectionDesktop = gql`
       cards {
         id
         name
-        rarity
         oracle_id
         createdAt
         image_uris {

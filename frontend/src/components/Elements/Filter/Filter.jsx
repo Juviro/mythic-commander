@@ -26,7 +26,10 @@ const Filter = () => {
     <FilterWrapper>
       <Input.Search
         value={filter.search}
-        autoFocus
+        onBlur={e => {
+          e.stopPropagation();
+          e.preventDefault();
+        }}
         placeholder="Filter by name"
         onChange={e => onChange('search')(e.target.value)}
         style={{ width: '100%' }}

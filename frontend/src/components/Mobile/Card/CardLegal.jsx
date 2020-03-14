@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Skeleton, Typography, Icon } from 'antd';
+import { Skeleton, Typography } from 'antd';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -16,7 +17,7 @@ export default ({ card }) => {
   const isLegal = card.legalities.commander === 'legal';
   return (
     <StyledWrapper isLegal={isLegal}>
-      <Icon type={isLegal ? 'check' : 'close'} />
+      {isLegal ? <CheckOutlined /> : <CloseOutlined />}
       <Typography.Text
         style={{ marginLeft: 8 }}
         type={isLegal ? undefined : 'danger'}
