@@ -18,13 +18,7 @@ const StyledWrapper = styled.div`
 
 export default () => {
   const { data, loading } = useQuery(getDecks);
-  const [{ query: searchQuery = '' }] = useQueryParams({
-    query: StringParam,
-  });
-
-  const decks = ((data && data.decks) || []).filter(({ name }) =>
-    name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const decks = data ? data.decks : [];
 
   return (
     <StyledWrapper>

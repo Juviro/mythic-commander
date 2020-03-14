@@ -7,6 +7,9 @@ cd /home/hauke/packages/mtg/frontend && yarn install --production=false && rm -r
 echo -e "\e[44mBuilding backend\e[0m"
 cd /home/hauke/packages/mtg/backend && yarn install --production=false && yarn build
 
+echo -e "\e[44mCopying schema\e[0m"
+cp /home/hauke/packages/mtg/backend/src/graphql/schema.graphql /home/hauke/packages/mtg/backend/dist/graphql/schema.graphql
+
 echo -e "\e[44mMigrating Database\e[0m"
 yarn migrate
 

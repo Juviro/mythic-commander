@@ -30,7 +30,8 @@ export const getCollectionNames = gql`
 export const addToCollection = gql`
   mutation addToCollection($cards: [AddToCollectionInput]!) {
     addToCollection(cards: $cards) {
-      ${COLLECTION_FIELDS}
+      createdAt
+      ${CARD_FIELDS}
     }
   }
 `;
