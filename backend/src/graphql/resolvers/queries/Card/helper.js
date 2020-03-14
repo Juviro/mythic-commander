@@ -52,3 +52,12 @@ export const getAllSets = async (oracle_id, userId, db) => {
     };
   });
 };
+
+export const getTypes = ({ type_line }) => {
+  const [mainTypes, flipTypes] = type_line.split(' // ');
+  const [primaryTypes, subTypes] = mainTypes
+    .split(' — ')
+    .map(part => part.split(' '));
+
+  return { mainTypes, flipTypes, primaryTypes, subTypes };
+};

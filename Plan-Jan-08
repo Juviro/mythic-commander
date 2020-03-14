@@ -5,6 +5,7 @@
     * Add filter
 
 
+* When opening single card view, highlight owned cards prefered
 * on card overview, show which decks include that card
 * add set view: display all cards from a set, allow search/filter. Maybe just add this as a filter to *all cards* view
 

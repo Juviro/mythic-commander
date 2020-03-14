@@ -12,7 +12,6 @@ const StyledWrapper = styled.div`
 `;
 
 export default () => {
-  return null;
   return (
     <StyledWrapper>
       <Filter />
