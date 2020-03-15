@@ -8,10 +8,11 @@ import styled from 'styled-components';
 import { getDecks, getCollectionNames } from '../../../../../queries';
 import OptionGroupHeader from './OptionGroupHeader';
 import CardContext from '../../../../CardProvider/CardProvider';
-import filterNames, {
-  filterByName,
-} from '../../../../Elements/SearchField/filterNames';
 import renderOption from './renderOption';
+import {
+  filterAndSortByQuery,
+  filterByName,
+} from '../../../../../utils/cardFilter';
 
 const MAX_RESULTS = 4;
 
@@ -50,6 +51,10 @@ const SearchBar = ({ history, transparentSearchBar }) => {
     setQuery({ query: value.split(';')[0] });
   };
   const onSelect = val => {
+    if (!val) {
+      inputEl.current.blur();
+      return;
+    }
     const { type, id } = JSON.parse(val);
     setQuery({ query: '' });
     inputEl.current.blur();
@@ -61,10 +66,12 @@ const SearchBar = ({ history, transparentSearchBar }) => {
     }
   };
 
-  const filteredCards = filterNames(cards, query, MAX_RESULTS).map(card => ({
-    ...card,
-    owned: collection.some(({ name }) => name === card.name),
-  }));
+  const filteredCards = filterAndSortByQuery(cards, query, MAX_RESULTS).map(
+    card => ({
+      ...card,
+      owned: collection.some(({ name }) => name === card.name),
+    })
+  );
   const filteredDecks = filterByName(decks, query)
     .slice(0, MAX_RESULTS)
     .sort(sortDecks(query));
@@ -73,27 +80,21 @@ const SearchBar = ({ history, transparentSearchBar }) => {
     {
       name: 'Cards',
       options: filteredCards,
-      onShowAll: () => history.push(`/m/cards?query=${query}`),
+      onShowAll: () => {
+        history.push(`/m/cards?query=${query}&sortBy=search`);
+        onSelect();
+      },
     },
     {
       name: 'Decks',
       options: filteredDecks,
-      onShowAll: () => history.push(`/m/decks?query=${query}`),
     },
   ];
 
   const dataSource = optionCategories
     .filter(({ options }) => options && options.length)
     .map(({ name, options, onShowAll }) => ({
-      label: (
-        <OptionGroupHeader
-          title={name}
-          onShowAll={() => {
-            onShowAll();
-            onSelect();
-          }}
-        />
-      ),
+      label: <OptionGroupHeader title={name} onShowAll={onShowAll} />,
       options: options.map(renderOption(query)),
     }));
 

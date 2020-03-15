@@ -1,4 +1,4 @@
-import { getAllSets, getPreviewImg, getTypes } from './helper';
+import { getAllSets, getPreviewImg, getTypes, getImageKey } from './helper';
 
 const resolver = {
   async owned({ oracle_id }, _, { db, user: { id: userId } }) {
@@ -20,6 +20,15 @@ const resolver = {
   },
   minPrice({ prices: { usd = 0, usd_foil = 0 } }) {
     return Math.min(usd, usd_foil);
+  },
+  imgKey(card) {
+    return getImageKey(card);
+  },
+  isTwoFaced({ card_faces }) {
+    return Boolean(card_faces);
+  },
+  isCommanderLegal({ legalities }) {
+    return legalities.commander === 'legal';
   },
 };
 

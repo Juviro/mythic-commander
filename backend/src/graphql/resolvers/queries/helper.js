@@ -1,11 +1,4 @@
-const getImageUri = card => {
-  const fullUrl = card.image_uris
-    ? card.image_uris.small
-    : card.card_faces[0].image_uris.small;
-  return fullUrl
-    .replace('https://img.scryfall.com/cards/small/front/', '')
-    .replace(/\.jpg\?\d+$/, '');
-};
+import { getImageKey } from './Card/helper';
 
 export const getCachedCards = async db => {
   const { rows: cards } = await db.raw(`
@@ -20,7 +13,7 @@ export const getCachedCards = async db => {
     ]);
     `);
   return cards.map(({ name, id, oracle_id, ...rest }) => ({
-    s: getImageUri(rest),
+    k: getImageKey(rest),
     n: name,
     i: id,
     o: oracle_id,

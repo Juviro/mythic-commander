@@ -2,6 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 import { highlightText } from '../../../../../utils/highlightText';
+import { getImageUrl } from '../../../../../utils/cardImage';
 
 const StyledCard = styled.div`
   display: flex;
@@ -49,7 +50,7 @@ const StyledCardImage = styled.img`
 `;
 
 export default searchString => element => {
-  const { name, id, oracle_id, imgSrc, previewImg, owned } = element;
+  const { name, id, oracle_id, imgSrc, imgKey, owned } = element;
 
   const value = oracle_id
     ? { type: 'CARD', id: oracle_id }
@@ -63,7 +64,7 @@ export default searchString => element => {
           {imgSrc ? (
             <StyledDeckImage src={imgSrc} />
           ) : (
-            <StyledCardImage src={previewImg} />
+            <StyledCardImage src={getImageUrl(id, imgKey)} />
           )}
         </CardImageWrapper>
         <StyledName isShort={owned}>
