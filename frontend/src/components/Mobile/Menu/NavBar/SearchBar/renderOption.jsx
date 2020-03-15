@@ -49,7 +49,7 @@ const StyledCardImage = styled.img`
 `;
 
 export default searchString => element => {
-  const { name, id, oracle_id, imgSrc, img, owned } = element;
+  const { name, id, oracle_id, imgSrc, previewImg, owned } = element;
 
   const value = oracle_id
     ? { type: 'CARD', id: oracle_id }
@@ -63,7 +63,7 @@ export default searchString => element => {
           {imgSrc ? (
             <StyledDeckImage src={imgSrc} />
           ) : (
-            <StyledCardImage src={img} />
+            <StyledCardImage src={previewImg} />
           )}
         </CardImageWrapper>
         <StyledName isShort={owned}>
