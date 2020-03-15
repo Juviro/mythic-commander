@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { List, Typography } from 'antd';
 import { UpOutlined } from '@ant-design/icons';
-
-import CardImage from './CardImage';
+import { CardListImage } from '../../../../../Elements';
 
 const StyledListItem = styled(List.Item)`
   width: 100%;
@@ -55,7 +54,7 @@ export default ({
       onClick={!isOpen ? () => setOpenCardId(card.oracle_id) : undefined}
     >
       <StyledBody>
-        <CardImage card={card} isOpen={isOpen} />
+        <CardListImage card={card} isOpen={isOpen} />
         <StyledCardNameWrapper
           isOpen={isOpen}
           onClick={isOpen ? () => setOpenCardId(null) : undefined}

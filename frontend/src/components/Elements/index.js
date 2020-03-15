@@ -1,6 +1,7 @@
 export { default as AddCards, Drawer } from './AddCards';
 export { default as Card } from './Card';
 export { default as CardList } from './CardList';
+export { default as CardListImage } from './CardListImage';
 export { default as EditIcon } from './EditIcon';
 export { default as Filter } from './Filter';
 export { default as FlippableCard } from './FlippableCard';
