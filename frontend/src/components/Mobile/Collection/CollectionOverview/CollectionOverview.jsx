@@ -9,8 +9,6 @@ const StyledCard = styled(Card)`
 `;
 
 export default ({ cards }) => {
-  console.log('cards :', cards);
-
   const numberOfUniqueCards = cards ? cards.length : 0;
   const numberOfCards = (cards || []).reduce(
     (sum, { amount }) => sum + amount,
@@ -20,7 +18,6 @@ export default ({ cards }) => {
     (sum, { minPrice }) => sum + minPrice,
     0
   );
-  console.log('numberOfCards :', numberOfCards);
 
   return (
     <StyledCard loading={!cards} title="Overview" size="small">

@@ -10,6 +10,7 @@ const DECK_CARD_FIELDS = `
   color_identity
   oracle_id
   amount
+  color_identity
 `;
 
 const DECK_FIELDS = `
