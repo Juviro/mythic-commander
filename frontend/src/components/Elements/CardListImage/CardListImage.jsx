@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import styled from 'styled-components';
-import { FlippableCard } from '../../../../../../Elements';
+import FlippableCard from '../FlippableCard';
 
 const ANIMATION_TIME = 200;
 
@@ -27,12 +27,22 @@ const StyledFlipWrapper = styled.div`
   }
 `;
 
+const getImages = ({ image_uris, previewImg, card_faces }) => {
+  if (previewImg) {
+    return [
+      {
+        small: previewImg,
+        normal: previewImg.replace('small', 'normal'),
+      },
+    ];
+  }
+  return image_uris ? [image_uris] : card_faces.map(card => card.image_uris);
+};
+
 export default ({ card, isOpen }) => {
   const [cardPreviewOpen, setCardPreviewOpen] = useState(false);
   const [showHighResImage, setShowHighResImage] = useState(false);
-  const images = card.image_uris
-    ? [card.image_uris]
-    : card.card_faces.map(({ image_uris }) => image_uris);
+  const images = getImages(card);
 
   const largeImageSrc = images[0].normal;
 

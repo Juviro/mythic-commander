@@ -3,8 +3,8 @@ import { withRouter } from 'react-router';
 
 import styled from 'styled-components';
 import { List, Typography, Row, Col } from 'antd';
-import { getImageUris } from '../../../utils/cardStats';
 import { highlightText } from '../../../utils/highlightText';
+import CardListImage from '../CardListImage';
 
 const StyledRow = styled(Row)`
   align-items: center;
@@ -12,14 +12,7 @@ const StyledRow = styled(Row)`
   width: 100%;
 `;
 
-const StyledPreview = styled.img`
-  height: auto;
-  width: 26px;
-  margin-right: 12px;
-`;
-
 const CardListItem = ({ card, history, searchString }) => {
-  const image = card.previewImg || card.img || getImageUris(card).small;
   const onClick = () => {
     history.push(`/m/cards/${card.oracle_id}`);
   };
@@ -27,7 +20,7 @@ const CardListItem = ({ card, history, searchString }) => {
     <List.Item style={{ padding: '2px 8px', height: 40 }}>
       <StyledRow onClick={onClick}>
         <Col span={3}>
-          <StyledPreview src={image} />
+          <CardListImage card={card} />
         </Col>
         <Col span={20}>
           <Typography.Text style={{ display: 'block' }} ellipsis>
