@@ -1,4 +1,4 @@
-import { getAllSets } from '../../network/mtgApi';
+import { getAllSets, getAllCreatureTypes } from '../../network/mtgApi';
 import client from '../../network/graphqlClient';
 import { cachedCards } from '../../queries';
 
@@ -34,6 +34,7 @@ const updateCollection = async (type, collectionKey, lastUpdateKey) => {
   const getter = {
     sets: getSets,
     cards: getCards,
+    creatureTypes: getAllCreatureTypes,
   };
 
   const stored = await getter[type]();

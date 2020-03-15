@@ -6,6 +6,7 @@ const CardContext = React.createContext({});
 export const CardContextProvider = ({ children }) => {
   const [cardNames, setCardNames] = useState();
   const [cards, setCards] = useState([]);
+  const [creatureTypes, setCreatureTypes] = useState([]);
   const [sets, setSets] = useState({});
 
   useEffect(() => {
@@ -17,13 +18,21 @@ export const CardContextProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    const getSets = async () => {
+      const allcreatureTypes = await getCollectionFromCache('creatureTypes');
+      setCreatureTypes(allcreatureTypes);
+    };
+    getSets();
+  }, []);
+
+  useEffect(() => {
     const getCards = async () => {
       const allCards = await getCollectionFromCache('cards');
       const fullCards = allCards.map(({ i, n, s, o }) => ({
         id: i,
         oracle_id: o,
         name: n,
-        img: `https://img.scryfall.com/cards/small/front/${s}.jpg`,
+        previewImg: `https://img.scryfall.com/cards/small/front/${s}.jpg`,
       }));
       setCards(fullCards);
       setCardNames(fullCards.map(({ name }) => name));
@@ -36,6 +45,7 @@ export const CardContextProvider = ({ children }) => {
       value={{
         cardNames,
         cards,
+        creatureTypes,
         sets,
       }}
     >

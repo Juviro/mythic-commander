@@ -1,6 +1,7 @@
 import { filterByName } from '../components/Elements/SearchField/filterNames';
 
 const filterByColor = (colorString = '') => ({ color_identity }) => {
+  if (!color_identity) return true;
   const [filteredColors] = colorString.match(/(w|u|b|r|g)+$/) || [''];
   const isExclude = colorString.includes('-');
   const isExact = colorString.includes('x');

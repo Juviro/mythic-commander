@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { StringParam, useQueryParams } from 'use-query-params';
 import { FilterOutlined } from '@ant-design/icons';
 
+import { blendIn } from '../../../../Animations';
+
 const StyledHeader = styled.div`
   display: flex;
   width: 100%;
@@ -15,9 +17,13 @@ const StyledText = styled.span`
   }
 `;
 
+const StyledButton = styled(Button)`
+  animation: ${blendIn} 0.3s linear;
+`;
+
 const filterAttrs = ['search', 'colors'];
 
-export default () => {
+export default ({ showIcon = true }) => {
   const [filter, setFilter] = useQueryParams(
     filterAttrs.reduce((acc, val) => ({ ...acc, [val]: StringParam }), {})
   );
@@ -36,15 +42,16 @@ export default () => {
       </div>
       <div>
         {canResetSearch && (
-          <Button
-            onClick={onResetSearch}
+          <StyledButton
+            danger
             type="link"
-            style={{ height: 15, lineHeight: 1, color: '#d20000' }}
+            onClick={onResetSearch}
+            style={{ height: 14, lineHeight: 0 }}
           >
             reset Search
-          </Button>
+          </StyledButton>
         )}
-        <FilterOutlined />
+        {showIcon && <FilterOutlined />}
       </div>
     </StyledHeader>
   );

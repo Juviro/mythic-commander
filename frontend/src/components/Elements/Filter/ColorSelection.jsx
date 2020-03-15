@@ -20,7 +20,7 @@ const addColor = (currentColors, newColor) => {
 const ColorSelectionWrapper = styled.div`
   width: 110%;
   display: flex;
-  margin-top: 20px;
+  margin-top: 12px;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
