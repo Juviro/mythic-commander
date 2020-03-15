@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import styled from 'styled-components';
 import FlippableCard from '../FlippableCard';
+import { getImageUrl } from '../../../utils/cardImage';
 
 const ANIMATION_TIME = 200;
 
@@ -27,24 +28,12 @@ const StyledFlipWrapper = styled.div`
   }
 `;
 
-const getImages = ({ image_uris, previewImg, card_faces }) => {
-  if (previewImg) {
-    return [
-      {
-        small: previewImg,
-        normal: previewImg.replace('small', 'normal'),
-      },
-    ];
-  }
-  return image_uris ? [image_uris] : card_faces.map(card => card.image_uris);
-};
-
 export default ({ card, isOpen }) => {
+  const { id, imgKey } = card;
   const [cardPreviewOpen, setCardPreviewOpen] = useState(false);
   const [showHighResImage, setShowHighResImage] = useState(false);
-  const images = getImages(card);
 
-  const largeImageSrc = images[0].normal;
+  const largeImageSrc = getImageUrl(id, imgKey, 'normal');
 
   const onChangeIsOpen = previewVisible => event => {
     event.stopPropagation();
@@ -67,7 +56,7 @@ export default ({ card, isOpen }) => {
   return (
     <>
       <StyledCard
-        src={images[0][showHighResImage ? 'normal' : 'small']}
+        src={getImageUrl(id, imgKey, showHighResImage ? 'normal' : 'small')}
         isLarge={isOpen}
         onClick={onChangeIsOpen(true)}
       />
@@ -82,7 +71,7 @@ export default ({ card, isOpen }) => {
         onCancel={onChangeIsOpen(false)}
       >
         <StyledFlipWrapper onClick={onChangeIsOpen(false)}>
-          <FlippableCard cardImages={images} />
+          <FlippableCard card={card} />
         </StyledFlipWrapper>
       </Modal>
     </>

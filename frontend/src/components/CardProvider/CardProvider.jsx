@@ -28,11 +28,11 @@ export const CardContextProvider = ({ children }) => {
   useEffect(() => {
     const getCards = async () => {
       const allCards = await getCollectionFromCache('cards');
-      const fullCards = allCards.map(({ i, n, s, o }) => ({
+      const fullCards = allCards.map(({ i, n, k, o }) => ({
         id: i,
         oracle_id: o,
         name: n,
-        previewImg: `https://img.scryfall.com/cards/small/front/${s}.jpg`,
+        imgKey: k,
       }));
       setCards(fullCards);
       setCardNames(fullCards.map(({ name }) => name));

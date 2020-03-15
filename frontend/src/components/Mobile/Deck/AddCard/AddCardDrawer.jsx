@@ -3,7 +3,7 @@ import { Drawer, message } from 'antd';
 import { useParams } from 'react-router';
 import { useMutation } from 'react-apollo';
 import { SearchField } from '../../../Elements';
-import { addCardsToDeck } from '../../../../queries/deck';
+import { addCardsToDeck } from '../queries';
 
 export default ({ isVisible, onClose }) => {
   const { id: deckId } = useParams();

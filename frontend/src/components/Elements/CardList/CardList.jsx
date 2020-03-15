@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useQueryParams, StringParam } from 'use-query-params';
 import CardListItem from './CardListItem';
 import CustomSkeleton from '../CustomSkeleton';
-import { filterCards } from '../../../utils/cardFilter';
+import { filterCards, sortCardsBySearch } from '../../../utils/cardFilter';
 
 const CARDS_PER_PAGE = 50;
 
@@ -17,13 +17,24 @@ const StyledButtonWrapper = styled.div`
   justify-content: center;
 `;
 
-export default ({ cards }) => {
+const sortCards = (cards, sortBy, searchString) => {
+  switch (sortBy) {
+    case 'search':
+      return cards.sort(sortCardsBySearch(searchString));
+    default:
+      return cards;
+  }
+};
+
+export default ({ cards, filterByQuery, loading }) => {
   const [numberOfDisplayedCards, setNumberOfDisplayedCards] = useState(
     CARDS_PER_PAGE
   );
-  const [filter] = useQueryParams({
+  const [{ search, colors, query, sortBy }] = useQueryParams({
     search: StringParam,
+    query: StringParam,
     colors: StringParam,
+    sortBy: StringParam,
   });
 
   if (!cards) {
@@ -34,14 +45,19 @@ export default ({ cards }) => {
     setNumberOfDisplayedCards(numberOfDisplayedCards + CARDS_PER_PAGE);
   };
 
-  const filteredCards = filterCards(cards, filter);
+  const searchString = filterByQuery ? query : search;
 
-  const showMoreButton = numberOfDisplayedCards < filteredCards.length;
+  const filteredCards = filterCards(cards, { colors, search: searchString });
 
-  const displayedCards = filteredCards.slice(0, numberOfDisplayedCards);
+  const sortedCards = sortCards(filteredCards, sortBy, searchString);
+
+  const showMoreButton = numberOfDisplayedCards < sortedCards.length;
+
+  const displayedCards = sortedCards.slice(0, numberOfDisplayedCards);
 
   return (
     <List
+      loading={loading}
       loadMore={
         showMoreButton && (
           <StyledButtonWrapper>
@@ -59,7 +75,7 @@ export default ({ cards }) => {
       dataSource={displayedCards}
       style={{ width: '100%', margin: 8 }}
       renderItem={card => (
-        <CardListItem card={card} searchString={filter.search} />
+        <CardListItem card={card} searchString={searchString} />
       )}
     />
   );

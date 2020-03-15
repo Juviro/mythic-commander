@@ -20,17 +20,28 @@ type Card {
   # Additional card fields
   owned: Boolean!
   minPrice: Float!
-  allSets: [CardSet!]!
+  imgKey: String!
+  isTwoFaced: Boolean!
+  isCommanderLegal: Boolean!
+  allSets: [Card!]!
   primaryTypes: [String]
 
-  # Deck specific fields
+  # used only for allSets
+  set_name: String
+
+  # TODO: rename deck amount to deckAmount / deckAmountFoil ?
+  # used by both Deck and allSets
   amount: Int!
+  amountFoil: Int!
+
+  # Deck specific fields
   zone: String!
 
   # Collectiom specific fields
   createdAt: String
 }
 
+# TODO: delete
 type CardSet {
   id: String!
   set: String!
@@ -87,7 +98,7 @@ type CachedCard {
   i: String!
   n: String!
   o: String!
-  s: String
+  k: String
 }
 
 ################################# Deck #################################

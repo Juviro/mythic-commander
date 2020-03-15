@@ -19,9 +19,6 @@ export default ({ onSetTab, currentTab }) => {
         <StyledMenuItem key="cards" onClick={() => onSetTab('cards')}>
           Cards
         </StyledMenuItem>
-        {/* <StyledMenuItem key="stats" onClick={() => onSetTab('stats')}>
-          Stats
-        </StyledMenuItem> */}
         <StyledMenuItem key="edit" onClick={() => onSetTab('edit')}>
           Edit
         </StyledMenuItem>

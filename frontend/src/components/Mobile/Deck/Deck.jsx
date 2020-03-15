@@ -8,7 +8,7 @@ import DeckHeader from './DeckHeader';
 import DeckMenu from './DeckMenu';
 import DeckBody from './DeckBody';
 import AddCard from './AddCard';
-import { getDeck } from '../../../queries/deck';
+import { getDeck } from './queries';
 
 const StyledDeck = styled.div`
   width: 100%;

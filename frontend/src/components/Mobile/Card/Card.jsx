@@ -4,7 +4,6 @@ import { useQuery } from 'react-apollo';
 
 import { useParams, withRouter } from 'react-router';
 import { Divider } from 'antd';
-import { getCardByOracleId } from '../../../queries';
 
 import CardRules from './CardRules';
 import CardImage from './CardImage';
@@ -12,6 +11,7 @@ import CardLegal from './CardLegal';
 import CardOwned from './CardOwned';
 import CardSetName from './CardSetName';
 import CardOverview from './CardOverview';
+import { getCardByOracleId } from './queries';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -35,9 +35,10 @@ const StyledBodyWrapper = styled.div`
 `;
 
 const sortByPrice = (a, b) => {
-  if (!a.prices.eur) return 1;
-  if (!b.prices.eur) return -1;
-  return a.prices.eur > b.prices.eur ? 1 : -1;
+  const getPrice = ({ prices: { usd, usd_foil } }) => Number(usd || usd_foil);
+  if (!getPrice(a)) return -1;
+  if (!getPrice(b)) return 1;
+  return getPrice(a) > getPrice(b) ? 1 : -1;
 };
 
 const Card = ({ history }) => {
@@ -47,13 +48,14 @@ const Card = ({ history }) => {
   });
 
   const card = data && data.cardsByOracleId;
+  console.log('card :', card);
   const sortedCards = card && [...card.allSets].sort(sortByPrice);
+  // TODO: select owned, if any
   const currentCard =
     card &&
     (cardId ? sortedCards.find(({ id }) => id === cardId) : sortedCards[0]);
 
   const fallbackId = loading || !currentCard ? null : currentCard.id;
-  const cardImages = currentCard && currentCard.image_uris;
 
   const onChangeSet = id => history.replace(`/m/cards/${oracle_id}/${id}`);
 
@@ -64,7 +66,7 @@ const Card = ({ history }) => {
 
   return (
     <StyledWrapper>
-      <CardImage cardImages={cardImages} loading={loading} />
+      <CardImage card={currentCard} loading={loading} />
       <CardSetName card={card} selectedCardId={cardId} loading={loading} />
       <StyledBodyWrapper>
         <CardOwned

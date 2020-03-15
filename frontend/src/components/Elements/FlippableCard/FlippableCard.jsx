@@ -3,6 +3,7 @@ import { useSpring, animated as a } from 'react-spring';
 import { SyncOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import './index.css';
+import { getImageUrl } from '../../../utils/cardImage';
 
 const StyledImageWrapper = styled.div`
   display: flex;
@@ -36,15 +37,19 @@ const StyledPlaceholder = styled.div`
   animation: ant-skeleton-loading 1.4s ease infinite;
 `;
 
-export default ({ loading, cardImages }) => {
+export default ({ loading, card }) => {
+  const { id, imgKey, isTwoFaced } = card || {};
+  console.log('isTwoFaced :', isTwoFaced);
   const [flipped, setFlipped] = useState(false);
   const [showHighResImage, setShowHighResImage] = useState(false);
+
   const { transform, opacity } = useSpring({
     opacity: flipped ? 1 : 0,
     transform: `perspective(600px) rotateY(-${flipped ? 180 : 0}deg)`,
     config: { mass: 5, tension: 500, friction: 80 },
   });
-  const frontLargeSrc = !loading && cardImages && cardImages[0].normal;
+
+  const frontLargeSrc = !loading && getImageUrl(id, imgKey, 'normal');
 
   useEffect(() => {
     setShowHighResImage(false);
@@ -61,14 +66,16 @@ export default ({ loading, cardImages }) => {
     setFlipped(state => !state);
   };
 
-  const frontImgSrc =
-    cardImages &&
-    (showHighResImage ? cardImages[0].normal : cardImages[0].small);
+  const frontImgSrc = getImageUrl(
+    id,
+    imgKey,
+    showHighResImage ? 'normal' : 'small'
+  );
 
   return (
     <StyledImageWrapper>
       {!showHighResImage && <StyledPlaceholder />}
-      {cardImages && cardImages.length > 1 && (
+      {isTwoFaced && (
         <>
           <StyledFlipIcon size="large" shape="circle" onClick={onFlipCard} />
           <a.div
@@ -76,7 +83,12 @@ export default ({ loading, cardImages }) => {
             style={{
               opacity,
               transform: transform.interpolate(t => `${t} rotateY(-180deg)`),
-              backgroundImage: `url(${cardImages[1].normal})`,
+              backgroundImage: `url(${getImageUrl(
+                id,
+                imgKey,
+                'normal',
+                'back'
+              )})`,
             }}
           />
         </>

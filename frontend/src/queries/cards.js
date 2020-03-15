@@ -10,6 +10,8 @@ export const CARD_FIELDS = `
     normal
     art_crop
   }
+  isTwoFaced
+  imgKey
   card_faces {
     name
     image_uris {
@@ -50,49 +52,13 @@ export const CARD_FIELDS = `
   rulings_uri
 `;
 
-const CARD_BY_ORACLE_ID_FIELDS = `
-  name  
-  oracle_id
-  rulings_uri
-  legalities {
-    commander
-  }
-
-  allSets {
-    id
-    set
-    set_name
-    foil
-    nonfoil
-    amount
-    amountFoil
-    prices {
-      eur
-      usd
-      usd_foil
-    }
-    image_uris {
-      small
-      normal
-    }
-  }
-`;
-
 export const cachedCards = gql`
   query cachedCards {
     cachedCards {
       i
       n
-      s
+      k
       o
     }
   }
-`;
-
-export const getCardByOracleId = gql`
-  query cardsByOracleId($oracle_id: String!) {
-    cardsByOracleId(oracle_id: $oracle_id) {
-        ${CARD_BY_ORACLE_ID_FIELDS}
-      }
-    }
 `;

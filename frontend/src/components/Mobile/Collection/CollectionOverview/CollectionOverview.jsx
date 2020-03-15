@@ -20,9 +20,9 @@ export default ({ cards }) => {
   );
 
   return (
-    <StyledCard loading={!cards} title="Overview" size="small">
+    <StyledCard loading={!cards} title="Your Collection" size="small">
       <Descriptions size="small">
-        <Descriptions.Item label="Collected Cards">
+        <Descriptions.Item label="Total Cards">
           {numberOfCards}
         </Descriptions.Item>
         <Descriptions.Item label="Unique Cards">

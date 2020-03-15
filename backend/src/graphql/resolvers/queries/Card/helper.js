@@ -29,21 +29,8 @@ export const getAllSets = async (oracle_id, userId, db) => {
     [userId, oracle_id]
   );
 
-  if (!cards.length) return null;
-
-  const cardsWithImageUris = cards
-    .map(card => ({
-      ...card,
-      image_uris: card.image_uris
-        ? [card.image_uris]
-        : card.card_faces.map(({ image_uris }) => image_uris),
-    }))
-    .sort(sortSets);
-
-  return cardsWithImageUris.map(card => {
-    const cardsWithSameSet = cardsWithImageUris.filter(
-      ({ set }) => set === card.set
-    );
+  return cards.map(card => {
+    const cardsWithSameSet = cards.filter(({ set }) => set === card.set);
     if (cardsWithSameSet.length === 1) return card;
     const version = cardsWithSameSet.findIndex(({ id }) => id === card.id) + 1;
     return {
@@ -60,4 +47,10 @@ export const getTypes = ({ type_line }) => {
     .map(part => part.split(' '));
 
   return { mainTypes, flipTypes, primaryTypes, subTypes };
+};
+
+export const getImageKey = ({ image_uris, card_faces }) => {
+  const cardFront = image_uris || card_faces[0].image_uris;
+
+  return cardFront.small.match(/front\/(.*)\//)[1];
 };
