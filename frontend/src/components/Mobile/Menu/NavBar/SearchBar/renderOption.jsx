@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styled from 'styled-components';
+import { highlightText } from '../../../../../utils/highlightText';
 
 const StyledCard = styled.div`
   display: flex;
@@ -46,22 +47,6 @@ const StyledCardImage = styled.img`
   width: 26px;
   display: flex;
 `;
-
-const highlightText = (searchString, option) => {
-  let currentSearchString = searchString;
-  const highlightedoption = option.split('').map(char => {
-    if (
-      !currentSearchString.length ||
-      char.toLowerCase() !== currentSearchString[0].toLowerCase()
-    ) {
-      return char;
-    }
-    currentSearchString = currentSearchString.substr(1);
-    return <b key={Math.random()}>{char}</b>;
-  });
-
-  return highlightedoption;
-};
 
 export default searchString => element => {
   const { name, id, oracle_id, imgSrc, img, owned } = element;

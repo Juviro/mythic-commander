@@ -23,8 +23,8 @@ export default () => {
   const cards = data && data.collection.cards;
   return (
     <StyledWrapper>
-      <CollapsableFilter />
       <CollectionOverview cards={cards} />
+      <CollapsableFilter />
       <Divider />
       <CardList cards={cards} />
     </StyledWrapper>

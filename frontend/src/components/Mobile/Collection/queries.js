@@ -10,6 +10,7 @@ export const getMinimalCollection = gql`
         minPrice
         oracle_id
         previewImg
+        color_identity
       }
     }
   }

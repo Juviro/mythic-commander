@@ -4,7 +4,7 @@ import { StringParam, useQueryParams } from 'use-query-params';
 
 import { Table, Spinner } from '../../../Elements';
 
-import { filterCards } from './cardFilter';
+import { filterCards } from '../../../../utils/cardFilter';
 import Actions from './Actions';
 
 const OverviewWrapper = styled.div`
