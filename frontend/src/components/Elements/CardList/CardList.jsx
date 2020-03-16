@@ -12,6 +12,7 @@ import {
   sortByName,
   sortByPrice,
   sortByAdded,
+  sortByAmount,
 } from '../../../utils/cardFilter';
 import GridCard from './GridCard';
 
@@ -62,6 +63,8 @@ const sortCards = (cards, orderBy = '', searchString) => {
       return sortByName(cards, direction);
     case 'price':
       return sortByPrice(cards, direction);
+    case 'amount':
+      return sortByAmount(cards, direction);
     default:
       return cards;
   }
