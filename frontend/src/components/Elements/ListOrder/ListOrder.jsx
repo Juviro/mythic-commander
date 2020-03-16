@@ -60,6 +60,14 @@ export default () => {
       value: 'cmc-desc',
     },
     {
+      label: 'Number collected (lowest first)',
+      value: 'amount-asc',
+    },
+    {
+      label: 'Number collected (highest first)',
+      value: 'amount-desc',
+    },
+    {
       label: 'Search result',
       value: 'search',
     },

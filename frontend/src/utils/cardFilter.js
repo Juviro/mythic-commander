@@ -131,3 +131,9 @@ export const sortByPrice = (cards, direction = 'asc') => {
 
   return direction === 'asc' ? sortedCards : sortedCards.reverse();
 };
+
+export const sortByAmount = (cards, direction = 'asc') => {
+  const sortedCards = cards.sort((a, b) => a.totalAmount - b.totalAmount);
+
+  return direction === 'asc' ? sortedCards : sortedCards.reverse();
+};
