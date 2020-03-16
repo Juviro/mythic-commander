@@ -6,6 +6,7 @@ export { default as CardListImage } from './CardListImage';
 export { default as EditIcon } from './EditIcon';
 export { default as Filter } from './Filter';
 export { default as FlippableCard } from './FlippableCard';
+export { default as FullscreenCardModal } from './FullscreenCardModal';
 export { default as FoilIcon } from './FoilIcon';
 export { default as ListOrder } from './ListOrder';
 export { default as Login } from './Login';

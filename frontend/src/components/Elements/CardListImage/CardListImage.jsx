@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Modal } from 'antd';
 import styled from 'styled-components';
-import FlippableCard from '../FlippableCard';
 import { getImageUrl } from '../../../utils/cardImage';
+import FullscreenCardModal from '../FullscreenCardModal/FullscreenCardModal';
 
 const ANIMATION_TIME = 200;
 
@@ -17,17 +16,6 @@ const StyledCard = styled.img`
   margin-top: ${({ isLarge }) => (isLarge ? 36 : 0)}px;
 `;
 
-const StyledFlipWrapper = styled.div`
-  display: flex;
-  position: relative;
-  width: 100%;
-  height: 133vw;
-
-  @media (min-width: 554px) {
-    height: 724px;
-  }
-`;
-
 export default ({ card, isOpen }) => {
   const { id, imgKey } = card;
   const [cardPreviewOpen, setCardPreviewOpen] = useState(false);
@@ -35,9 +23,9 @@ export default ({ card, isOpen }) => {
 
   const largeImageSrc = getImageUrl(id, imgKey, 'normal');
 
-  const onChangeIsOpen = previewVisible => event => {
+  const onChangeIsOpen = event => {
     event.stopPropagation();
-    setCardPreviewOpen(previewVisible);
+    setCardPreviewOpen(!cardPreviewOpen);
   };
 
   useEffect(() => {
@@ -58,22 +46,13 @@ export default ({ card, isOpen }) => {
       <StyledCard
         src={getImageUrl(id, imgKey, showHighResImage ? 'normal' : 'small')}
         isLarge={isOpen}
-        onClick={onChangeIsOpen(true)}
+        onClick={onChangeIsOpen}
       />
-      <Modal
-        footer={null}
-        closeIcon={<div />}
+      <FullscreenCardModal
         visible={cardPreviewOpen}
-        bodyStyle={{
-          padding: 0,
-        }}
-        wrapClassName="transparent-modal"
-        onCancel={onChangeIsOpen(false)}
-      >
-        <StyledFlipWrapper onClick={onChangeIsOpen(false)}>
-          <FlippableCard card={card} />
-        </StyledFlipWrapper>
-      </Modal>
+        card={card}
+        onChangeIsOpen={onChangeIsOpen}
+      />
     </>
   );
 };
