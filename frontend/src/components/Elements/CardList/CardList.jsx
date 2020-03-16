@@ -90,7 +90,6 @@ export default ({ cards, filterByQuery, loading }) => {
     orderBy: StringParam,
   });
 
-  console.log('cards :', cards);
   if (!cards) {
     return <CustomSkeleton.List />;
   }
