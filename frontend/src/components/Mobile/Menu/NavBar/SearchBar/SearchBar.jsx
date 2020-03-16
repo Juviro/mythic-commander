@@ -62,7 +62,9 @@ const SearchBar = ({ history, transparentSearchBar }) => {
     if (type === 'DECK') {
       history.push(`/m/decks/${id}`);
     } else {
-      history.push(`/m/cards/${id}?query=${query}`);
+      const isCardView = history.location.pathname.match(/\/cards\/.+/);
+
+      history[isCardView ? 'replace' : 'push'](`/m/cards/${id}?query=${query}`);
     }
   };
 
