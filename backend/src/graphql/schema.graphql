@@ -41,7 +41,8 @@ type Card {
   zone: String!
 
   # Collectiom specific fields
-  createdAt: Number
+  createdAt: String
+  sumPrice: Float
 }
 
 type Set {

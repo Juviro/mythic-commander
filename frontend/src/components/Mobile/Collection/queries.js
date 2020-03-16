@@ -13,6 +13,7 @@ const COLLECTION_FIELDS = `
     subTypes
     primaryTypes
     minPrice
+    sumPrice
     oracle_id
     color_identity
   }

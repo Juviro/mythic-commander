@@ -20,7 +20,8 @@ const resolver = {
   previewImg(card) {
     return getPreviewImg(card);
   },
-  minPrice({ prices: { usd, usd_foil } }) {
+  minPrice({ minPrice, prices: { usd, usd_foil } }) {
+    if (minPrice) return minPrice;
     return usd || usd_foil || 0;
   },
   imgKey(card) {
