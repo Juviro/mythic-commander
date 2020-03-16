@@ -25,7 +25,6 @@ export default () => {
     }
   );
 
-  //   const orderOptions = ['Name', 'Price', 'Mana costs'];
   const orderOptions = [
     {
       label: 'Name (A-Z)',

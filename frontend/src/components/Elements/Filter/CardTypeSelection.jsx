@@ -43,7 +43,7 @@ export default () => {
         allowClear
         defaultActiveFirstOption
         style={{ width: '100%' }}
-        placeholder="Search for creature type"
+        placeholder="Search for card type"
         onChange={val => {
           setValue(val);
           if (!cardTypes.includes(val)) setSelectedType('');

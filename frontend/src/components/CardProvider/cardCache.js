@@ -45,16 +45,18 @@ const updateCollection = async (type, collectionKey, lastUpdateKey) => {
   return stored;
 };
 
-// TODO: add some sort of option to force reload once
+const FORCE_UPDATE_IF_BEFORE = 1584369900654;
+
 export const getCollectionFromCache = async type => {
   const lastUpdateKey = `lastUpdate-${type}`;
   const collectionKey = `stored-${type}`;
 
-  // TODO: enable once
-  // localStorage.removeItem(collectionKey);
-
   const lastUpdate = localStorage.getItem(lastUpdateKey);
-  const shouldUpdate = !lastUpdate || Date.now() - lastUpdate > REFRESH_PERIOD;
+  const shouldUpdate =
+    !lastUpdate ||
+    Date.now() - Number(lastUpdate) > REFRESH_PERIOD ||
+    Number(lastUpdate) < FORCE_UPDATE_IF_BEFORE;
+
   const cachedCollection = localStorage.getItem(collectionKey);
 
   if (!shouldUpdate && cachedCollection) {
