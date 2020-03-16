@@ -16,7 +16,7 @@ import {
 } from '../../../utils/cardFilter';
 import GridCard from './GridCard';
 
-const CARDS_PER_PAGE = 30;
+export const CARDS_PER_PAGE = 30;
 
 const StyledButtonWrapper = styled.div`
   width: 100%;

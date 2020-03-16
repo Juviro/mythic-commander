@@ -5,8 +5,10 @@ import {
   AppstoreOutlined,
   BorderOutlined,
 } from '@ant-design/icons';
-import { useQueryParams, StringParam } from 'use-query-params';
+import { useQueryParams, StringParam, NumberParam } from 'use-query-params';
 import styled from 'styled-components';
+
+import { CARDS_PER_PAGE } from '../CardList/CardList';
 
 const StyledListOrder = styled.div`
   display: flex;
@@ -24,7 +26,11 @@ export default () => {
   ] = useQueryParams({
     layout: StringParam,
     orderBy: StringParam,
+    displayedResults: NumberParam,
   });
+
+  const onSelectLayout = e =>
+    setFilter({ layout: e.target.value, displayedResults: CARDS_PER_PAGE });
 
   const orderOptions = [
     {
@@ -86,10 +92,7 @@ export default () => {
           </Select.Option>
         ))}
       </Select>
-      <Radio.Group
-        value={layout}
-        onChange={e => setFilter({ layout: e.target.value })}
-      >
+      <Radio.Group value={layout} onChange={onSelectLayout}>
         <Radio.Button value="list">
           <BarsOutlined />
         </Radio.Button>
