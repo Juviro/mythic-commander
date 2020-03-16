@@ -15,7 +15,7 @@ export default ({ cards }) => {
     0
   );
   const collectionValue = (cards || []).reduce(
-    (sum, { minPrice }) => sum + minPrice,
+    (sum, { sumPrice }) => sum + sumPrice,
     0
   );
 

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { withRouter } from 'react-router';
 
 import { getImageUrl } from '../../../utils/cardImage';
-import { highlightText } from '../../../utils/highlightText';
 import { getPriceLabel } from '../../../utils/cardStats';
 
 const StyledWrapper = styled.div`
@@ -23,22 +22,30 @@ const StyledImage = styled.img`
   border-radius: 4%;
 `;
 
-const GridCard = ({ isLarge, card, history, searchString }) => {
+const GridCard = ({ isLarge, card, history }) => {
   const imgSrc = getImageUrl(card.id, card.imgKey, 'normal');
   const onClick = () => {
     history.push(`/m/cards/${card.oracle_id}`);
   };
 
   const style = isLarge
-    ? { fontSize: 20, marginBottom: 8, padding: 20 }
+    ? { fontSize: 16, marginBottom: 8, padding: 20 }
     : { maxWidth: '50%' };
+
+  const { minPrice, name, sumPrice, totalAmount } = card;
+  const shouldDisplayTotal = minPrice !== sumPrice;
+  const total = shouldDisplayTotal
+    ? ` (${getPriceLabel(card.sumPrice)} total)`
+    : '';
+
+  const amountLabel = totalAmount > 1 ? ` (${totalAmount}x)` : '';
 
   return (
     <StyledWrapper style={style} onClick={onClick}>
       <StyledImage src={imgSrc} />
-      <Typography.Text>{getPriceLabel(card.minPrice)}</Typography.Text>
+      <Typography.Text>{getPriceLabel(minPrice) + total}</Typography.Text>
       <Typography.Text ellipsis style={{ maxWidth: '90%' }}>
-        {highlightText(searchString, card.name)}
+        {name + amountLabel}
       </Typography.Text>
     </StyledWrapper>
   );
