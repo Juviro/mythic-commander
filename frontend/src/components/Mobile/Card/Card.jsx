@@ -34,13 +34,6 @@ const StyledBodyWrapper = styled.div`
   background-color: white;
 `;
 
-const sortByPrice = (a, b) => {
-  const getPrice = ({ prices: { usd, usd_foil } }) => Number(usd || usd_foil);
-  if (!getPrice(a)) return -1;
-  if (!getPrice(b)) return 1;
-  return getPrice(a) > getPrice(b) ? 1 : -1;
-};
-
 const Card = ({ history }) => {
   const { oracle_id, cardId } = useParams();
   const { data, loading } = useQuery(getCardByOracleId, {
@@ -48,11 +41,12 @@ const Card = ({ history }) => {
   });
 
   const card = data && data.cardsByOracleId;
-  const sortedCards = card && [...card.allSets].sort(sortByPrice);
-  // TODO: select owned, if any
-  const currentCard =
-    card &&
-    (cardId ? sortedCards.find(({ id }) => id === cardId) : sortedCards[0]);
+
+  const currentCardId = cardId || (card && card.id);
+
+  const currentCard = card
+    ? card.allSets.find(({ id }) => id === currentCardId)
+    : null;
 
   const fallbackId = loading || !currentCard ? null : currentCard.id;
 

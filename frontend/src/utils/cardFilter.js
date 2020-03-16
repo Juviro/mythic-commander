@@ -1,7 +1,7 @@
 const MAX_RESULTS = 30;
 
 const trimName = str => {
-  return str.replace(/[,';"().\s]+/g, '').toLowerCase();
+  return str.replace(/[,';"().\][*\s]+/g, '').toLowerCase();
 };
 
 // @Params card: string[] | { name: string }[]
