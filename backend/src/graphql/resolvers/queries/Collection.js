@@ -18,6 +18,9 @@ const resolver = {
           LEFT JOIN cards 
             ON cards.id = collection.id 
           WHERE "userId" = ?
+          AND (
+            amount > 0 OR "amountFoil" > 0
+          )
           GROUP BY cards.oracle_id
         )
         SELECT * 

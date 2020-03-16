@@ -35,6 +35,20 @@ const sortDecks = query => (a, b) => {
   return Number(b.lastEdit) - Number(a.lastEdit);
 };
 
+// TODO: find a more elegant solution
+const blur = () => {
+  const field = document.createElement('input');
+  field.setAttribute('type', 'text');
+  document.body.appendChild(field);
+
+  setTimeout(() => {
+    field.focus();
+    setTimeout(() => {
+      field.setAttribute('style', 'display:none;');
+    }, 50);
+  }, 50);
+};
+
 const SearchBar = ({ history, transparentSearchBar }) => {
   const inputEl = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -51,12 +65,13 @@ const SearchBar = ({ history, transparentSearchBar }) => {
     setQuery({ query: value.split(';')[0] });
   };
   const onSelect = val => {
+    console.log('val :', val);
+    blur();
     if (!val) {
       inputEl.current.blur();
       return;
     }
     const { type, id } = JSON.parse(val);
-    setQuery({ query: '' });
     inputEl.current.blur();
 
     if (type === 'DECK') {
