@@ -17,8 +17,8 @@ const CardListItem = ({ card, history, searchString }) => {
   const onClick = () => {
     history.push(`/m/cards/${card.oracle_id}`);
   };
-  const { sumPrice } = card;
-  const hasMinPrice = sumPrice !== undefined;
+  const { minPrice } = card;
+  const hasMinPrice = minPrice !== undefined;
   return (
     <List.Item style={{ padding: '2px 8px', height: 40 }}>
       <StyledRow onClick={onClick}>
@@ -32,7 +32,7 @@ const CardListItem = ({ card, history, searchString }) => {
         </Col>
         {hasMinPrice && (
           <Col span={4} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Typography.Text>{getPriceLabel(sumPrice)}</Typography.Text>
+            <Typography.Text>{getPriceLabel(minPrice)}</Typography.Text>
           </Col>
         )}
       </StyledRow>
