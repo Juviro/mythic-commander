@@ -42,22 +42,7 @@ type Card {
 
   # Collectiom specific fields
   createdAt: String
-}
-
-# TODO: delete
-type CardSet {
-  id: String!
-  set: String!
-  set_name: String!
-  prices: Prices!
-  amount: Int!
-  amountFoil: Int!
-  foil: Boolean!
-  nonfoil: Boolean!
-  image_uris: [ImageUris]!
-  purchase_uris: PurchaseUris!
-
-  card_faces: [CardFace!]
+  sumPrice: Float
 }
 
 type Set {

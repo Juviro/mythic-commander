@@ -6,7 +6,12 @@ const resolver = {
           SELECT 
             SUM(amount) as amount, 
             SUM("amountFoil") as "amountFoil", 
-            MAX("createdAt") as "createdAt",
+            MIN("createdAt") as "createdAt",
+            SUM(
+              coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * amount + 
+              coalesce(GREATEST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * "amountFoil"
+            ) as "sumPrice",
+            MIN(coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0)) as "minPrice",
             MAX(cards.id) as id 
           FROM collection 
           LEFT JOIN cards 

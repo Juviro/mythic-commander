@@ -108,6 +108,12 @@ export const filterAndSortByQuery = (
     .slice(0, maxResults);
 };
 
+export const sortByAdded = (cards, direction = 'asc') => {
+  const sortedCards = cards.sort((a, b) => a.createdAt - b.createdAt);
+
+  return direction === 'asc' ? sortedCards : sortedCards.reverse();
+};
+
 export const sortByCmc = (cards, direction = 'asc') => {
   const sortedCards = cards.sort((a, b) => a.cmc - b.cmc);
 
