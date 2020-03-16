@@ -1,9 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import { useMutation } from 'react-apollo';
-import { editDeckCard } from '../../../../../../../queries';
-import { getDeck } from '../../../../../../../queries/deck';
 import { SetPicker } from '../../../../../../Elements';
+import { getDeck, editDeckCard } from '../../../../queries';
 
 export default ({ card }) => {
   const { id: deckId } = useParams();

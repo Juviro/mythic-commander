@@ -1,7 +1,7 @@
 import React from 'react';
 import { AutoComplete } from 'antd';
 import CardContext from '../../CardProvider/CardProvider';
-import filterNames from './filterNames';
+import { filterAndSortByQuery } from '../../../utils/cardFilter';
 
 export const splitAmountAndName = query => {
   const match = query.match(/^(\d*)x{0,1}\s{0,1}(.*)/);
@@ -77,7 +77,7 @@ export default class SearchField extends React.Component {
 
     const searchStringWithoutAmount = splitAmountAndName(searchString).name;
 
-    const suggestions = filterNames(cards, searchStringWithoutAmount);
+    const suggestions = filterAndSortByQuery(cards, searchStringWithoutAmount);
 
     return (
       <AutoComplete

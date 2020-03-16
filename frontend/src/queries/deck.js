@@ -14,15 +14,11 @@ const DECK_CARD_FIELDS = `
 `;
 
 const DECK_FIELDS = `
-  id
-  name
-  createdAt
-  lastEdit
-  imgSrc
-`;
-
-const DECK_FIELDS_WITH_CARDS = `
-    ${DECK_FIELDS}
+    id
+    name
+    createdAt
+    lastEdit
+    imgSrc
     cards {
      ${DECK_CARD_FIELDS}
     }
@@ -42,7 +38,7 @@ export const getDecks = gql`
 export const getDeck = gql`
   query deck($id: String!) {
     deck(id: $id) {
-      ${DECK_FIELDS_WITH_CARDS}
+      ${DECK_FIELDS}
     }
   }
 `;
@@ -50,7 +46,7 @@ export const getDeck = gql`
 export const createDeck = gql`
   mutation createDeck {
     createDeck {
-        ${DECK_FIELDS_WITH_CARDS}
+        ${DECK_FIELDS}
     }
   }
 `;
@@ -58,7 +54,7 @@ export const createDeck = gql`
 export const editDeck = gql`
   mutation editDeck($deckId: String!, $newProperties: EditDeckFieldsInput!) {
     editDeck(deckId: $deckId, newProperties: $newProperties) {
-        ${DECK_FIELDS_WITH_CARDS}
+        ${DECK_FIELDS}
     }
   }
 `;
@@ -66,7 +62,7 @@ export const editDeck = gql`
 export const addCardsToDeck = gql`
   mutation addCardsToDeck($cards: [CardInputType!]!, $deckId: String!) {
     addCardsToDeck(cards: $cards, deckId: $deckId) {
-      ${DECK_FIELDS_WITH_CARDS}
+      ${DECK_FIELDS}
     }
   }
 `;
@@ -74,7 +70,7 @@ export const addCardsToDeck = gql`
 export const deleteFromDeck = gql`
   mutation deleteFromDeck($cardId: String!, $deckId: String!) {
     deleteFromDeck(cardId: $cardId, deckId: $deckId) {
-      ${DECK_FIELDS_WITH_CARDS}
+      ${DECK_FIELDS}
     }
   }
 `;

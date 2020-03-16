@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import { Row, Col } from 'antd';
 import styled from 'styled-components';
+
 import CardContext from '../../../CardProvider/CardProvider';
 import Amount from './Amount';
+import { getImageUrl } from '../../../../utils/cardImage';
 
 const StyledSetIcon = styled.img`
   height: auto;
@@ -29,7 +31,7 @@ export default ({
   onChangeAmount,
 }) => {
   const { sets } = useContext(CardContext);
-  const { id, set, set_name, image_uris, amount, amountFoil } = card;
+  const { id, set, set_name, imgKey, amount, amountFoil } = card;
   return (
     <Row
       gutter={[12, 2]}
@@ -46,7 +48,7 @@ export default ({
         span={isEditing ? 11 : 16}
         style={{ display: 'flex', alignItems: 'center' }}
       >
-        <StyledCardPreview src={image_uris[0].small} />
+        <StyledCardPreview src={getImageUrl(id, imgKey)} />
         <StyledSetIcon src={sets[set].icon_svg_uri} />
         <StyledSetName>{set_name}</StyledSetName>
       </Col>

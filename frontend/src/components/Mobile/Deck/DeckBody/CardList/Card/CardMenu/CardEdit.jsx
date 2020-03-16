@@ -1,19 +1,10 @@
 import React from 'react';
 
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import SetPicker from './SetPicker';
 import AmountPicker from './AmountPicker';
 import Delete from './Delete';
-
-const blendIn = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`;
+import { blendIn } from '../../../../../../Animations';
 
 const StyledWrapper = styled.div`
   display: flex;

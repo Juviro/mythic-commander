@@ -16,9 +16,6 @@ export default ({ deck, currentTab }) => {
       <Tabs.TabPane tab="1" key="cards">
         <CardList deck={deck} />
       </Tabs.TabPane>
-      <Tabs.TabPane tab="2" key="stats">
-        <CardList deck={deck} />
-      </Tabs.TabPane>
       <Tabs.TabPane tab="3" key="edit">
         <EditDeck deck={deck} />
       </Tabs.TabPane>

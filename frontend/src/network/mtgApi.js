@@ -1,6 +1,5 @@
-import { Sets } from 'scryfall-sdk';
+import { Sets, Catalog } from 'scryfall-sdk';
 
-// TODO: evaluate moving this to the backend as well
 export const getAllSets = async () => {
   const sets = await Sets.all();
 
@@ -13,4 +12,8 @@ export const getAllSets = async () => {
       },
     };
   }, {});
+};
+
+export const getAllCreatureTypes = async () => {
+  return Catalog.creatureTypes();
 };

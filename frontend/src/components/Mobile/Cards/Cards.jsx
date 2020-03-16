@@ -6,5 +6,5 @@ import CardList from '../../Elements/CardList';
 export default () => {
   const { cards } = useContext(CardContext);
 
-  return <CardList cards={cards} />;
+  return <CardList cards={cards} filterByQuery />;
 };

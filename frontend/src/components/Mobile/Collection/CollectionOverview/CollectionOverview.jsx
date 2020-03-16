@@ -11,7 +11,7 @@ const StyledCard = styled(Card)`
 export default ({ cards }) => {
   const numberOfUniqueCards = cards ? cards.length : 0;
   const numberOfCards = (cards || []).reduce(
-    (sum, { amount }) => sum + amount,
+    (sum, { totalAmount }) => sum + totalAmount,
     0
   );
   const collectionValue = (cards || []).reduce(
@@ -20,9 +20,9 @@ export default ({ cards }) => {
   );
 
   return (
-    <StyledCard loading={!cards} title="Overview" size="small">
+    <StyledCard loading={!cards} title="Your Collection" size="small">
       <Descriptions size="small">
-        <Descriptions.Item label="Collected Cards">
+        <Descriptions.Item label="Total Cards">
           {numberOfCards}
         </Descriptions.Item>
         <Descriptions.Item label="Unique Cards">

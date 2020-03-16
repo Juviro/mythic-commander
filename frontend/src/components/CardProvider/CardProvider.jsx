@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { getCollectionFromCache } from './cardCache';
+import { CARD_TYPES } from './staticTypes';
 
 const CardContext = React.createContext({});
 
 export const CardContextProvider = ({ children }) => {
   const [cardNames, setCardNames] = useState();
   const [cards, setCards] = useState([]);
+  const [creatureTypes, setCreatureTypes] = useState([]);
   const [sets, setSets] = useState({});
 
   useEffect(() => {
@@ -17,13 +19,21 @@ export const CardContextProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    const getSets = async () => {
+      const allcreatureTypes = await getCollectionFromCache('creatureTypes');
+      setCreatureTypes(allcreatureTypes);
+    };
+    getSets();
+  }, []);
+
+  useEffect(() => {
     const getCards = async () => {
       const allCards = await getCollectionFromCache('cards');
-      const fullCards = allCards.map(({ i, n, s, o }) => ({
+      const fullCards = allCards.map(({ i, n, k, o }) => ({
         id: i,
         oracle_id: o,
         name: n,
-        img: `https://img.scryfall.com/cards/small/front/${s}.jpg`,
+        imgKey: k,
       }));
       setCards(fullCards);
       setCardNames(fullCards.map(({ name }) => name));
@@ -36,7 +46,9 @@ export const CardContextProvider = ({ children }) => {
       value={{
         cardNames,
         cards,
+        creatureTypes,
         sets,
+        cardTypes: CARD_TYPES,
       }}
     >
       {children}

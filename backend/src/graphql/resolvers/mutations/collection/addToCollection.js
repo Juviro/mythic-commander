@@ -1,8 +1,8 @@
 const ON_CONFLICT = `
-ON CONFLICT (id, "userId") 
-DO UPDATE SET 
-  amount = collection.amount + EXCLUDED.amount, 
-  "createdAt" = NOW()
+    ON CONFLICT (id, "userId") 
+    DO UPDATE SET 
+      amount = collection.amount + EXCLUDED.amount, 
+      "createdAt" = NOW()
   `;
 
 export default async (_, { cards }, { user: { id: userId }, db }) => {
@@ -11,9 +11,11 @@ export default async (_, { cards }, { user: { id: userId }, db }) => {
       ({ id }, index) => index === cards.findIndex(card => card.id === id)
     )
     .map(card => ({ ...card, userId }));
+
   const query = db('collection')
     .insert(withoutDuplicates)
     .toString();
+
   const { rows: newCardIds } = await db.raw(
     query + ON_CONFLICT + ' returning id'
   );
