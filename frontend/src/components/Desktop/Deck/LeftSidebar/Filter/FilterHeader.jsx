@@ -21,7 +21,13 @@ const StyledButton = styled(Button)`
   animation: ${blendIn} 0.3s linear;
 `;
 
-const filterAttrs = ['search', 'colors'];
+const filterAttrs = [
+  'search',
+  'colors',
+  'creatureType',
+  'isLegendary',
+  'cardType',
+];
 
 export default ({ showIcon = true }) => {
   const [filter, setFilter] = useQueryParams(
@@ -48,7 +54,7 @@ export default ({ showIcon = true }) => {
             onClick={onResetSearch}
             style={{ height: 14, lineHeight: 0 }}
           >
-            reset Search
+            reset
           </StyledButton>
         )}
         {showIcon && <FilterOutlined />}

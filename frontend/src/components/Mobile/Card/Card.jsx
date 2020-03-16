@@ -48,7 +48,6 @@ const Card = ({ history }) => {
   });
 
   const card = data && data.cardsByOracleId;
-  console.log('card :', card);
   const sortedCards = card && [...card.allSets].sort(sortByPrice);
   // TODO: select owned, if any
   const currentCard =

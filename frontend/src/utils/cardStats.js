@@ -38,7 +38,5 @@ export const getPriceLabel = (amountInUsd, { round = false } = {}) => {
       currency: 'USD',
     });
 
-  // const roundedAmount = round ? Math.round(amountInUsd) : amountInUsd;
-
   return amountInUsd ? formatPrice(amountInUsd) : '-';
 };

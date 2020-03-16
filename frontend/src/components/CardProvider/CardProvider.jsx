@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getCollectionFromCache } from './cardCache';
+import { CARD_TYPES } from './staticTypes';
 
 const CardContext = React.createContext({});
 
@@ -47,6 +48,7 @@ export const CardContextProvider = ({ children }) => {
         cards,
         creatureTypes,
         sets,
+        cardTypes: CARD_TYPES,
       }}
     >
       {children}

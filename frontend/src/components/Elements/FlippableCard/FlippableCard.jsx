@@ -39,7 +39,6 @@ const StyledPlaceholder = styled.div`
 
 export default ({ loading, card }) => {
   const { id, imgKey, isTwoFaced } = card || {};
-  console.log('isTwoFaced :', isTwoFaced);
   const [flipped, setFlipped] = useState(false);
   const [showHighResImage, setShowHighResImage] = useState(false);
 
