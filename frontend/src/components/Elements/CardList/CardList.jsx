@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { List, Button, Typography } from 'antd';
 import styled from 'styled-components';
 
-import { useQueryParams, StringParam } from 'use-query-params';
+import { useQueryParams, StringParam, NumberParam } from 'use-query-params';
 import CardListItem from './CardListItem';
 import CustomSkeleton from '../CustomSkeleton';
 import {
@@ -11,6 +11,7 @@ import {
   sortByCmc,
   sortByName,
   sortByPrice,
+  sortByAdded,
 } from '../../../utils/cardFilter';
 import GridCard from './GridCard';
 
@@ -32,7 +33,7 @@ const StyledGridWrapper = styled.div`
 const ShowMoreButton = ({
   canLoadMore,
   onLoadMore,
-  numberOfDisplayedCards,
+  displayedResults,
   totalCards,
 }) => (
   <StyledButtonWrapper>
@@ -44,7 +45,7 @@ const ShowMoreButton = ({
     <Typography.Text
       style={{ marginTop: 8 }}
       type="secondary"
-    >{`Displaying ${numberOfDisplayedCards} of ${totalCards} cards`}</Typography.Text>
+    >{`Displaying ${displayedResults} of ${totalCards} cards`}</Typography.Text>
   </StyledButtonWrapper>
 );
 
@@ -55,6 +56,8 @@ const sortCards = (cards, orderBy = '', searchString) => {
       return cards.sort(sortCardsBySearch(searchString));
     case 'cmc':
       return sortByCmc(cards, direction);
+    case 'added':
+      return sortByAdded(cards, direction);
     case 'name':
       return sortByName(cards, direction);
     case 'price':
@@ -65,9 +68,6 @@ const sortCards = (cards, orderBy = '', searchString) => {
 };
 
 export default ({ cards, filterByQuery, loading }) => {
-  const [numberOfDisplayedCards, setNumberOfDisplayedCards] = useState(
-    CARDS_PER_PAGE
-  );
   const [
     {
       search,
@@ -77,8 +77,10 @@ export default ({ cards, filterByQuery, loading }) => {
       cardType,
       isLegendary,
       layout = 'list',
-      orderBy = 'name-asc',
+      orderBy = 'added-desc',
+      displayedResults = CARDS_PER_PAGE,
     },
+    setFilter,
   ] = useQueryParams({
     search: StringParam,
     query: StringParam,
@@ -88,6 +90,7 @@ export default ({ cards, filterByQuery, loading }) => {
     isLegendary: StringParam,
     layout: StringParam,
     orderBy: StringParam,
+    displayedResults: NumberParam,
   });
 
   if (!cards) {
@@ -95,7 +98,7 @@ export default ({ cards, filterByQuery, loading }) => {
   }
 
   const onLoadMore = () => {
-    setNumberOfDisplayedCards(numberOfDisplayedCards + CARDS_PER_PAGE);
+    setFilter({ displayedResults: displayedResults + CARDS_PER_PAGE });
   };
 
   const searchString = filterByQuery ? query : search;
@@ -110,15 +113,15 @@ export default ({ cards, filterByQuery, loading }) => {
 
   const sortedCards = sortCards(filteredCards, orderBy, searchString);
 
-  const canLoadMore = numberOfDisplayedCards < sortedCards.length;
+  const canLoadMore = displayedResults < sortedCards.length;
 
-  const displayedCards = sortedCards.slice(0, numberOfDisplayedCards);
+  const displayedCards = sortedCards.slice(0, displayedResults);
 
   const showMoreButton = (
     <ShowMoreButton
       canLoadMore={canLoadMore}
       totalCards={filteredCards.length}
-      numberOfDisplayedCards={displayedCards.length}
+      displayedResults={displayedCards.length}
       onLoadMore={onLoadMore}
     />
   );

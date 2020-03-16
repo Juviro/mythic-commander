@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useQuery } from 'react-apollo';
-import { Divider } from 'antd';
-import { getMobileCollection } from './queries';
+import { useQuery, useMutation } from 'react-apollo';
+import { Divider, message } from 'antd';
+import { getMobileCollection, addToCollection } from './queries';
 
-import { CardList, ListOrder } from '../../Elements';
+import { CardList, ListOrder, AddCardMobile } from '../../Elements';
 import CollectionOverview from './CollectionOverview';
 import CollapsableFilter from '../../Elements/Filter/CollapsableFilter';
 
@@ -21,6 +21,18 @@ const StyledWrapper = styled.div`
 export default () => {
   const { data } = useQuery(getMobileCollection);
   const cards = data && data.collection.cards;
+  const [mutate] = useMutation(addToCollection);
+
+  const onAddCard = (card, name) => {
+    message.success(
+      <span>
+        Added <b>{name}</b> to your collection!
+      </span>
+    );
+    mutate({
+      variables: { cards: [card] },
+    });
+  };
 
   return (
     <StyledWrapper>
@@ -29,6 +41,7 @@ export default () => {
       <ListOrder />
       <Divider />
       <CardList cards={cards} />
+      <AddCardMobile onAddCard={onAddCard} />
     </StyledWrapper>
   );
 };

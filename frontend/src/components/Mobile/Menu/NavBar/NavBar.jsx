@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { withRouter } from 'react-router';
@@ -32,33 +32,26 @@ const StyledInvisibleWrapper = styled.div`
 
 const isCardsUrl = pathname => Boolean(pathname.match(/^\/m\/cards\/[\w-/]+$/));
 
-const getSearchBarProps = (pathname = '', previousUrl) => {
-  if (pathname.match(/^\/m\/decks\/[0-9]+$/))
+const getSearchBarProps = (pathname = '') => {
+  if (pathname.match(/^\/m\/decks\/[0-9]+$/)) {
     return { goBackUrl: '/m/decks', transparentSearchBar: true };
-  if (isCardsUrl(pathname)) {
-    return { goBackUrl: previousUrl || '/m/cards' };
   }
 
   return {};
 };
 
-const Menu = ({ onToggleDrawer, location: { pathname, search }, history }) => {
-  const [previousUrl, setPreviousUrl] = useState('');
-
-  const { goBackUrl, transparentSearchBar } = getSearchBarProps(
-    pathname,
-    previousUrl
-  );
-
-  useEffect(() => {
-    if (!isCardsUrl(pathname)) {
-      setPreviousUrl(pathname + search);
-    }
-  }, [pathname, search]);
+const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
+  const { goBackUrl, transparentSearchBar } = getSearchBarProps(pathname);
+  const canGoBack = isCardsUrl(pathname);
 
   const onClickIcon = () => {
-    if (goBackUrl) history.push(goBackUrl);
-    else onToggleDrawer();
+    if (goBackUrl) {
+      history.push(goBackUrl);
+    } else if (canGoBack) {
+      history.goBack();
+    } else {
+      onToggleDrawer();
+    }
   };
 
   const iconStyle = transparentSearchBar
@@ -70,7 +63,7 @@ const Menu = ({ onToggleDrawer, location: { pathname, search }, history }) => {
   return (
     <>
       <StyledMenu transparent={transparentSearchBar}>
-        {goBackUrl ? (
+        {goBackUrl || canGoBack ? (
           <ArrowLeftOutlined onClick={onClickIcon} style={iconStyle} />
         ) : (
           <MenuOutlined onClick={onClickIcon} style={iconStyle} />

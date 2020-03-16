@@ -1,4 +1,5 @@
 export { default as AddCards, Drawer } from './AddCards';
+export { default as AddCardMobile } from './AddCardMobile';
 export { default as Card } from './Card';
 export { default as CardList } from './CardList';
 export { default as CardListImage } from './CardListImage';

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Spin } from 'antd';
+import { Spin, message } from 'antd';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
-import { useQuery } from 'react-apollo';
+import { useQuery, useMutation } from 'react-apollo';
 
 import DeckHeader from './DeckHeader';
 import DeckMenu from './DeckMenu';
 import DeckBody from './DeckBody';
-import AddCard from './AddCard';
-import { getDeck } from './queries';
+import { getDeck, addCardsToDeck } from './queries';
+import { AddCardMobile } from '../../Elements';
 
 const StyledDeck = styled.div`
   width: 100%;
@@ -23,7 +23,20 @@ export default () => {
   const { id } = useParams();
   const [currentTab, setCurrentTab] = useState('cards');
   const { data, loading } = useQuery(getDeck, { variables: { id } });
+  const [mutate] = useMutation(addCardsToDeck);
+
   const deck = data && data.deck;
+
+  const onAddCard = (card, name) => {
+    message.success(
+      <span>
+        Added <b>{name}</b> to your deck!
+      </span>
+    );
+    mutate({
+      variables: { cards: [card], deckId: id },
+    });
+  };
 
   return (
     <StyledDeck>
@@ -40,7 +53,7 @@ export default () => {
           <DeckBody deck={deck} currentTab={currentTab} />
         </>
       )}
-      <AddCard />
+      <AddCardMobile onAddCard={onAddCard} />
     </StyledDeck>
   );
 };
