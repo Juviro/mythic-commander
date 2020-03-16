@@ -3,7 +3,8 @@ import { Select, List, message } from 'antd';
 import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
 
-import { editDeck } from '../../../../../queries';
+import { editDeck } from '../../queries';
+import { getImageUrl } from '../../../../../utils/cardImage';
 
 const StyledHeader = styled.span`
   margin-bottom: 8px;
@@ -15,9 +16,7 @@ const byName = (a, b) => (a.name > b.name ? 1 : -1);
 
 export default ({ deck }) => {
   const [editMutation] = useMutation(editDeck);
-  const getImgSrc = card =>
-    card.id &&
-    (card.card_faces ? card.card_faces[0] : card).image_uris.art_crop;
+  const getImgSrc = ({ id, imgKey }) => getImageUrl(id, imgKey, 'art_crop');
 
   const currentImage =
     deck.cards.find(card => getImgSrc(card) === deck.imgSrc) || {};

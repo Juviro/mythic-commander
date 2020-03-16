@@ -9,10 +9,10 @@ const StyledWrapper = styled.div`
   margin: 5vw 0 0;
 `;
 
-export default ({ cardImages, loading }) => {
+export default ({ card, loading }) => {
   return (
     <StyledWrapper>
-      <FlippableCard cardImages={cardImages} loading={loading} />
+      <FlippableCard card={card} loading={loading} />
     </StyledWrapper>
   );
 };

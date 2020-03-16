@@ -1,13 +1,12 @@
 export const isCardLegal = (card, commander) => {
-  const { color_identity, legalities } = card;
-  const isLegal = !legalities.commander || legalities.commander === 'legal';
-  if (!commander) return isLegal;
+  const { color_identity, isCommanderLegal } = card;
+  if (!commander) return isCommanderLegal;
 
   const rightColorIdentity =
     !color_identity ||
     color_identity.every(color => commander.color_identity.includes(color));
 
-  return rightColorIdentity && isLegal;
+  return rightColorIdentity && isCommanderLegal;
 };
 
 export const isDeckLegal = ({ cards = [] }) => {
@@ -38,8 +37,6 @@ export const getPriceLabel = (amountInUsd, { round = false } = {}) => {
       minimumFractionDigits: numberOfDigits,
       currency: 'USD',
     });
-
-  // const roundedAmount = round ? Math.round(amountInUsd) : amountInUsd;
 
   return amountInUsd ? formatPrice(amountInUsd) : '-';
 };

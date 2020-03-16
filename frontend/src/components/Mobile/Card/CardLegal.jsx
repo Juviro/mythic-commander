@@ -14,7 +14,7 @@ const StyledWrapper = styled.div`
 
 export default ({ card }) => {
   if (!card) return <Skeleton active paragraph={null} />;
-  const isLegal = card.legalities.commander === 'legal';
+  const isLegal = card.isCommanderLegal;
   return (
     <StyledWrapper isLegal={isLegal}>
       {isLegal ? <CheckOutlined /> : <CloseOutlined />}

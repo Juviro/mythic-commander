@@ -20,9 +20,7 @@ const StyledIconWrapper = styled.div`
 `;
 
 export default ({ card, isOpen, isLegal }) => {
-  const { legalities } = card;
-  const isCommanderLegal =
-    !legalities.commander || legalities.commander === 'legal';
+  const { isCommanderLegal } = card;
 
   const isLegalWarning = isLegal
     ? ''

@@ -1,4 +1,4 @@
-import { getAllSets } from '../../network/mtgApi';
+import { getAllSets, getAllCreatureTypes } from '../../network/mtgApi';
 import client from '../../network/graphqlClient';
 import { cachedCards } from '../../queries';
 
@@ -34,6 +34,7 @@ const updateCollection = async (type, collectionKey, lastUpdateKey) => {
   const getter = {
     sets: getSets,
     cards: getCards,
+    creatureTypes: getAllCreatureTypes,
   };
 
   const stored = await getter[type]();
@@ -44,12 +45,18 @@ const updateCollection = async (type, collectionKey, lastUpdateKey) => {
   return stored;
 };
 
+const FORCE_UPDATE_IF_BEFORE = 1584369900654;
+
 export const getCollectionFromCache = async type => {
   const lastUpdateKey = `lastUpdate-${type}`;
   const collectionKey = `stored-${type}`;
 
   const lastUpdate = localStorage.getItem(lastUpdateKey);
-  const shouldUpdate = !lastUpdate || Date.now() - lastUpdate > REFRESH_PERIOD;
+  const shouldUpdate =
+    !lastUpdate ||
+    Date.now() - Number(lastUpdate) > REFRESH_PERIOD ||
+    Number(lastUpdate) < FORCE_UPDATE_IF_BEFORE;
+
   const cachedCollection = localStorage.getItem(collectionKey);
 
   if (!shouldUpdate && cachedCollection) {

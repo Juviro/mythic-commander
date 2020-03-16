@@ -3,7 +3,7 @@ import { Select, List, message } from 'antd';
 import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
 
-import { editDeckCard } from '../../../../../queries';
+import { editDeckCard } from '../../queries';
 
 const StyledHeader = styled.span`
   margin-bottom: 8px;

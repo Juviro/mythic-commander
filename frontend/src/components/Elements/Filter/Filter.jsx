@@ -1,10 +1,12 @@
 import React from 'react';
-import { Input } from 'antd';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
-import { StringParam, useQueryParams } from 'use-query-params';
 
+import { Typography } from 'antd';
 import ColorSelection from './ColorSelection';
+import SearchFilter from './SearchFilter';
+import CreatureTypeSelection from './CreatureTypeSelection';
+import CardTypeSelection from './CardTypeSelection';
 
 const FilterWrapper = styled.div`
   width: 100%;
@@ -12,33 +14,24 @@ const FilterWrapper = styled.div`
   flex-direction: column;
 `;
 
+const Label = ({ title }) => (
+  <Typography.Text
+    strong
+    style={{ marginTop: 16, marginBottom: 4 }}
+  >{`${title}:`}</Typography.Text>
+);
+
 const Filter = () => {
-  const [filter, setFilter] = useQueryParams({
-    search: StringParam,
-    colors: StringParam,
-  });
-
-  const onChange = key => value => {
-    setFilter({ [key]: value });
-  };
-
   return (
     <FilterWrapper>
-      <Input.Search
-        value={filter.search}
-        onBlur={e => {
-          e.stopPropagation();
-          e.preventDefault();
-        }}
-        placeholder="Filter by name"
-        onChange={e => onChange('search')(e.target.value)}
-        style={{ width: '100%' }}
-        size="small"
-      />
-      <ColorSelection
-        onSetColors={onChange('colors')}
-        selectedColors={filter.colors}
-      />
+      <Label title="Card name" />
+      <SearchFilter />
+      <Label title="Card type" />
+      <CardTypeSelection />
+      <Label title="Creature type" />
+      <CreatureTypeSelection />
+      <Label title="Color identity" />
+      <ColorSelection />
     </FilterWrapper>
   );
 };
