@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Checkbox } from 'antd';
+import { useQueryParam, StringParam } from 'use-query-params';
 import { colors as colorIcons } from '../../../assets/icons';
 
 const colors = ['w', 'u', 'b', 'r', 'g'];
@@ -20,7 +21,6 @@ const addColor = (currentColors, newColor) => {
 const ColorSelectionWrapper = styled.div`
   width: 110%;
   display: flex;
-  margin-top: 12px;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
@@ -52,7 +52,9 @@ const StyledColorTag = styled.img`
   }
 `;
 
-export default ({ onSetColors, selectedColors = '' }) => {
+export default () => {
+  const [selectedColors = '', setColors] = useQueryParam('colors', StringParam);
+
   const isColorSelected = letter =>
     selectedColors && selectedColors.includes(letter);
   const onSelectColor = letter => {
@@ -60,13 +62,13 @@ export default ({ onSetColors, selectedColors = '' }) => {
     const newColors = isSelected
       ? selectedColors.replace(letter, '')
       : addColor(selectedColors, letter);
-    onSetColors(newColors);
+    setColors(newColors);
   };
   const onSetExcluded = symbol => e => {
     const isExclude = e.target.checked;
     const withoutSymbol = selectedColors.replace(new RegExp(symbol, 'g'), '');
     const newColors = isExclude ? symbol.concat(withoutSymbol) : withoutSymbol;
-    onSetColors(newColors);
+    setColors(newColors);
   };
 
   return (

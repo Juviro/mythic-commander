@@ -6,6 +6,7 @@ export { default as EditIcon } from './EditIcon';
 export { default as Filter } from './Filter';
 export { default as FlippableCard } from './FlippableCard';
 export { default as FoilIcon } from './FoilIcon';
+export { default as ListOrder } from './ListOrder';
 export { default as Login } from './Login';
 export { default as SearchField } from './SearchField';
 export { default as Set } from './Set';

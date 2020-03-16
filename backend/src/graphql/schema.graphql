@@ -9,6 +9,7 @@ type Card {
   card_faces: [CardFace!]
   prices: Prices!
   rarity: String!
+  cmc: Float!
   legalities: Legalities!
   purchase_uris: PurchaseUris!
   oracle_id: String!
@@ -19,12 +20,14 @@ type Card {
 
   # Additional card fields
   owned: Boolean!
+  totalAmount: Int!
   minPrice: Float!
   imgKey: String!
   isTwoFaced: Boolean!
   isCommanderLegal: Boolean!
   allSets: [Card!]!
-  primaryTypes: [String]
+  primaryTypes: [String!]!
+  subTypes: [String!]!
 
   # used only for allSets
   set_name: String

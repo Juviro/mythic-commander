@@ -38,8 +38,34 @@ const filterByColor = (colorString = '') => ({ color_identity }) => {
   return someMatches;
 };
 
-export const filterCards = (cards, { search, colors }) => {
-  return filterByName(cards, search).filter(filterByColor(colors));
+const filterByCreatureType = creatureType => ({ subTypes }) => {
+  if (!creatureType) return true;
+  return subTypes.some(
+    type => type.toLowerCase() === creatureType.toLowerCase()
+  );
+};
+
+const filterByCardType = cardType => ({ primaryTypes }) => {
+  if (!cardType) return true;
+  return primaryTypes.some(
+    type => type.toLowerCase() === cardType.toLowerCase()
+  );
+};
+const filterByLegendary = isLegendary => ({ primaryTypes }) => {
+  if (!isLegendary) return true;
+  const isCardLegendary = primaryTypes.includes('Legendary');
+  return isLegendary === 'true' ? isCardLegendary : !isCardLegendary;
+};
+
+export const filterCards = (
+  cards,
+  { search, colors, creatureType, cardType, isLegendary }
+) => {
+  return filterByName(cards, search)
+    .filter(filterByColor(colors))
+    .filter(filterByCardType(cardType))
+    .filter(filterByLegendary(isLegendary))
+    .filter(filterByCreatureType(creatureType));
 };
 
 export const sortCardsBySearch = (searchString = '') => (
@@ -80,4 +106,22 @@ export const filterAndSortByQuery = (
   return filterByName(cards, searchString)
     .sort(sortCardsBySearch(searchString))
     .slice(0, maxResults);
+};
+
+export const sortByCmc = (cards, direction = 'asc') => {
+  const sortedCards = cards.sort((a, b) => a.cmc - b.cmc);
+
+  return direction === 'asc' ? sortedCards : sortedCards.reverse();
+};
+
+export const sortByName = (cards, direction = 'asc') => {
+  const sortedCards = cards.sort((a, b) => (a.name < b.name ? -1 : 1));
+
+  return direction === 'asc' ? sortedCards : sortedCards.reverse();
+};
+
+export const sortByPrice = (cards, direction = 'asc') => {
+  const sortedCards = cards.sort((a, b) => a.minPrice - b.minPrice);
+
+  return direction === 'asc' ? sortedCards : sortedCards.reverse();
 };

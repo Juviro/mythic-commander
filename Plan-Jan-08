@@ -1,9 +1,10 @@
-* Move queries to components, only query what's actually necessary
-* Implement Collection view
-    * Add dedicated collection view
-    * Improve list
-    * Add filter
+BUGFIXES:
+    * When searching for card, searchFiled keeps focus
 
+NEXT:
+    * add *add to collection* to mobile
+    * find a way to update storage on demand
+    * add collected amount to collection  view ?
 
 * When opening single card view, highlight owned cards prefered
 * on card overview, show which decks include that card

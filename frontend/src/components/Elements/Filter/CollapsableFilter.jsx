@@ -7,11 +7,12 @@ import Filter from './Filter';
 import FilterHeader from '../../Desktop/Deck/LeftSidebar/Filter/FilterHeader';
 
 export default () => {
-  const [{ search, colors }] = useQueryParams({
+  const [{ search, colors, creatureType }] = useQueryParams({
     search: StringParam,
     colors: StringParam,
+    creatureType: StringParam,
   });
-  const defaultOpen = search || colors;
+  const defaultOpen = search || colors || creatureType;
 
   return (
     <Collapse

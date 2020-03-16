@@ -29,15 +29,18 @@ export const getAllSets = async (oracle_id, userId, db) => {
     [userId, oracle_id]
   );
 
-  return cards.map(card => {
-    const cardsWithSameSet = cards.filter(({ set }) => set === card.set);
-    if (cardsWithSameSet.length === 1) return card;
-    const version = cardsWithSameSet.findIndex(({ id }) => id === card.id) + 1;
-    return {
-      ...card,
-      set_name: `${card.set_name} (Version ${version})`,
-    };
-  });
+  return cards
+    .map(card => {
+      const cardsWithSameSet = cards.filter(({ set }) => set === card.set);
+      if (cardsWithSameSet.length === 1) return card;
+      const version =
+        cardsWithSameSet.findIndex(({ id }) => id === card.id) + 1;
+      return {
+        ...card,
+        set_name: `${card.set_name} (Version ${version})`,
+      };
+    })
+    .sort(sortSets);
 };
 
 export const getTypes = ({ type_line }) => {

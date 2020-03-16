@@ -1,15 +1,18 @@
 import gql from 'graphql-tag';
 
-export const getMinimalCollection = gql`
-  query getMinimalCollection {
+export const getMobileCollection = gql`
+  query getMobileCollection {
     collection {
       id
       cards {
         id
         name
-        amount
+        cmc
+        totalAmount
         imgKey
         isTwoFaced
+        subTypes
+        primaryTypes
         minPrice
         oracle_id
         color_identity
