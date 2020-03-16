@@ -5,11 +5,13 @@ import { withRouter } from 'react-router';
 
 import { getImageUrl } from '../../../utils/cardImage';
 import { getPriceLabel } from '../../../utils/cardStats';
+import EnlargeImage from './EnlargeImage';
 
 const StyledWrapper = styled.div`
   width: 100%;
   padding: 4px;
   display: flex;
+  position: relative;
   align-items: center;
   flex-direction: column;
   justify-content: center;
@@ -43,6 +45,7 @@ const GridCard = ({ isLarge, card, history }) => {
   return (
     <StyledWrapper style={style} onClick={onClick}>
       <StyledImage src={imgSrc} />
+      {!isLarge && <EnlargeImage src={imgSrc} card={card} />}
       <Typography.Text>{getPriceLabel(minPrice) + total}</Typography.Text>
       <Typography.Text ellipsis style={{ maxWidth: '90%' }}>
         {name + amountLabel}
