@@ -20,8 +20,37 @@ const resolver = {
   previewImg(card) {
     return getPreviewImg(card);
   },
-  minPrice({ prices: { usd, usd_foil } }) {
+  minPrice({ minPrice, prices: { usd, usd_foil } }) {
+    if (minPrice) return minPrice;
     return usd || usd_foil || 0;
+  },
+  async sumPrice({ sumPrice, oracle_id }, _, { db, user: { id: userId } }) {
+    if (sumPrice) return sumPrice;
+    const {
+      rows: [{ price }],
+    } = await db.raw(
+      `
+    SELECT SUM(coalesce(
+      LEAST(
+        (prices->>'usd')::float, 
+        (prices->>'usd_foil')::float
+        ), 0
+        ) * amount + 
+        coalesce(
+      GREATEST(
+        (prices->>'usd')::float, 
+        (prices->>'usd_foil')::float
+        ), 0
+        ) * "amountFoil") AS price
+    FROM "collectionWithOracle" 
+    LEFT JOIN cards ON cards.id = "collectionWithOracle".id 
+    WHERE cards.oracle_id = ? 
+      AND "userId" = ?
+    GROUP BY cards.oracle_id;
+            `,
+      [oracle_id, userId]
+    );
+    return price;
   },
   imgKey(card) {
     return getImageKey(card);
@@ -32,8 +61,28 @@ const resolver = {
   isCommanderLegal({ legalities }) {
     return legalities.commander === 'legal';
   },
-  totalAmount({ amount, amountFoil }) {
-    return Number(amount) + Number(amountFoil);
+  async totalAmount(
+    { totalAmount, oracle_id },
+    _,
+    { db, user: { id: userId } }
+  ) {
+    if (totalAmount) return totalAmount;
+
+    const {
+      rows: [{ amount }],
+    } = await db.raw(
+      `
+    SELECT 
+      SUM(amount + "amountFoil") as amount
+    FROM "collectionWithOracle" 
+    LEFT JOIN cards ON cards.id = "collectionWithOracle".id 
+    WHERE cards.oracle_id = ? 
+      AND "userId" = ?
+    GROUP BY cards.oracle_id;
+            `,
+      [oracle_id, userId]
+    );
+    return amount;
   },
 };
 

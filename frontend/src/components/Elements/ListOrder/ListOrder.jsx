@@ -18,14 +18,23 @@ const StyledListOrder = styled.div`
 `;
 
 export default () => {
-  const [{ layout = 'list', orderBy = 'name-asc' }, setFilter] = useQueryParams(
-    {
-      layout: StringParam,
-      orderBy: StringParam,
-    }
-  );
+  const [
+    { layout = 'list', orderBy = 'added-desc' },
+    setFilter,
+  ] = useQueryParams({
+    layout: StringParam,
+    orderBy: StringParam,
+  });
 
   const orderOptions = [
+    {
+      label: 'Added (last added first)',
+      value: 'added-desc',
+    },
+    {
+      label: 'Added (last added last)',
+      value: 'added-asc',
+    },
     {
       label: 'Name (A-Z)',
       value: 'name-asc',

@@ -1,29 +1,14 @@
 import React from 'react';
-import { Drawer, message } from 'antd';
-import { useParams } from 'react-router';
-import { useMutation } from 'react-apollo';
-import { SearchField } from '../../../Elements';
-import { addCardsToDeck } from '../queries';
+import { Drawer } from 'antd';
 
-export default ({ isVisible, onClose }) => {
-  const { id: deckId } = useParams();
-  const [mutate] = useMutation(addCardsToDeck);
+import { SearchField } from '..';
+
+export default ({ isVisible, onClose, onAddCard }) => {
   const searchInputRef = React.createRef();
 
   const afterVisibleChange = visible => {
     if (!visible) return;
     searchInputRef.current.focus();
-  };
-
-  const onAddCard = (card, name) => {
-    message.success(
-      <span>
-        Added <b>{name}</b> to your deck!
-      </span>
-    );
-    mutate({
-      variables: { cards: [card], deckId },
-    });
   };
 
   return (
