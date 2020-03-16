@@ -1,8 +1,6 @@
 import gql from 'graphql-tag';
 
-const COLLECTION_FIELDS = `
-  id
-  cards {
+const COLLECTION_CARD_FIELDS = `
     id
     name
     cmc
@@ -16,6 +14,12 @@ const COLLECTION_FIELDS = `
     sumPrice
     oracle_id
     color_identity
+`;
+
+const COLLECTION_FIELDS = `
+  id
+  cards {
+    ${COLLECTION_CARD_FIELDS}
   }
 `;
 
@@ -27,10 +31,10 @@ export const getMobileCollection = gql`
   }
 `;
 
-export const addToCollection = gql`
-  mutation addToCollection($cards: [AddToCollectionInput]!) {
+export const addToCollectionMobile = gql`
+  mutation addToCollectionMobile($cards: [AddToCollectionInput]!) {
     addToCollection(cards: $cards) {
-      ${COLLECTION_FIELDS}
+      ${COLLECTION_CARD_FIELDS}
     }
   }
 `;
