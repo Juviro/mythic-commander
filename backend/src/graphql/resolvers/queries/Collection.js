@@ -6,7 +6,8 @@ const resolver = {
           SELECT 
             SUM(amount) as amount, 
             SUM("amountFoil") as "amountFoil", 
-            MIN("createdAt") as "createdAt",
+            SUM("amountFoil" + amount) as "totalAmount", 
+            MAX("createdAt") as "createdAt",
             SUM(
               coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * amount + 
               coalesce(GREATEST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * "amountFoil"
