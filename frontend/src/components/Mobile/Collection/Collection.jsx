@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useQuery, useMutation } from 'react-apollo';
 import { Divider, message } from 'antd';
-import { getMobileCollection, addToCollection } from './queries';
+import { getMobileCollection, addToCollectionMobile } from './queries';
 
 import { CardList, ListOrder, AddCardMobile } from '../../Elements';
 import CollectionOverview from './CollectionOverview';
@@ -22,16 +22,38 @@ const StyledWrapper = styled.div`
 export default () => {
   const { data } = useQuery(getMobileCollection);
   const cards = data && data.collection.cards;
-  const [mutate] = useMutation(addToCollection);
+  const [mutate] = useMutation(addToCollectionMobile);
 
-  const onAddCard = (card, name) => {
+  const onAddCard = (newCard, name) => {
     message.success(
       <span>
         Added <b>{name}</b> to your collection!
       </span>
     );
     mutate({
-      variables: { cards: [card] },
+      variables: { cards: [newCard] },
+      update: (cache, { data: updateData }) => {
+        if (!updateData) return;
+        const { addToCollection: newCards } = updateData;
+        const existing = cache.readQuery({
+          query: getMobileCollection,
+        });
+
+        const existingCards = existing.collection.cards.filter(
+          ({ oracle_id }) =>
+            !newCards.some(card => card.oracle_id === oracle_id)
+        );
+
+        cache.writeQuery({
+          query: getMobileCollection,
+          data: {
+            collection: {
+              ...existing.collection,
+              cards: existingCards.concat(newCards),
+            },
+          },
+        });
+      },
     });
   };
 

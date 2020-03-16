@@ -53,9 +53,11 @@ const GridCard = ({ isLarge, card, history }) => {
 
 const areEqual = (prevProps, nextProps) => {
   if (prevProps.isLarge !== nextProps.isLarge) return false;
-  return ['id', 'amount', 'amountFoil'].every(propKey => {
-    return prevProps.card[propKey] === nextProps.card[propKey];
-  });
+  return ['id', 'amount', 'amountFoil', 'totalAmount', 'sumPrice'].every(
+    propKey => {
+      return prevProps.card[propKey] === nextProps.card[propKey];
+    }
+  );
 };
 
 export default withRouter(React.memo(GridCard, areEqual));
