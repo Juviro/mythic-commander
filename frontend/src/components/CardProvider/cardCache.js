@@ -45,7 +45,7 @@ const updateCollection = async (type, collectionKey, lastUpdateKey) => {
   return stored;
 };
 
-const FORCE_UPDATE_IF_BEFORE = 1584369900654;
+const FORCE_UPDATE_IF_BEFORE = 1584399664770;
 
 export const getCollectionFromCache = async type => {
   const lastUpdateKey = `lastUpdate-${type}`;
