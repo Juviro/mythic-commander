@@ -19,7 +19,7 @@ const addColor = (currentColors, newColor) => {
 };
 
 const ColorSelectionWrapper = styled.div`
-  width: 110%;
+  max-width: 400px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;

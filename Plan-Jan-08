@@ -3,7 +3,6 @@ BUGFIXES:
 
 NEXT:
     * add *add to collection* to mobile
-    * find a way to update storage on demand
     * add collected amount to collection  view ?
 
 * When opening single card view, highlight owned cards prefered

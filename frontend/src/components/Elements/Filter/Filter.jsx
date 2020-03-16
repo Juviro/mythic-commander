@@ -26,12 +26,12 @@ const Filter = () => {
     <FilterWrapper>
       <Label title="Card name" />
       <SearchFilter />
-      <Label title="Color identity" />
-      <ColorSelection />
       <Label title="Card type" />
       <CardTypeSelection />
       <Label title="Creature type" />
       <CreatureTypeSelection />
+      <Label title="Color identity" />
+      <ColorSelection />
     </FilterWrapper>
   );
 };

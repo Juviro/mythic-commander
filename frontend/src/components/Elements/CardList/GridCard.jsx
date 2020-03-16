@@ -20,6 +20,7 @@ const StyledImage = styled.img`
   width: 100%;
   height: auto;
   max-width: 90vw;
+  border-radius: 4%;
 `;
 
 const GridCard = ({ isLarge, card, history, searchString }) => {
