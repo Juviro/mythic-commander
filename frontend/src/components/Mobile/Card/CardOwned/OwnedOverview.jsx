@@ -18,14 +18,14 @@ const StyledWrapper = styled.div`
 `;
 
 export default ({ cardOracleId, cards, onChangeSet, selectedCardId }) => {
-  const [mutate] = useMutation(changeCollection);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedMap, setEditedMap] = useState({});
-  const [addedMap, setAddedMap] = useState({});
-
   const ownedCards = cards.filter(
     ({ amount, amountFoil }) => amount + amountFoil
   );
+
+  const [mutate] = useMutation(changeCollection);
+  const [isEditing, setIsEditing] = useState(!ownedCards.length);
+  const [editedMap, setEditedMap] = useState({});
+  const [addedMap, setAddedMap] = useState({});
 
   const onResetEditing = () => {
     setIsEditing(false);
@@ -70,7 +70,7 @@ export default ({ cardOracleId, cards, onChangeSet, selectedCardId }) => {
   const onAddCard = id => {
     setAddedMap({
       ...addedMap,
-      [id]: { amount: 0, amountFoil: 0 },
+      [id]: { amount: 1, amountFoil: 0 },
     });
   };
 
