@@ -19,11 +19,11 @@ export const CardContextProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const getSets = async () => {
+    const getCreatureTypes = async () => {
       const allcreatureTypes = await getCollectionFromCache('creatureTypes');
       setCreatureTypes(allcreatureTypes);
     };
-    getSets();
+    getCreatureTypes();
   }, []);
 
   useEffect(() => {

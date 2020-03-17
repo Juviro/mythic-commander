@@ -14,8 +14,9 @@ import { CardContextProvider } from './components/CardProvider/CardProvider';
 
 export const history = createBrowserHistory();
 
-history.listen((_, action) => {
-  if (action === 'REPLACE') return;
+history.listen(({ pathname }, action) => {
+  const isCardsView = pathname.match(/\/cards\/.+/);
+  if (action === 'REPLACE' && !isCardsView) return;
   window.scrollTo(0, 0);
 });
 

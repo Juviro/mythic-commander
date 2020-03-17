@@ -5,8 +5,9 @@ import { withRouter } from 'react-router';
 import { Typography } from 'antd';
 import ColorSelection from './ColorSelection';
 import SearchFilter from './SearchFilter';
-import CreatureTypeSelection from './CreatureTypeSelection';
-import CardTypeSelection from './CardTypeSelection';
+import CreatureTypeSelection from './SelectFilter/CreatureTypeSelection';
+import CardTypeSelection from './SelectFilter/CardTypeSelection';
+import SetSelection from './SelectFilter/SetSelection';
 
 const FilterWrapper = styled.div`
   width: 100%;
@@ -21,11 +22,17 @@ const Label = ({ title }) => (
   >{`${title}:`}</Typography.Text>
 );
 
-const Filter = () => {
+const Filter = ({ advacedSearch }) => {
   return (
     <FilterWrapper>
       <Label title="Card name" />
       <SearchFilter />
+      {advacedSearch && (
+        <>
+          <Label title="Set" />
+          <SetSelection />
+        </>
+      )}
       <Label title="Card type" />
       <CardTypeSelection />
       <Label title="Creature type" />

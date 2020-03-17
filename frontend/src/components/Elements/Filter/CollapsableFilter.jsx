@@ -4,15 +4,16 @@ import { FilterTwoTone } from '@ant-design/icons';
 import { useQueryParams, StringParam } from 'use-query-params';
 
 import Filter from './Filter';
-import FilterHeader from '../../Desktop/Deck/LeftSidebar/Filter/FilterHeader';
+import FilterHeader from './FilterHeader';
 
 export default () => {
-  const [{ search, colors, creatureType }] = useQueryParams({
-    search: StringParam,
+  const [{ name, colors, creatureType }] = useQueryParams({
+    name: StringParam,
     colors: StringParam,
     creatureType: StringParam,
   });
-  const defaultOpen = search || colors || creatureType;
+  // TODO: add all search params, unify with others
+  const defaultOpen = name || colors || creatureType;
 
   return (
     <Collapse

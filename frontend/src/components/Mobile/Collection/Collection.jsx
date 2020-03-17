@@ -4,14 +4,14 @@ import { useQuery, useMutation } from 'react-apollo';
 import { Divider, message } from 'antd';
 import { getMobileCollection, addToCollectionMobile } from './queries';
 
-import { CardList, ListOrder, AddCardMobile } from '../../Elements';
+import { ListOrder, AddCardMobile } from '../../Elements';
 import CollectionOverview from './CollectionOverview';
 import CollapsableFilter from '../../Elements/Filter/CollapsableFilter';
+import FilteredCardList from '../../Elements/CardList/FilteredCardList';
 
 const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
-  min-height: 100vh;
   padding: 8px;
   display: flex;
   justify-content: center;
@@ -61,9 +61,9 @@ export default () => {
     <StyledWrapper>
       <CollectionOverview cards={cards} />
       <CollapsableFilter />
-      <ListOrder />
+      <ListOrder showCollectionFilters />
       <Divider />
-      <CardList cards={cards} />
+      <FilteredCardList cards={cards} />
       <AddCardMobile onAddCard={onAddCard} />
     </StyledWrapper>
   );

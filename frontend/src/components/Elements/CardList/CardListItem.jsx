@@ -15,7 +15,7 @@ const StyledRow = styled(Row)`
 
 const CardListItem = ({ card, history, searchString }) => {
   const onClick = () => {
-    history.push(`/m/cards/${card.oracle_id}`);
+    history.push(`/m/cards/${card.oracle_id}/${card.id}`);
   };
   const { minPrice } = card;
   const hasMinPrice = minPrice !== undefined;
@@ -25,7 +25,7 @@ const CardListItem = ({ card, history, searchString }) => {
         <Col span={3}>
           <CardListImage card={card} />
         </Col>
-        <Col span={hasMinPrice ? 17 : 22}>
+        <Col span={hasMinPrice ? 17 : 21}>
           <Typography.Text style={{ display: 'block' }} ellipsis>
             {highlightText(searchString, card.name)}
           </Typography.Text>

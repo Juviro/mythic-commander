@@ -16,7 +16,7 @@ const OverviewWrapper = styled.div`
 
 export default ({ deck, loading }) => {
   const [filter] = useQueryParams({
-    search: StringParam,
+    name: StringParam,
     colors: StringParam,
   });
   if (loading || !deck.cards) return <Spinner />;

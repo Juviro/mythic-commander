@@ -10,6 +10,8 @@ const SkeletonWrapper = styled.div`
   padding: 16px;
 `;
 
+export const Line = () => <Skeleton active paragraph={null} />;
+
 export const List = () => {
   const dummyArray = [];
   for (let i = 0; i < 10; i++) {

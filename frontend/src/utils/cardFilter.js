@@ -40,6 +40,7 @@ const filterByColor = (colorString = '') => ({ color_identity }) => {
 
 const filterByCreatureType = creatureType => ({ subTypes }) => {
   if (!creatureType) return true;
+  if (!subTypes) return false;
   return subTypes.some(
     type => type.toLowerCase() === creatureType.toLowerCase()
   );
@@ -47,21 +48,23 @@ const filterByCreatureType = creatureType => ({ subTypes }) => {
 
 const filterByCardType = cardType => ({ primaryTypes }) => {
   if (!cardType) return true;
+  if (!primaryTypes) return false;
   return primaryTypes.some(
     type => type.toLowerCase() === cardType.toLowerCase()
   );
 };
 const filterByLegendary = isLegendary => ({ primaryTypes }) => {
   if (!isLegendary) return true;
+  if (!primaryTypes) return isLegendary === 'false';
   const isCardLegendary = primaryTypes.includes('Legendary');
   return isLegendary === 'true' ? isCardLegendary : !isCardLegendary;
 };
 
 export const filterCards = (
   cards,
-  { search, colors, creatureType, cardType, isLegendary }
+  { name, colors, creatureType, cardType, isLegendary }
 ) => {
-  return filterByName(cards, search)
+  return filterByName(cards, name)
     .filter(filterByColor(colors))
     .filter(filterByCardType(cardType))
     .filter(filterByLegendary(isLegendary))
