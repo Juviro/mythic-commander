@@ -9,6 +9,7 @@ type Card {
   card_faces: [CardFace!]
   prices: Prices!
   rarity: String!
+  oracle_text: String
   cmc: Float!
   legalities: Legalities!
   purchase_uris: PurchaseUris!
@@ -89,6 +90,13 @@ type CachedCard {
   k: String
 }
 
+type PaginatedCards {
+  hasMore: Boolean!
+  nextOffset: Int
+  totalResults: Int!
+  cards: [Card!]!
+}
+
 ################################# Deck #################################
 
 type Deck {
@@ -126,8 +134,24 @@ type Query {
   collection: Collection!
 
   card(id: String!): Card!
+  paginatedCards(
+    offset: Int
+    limit: Int
+    options: CardsOptionsInput
+  ): PaginatedCards!
   cardsByOracleId(oracle_id: String!): Card!
   cachedCards: [CachedCard!]!
+}
+
+input CardsOptionsInput {
+  name: String
+  colors: String
+  creatureType: String
+  cardType: String
+  isLegendary: String
+  text: String
+  set: String
+  orderBy: String
 }
 
 ################################# Mutations #################################

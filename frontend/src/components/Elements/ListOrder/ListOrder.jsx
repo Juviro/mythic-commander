@@ -8,7 +8,7 @@ import {
 import { useQueryParams, StringParam, NumberParam } from 'use-query-params';
 import styled from 'styled-components';
 
-import { CARDS_PER_PAGE } from '../CardList/CardList';
+import { CARDS_PER_PAGE } from '../CardList/FilteredCardList';
 
 const StyledListOrder = styled.div`
   display: flex;
@@ -19,70 +19,77 @@ const StyledListOrder = styled.div`
   width: 100%;
 `;
 
-export default () => {
-  const [
-    { layout = 'list', orderBy = 'added-desc' },
-    setFilter,
-  ] = useQueryParams({
+const DEFAULT_FILTER = [
+  {
+    label: 'Name (A-Z)',
+    value: 'name-asc',
+  },
+  {
+    label: 'Name (Z-A)',
+    value: 'name-desc',
+  },
+  {
+    label: 'Price (lowest first)',
+    value: 'price-asc',
+  },
+  {
+    label: 'Price (highest first)',
+    value: 'price-desc',
+  },
+  {
+    label: 'Mana costs (lowest first)',
+    value: 'cmc-asc',
+  },
+  {
+    label: 'Mana costs (highest first)',
+    value: 'cmc-desc',
+  },
+];
+
+const COLLECTION_FILTER = [
+  {
+    label: 'Added (last added first)',
+    value: 'added-desc',
+  },
+  {
+    label: 'Added (last added last)',
+    value: 'added-asc',
+  },
+  ...DEFAULT_FILTER,
+  {
+    label: 'Number collected (lowest first)',
+    value: 'amount-asc',
+  },
+  {
+    label: 'Number collected (highest first)',
+    value: 'amount-desc',
+  },
+];
+
+export default ({ showCollectionFilters }) => {
+  const orderOptions = showCollectionFilters
+    ? COLLECTION_FILTER
+    : DEFAULT_FILTER;
+
+  const [{ layout = 'list', orderBy }, setFilter] = useQueryParams({
     layout: StringParam,
     orderBy: StringParam,
     displayedResults: NumberParam,
   });
 
+  if (!orderBy) setFilter({ orderBy: orderOptions[0].value });
+
   const onSelectLayout = e =>
     setFilter({ layout: e.target.value, displayedResults: CARDS_PER_PAGE });
 
-  const orderOptions = [
-    {
-      label: 'Added (last added first)',
-      value: 'added-desc',
-    },
-    {
-      label: 'Added (last added last)',
-      value: 'added-asc',
-    },
-    {
-      label: 'Name (A-Z)',
-      value: 'name-asc',
-    },
-    {
-      label: 'Name (Z-A)',
-      value: 'name-desc',
-    },
-    {
-      label: 'Price (lowest first)',
-      value: 'price-asc',
-    },
-    {
-      label: 'Price (highest first)',
-      value: 'price-desc',
-    },
-    {
-      label: 'Mana costs (lowest first)',
-      value: 'cmc-asc',
-    },
-    {
-      label: 'Mana costs (highest first)',
-      value: 'cmc-desc',
-    },
-    {
-      label: 'Number collected (lowest first)',
-      value: 'amount-asc',
-    },
-    {
-      label: 'Number collected (highest first)',
-      value: 'amount-desc',
-    },
-    {
-      label: 'Search result',
-      value: 'search',
-    },
-  ];
+  const defaultValue = orderOptions.find(
+    ({ value }) => value === (orderBy || orderOptions[0].value)
+  ).label;
 
   return (
     <StyledListOrder>
       <Select
-        defaultValue={orderOptions.find(({ value }) => value === orderBy).label}
+        defaultValue={defaultValue}
         style={{ width: 215 }}
         onSelect={value => setFilter({ orderBy: value })}
       >

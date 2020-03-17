@@ -27,7 +27,7 @@ const StyledCardWrapper = styled.div`
 const GridCard = ({ isLarge, card, history, loading }) => {
   const imgSrc = getImageUrl(card.id, card.imgKey, 'normal');
   const onClick = () => {
-    history.push(`/m/cards/${card.oracle_id}`);
+    history.push(`/m/cards/${card.oracle_id}/${card.id}`);
   };
 
   const style = isLarge
@@ -35,12 +35,10 @@ const GridCard = ({ isLarge, card, history, loading }) => {
     : { maxWidth: '50%' };
 
   const { minPrice, name, sumPrice, totalAmount } = card;
-  const shouldDisplayTotal = minPrice !== sumPrice;
+  const shouldDisplayTotal = sumPrice && minPrice !== sumPrice;
   const total = shouldDisplayTotal
-    ? ` (${getPriceLabel(card.sumPrice)} total)`
+    ? ` (${totalAmount}x | ${getPriceLabel(card.sumPrice)})`
     : '';
-
-  const amountLabel = totalAmount > 1 ? ` (${totalAmount}x)` : '';
 
   return (
     <StyledWrapper style={style} onClick={onClick}>
@@ -50,7 +48,7 @@ const GridCard = ({ isLarge, card, history, loading }) => {
       {!isLarge && <EnlargeImage src={imgSrc} card={card} />}
       <Typography.Text>{getPriceLabel(minPrice) + total}</Typography.Text>
       <Typography.Text ellipsis style={{ maxWidth: '90%' }}>
-        {name + amountLabel}
+        {name}
       </Typography.Text>
     </StyledWrapper>
   );
@@ -58,6 +56,7 @@ const GridCard = ({ isLarge, card, history, loading }) => {
 
 const areEqual = (prevProps, nextProps) => {
   if (prevProps.isLarge !== nextProps.isLarge) return false;
+  if (prevProps.loading !== nextProps.loading) return false;
   return ['id', 'amount', 'amountFoil', 'totalAmount', 'sumPrice'].every(
     propKey => {
       return prevProps.card[propKey] === nextProps.card[propKey];

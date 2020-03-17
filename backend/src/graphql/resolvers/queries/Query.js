@@ -1,4 +1,5 @@
-import { getCachedCards } from './helper';
+import getCachedCards from './getCachedCards';
+import getCards from './getCards';
 
 const resolver = {
   user(_, __, { db, user: { id } }) {
@@ -32,6 +33,7 @@ const resolver = {
   },
 
   cachedCards: (_, __, { db }) => getCachedCards(db),
+  paginatedCards: getCards,
 };
 
 export default resolver;

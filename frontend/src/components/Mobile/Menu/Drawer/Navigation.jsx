@@ -12,6 +12,10 @@ export default ({ onCloseDrawer }) => {
       href: '/m/collection',
       title: 'Collection',
     },
+    {
+      href: '/m/cards',
+      title: 'Cards',
+    },
   ];
   return (
     <List>

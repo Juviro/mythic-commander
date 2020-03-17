@@ -48,7 +48,7 @@ export default ({ loading, card }) => {
     config: { mass: 5, tension: 500, friction: 80 },
   });
 
-  const frontLargeSrc = !loading && getImageUrl(id, imgKey, 'normal');
+  const frontLargeSrc = imgKey && getImageUrl(id, imgKey, 'normal');
 
   useEffect(() => {
     setShowHighResImage(false);
@@ -92,7 +92,7 @@ export default ({ loading, card }) => {
           />
         </>
       )}
-      {!loading && (
+      {
         <a.div
           className="flippable-card"
           style={{
@@ -101,7 +101,7 @@ export default ({ loading, card }) => {
             backgroundImage: `url(${frontImgSrc})`,
           }}
         />
-      )}
+      }
     </StyledImageWrapper>
   );
 };

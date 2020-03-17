@@ -8,7 +8,7 @@ import {
   UnorderedListOutlined,
   EllipsisOutlined,
 } from '@ant-design/icons';
-import FilterHeader from './Filter/FilterHeader';
+import FilterHeader from '../../../Elements/Filter/FilterHeader';
 import { Filter } from '../../../Elements';
 import AddCards from './AddCards';
 import DeckProfile from './DeckProfile';

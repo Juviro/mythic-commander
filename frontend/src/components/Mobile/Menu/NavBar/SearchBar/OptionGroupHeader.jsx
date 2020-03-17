@@ -6,7 +6,7 @@ export default ({ title, onShowAll }) => (
     {title}
     {onShowAll && (
       <Button type="link" style={{ float: 'right' }} onClick={onShowAll}>
-        show more
+        advanced
       </Button>
     )}
   </span>
