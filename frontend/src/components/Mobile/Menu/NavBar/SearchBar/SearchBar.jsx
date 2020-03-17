@@ -62,8 +62,8 @@ const SearchBar = ({ history, transparentSearchBar }) => {
     query: StringParam,
   });
   const onSetSearch = (value = '') => {
-    const query = value.startsWith('{') ? '' : value.split(';')[0];
-    setQuery({ query });
+    const newQuery = value.startsWith('{') ? '' : value.split(';')[0];
+    setQuery({ query: newQuery });
   };
   const onSelect = val => {
     blur();
