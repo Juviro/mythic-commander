@@ -55,8 +55,8 @@ const resolver = {
   imgKey(card) {
     return getImageKey(card);
   },
-  isTwoFaced({ card_faces }) {
-    return Boolean(card_faces);
+  isTwoFaced({ image_uris }) {
+    return !image_uris;
   },
   isCommanderLegal({ legalities }) {
     return legalities.commander === 'legal';
