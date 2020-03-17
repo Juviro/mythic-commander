@@ -1,11 +1,10 @@
 BUGFIXES:
-    * When searching for card, searchFiled keeps focus
     * wear//tear is flippable
 
 NEXT:
 
 IMPROVEMENTS: 
-    * When opening single card view, highlight owned cards prefered
+
 
 FEATURES:
     * Wants list (text export, proxie printer)

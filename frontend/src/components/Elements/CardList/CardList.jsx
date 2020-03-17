@@ -147,7 +147,12 @@ export default ({ cards, filterByQuery, loading }) => {
   return (
     <StyledGridWrapper>
       {displayedCards.map(card => (
-        <GridCard key={card.id} card={card} isLarge={layout !== 'grid'} />
+        <GridCard
+          loading={loading}
+          key={card.id}
+          card={card}
+          isLarge={layout !== 'grid'}
+        />
       ))}
       {showMoreButton}
     </StyledGridWrapper>
