@@ -17,7 +17,7 @@ const StyledImageWrapper = styled.div`
 const StyledFlipIcon = styled(SyncOutlined)`
   z-index: 10;
   right: -35%;
-  top: -10%;
+  top: -5%;
   border: none;
   opacity: 0.7;
   background-color: #9c9c9c;
@@ -74,7 +74,7 @@ export default ({ loading, card }) => {
   return (
     <StyledImageWrapper>
       {!showHighResImage && <StyledPlaceholder />}
-      {isTwoFaced && (
+      {isTwoFaced && showHighResImage && (
         <>
           <StyledFlipIcon size="large" shape="circle" onClick={onFlipCard} />
           <a.div

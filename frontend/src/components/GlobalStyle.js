@@ -20,7 +20,7 @@ export default createGlobalStyle`
     height: 100%;
     cursor: pointer;
     position: absolute;
-    border-radius: 20px;
+    border-radius: 4%;
     background-size: cover;
     will-change: transform,opacity;
   }

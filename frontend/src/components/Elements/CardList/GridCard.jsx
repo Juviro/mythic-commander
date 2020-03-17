@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 import { getImageUrl } from '../../../utils/cardImage';
 import { getPriceLabel } from '../../../utils/cardStats';
 import EnlargeImage from './EnlargeImage';
+import FlippableCard from '../FlippableCard';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -17,14 +18,13 @@ const StyledWrapper = styled.div`
   justify-content: center;
 `;
 
-const StyledImage = styled.img`
-  width: 100%;
-  height: auto;
-  max-width: 90vw;
-  border-radius: 4%;
+const StyledCardWrapper = styled.div`
+  width: ${({ isLarge }) => (isLarge ? '90vw' : '43vw')};
+  height: ${({ isLarge }) => (isLarge ? '125vw' : '60vw')};
+  border-radius: 3%;
 `;
 
-const GridCard = ({ isLarge, card, history }) => {
+const GridCard = ({ isLarge, card, history, loading }) => {
   const imgSrc = getImageUrl(card.id, card.imgKey, 'normal');
   const onClick = () => {
     history.push(`/m/cards/${card.oracle_id}`);
@@ -44,7 +44,9 @@ const GridCard = ({ isLarge, card, history }) => {
 
   return (
     <StyledWrapper style={style} onClick={onClick}>
-      <StyledImage src={imgSrc} />
+      <StyledCardWrapper isLarge={isLarge}>
+        <FlippableCard card={card} loading={loading} />
+      </StyledCardWrapper>
       {!isLarge && <EnlargeImage src={imgSrc} card={card} />}
       <Typography.Text>{getPriceLabel(minPrice) + total}</Typography.Text>
       <Typography.Text ellipsis style={{ maxWidth: '90%' }}>
