@@ -10,7 +10,7 @@ const StyledMenu = styled.div`
   padding: 8px;
   display: flex;
   flex-direction: row;
-  z-index: 99;
+  z-index: 1001;
   position: fixed;
   background-color: white;
 
@@ -30,7 +30,8 @@ const StyledInvisibleWrapper = styled.div`
   background-color: transparent;
 `;
 
-const isCardsUrl = pathname => Boolean(pathname.match(/^\/m\/cards\/[\w-/]+$/));
+const isCardView = pathname =>
+  Boolean(pathname.match(/^\/m\/(card-search|collection|cards)+\/[\w-/]+$/));
 
 const getSearchBarProps = (pathname = '') => {
   if (pathname.match(/^\/m\/decks\/[0-9]+$/)) {
@@ -42,7 +43,7 @@ const getSearchBarProps = (pathname = '') => {
 
 const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
   const { goBackUrl, transparentSearchBar } = getSearchBarProps(pathname);
-  const canGoBack = isCardsUrl(pathname);
+  const canGoBack = isCardView(pathname);
 
   const onClickIcon = () => {
     if (goBackUrl) {

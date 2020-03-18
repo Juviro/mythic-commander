@@ -7,13 +7,14 @@ import Filter from './Filter';
 import FilterHeader from './FilterHeader';
 
 export default () => {
-  const [{ name, colors, creatureType }] = useQueryParams({
+  const [filter] = useQueryParams({
     name: StringParam,
     colors: StringParam,
     creatureType: StringParam,
+    cardType: StringParam,
+    isLegendary: StringParam,
   });
-  // TODO: add all search params, unify with others
-  const defaultOpen = name || colors || creatureType;
+  const defaultOpen = Object.values(filter).some(Boolean);
 
   return (
     <Collapse

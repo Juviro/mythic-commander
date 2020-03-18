@@ -73,7 +73,7 @@ export default ({ loading, card }) => {
 
   return (
     <StyledImageWrapper>
-      {!showHighResImage && <StyledPlaceholder />}
+      {(loading || !showHighResImage) && <StyledPlaceholder />}
       {isTwoFaced && showHighResImage && (
         <>
           <StyledFlipIcon size="large" shape="circle" onClick={onFlipCard} />
@@ -92,7 +92,7 @@ export default ({ loading, card }) => {
           />
         </>
       )}
-      {
+      {!loading && (
         <a.div
           className="flippable-card"
           style={{
@@ -101,7 +101,7 @@ export default ({ loading, card }) => {
             backgroundImage: `url(${frontImgSrc})`,
           }}
         />
-      }
+      )}
     </StyledImageWrapper>
   );
 };

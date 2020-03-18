@@ -46,6 +46,7 @@ export default async (_, { offset = 0, limit = 30, options = {} }, { db }) => {
     creatureType,
     cardType,
     isLegendary,
+    isCommanderLegal,
     orderBy = 'name-asc',
   } = options;
 
@@ -60,6 +61,8 @@ export default async (_, { offset = 0, limit = 30, options = {} }, { db }) => {
       if (creatureType) q.where('type_line', 'ILIKE', `%${creatureType}%`);
       if (cardType) q.where('type_line', 'ILIKE', `%${cardType}%`);
       if (set) q.where('set', set);
+      if (isCommanderLegal)
+        q.whereRaw("(legalities->>'commander')::text = 'legal'");
       if (isLegendary === 'true') q.where('type_line', 'ILIKE', `%Legendary%`);
       if (isLegendary === 'false')
         q.whereNot('type_line', 'ILIKE', `%Legendary%`);

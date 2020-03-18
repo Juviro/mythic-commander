@@ -14,12 +14,6 @@ import { CardContextProvider } from './components/CardProvider/CardProvider';
 
 export const history = createBrowserHistory();
 
-history.listen(({ pathname }, action) => {
-  const isCardsView = pathname.match(/\/cards\/.+/);
-  if (action === 'REPLACE' && !isCardsView) return;
-  window.scrollTo(0, 0);
-});
-
 ReactDOM.render(
   <ApolloProvider client={client}>
     <CardContextProvider>

@@ -98,7 +98,7 @@ const SearchBar = ({ history, transparentSearchBar }) => {
       name: 'Cards',
       options: filteredCards,
       onShowAll: () => {
-        history.push(`/m/cards?name=${query}`);
+        history.push(`/m/card-search?name=${query}`);
         onSelect();
       },
     },
