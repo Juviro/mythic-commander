@@ -57,7 +57,10 @@ const Card = ({ history }) => {
   };
 
   useEffect(() => {
-    if (!cardId && fallbackId) onChangeSet(fallbackId);
+    if (!cardId && fallbackId) {
+      onChangeSet(fallbackId);
+      window.scrollTo(0, 0);
+    }
     // eslint-disable-next-line
   }, [cardId, fallbackId]);
 

@@ -23,7 +23,7 @@ const StyledCardWrapper = styled.div`
   border-radius: 3%;
 `;
 
-const GridCard = ({ isLarge, card, loading, onClick }) => {
+const GridCard = ({ isLarge, card, onClick }) => {
   const imgSrc = getImageUrl(card.id, card.imgKey, 'normal');
 
   const style = isLarge
@@ -39,7 +39,7 @@ const GridCard = ({ isLarge, card, loading, onClick }) => {
   return (
     <StyledWrapper style={style} onClick={onClick}>
       <StyledCardWrapper isLarge={isLarge}>
-        <FlippableCard card={card} loading={loading} />
+        <FlippableCard card={card} />
       </StyledCardWrapper>
       {!isLarge && <EnlargeImage src={imgSrc} card={card} />}
       <Typography.Text>{getPriceLabel(minPrice) + total}</Typography.Text>

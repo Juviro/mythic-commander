@@ -4,10 +4,12 @@ import { withRouter } from 'react-router';
 
 import { Typography } from 'antd';
 import ColorSelection from './ColorSelection';
-import SearchFilter from './SearchFilter';
+import NameFilter from './TextFilter/NameFilter';
+import OracleTextFilter from './TextFilter/OracleTextFilter';
 import CreatureTypeSelection from './SelectFilter/CreatureTypeSelection';
 import CardTypeSelection from './SelectFilter/CardTypeSelection';
 import SetSelection from './SelectFilter/SetSelection';
+import IsCommanderLegal from './CheckboxFilter/IsCommanderLegal';
 
 const FilterWrapper = styled.div`
   width: 100%;
@@ -22,13 +24,15 @@ const Label = ({ title }) => (
   >{`${title}:`}</Typography.Text>
 );
 
-const Filter = ({ advacedSearch }) => {
+const Filter = ({ advacedSearch, onSearch }) => {
   return (
     <FilterWrapper>
       <Label title="Card name" />
-      <SearchFilter />
+      <NameFilter onSearch={onSearch} />
       {advacedSearch && (
         <>
+          <Label title="Oracle text" />
+          <OracleTextFilter onSearch={onSearch} />
           <Label title="Set" />
           <SetSelection />
         </>
@@ -37,6 +41,12 @@ const Filter = ({ advacedSearch }) => {
       <CardTypeSelection />
       <Label title="Creature type" />
       <CreatureTypeSelection />
+      {advacedSearch && (
+        <>
+          <Label title="Commander legality" />
+          <IsCommanderLegal />
+        </>
+      )}
       <Label title="Color identity" />
       <ColorSelection />
     </FilterWrapper>

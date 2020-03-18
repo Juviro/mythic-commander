@@ -17,6 +17,7 @@ const filterAttrs = [
   'isLegal',
   'creatureType',
   'isLegendary',
+  'isCommanderLegal',
   'cardType',
 ];
 
