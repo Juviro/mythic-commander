@@ -57,6 +57,8 @@
     "prettier": "^1.19.1",
     "prop-types": "^15.7.2",
     "react-scripts": "^3.3.0",
-    "terser": "3.14.1"
+    "terser": "^4.6.7",
+    "terser-webpack-plugin": "^2.3.5",
+    "webpack": "^4.42.0"
   }
 }
