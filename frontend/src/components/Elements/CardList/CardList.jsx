@@ -45,7 +45,7 @@ const CardList = ({
     />
   );
 
-  const onClick = ({ id, oracle_id }) => {
+  const onOpenDetailView = ({ id, oracle_id }) => {
     const match = history.location.pathname.match(/\/m\/([-a-z]+)/);
     const basePath = match ? match[1] : 'cards';
     history.push(`/m/${basePath}/${oracle_id}/${id}${history.location.search}`);
@@ -63,7 +63,7 @@ const CardList = ({
             <CardListItem
               card={card}
               searchString={name}
-              onClick={() => onClick(card)}
+              onClick={() => onOpenDetailView(card)}
             />
           )}
         />
@@ -77,7 +77,7 @@ const CardList = ({
       {cards.map(card => (
         <GridCard
           key={card.id}
-          onClick={() => onClick(card)}
+          onClick={() => onOpenDetailView(card)}
           card={card}
           isLarge={layout !== 'grid'}
         />
