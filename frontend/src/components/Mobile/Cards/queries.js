@@ -8,12 +8,13 @@ export const paginatedCards = gql`
       totalResults
       cards {
         id
-        oracle_id
         name
         owned
         imgKey
         owned
+        isTwoFaced
         minPrice
+        oracle_id
       }
     }
   }
