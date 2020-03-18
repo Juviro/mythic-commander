@@ -1,5 +1,6 @@
 BUGFIXES:
     - demigod listed under god
+    - deploying crashes
 
 NEXT:
 
