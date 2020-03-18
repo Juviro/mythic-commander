@@ -1,7 +1,6 @@
 import React from 'react';
 import { Typography } from 'antd';
 import styled from 'styled-components';
-import { withRouter } from 'react-router';
 
 import { getImageUrl } from '../../../utils/cardImage';
 import { getPriceLabel } from '../../../utils/cardStats';
@@ -24,11 +23,8 @@ const StyledCardWrapper = styled.div`
   border-radius: 3%;
 `;
 
-const GridCard = ({ isLarge, card, history, loading }) => {
+const GridCard = ({ isLarge, card, loading, onClick }) => {
   const imgSrc = getImageUrl(card.id, card.imgKey, 'normal');
-  const onClick = () => {
-    history.push(`/m/cards/${card.oracle_id}/${card.id}`);
-  };
 
   const style = isLarge
     ? { fontSize: 16, marginBottom: 8, padding: 20 }
@@ -64,4 +60,4 @@ const areEqual = (prevProps, nextProps) => {
   );
 };
 
-export default withRouter(React.memo(GridCard, areEqual));
+export default React.memo(GridCard, areEqual);

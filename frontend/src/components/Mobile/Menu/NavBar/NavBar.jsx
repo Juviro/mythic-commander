@@ -30,9 +30,8 @@ const StyledInvisibleWrapper = styled.div`
   background-color: transparent;
 `;
 
-const isCardsUrl = pathname => Boolean(pathname.match(/^\/m\/cards\/[\w-/]+$/));
-const isCardsSearchUrl = pathname =>
-  Boolean(pathname.match(/^\/m\/card-search\/[\w-/]+$/));
+const isCardView = pathname =>
+  Boolean(pathname.match(/^\/m\/(card-search|collection|cards)+\/[\w-/]+$/));
 
 const getSearchBarProps = (pathname = '') => {
   if (pathname.match(/^\/m\/decks\/[0-9]+$/)) {
@@ -44,7 +43,7 @@ const getSearchBarProps = (pathname = '') => {
 
 const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
   const { goBackUrl, transparentSearchBar } = getSearchBarProps(pathname);
-  const canGoBack = isCardsUrl(pathname) || isCardsSearchUrl(pathname);
+  const canGoBack = isCardView(pathname);
 
   const onClickIcon = () => {
     if (goBackUrl) {

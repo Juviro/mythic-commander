@@ -26,14 +26,16 @@ const App = () => {
         <Route path="/m/decks" exact component={Decks} />
         <Route path="/m/cards/:oracle_id/:cardId" component={Card} />
         <Route path="/m/cards/:oracle_id/" component={Card} />
-        {/* <Route path="/m/card-search" exact component={Cards} /> */}
         <Route
           path="/m/card-search/:oracle_id?/:cardId?"
           exact
           component={Cards}
         />
-        {/* <Route path="/m/card-search/:oracle_id" exact component={Cards} /> */}
-        <Route path="/m/collection" exact component={Collection} />
+        <Route
+          path="/m/collection/:oracle_id?/:cardId?"
+          exact
+          component={Collection}
+        />
         <Redirect from="*" to="/m/decks" />
       </Switch>
       <GlobalStyle />
