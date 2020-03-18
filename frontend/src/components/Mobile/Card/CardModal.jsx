@@ -1,8 +1,18 @@
 import React from 'react';
 import { Modal } from 'antd';
+import { useParams, withRouter } from 'react-router';
 import Card from '.';
 
-export default ({ visible = true, onClose }) => {
+const CardModal = ({ visible = true, history }) => {
+  const { oracle_id } = useParams();
+  if (!oracle_id) return null;
+
+  const onClose = () => {
+    const match = history.location.pathname.match(/\/m\/([-a-z]+)/);
+    const basePath = match ? match[1] : 'cards';
+    history.replace(`/m/${basePath}${history.location.search}`);
+  };
+
   return (
     <Modal
       footer={null}
@@ -16,3 +26,5 @@ export default ({ visible = true, onClose }) => {
     </Modal>
   );
 };
+
+export default withRouter(CardModal);

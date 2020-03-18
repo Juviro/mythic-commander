@@ -16,6 +16,9 @@ export const history = createBrowserHistory();
 
 history.listen(({ pathname }, action) => {
   // TODO: evaluate usage of this
+
+  // Should jumpt to top when:
+  // * entering detail card view from anywhere, NOT on set change
   return;
   const isCardsView = pathname.match(/\/cards\/.+/);
   const isCardsSearch = pathname.match(/\/card-search\/.+/);

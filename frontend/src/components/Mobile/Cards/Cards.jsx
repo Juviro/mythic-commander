@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Divider } from 'antd';
 
 import { useApolloClient } from 'react-apollo';
 import { useQueryParams, StringParam, NumberParam } from 'use-query-params';
-import { useParams, withRouter } from 'react-router';
 import CardList from '../../Elements/CardList';
 import { ListOrder, Filter } from '../../Elements';
 import SearchButton from './SearchButton';
 import Header from './Header';
 import { paginatedCards } from './queries';
 import { CARDS_PER_PAGE } from '../../Elements/CardList/CardList';
-import Card from '../Card';
 import CardModal from '../Card/CardModal';
 
 const StyledWrapper = styled.div`
@@ -25,8 +23,7 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
-const Cards = ({ history }) => {
-  const { oracle_id } = useParams();
+export default () => {
   const [allCards, setAllCards] = useState(null);
   const [queryResult, setQueryResult] = useState({});
   const [loading, setLoading] = useState(false);
@@ -96,15 +93,7 @@ const Cards = ({ history }) => {
           />
         )}
       </StyledWrapper>
-      {oracle_id && (
-        <CardModal
-          onClose={() => {
-            history.replace(`/m/card-search${history.location.search}`);
-          }}
-        />
-      )}
+      <CardModal />
     </>
   );
 };
-
-export default withRouter(Cards);
