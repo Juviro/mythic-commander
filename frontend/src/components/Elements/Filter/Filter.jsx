@@ -24,11 +24,11 @@ const Label = ({ title }) => (
   >{`${title}:`}</Typography.Text>
 );
 
-const Filter = ({ advacedSearch, onSearch }) => {
+const Filter = ({ advacedSearch, onSearch, hideNameFilter }) => {
   return (
     <FilterWrapper>
       <Label title="Card name" />
-      <NameFilter onSearch={onSearch} />
+      {!hideNameFilter && <NameFilter onSearch={onSearch} />}
       {advacedSearch && (
         <>
           <Label title="Oracle text" />

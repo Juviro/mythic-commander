@@ -9,20 +9,12 @@ const StyledHeader = styled.div`
   width: 100%;
   justify-content: space-between;
 `;
-const StyledText = styled.span`
-  &:before {
-    content: 'Filter';
-  }
-`;
-
-export default ({ showIcon = true }) => {
+export default ({ showIcon = true, headerText = 'Filter', hideReset }) => {
   return (
     <StyledHeader>
+      <div>{headerText}</div>
       <div>
-        <StyledText />
-      </div>
-      <div>
-        <ResetFilter />
+        {!hideReset && <ResetFilter />}
         {showIcon && <FilterOutlined />}
       </div>
     </StyledHeader>

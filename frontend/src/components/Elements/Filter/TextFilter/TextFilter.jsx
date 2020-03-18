@@ -2,7 +2,7 @@ import React from 'react';
 import { useQueryParam, StringParam } from 'use-query-params';
 import { Input } from 'antd';
 
-export default ({ paramName, placeholder, onSearch }) => {
+export default ({ paramName, placeholder, onSearch, size = 'small' }) => {
   const [value, setSearch] = useQueryParam(paramName, StringParam);
 
   const onPressEnter = () => {
@@ -16,7 +16,7 @@ export default ({ paramName, placeholder, onSearch }) => {
       placeholder={placeholder}
       onChange={e => setSearch(e.target.value)}
       style={{ width: '100%' }}
-      size="small"
+      size={size}
     />
   );
 };
