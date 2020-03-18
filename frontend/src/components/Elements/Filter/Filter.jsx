@@ -27,8 +27,12 @@ const Label = ({ title }) => (
 const Filter = ({ advacedSearch, onSearch, hideNameFilter }) => {
   return (
     <FilterWrapper>
-      <Label title="Card name" />
-      {!hideNameFilter && <NameFilter onSearch={onSearch} />}
+      {!hideNameFilter && (
+        <>
+          <Label title="Card name" />
+          <NameFilter onSearch={onSearch} />
+        </>
+      )}
       {advacedSearch && (
         <>
           <Label title="Oracle text" />
