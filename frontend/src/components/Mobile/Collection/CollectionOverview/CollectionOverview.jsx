@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { getPriceLabel } from '../../../../utils/cardStats';
 
 const StyledCard = styled(Card)`
-  margin-top: 16px;
   width: 100%;
 `;
 

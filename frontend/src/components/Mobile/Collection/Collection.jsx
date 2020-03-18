@@ -22,7 +22,8 @@ const StyledWrapper = styled.div`
 
 export default () => {
   const { data } = useQuery(getMobileCollection);
-  const cards = data && data.collection.cards;
+  const cards =
+    data && data.collection.cards.filter(({ totalAmount }) => totalAmount);
   const [mutate] = useMutation(addToCollectionMobile);
 
   const onAddCard = (newCard, name) => {

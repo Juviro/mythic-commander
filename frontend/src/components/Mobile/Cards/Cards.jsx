@@ -25,6 +25,7 @@ const StyledWrapper = styled.div`
 
 export default () => {
   const [allCards, setAllCards] = useState(null);
+  const [currentOptions, setCurrentOptions] = useState(null);
   const [queryResult, setQueryResult] = useState({});
   const [loading, setLoading] = useState(false);
   const [options, setFilter] = useQueryParams({
@@ -43,7 +44,8 @@ export default () => {
 
   const { hasMore, nextOffset = 0, totalResults = 0 } = queryResult;
 
-  const onSearch = offset => {
+  const onLoadCards = (searchOptions, offset = 0) => {
+    setCurrentOptions(searchOptions);
     const search = async () => {
       setLoading(true);
       const { data } = await client.query({
@@ -52,7 +54,7 @@ export default () => {
         variables: {
           offset,
           limit: CARDS_PER_PAGE,
-          options,
+          options: searchOptions,
         },
       });
       setQueryResult(data.paginatedCards);
@@ -67,27 +69,21 @@ export default () => {
     search();
   };
 
+  const onSearch = () => {
+    onLoadCards(options);
+  };
+
   const onLoadMore = () => {
-    onSearch(nextOffset);
+    onLoadCards(currentOptions, nextOffset);
   };
 
   return (
     <>
       <StyledWrapper>
         <Header />
-        <Filter
-          advacedSearch
-          onSearch={() => {
-            onSearch(0);
-          }}
-        />
+        <Filter advacedSearch onSearch={onSearch} />
         <ListOrder />
-        <SearchButton
-          onSearch={() => {
-            onSearch(0);
-          }}
-          loading={loading}
-        />
+        <SearchButton onSearch={onSearch} loading={loading} />
         <Divider />
         {allCards && (
           <CardList
