@@ -35,10 +35,10 @@ const Filter = ({ advacedSearch, onSearch, hideNameFilter }) => {
       )}
       {advacedSearch && (
         <>
-          <Label title="Oracle text" />
-          <OracleTextFilter onSearch={onSearch} />
           <Label title="Set" />
           <SetSelection />
+          <Label title="Oracle text" />
+          <OracleTextFilter onSearch={onSearch} />
         </>
       )}
       <Label title="Card type" />
