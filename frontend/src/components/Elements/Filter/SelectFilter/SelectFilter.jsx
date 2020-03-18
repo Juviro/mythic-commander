@@ -5,6 +5,7 @@ import { StringParam, useQueryParam } from 'use-query-params';
 import CustomSkeleton from '../../CustomSkeleton';
 
 const SelectFilter = ({ paramName, options, placeholder }) => {
+  const inputRef = React.useRef(null);
   const unifiedOptions = options.map(option => {
     if (option.value) return option;
     return {
@@ -33,12 +34,10 @@ const SelectFilter = ({ paramName, options, placeholder }) => {
       </AutoComplete.Option>
     ));
 
-  const onSelect = key => {
-    const val = unifiedOptions.find(
-      ({ value: optionValue }) => optionValue === key
-    );
+  const onSelect = (_, { key, children: optionValue }) => {
     setParam(key);
-    setValue(val.name);
+    setValue(optionValue);
+    setTimeout(() => inputRef.current.blur(), 100);
   };
 
   return (
@@ -46,12 +45,13 @@ const SelectFilter = ({ paramName, options, placeholder }) => {
       size="small"
       value={value}
       allowClear
+      ref={inputRef}
       defaultActiveFirstOption
       style={{ width: '100%' }}
       placeholder={placeholder}
       onChange={val => {
         setValue(val);
-        if (!options.includes(val)) setParam('');
+        setParam('');
       }}
       onSelect={onSelect}
     >
