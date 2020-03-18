@@ -4,12 +4,15 @@ import { Divider } from 'antd';
 
 import { useApolloClient } from 'react-apollo';
 import { useQueryParams, StringParam, NumberParam } from 'use-query-params';
+import { useParams, withRouter } from 'react-router';
 import CardList from '../../Elements/CardList';
 import { ListOrder, Filter } from '../../Elements';
 import SearchButton from './SearchButton';
 import Header from './Header';
 import { paginatedCards } from './queries';
 import { CARDS_PER_PAGE } from '../../Elements/CardList/CardList';
+import Card from '../Card';
+import CardModal from '../Card/CardModal';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -22,7 +25,8 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
-export default () => {
+const Cards = ({ history }) => {
+  const { oracle_id } = useParams();
   const [allCards, setAllCards] = useState(null);
   const [queryResult, setQueryResult] = useState({});
   const [loading, setLoading] = useState(false);
@@ -65,35 +69,42 @@ export default () => {
     search();
   };
 
-  useEffect(() => {
-    onSearch({ offset: 0, limit: displayedResults });
-    // eslint-disable-next-line
-  }, []);
-
   const onLoadMore = () => {
     onSearch({ offset: nextOffset, limit: CARDS_PER_PAGE });
   };
 
   return (
-    <StyledWrapper>
-      <Header />
-      <Filter advacedSearch />
-      <ListOrder />
-      <SearchButton
-        // onSearch={onSearch}
-        onSearch={() => {
-          onSearch({ offset: 0, limit: CARDS_PER_PAGE });
-        }}
-        loading={loading}
-      />
-      <Divider />
-      <CardList
-        cards={allCards}
-        hasMore={hasMore}
-        loading={loading}
-        totalResults={totalResults}
-        onLoadMore={onLoadMore}
-      />
-    </StyledWrapper>
+    <>
+      <StyledWrapper>
+        <Header />
+        <Filter advacedSearch />
+        <ListOrder />
+        <SearchButton
+          onSearch={() => {
+            onSearch({ offset: 0, limit: CARDS_PER_PAGE });
+          }}
+          loading={loading}
+        />
+        <Divider />
+        {allCards && (
+          <CardList
+            cards={allCards}
+            hasMore={hasMore}
+            loading={loading}
+            totalResults={totalResults}
+            onLoadMore={onLoadMore}
+          />
+        )}
+      </StyledWrapper>
+      {oracle_id && (
+        <CardModal
+          onClose={() => {
+            history.replace(`/m/card-search${history.location.search}`);
+          }}
+        />
+      )}
+    </>
   );
 };
+
+export default withRouter(Cards);

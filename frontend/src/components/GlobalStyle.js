@@ -29,4 +29,12 @@ export default createGlobalStyle`
   .transparent-modal .ant-modal-content {
     background-color: transparent;
   }
+
+
+  .fullscreen-modal {
+    margin: 0;
+    top: 50px;
+    max-width: 100vw;
+    padding-bottom: 0;
+  }
 `;

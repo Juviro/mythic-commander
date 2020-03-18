@@ -15,7 +15,7 @@ const StyledRow = styled(Row)`
 
 const CardListItem = ({ card, history, searchString }) => {
   const onClick = () => {
-    history.push(`/m/cards/${card.oracle_id}/${card.id}`);
+    history.push(`/m/card-search/${card.oracle_id}/${card.id}`);
   };
   const { minPrice } = card;
   const hasMinPrice = minPrice !== undefined;

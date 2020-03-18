@@ -50,7 +50,11 @@ const Card = ({ history }) => {
 
   const fallbackId = loading || !currentCard ? null : currentCard.id;
 
-  const onChangeSet = id => history.replace(`/m/cards/${oracle_id}/${id}`);
+  const onChangeSet = id => {
+    const match = history.location.pathname.match(/\/m\/([-a-z]+)\//);
+    const basePath = match ? match[1] : 'cards';
+    history.replace(`/m/${basePath}/${oracle_id}/${id}`);
+  };
 
   useEffect(() => {
     if (!cardId && fallbackId) onChangeSet(fallbackId);
