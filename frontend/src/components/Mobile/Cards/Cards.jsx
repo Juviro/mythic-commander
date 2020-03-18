@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Divider } from 'antd';
 
 import { useApolloClient } from 'react-apollo';
-import { useQueryParams, StringParam, NumberParam } from 'use-query-params';
+import { useQueryParams, StringParam, BooleanParam } from 'use-query-params';
 import CardList from '../../Elements/CardList';
 import { ListOrder, Filter } from '../../Elements';
 import SearchButton from './SearchButton';
@@ -27,14 +27,15 @@ export default () => {
   const [allCards, setAllCards] = useState(null);
   const [queryResult, setQueryResult] = useState({});
   const [loading, setLoading] = useState(false);
-  const [{ displayedResults, ...options }, setFilter] = useQueryParams({
+  const [options, setFilter] = useQueryParams({
     name: StringParam,
     set: StringParam,
+    text: StringParam,
     colors: StringParam,
     creatureType: StringParam,
     cardType: StringParam,
     isLegendary: StringParam,
-    displayedResults: NumberParam,
+    isCommanderLegal: BooleanParam,
     orderBy: StringParam,
   });
 
@@ -42,7 +43,7 @@ export default () => {
 
   const { hasMore, nextOffset = 0, totalResults = 0 } = queryResult;
 
-  const onSearch = ({ offset, limit }) => {
+  const onSearch = offset => {
     const search = async () => {
       setLoading(true);
       const { data } = await client.query({
@@ -50,7 +51,7 @@ export default () => {
         query: paginatedCards,
         variables: {
           offset,
-          limit,
+          limit: CARDS_PER_PAGE,
           options,
         },
       });
@@ -67,18 +68,23 @@ export default () => {
   };
 
   const onLoadMore = () => {
-    onSearch({ offset: nextOffset, limit: CARDS_PER_PAGE });
+    onSearch(nextOffset);
   };
 
   return (
     <>
       <StyledWrapper>
         <Header />
-        <Filter advacedSearch />
+        <Filter
+          advacedSearch
+          onSearch={() => {
+            onSearch(0);
+          }}
+        />
         <ListOrder />
         <SearchButton
           onSearch={() => {
-            onSearch({ offset: 0, limit: CARDS_PER_PAGE });
+            onSearch(0);
           }}
           loading={loading}
         />

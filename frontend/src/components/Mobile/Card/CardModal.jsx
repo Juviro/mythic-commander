@@ -3,7 +3,7 @@ import { Modal } from 'antd';
 import { useParams, withRouter } from 'react-router';
 import Card from '.';
 
-const CardModal = ({ visible = true, history }) => {
+const CardModal = ({ history }) => {
   const { oracle_id } = useParams();
   if (!oracle_id) return null;
 
@@ -15,9 +15,9 @@ const CardModal = ({ visible = true, history }) => {
 
   return (
     <Modal
+      visible
       footer={null}
       closeIcon={<div />}
-      visible={visible}
       bodyStyle={{ padding: 0 }}
       className="fullscreen-modal"
       onCancel={onClose}

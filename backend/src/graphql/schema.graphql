@@ -149,6 +149,7 @@ input CardsOptionsInput {
   creatureType: String
   cardType: String
   isLegendary: String
+  isCommanderLegal: Boolean
   text: String
   set: String
   orderBy: String

@@ -48,7 +48,7 @@ const CardList = ({
   const onClick = ({ id, oracle_id }) => {
     const match = history.location.pathname.match(/\/m\/([-a-z]+)/);
     const basePath = match ? match[1] : 'cards';
-    history.push(`/m/${basePath}/${oracle_id}/${id}`);
+    history.push(`/m/${basePath}/${oracle_id}/${id}${history.location.search}`);
   };
 
   if (layout === 'list') {
@@ -76,7 +76,6 @@ const CardList = ({
     <StyledGridWrapper>
       {cards.map(card => (
         <GridCard
-          loading={loading}
           key={card.id}
           onClick={() => onClick(card)}
           card={card}
