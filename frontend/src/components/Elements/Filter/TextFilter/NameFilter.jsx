@@ -1,11 +1,12 @@
 import React from 'react';
 import TextFilter from './TextFilter';
 
-export default ({ onSearch }) => {
+export default ({ onSearch, size }) => {
   return (
     <TextFilter
+      size={size}
       paramName="name"
-      placeholder="Filter by name"
+      placeholder="Search for name"
       onSearch={onSearch}
     />
   );
