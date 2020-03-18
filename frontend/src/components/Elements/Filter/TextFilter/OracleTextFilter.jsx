@@ -5,7 +5,7 @@ export default ({ onSearch }) => {
   return (
     <TextFilter
       paramName="text"
-      placeholder="Filter by oracle text"
+      placeholder="Search for oracle text"
       onSearch={onSearch}
     />
   );

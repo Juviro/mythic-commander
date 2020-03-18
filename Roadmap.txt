@@ -1,6 +1,7 @@
 BUGFIXES:
     - load more should use previous filter
     - demigod listed under god
+    - deploying crashes
 
 NEXT:
     - Multiple (Want-) lists (text export, proxie printer)
