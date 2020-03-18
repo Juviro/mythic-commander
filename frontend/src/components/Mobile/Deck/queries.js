@@ -17,11 +17,6 @@ const DECK_CARD_FIELDS = `
         usd
         usd_foil
     }
-    allSets {
-        id
-        set
-        set_name
-    }
 `;
 
 const DECK_FIELDS = `
