@@ -1,0 +1,17 @@
+BUGFIXES:
+    - demigod listed under god
+
+NEXT:
+
+IMPROVEMENTS: 
+    - hide cards search filters except for name
+    - show number of results on top as well
+
+FEATURES: 
+    - Multiple (Want-) lists (text export, proxie printer)
+    - on card overview, show which decks include that card
+    - Make sets clickable in card view, jump to filtered cards view
+
+
+REFACTORINGS:
+    - Add db constraint, if amount + amountFoil = 0 => delete row
