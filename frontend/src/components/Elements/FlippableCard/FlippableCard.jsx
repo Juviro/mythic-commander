@@ -73,7 +73,7 @@ export default ({ loading, card }) => {
 
   return (
     <StyledImageWrapper>
-      {loading && <StyledPlaceholder />}
+      {(loading || !showHighResImage) && <StyledPlaceholder />}
       {isTwoFaced && showHighResImage && (
         <>
           <StyledFlipIcon size="large" shape="circle" onClick={onFlipCard} />
