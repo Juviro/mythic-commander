@@ -15,7 +15,11 @@ import { CardContextProvider } from './components/CardProvider/CardProvider';
 export const history = createBrowserHistory();
 
 history.listen(({ pathname }, action) => {
+  // TODO: evaluate usage of this
+  return;
   const isCardsView = pathname.match(/\/cards\/.+/);
+  const isCardsSearch = pathname.match(/\/card-search\/.+/);
+  if (isCardsSearch) return;
   if (action === 'REPLACE' && !isCardsView) return;
   window.scrollTo(0, 0);
 });

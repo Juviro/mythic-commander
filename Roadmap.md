@@ -1,4 +1,6 @@
-BUGFIXES: \* Card view jumpts to page top when switching set
+BUGFIXES: \*
+Card view jumpts to page top when switching set
+demigod listed under god
 
 NEXT:
 
