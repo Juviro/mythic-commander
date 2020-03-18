@@ -8,6 +8,7 @@ import { ListOrder, AddCardMobile } from '../../Elements';
 import CollectionOverview from './CollectionOverview';
 import CollapsableFilter from '../../Elements/Filter/CollapsableFilter';
 import FilteredCardList from '../../Elements/CardList/FilteredCardList';
+import CardModal from '../Card/CardModal';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -65,6 +66,7 @@ export default () => {
       <Divider />
       <FilteredCardList cards={cards} />
       <AddCardMobile onAddCard={onAddCard} />
+      <CardModal />
     </StyledWrapper>
   );
 };
