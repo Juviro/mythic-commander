@@ -32,7 +32,7 @@ const sortCards = (cards, orderBy = '') => {
   }
 };
 
-export default ({ cards, loading, basePath, shouldFilterCards = true }) => {
+export default ({ cards, loading, basePath, onDeleteElement }) => {
   const [
     {
       name,
@@ -63,15 +63,13 @@ export default ({ cards, loading, basePath, shouldFilterCards = true }) => {
     setFilter({ displayedResults: displayedResults + CARDS_PER_PAGE });
   };
 
-  const filteredCards = shouldFilterCards
-    ? filterCards(cards, {
-        colors,
-        name,
-        creatureType,
-        cardType,
-        isLegendary,
-      })
-    : cards;
+  const filteredCards = filterCards(cards, {
+    colors,
+    name,
+    creatureType,
+    cardType,
+    isLegendary,
+  });
 
   const sortedCards = sortCards(filteredCards, orderBy, name);
 
@@ -86,6 +84,7 @@ export default ({ cards, loading, basePath, shouldFilterCards = true }) => {
       loading={loading}
       cards={displayedCards}
       onLoadMore={onLoadMore}
+      onDeleteElement={onDeleteElement}
       totalResults={cards.length}
     />
   );

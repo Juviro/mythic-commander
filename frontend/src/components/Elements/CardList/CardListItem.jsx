@@ -1,7 +1,8 @@
 import React from 'react';
 
 import styled from 'styled-components';
-import { List, Typography, Row, Col } from 'antd';
+import { List, Typography, Row, Col, message } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import { highlightText } from '../../../utils/highlightText';
 import CardListImage from '../CardListImage';
 import { getPriceLabel } from '../../../utils/cardStats';
@@ -10,13 +11,27 @@ const StyledRow = styled(Row)`
   align-items: center;
   display: flex;
   width: 100%;
+  flex-wrap: nowrap;
 `;
 
-const CardListItem = ({ card, searchString, onClick }) => {
+const CardListItem = ({ card, searchString, onClick, onDeleteElement }) => {
   const { minPrice, amount, totalAmount } = card;
   const displayedAmount = amount || totalAmount;
   const hasMinPrice = minPrice !== undefined;
   const amountLabel = displayedAmount > 1 ? displayedAmount : '';
+  let textWidth = 20;
+  if (hasMinPrice) textWidth -= 4;
+  if (onDeleteElement) textWidth -= 2;
+
+  const onDelete = event => {
+    event.stopPropagation();
+    onDeleteElement(card.id);
+    message.success(
+      <span>
+        Deleted <b>{card.name}</b>!
+      </span>
+    );
+  };
 
   return (
     <List.Item style={{ padding: '2px 8px', height: 40 }}>
@@ -27,7 +42,10 @@ const CardListItem = ({ card, searchString, onClick }) => {
         <Col span={1}>
           <Typography.Text strong>{amountLabel}</Typography.Text>
         </Col>
-        <Col span={hasMinPrice ? 16 : 20}>
+        <Col
+          span={textWidth}
+          style={{ transition: 'all 0.2s', willChange: 'max-width' }}
+        >
           <Typography.Text style={{ display: 'block' }} ellipsis>
             {highlightText(searchString, card.name)}
           </Typography.Text>
@@ -37,6 +55,15 @@ const CardListItem = ({ card, searchString, onClick }) => {
             <Typography.Text>{getPriceLabel(minPrice)}</Typography.Text>
           </Col>
         )}
+        {onDeleteElement && (
+          <Col
+            span={2}
+            style={{ display: 'flex', justifyContent: 'flex-end' }}
+            onClick={onDelete}
+          >
+            <DeleteOutlined style={{ color: 'rgb(255, 77, 79)' }} />
+          </Col>
+        )}
       </StyledRow>
     </List.Item>
   );
@@ -44,6 +71,7 @@ const CardListItem = ({ card, searchString, onClick }) => {
 
 const areEqual = (prevProps, nextProps) => {
   if (prevProps.isOpen !== nextProps.isOpen) return false;
+  if (prevProps.onDeleteElement !== nextProps.onDeleteElement) return false;
 
   return ['id', 'amount', 'amountFoil'].every(propKey => {
     return prevProps.card[propKey] === nextProps.card[propKey];

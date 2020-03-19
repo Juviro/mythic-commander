@@ -12,6 +12,7 @@ import CardOwned from './CardOwned';
 import CardLinks from './CardLinks';
 import CardOverview from './CardOverview';
 import { getCardByOracleId } from './queries';
+import AddToWants from './AddToWants';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -75,6 +76,8 @@ const Card = ({ history, basePath }) => {
           selectedCardId={cardId}
           onChangeSet={onChangeSet}
         />
+        <Divider>Wants List</Divider>
+        <AddToWants card={card} />
         <Divider>Collection</Divider>
         <CardOwned
           card={card}

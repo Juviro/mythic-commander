@@ -26,6 +26,7 @@ const CardList = ({
   totalResults,
   history,
   basePath,
+  onDeleteElement,
 }) => {
   const [{ name, layout = 'list' }] = useQueryParams({
     name: StringParam,
@@ -61,6 +62,7 @@ const CardList = ({
           renderItem={card => (
             <CardListItem
               card={card}
+              onDeleteElement={onDeleteElement}
               searchString={name}
               onClick={() => onOpenDetailView(card)}
             />

@@ -6,3 +6,10 @@ export const canAccessDeck = async (userId, deckId) => {
     .length;
   if (!isAuthenticated) throw new ValidationError('Not authenticated');
 };
+
+export const canAccessWantsList = async (userId, wantsListId) => {
+  const isAuthenticated = (
+    await db('wantsLists').where({ userId, id: wantsListId })
+  ).length;
+  if (!isAuthenticated) throw new ValidationError('Not authenticated');
+};

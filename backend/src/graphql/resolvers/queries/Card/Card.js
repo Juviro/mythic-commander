@@ -24,6 +24,19 @@ const resolver = {
     if (minPrice) return minPrice;
     return usd || usd_foil || 0;
   },
+  async containingWantsLists({ oracle_id }, _, { db, user: { id: userId } }) {
+    const result = await db('wantsLists')
+      .leftJoin('cardToWantsListWithOracle', {
+        'cardToWantsListWithOracle.wantsListId': 'wantsLists.id',
+      })
+      .where('oracle_id', oracle_id)
+      .where('userId', userId);
+
+    return result.map(({ wantsListId, ...rest }) => ({
+      ...rest,
+      id: wantsListId,
+    }));
+  },
   async sumPrice({ sumPrice, oracle_id }, _, { db, user: { id: userId } }) {
     if (sumPrice) return sumPrice;
     const {

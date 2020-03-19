@@ -1,6 +1,6 @@
 import React from 'react';
 import { Descriptions, Skeleton } from 'antd';
-import { getPriceLabel } from '../../../utils/cardStats';
+import { getPriceLabel } from '../../../../utils/cardStats';
 
 export default ({ wantsList }) => {
   if (!wantsList) return <Skeleton />;

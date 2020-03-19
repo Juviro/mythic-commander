@@ -1,13 +1,10 @@
-import { ValidationError } from 'apollo-server-koa';
 import { updateLastEdit } from './helper';
+import { canAccessDeck } from '../../../../auth/authenticateUser';
 
 const DEFAULT_ZONE = 'MAINBOARD';
 
 export default async (_, { cards, deckId }, { user, db }) => {
-  const isAuthenticated = await db('decks')
-    .where({ userId: user.id, id: deckId })
-    .first();
-  if (!isAuthenticated) throw new ValidationError('Not authenticated');
+  await canAccessDeck(user.id, deckId);
 
   const { rows: cardsAlreadyInDeck } = await db.raw(
     `

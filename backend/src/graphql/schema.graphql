@@ -44,6 +44,15 @@ type Card {
   # Collectiom specific fields
   createdAt: String
   sumPrice: Float
+
+  # Find card in lists
+  containingWantsLists: [ContainingList!]!
+}
+
+type ContainingList {
+  id: String!
+  name: String!
+  amount: Int!
 }
 
 type Set {
@@ -204,6 +213,7 @@ type Mutation {
     wantsListId: String!
     newProperties: EditWantsListFieldsInput!
   ): WantsList!
+  deleteFromWantsList(cardId: String!, wantsListId: String!): WantsList!
   addCardsToWantsList(wantsListId: String!, cards: [CardInputType!]!): [Card!]!
 }
 
