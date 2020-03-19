@@ -1,7 +1,7 @@
 export default async (_, __, { user: { id: userId }, db }) => {
-  const [deck] = await db('decks')
+  const [wantsList] = await db('wantsLists')
     .insert({ userId })
     .returning('*');
 
-  return deck;
+  return wantsList;
 };

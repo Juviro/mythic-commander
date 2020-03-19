@@ -3,7 +3,7 @@ import { Modal } from 'antd';
 import { useParams } from 'react-router';
 import Card from '.';
 
-export default () => {
+export default ({ basePath }) => {
   const { oracle_id } = useParams();
   if (!oracle_id) return null;
 
@@ -15,7 +15,7 @@ export default () => {
       bodyStyle={{ padding: 0 }}
       className="fullscreen-modal"
     >
-      <Card />
+      <Card basePath={basePath} />
     </Modal>
   );
 };

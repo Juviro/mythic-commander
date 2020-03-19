@@ -25,6 +25,7 @@ const CardList = ({
   hasMore,
   totalResults,
   history,
+  basePath,
 }) => {
   const [{ name, layout = 'list' }] = useQueryParams({
     name: StringParam,
@@ -46,9 +47,7 @@ const CardList = ({
   );
 
   const onOpenDetailView = ({ id, oracle_id }) => {
-    const match = history.location.pathname.match(/\/m\/([-a-z]+)/);
-    const basePath = match ? match[1] : 'cards';
-    history.push(`/m/${basePath}/${oracle_id}/${id}${history.location.search}`);
+    history.push(`${basePath}/${oracle_id}/${id}${history.location.search}`);
   };
 
   if (layout === 'list') {
@@ -58,7 +57,7 @@ const CardList = ({
           loadMore={showMoreButton}
           size="small"
           dataSource={cards}
-          style={{ width: '100%', margin: 8, minHeight: '70vh' }}
+          style={{ width: '100%', minHeight: '70vh' }}
           renderItem={card => (
             <CardListItem
               card={card}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Descriptions } from 'antd';
 import styled from 'styled-components';
-import { getPriceLabel } from '../../../../utils/cardStats';
+import { getPriceLabel } from '../../../utils/cardStats';
 
 const StyledCard = styled(Card)`
   width: 100%;

@@ -1,12 +1,11 @@
 export default async (
   _,
-  { deckId, newProperties: { imgSrc, name } },
+  { wantsListId: id, newProperties: { name } },
   { user, db }
 ) => {
-  const [result] = await db('decks')
-    .where({ userId: user.id, id: deckId })
+  const [result] = await db('wantsLists')
+    .where({ userId: user.id, id })
     .update({
-      imgSrc,
       name,
       lastEdit: new Date(),
     })

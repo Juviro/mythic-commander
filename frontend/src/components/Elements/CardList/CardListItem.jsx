@@ -13,13 +13,19 @@ const StyledRow = styled(Row)`
 `;
 
 const CardListItem = ({ card, searchString, onClick }) => {
-  const { minPrice } = card;
+  const { minPrice, amount, totalAmount } = card;
+  const displayedAmount = amount || totalAmount;
   const hasMinPrice = minPrice !== undefined;
+  const amountLabel = displayedAmount > 1 ? displayedAmount : '';
+
   return (
     <List.Item style={{ padding: '2px 8px', height: 40 }}>
       <StyledRow onClick={onClick}>
-        <Col span={3}>
+        <Col span={2}>
           <CardListImage card={card} />
+        </Col>
+        <Col span={1}>
+          <Typography.Text strong>{amountLabel}</Typography.Text>
         </Col>
         <Col span={hasMinPrice ? 17 : 21}>
           <Typography.Text style={{ display: 'block' }} ellipsis>

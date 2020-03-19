@@ -3,6 +3,7 @@ export { default as AddCardMobile } from './AddCardMobile';
 export { default as Card } from './Card';
 export { default as CardList } from './CardList';
 export { default as CardListImage } from './CardListImage';
+export { default as EditableTitle } from './EditableTitle';
 export { default as EditIcon } from './EditIcon';
 export { default as Filter } from './Filter';
 export { default as FlippableCard } from './FlippableCard';

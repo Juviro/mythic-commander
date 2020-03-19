@@ -34,7 +34,7 @@ const StyledBodyWrapper = styled.div`
   background-color: white;
 `;
 
-const Card = ({ history }) => {
+const Card = ({ history, basePath }) => {
   const { oracle_id, cardId } = useParams();
   const { data, loading } = useQuery(getCardByOracleId, {
     variables: { oracle_id },
@@ -52,8 +52,8 @@ const Card = ({ history }) => {
 
   const onChangeSet = id => {
     const match = history.location.pathname.match(/\/m\/([-a-z]+)\//);
-    const basePath = match ? match[1] : 'cards';
-    history.replace(`/m/${basePath}/${oracle_id}/${id}`);
+    const defaultBasePath = `/m/${match ? match[1] : 'cards'}`;
+    history.replace(`${basePath || defaultBasePath}/${oracle_id}/${id}`);
   };
 
   useEffect(() => {

@@ -123,6 +123,16 @@ type User {
   email: String!
 }
 
+################################# Wants #################################
+
+type WantsList {
+  id: String!
+  name: String!
+  lastEdit: String!
+  createdAt: String!
+  cards: [Card!]!
+}
+
 ################################# Queries #################################
 
 type Query {
@@ -141,6 +151,9 @@ type Query {
   ): PaginatedCards!
   cardsByOracleId(oracle_id: String!): Card!
   cachedCards: [CachedCard!]!
+
+  wantsList(id: String!): WantsList!
+  wantsLists: [WantsList!]!
 }
 
 input CardsOptionsInput {
@@ -184,6 +197,14 @@ type Mutation {
   ########## Session ##########
   login(token: String): LoginResponse!
   logout: Boolean
+
+  ########## Wants ##########
+  createWantsList: WantsList!
+  editWantsList(
+    wantsListId: String!
+    newProperties: EditWantsListFieldsInput!
+  ): WantsList!
+  addCardsToWantsList(wantsListId: String!, cards: [CardInputType!]!): [Card!]!
 }
 
 ################################# Deck #################################
@@ -221,4 +242,10 @@ input ChangeCollectionInput {
 
 type LoginResponse {
   session: String!
+}
+
+################################# Wants List #################################
+
+input EditWantsListFieldsInput {
+  name: String
 }
