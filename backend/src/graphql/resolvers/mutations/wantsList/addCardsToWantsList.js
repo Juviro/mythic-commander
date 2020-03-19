@@ -1,5 +1,5 @@
-import { ValidationError } from 'apollo-server-koa';
 import { updateLastEdit } from './helper';
+import { canAccessWantsList } from '../../../../auth/authenticateUser';
 
 const ON_CONFLICT = `
     ON CONFLICT (id, "wantsListId") 
@@ -12,10 +12,7 @@ export default async (
   { cards, wantsListId },
   { user: { id: userId }, db }
 ) => {
-  const isAuthenticated = await db('wantsLists')
-    .where({ userId, id: wantsListId })
-    .first();
-  if (!isAuthenticated) throw new ValidationError('Not authenticated');
+  await canAccessWantsList(userId, wantsListId);
 
   const cardsToInsert = cards.map(({ id, amount = 1 }) => ({
     id,

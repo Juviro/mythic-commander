@@ -51,12 +51,19 @@ export default ({ loading, card }) => {
   const frontLargeSrc = imgKey && getImageUrl(id, imgKey, 'normal');
 
   useEffect(() => {
+    let isMounted = true;
     setShowHighResImage(false);
-    if (!frontLargeSrc) return;
-    const img = new Image();
-    img.src = frontLargeSrc;
-    img.onload = () => {
-      setShowHighResImage(true);
+    if (frontLargeSrc) {
+      const img = new Image();
+      img.src = frontLargeSrc;
+      img.onload = () => {
+        if (!isMounted) return;
+        setShowHighResImage(true);
+      };
+    }
+
+    return () => {
+      isMounted = false;
     };
   }, [frontLargeSrc]);
 

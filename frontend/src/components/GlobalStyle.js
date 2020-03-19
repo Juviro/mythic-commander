@@ -30,7 +30,6 @@ export default createGlobalStyle`
     background-color: transparent;
   }
 
-
   .fullscreen-modal {
     margin: 0;
     top: 50px;
