@@ -34,6 +34,7 @@ export default createGlobalStyle`
   .fullscreen-modal {
     margin: 0;
     top: 50px;
+    width: auto !important;
     max-width: 100vw;
     padding-bottom: 0;
   }
