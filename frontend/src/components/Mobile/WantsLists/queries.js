@@ -6,6 +6,7 @@ export const wantsLists = gql`
       id
       name
       lastEdit
+      numberOfCards
     }
   }
 `;
@@ -16,6 +17,7 @@ export const createWantsList = gql`
       id
       name
       lastEdit
+      numberOfCards
     }
   }
 `;
