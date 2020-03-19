@@ -41,4 +41,5 @@ export default createGlobalStyle`
     border-radius: 8px !important;
     background-color: white;
   }
+
 `;

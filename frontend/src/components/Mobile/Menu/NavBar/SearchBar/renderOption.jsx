@@ -49,24 +49,23 @@ const StyledCardImage = styled.img`
   display: flex;
 `;
 
-export default searchString => element => {
+export default (searchString, type) => element => {
   const { name, id, oracle_id, imgSrc, imgKey, owned } = element;
 
-  const value = oracle_id
-    ? { type: 'CARD', id: oracle_id }
-    : { type: 'DECK', id };
+  const elementId = type === 'CARD' ? oracle_id : id;
+
+  const preview =
+    type === 'WANTS' ? null : imgSrc ? (
+      <StyledDeckImage src={imgSrc} />
+    ) : (
+      <StyledCardImage src={getImageUrl(id, imgKey)} />
+    );
 
   return {
-    value: JSON.stringify(value),
+    value: JSON.stringify({ type, id: elementId }),
     label: (
       <StyledCard>
-        <CardImageWrapper>
-          {imgSrc ? (
-            <StyledDeckImage src={imgSrc} />
-          ) : (
-            <StyledCardImage src={getImageUrl(id, imgKey)} />
-          )}
-        </CardImageWrapper>
+        {preview && <CardImageWrapper>{preview}</CardImageWrapper>}
         <StyledName isShort={owned}>
           {highlightText(searchString, name)}
         </StyledName>
