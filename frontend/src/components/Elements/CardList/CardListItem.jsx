@@ -21,13 +21,13 @@ const CardListItem = ({ card, searchString, onClick }) => {
   return (
     <List.Item style={{ padding: '2px 8px', height: 40 }}>
       <StyledRow onClick={onClick}>
-        <Col span={2}>
+        <Col span={3}>
           <CardListImage card={card} />
         </Col>
         <Col span={1}>
           <Typography.Text strong>{amountLabel}</Typography.Text>
         </Col>
-        <Col span={hasMinPrice ? 17 : 21}>
+        <Col span={hasMinPrice ? 16 : 20}>
           <Typography.Text style={{ display: 'block' }} ellipsis>
             {highlightText(searchString, card.name)}
           </Typography.Text>
