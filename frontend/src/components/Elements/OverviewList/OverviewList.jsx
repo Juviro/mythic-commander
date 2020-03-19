@@ -65,7 +65,7 @@ const ListItem = ({ onClick, image, name, showRightIcon, numberOfCards }) => (
       }
       avatar={image}
       description={
-        numberOfCards !== null ? `${numberOfCards} Cards` : undefined
+        typeof numberOfCards === 'number' ? `${numberOfCards} Cards` : undefined
       }
     />
   </StyledListItem>
