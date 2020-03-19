@@ -31,7 +31,9 @@ const StyledInvisibleWrapper = styled.div`
 `;
 
 const isCardView = pathname =>
-  Boolean(pathname.match(/^\/m\/(card-search|collection|cards)+\/[\w-/]+$/));
+  Boolean(
+    pathname.match(/^\/m\/(search|collection|cards|wants\/\d+)+\/[\w-/]+$/)
+  );
 
 const getSearchBarProps = (pathname = '') => {
   if (pathname.match(/^\/m\/decks\/[0-9]+$/)) {

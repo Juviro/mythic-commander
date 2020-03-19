@@ -1,9 +1,7 @@
 export default async (_, __, { user: { id: userId }, db }) => {
-  const [deckId] = await db('decks')
+  const [deck] = await db('decks')
     .insert({ userId })
-    .returning('id');
+    .returning('*');
 
-  return db('decks')
-    .where({ id: deckId })
-    .first();
+  return deck;
 };

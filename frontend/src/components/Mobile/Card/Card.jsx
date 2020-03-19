@@ -12,6 +12,7 @@ import CardOwned from './CardOwned';
 import CardLinks from './CardLinks';
 import CardOverview from './CardOverview';
 import { getCardByOracleId } from './queries';
+import AddToWants from './AddToWants';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -34,7 +35,7 @@ const StyledBodyWrapper = styled.div`
   background-color: white;
 `;
 
-const Card = ({ history }) => {
+const Card = ({ history, basePath }) => {
   const { oracle_id, cardId } = useParams();
   const { data, loading } = useQuery(getCardByOracleId, {
     variables: { oracle_id },
@@ -52,8 +53,8 @@ const Card = ({ history }) => {
 
   const onChangeSet = id => {
     const match = history.location.pathname.match(/\/m\/([-a-z]+)\//);
-    const basePath = match ? match[1] : 'cards';
-    history.replace(`/m/${basePath}/${oracle_id}/${id}`);
+    const defaultBasePath = `/m/${match ? match[1] : 'cards'}`;
+    history.replace(`${basePath || defaultBasePath}/${oracle_id}/${id}`);
   };
 
   useEffect(() => {
@@ -75,6 +76,8 @@ const Card = ({ history }) => {
           selectedCardId={cardId}
           onChangeSet={onChangeSet}
         />
+        <Divider>Wants List</Divider>
+        <AddToWants card={card} />
         <Divider>Collection</Divider>
         <CardOwned
           card={card}

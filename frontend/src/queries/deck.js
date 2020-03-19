@@ -31,6 +31,7 @@ export const getDecks = gql`
       name
       lastEdit
       imgSrc
+      numberOfCards
     }
   }
 `;
