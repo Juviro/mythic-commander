@@ -68,21 +68,19 @@ const resolver = {
   ) {
     if (totalAmount) return totalAmount;
 
-    const {
-      rows: [{ amount }],
-    } = await db.raw(
+    const { rows } = await db.raw(
       `
-    SELECT 
+      SELECT 
       SUM(amount + "amountFoil") as amount
-    FROM "collectionWithOracle" 
-    LEFT JOIN cards ON cards.id = "collectionWithOracle".id 
-    WHERE cards.oracle_id = ? 
+      FROM "collectionWithOracle" 
+      LEFT JOIN cards ON cards.id = "collectionWithOracle".id 
+      WHERE cards.oracle_id = ? 
       AND "userId" = ?
-    GROUP BY cards.oracle_id;
-            `,
+      GROUP BY cards.oracle_id;
+      `,
       [oracle_id, userId]
     );
-    return amount;
+    return rows.length ? rows[0].amount : 0;
   },
 };
 

@@ -57,11 +57,11 @@ const COLLECTION_FILTER = [
   },
   ...DEFAULT_FILTER,
   {
-    label: 'Number collected (lowest first)',
+    label: 'Amount (lowest first)',
     value: 'amount-asc',
   },
   {
-    label: 'Number collected (highest first)',
+    label: 'Amount (highest first)',
     value: 'amount-desc',
   },
 ];

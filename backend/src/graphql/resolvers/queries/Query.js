@@ -25,7 +25,9 @@ const resolver = {
       .first();
   },
   decks(_, __, { user, db }) {
-    return db('decks').where({ userId: user.id });
+    return db('decks')
+      .where({ userId: user.id })
+      .orderBy('lastEdit', 'desc');
   },
 
   collection(_, __, { user: { id } }) {
@@ -34,6 +36,18 @@ const resolver = {
 
   cachedCards: (_, __, { db }) => getCachedCards(db),
   paginatedCards: getCards,
+
+  wantsList(_, { id }, { user: { id: userId }, db }) {
+    return db('wantsLists')
+      .where({ id, userId })
+      .first();
+  },
+
+  wantsLists(_, __, { user: { id: userId }, db }) {
+    return db('wantsLists')
+      .where({ userId })
+      .orderBy('createdAt', 'asc');
+  },
 };
 
 export default resolver;

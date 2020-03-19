@@ -32,7 +32,7 @@ const sortCards = (cards, orderBy = '') => {
   }
 };
 
-export default ({ cards, loading, shouldFilterCards = true }) => {
+export default ({ cards, loading, basePath, shouldFilterCards = true }) => {
   const [
     {
       name,
@@ -81,6 +81,7 @@ export default ({ cards, loading, shouldFilterCards = true }) => {
 
   return (
     <CardList
+      basePath={basePath}
       hasMore={hasMore}
       loading={loading}
       cards={displayedCards}

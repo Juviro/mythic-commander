@@ -95,6 +95,7 @@ export default () => {
         <Divider />
         {allCards && (
           <CardList
+            basePath="/m/cards"
             cards={allCards}
             hasMore={hasMore}
             loading={loading}

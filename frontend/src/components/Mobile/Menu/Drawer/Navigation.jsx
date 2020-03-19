@@ -13,8 +13,12 @@ export default ({ onCloseDrawer }) => {
       title: 'Collection',
     },
     {
-      href: '/m/card-search',
-      title: 'Cards',
+      href: '/m/wants',
+      title: 'Wants',
+    },
+    {
+      href: '/m/search',
+      title: 'Advanced Search',
     },
   ];
   return (
