@@ -30,10 +30,14 @@ const GridCard = ({ isLarge, card, onClick }) => {
     ? { fontSize: 16, marginBottom: 8, padding: 20 }
     : { maxWidth: '50%' };
 
-  const { minPrice, name, sumPrice, totalAmount } = card;
-  const shouldDisplayTotal = sumPrice && minPrice !== sumPrice;
+  const { minPrice, name, sumPrice, totalAmount, amount } = card;
+  const displayedAmount = amount || totalAmount;
+  const shouldDisplayTotal =
+    (sumPrice && minPrice !== sumPrice) || displayedAmount > 1;
   const total = shouldDisplayTotal
-    ? ` (${totalAmount}x | ${getPriceLabel(card.sumPrice)})`
+    ? ` (${displayedAmount}x${
+        card.sumPrice ? ` | ${getPriceLabel(card.sumPrice)}` : ''
+      })`
     : '';
 
   return (

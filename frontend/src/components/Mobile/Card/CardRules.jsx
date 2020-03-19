@@ -15,12 +15,28 @@ export default ({ card = {}, loading }) => {
   const [isOpen, setIsOpen] = useState(null);
 
   useEffect(() => {
+    const abortController = new AbortController();
+
+    const fetchRules = async () => {
+      try {
+        const response = await fetch(rulings_uri, {
+          signal: abortController.signal,
+        });
+        const { data } = await response.json();
+        setRules(data);
+      } catch (e) {
+        console.warn(e);
+      }
+    };
+
     setRules(null);
-    if (!rulings_uri) return;
-    fetch(rulings_uri)
-      .then(response => response.json())
-      .then(({ data }) => setRules(data));
-    // Don't refetch when only set is changed
+    if (rulings_uri) fetchRules();
+
+    return () => {
+      abortController.abort();
+    };
+
+    // Don't refetch when set is changed
     // eslint-disable-next-line
   }, [oracle_id]);
 

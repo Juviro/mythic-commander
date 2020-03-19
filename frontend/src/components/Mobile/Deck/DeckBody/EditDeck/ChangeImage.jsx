@@ -15,7 +15,7 @@ const StyledHeader = styled.span`
 const byName = (a, b) => (a.name > b.name ? 1 : -1);
 
 export default ({ deck }) => {
-  const [editMutation] = useMutation(editDeck);
+  const [mutate] = useMutation(editDeck);
   const getImgSrc = ({ id, imgKey }) => getImageUrl(id, imgKey, 'art_crop');
 
   const currentImage =
@@ -23,7 +23,7 @@ export default ({ deck }) => {
 
   const onChangeImage = imgSrc => {
     message.success('Title image changed!');
-    editMutation({
+    mutate({
       variables: {
         deckId: deck.id,
         newProperties: {
