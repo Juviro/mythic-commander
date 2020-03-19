@@ -41,13 +41,18 @@ const Left = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  max-width: 90%;
 `;
 
 const ListItem = ({ onClick, image, name, showRightIcon }) => (
   <StyledListItem onClick={onClick}>
     <Left>
       {image}
-      <Typography.Text ellipsis strong style={{ fontSize: 16 }}>
+      <Typography.Text
+        ellipsis
+        strong
+        style={{ fontSize: 16, maxWidth: '100%' }}
+      >
         {name}
       </Typography.Text>
     </Left>

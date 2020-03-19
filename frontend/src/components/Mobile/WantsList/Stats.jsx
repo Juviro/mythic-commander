@@ -4,7 +4,6 @@ import { getPriceLabel } from '../../../utils/cardStats';
 
 export default ({ wantsList }) => {
   if (!wantsList) return <Skeleton />;
-  console.log('wantsList :', wantsList);
   const { cards } = wantsList;
   const numberOfCards = cards.reduce((sum, { amount }) => sum + amount, 0);
   const numberOfUniqueCards = cards.length;

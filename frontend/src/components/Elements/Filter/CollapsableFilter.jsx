@@ -20,7 +20,9 @@ export default ({
     cardType: StringParam,
     isLegendary: StringParam,
   });
-  const defaultOpen = Object.values(filter).some(Boolean);
+  const defaultOpen = Object.values(filter)
+    .filter(param => !hideNameFilter && param === filter.name)
+    .some(Boolean);
 
   return (
     <Collapse
