@@ -12,21 +12,21 @@ WANTS
     - add option to export unowned deck cards to list (maybe desktop only?)
     - show wants in search bar
     - duplicate wants list
-    - When editing, allow editing of amoutn as well
+    - When editing, allow editing of amount as well
 
 IMPROVEMENTS: 
     - add filter options:
         - rarity
         - cmc (range?)
         - power (range?)
-    - evaluate adding oracle text search for collection
+        - owned (not collection)
+    - evaluate adding oracle text search for collection, monitor response size
     - show number of results on top as well
     - increase search bar dropdown height
-    - on deck/wants/collection add, show *already container* badge like the owned badge in searchbar
+    - on deck/wants/collection add, show *already contained* badge like the owned badge in searchbar
 
 FEATURES: 
     - on card overview, show which decks include that card
-    - on card overview, show which wants lists include that card
     - add *owned* filter to advanced search
     - Make sets clickable in card view, jump to filtered cards view
 

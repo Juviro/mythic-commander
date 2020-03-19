@@ -44,19 +44,30 @@ const Left = styled.div`
   max-width: 90%;
 `;
 
-const ListItem = ({ onClick, image, name, showRightIcon }) => (
-  <StyledListItem onClick={onClick}>
-    <Left>
-      {image}
-      <Typography.Text
-        ellipsis
-        strong
-        style={{ fontSize: 16, maxWidth: '100%' }}
-      >
-        {name}
-      </Typography.Text>
-    </Left>
-    {showRightIcon && <RightOutlined />}
+const ListItem = ({ onClick, image, name, showRightIcon, numberOfCards }) => (
+  <StyledListItem
+    onClick={onClick}
+    actions={showRightIcon ? [<RightOutlined />] : undefined}
+  >
+    <List.Item.Meta
+      title={
+        <>
+          <Left>
+            <Typography.Text
+              ellipsis
+              strong
+              style={{ fontSize: 16, maxWidth: '100%' }}
+            >
+              {name}
+            </Typography.Text>
+          </Left>
+        </>
+      }
+      avatar={image}
+      description={
+        numberOfCards !== null ? `${numberOfCards} Cards` : undefined
+      }
+    />
   </StyledListItem>
 );
 
@@ -67,16 +78,13 @@ const DeckList = ({
   onClick,
   header,
 }) => {
-  const deckComponents = elements.map(element => (
+  const deckComponents = elements.map(({ name, imgSrc, id, numberOfCards }) => (
     <ListItem
+      name={name}
       showRightIcon
-      name={element.name}
-      onClick={() => onClick(element.id)}
-      image={
-        element.imgSrc ? (
-          <StyledImage src={element.imgSrc} alt={element.name} />
-        ) : null
-      }
+      onClick={() => onClick(id)}
+      numberOfCards={numberOfCards}
+      image={imgSrc ? <StyledImage src={imgSrc} alt={name} /> : null}
     />
   ));
 

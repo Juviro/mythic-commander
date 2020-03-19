@@ -114,6 +114,7 @@ type Deck {
   createdAt: String!
   lastEdit: String!
   imgSrc: String!
+  numberOfCards: Int!
   cards: [Card!]!
 }
 ################################# Collection #################################
@@ -140,6 +141,7 @@ type WantsList {
   lastEdit: String!
   createdAt: String!
   cards: [Card!]!
+  numberOfCards: Int!
 }
 
 ################################# Queries #################################
