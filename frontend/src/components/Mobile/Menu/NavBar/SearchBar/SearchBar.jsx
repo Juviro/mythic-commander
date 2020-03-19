@@ -13,6 +13,7 @@ import {
   filterAndSortByQuery,
   filterByName,
 } from '../../../../../utils/cardFilter';
+import { wantsLists as wantsListsQuery } from '../../../WantsLists/queries';
 
 const MAX_RESULTS = 4;
 
@@ -30,12 +31,11 @@ const StyledBackground = styled.div`
   ${({ isVisible }) => (!isVisible ? 'pointer-events: none;' : '')};
 `;
 
-const sortDecks = query => (a, b) => {
+const sortByName = query => (a, b) => {
   if (query) return a.name > b.name ? 1 : -1;
   return Number(b.lastEdit) - Number(a.lastEdit);
 };
 
-// TODO: find a more elegant solution
 const blur = () => {
   const field = document.createElement('input');
   field.setAttribute('type', 'text');
@@ -54,8 +54,10 @@ const SearchBar = ({ history, transparentSearchBar }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { cards } = useContext(CardContext);
   const { data: decksData } = useQuery(getDecks);
+  const { data: wantsListData } = useQuery(wantsListsQuery);
   const { data: collectionData } = useQuery(getCollectionNames);
   const decks = (decksData && decksData.decks) || [];
+  const wantsLists = (wantsListData && wantsListData.wantsLists) || [];
   const collection = (collectionData && collectionData.collection.cards) || [];
 
   const [{ query = '' }, setQuery] = useQueryParams({
@@ -76,10 +78,11 @@ const SearchBar = ({ history, transparentSearchBar }) => {
 
     if (type === 'DECK') {
       history.push(`/m/decks/${id}`);
-    } else {
+    } else if (type === 'CARD') {
       const isCardView = history.location.pathname.match(/\/cards\/.+/);
-
       history[isCardView ? 'replace' : 'push'](`/m/cards/${id}?query=${query}`);
+    } else {
+      history.push(`/m/wants/${id}`);
     }
   };
 
@@ -91,11 +94,16 @@ const SearchBar = ({ history, transparentSearchBar }) => {
   );
   const filteredDecks = filterByName(decks, query)
     .slice(0, MAX_RESULTS)
-    .sort(sortDecks(query));
+    .sort(sortByName(query));
+
+  const filteredWantsLists = filterByName(wantsLists, query)
+    .slice(0, MAX_RESULTS)
+    .sort(sortByName(query));
 
   const optionCategories = [
     {
       name: 'Cards',
+      type: 'CARD',
       options: filteredCards,
       onShowAll: () => {
         history.push(`/m/search?name=${query}`);
@@ -104,15 +112,21 @@ const SearchBar = ({ history, transparentSearchBar }) => {
     },
     {
       name: 'Decks',
+      type: 'DECK',
       options: filteredDecks,
+    },
+    {
+      name: 'Wants Lists',
+      type: 'WANTS',
+      options: filteredWantsLists,
     },
   ];
 
   const dataSource = optionCategories
     .filter(({ options }) => options && options.length)
-    .map(({ name, options, onShowAll }) => ({
+    .map(({ name, type, options, onShowAll }) => ({
       label: <OptionGroupHeader title={name} onShowAll={onShowAll} />,
-      options: options.map(renderOption(query)),
+      options: options.map(renderOption(query, type)),
     }));
 
   return (

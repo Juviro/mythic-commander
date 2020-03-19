@@ -5,16 +5,14 @@ BUGFIXES:
     - Deck image select has no default value
     - when searching for card in add deck etc, name is not highlighted when using amount
 
-NEXT:
-    - Multiple (Want-) lists (text export, proxie printer)
 
 WANTS
     - add option to export unowned deck cards to list (maybe desktop only?)
-    - show wants in search bar
     - duplicate wants list
     - When editing, allow editing of amount as well
 
 IMPROVEMENTS: 
+    - increase search bar dropdown height
     - add filter options:
         - rarity
         - cmc (range?)
@@ -22,7 +20,6 @@ IMPROVEMENTS:
         - owned (not collection)
     - evaluate adding oracle text search for collection, monitor response size
     - show number of results on top as well
-    - increase search bar dropdown height
     - on deck/wants/collection add, show *already contained* badge like the owned badge in searchbar
 
 FEATURES: 
