@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import CardContext from '../../CardProvider/CardProvider';
 
 const StyledSetIcon = styled.img`
@@ -28,7 +29,12 @@ export default ({ setKey, style = {}, name: overwriteName }) => {
   return (
     <StyledSet style={style}>
       <StyledSetIcon src={icon_svg_uri} alt={setName} />
-      <StyledName>{setName}</StyledName>
+      <Link
+        to={`/m/search?orderBy=name-asc&set=${setKey}&autoSearch=true`}
+        onClick={e => e.stopPropagation()}
+      >
+        <StyledName>{setName}</StyledName>
+      </Link>
     </StyledSet>
   );
 };

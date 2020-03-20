@@ -26,7 +26,7 @@ const StyledLabel = styled.span`
   margin-bottom: -10px;
 `;
 
-export default ({ card }) => {
+export default ({ card, deck }) => {
   return (
     <StyledWrapper>
       <StyledItem>
@@ -38,7 +38,7 @@ export default ({ card }) => {
         <AmountPicker card={card} />
       </StyledItem>
       <StyledItem>
-        <Delete card={card} />
+        <Delete card={card} deck={deck} />
       </StyledItem>
     </StyledWrapper>
   );

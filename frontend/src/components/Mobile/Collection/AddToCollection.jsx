@@ -1,19 +1,15 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
-import { message } from 'antd';
 import { getMobileCollection, addToCollectionMobile } from './queries';
 
 import { AddCardMobile } from '../../Elements';
+import message from '../../../utils/message';
 
 export default () => {
   const [mutate] = useMutation(addToCollectionMobile);
 
   const onAddCard = (newCard, name) => {
-    message.success(
-      <span>
-        Added <b>{name}</b> to your collection!
-      </span>
-    );
+    message(`Added <b>${name}</b> to your collection!`);
     mutate({
       variables: { cards: [newCard] },
       update: (cache, { data: updateData }) => {

@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
-export const paginatedCards = gql`
-  query paginatedCards($offset: Int, $limit: Int, $options: CardsOptionsInput) {
-    paginatedCards(offset: $offset, limit: $limit, options: $options) {
+export const cardSearch = gql`
+  query cardSearch($offset: Int, $limit: Int, $options: CardsOptionsInput) {
+    cardSearch(offset: $offset, limit: $limit, options: $options) {
       hasMore
       nextOffset
       totalResults

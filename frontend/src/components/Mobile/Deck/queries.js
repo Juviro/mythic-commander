@@ -13,9 +13,11 @@ const DECK_CARD_FIELDS = `
     color_identity
     isCommanderLegal
     amount
-    prices {
-        usd
-        usd_foil
+    minPrice
+    allSets {
+      set
+      id
+      set_name
     }
 `;
 
@@ -66,6 +68,14 @@ export const addCardsToDeck = gql`
   mutation addCardsToDeck($cards: [CardInputType!]!, $deckId: String!) {
     addCardsToDeck(cards: $cards, deckId: $deckId) {
         ${DECK_FIELDS}
+    }
+  }
+`;
+
+export const deleteFromDeck = gql`
+  mutation deleteFromDeck($cardId: String!, $deckId: String!) {
+    deleteFromDeck(cardId: $cardId, deckId: $deckId) {
+      ${DECK_FIELDS}
     }
   }
 `;

@@ -1,5 +1,5 @@
 import getCachedCards from './getCachedCards';
-import getCards from './getCards';
+import cardSearch from './cardSearch';
 
 const resolver = {
   user(_, __, { db, user: { id } }) {
@@ -35,7 +35,7 @@ const resolver = {
   },
 
   cachedCards: (_, __, { db }) => getCachedCards(db),
-  paginatedCards: getCards,
+  cardSearch,
 
   wantsList(_, { id }, { user: { id: userId }, db }) {
     return db('wantsLists')

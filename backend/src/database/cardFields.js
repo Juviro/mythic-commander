@@ -73,7 +73,7 @@ export const CARD_FIELDS_INITIAL = [
     type: 'string',
   },
   {
-    key: 'toughnes',
+    key: 'toughness',
     type: 'string',
   },
   {

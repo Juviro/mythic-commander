@@ -9,11 +9,10 @@ const resolver = {
     return cards.map(toDeckCard);
   },
   async numberOfCards({ id: deckId }, _, { db }) {
-    const [{ count }] = await db('cardToDeck')
-      .leftJoin('cards', { 'cards.id': 'cardToDeck.id' })
-      .count('cards')
+    const [{ sum }] = await db('cardToDeck')
+      .sum('amount')
       .where({ deckId });
-    return count;
+    return sum || 0;
   },
 };
 

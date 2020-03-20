@@ -106,7 +106,7 @@ const SearchBar = ({ history, transparentSearchBar }) => {
       type: 'CARD',
       options: filteredCards,
       onShowAll: () => {
-        history.push(`/m/search?name=${query}`);
+        history.push(`/m/search?name=${query}&autoSearch=true`);
         onSelect();
       },
     },

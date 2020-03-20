@@ -1,5 +1,5 @@
 import React from 'react';
-import { AutoComplete } from 'antd';
+import { AutoComplete, Typography } from 'antd';
 import CardContext from '../../CardProvider/CardProvider';
 import { filterAndSortByQuery } from '../../../utils/cardFilter';
 
@@ -75,9 +75,9 @@ export default class SearchField extends React.Component {
     const { searchString } = this.state;
     const { cards = [] } = this.context;
 
-    const searchStringWithoutAmount = splitAmountAndName(searchString).name;
+    const { name, amount } = splitAmountAndName(searchString);
 
-    const suggestions = filterAndSortByQuery(cards, searchStringWithoutAmount);
+    const suggestions = filterAndSortByQuery(cards, name);
 
     return (
       <AutoComplete
@@ -97,7 +97,10 @@ export default class SearchField extends React.Component {
             text={option.name}
             key={`${option.id};${option.name}`}
           >
-            {getHighlightedOption(searchString, option.name)}
+            {amount > 1 && (
+              <Typography.Text strong>{`${amount}x `}</Typography.Text>
+            )}
+            {getHighlightedOption(name, option.name)}
           </AutoComplete.Option>
         ))}
       </AutoComplete>

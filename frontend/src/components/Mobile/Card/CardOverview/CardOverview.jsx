@@ -3,7 +3,7 @@ import { Table, Skeleton } from 'antd';
 
 import columns from './columns';
 
-const CardCosts = ({ card, loading, selectedCardId, onChangeSet }) => {
+const CardOverview = ({ card, loading, selectedCardId, onChangeSet }) => {
   if (!card) {
     return <Skeleton active paragraph={4} />;
   }
@@ -47,4 +47,4 @@ const areEqual = (prevProps, nextProps) => {
   return true;
 };
 
-export default React.memo(CardCosts, areEqual);
+export default React.memo(CardOverview, areEqual);

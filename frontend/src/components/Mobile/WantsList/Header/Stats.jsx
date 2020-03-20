@@ -8,7 +8,7 @@ export default ({ wantsList }) => {
   const numberOfCards = cards.reduce((sum, { amount }) => sum + amount, 0);
   const numberOfUniqueCards = cards.length;
   const collectionValue = cards.reduce(
-    (sum, { minPrice }) => sum + minPrice,
+    (sum, { minPrice, amount }) => sum + minPrice * amount,
     0
   );
 

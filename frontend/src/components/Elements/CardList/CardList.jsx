@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, BackTop } from 'antd';
+import { List, BackTop, Typography } from 'antd';
 import styled from 'styled-components';
 
 import { useQueryParams, StringParam } from 'use-query-params';
@@ -27,6 +27,7 @@ const CardList = ({
   history,
   basePath,
   onDeleteElement,
+  showTotalResults,
 }) => {
   const [{ name, layout = 'list' }] = useQueryParams({
     name: StringParam,
@@ -51,9 +52,17 @@ const CardList = ({
     history.push(`${basePath}/${oracle_id}/${id}${history.location.search}`);
   };
 
+  const totalResultsLabel = showTotalResults && (
+    <Typography.Text
+      strong
+      style={{ marginBottom: 16 }}
+    >{`Found ${totalResults} cards:`}</Typography.Text>
+  );
+
   if (layout === 'list') {
     return (
       <>
+        {totalResultsLabel}
         <List
           loadMore={showMoreButton}
           size="small"
@@ -74,18 +83,21 @@ const CardList = ({
   }
 
   return (
-    <StyledGridWrapper>
-      {cards.map(card => (
-        <GridCard
-          key={card.id}
-          onClick={() => onOpenDetailView(card)}
-          card={card}
-          isLarge={layout !== 'grid'}
-        />
-      ))}
-      {showMoreButton}
-      <BackTop style={{ left: 20, bottom: 20 }} />
-    </StyledGridWrapper>
+    <>
+      {totalResultsLabel}
+      <StyledGridWrapper>
+        {cards.map(card => (
+          <GridCard
+            key={card.id}
+            onClick={() => onOpenDetailView(card)}
+            card={card}
+            isLarge={layout !== 'grid'}
+          />
+        ))}
+        {showMoreButton}
+        <BackTop style={{ left: 20, bottom: 20 }} />
+      </StyledGridWrapper>
+    </>
   );
 };
 

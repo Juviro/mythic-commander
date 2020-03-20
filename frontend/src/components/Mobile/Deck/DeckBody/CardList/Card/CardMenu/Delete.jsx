@@ -1,10 +1,10 @@
 import React from 'react';
-import { message } from 'antd';
 import { useParams } from 'react-router';
 import { useMutation } from 'react-apollo';
 import styled from 'styled-components';
 import { DeleteOutlined } from '@ant-design/icons';
-import { deleteFromDeck } from '../../../../../../../queries';
+import message from '../../../../../../../utils/message';
+import { deleteFromDeck } from '../../../../queries';
 
 const StyledActionWrapper = styled.div`
   display: flex;
@@ -18,17 +18,23 @@ const StyledActionWrapper = styled.div`
   cursor: pointer;
 `;
 
-export default ({ card }) => {
+export default ({ card, deck }) => {
   const { id: deckId } = useParams();
   const [onDeleteMutation] = useMutation(deleteFromDeck);
 
   const onDelete = () => {
-    message.success(
-      <span>
-        Deleted <b>{card.name}</b> from your deck!
-      </span>
-    );
-    onDeleteMutation({ variables: { cardId: card.id, deckId } });
+    message(`Deleted <b>${card.name}</b> from your deck!`);
+    const newCards = deck.cards.filter(({ id }) => id !== card.id);
+    onDeleteMutation({
+      variables: { cardId: card.id, deckId },
+      optimisticResponse: () => ({
+        __typename: 'Mutation',
+        deleteFromDeck: {
+          ...deck,
+          cards: newCards,
+        },
+      }),
+    });
   };
 
   return (

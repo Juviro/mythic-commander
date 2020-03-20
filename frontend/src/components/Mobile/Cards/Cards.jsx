@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Divider } from 'antd';
 
@@ -8,7 +8,7 @@ import CardList from '../../Elements/CardList';
 import { ListOrder } from '../../Elements';
 import SearchButton from './SearchButton';
 import Header from './Header';
-import { paginatedCards } from './queries';
+import { cardSearch } from './queries';
 import { CARDS_PER_PAGE } from '../../Elements/CardList/CardList';
 import CardModal from '../Card/CardModal';
 import CollapsableFilter from '../../Elements/Filter/CollapsableFilter';
@@ -29,14 +29,20 @@ export default () => {
   const [currentOptions, setCurrentOptions] = useState(null);
   const [queryResult, setQueryResult] = useState({});
   const [loading, setLoading] = useState(false);
-  const [options, setFilter] = useQueryParams({
+  const [{ autoSearch, ...options }, setFilter] = useQueryParams({
+    autoSearch: StringParam,
+
     name: StringParam,
+    cmc: StringParam,
+    power: StringParam,
+    toughness: StringParam,
     set: StringParam,
     text: StringParam,
     colors: StringParam,
     creatureType: StringParam,
     cardType: StringParam,
     isLegendary: StringParam,
+    isOwned: BooleanParam,
     isCommanderLegal: BooleanParam,
     orderBy: StringParam,
   });
@@ -45,29 +51,26 @@ export default () => {
 
   const { hasMore, nextOffset = 0, totalResults = 0 } = queryResult;
 
-  const onLoadCards = (searchOptions, offset = 0) => {
+  const onLoadCards = async (searchOptions, offset = 0) => {
     setCurrentOptions(searchOptions);
-    const search = async () => {
-      setLoading(true);
-      const { data } = await client.query({
-        fetchPolicy: 'cache-first',
-        query: paginatedCards,
-        variables: {
-          offset,
-          limit: CARDS_PER_PAGE,
-          options: searchOptions,
-        },
-      });
-      setQueryResult(data.paginatedCards);
-      const { cards } = data.paginatedCards;
-      const newCards = offset ? (allCards || []).concat(cards) : cards;
-      setAllCards(newCards);
-      setFilter({
-        displayedResults: data.paginatedCards.nextOffset || newCards.length,
-      });
-      setLoading(false);
-    };
-    search();
+    setLoading(true);
+    const { data } = await client.query({
+      fetchPolicy: 'cache-first',
+      query: cardSearch,
+      variables: {
+        offset,
+        limit: CARDS_PER_PAGE,
+        options: searchOptions,
+      },
+    });
+    setQueryResult(data.cardSearch);
+    const { cards } = data.cardSearch;
+    const newCards = offset ? (allCards || []).concat(cards) : cards;
+    setAllCards(newCards);
+    setFilter({
+      displayedResults: data.cardSearch.nextOffset || newCards.length,
+    });
+    setLoading(false);
   };
 
   const onSearch = () => {
@@ -77,6 +80,16 @@ export default () => {
   const onLoadMore = () => {
     onLoadCards(currentOptions, nextOffset);
   };
+
+  useEffect(() => {
+    if (!autoSearch) return;
+    const autoLoadCards = async () => {
+      await onLoadCards(options);
+      setFilter({ autoSearch: '' });
+    };
+    autoLoadCards();
+    // eslint-disable-next-line
+  }, [autoSearch]);
 
   return (
     <>
@@ -95,7 +108,8 @@ export default () => {
         <Divider />
         {allCards && (
           <CardList
-            basePath="/m/cards"
+            showTotalResults
+            basePath="/m/search"
             cards={allCards}
             hasMore={hasMore}
             loading={loading}
