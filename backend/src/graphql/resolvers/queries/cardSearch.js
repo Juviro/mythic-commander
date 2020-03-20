@@ -28,6 +28,13 @@ const addColorClause = (q, colors) => {
   }
 };
 
+const addOwnedClause = (q, userId) => {
+  q.whereRaw(
+    `oracle_id IN (SELECT DISTINCT oracle_id FROM "collectionWithOracle" WHERE "userId" = ?)`,
+    userId
+  );
+};
+
 const getOrderColumn = orderBy => {
   switch (orderBy) {
     case 'price':
@@ -37,7 +44,25 @@ const getOrderColumn = orderBy => {
   }
 };
 
-export default async (_, { offset = 0, limit = 30, options = {} }, { db }) => {
+const addRangeClause = (q, encodedValue, columnName) => {
+  // eslint-disable-next-line no-unused-vars
+  const [_, from = '', __, to = ''] = encodedValue.match(/(\d*)(-)(\d*)/);
+
+  if (from)
+    q.whereRaw(
+      `"${columnName}" ~ '^[0-9.]+$' AND "${columnName}"::float >= ${from}`
+    );
+  if (to)
+    q.whereRaw(
+      `"${columnName}" ~ '^[0-9.]+$' AND "${columnName}"::float <= ${to}`
+    );
+};
+
+export default async (
+  _,
+  { offset = 0, limit = 30, options = {} },
+  { db, user }
+) => {
   const {
     colors = '',
     name,
@@ -47,6 +72,10 @@ export default async (_, { offset = 0, limit = 30, options = {} }, { db }) => {
     cardType,
     isLegendary,
     isCommanderLegal,
+    isOwned,
+    toughness,
+    power,
+    cmc,
     orderBy = 'name-asc',
   } = options;
 
@@ -58,7 +87,7 @@ export default async (_, { offset = 0, limit = 30, options = {} }, { db }) => {
     .where(q => {
       if (name) q.where('name', 'ILIKE', `%${name}%`);
       if (text) q.where('oracle_text', 'ILIKE', `%${text}%`);
-      if (creatureType) q.where('type_line', 'ILIKE', `%${creatureType}%`);
+      if (creatureType) q.where('type_line', 'LIKE', `%${creatureType}%`);
       if (cardType) q.where('type_line', 'ILIKE', `%${cardType}%`);
       if (set) q.where('set', set);
       if (isCommanderLegal)
@@ -67,6 +96,10 @@ export default async (_, { offset = 0, limit = 30, options = {} }, { db }) => {
       if (isLegendary === 'false')
         q.whereNot('type_line', 'ILIKE', `%Legendary%`);
       if (colors.length) addColorClause(q, colors);
+      if (isOwned && user) addOwnedClause(q, user.id);
+      if (cmc) addRangeClause(q, cmc, 'cmc');
+      if (power) addRangeClause(q, power, 'power');
+      if (toughness) addRangeClause(q, toughness, 'toughness');
     })
     .orderByRaw(`${getOrderColumn(order)} ${direction.toUpperCase()}`);
 

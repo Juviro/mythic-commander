@@ -1,39 +1,27 @@
 BUGFIXES:
-    - demigod listed under god
-    - deploying crashes (gone?)
-    - adding a new deck AND deleting a deck will not add it to the decks list
-    - Deck image select has no default value
-    - wants list: sort for last added seems to be broken
-    - totalAmount in deck/wants list is not displaying recent changes
-    - totalAmount in deck/wants list is not counting the amount
-    - when searching for card in add deck etc, name is not highlighted when using amount
-    - wants list -> total cost in not taking the amount into account
+    - deploying crashes
 
 NEXT:
     - allow adding wants list in card view
-    - when adding cards to wants list, show message.success
-    - add option to export unowned deck cards to list (maybe desktop only?)
+    - add option to export unowned deck cards to list
 
-WANTS
+WANTS:
     - duplicate wants list
+    - delete wants list
     - When editing, allow editing of amount as well
+    
 
 IMPROVEMENTS: 
+    - fix not jumping to page top
     - increase search bar dropdown height
     - add filter options:
         - rarity
-        - cmc (range?)
-        - power (range?)
-        - owned (not collection)
-    - evaluate adding oracle text search for collection, monitor response size
-    - show number of results on top as well
     - on deck/wants/collection add, show *already contained* badge like the owned badge in searchbar
 
 FEATURES: 
     - on card overview, show which decks include that card
-    - add *owned* filter to advanced search
-    - Make sets clickable in card view, jump to filtered cards view
 
 REFACTORINGS:
-    - Add db constraint, if amount + amountFoil = 0 => delete row
-    - add message bold helper
+
+TODO :
+    - remove last migration file after deployment

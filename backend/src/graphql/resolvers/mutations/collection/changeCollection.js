@@ -41,6 +41,12 @@ export default async (
 
   await Promise.all(promises);
 
+  if (edited.length) {
+    await db('collection')
+      .where({ amount: 0, amountFoil: 0 })
+      .del();
+  }
+
   return db('cards')
     .where({ oracle_id: cardOracleId })
     .first();

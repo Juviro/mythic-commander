@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, message, Typography, Col, Row, List } from 'antd';
+import { Select, Typography, Col, Row, List } from 'antd';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { wantsLists as wantsListsQuery } from '../WantsLists/queries';
 import { CustomSkeleton } from '../../Elements';
 import { addCardsToWantsList } from './queries';
+import message from '../../../utils/message';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -50,11 +51,7 @@ export default ({ card }) => {
       }),
     });
 
-    message.success(
-      <span>
-        Added to <b>{name}</b>!
-      </span>
-    );
+    message(`Added to <b>${name}</b>!`);
   };
 
   const dataSource = containingWantsLists.sort((a, b) =>

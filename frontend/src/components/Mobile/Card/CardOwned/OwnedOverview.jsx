@@ -48,6 +48,7 @@ export default ({ cardOracleId, cards, onChangeSet, selectedCardId }) => {
         edited,
         added,
       },
+      refetchQueries: ['cardSearch'],
     });
     message.success('Updated your collection!');
     onResetEditing();

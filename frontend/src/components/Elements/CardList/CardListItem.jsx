@@ -1,11 +1,12 @@
 import React from 'react';
 
 import styled from 'styled-components';
-import { List, Typography, Row, Col, message } from 'antd';
+import { List, Typography, Row, Col } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { highlightText } from '../../../utils/highlightText';
 import CardListImage from '../CardListImage';
 import { getPriceLabel } from '../../../utils/cardStats';
+import message from '../../../utils/message';
 
 const StyledRow = styled(Row)`
   align-items: center;
@@ -26,11 +27,7 @@ const CardListItem = ({ card, searchString, onClick, onDeleteElement }) => {
   const onDelete = event => {
     event.stopPropagation();
     onDeleteElement(card.id);
-    message.success(
-      <span>
-        Deleted <b>{card.name}</b>!
-      </span>
-    );
+    message(`Deleted <b>${card.name}</b>!`);
   };
 
   return (

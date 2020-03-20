@@ -24,7 +24,7 @@ const StyledInnerStatsWrapper = styled.div`
   }}
 `;
 
-export default ({ card, isVisible, isLegal }) => {
+export default ({ deck, card, isVisible, isLegal }) => {
   const [isEditing, setIsEditing] = useState(false);
   const onToggleEdit = () => setIsEditing(!isEditing);
 
@@ -39,7 +39,7 @@ export default ({ card, isVisible, isLegal }) => {
         {!isEditing ? (
           <CardInfo card={card} isLegal={isLegal} />
         ) : (
-          <CardEdit card={card} />
+          <CardEdit card={card} deck={deck} />
         )}
       </StyledInnerStatsWrapper>
     </div>

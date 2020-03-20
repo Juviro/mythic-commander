@@ -43,6 +43,7 @@ const DeckList = ({ deck }) => {
           commander={commander}
           setOpenCardId={setOpenCardId}
           openCardId={openCardId}
+          deck={deck}
         />
       ))}
     </>

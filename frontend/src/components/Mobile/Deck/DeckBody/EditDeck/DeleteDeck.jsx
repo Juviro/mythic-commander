@@ -3,7 +3,7 @@ import { List, Modal, message } from 'antd';
 import { useMutation } from 'react-apollo';
 import { useParams, withRouter } from 'react-router';
 
-import { deleteDeck } from '../../../../../queries';
+import { deleteDeck, getDecks } from '../../../../../queries';
 
 const DeleteDeck = ({ history }) => {
   const { id: deckId } = useParams();
@@ -14,6 +14,18 @@ const DeleteDeck = ({ history }) => {
     await deleteDeckMutation({
       variables: {
         deckId,
+      },
+      update: cache => {
+        const existing = cache.readQuery({
+          query: getDecks,
+        });
+
+        cache.writeQuery({
+          query: getDecks,
+          data: {
+            decks: existing.decks.filter(({ id }) => id !== deckId),
+          },
+        });
       },
     });
     message.success('Deck deleted!');

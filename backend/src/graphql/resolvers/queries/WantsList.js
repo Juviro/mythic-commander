@@ -5,11 +5,10 @@ const resolver = {
       .where({ wantsListId });
   },
   async numberOfCards({ id: wantsListId }, _, { db }) {
-    const [{ count }] = await db('cardToWantsList')
-      .leftJoin('cards', { 'cards.id': 'cardToWantsList.id' })
-      .count('cards')
+    const [{ sum }] = await db('cardToWantsList')
+      .sum('amount')
       .where({ wantsListId });
-    return count;
+    return sum || 0;
   },
 };
 

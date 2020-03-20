@@ -5,12 +5,12 @@ import CardMenu from './CardMenu';
 import NotLegalWarning from './Warning';
 import CardListItem from './CardListItem';
 
-const Card = ({ card, commander, setOpenCardId, isOpen }) => {
+const Card = ({ deck, card, commander, setOpenCardId, isOpen }) => {
   const isLegal = isCardLegal(card, commander);
   const showWarning = !isLegal || !card.owned;
 
   const cardBody = (
-    <CardMenu card={card} isVisible={isOpen} isLegal={isLegal} />
+    <CardMenu deck={deck} card={card} isVisible={isOpen} isLegal={isLegal} />
   );
   const additionalIcon = showWarning ? (
     <NotLegalWarning card={card} isOpen={isOpen} isLegal={isLegal} />

@@ -17,9 +17,9 @@ type Card {
   rulings_uri: String!
   colors: [String]
   color_identity: [String]
-  previewImg: String
 
   # Additional card fields
+  previewImg: String
   owned: Boolean!
   totalAmount: Int!
   minPrice: Float!
@@ -155,7 +155,7 @@ type Query {
   collection: Collection!
 
   card(id: String!): Card!
-  paginatedCards(
+  cardSearch(
     offset: Int
     limit: Int
     options: CardsOptionsInput
@@ -174,7 +174,12 @@ input CardsOptionsInput {
   cardType: String
   isLegendary: String
   isCommanderLegal: Boolean
+  isOwned: Boolean
   text: String
+  cmc: String
+  rarity: String
+  power: String
+  toughness: String
   set: String
   orderBy: String
 }

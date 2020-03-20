@@ -47,7 +47,11 @@ export const getDeck = gql`
 export const createDeck = gql`
   mutation createDeck {
     createDeck {
-        ${DECK_FIELDS}
+      id
+      name
+      lastEdit
+      imgSrc
+      numberOfCards
     }
   }
 `;

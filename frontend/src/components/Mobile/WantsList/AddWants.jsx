@@ -3,17 +3,20 @@ import { useMutation } from 'react-apollo';
 import { useParams } from 'react-router';
 import { addCardsToWantsList, wantsList } from './queries';
 import { AddCardMobile } from '../../Elements';
+import message from '../../../utils/message';
 
 export default () => {
   const { id: wantsListId } = useParams();
   const [mutate] = useMutation(addCardsToWantsList);
 
-  const onAddCard = card => {
+  const onAddCard = (card, name) => {
+    message(`Added <b>${name}</b> to your list!`);
     mutate({
       variables: {
         wantsListId,
         cards: [card],
       },
+      refetchQueries: ['wantsList'],
       update: (cache, { data }) => {
         if (!data) return;
         const { addCardsToWantsList: newCards } = data;

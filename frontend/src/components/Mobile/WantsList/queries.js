@@ -16,6 +16,7 @@ const WANTS_LIST_FIELDS = `
   id
   name
   lastEdit
+  numberOfCards
   cards {
     ${CARD_FIELDS}
   }

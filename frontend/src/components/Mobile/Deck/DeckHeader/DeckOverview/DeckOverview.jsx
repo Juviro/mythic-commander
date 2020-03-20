@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import NotLegalWarning from './NotLegalWarning';
 import DeckName from './DeckName';
 import { getNumberOfCards } from '../../../../../utils/deck';
-import { getPriceLabel, getPrice } from '../../../../../utils/cardStats';
+import { getPriceLabel } from '../../../../../utils/cardStats';
 
 const StyledInfoBox = styled.div`
   width: 100%;
@@ -28,11 +28,11 @@ export default ({ deck }) => {
     numberOfUnowned ? `(${numberOfUnowned} not owned)` : ''
   }`;
   const totalValue = (deck.cards || []).reduce(
-    (acc, val) => acc + getPrice(val),
+    (acc, val) => acc + val.minPrice,
     0
   );
   const unownedValue = (deck.cards || []).reduce(
-    (acc, val) => (val.owned ? acc : acc + getPrice(val)),
+    (acc, val) => (val.owned ? acc : acc + val.minPrice),
     0
   );
 

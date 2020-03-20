@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Divider } from 'antd';
 import styled from 'styled-components';
 import { useQuery, useMutation } from 'react-apollo';
 import { useParams } from 'react-router';
+import { StringParam, useQueryParam } from 'use-query-params';
 import { wantsList as wantsListQuery, deleteFromWantsList } from './queries';
 
 import Header from './Header';
@@ -21,20 +22,29 @@ export default () => {
   const { id } = useParams();
   const { data } = useQuery(wantsListQuery, { variables: { id } });
   const [mutate] = useMutation(deleteFromWantsList);
+  const [layout] = useQueryParam('layout', StringParam);
 
   const [isEditing, setIsEditing] = useState(false);
   const cards = data && data.wantsList.cards;
   const basePath = `/m/wants/${id}`;
   const wantsList = data && data.wantsList;
+  const canEdit = !layout || layout === 'list';
+
+  useEffect(() => {
+    if (!canEdit) setIsEditing(false);
+  }, [canEdit]);
 
   const onDeleteWant = cardId => {
+    const newCards = wantsList.cards.filter(card => card.id !== cardId);
+    const newNumberOfCards = wantsList.numberOfCards;
     mutate({
       variables: { cardId, wantsListId: id },
       optimisticResponse: () => ({
         __typename: 'Mutation',
         deleteFromWantsList: {
           ...wantsList,
-          cards: wantsList.cards.filter(card => card.id !== cardId),
+          cards: newCards,
+          numberOfCards: newNumberOfCards,
         },
       }),
     });
@@ -45,10 +55,12 @@ export default () => {
       <Header wantsList={wantsList} />
       <ListOrder showCollectionFilters />
       <Divider />
-      <EditIcon
-        onClick={() => setIsEditing(!isEditing)}
-        isEditing={isEditing}
-      />
+      {canEdit && (
+        <EditIcon
+          onClick={() => setIsEditing(!isEditing)}
+          isEditing={isEditing}
+        />
+      )}
       <FilteredCardList
         cards={cards}
         basePath={basePath}

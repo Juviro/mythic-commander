@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Spin, message } from 'antd';
+import { Spin } from 'antd';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
@@ -9,6 +9,7 @@ import DeckMenu from './DeckMenu';
 import DeckBody from './DeckBody';
 import { getDeck, addCardsToDeck } from './queries';
 import { AddCardMobile } from '../../Elements';
+import message from '../../../utils/message';
 
 const StyledDeck = styled.div`
   width: 100%;
@@ -28,11 +29,8 @@ export default () => {
   const deck = data && data.deck;
 
   const onAddCard = (card, name) => {
-    message.success(
-      <span>
-        Added <b>{name}</b> to your deck!
-      </span>
-    );
+    message(`Added <b>${name}</b> to your deck!`);
+
     mutate({
       variables: { cards: [card], deckId: id },
     });

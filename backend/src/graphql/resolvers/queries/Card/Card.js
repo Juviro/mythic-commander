@@ -8,7 +8,8 @@ const resolver = {
     });
     return Boolean(owned);
   },
-  allSets({ oracle_id }, _, { db, user: { id: userId } }) {
+  allSets({ oracle_id, type_line }, _, { db, user: { id: userId } }) {
+    if (type_line.startsWith('Basic')) return [];
     return getAllSets(oracle_id, userId, db);
   },
   primaryTypes(card) {

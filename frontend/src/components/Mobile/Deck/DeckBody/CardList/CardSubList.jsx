@@ -4,7 +4,14 @@ import SublistHeader from './SublistHeader';
 import Card from './Card';
 import { getNumberOfCards } from '../../../../../utils/deck';
 
-export default ({ cards, type, commander, openCardId, setOpenCardId }) => {
+export default ({
+  deck,
+  cards,
+  type,
+  commander,
+  openCardId,
+  setOpenCardId,
+}) => {
   if (!cards || !cards.length) return null;
   const dataSource = cards.sort((a, b) => (a.name < b.name ? -1 : 1));
   const numberOfCards = getNumberOfCards(cards);
@@ -16,6 +23,7 @@ export default ({ cards, type, commander, openCardId, setOpenCardId }) => {
       style={{ width: '100%' }}
       renderItem={card => (
         <Card
+          deck={deck}
           card={card}
           setOpenCardId={setOpenCardId}
           commander={commander}
