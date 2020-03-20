@@ -3,11 +3,18 @@ BUGFIXES:
     - deploying crashes (gone?)
     - adding a new deck AND deleting a deck will not add it to the decks list
     - Deck image select has no default value
+    - wants list: sort for last added seems to be broken
+    - totalAmount in deck/wants list is not displaying recent changes
+    - totalAmount in deck/wants list is not counting the amount
     - when searching for card in add deck etc, name is not highlighted when using amount
+    - wants list -> total cost in not taking the amount into account
 
+NEXT:
+    - allow adding wants list in card view
+    - when adding cards to wants list, show message.success
+    - add option to export unowned deck cards to list (maybe desktop only?)
 
 WANTS
-    - add option to export unowned deck cards to list (maybe desktop only?)
     - duplicate wants list
     - When editing, allow editing of amount as well
 

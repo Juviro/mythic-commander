@@ -28,7 +28,7 @@ const StyledBodyWrapper = styled.div`
   z-index: 1;
   padding: 10px 5vw;
   min-height: 100px;
-  margin: 16px 0 32px;
+  margin: 48px 0 32px;
   align-items: center;
   flex-direction: column;
   justify-content: center;
