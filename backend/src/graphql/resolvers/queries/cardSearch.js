@@ -58,6 +58,21 @@ const addRangeClause = (q, encodedValue, columnName) => {
     );
 };
 
+const addRarityClause = (q, rarity) => {
+  const rarityMap = {
+    m: 'mythic',
+    r: 'rare',
+    u: 'uncommon',
+    c: 'common',
+  };
+  const rarities = rarity
+    .split('')
+    .map(letter => rarityMap[letter])
+    .filter(Boolean);
+  console.log('rarities :', rarities);
+  q.whereIn('rarity', rarities);
+};
+
 export default async (
   _,
   { offset = 0, limit = 30, options = {} },
@@ -76,6 +91,7 @@ export default async (
     toughness,
     power,
     cmc,
+    rarity,
     orderBy = 'name-asc',
   } = options;
 
@@ -100,6 +116,7 @@ export default async (
       if (cmc) addRangeClause(q, cmc, 'cmc');
       if (power) addRangeClause(q, power, 'power');
       if (toughness) addRangeClause(q, toughness, 'toughness');
+      if (rarity) addRarityClause(q, rarity);
     })
     .orderByRaw(`${getOrderColumn(order)} ${direction.toUpperCase()}`);
 
