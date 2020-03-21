@@ -17,7 +17,7 @@ module.exports = {
       user: 'hauke',
       database: 'mtg',
       password: '17ARqkNuJWKgyDHAEVDP',
-      host: 'localhost',
+      host: 'mtg.cr9n9thq5jyt.eu-central-1.rds.amazonaws.com',
     },
     migrations: {
       directory: './src/database/migrations',
