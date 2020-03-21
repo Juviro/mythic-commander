@@ -1,5 +1,7 @@
 BUGFIXES:
     - deploying crashes
+    - reset filter for new attrs
+    - when adding card to wants on detail list, update fails
 
 NEXT:
     - allow adding wants list in card view
