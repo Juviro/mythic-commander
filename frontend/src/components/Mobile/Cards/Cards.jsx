@@ -33,6 +33,7 @@ export default () => {
     autoSearch: StringParam,
 
     name: StringParam,
+    rarity: StringParam,
     cmc: StringParam,
     power: StringParam,
     toughness: StringParam,

@@ -12,6 +12,7 @@ import SetSelection from './SelectFilter/SetSelection';
 import IsCommanderLegal from './CheckboxFilter/IsCommanderLegal';
 import IsOwned from './CheckboxFilter/IsOwned';
 import RangeFilter from './RangeFilter';
+import RarityFilter from './RarityFilter';
 
 const FilterWrapper = styled.div`
   width: 100%;
@@ -51,6 +52,8 @@ const Filter = ({ advacedSearch, onSearch, hideNameFilter }) => {
       <ColorSelection />
       {advacedSearch && (
         <>
+          <Label title="Rarity" />
+          <RarityFilter />
           <Label title="Converted mana cost" />
           <RangeFilter paramName="cmc" onSearch={onSearch} />
           <Label title="Power" />
