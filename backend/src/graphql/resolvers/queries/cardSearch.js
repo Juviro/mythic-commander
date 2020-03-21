@@ -69,7 +69,6 @@ const addRarityClause = (q, rarity) => {
     .split('')
     .map(letter => rarityMap[letter])
     .filter(Boolean);
-  console.log('rarities :', rarities);
   q.whereIn('rarity', rarities);
 };
 

@@ -14,8 +14,6 @@ WANTS:
 IMPROVEMENTS: 
     - fix not jumping to page top
     - increase search bar dropdown height
-    - add filter options:
-        - rarity
     - on deck/wants/collection add, show *already contained* badge like the owned badge in searchbar
 
 FEATURES: 
