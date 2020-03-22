@@ -13,7 +13,6 @@ import client from './network/graphqlClient';
 import { CardContextProvider } from './components/CardProvider/CardProvider';
 
 export const history = createBrowserHistory();
-console.log('DEPLOYED');
 ReactDOM.render(
   <ApolloProvider client={client}>
     <CardContextProvider>
