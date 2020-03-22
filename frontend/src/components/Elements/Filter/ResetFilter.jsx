@@ -19,6 +19,11 @@ const filterAttrs = [
   'isLegendary',
   'isCommanderLegal',
   'cardType',
+  'cmc',
+  'toughness',
+  'power',
+  'isOwned',
+  'rarity',
 ];
 
 export default () => {

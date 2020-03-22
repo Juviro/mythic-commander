@@ -1,11 +1,6 @@
 BUGFIXES:
-    - deploying crashes
-    - reset filter for new attrs
-    - when adding card to wants on detail list, update fails
 
 NEXT:
-    - card Wild Growth takes 6 s to load
-    - decks are 500KB large
 
 WANTS:
     - duplicate wants list
@@ -24,6 +19,3 @@ FEATURES:
     - on card overview, show which decks include that card
 
 REFACTORINGS:
-
-TODO :
-    - remove last migration file after deployment
