@@ -20,7 +20,7 @@ const StyledWrapper = styled.div`
 
 export default () => {
   const { id } = useParams();
-  const { data } = useQuery(wantsListQuery, { variables: { id } });
+  const { data, loading } = useQuery(wantsListQuery, { variables: { id } });
   const [mutate] = useMutation(deleteFromWantsList);
   const [layout] = useQueryParam('layout', StringParam);
 
@@ -50,6 +50,12 @@ export default () => {
     });
   };
 
+  useEffect(() => {
+    if (!loading) return;
+    setTimeout(() => window.scrollTo(0, 0), 100);
+    // eslint-disable-next-line
+  }, [loading]);
+
   return (
     <StyledWrapper>
       <Header wantsList={wantsList} />
@@ -63,6 +69,7 @@ export default () => {
       )}
       <FilteredCardList
         cards={cards}
+        loading={loading}
         basePath={basePath}
         onDeleteElement={isEditing ? onDeleteWant : undefined}
       />
