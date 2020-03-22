@@ -5,13 +5,13 @@
   "license": "MIT",
   "scripts": {
     "start": "NODE_ENV=development nodemon --exec babel-node ./src/index.js",
-    "start-prod": "NODE_ENV=production nodemon --exec babel-node ./dist/index.js",
+    "start-staging": "NODE_ENV=staging nodemon --exec babel-node ./dist/index.js",
+    "start-prod": "pm2 --name backend ./dist/index.js",
     "build": "babel src --out-dir dist",
     "migrate": "babel-node node_modules/.bin/knex migrate:latest",
     "rollback": "babel-node node_modules/.bin/knex migrate:rollback",
     "updateCards": "babel-node src/cron/updateCardsManually.js",
-    "lint": "eslint --fix src",
-    "install-prod": "yarn install --production=false"
+    "lint": "eslint --fix src"
   },
   "dependencies": {
     "apollo-server-koa": "^2.9.13",
