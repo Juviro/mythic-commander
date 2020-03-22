@@ -4,7 +4,12 @@ import styled from 'styled-components';
 import { useQuery, useMutation } from 'react-apollo';
 import { useParams } from 'react-router';
 import { StringParam, useQueryParam } from 'use-query-params';
-import { wantsList as wantsListQuery, deleteFromWantsList } from './queries';
+import { SaveOutlined } from '@ant-design/icons';
+import {
+  wantsList as wantsListQuery,
+  deleteFromWantsList,
+  changeWantsListAmount,
+} from './queries';
 
 import Header from './Header';
 import AddWants from './AddWants';
@@ -22,9 +27,11 @@ export default () => {
   const { id } = useParams();
   const { data, loading } = useQuery(wantsListQuery, { variables: { id } });
   const [mutate] = useMutation(deleteFromWantsList);
+  const [mutateAmount] = useMutation(changeWantsListAmount);
   const [layout] = useQueryParam('layout', StringParam);
-
+  const [changedAmount, setChangedAmount] = useState({});
   const [isEditing, setIsEditing] = useState(false);
+
   const cards = data && data.wantsList.cards;
   const basePath = `/m/wants/${id}`;
   const wantsList = data && data.wantsList;
@@ -56,6 +63,42 @@ export default () => {
     // eslint-disable-next-line
   }, [loading]);
 
+  const onChangeAmount = (cardId, val) => {
+    setChangedAmount({
+      ...changedAmount,
+      [cardId]: Math.max(val, 1),
+    });
+  };
+
+  const onSaveChanges = () => {
+    const updatedCards = Object.keys(changedAmount).map(key => ({
+      id: key,
+      amount: changedAmount[key],
+    }));
+    const optimisticCards = cards
+      .filter(card => Boolean(changedAmount[card.id]))
+      .map(card => ({
+        ...card,
+        amount: changedAmount[card.id],
+      }));
+
+    mutateAmount({
+      variables: { wantsListId: id, cards: updatedCards },
+      optimisticResponse: () => ({
+        __typename: 'Mutation',
+        changeWantsListAmount: optimisticCards,
+      }),
+    });
+    setChangedAmount({});
+  };
+
+  const onResetEditing = () => {
+    setChangedAmount({});
+    setIsEditing(false);
+  };
+
+  const hasChanges = Boolean(Object.keys(changedAmount).length);
+
   return (
     <StyledWrapper>
       <Header wantsList={wantsList} />
@@ -63,14 +106,22 @@ export default () => {
       <Divider />
       {canEdit && (
         <EditIcon
-          onClick={() => setIsEditing(!isEditing)}
+          editingText={hasChanges ? 'Save' : 'Back'}
+          editingIcon={SaveOutlined}
+          onDiscard={hasChanges ? onResetEditing : undefined}
+          onClick={() => {
+            if (isEditing && hasChanges) onSaveChanges();
+            setIsEditing(!isEditing);
+          }}
           isEditing={isEditing}
         />
       )}
       <FilteredCardList
         cards={cards}
+        isEditing={isEditing}
         loading={loading}
         basePath={basePath}
+        onChangeAmount={onChangeAmount}
         onDeleteElement={isEditing ? onDeleteWant : undefined}
       />
       <AddWants containedCards={cards} />

@@ -33,7 +33,6 @@ type Card {
   # used only for allSets
   set_name: String
 
-  # TODO: rename deck amount to deckAmount / deckAmountFoil ?
   # used by both Deck and allSets
   amount: Int!
   amountFoil: Int!
@@ -220,6 +219,10 @@ type Mutation {
     wantsListId: String!
     newProperties: EditWantsListFieldsInput!
   ): WantsList!
+  changeWantsListAmount(
+    cards: [CardInputType!]!
+    wantsListId: String!
+  ): [Card!]!
   deleteFromWantsList(cardId: String!, wantsListId: String!): WantsList!
   addCardsToWantsList(wantsListId: String!, cards: [CardInputType!]!): [Card!]!
 }
