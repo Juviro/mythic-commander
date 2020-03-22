@@ -7,6 +7,7 @@
     "start": "NODE_ENV=development nodemon --exec babel-node ./src/index.js",
     "start-staging": "NODE_ENV=staging nodemon --exec babel-node ./dist/index.js",
     "start-prod": "NODE_ENV=production pm2 start ./dist/index.js --name backend --interpreter ./node_modules/.bin/babel-node",
+    "stop-prod": "pm2 delete backend",
     "build": "babel src --out-dir dist",
     "migrate": "babel-node node_modules/.bin/knex migrate:latest",
     "rollback": "babel-node node_modules/.bin/knex migrate:rollback",
