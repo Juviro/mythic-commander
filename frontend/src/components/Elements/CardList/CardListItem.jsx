@@ -1,28 +1,25 @@
 import React from 'react';
 
 import styled from 'styled-components';
-import { List, Typography, Row, Col } from 'antd';
+import { List, Typography } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { highlightText } from '../../../utils/highlightText';
-import CardListImage from '../CardListImage';
 import { getPriceLabel } from '../../../utils/cardStats';
 import message from '../../../utils/message';
+import PreviewCardImage from '../PreviewCardImage';
+import OwnedBadge from '../OwnedBadge';
 
-const StyledRow = styled(Row)`
-  align-items: center;
+const StyledDescription = styled.div`
   display: flex;
-  width: 100%;
-  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const CardListItem = ({ card, searchString, onClick, onDeleteElement }) => {
-  const { minPrice, amount, totalAmount } = card;
+  const { minPrice, amount, totalAmount, owned } = card;
   const displayedAmount = amount || totalAmount;
   const hasMinPrice = minPrice !== undefined;
-  const amountLabel = displayedAmount > 1 ? displayedAmount : '';
-  let textWidth = 20;
-  if (hasMinPrice) textWidth -= 4;
-  if (onDeleteElement) textWidth -= 2;
+  const amountLabel = displayedAmount > 1 ? `${displayedAmount}x` : '';
 
   const onDelete = event => {
     event.stopPropagation();
@@ -30,38 +27,42 @@ const CardListItem = ({ card, searchString, onClick, onDeleteElement }) => {
     message(`Deleted <b>${card.name}</b>!`);
   };
 
+  const actions = [];
+  if (hasMinPrice) {
+    actions.push(<Typography.Text>{getPriceLabel(minPrice)}</Typography.Text>);
+  }
+  if (onDeleteElement) {
+    actions.push(
+      <DeleteOutlined
+        onClick={onDelete}
+        style={{ color: 'rgb(255, 77, 79)' }}
+      />
+    );
+  }
+
   return (
-    <List.Item style={{ padding: '2px 8px', height: 40 }}>
-      <StyledRow onClick={onClick}>
-        <Col span={3}>
-          <CardListImage card={card} />
-        </Col>
-        <Col span={1}>
-          <Typography.Text strong>{amountLabel}</Typography.Text>
-        </Col>
-        <Col
-          span={textWidth}
-          style={{ transition: 'all 0.2s', willChange: 'max-width' }}
-        >
+    <List.Item
+      actions={actions}
+      style={{ paddingTop: 4, paddingBottom: 4 }}
+      onClick={onClick}
+    >
+      <List.Item.Meta
+        style={{ overflow: 'hidden' }}
+        title={
           <Typography.Text style={{ display: 'block' }} ellipsis>
             {highlightText(searchString, card.name)}
           </Typography.Text>
-        </Col>
-        {hasMinPrice && (
-          <Col span={4} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Typography.Text>{getPriceLabel(minPrice)}</Typography.Text>
-          </Col>
-        )}
-        {onDeleteElement && (
-          <Col
-            span={2}
-            style={{ display: 'flex', justifyContent: 'flex-end' }}
-            onClick={onDelete}
-          >
-            <DeleteOutlined style={{ color: 'rgb(255, 77, 79)' }} />
-          </Col>
-        )}
-      </StyledRow>
+        }
+        avatar={<PreviewCardImage height="48px" card={card} />}
+        description={
+          <StyledDescription>
+            <span>
+              {amountLabel && <Typography.Text>{amountLabel}</Typography.Text>}
+            </span>
+            <span>{owned && <OwnedBadge marginLeft={0} />}</span>
+          </StyledDescription>
+        }
+      />
     </List.Item>
   );
 };
