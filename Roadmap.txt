@@ -2,12 +2,11 @@ BUGFIXES:
     - deploy crashes
 
 NEXT:
-    - on deck/wants/collection add, show *already contained* badge like the owned badge in searchbar
+    - When editing, allow editing of amount as well
 
 WANTS:
     - delete wants list
     - duplicate wants list
-    - When editing, allow editing of amount as well
     - show owned badge in list
 
 IMPROVEMENTS: 

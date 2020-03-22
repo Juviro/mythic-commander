@@ -2,7 +2,7 @@ import React from 'react';
 import { Drawer } from 'antd';
 
 import { useQuery } from 'react-apollo';
-import { SearchField } from '..';
+import SearchField from '../SearchField';
 import { getCollectionNames } from '../../../queries';
 
 export default ({ containedCardNames, isVisible, onClose, onAddCard }) => {
