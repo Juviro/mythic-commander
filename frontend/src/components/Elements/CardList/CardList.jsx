@@ -26,6 +26,8 @@ const CardList = ({
   totalResults,
   history,
   basePath,
+  isEditing,
+  onChangeAmount,
   onDeleteElement,
   showTotalResults,
 }) => {
@@ -71,6 +73,8 @@ const CardList = ({
           renderItem={card => (
             <CardListItem
               card={card}
+              isEditing={isEditing}
+              onChangeAmount={onChangeAmount}
               onDeleteElement={onDeleteElement}
               searchString={name}
               onClick={() => onOpenDetailView(card)}
