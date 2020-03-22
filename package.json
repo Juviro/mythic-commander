@@ -6,7 +6,8 @@
     "start": "NODE_ENV=dev concurrently \"cd ./backend && yarn start\" \"cd ./frontend && yarn start\"",
     "startDb": "brew services start postgresql",
     "stopDb": "brew services stop postgresql",
-    "deploy": "./scripts/deploy.sh"
+    "deploy-prod": "./scripts/deploy-prod.sh",
+    "deploy-staging": "./scripts/deploy-staging.sh"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
