@@ -32,7 +32,14 @@ const sortCards = (cards, orderBy = '') => {
   }
 };
 
-export default ({ cards, loading, basePath, onDeleteElement }) => {
+export default ({
+  cards,
+  loading,
+  basePath,
+  onDeleteElement,
+  isEditing,
+  onChangeAmount,
+}) => {
   const [
     {
       name,
@@ -79,9 +86,11 @@ export default ({ cards, loading, basePath, onDeleteElement }) => {
 
   return (
     <CardList
+      isEditing={isEditing}
       basePath={basePath}
       hasMore={hasMore}
       loading={loading}
+      onChangeAmount={onChangeAmount}
       cards={displayedCards}
       onLoadMore={onLoadMore}
       onDeleteElement={onDeleteElement}
