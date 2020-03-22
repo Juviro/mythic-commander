@@ -31,6 +31,7 @@ export default ({ card, deck }) => {
         __typename: 'Mutation',
         deleteFromDeck: {
           ...deck,
+          numberOfCards: deck.numberOfCards - card.amount,
           cards: newCards,
         },
       }),

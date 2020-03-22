@@ -9,12 +9,12 @@ export default ({ onCloseDrawer }) => {
       title: 'Decks',
     },
     {
-      href: '/m/collection',
-      title: 'Collection',
-    },
-    {
       href: '/m/wants',
       title: 'Wants',
+    },
+    {
+      href: '/m/collection',
+      title: 'Collection',
     },
     {
       href: '/m/search',
