@@ -38,7 +38,7 @@ export default () => {
 
   return (
     <StyledDeck>
-      {loading && !deck ? (
+      {loading ? (
         <Spin />
       ) : (
         <>

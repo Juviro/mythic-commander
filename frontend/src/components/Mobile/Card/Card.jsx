@@ -27,7 +27,6 @@ const StyledBodyWrapper = styled.div`
   display: flex;
   z-index: 1;
   padding: 10px 5vw;
-  min-height: 100px;
   margin: 48px 0 32px;
   align-items: center;
   flex-direction: column;
@@ -58,10 +57,11 @@ const Card = ({ history, basePath }) => {
   };
 
   useEffect(() => {
-    if (!cardId && fallbackId) {
+    if (cardId) return;
+    if (fallbackId) {
       onChangeSet(fallbackId);
-      window.scrollTo(0, 0);
     }
+    setTimeout(() => window.scrollTo(0, 0), 100);
     // eslint-disable-next-line
   }, [cardId, fallbackId]);
 
