@@ -5,12 +5,14 @@
   "license": "MIT",
   "scripts": {
     "start": "NODE_ENV=development nodemon --exec babel-node ./src/index.js",
+    "start-staging": "NODE_ENV=staging nodemon --exec babel-node ./dist/index.js",
+    "start-prod": "NODE_ENV=production pm2 start ./dist/index.js --name backend --interpreter ./node_modules/.bin/babel-node",
+    "stop-prod": "pm2 delete backend",
     "build": "babel src --out-dir dist",
     "migrate": "babel-node node_modules/.bin/knex migrate:latest",
     "rollback": "babel-node node_modules/.bin/knex migrate:rollback",
     "updateCards": "babel-node src/cron/updateCardsManually.js",
-    "lint": "eslint --fix src",
-    "install-prod": "yarn install --production=false"
+    "lint": "eslint --fix src"
   },
   "dependencies": {
     "apollo-server-koa": "^2.9.13",
@@ -41,6 +43,7 @@
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-prettier": "^3.1.2",
-    "nodemon": "^2.0.1"
+    "nodemon": "^2.0.1",
+    "pm2": "^4.2.3"
   }
 }

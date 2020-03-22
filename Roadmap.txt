@@ -1,9 +1,11 @@
 BUGFIXES:
     - deploying crashes
+    - reset filter for new attrs
+    - when adding card to wants on detail list, update fails
 
 NEXT:
-    - allow adding wants list in card view
-    - add option to export unowned deck cards to list
+    - card Wild Growth takes 6 s to load
+    - decks are 500KB large
 
 WANTS:
     - duplicate wants list
@@ -17,6 +19,8 @@ IMPROVEMENTS:
     - on deck/wants/collection add, show *already contained* badge like the owned badge in searchbar
 
 FEATURES: 
+    - allow adding wants list in card view
+    - add option to export unowned deck cards to list
     - on card overview, show which decks include that card
 
 REFACTORINGS:
