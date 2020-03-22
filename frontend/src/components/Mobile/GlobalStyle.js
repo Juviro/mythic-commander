@@ -42,4 +42,7 @@ export default createGlobalStyle`
     background-color: white;
   }
 
+  .ant-list-item-meta-content {
+    max-width: calc(100% - 50px);
+  }
 `;

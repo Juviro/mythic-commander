@@ -3,6 +3,7 @@ import { AutoComplete, Typography } from 'antd';
 import styled from 'styled-components';
 import CardContext from '../../CardProvider/CardProvider';
 import { filterAndSortByQuery } from '../../../utils/cardFilter';
+import OwnedBadge from '../OwnedBadge';
 
 export const splitAmountAndName = query => {
   const match = query.match(/^(\d*)x{0,1}\s{0,1}(.*)/);
@@ -45,11 +46,7 @@ const getHighlightedOption = (
         {alreadyInList && (
           <Typography.Text type="warning">already in list</Typography.Text>
         )}
-        {owned && (
-          <Typography.Text style={{ color: '#1fb31f', marginLeft: 8 }}>
-            owned
-          </Typography.Text>
-        )}
+        {owned && <OwnedBadge />}
       </span>
     </StyledOption>
   );
