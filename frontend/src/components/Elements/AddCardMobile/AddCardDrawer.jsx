@@ -1,15 +1,22 @@
 import React from 'react';
 import { Drawer } from 'antd';
 
+import { useQuery } from 'react-apollo';
 import { SearchField } from '..';
+import { getCollectionNames } from '../../../queries';
 
-export default ({ isVisible, onClose, onAddCard }) => {
+export default ({ containedCardNames, isVisible, onClose, onAddCard }) => {
   const searchInputRef = React.createRef();
+  const { data } = useQuery(getCollectionNames);
 
   const afterVisibleChange = visible => {
     if (!visible) return;
     searchInputRef.current.focus();
   };
+
+  const ownedCardNames = data
+    ? data.collection.cards.map(({ name }) => name)
+    : [];
 
   return (
     <Drawer
@@ -25,8 +32,10 @@ export default ({ isVisible, onClose, onAddCard }) => {
         alignTop
         resetSearch
         width="100%"
+        ownedCardNames={ownedCardNames}
         ref={searchInputRef}
         onSearch={onAddCard}
+        containedCardNames={containedCardNames}
         defaultActiveFirstOption
       />
     </Drawer>

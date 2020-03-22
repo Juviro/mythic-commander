@@ -11,13 +11,16 @@ const StyledButton = styled.div`
   z-index: 1000;
 `;
 
-export default ({ onAddCard }) => {
+export default ({ onAddCard, containedCards = [] }) => {
   const [isAdding, setIsAdding] = useState(false);
+
+  const containedCardNames = containedCards.map(({ name }) => name);
 
   return (
     <>
       <AddCardDrawer
         onAddCard={onAddCard}
+        containedCardNames={containedCardNames}
         isVisible={isAdding}
         onClose={() => setIsAdding(false)}
       />

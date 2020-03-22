@@ -8,6 +8,7 @@ WANTS:
     - delete wants list
     - duplicate wants list
     - When editing, allow editing of amount as well
+    - show owned badge in list
 
 IMPROVEMENTS: 
     - increase search bar dropdown height
@@ -16,5 +17,7 @@ FEATURES:
     - allow adding wants list in card view
     - add option to export unowned deck cards to list
     - on card overview, show which decks include that card
+    - when adding card to collection, store current card value to later make graphs
+    - store total value of collection each day
 
 REFACTORINGS:
