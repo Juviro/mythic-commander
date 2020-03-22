@@ -6,6 +6,7 @@ import { getImageUrl } from '../../../utils/cardImage';
 import { getPriceLabel } from '../../../utils/cardStats';
 import EnlargeImage from './EnlargeImage';
 import FlippableCard from '../FlippableCard';
+import OwnedBadge from '../OwnedBadge';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -15,6 +16,14 @@ const StyledWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
+`;
+
+const StyledFirstRow = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: ${({ justify }) => justify};
+  padding: 0 4px;
 `;
 
 const StyledCardWrapper = styled.div`
@@ -46,8 +55,11 @@ const GridCard = ({ isLarge, card, onClick }) => {
         <FlippableCard card={card} />
       </StyledCardWrapper>
       {!isLarge && <EnlargeImage src={imgSrc} card={card} />}
-      <Typography.Text>{getPriceLabel(minPrice) + total}</Typography.Text>
-      <Typography.Text ellipsis style={{ maxWidth: '90%' }}>
+      <StyledFirstRow justify={card.owned ? 'space-between' : 'center'}>
+        {card.owned && <OwnedBadge marginLeft={0} />}
+        <Typography.Text>{getPriceLabel(minPrice) + total}</Typography.Text>
+      </StyledFirstRow>
+      <Typography.Text ellipsis style={{ maxWidth: 'calc(100% - 8px)' }}>
         {name}
       </Typography.Text>
     </StyledWrapper>
