@@ -1,17 +1,16 @@
 BUGFIXES:
+    - deploy crashes
 
 NEXT:
+    - on deck/wants/collection add, show *already contained* badge like the owned badge in searchbar
 
 WANTS:
-    - duplicate wants list
     - delete wants list
+    - duplicate wants list
     - When editing, allow editing of amount as well
-    
 
 IMPROVEMENTS: 
-    - fix not jumping to page top
     - increase search bar dropdown height
-    - on deck/wants/collection add, show *already contained* badge like the owned badge in searchbar
 
 FEATURES: 
     - allow adding wants list in card view
