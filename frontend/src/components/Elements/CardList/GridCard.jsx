@@ -23,7 +23,7 @@ const StyledFirstRow = styled.div`
   align-items: center;
   width: 100%;
   justify-content: ${({ justify }) => justify};
-  padding: 0 4px;
+  padding: 0 8px;
 `;
 
 const StyledCardWrapper = styled.div`
