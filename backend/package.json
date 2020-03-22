@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=development nodemon --exec babel-node ./src/index.js",
     "start-staging": "NODE_ENV=staging nodemon --exec babel-node ./dist/index.js",
-    "start-prod": "pm2 --name backend ./dist/index.js",
+    "start-prod": "pm2 start ./dist/index.js --name backend --interpreter ./node_modules/.bin/babel-node",
     "build": "babel src --out-dir dist",
     "migrate": "babel-node node_modules/.bin/knex migrate:latest",
     "rollback": "babel-node node_modules/.bin/knex migrate:rollback",
@@ -18,6 +18,7 @@
     "body-parser": "^1.18.3",
     "cron": "^1.7.2",
     "crypto": "^1.0.1",
+    "global": "^4.4.0",
     "google-auth-library": "^5.6.1",
     "graphql-tag": "^2.10.3",
     "graphql-tools": "^4.0.6",
