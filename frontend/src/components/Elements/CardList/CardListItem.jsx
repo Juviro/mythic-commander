@@ -8,6 +8,7 @@ import { getPriceLabel } from '../../../utils/cardStats';
 import message from '../../../utils/message';
 import PreviewCardImage from '../PreviewCardImage';
 import OwnedBadge from '../OwnedBadge';
+import EditableAmount from './EditableAmount';
 
 const StyledDescription = styled.div`
   display: flex;
@@ -15,11 +16,16 @@ const StyledDescription = styled.div`
   justify-content: space-between;
 `;
 
-const CardListItem = ({ card, searchString, onClick, onDeleteElement }) => {
-  const { minPrice, amount, totalAmount, owned } = card;
-  const displayedAmount = amount || totalAmount;
+const CardListItem = ({
+  card,
+  searchString,
+  onClick,
+  onDeleteElement,
+  isEditing,
+  onChangeAmount,
+}) => {
+  const { minPrice, owned } = card;
   const hasMinPrice = minPrice !== undefined;
-  const amountLabel = displayedAmount > 1 ? `${displayedAmount}x` : '';
 
   const onDelete = event => {
     event.stopPropagation();
@@ -56,9 +62,12 @@ const CardListItem = ({ card, searchString, onClick, onDeleteElement }) => {
         avatar={<PreviewCardImage height="48px" card={card} />}
         description={
           <StyledDescription>
-            <span>
-              {amountLabel && <Typography.Text>{amountLabel}</Typography.Text>}
-            </span>
+            <EditableAmount
+              card={card}
+              onChangeAmount={onChangeAmount}
+              isEditing={isEditing}
+            />
+
             <span>{owned && <OwnedBadge marginLeft={0} />}</span>
           </StyledDescription>
         }
