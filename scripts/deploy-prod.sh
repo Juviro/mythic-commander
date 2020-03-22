@@ -14,4 +14,4 @@ echo -e "\e[44mMigrating Database\e[0m"
 yarn migrate
 
 echo -e "\e[44mrestarting backend\e[0m"
-pm2 restart backend
+NODE_ENV=production pm2 restart backend
