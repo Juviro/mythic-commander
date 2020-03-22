@@ -5,7 +5,7 @@ import { addCardsToWantsList, wantsList } from './queries';
 import { AddCardMobile } from '../../Elements';
 import message from '../../../utils/message';
 
-export default () => {
+export default ({ containedCards }) => {
   const { id: wantsListId } = useParams();
   const [mutate] = useMutation(addCardsToWantsList);
 
@@ -41,9 +41,8 @@ export default () => {
       },
     });
   };
+
   return (
-    <>
-      <AddCardMobile onAddCard={onAddCard} />
-    </>
+    <AddCardMobile onAddCard={onAddCard} containedCards={containedCards} />
   );
 };

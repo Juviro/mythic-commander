@@ -51,7 +51,10 @@ export default () => {
           <DeckBody deck={deck} currentTab={currentTab} />
         </>
       )}
-      <AddCardMobile onAddCard={onAddCard} />
+      <AddCardMobile
+        onAddCard={onAddCard}
+        containedCards={deck && deck.cards}
+      />
     </StyledDeck>
   );
 };

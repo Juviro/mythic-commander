@@ -73,7 +73,7 @@ export default () => {
         basePath={basePath}
         onDeleteElement={isEditing ? onDeleteWant : undefined}
       />
-      <AddWants />
+      <AddWants containedCards={cards} />
       <CardModal basePath={basePath} />
     </StyledWrapper>
   );
