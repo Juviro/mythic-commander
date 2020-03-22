@@ -9,16 +9,12 @@ const DECK_CARD_FIELDS = `
     oracle_id
     zone
     owned
+    set_name
     primaryTypes
     color_identity
     isCommanderLegal
     amount
     minPrice
-    allSets {
-      set
-      id
-      set_name
-    }
 `;
 
 const DECK_FIELDS = `
@@ -27,6 +23,7 @@ const DECK_FIELDS = `
     createdAt
     lastEdit
     imgSrc
+    numberOfCards
     cards {
     ${DECK_CARD_FIELDS}
     }

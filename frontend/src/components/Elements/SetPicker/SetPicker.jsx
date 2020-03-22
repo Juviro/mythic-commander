@@ -2,7 +2,9 @@ import React, { useContext } from 'react';
 import { Select } from 'antd';
 import styled from 'styled-components';
 
+import { useQuery } from 'react-apollo';
 import CardContext from '../../CardProvider/CardProvider';
+import { allCardSets as allCardSetsQuery } from './queries';
 
 const StyledSetIcon = styled.img`
   height: 16px;
@@ -10,23 +12,26 @@ const StyledSetIcon = styled.img`
   margin-right: 4px;
 `;
 
-export default ({ card, onClick, defaultCardId }) => {
+export default ({ card, onClick }) => {
   const { sets } = useContext(CardContext);
+  const { data, loading } = useQuery(allCardSetsQuery, {
+    variables: { oracle_id: card.oracle_id },
+  });
 
-  const allCardSets = card.allSets.map(({ set: setKey, id, set_name }) => ({
-    id,
-    setKey,
-    ...sets[setKey],
-    name: set_name || sets[setKey].name,
-  }));
-
-  const defaultValue =
-    defaultCardId || (allCardSets.length && allCardSets[0].id);
+  const allCardSets = loading
+    ? []
+    : data.cardsByOracleId.allSets.map(({ set: setKey, id, set_name }) => ({
+        id,
+        setKey,
+        ...sets[setKey],
+        name: set_name || sets[setKey].name,
+      }));
 
   return (
     <Select
+      loading={loading}
       size="small"
-      defaultValue={defaultValue}
+      defaultValue={card.set_name}
       style={{ width: '100%' }}
       onSelect={onClick}
       disabled={allCardSets.length <= 1}
