@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styled from 'styled-components';
+import { UnorderedListOutlined } from '@ant-design/icons';
 import { highlightText } from '../../../../../utils/highlightText';
 import { getImageUrl } from '../../../../../utils/cardImage';
 
@@ -65,7 +66,11 @@ export default (searchString, type) => element => {
     value: JSON.stringify({ type, id: elementId }),
     label: (
       <StyledCard>
-        {preview && <CardImageWrapper>{preview}</CardImageWrapper>}
+        {preview ? (
+          <CardImageWrapper>{preview}</CardImageWrapper>
+        ) : (
+          <UnorderedListOutlined style={{ width: 24 }} />
+        )}
         <StyledName isShort={owned}>
           {highlightText(searchString, name)}
         </StyledName>

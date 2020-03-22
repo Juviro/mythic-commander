@@ -11,16 +11,7 @@ const StyledPriceWrapper = styled.div`
 `;
 
 const renderSet = card => {
-  return (
-    <Set
-      setKey={card.set}
-      name={card.set_name}
-      style={{
-        maxWidth: 'calc(100vw - 200px)',
-        fontSize: 12,
-      }}
-    />
-  );
+  return <Set setKey={card.set} name={card.set_name} />;
 };
 
 const renderPrice = priceKey => price => (

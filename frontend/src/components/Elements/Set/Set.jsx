@@ -11,29 +11,28 @@ const StyledSetIcon = styled.img`
 `;
 
 const StyledSet = styled.div`
-  display: flex;
+  display: block;
   align-items: center;
   flex-direction: row;
-`;
-
-const StyledName = styled.div`
+  font-size: 12px;
+  max-width: calc(100vw - 200px);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 `;
 
-export default ({ setKey, style = {}, name: overwriteName }) => {
+export default ({ setKey, name: overwriteName }) => {
   const { sets } = useContext(CardContext);
   const { name, icon_svg_uri } = sets[setKey];
   const setName = overwriteName || name;
   return (
-    <StyledSet style={style}>
+    <StyledSet>
       <StyledSetIcon src={icon_svg_uri} alt={setName} />
       <Link
         to={`/m/search?orderBy=name-asc&set=${setKey}&autoSearch=true`}
         onClick={e => e.stopPropagation()}
       >
-        <StyledName>{setName}</StyledName>
+        {setName}
       </Link>
     </StyledSet>
   );

@@ -2,7 +2,7 @@ BUGFIXES:
     - deploy crashes
 
 NEXT:
-    - When editing, allow editing of amount as well
+    - Wants: When editing, allow editing of amount as well
 
 WANTS:
     - delete wants list
