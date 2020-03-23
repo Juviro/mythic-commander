@@ -10,6 +10,7 @@ const CARD_FIELDS = `
   isTwoFaced
   amount
   cmc
+  createdAt
 `;
 
 const WANTS_LIST_FIELDS = `

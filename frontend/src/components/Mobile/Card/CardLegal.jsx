@@ -9,6 +9,7 @@ const StyledWrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: row;
+  margin-top: 16px;
   color: ${({ isLegal }) => (isLegal ? 'green' : 'red')};
 `;
 
