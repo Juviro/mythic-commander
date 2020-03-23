@@ -8,8 +8,8 @@ const StyledAddButton = styled(PlusOutlined)`
   font-size: 50px;
   color: white;
   opacity: 0.5;
-  right: 16px;
-  top: 32px;
+  top: 10%;
+  right: 10%;
 `;
 
 export default ({ card }) => {
