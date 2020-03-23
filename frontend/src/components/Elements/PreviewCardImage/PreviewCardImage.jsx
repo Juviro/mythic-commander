@@ -29,10 +29,13 @@ export default ({ width, height, card }) => {
   };
   return (
     <>
-      <StyledPreviewWrapper width={width} height={height}>
+      <StyledPreviewWrapper
+        width={width}
+        height={height}
+        onClick={onChangeIsOpen}
+      >
         <StyledCard
           src={getImageUrl(id, imgKey)}
-          onClick={onChangeIsOpen}
           onLoad={() => setLoading(false)}
         />
         {loading && <CustomSkeleton.CardImage />}
