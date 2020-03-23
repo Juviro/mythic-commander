@@ -2,7 +2,6 @@ BUGFIXES:
     - deploy crashes
 
 NEXT:
-    - investigate card details view load time (db, network)
     - on card overview, show which decks include that card
 
 WANTS:
