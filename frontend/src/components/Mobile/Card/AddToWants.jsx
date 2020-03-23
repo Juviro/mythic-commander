@@ -66,14 +66,14 @@ export default ({ card }) => {
           dataSource={dataSource}
           renderItem={({ id, name, amount }) => (
             <List.Item style={{ padding: 0 }}>
-              <Link to={`/m/wants/${id}`} style={{ width: '100%' }}>
-                <Row>
-                  <Col span={3}>
-                    <Typography.Text strong>{`${amount}x`}</Typography.Text>
-                  </Col>
-                  <Col span={21}>{name}</Col>
-                </Row>
-              </Link>
+              <Row style={{ width: '100%' }}>
+                <Col span={2}>
+                  <Typography.Text strong>{`${amount}x`}</Typography.Text>
+                </Col>
+                <Col span={22}>
+                  <Link to={`/m/wants/${id}`}>{name}</Link>
+                </Col>
+              </Row>
             </List.Item>
           )}
         />
