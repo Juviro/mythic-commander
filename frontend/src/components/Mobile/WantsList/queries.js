@@ -59,6 +59,20 @@ export const deleteFromWantsList = gql`
   }
 `;
 
+export const deleteWantsList = gql`
+  mutation deleteWantsList($wantsListId: String!) {
+    deleteWantsList(wantsListId: $wantsListId)
+  }
+`;
+
+export const duplicateWantsList = gql`
+  mutation duplicateWantsList($wantsListId: String!) {
+    duplicateWantsList(wantsListId: $wantsListId) {
+      ${WANTS_LIST_FIELDS}
+    }
+  }
+`;
+
 export const changeWantsListAmount = gql`
   mutation changeWantsListAmount($cards: [CardInputType!]!, $wantsListId: String!) {
     changeWantsListAmount(cards: $cards, wantsListId: $wantsListId) {

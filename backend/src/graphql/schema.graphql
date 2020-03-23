@@ -224,6 +224,8 @@ type Mutation {
     wantsListId: String!
   ): [Card!]!
   deleteFromWantsList(cardId: String!, wantsListId: String!): WantsList!
+  deleteWantsList(wantsListId: String!): Boolean!
+  duplicateWantsList(wantsListId: String!): WantsList!
   addCardsToWantsList(wantsListId: String!, cards: [CardInputType!]!): [Card!]!
 }
 

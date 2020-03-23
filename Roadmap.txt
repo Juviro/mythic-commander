@@ -1,12 +1,11 @@
 BUGFIXES:
     - deploy crashes
+    - ListOrder : Cannot update during an existing state transition
+    - fix 'sort by added' in wants list
 
 NEXT:
-    - on card overview, show which decks include that card
 
 WANTS:
-    - delete wants list
-    - duplicate wants list
     - allow link to deck
     - allow adding wants list in card view
 
@@ -15,6 +14,7 @@ IMPROVEMENTS:
     - auto load more items when scrolling to end
 
 FEATURES: 
+    - on card overview, show which decks include that card
     - when adding card to collection, store current card value to later make fancy graphs
     - store total value of collection each day
     - store win/loss of collection each day
