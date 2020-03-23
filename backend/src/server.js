@@ -46,6 +46,7 @@ export default new ApolloServer({
     return error;
   },
   tracing: true,
+  introspection: true,
   playground: {
     settings: {
       'editor.reuseHeaders': true,
