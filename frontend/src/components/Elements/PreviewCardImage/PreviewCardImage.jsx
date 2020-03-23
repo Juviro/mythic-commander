@@ -3,14 +3,24 @@ import styled from 'styled-components';
 
 import { getImageUrl } from '../../../utils/cardImage';
 import FullscreenCardModal from '../FullscreenCardModal';
+import CustomSkeleton from '../CustomSkeleton';
 
 const StyledCard = styled.img`
-  width: ${({ width = 'auto' }) => width};
-  height: ${({ height = 'auto' }) => height};
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+`;
+
+const StyledPreviewWrapper = styled.div`
+  position: relative;
+  width: ${({ width = '36px' }) => width};
+  height: ${({ height = '48px' }) => height};
 `;
 
 export default ({ width, height, card }) => {
   const [cardPreviewOpen, setCardPreviewOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { id, imgKey } = card;
 
   const onChangeIsOpen = event => {
@@ -19,12 +29,14 @@ export default ({ width, height, card }) => {
   };
   return (
     <>
-      <StyledCard
-        src={getImageUrl(id, imgKey)}
-        width={width}
-        height={height}
-        onClick={onChangeIsOpen}
-      />
+      <StyledPreviewWrapper width={width} height={height}>
+        <StyledCard
+          src={getImageUrl(id, imgKey)}
+          onClick={onChangeIsOpen}
+          onLoad={() => setLoading(false)}
+        />
+        {loading && <CustomSkeleton.CardImage />}
+      </StyledPreviewWrapper>
       <FullscreenCardModal
         visible={cardPreviewOpen}
         card={card}
