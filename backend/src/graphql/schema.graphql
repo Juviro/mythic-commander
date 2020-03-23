@@ -40,8 +40,10 @@ type Card {
   # Deck specific fields
   zone: String!
 
-  # Collectiom specific fields
+  # used by collection, deck, wants
   createdAt: String
+
+  # Collectiom specific fields
   sumPrice: Float
 
   # Find card in lists

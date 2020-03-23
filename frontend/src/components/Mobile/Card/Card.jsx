@@ -76,19 +76,19 @@ const Card = ({ history, basePath }) => {
           selectedCardId={cardId}
           onChangeSet={onChangeSet}
         />
-        <Divider>Wants List</Divider>
-        <AddToWants card={card} />
-        <Divider>Collection</Divider>
+        <Divider>Your Collection</Divider>
         <CardOwned
           card={card}
           loading={loading}
           onChangeSet={onChangeSet}
           selectedCardId={cardId}
         />
-        <Divider>Rules</Divider>
+        <Divider>Wants Lists</Divider>
+        <AddToWants card={card} />
+        <Divider>Resources</Divider>
+        <CardLinks card={card} />
         <CardLegal card={card} />
         <CardRules card={card} loading={loading} />
-        <CardLinks card={card} />
       </StyledBodyWrapper>
     </StyledWrapper>
   );

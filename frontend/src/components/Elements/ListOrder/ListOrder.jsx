@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Radio, Select } from 'antd';
 import {
   BarsOutlined,
@@ -77,7 +77,9 @@ export default ({ showCollectionFilters }) => {
     displayedResults: NumberParam,
   });
 
-  if (!orderBy) setFilter({ orderBy: orderOptions[0].value });
+  useEffect(() => {
+    if (!orderBy) setFilter({ orderBy: orderOptions[0].value });
+  }, [orderBy]);
 
   const onSelectLayout = e =>
     setFilter({ layout: e.target.value, displayedResults: CARDS_PER_PAGE });
