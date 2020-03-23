@@ -90,8 +90,9 @@ export default ({ showCollectionFilters }) => {
     <StyledListOrder>
       <Select
         defaultValue={defaultValue}
-        style={{ width: 215, maxWidth: 'calc(100% - 140px)' }}
+        dropdownStyle={{ minWidth: 200 }}
         onSelect={value => setFilter({ orderBy: value })}
+        style={{ width: 215, maxWidth: 'calc(100% - 140px)' }}
       >
         {orderOptions.map(({ label, value }) => (
           <Select.Option value={value} key={value}>
