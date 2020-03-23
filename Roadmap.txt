@@ -2,21 +2,21 @@ BUGFIXES:
     - deploy crashes
 
 NEXT:
-    - Wants: When editing, allow editing of amount as well
+    - investigate card details view load time (db, network)
+    - on card overview, show which decks include that card
 
 WANTS:
     - delete wants list
     - duplicate wants list
-    - show owned badge in list
+    - allow link to deck
+    - allow adding wants list in card view
 
 IMPROVEMENTS: 
     - increase search bar dropdown height
 
 FEATURES: 
-    - allow adding wants list in card view
-    - add option to export unowned deck cards to list
-    - on card overview, show which decks include that card
-    - when adding card to collection, store current card value to later make graphs
+    - when adding card to collection, store current card value to later make fancy graphs
     - store total value of collection each day
+    - store win/loss of collection each day
 
 REFACTORINGS:
