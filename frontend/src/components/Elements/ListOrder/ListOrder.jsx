@@ -90,7 +90,7 @@ export default ({ showCollectionFilters }) => {
     <StyledListOrder>
       <Select
         defaultValue={defaultValue}
-        style={{ width: 215 }}
+        style={{ width: 215, maxWidth: 'calc(100% - 140px)' }}
         onSelect={value => setFilter({ orderBy: value })}
       >
         {orderOptions.map(({ label, value }) => (
