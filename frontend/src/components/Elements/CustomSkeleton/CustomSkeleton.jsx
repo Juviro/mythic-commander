@@ -10,6 +10,14 @@ const SkeletonWrapper = styled.div`
   padding: 16px;
 `;
 
+const StyledImagePreview = styled.div`
+  width: 100%;
+  height: 100%;
+  border-radius: 4%;
+  background-size: 400% 100%;
+  background: linear-gradient(90deg, #f2f2f2 25%, #e8e8e8 37%, #f2f2f2 63%);
+`;
+
 export const Line = ({ style = {} }) => (
   <Skeleton active paragraph={null} style={style} />
 );
@@ -30,3 +38,7 @@ export const List = () => {
     </SkeletonWrapper>
   );
 };
+
+export const CardImage = () => <StyledImagePreview />;
+
+export default () => <Skeleton />;

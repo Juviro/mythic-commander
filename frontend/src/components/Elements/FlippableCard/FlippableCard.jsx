@@ -4,6 +4,7 @@ import { SyncOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import './index.css';
 import { getImageUrl } from '../../../utils/cardImage';
+import CustomSkeleton from '../CustomSkeleton';
 
 const StyledImageWrapper = styled.div`
   display: flex;
@@ -26,15 +27,6 @@ const StyledFlipIcon = styled(SyncOutlined)`
   padding: 2vw;
   position: relative;
   display: inline-block;
-`;
-
-const StyledPlaceholder = styled.div`
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
-  background-size: 400% 100%;
-  background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 37%, #f2f2f2 63%);
-  animation: ant-skeleton-loading 1.4s ease infinite;
 `;
 
 export default ({ loading, card }) => {
@@ -80,7 +72,7 @@ export default ({ loading, card }) => {
 
   return (
     <StyledImageWrapper>
-      {(loading || !showHighResImage) && <StyledPlaceholder />}
+      {(loading || !showHighResImage) && <CustomSkeleton.CardImage />}
       {isTwoFaced && showHighResImage && (
         <>
           <StyledFlipIcon size="large" shape="circle" onClick={onFlipCard} />
