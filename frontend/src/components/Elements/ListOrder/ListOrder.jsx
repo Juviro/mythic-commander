@@ -79,6 +79,7 @@ export default ({ showCollectionFilters }) => {
 
   useEffect(() => {
     if (!orderBy) setFilter({ orderBy: orderOptions[0].value });
+    // eslint-disable-next-line
   }, [orderBy]);
 
   const onSelectLayout = e =>
