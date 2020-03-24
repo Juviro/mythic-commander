@@ -8,7 +8,6 @@ WANTS:
 
 IMPROVEMENTS: 
     - increase search bar dropdown height
-    - auto load more items when scrolling to end
 
 FEATURES: 
     - when adding card to collection, store current card value to later make fancy graphs
