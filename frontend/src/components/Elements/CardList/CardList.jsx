@@ -102,7 +102,7 @@ const CardList = ({
         {cardList}
       </InfiniteScroll>
       <Footer
-        loading
+        loading={loading}
         displayedCards={cards.length}
         totalResults={totalResults}
       />

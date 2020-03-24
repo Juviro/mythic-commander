@@ -20,6 +20,7 @@ export default ({ wantsList }) => {
           name,
         },
       }),
+      refetchQueries: ['cardsByOracleId'],
     });
   };
 
