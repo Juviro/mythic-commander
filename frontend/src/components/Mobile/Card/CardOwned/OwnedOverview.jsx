@@ -5,7 +5,10 @@ import { useMutation } from 'react-apollo';
 
 import { SaveOutlined } from '@ant-design/icons';
 import { EditIcon } from '../../../Elements';
-import { changeCollection } from '../../../../queries/collection';
+import {
+  changeCollection,
+  getCollectionNames,
+} from '../../../../queries/collection';
 import AddCard from './AddCard';
 import CardRow from './CardRow';
 
@@ -17,7 +20,13 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
-export default ({ cardOracleId, cards, onChangeSet, selectedCardId }) => {
+export default ({
+  cardOracleId,
+  cards,
+  onChangeSet,
+  selectedCardId,
+  cardName,
+}) => {
   const ownedCards = cards.filter(
     ({ amount, amountFoil }) => amount + amountFoil
   );
@@ -49,6 +58,30 @@ export default ({ cardOracleId, cards, onChangeSet, selectedCardId }) => {
         added,
       },
       refetchQueries: ['cardSearch'],
+      update: cache => {
+        const existing = cache.readQuery({
+          query: getCollectionNames,
+        });
+
+        const alreadyOwned = existing.collection.cards.some(
+          ({ name }) => name === cardName
+        );
+
+        if (alreadyOwned) return;
+
+        cache.writeQuery({
+          query: getCollectionNames,
+          data: {
+            collection: {
+              ...existing.collection,
+              cards: existing.collection.cards.concat({
+                name: cardName,
+                __typename: 'Card',
+              }),
+            },
+          },
+        });
+      },
     });
     message.success('Updated your collection!');
     onResetEditing();

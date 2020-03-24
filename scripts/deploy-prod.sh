@@ -13,9 +13,9 @@ cp /opt/mtg/backend/src/graphql/schema.graphql /opt/mtg/backend/dist/graphql/sch
 echo -e "\e[44mMigrating Database\e[0m"
 NODE_ENV=production yarn migrate
 
-echo -e "\e[44mdeploying frontend\e[0m"
+echo -e "\e[44mDeploying frontend\e[0m"
 rm -rf /var/www/mtg/* 
 cp -r /opt/mtg/frontend/build/* /var/www/mtg/
 
-echo -e "\e[44mrestarting backend\e[0m"
+echo -e "\e[44mRestarting backend\e[0m"
 NODE_ENV=production pm2 reload backend
