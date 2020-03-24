@@ -17,6 +17,23 @@ const StyledWrapper = styled.div`
 
 const NEW_LIST_DUMMY_ID = 'new-deck';
 
+const WantsListLink = ({ id, name }) => {
+  if (id === NEW_LIST_DUMMY_ID) return name;
+  return (
+    <Link to={`/m/wants/${id}`}>
+      <Typography.Text
+        ellipsis
+        style={{
+          color: 'inherit',
+          maxWidth: '100%',
+        }}
+      >
+        {name}
+      </Typography.Text>
+    </Link>
+  );
+};
+
 export default ({ card }) => {
   const { data } = useQuery(wantsListsQuery);
   const [mutate] = useMutation(addCardsToWantsList);
@@ -51,6 +68,7 @@ export default ({ card }) => {
           },
         ],
       }),
+      refetchQueries: ['wantsLists'],
     });
 
     message(`Added to <b>${name}</b>!`);
@@ -80,17 +98,7 @@ export default ({ card }) => {
                   <Typography.Text strong>{`${amount}x`}</Typography.Text>
                 </Col>
                 <Col span={22}>
-                  <Link to={id !== NEW_LIST_DUMMY_ID && `/m/wants/${id}`}>
-                    <Typography.Text
-                      ellipsis
-                      style={{
-                        color: id !== NEW_LIST_DUMMY_ID ? 'inherit' : '',
-                        maxWidth: '100%',
-                      }}
-                    >
-                      {name}
-                    </Typography.Text>
-                  </Link>
+                  <WantsListLink id={id} name={name} />
                 </Col>
               </Row>
             </List.Item>
