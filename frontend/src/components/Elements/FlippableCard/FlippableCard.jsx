@@ -17,15 +17,15 @@ const StyledImageWrapper = styled.div`
 
 const StyledFlipIcon = styled(SyncOutlined)`
   z-index: 10;
-  right: -35%;
-  top: -5%;
+  top: 40%;
+  right: 10%;
   border: none;
   opacity: 0.7;
   background-color: #9c9c9c;
   border-radius: 50%;
   font-size: 6vw;
   padding: 2vw;
-  position: relative;
+  position: absolute;
   display: inline-block;
 `;
 

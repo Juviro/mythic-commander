@@ -2,15 +2,10 @@ BUGFIXES:
 
 NEXT:
 
-WANTS:
+IMPROVEMENTS: 
+
+FEATURES:
     - allow link to deck
     - allow adding wants list in card view
-
-IMPROVEMENTS: 
-    - increase search bar dropdown height
-
-FEATURES: 
-    - when adding card to collection, store current card value to later make fancy graphs
-    - store win/loss of collection each day
 
 REFACTORINGS:
