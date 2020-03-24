@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button, Typography } from 'antd';
+import { Typography } from 'antd';
 import styled from 'styled-components';
-
-export const CARDS_PER_PAGE = 30;
+import { LoadingOutlined } from '@ant-design/icons';
 
 const StyledButtonWrapper = styled.div`
   width: 100%;
@@ -10,21 +9,12 @@ const StyledButtonWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  margin-bottom: 24px;
 `;
 
-export default ({
-  hasMore,
-  loading,
-  onLoadMore,
-  displayedCards,
-  totalResults,
-}) => (
+export default ({ loading, displayedCards, totalResults }) => (
   <StyledButtonWrapper>
-    {hasMore && (
-      <Button type="link" onClick={onLoadMore} loading={loading}>
-        Load more
-      </Button>
-    )}
+    {loading && <LoadingOutlined />}
     <Typography.Text
       style={{ marginTop: 8 }}
       type="secondary"

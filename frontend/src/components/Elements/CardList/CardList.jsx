@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { List, BackTop, Typography } from 'antd';
 import styled from 'styled-components';
-
+import InfiniteScroll from 'react-infinite-scroller';
 import { useQueryParams, StringParam } from 'use-query-params';
 import { withRouter } from 'react-router';
+
 import CardListItem from './CardListItem';
 import CustomSkeleton from '../CustomSkeleton';
 import GridCard from './GridCard';
-import ShowMoreButton from './ShowMoreButton';
-
-export const CARDS_PER_PAGE = 30;
+import Footer from './Footer';
 
 const StyledGridWrapper = styled.div`
   display: flex;
@@ -36,19 +35,13 @@ const CardList = ({
     layout: StringParam,
   });
 
+  useEffect(() => {
+    setTimeout(() => window.scrollTo(0, 0), 100);
+  }, [basePath]);
+
   if (!cards) {
     return <CustomSkeleton.List />;
   }
-
-  const showMoreButton = (
-    <ShowMoreButton
-      loading={loading}
-      hasMore={hasMore}
-      totalResults={totalResults}
-      onLoadMore={onLoadMore}
-      displayedCards={cards.length}
-    />
-  );
 
   const onOpenDetailView = ({ id, oracle_id }) => {
     history.push(`${basePath}/${oracle_id}/${id}${history.location.search}`);
@@ -61,12 +54,10 @@ const CardList = ({
     >{`Found ${totalResults} cards:`}</Typography.Text>
   );
 
-  if (layout === 'list') {
-    return (
+  const cardList =
+    layout === 'list' ? (
       <>
-        {totalResultsLabel}
         <List
-          loadMore={showMoreButton}
           size="small"
           dataSource={cards}
           style={{ width: '100%', minHeight: '70vh' }}
@@ -81,26 +72,40 @@ const CardList = ({
             />
           )}
         />
-        <BackTop style={{ left: 20, bottom: 20 }} />
+      </>
+    ) : (
+      <>
+        <StyledGridWrapper>
+          {cards.map(card => (
+            <GridCard
+              key={card.id}
+              onClick={() => onOpenDetailView(card)}
+              card={card}
+              isLarge={layout !== 'grid'}
+            />
+          ))}
+        </StyledGridWrapper>
       </>
     );
-  }
 
   return (
     <>
       {totalResultsLabel}
-      <StyledGridWrapper>
-        {cards.map(card => (
-          <GridCard
-            key={card.id}
-            onClick={() => onOpenDetailView(card)}
-            card={card}
-            isLarge={layout !== 'grid'}
-          />
-        ))}
-        {showMoreButton}
-        <BackTop style={{ left: 20, bottom: 20 }} />
-      </StyledGridWrapper>
+      <InfiniteScroll
+        initialLoad={false}
+        pageStart={0}
+        loadMore={onLoadMore}
+        hasMore={!loading && hasMore}
+        style={{ width: '100%' }}
+      >
+        {cardList}
+      </InfiniteScroll>
+      <Footer
+        loading
+        displayedCards={cards.length}
+        totalResults={totalResults}
+      />
+      <BackTop style={{ left: 20, bottom: 20 }} />
     </>
   );
 };
