@@ -69,7 +69,14 @@ export default ({ card }) => {
                   <Typography.Text strong>{`${amount}x`}</Typography.Text>
                 </Col>
                 <Col span={22}>
-                  <Link to={`/m/wants/${id}`}>{name}</Link>
+                  <Link to={`/m/wants/${id}`}>
+                    <Typography.Text
+                      ellipsis
+                      style={{ color: 'inherit', maxWidth: '100%' }}
+                    >
+                      {name}
+                    </Typography.Text>
+                  </Link>
                 </Col>
               </Row>
             </List.Item>
