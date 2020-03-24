@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { useQueryParams, StringParam, NumberParam } from 'use-query-params';
+import { useQueryParams, StringParam } from 'use-query-params';
 import CustomSkeleton from '../CustomSkeleton';
 import {
   filterCards,
@@ -48,9 +48,7 @@ export default ({
       cardType,
       isLegendary,
       orderBy = 'added-desc',
-      displayedResults = CARDS_PER_PAGE,
     },
-    setFilter,
   ] = useQueryParams({
     name: StringParam,
     colors: StringParam,
@@ -59,15 +57,16 @@ export default ({
     isLegendary: StringParam,
     layout: StringParam,
     orderBy: StringParam,
-    displayedResults: NumberParam,
   });
+
+  const [displayedResults, setDisplayedResults] = useState(CARDS_PER_PAGE);
 
   if (!cards) {
     return <CustomSkeleton.List />;
   }
 
   const onLoadMore = () => {
-    setFilter({ displayedResults: displayedResults + CARDS_PER_PAGE });
+    setDisplayedResults(displayedResults + CARDS_PER_PAGE);
   };
 
   const filteredCards = filterCards(cards, {
