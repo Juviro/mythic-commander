@@ -6,6 +6,5 @@ IMPROVEMENTS:
 
 FEATURES:
     - allow link to deck
-    - allow adding wants list in card view
 
 REFACTORINGS:

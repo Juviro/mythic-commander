@@ -48,14 +48,8 @@ const addRangeClause = (q, encodedValue, columnName) => {
   // eslint-disable-next-line no-unused-vars
   const [_, from = '', __, to = ''] = encodedValue.match(/(\d*)(-)(\d*)/);
 
-  if (from)
-    q.whereRaw(
-      `"${columnName}" ~ '^[0-9.]+$' AND "${columnName}"::float >= ${from}`
-    );
-  if (to)
-    q.whereRaw(
-      `"${columnName}" ~ '^[0-9.]+$' AND "${columnName}"::float <= ${to}`
-    );
+  if (from) q.whereRaw(`"${columnName}"::float >= ${from}`);
+  if (to) q.whereRaw(`"${columnName}"::float <= ${to}`);
 };
 
 const addRarityClause = (q, rarity) => {
@@ -118,6 +112,8 @@ export default async (
       if (rarity) addRarityClause(q, rarity);
     })
     .orderByRaw(`${getOrderColumn(order)} ${direction.toUpperCase()}`);
+
+  console.log('query', query.toString());
 
   const cards = await query;
 
