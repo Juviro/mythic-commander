@@ -23,10 +23,9 @@ const StyledFlipIcon = styled(SyncOutlined)`
   opacity: 0.7;
   background-color: #9c9c9c;
   border-radius: 50%;
-  font-size: 6vw;
-  padding: 2vw;
+  font-size: 30px;
+  padding: 3%;
   position: absolute;
-  display: inline-block;
 `;
 
 export default ({ loading, card }) => {
