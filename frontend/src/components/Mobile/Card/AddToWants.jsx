@@ -1,7 +1,6 @@
 import React from 'react';
 import { Select, Typography, Col, Row, List } from 'antd';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
 import styled from 'styled-components';
@@ -17,7 +16,6 @@ const StyledWrapper = styled.div`
 `;
 
 export default ({ card }) => {
-  const { cardId } = useParams();
   const { data } = useQuery(wantsListsQuery);
   const [mutate] = useMutation(addCardsToWantsList);
 
@@ -36,7 +34,7 @@ export default ({ card }) => {
     mutate({
       variables: {
         wantsListId: id,
-        cards: [{ id: cardId }],
+        cards: [{ id: card.id }],
       },
       optimisticResponse: () => ({
         __typename: 'Mutation',
@@ -81,7 +79,7 @@ export default ({ card }) => {
       <Select
         style={{ width: '100%', marginTop: 16 }}
         onChange={onAddToList}
-        value="Add to list..."
+        value="Add to wants list..."
       >
         {wantsLists.map(({ id, name }) => (
           <Select.Option value={id} key={id}>

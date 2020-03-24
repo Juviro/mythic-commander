@@ -29,6 +29,7 @@ type Card {
   allSets: [Card!]!
   primaryTypes: [String!]!
   subTypes: [String!]!
+  containingDecks: [Deck!]!
 
   # used only for allSets
   set_name: String
