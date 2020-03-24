@@ -20,6 +20,14 @@ const resolver = {
   previewImg(card) {
     return getPreviewImg(card);
   },
+  containingDecks({ oracle_id }, _, { db, user: { id: userId } }) {
+    return db('decks')
+      .select('decks.*')
+      .leftJoin('cardToDeckWithOracle', {
+        'cardToDeckWithOracle.deckId': 'decks.id',
+      })
+      .where({ userId, oracle_id });
+  },
   minPrice({ minPrice, prices: { usd, usd_foil } }) {
     if (minPrice) return minPrice;
     return usd || usd_foil || 0;
