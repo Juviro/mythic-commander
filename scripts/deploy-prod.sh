@@ -19,3 +19,4 @@ cp -r /opt/mtg/frontend/build/* /var/www/mtg/
 
 echo -e "\e[44mRestarting backend\e[0m"
 NODE_ENV=production pm2 reload backend
+NODE_ENV=production pm2 restart backend
