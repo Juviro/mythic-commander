@@ -12,6 +12,13 @@ export default async (
   { cards, wantsListId },
   { user: { id: userId }, db }
 ) => {
+  if (wantsListId === 'new-deck') {
+    const [id] = await db('wantsLists')
+      .insert({ userId })
+      .returning('id');
+    wantsListId = id;
+  }
+
   await canAccessWantsList(userId, wantsListId);
 
   const cardsToInsert = cards.map(({ id, amount = 1 }) => ({
