@@ -13,6 +13,7 @@ import CardLinks from './CardLinks';
 import CardOverview from './CardOverview';
 import { getCardByOracleId } from './queries';
 import AddToWants from './AddToWants';
+import IncludedDecks from './IncludedDecks';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -85,6 +86,8 @@ const Card = ({ history, basePath }) => {
         />
         <Divider>Wants Lists</Divider>
         <AddToWants card={card} />
+        <Divider>Decks</Divider>
+        <IncludedDecks card={card} />
         <Divider>Resources</Divider>
         <CardLinks card={card} />
         <CardLegal card={card} />

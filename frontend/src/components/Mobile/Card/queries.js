@@ -8,10 +8,17 @@ const CARD_FIELDS = `
   imgKey
   isTwoFaced
   rulings_uri
+  
   containingWantsLists {
     id
     name
     amount
+  }
+
+  containingDecks {
+    id
+    name
+    imgSrc
   }
 
   allSets {
@@ -27,6 +34,7 @@ const CARD_FIELDS = `
       usd_foil
     }
   }
+
 `;
 
 export const getCardByOracleId = gql`
