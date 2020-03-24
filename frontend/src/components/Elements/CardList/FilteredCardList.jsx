@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useQueryParams, StringParam } from 'use-query-params';
 import CustomSkeleton from '../CustomSkeleton';
@@ -44,6 +44,7 @@ export default ({
     {
       name,
       colors,
+      layout,
       creatureType,
       cardType,
       isLegendary,
@@ -60,6 +61,11 @@ export default ({
   });
 
   const [displayedResults, setDisplayedResults] = useState(CARDS_PER_PAGE);
+
+  useEffect(() => {
+    setDisplayedResults(CARDS_PER_PAGE);
+    // eslint-disable-next-line
+  }, [layout]);
 
   if (!cards) {
     return <CustomSkeleton.List />;
