@@ -15,6 +15,8 @@ const StyledWrapper = styled.div`
   width: 100%;
 `;
 
+const NEW_LIST_DUMMY_ID = 'new-deck';
+
 export default ({ card }) => {
   const { data } = useQuery(wantsListsQuery);
   const [mutate] = useMutation(addCardsToWantsList);
@@ -25,7 +27,9 @@ export default ({ card }) => {
   const { wantsLists } = data;
 
   const onAddToList = id => {
-    const { name } = wantsLists.find(wantsList => wantsList.id === id);
+    const { name } = wantsLists.find(wantsList => wantsList.id === id) || {
+      name: 'New Wants List',
+    };
     const updatedWantsList = containingWantsLists.find(
       wantsList => wantsList.id === id
     ) || { name, id, amount: 0, __typename: 'ContainingList' };
@@ -56,6 +60,13 @@ export default ({ card }) => {
     a.name > b.name ? 1 : -1
   );
 
+  const addDeckElement = {
+    name: '+ New list',
+    id: NEW_LIST_DUMMY_ID,
+  };
+
+  const selectOptions = [addDeckElement, ...wantsLists];
+
   return (
     <StyledWrapper>
       {Boolean(containingWantsLists.length) && (
@@ -69,10 +80,13 @@ export default ({ card }) => {
                   <Typography.Text strong>{`${amount}x`}</Typography.Text>
                 </Col>
                 <Col span={22}>
-                  <Link to={`/m/wants/${id}`}>
+                  <Link to={id !== NEW_LIST_DUMMY_ID && `/m/wants/${id}`}>
                     <Typography.Text
                       ellipsis
-                      style={{ color: 'inherit', maxWidth: '100%' }}
+                      style={{
+                        color: id !== NEW_LIST_DUMMY_ID ? 'inherit' : '',
+                        maxWidth: '100%',
+                      }}
                     >
                       {name}
                     </Typography.Text>
@@ -88,9 +102,13 @@ export default ({ card }) => {
         onChange={onAddToList}
         value="Add to wants list..."
       >
-        {wantsLists.map(({ id, name }) => (
+        {selectOptions.map(({ id, name }) => (
           <Select.Option value={id} key={id}>
-            {name}
+            <Typography.Text
+              type={id === NEW_LIST_DUMMY_ID ? 'secondary' : 'primary'}
+            >
+              {name}
+            </Typography.Text>
           </Select.Option>
         ))}
       </Select>
