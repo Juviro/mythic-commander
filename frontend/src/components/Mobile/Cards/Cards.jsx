@@ -9,10 +9,10 @@ import { ListOrder } from '../../Elements';
 import SearchButton from './SearchButton';
 import Header from './Header';
 import { cardSearch } from './queries';
-import { CARDS_PER_PAGE } from '../../Elements/CardList/CardList';
 import CardModal from '../Card/CardModal';
 import CollapsableFilter from '../../Elements/Filter/CollapsableFilter';
 import NameFilter from '../../Elements/Filter/TextFilter/NameFilter';
+import { CARDS_PER_PAGE } from '../../Elements/CardList/FilteredCardList';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -68,9 +68,6 @@ export default () => {
     const { cards } = data.cardSearch;
     const newCards = offset ? (allCards || []).concat(cards) : cards;
     setAllCards(newCards);
-    setFilter({
-      displayedResults: data.cardSearch.nextOffset || newCards.length,
-    });
     setLoading(false);
   };
 

@@ -1,8 +1,6 @@
 BUGFIXES:
-    - deploy crashes
 
 NEXT:
-    - on card overview, show which decks include that card
 
 WANTS:
     - allow link to deck
@@ -14,7 +12,6 @@ IMPROVEMENTS:
 
 FEATURES: 
     - when adding card to collection, store current card value to later make fancy graphs
-    - store total value of collection each day
     - store win/loss of collection each day
 
 REFACTORINGS:

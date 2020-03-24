@@ -5,10 +5,8 @@ import {
   AppstoreOutlined,
   BorderOutlined,
 } from '@ant-design/icons';
-import { useQueryParams, StringParam, NumberParam } from 'use-query-params';
+import { useQueryParams, StringParam } from 'use-query-params';
 import styled from 'styled-components';
-
-import { CARDS_PER_PAGE } from '../CardList/FilteredCardList';
 
 const StyledListOrder = styled.div`
   display: flex;
@@ -74,7 +72,6 @@ export default ({ showCollectionFilters }) => {
   const [{ layout = 'list', orderBy }, setFilter] = useQueryParams({
     layout: StringParam,
     orderBy: StringParam,
-    displayedResults: NumberParam,
   });
 
   useEffect(() => {
@@ -82,8 +79,7 @@ export default ({ showCollectionFilters }) => {
     // eslint-disable-next-line
   }, [orderBy]);
 
-  const onSelectLayout = e =>
-    setFilter({ layout: e.target.value, displayedResults: CARDS_PER_PAGE });
+  const onSelectLayout = e => setFilter({ layout: e.target.value });
 
   const defaultValue = orderOptions.find(
     ({ value }) => value === (orderBy || orderOptions[0].value)
