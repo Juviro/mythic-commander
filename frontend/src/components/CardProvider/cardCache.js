@@ -1,9 +1,16 @@
+import { message } from 'antd';
 import { getAllSets, getAllCreatureTypes } from '../../network/mtgApi';
 import client from '../../network/graphqlClient';
-import { cachedCards } from '../../queries';
+import { cachedCards, numberOfCachedCards } from './queries';
 
 const REFRESH_PERIOD = 24 * 60 * 60 * 1000;
 
+const filteredCardOracleIds = [
+  '94a3b2af-0741-48c5-b827-6ff529bafae3',
+  '9adc9df1-bab0-4458-9453-7028f23693b8',
+  '8d8b9933-d7a2-4adc-85ee-ac62b23e784f',
+  '4e536142-4ebe-4062-887b-5dd123c41d39',
+];
 // Special cases for the three cards named
 // "Our Market Research Shows That Players Like Really Long bla bla bla"
 // and
@@ -13,15 +20,27 @@ const REFRESH_PERIOD = 24 * 60 * 60 * 1000;
 // that kind of break the search
 // and the card "_____"
 // that can't be found by the scryfall api
-const filterProblematicCards = ({ n }) => {
-  const tooLong = n.length > 60;
-  const crashesDb = n.startsWith('___');
-
-  return !tooLong && !crashesDb;
+const filterProblematicCards = ({ o }) => {
+  return !filteredCardOracleIds.includes(o);
 };
 
-const getCards = async () => {
+const getCards = async (currentCards = [], shouldForceUpdate) => {
+  const {
+    data: { numberOfCachedCards: updatedCardCount },
+  } = await client.query({
+    query: numberOfCachedCards,
+  });
+
+  const filteredUpdatedCardCount =
+    updatedCardCount - filteredCardOracleIds.length;
+
+  if (filteredUpdatedCardCount === currentCards.length && !shouldForceUpdate) {
+    return currentCards;
+  }
+
+  message.info('Updating cards... this may take some time');
   const { data } = await client.query({ query: cachedCards });
+  message.success('Cards updated successfully!');
   return data.cachedCards.filter(filterProblematicCards) || [];
 };
 
@@ -30,14 +49,20 @@ const getSets = async () => {
   return sets;
 };
 
-const updateCollection = async (type, collectionKey, lastUpdateKey) => {
+const updateCollection = async (
+  type,
+  collectionKey,
+  lastUpdateKey,
+  parsedCollection,
+  shouldForceUpdate
+) => {
   const getter = {
     sets: getSets,
     cards: getCards,
     creatureTypes: getAllCreatureTypes,
   };
 
-  const stored = await getter[type]();
+  const stored = await getter[type](parsedCollection, shouldForceUpdate);
 
   localStorage.setItem(collectionKey, JSON.stringify(stored));
   localStorage.setItem(lastUpdateKey, Date.now());
@@ -52,20 +77,30 @@ export const getCollectionFromCache = async type => {
   const collectionKey = `stored-${type}`;
 
   const lastUpdate = localStorage.getItem(lastUpdateKey);
+  const shouldForceUpdate = Number(lastUpdate) < FORCE_UPDATE_IF_BEFORE;
+
   const shouldUpdate =
     !lastUpdate ||
     Date.now() - Number(lastUpdate) > REFRESH_PERIOD ||
-    Number(lastUpdate) < FORCE_UPDATE_IF_BEFORE;
+    shouldForceUpdate;
 
   const cachedCollection = localStorage.getItem(collectionKey);
 
+  const parsedCollection = JSON.parse(cachedCollection);
+
   if (!shouldUpdate && cachedCollection) {
-    return JSON.parse(cachedCollection);
+    return parsedCollection;
   }
 
   if (cachedCollection) {
-    updateCollection(type, collectionKey, lastUpdateKey);
-    return JSON.parse(cachedCollection);
+    updateCollection(
+      type,
+      collectionKey,
+      lastUpdateKey,
+      parsedCollection,
+      shouldForceUpdate
+    );
+    return parsedCollection;
   }
 
   return updateCollection(type, collectionKey, lastUpdateKey);

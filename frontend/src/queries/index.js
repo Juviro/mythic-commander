@@ -1,5 +1,4 @@
 export { getUser, login } from './user';
-export { cachedCards } from './cards';
 export {
   addToCollection,
   getCollection,

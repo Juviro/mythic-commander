@@ -35,6 +35,13 @@ const resolver = {
   },
 
   cachedCards: (_, __, { db }) => getCachedCards(db),
+  numberOfCachedCards: async (_, __, { db }) => {
+    const { count } = await db('distinctCards')
+      .count('*')
+      .first();
+    return count;
+  },
+
   cardSearch,
 
   wantsList(_, { id }, { user: { id: userId }, db }) {

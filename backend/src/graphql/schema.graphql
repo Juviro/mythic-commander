@@ -163,6 +163,8 @@ type Query {
     options: CardsOptionsInput
   ): PaginatedCards!
   cardsByOracleId(oracle_id: String!): Card!
+
+  numberOfCachedCards: Int!
   cachedCards: [CachedCard!]!
 
   wantsList(id: String!): WantsList!
