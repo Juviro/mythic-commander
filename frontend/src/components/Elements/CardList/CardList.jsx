@@ -97,6 +97,7 @@ const CardList = ({
         loadMore={onLoadMore}
         hasMore={!loading && hasMore}
         style={{ width: '100%' }}
+        threshold={1000}
       >
         {cardList}
       </InfiniteScroll>
