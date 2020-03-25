@@ -15,6 +15,7 @@ import CardList from '.';
 export const CARDS_PER_PAGE = 30;
 
 const sortCards = (cards, orderBy = '') => {
+  console.log('orderBy :', orderBy);
   const [order, direction = 'asc'] = orderBy.split('-');
   switch (order) {
     case 'cmc':
