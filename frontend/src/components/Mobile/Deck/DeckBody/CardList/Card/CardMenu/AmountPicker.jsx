@@ -2,7 +2,7 @@ import React from 'react';
 import { InputNumber } from 'antd';
 import { useParams } from 'react-router';
 import { useMutation } from 'react-apollo';
-import { editDeckCard } from '../../../../../../../queries';
+import { editDeckCard } from '../../../../queries';
 
 export default ({ card }) => {
   const { id: deckId } = useParams();

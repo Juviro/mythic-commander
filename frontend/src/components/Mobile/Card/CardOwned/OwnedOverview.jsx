@@ -5,12 +5,9 @@ import { useMutation } from 'react-apollo';
 
 import { SaveOutlined } from '@ant-design/icons';
 import { EditIcon } from '../../../Elements';
-import {
-  changeCollection,
-  getCollectionNames,
-} from '../../../../queries/collection';
 import AddCard from './AddCard';
 import CardRow from './CardRow';
+import { changeCollection, getCollectionNames } from './queries';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -75,8 +72,11 @@ export default ({
             collection: {
               ...existing.collection,
               cards: existing.collection.cards.concat({
-                name: cardName,
-                __typename: 'Card',
+                __typename: 'CollectionCard',
+                card: {
+                  name: cardName,
+                  __typename: 'Card',
+                },
               }),
             },
           },

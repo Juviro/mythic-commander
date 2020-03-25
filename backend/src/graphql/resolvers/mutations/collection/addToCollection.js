@@ -1,3 +1,5 @@
+import unifyCardFormat from '../../unifyCardFormat';
+
 const ON_CONFLICT = `
     ON CONFLICT (id, "userId") 
     DO UPDATE SET 
@@ -19,11 +21,13 @@ export default async (_, { cards }, { user: { id: userId }, db }) => {
   const { rows: newCardIds } = await db.raw(
     query + ON_CONFLICT + ' returning id'
   );
-  return await db('collection')
+  const updatedCards = await db('collection')
     .leftJoin('cards', { 'cards.id': 'collection.id' })
     .whereIn(
       'collection.id',
       newCardIds.map(({ id }) => id)
     )
     .andWhere({ userId });
+
+  return updatedCards.map(unifyCardFormat(userId));
 };

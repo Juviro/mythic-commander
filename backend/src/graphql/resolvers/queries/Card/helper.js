@@ -1,5 +1,3 @@
-export const toDeckCard = card => ({ ...card, card: { id: card.id } });
-
 export const getPreviewImg = ({ image_uris, card_faces }) =>
   image_uris ? image_uris.small : card_faces[0].image_uris.small;
 

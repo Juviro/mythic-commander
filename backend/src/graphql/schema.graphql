@@ -17,37 +17,33 @@ type Card {
   rulings_uri: String!
   colors: [String]
   color_identity: [String]
+  set_name: String
 
   # Additional card fields
   previewImg: String
-  owned: Boolean!
-  totalAmount: Int!
-  minPrice: Float!
   imgKey: String!
+
   isTwoFaced: Boolean!
   isCommanderLegal: Boolean!
-  allSets: [Card!]!
   primaryTypes: [String!]!
   subTypes: [String!]!
 
-  # used only for allSets
-  set_name: String
+  allSets: [Card!]!
 
-  # used by allSets
+  minPrice: Float!
+  sumPrice: Float
+
+  owned: Boolean!
   amountOwned: Int!
   amountOwnedFoil: Int!
+  totalAmount: Int!
 
   # used by Deck and WantsList
   amount: Int!
-
   # Deck specific fields
   zone: String!
-
   # used by collection, deck, wants
   createdAt: String
-
-  # Collectiom specific fields
-  sumPrice: Float
 
   # Find card in lists
   containingDecks: [Deck!]!
@@ -120,13 +116,28 @@ type Deck {
   lastEdit: String!
   imgSrc: String!
   numberOfCards: Int!
-  cards: [Card!]!
+  cards: [DeckCard!]!
 }
+
+type DeckCard {
+  id: String!
+  amount: Int!
+  createdAt: String!
+  zone: String!
+  card: Card!
+}
+
 ################################# Collection #################################
 
 type Collection {
   id: String!
-  cards: [Card!]!
+  cards: [CollectionCard!]!
+}
+
+type CollectionCard {
+  id: String!
+  createdAt: String!
+  card: Card!
 }
 
 ################################# User #################################
@@ -145,8 +156,15 @@ type WantsList {
   name: String!
   lastEdit: String!
   createdAt: String!
-  cards: [Card!]!
   numberOfCards: Int!
+  cards: [WantsListCard!]!
+}
+
+type WantsListCard {
+  id: String!
+  createdAt: String!
+  amount: Int!
+  card: Card!
 }
 
 ################################# Queries #################################
@@ -202,19 +220,19 @@ type Mutation {
     cardId: String!
     deckId: String!
     newProps: EditDeckCardInput!
-  ): Card!
+  ): DeckCard!
   deleteDeck(deckId: String!): Boolean
   deleteFromDeck(cardId: String!, deckId: String!): Deck!
   duplicateDeck(deckId: String!): String!
 
   ########## Collection ##########
-  addToCollection(cards: [AddToCollectionInput]!): [Card]!
+  addToCollection(cards: [AddToCollectionInput]!): [CollectionCard]!
   changeCollection(
     cardOracleId: String!
     added: [ChangeCollectionInput!]
     edited: [ChangeCollectionInput!]
     deleted: [String!]
-  ): Card!
+  ): CollectionCard!
   deleteFromCollection(cardIds: [String]!): Boolean!
 
   ########## Session ##########
@@ -227,19 +245,18 @@ type Mutation {
     wantsListId: String!
     newProperties: EditWantsListFieldsInput!
   ): WantsList!
-  changeWantsListAmount(
-    cards: [CardInputType!]!
-    wantsListId: String!
-  ): [Card!]!
   editWantsListCard(
     cardId: String!
     wantsListId: String!
     newProps: EditWantsListCardInput!
-  ): Card!
+  ): WantsListCard!
   deleteFromWantsList(cardId: String!, wantsListId: String!): WantsList!
   deleteWantsList(wantsListId: String!): Boolean!
   duplicateWantsList(wantsListId: String!): WantsList!
-  addCardsToWantsList(wantsListId: String!, cards: [CardInputType!]!): [Card!]!
+  addCardsToWantsList(
+    wantsListId: String!
+    cards: [CardInputType!]!
+  ): [WantsListCard!]!
 }
 
 ################################# Deck #################################

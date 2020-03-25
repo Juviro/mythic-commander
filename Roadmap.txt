@@ -15,8 +15,15 @@ FEATURES:
 
 REFACTORINGS:
     - remove amount from card
+    - random id for deck and wants
     - move collectionValue and collectionAmount together
 
 LONG TERM FEATURES
     - Add option to deck to fill up empty card slots with basic lands, based on mana occurrance
     - find a way to make collection value work
+
+
+
+CURRENT REFACTORING:
+    - deck color is colorless
+        - check deck color checks
