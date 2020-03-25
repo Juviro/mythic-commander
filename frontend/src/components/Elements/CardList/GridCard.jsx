@@ -22,7 +22,7 @@ const StyledFirstRow = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  justify-content: ${({ justify }) => justify};
+  justify-content: space-between;
   padding: 0 8px;
 `;
 
@@ -32,7 +32,13 @@ const StyledCardWrapper = styled.div`
   border-radius: 3%;
 `;
 
-const GridCard = ({ isLarge, card, onClick }) => {
+const GridCard = ({
+  isLarge,
+  card,
+  onClick,
+  onChangeElement,
+  onDeleteElement,
+}) => {
   const imgSrc = getImageUrl(card.id, card.imgKey, 'normal');
 
   const style = isLarge
@@ -55,8 +61,8 @@ const GridCard = ({ isLarge, card, onClick }) => {
         <FlippableCard card={card} />
       </StyledCardWrapper>
       {!isLarge && <EnlargeImage src={imgSrc} card={card} />}
-      <StyledFirstRow justify={card.owned ? 'space-between' : 'center'}>
-        {card.owned && <OwnedBadge marginLeft={0} />}
+      <StyledFirstRow>
+        <span>{card.owned && <OwnedBadge marginLeft={0} />}</span>
         <Typography.Text>{getPriceLabel(minPrice) + total}</Typography.Text>
       </StyledFirstRow>
       <Typography.Text ellipsis style={{ maxWidth: 'calc(100% - 8px)' }}>

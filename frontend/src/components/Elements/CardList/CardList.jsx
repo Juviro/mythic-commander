@@ -79,6 +79,8 @@ const CardList = ({
               key={card.id}
               onClick={() => onOpenDetailView(card)}
               card={card}
+              onChangeElement={onChangeElement}
+              onDeleteElement={onDeleteElement}
               isLarge={layout !== 'grid'}
             />
           ))}
