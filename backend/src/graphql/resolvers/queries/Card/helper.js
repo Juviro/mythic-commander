@@ -17,8 +17,8 @@ export const getAllSets = async (oracle_id, userId, db) => {
     `
       SELECT 
         cards.*, 
-        coalesce(collection.amount,0) as amount, 
-        coalesce(collection."amountFoil",0) as "amountFoil" 
+        coalesce(collection.amount,0) as "amountOwned", 
+        coalesce(collection."amountFoil",0) as "amountOwnedFoil" 
       FROM cards 
       LEFT JOIN collection
         ON collection.id = cards.id

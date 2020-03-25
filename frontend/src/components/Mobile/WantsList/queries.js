@@ -10,6 +10,7 @@ const CARD_FIELDS = `
   isTwoFaced
   amount
   cmc
+  set_name
   createdAt
 `;
 
@@ -74,9 +75,17 @@ export const duplicateWantsList = gql`
   }
 `;
 
-export const changeWantsListAmount = gql`
-  mutation changeWantsListAmount($cards: [CardInputType!]!, $wantsListId: String!) {
-    changeWantsListAmount(cards: $cards, wantsListId: $wantsListId) {
+export const editWantsListCard = gql`
+  mutation editWantsListCard(
+    $cardId: String!
+    $wantsListId: String!
+    $newProps: EditWantsListCardInput!
+  ) {
+    editWantsListCard(
+      wantsListId: $wantsListId
+      newProps: $newProps
+      cardId: $cardId
+    ) {
       ${CARD_FIELDS}
     }
   }

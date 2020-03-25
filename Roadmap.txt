@@ -1,10 +1,22 @@
 BUGFIXES:
+    - backend deployment
+    - basic lands are shown as unowned in deck list
 
 NEXT:
+    - improve option to edit card in listview (allow set change, edit icon to each row)
+    - add option to edit cards in gridview (menu overlaying card): edit amount, edit set, delete
+    - switch deck to list (disable pagination) with new menu
 
 IMPROVEMENTS: 
+    - destroy mobile add card search field when not visible (text stays in input)
 
 FEATURES:
     - allow link to deck
 
 REFACTORINGS:
+    - remove amount from card
+    - move collectionValue and collectionAmount together
+
+LONG TERM FEATURES
+    - Add option to deck to fill up empty card slots with basic lands, based on mana occurrance
+    - find a way to make collection value work

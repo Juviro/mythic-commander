@@ -35,5 +35,5 @@ export default ({ card }) => {
     });
   };
 
-  return <SetPicker card={card} onClick={onChangeSet} />;
+  return <SetPicker card={card} onSelect={onChangeSet} />;
 };

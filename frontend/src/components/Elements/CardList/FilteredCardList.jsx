@@ -37,8 +37,7 @@ export default ({
   loading,
   basePath,
   onDeleteElement,
-  isEditing,
-  onChangeAmount,
+  onChangeElement,
 }) => {
   const [
     {
@@ -91,13 +90,12 @@ export default ({
 
   return (
     <CardList
-      isEditing={isEditing}
       basePath={basePath}
       hasMore={hasMore}
       loading={loading}
-      onChangeAmount={onChangeAmount}
       cards={displayedCards}
       onLoadMore={onLoadMore}
+      onChangeElement={onChangeElement}
       onDeleteElement={onDeleteElement}
       totalResults={cards.length}
     />
