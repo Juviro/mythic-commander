@@ -41,7 +41,7 @@ export default ({ basePath, cards, loading, wantsList }) => {
         const { editWantsListCard: newCard } = data;
 
         const newCards = existing.wantsList.cards.map(card => {
-          if (card.id !== cardId) return card;
+          if (card.card.id !== cardId) return card;
           return newCard;
         });
 

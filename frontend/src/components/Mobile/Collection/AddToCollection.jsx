@@ -20,8 +20,8 @@ export default () => {
         });
 
         const existingCards = existing.collection.cards.filter(
-          ({ oracle_id }) =>
-            !newCards.some(card => card.oracle_id === oracle_id)
+          ({ card: { oracle_id } }) =>
+            !newCards.some(({ card }) => card.oracle_id === oracle_id)
         );
 
         cache.writeQuery({

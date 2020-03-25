@@ -5,6 +5,7 @@ import { Divider } from 'antd';
 import { getMobileCollection } from './queries';
 
 import { ListOrder } from '../../Elements';
+import unifyCardFormat from '../../../utils/unifyCardFormat';
 import CollectionOverview from './CollectionOverview';
 import CollapsableFilter from '../../Elements/Filter/CollapsableFilter';
 import FilteredCardList from '../../Elements/CardList/FilteredCardList';
@@ -23,8 +24,7 @@ const StyledWrapper = styled.div`
 
 export default () => {
   const { data } = useQuery(getMobileCollection);
-  const cards =
-    data && data.collection.cards.filter(({ totalAmount }) => totalAmount);
+  const cards = unifyCardFormat(data && data.collection.cards);
 
   return (
     <StyledWrapper>

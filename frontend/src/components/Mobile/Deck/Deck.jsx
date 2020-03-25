@@ -10,6 +10,7 @@ import DeckBody from './DeckBody';
 import { getDeck, addCardsToDeck } from './queries';
 import { AddCardMobile } from '../../Elements';
 import message from '../../../utils/message';
+import unifyCardFormat from '../../../utils/unifyCardFormat';
 
 const StyledDeck = styled.div`
   width: 100%;
@@ -27,6 +28,12 @@ export default () => {
   const [mutate] = useMutation(addCardsToDeck);
 
   const deck = data && data.deck;
+  const cards = deck && unifyCardFormat(deck.cards);
+
+  const unifiedDeck = deck && {
+    ...deck,
+    cards,
+  };
 
   const onAddCard = (card, name) => {
     message(`Added <b>${name}</b> to your deck!`);
@@ -42,19 +49,16 @@ export default () => {
         <Spin />
       ) : (
         <>
-          <DeckHeader deck={deck} />
+          <DeckHeader deck={unifiedDeck} />
           <DeckMenu
-            deck={deck}
+            deck={unifiedDeck}
             currentTab={currentTab}
             onSetTab={setCurrentTab}
           />
-          <DeckBody deck={deck} currentTab={currentTab} />
+          <DeckBody deck={unifiedDeck} cards={cards} currentTab={currentTab} />
         </>
       )}
-      <AddCardMobile
-        onAddCard={onAddCard}
-        containedCards={deck && deck.cards}
-      />
+      <AddCardMobile onAddCard={onAddCard} containedCards={cards} />
     </StyledDeck>
   );
 };

@@ -1,5 +1,6 @@
 import { updateLastEdit } from './helper';
 import { canAccessWantsList } from '../../../../auth/authenticateUser';
+import unifyCardFormat from '../../unifyCardFormat';
 
 const ON_CONFLICT = `
     ON CONFLICT (id, "wantsListId") 
@@ -35,11 +36,13 @@ export default async (
 
   await updateLastEdit(wantsListId, db);
 
-  return db('cardToWantsList')
+  const insertedCards = await db('cardToWantsList')
     .leftJoin('cards', { 'cards.id': 'cardToWantsList.id' })
     .where({ wantsListId })
     .whereIn(
       'cards.id',
       cards.map(({ id }) => id)
     );
+
+  return insertedCards.map(unifyCardFormat(wantsListId));
 };

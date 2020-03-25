@@ -2,16 +2,19 @@ import gql from 'graphql-tag';
 
 const CARD_FIELDS = `
   id
-  oracle_id
-  name
-  owned
-  minPrice
-  imgKey
-  isTwoFaced
   amount
-  cmc
-  set_name
   createdAt
+  card {
+    id
+    oracle_id
+    name
+    owned
+    minPrice
+    imgKey
+    isTwoFaced
+    cmc
+    set_name
+  }
 `;
 
 const WANTS_LIST_FIELDS = `

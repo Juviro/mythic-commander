@@ -1,6 +1,6 @@
 import { canAccessDeck } from '../../../../auth/authenticateUser';
 import { updateLastEdit } from './helper';
-import { toDeckCard } from '../../queries/Card/helper';
+import unifyCardFormat from '../../unifyCardFormat';
 
 export default async (_, { cardId, deckId, newProps }, { user, db }) => {
   await canAccessDeck(user.id, deckId);
@@ -15,5 +15,5 @@ export default async (_, { cardId, deckId, newProps }, { user, db }) => {
     .leftJoin('cards', { 'cards.id': 'cardToDeck.id' })
     .where({ deckId, 'cardToDeck.id': newCardId });
 
-  return toDeckCard(updatedCard);
+  return unifyCardFormat(deckId)(updatedCard);
 };

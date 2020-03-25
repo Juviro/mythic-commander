@@ -1,5 +1,3 @@
-import gql from 'graphql-tag';
-
 export const CARD_FIELDS = `
   id
   set
@@ -50,15 +48,4 @@ export const CARD_FIELDS = `
     }
   }
   rulings_uri
-`;
-
-export const cachedCards = gql`
-  query cachedCards {
-    cachedCards {
-      i
-      n
-      k
-      o
-    }
-  }
 `;

@@ -21,7 +21,7 @@ export default ({ card }) => {
         if (!existing) return;
         const cards = [
           ...existing.deck.cards.filter(
-            existingCard => existingCard.id !== card.id
+            existingCard => existingCard.card.id !== card.id
           ),
           editedCard,
         ];

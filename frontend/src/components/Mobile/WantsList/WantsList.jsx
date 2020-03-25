@@ -10,6 +10,7 @@ import AddWants from './AddWants';
 import CardModal from '../Card/CardModal';
 import { ListOrder } from '../../Elements';
 import CardsList from './CardsList';
+import unifyCardFormat from '../../../utils/unifyCardFormat';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -25,7 +26,7 @@ export default () => {
   });
 
   const wantsList = data && data.wantsList;
-  const cards = wantsList && wantsList.cards;
+  const cards = wantsList && unifyCardFormat(wantsList.cards);
   const basePath = `/m/wants/${id}`;
 
   useEffect(() => {

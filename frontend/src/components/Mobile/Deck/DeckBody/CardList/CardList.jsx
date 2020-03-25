@@ -24,9 +24,8 @@ const addMainType = card => {
   };
 };
 
-const DeckList = ({ deck }) => {
+const DeckList = ({ deck, cards = [] }) => {
   const [openCardId, setOpenCardId] = useState(null);
-  const cards = deck.cards || [];
   const cardWithMainType = cards.map(addMainType);
   const cardsByType = CARD_TYPES.map(type => ({
     type,

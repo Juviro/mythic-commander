@@ -1,4 +1,5 @@
 import { canAccessWantsList } from '../../../../auth/authenticateUser';
+import unifyCardFormat from '../../unifyCardFormat';
 
 export default async (
   _,
@@ -12,8 +13,10 @@ export default async (
     .update(newProps)
     .returning('id');
 
-  return db('cardToWantsList')
+  const updatedCard = await db('cardToWantsList')
     .leftJoin('cards', { 'cards.id': 'cardToWantsList.id' })
     .where({ 'cards.id': id, wantsListId })
     .first();
+
+  return unifyCardFormat(wantsListId)(updatedCard);
 };
