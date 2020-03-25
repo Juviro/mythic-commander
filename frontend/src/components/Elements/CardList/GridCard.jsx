@@ -69,11 +69,9 @@ const GridCard = ({ isLarge, card, onClick }) => {
 const areEqual = (prevProps, nextProps) => {
   if (prevProps.isLarge !== nextProps.isLarge) return false;
   if (prevProps.loading !== nextProps.loading) return false;
-  return ['id', 'amount', 'amountFoil', 'totalAmount', 'sumPrice'].every(
-    propKey => {
-      return prevProps.card[propKey] === nextProps.card[propKey];
-    }
-  );
+  return ['id', 'amount', 'totalAmount', 'sumPrice'].every(propKey => {
+    return prevProps.card[propKey] === nextProps.card[propKey];
+  });
 };
 
 export default React.memo(GridCard, areEqual);

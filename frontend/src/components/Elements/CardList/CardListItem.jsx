@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import styled from 'styled-components';
 import { List, Typography } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
 import { highlightText } from '../../../utils/highlightText';
 import { getPriceLabel } from '../../../utils/cardStats';
 import message from '../../../utils/message';
 import PreviewCardImage from '../PreviewCardImage';
 import OwnedBadge from '../OwnedBadge';
 import EditableAmount from './EditableAmount';
+import SetPicker from '../SetPicker';
 
 const StyledDescription = styled.div`
   display: flex;
   align-items: center;
+  min-height: 24px;
   justify-content: space-between;
 `;
 
@@ -21,11 +23,18 @@ const CardListItem = ({
   searchString,
   onClick,
   onDeleteElement,
-  isEditing,
-  onChangeAmount,
+  onChangeElement,
 }) => {
+  const [isEditing, setIsEditig] = useState(false);
+  const [newProps, setNewProps] = useState({});
+
   const { minPrice, owned } = card;
   const hasMinPrice = minPrice !== undefined;
+  const cardId = card.id;
+
+  useEffect(() => {
+    setIsEditig(false);
+  }, [cardId]);
 
   const onDelete = event => {
     event.stopPropagation();
@@ -33,16 +42,37 @@ const CardListItem = ({
     message(`Deleted <b>${card.name}</b>!`);
   };
 
+  const onToggleEditing = event => {
+    event.stopPropagation();
+    if (isEditing && Object.keys(newProps).length) {
+      onChangeElement(card.id, newProps);
+      setNewProps({});
+    }
+    setIsEditig(!isEditing);
+  };
+
+  const onChangeProp = key => value => {
+    setNewProps({
+      ...newProps,
+      [key]: value,
+    });
+  };
+
   const actions = [];
-  if (hasMinPrice) {
-    actions.push(<Typography.Text>{getPriceLabel(minPrice)}</Typography.Text>);
-  }
-  if (onDeleteElement) {
+
+  if (isEditing && onDelete) {
     actions.push(
       <DeleteOutlined
         onClick={onDelete}
+        type="danger"
         style={{ color: 'rgb(255, 77, 79)' }}
       />
+    );
+  }
+  if (onChangeElement) {
+    const Icon = isEditing ? SaveOutlined : EditOutlined;
+    actions.push(
+      <Icon onClick={onToggleEditing} style={{ color: '#40a9ff' }} />
     );
   }
 
@@ -50,25 +80,41 @@ const CardListItem = ({
     <List.Item
       actions={actions}
       style={{ paddingTop: 4, paddingBottom: 4 }}
-      onClick={onClick}
+      onClick={!isEditing ? onClick : undefined}
     >
       <List.Item.Meta
         style={{ overflow: 'hidden' }}
         title={
-          <Typography.Text style={{ display: 'block' }} ellipsis>
-            {highlightText(searchString, card.name)}
-          </Typography.Text>
+          <StyledDescription>
+            <Typography.Text style={{ display: 'block' }} ellipsis>
+              {highlightText(searchString, card.name)}
+            </Typography.Text>
+            {hasMinPrice && !isEditing && (
+              <Typography.Text>{getPriceLabel(minPrice)}</Typography.Text>
+            )}
+          </StyledDescription>
         }
         avatar={<PreviewCardImage height="48px" card={card} />}
         description={
           <StyledDescription>
-            <EditableAmount
-              card={card}
-              onChangeAmount={onChangeAmount}
-              isEditing={isEditing}
-            />
-
-            <span>{owned && <OwnedBadge marginLeft={0} />}</span>
+            <span>
+              <EditableAmount
+                card={card}
+                onChangeAmount={onChangeProp('amount')}
+                isEditing={isEditing}
+              />
+            </span>
+            <span style={{ marginRight: 4 }}>
+              {isEditing ? (
+                <SetPicker
+                  width={150}
+                  card={card}
+                  onSelect={onChangeProp('id')}
+                />
+              ) : (
+                owned && <OwnedBadge marginLeft={0} />
+              )}
+            </span>
           </StyledDescription>
         }
       />
@@ -77,10 +123,9 @@ const CardListItem = ({
 };
 
 const areEqual = (prevProps, nextProps) => {
-  if (prevProps.isOpen !== nextProps.isOpen) return false;
-  if (prevProps.onDeleteElement !== nextProps.onDeleteElement) return false;
+  if (prevProps.searchString !== nextProps.searchString) return false;
 
-  return ['id', 'amount', 'amountFoil'].every(propKey => {
+  return ['id', 'amountOwned', 'amountOwnedFoil', 'amount'].every(propKey => {
     return prevProps.card[propKey] === nextProps.card[propKey];
   });
 };

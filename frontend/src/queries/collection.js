@@ -56,8 +56,8 @@ export const changeCollection = gql`
       id
       allSets {
         id
-        amount
-        amountFoil
+        amountOwned
+        amountOwnedFoil
       }
     }
   }

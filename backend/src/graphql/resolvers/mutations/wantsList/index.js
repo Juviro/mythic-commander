@@ -1,5 +1,5 @@
 import addCardsToWantsList from './addCardsToWantsList';
-import changeWantsListAmount from './changeWantsListAmount';
+import editWantsListCard from './editWantsListCard';
 import createWantsList from './createWantsList';
 import deleteFromWantsList from './deleteFromWantsList';
 import deleteWantsList from './deleteWantsList';
@@ -8,7 +8,7 @@ import editWantsList from './editWantsList';
 
 export default {
   addCardsToWantsList,
-  changeWantsListAmount,
+  editWantsListCard,
   createWantsList,
   deleteFromWantsList,
   deleteWantsList,

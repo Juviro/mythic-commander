@@ -31,7 +31,7 @@ export default ({
   onChangeAmount,
 }) => {
   const { sets } = useContext(CardContext);
-  const { id, set, set_name, imgKey, amount, amountFoil } = card;
+  const { id, set, set_name, imgKey, amountOwned, amountOwnedFoil } = card;
   return (
     <Row
       gutter={[12, 2]}
@@ -54,14 +54,14 @@ export default ({
       </Col>
       <Amount
         cardId={id}
-        amount={amount}
+        amount={amountOwned}
         isEditing={isEditing}
         onChangeAmount={onChangeAmount}
       />
       <Amount
         isFoil
         cardId={id}
-        amount={amountFoil}
+        amount={amountOwnedFoil}
         onChangeAmount={onChangeAmount}
         isEditing={isEditing}
       />

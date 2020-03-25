@@ -12,7 +12,7 @@ const StyledSetIcon = styled.img`
   margin-right: 4px;
 `;
 
-export default ({ card, onClick }) => {
+export default ({ card, onSelect, width = '100%' }) => {
   const { sets } = useContext(CardContext);
   const { data, loading } = useQuery(allCardSetsQuery, {
     variables: { oracle_id: card.oracle_id },
@@ -32,8 +32,10 @@ export default ({ card, onClick }) => {
       loading={loading}
       size="small"
       defaultValue={card.set_name}
-      style={{ width: '100%' }}
-      onSelect={onClick}
+      style={{ width }}
+      onSelect={onSelect}
+      dropdownStyle={{ minWidth: 200 }}
+      onClick={e => e.stopPropagation()}
       disabled={allCardSets.length <= 1}
     >
       {allCardSets.map(({ name, icon_svg_uri, id }) => (

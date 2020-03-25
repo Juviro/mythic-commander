@@ -8,7 +8,7 @@ export default async (
 ) => {
   const promises = [];
 
-  edited.forEach(({ id, amount, amountFoil }) => {
+  edited.forEach(({ id, amountOwned: amount, amountOwnedFoil: amountFoil }) => {
     const promise = db('collection')
       .update({ amount, amountFoil })
       .where({ id, userId: user.id });

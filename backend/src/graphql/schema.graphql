@@ -29,14 +29,16 @@ type Card {
   allSets: [Card!]!
   primaryTypes: [String!]!
   subTypes: [String!]!
-  containingDecks: [Deck!]!
 
   # used only for allSets
   set_name: String
 
-  # used by both Deck and allSets
+  # used by allSets
+  amountOwned: Int!
+  amountOwnedFoil: Int!
+
+  # used by Deck and WantsList
   amount: Int!
-  amountFoil: Int!
 
   # Deck specific fields
   zone: String!
@@ -48,6 +50,7 @@ type Card {
   sumPrice: Float
 
   # Find card in lists
+  containingDecks: [Deck!]!
   containingWantsLists: [ContainingList!]!
 }
 
@@ -198,7 +201,7 @@ type Mutation {
   editDeckCard(
     cardId: String!
     deckId: String!
-    newProps: EditCardsPropsInput!
+    newProps: EditDeckCardInput!
   ): Card!
   deleteDeck(deckId: String!): Boolean
   deleteFromDeck(cardId: String!, deckId: String!): Deck!
@@ -228,6 +231,11 @@ type Mutation {
     cards: [CardInputType!]!
     wantsListId: String!
   ): [Card!]!
+  editWantsListCard(
+    cardId: String!
+    wantsListId: String!
+    newProps: EditWantsListCardInput!
+  ): Card!
   deleteFromWantsList(cardId: String!, wantsListId: String!): WantsList!
   deleteWantsList(wantsListId: String!): Boolean!
   duplicateWantsList(wantsListId: String!): WantsList!
@@ -246,7 +254,7 @@ input CardInputType {
   amount: Int
 }
 
-input EditCardsPropsInput {
+input EditDeckCardInput {
   id: String
   zone: String
   amount: Int
@@ -261,8 +269,8 @@ input AddToCollectionInput {
 
 input ChangeCollectionInput {
   id: String!
-  amount: Int
-  amountFoil: Int
+  amountOwned: Int
+  amountOwnedFoil: Int
 }
 
 ################################# Session #################################
@@ -275,4 +283,8 @@ type LoginResponse {
 
 input EditWantsListFieldsInput {
   name: String
+}
+input EditWantsListCardInput {
+  id: String
+  amount: Int
 }
