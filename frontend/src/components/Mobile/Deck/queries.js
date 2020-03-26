@@ -13,6 +13,7 @@ const CARD_FIELDS = `
       isTwoFaced
       oracle_id
       owned
+      cmc
       set_name
       primaryTypes
       color_identity

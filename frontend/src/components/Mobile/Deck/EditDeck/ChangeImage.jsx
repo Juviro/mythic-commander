@@ -3,8 +3,8 @@ import { Select, List, message } from 'antd';
 import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
 
-import { editDeck } from '../../queries';
-import { getImageUrl } from '../../../../../utils/cardImage';
+import { editDeck } from '../queries';
+import { getImageUrl } from '../../../../utils/cardImage';
 
 const StyledHeader = styled.span`
   margin-bottom: 8px;

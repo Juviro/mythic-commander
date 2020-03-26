@@ -3,7 +3,7 @@ import { List, Modal, message } from 'antd';
 import { useMutation } from 'react-apollo';
 import { useParams, withRouter } from 'react-router';
 
-import { deleteDeck, getDecks } from '../../../../../queries';
+import { deleteDeck, getDecks } from '../../../../queries';
 
 const DeleteDeck = ({ history }) => {
   const { id: deckId } = useParams();

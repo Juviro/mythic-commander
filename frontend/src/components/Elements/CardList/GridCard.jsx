@@ -26,13 +26,7 @@ const StyledCardWrapper = styled.div`
   position: inherit;
 `;
 
-const GridCard = ({
-  isLarge,
-  card,
-  onClick,
-  onChangeElement,
-  onDeleteElement,
-}) => {
+const GridCard = ({ isLarge, card, onClick, onEditCard, onDeleteCard }) => {
   const imgSrc = getImageUrl(card.id, card.imgKey, 'normal');
 
   const style = isLarge
@@ -47,12 +41,12 @@ const GridCard = ({
       <StyledCardWrapper isLarge={isLarge}>
         <FlippableCard card={card} />
         {!isLarge && <EnlargeImage src={imgSrc} card={card} />}
-        {onChangeElement && (
+        {onEditCard && (
           <EditCard
             card={card}
             isLarge={isLarge}
-            onChangeElement={onChangeElement}
-            onDeleteElement={onDeleteElement}
+            onEditCard={onEditCard}
+            onDeleteCard={onDeleteCard}
           />
         )}
       </StyledCardWrapper>

@@ -2,7 +2,7 @@ import React from 'react';
 import { List, Typography, message } from 'antd';
 import { useMutation } from 'react-apollo';
 
-import { editDeck } from '../../../../../queries';
+import { editDeck } from '../../../../queries';
 
 export default ({ deck }) => {
   const [editDeckMutation] = useMutation(editDeck);

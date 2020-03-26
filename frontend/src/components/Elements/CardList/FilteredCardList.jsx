@@ -36,8 +36,9 @@ export default ({
   cards,
   loading,
   basePath,
-  onDeleteElement,
-  onChangeElement,
+  hideFooter,
+  onDeleteCard,
+  onEditCard,
 }) => {
   const [
     {
@@ -90,13 +91,14 @@ export default ({
 
   return (
     <CardList
+      hideFooter={hideFooter}
       basePath={basePath}
       hasMore={hasMore}
       loading={loading}
       cards={displayedCards}
       onLoadMore={onLoadMore}
-      onChangeElement={onChangeElement}
-      onDeleteElement={onDeleteElement}
+      onEditCard={onEditCard}
+      onDeleteCard={onDeleteCard}
       totalResults={cards.length}
     />
   );

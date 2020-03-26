@@ -33,8 +33,8 @@ const StyedCloseIcon = styled(CloseOutlined)`
 
 export default ({
   card,
-  onChangeElement,
-  onDeleteElement,
+  onEditCard,
+  onDeleteCard,
   onClose,
   isEditing,
   isLarge,
@@ -56,7 +56,7 @@ export default ({
   };
 
   const onSave = () => {
-    onChangeElement(card.id, newProps);
+    onEditCard(card.id, newProps);
     setNewProps({});
     onClose();
   };
@@ -73,6 +73,7 @@ export default ({
             addonBefore={isLarge ? 'Amount' : undefined}
             style={{ width: '100%' }}
             defaultValue={displayedAmount}
+            onPressEnter={canSubmit ? onSave : undefined}
             onChange={e => onChangeProp('amount')(Number(e.target.value) || 1)}
           />
         </StyledOption>
@@ -86,7 +87,7 @@ export default ({
             danger
             size={size}
             icon={<DeleteOutlined />}
-            onClick={() => onDeleteElement(card.id)}
+            onClick={() => onDeleteCard(card.id)}
             style={{ backgroundColor: 'rgba(0,0,0,0.5)', width: '100%' }}
           >
             Delete

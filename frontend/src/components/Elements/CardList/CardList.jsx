@@ -13,7 +13,6 @@ import Footer from './Footer';
 const StyledGridWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  min-height: 70vh;
   align-items: flex-start;
 `;
 
@@ -25,8 +24,9 @@ const CardList = ({
   totalResults,
   history,
   basePath,
-  onChangeElement,
-  onDeleteElement,
+  hideFooter,
+  onEditCard,
+  onDeleteCard,
   showTotalResults,
 }) => {
   const [{ name, layout = 'list' }] = useQueryParams({
@@ -59,12 +59,12 @@ const CardList = ({
         <List
           size="small"
           dataSource={cards}
-          style={{ width: '100%', minHeight: '70vh' }}
+          style={{ width: '100%' }}
           renderItem={card => (
             <CardListItem
               card={card}
-              onChangeElement={onChangeElement}
-              onDeleteElement={onDeleteElement}
+              onEditCard={onEditCard}
+              onDeleteCard={onDeleteCard}
               searchString={name}
               onClick={() => onOpenDetailView(card)}
             />
@@ -79,8 +79,8 @@ const CardList = ({
               key={card.id}
               onClick={() => onOpenDetailView(card)}
               card={card}
-              onChangeElement={onChangeElement}
-              onDeleteElement={onDeleteElement}
+              onEditCard={onEditCard}
+              onDeleteCard={onDeleteCard}
               isLarge={layout !== 'grid'}
             />
           ))}
@@ -101,11 +101,13 @@ const CardList = ({
       >
         {cardList}
       </InfiniteScroll>
-      <Footer
-        loading={loading}
-        displayedCards={cards.length}
-        totalResults={totalResults}
-      />
+      {!hideFooter && (
+        <Footer
+          loading={loading}
+          displayedCards={cards.length}
+          totalResults={totalResults}
+        />
+      )}
       <BackTop style={{ left: 20, bottom: 20 }} />
     </>
   );

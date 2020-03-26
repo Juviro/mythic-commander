@@ -24,10 +24,14 @@ const App = () => {
     <>
       <Menu />
       <Switch>
-        <Route path="/m/decks" exact component={Decks} />
-        <Route path="/m/decks/:id" component={Deck} />
-        <Route path="/m/cards/:oracle_id/:cardId?" component={Card} />
         <Route path="/m/search/:oracle_id?/:cardId?" exact component={Cards} />
+        <Route path="/m/decks" exact component={Decks} />
+        <Route
+          path="/m/decks/:id/:oracle_id?/:cardId?"
+          exact
+          component={Deck}
+        />
+        <Route path="/m/cards/:oracle_id/:cardId?" component={Card} />
         <Route
           path="/m/collection/:oracle_id?/:cardId?"
           exact
