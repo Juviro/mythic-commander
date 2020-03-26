@@ -25,9 +25,13 @@ export default () => {
     fetchPolicy: 'network-only',
   });
 
+  const basePath = `/m/wants/${id}`;
   const wantsList = data && data.wantsList;
   const cards = wantsList && unifyCardFormat(wantsList.cards);
-  const basePath = `/m/wants/${id}`;
+  const unifiedWantsList = wantsList && {
+    ...wantsList,
+    cards,
+  };
 
   useEffect(() => {
     if (!loading) return;
@@ -37,14 +41,14 @@ export default () => {
 
   return (
     <StyledWrapper>
-      <Header wantsList={wantsList} />
+      <Header wantsList={unifiedWantsList} />
       <ListOrder showCollectionFilters />
       <Divider />
       <CardsList
         cards={cards}
         loading={loading}
         basePath={basePath}
-        wantsList={wantsList}
+        wantsList={unifiedWantsList}
       />
       <AddWants containedCards={cards} />
       <CardModal basePath={basePath} />
