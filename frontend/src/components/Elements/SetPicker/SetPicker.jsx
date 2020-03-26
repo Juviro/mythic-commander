@@ -12,7 +12,7 @@ const StyledSetIcon = styled.img`
   margin-right: 4px;
 `;
 
-export default ({ card, onSelect, width = '100%' }) => {
+export default ({ card, onSelect, width = '100%', size = 'small' }) => {
   const { sets } = useContext(CardContext);
   const { data, loading } = useQuery(allCardSetsQuery, {
     variables: { oracle_id: card.oracle_id },
@@ -30,8 +30,8 @@ export default ({ card, onSelect, width = '100%' }) => {
   return (
     <Select
       loading={loading}
-      size="small"
-      defaultValue={card.set_name}
+      size={size}
+      defaultValue={card.id}
       style={{ width }}
       onSelect={onSelect}
       dropdownStyle={{ minWidth: 200 }}

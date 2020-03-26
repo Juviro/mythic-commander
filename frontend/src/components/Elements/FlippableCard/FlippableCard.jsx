@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import './index.css';
 import { getImageUrl } from '../../../utils/cardImage';
 import CustomSkeleton from '../CustomSkeleton';
+import CardButton from '../CardButton/CardButton';
 
 const StyledImageWrapper = styled.div`
   display: flex;
@@ -13,19 +14,6 @@ const StyledImageWrapper = styled.div`
   position: relative;
   justify-content: center;
   align-items: center;
-`;
-
-const StyledFlipIcon = styled(SyncOutlined)`
-  z-index: 10;
-  top: 40%;
-  right: 10%;
-  border: none;
-  opacity: 0.7;
-  background-color: #9c9c9c;
-  border-radius: 50%;
-  font-size: 30px;
-  padding: 3%;
-  position: absolute;
 `;
 
 export default ({ loading, card }) => {
@@ -74,7 +62,7 @@ export default ({ loading, card }) => {
       {(loading || !showHighResImage) && <CustomSkeleton.CardImage />}
       {isTwoFaced && showHighResImage && (
         <>
-          <StyledFlipIcon size="large" shape="circle" onClick={onFlipCard} />
+          <CardButton Icon={SyncOutlined} index={1} onClick={onFlipCard} />
           <a.div
             className="flippable-card "
             style={{
