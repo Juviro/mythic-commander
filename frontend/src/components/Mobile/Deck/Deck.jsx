@@ -11,6 +11,7 @@ import { getDeck, addCardsToDeck } from './queries';
 import { AddCardMobile } from '../../Elements';
 import message from '../../../utils/message';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
+import CardModal from '../Card/CardModal';
 
 const StyledDeck = styled.div`
   width: 100%;
@@ -37,11 +38,12 @@ export default () => {
 
   const onAddCard = (card, name) => {
     message(`Added <b>${name}</b> to your deck!`);
-
     mutate({
       variables: { cards: [card], deckId: id },
     });
   };
+
+  const basePath = `/m/decks/${id}`;
 
   return (
     <StyledDeck>
@@ -55,10 +57,15 @@ export default () => {
             currentTab={currentTab}
             onSetTab={setCurrentTab}
           />
-          <DeckBody deck={unifiedDeck} cards={cards} currentTab={currentTab} />
+          <DeckBody
+            loading={loading}
+            deck={unifiedDeck}
+            currentTab={currentTab}
+          />
         </>
       )}
       <AddCardMobile onAddCard={onAddCard} containedCards={cards} />
+      <CardModal basePath={basePath} />
     </StyledDeck>
   );
 };

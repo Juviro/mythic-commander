@@ -14,7 +14,7 @@ export default ({ basePath, cards, loading, wantsList }) => {
   const [mutateDelete] = useMutation(deleteFromWantsList);
   const [mutateEdit] = useMutation(editWantsListCard);
 
-  const onDeleteWant = cardId => {
+  const onDeleteCard = cardId => {
     const newCards = wantsList.cards.filter(card => card.id !== cardId);
     const newNumberOfCards = wantsList.numberOfCards;
     mutateDelete({
@@ -63,8 +63,8 @@ export default ({ basePath, cards, loading, wantsList }) => {
       cards={cards}
       loading={loading}
       basePath={basePath}
-      onChangeElement={onEditCard}
-      onDeleteElement={onDeleteWant}
+      onEditCard={onEditCard}
+      onDeleteCard={onDeleteCard}
     />
   );
 };

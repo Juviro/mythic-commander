@@ -22,8 +22,8 @@ const CardListItem = ({
   card,
   searchString,
   onClick,
-  onDeleteElement,
-  onChangeElement,
+  onDeleteCard,
+  onEditCard,
 }) => {
   const [isEditing, setIsEditig] = useState(false);
   const [newProps, setNewProps] = useState({});
@@ -38,14 +38,14 @@ const CardListItem = ({
 
   const onDelete = event => {
     event.stopPropagation();
-    onDeleteElement(card.id);
+    onDeleteCard(card.id);
     message(`Deleted <b>${card.name}</b>!`);
   };
 
   const onToggleEditing = event => {
     event.stopPropagation();
     if (isEditing && Object.keys(newProps).length) {
-      onChangeElement(card.id, newProps);
+      onEditCard(card.id, newProps);
       setNewProps({});
     }
     setIsEditig(!isEditing);
@@ -69,7 +69,7 @@ const CardListItem = ({
       />
     );
   }
-  if (onChangeElement) {
+  if (onEditCard) {
     const Icon = isEditing ? SaveOutlined : EditOutlined;
     actions.push(
       <Icon onClick={onToggleEditing} style={{ color: '#40a9ff' }} />

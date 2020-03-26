@@ -32,7 +32,7 @@ const StyledOverlay = styled.div`
   background-color: black;
 `;
 
-export default ({ card, onChangeElement, onDeleteElement, isLarge }) => {
+export default ({ card, onEditCard, onDeleteCard, isLarge }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const onChangeIsEditing = e => {
@@ -50,8 +50,8 @@ export default ({ card, onChangeElement, onDeleteElement, isLarge }) => {
             card={card}
             isLarge={isLarge}
             isEditing={isEditing}
-            onChangeElement={onChangeElement}
-            onDeleteElement={onDeleteElement}
+            onEditCard={onEditCard}
+            onDeleteCard={onDeleteCard}
             onClose={() => setIsEditing(false)}
           />
         </StyledBody>
