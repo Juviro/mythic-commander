@@ -50,6 +50,7 @@ const GridCard = ({
         {onChangeElement && (
           <EditCard
             card={card}
+            isLarge={isLarge}
             onChangeElement={onChangeElement}
             onDeleteElement={onDeleteElement}
           />
