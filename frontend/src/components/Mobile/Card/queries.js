@@ -26,9 +26,9 @@ const CARD_FIELDS = `
     set
     imgKey
     isTwoFaced
-    amount
+    amountOwned
+    amountOwnedFoil
     set_name
-    amountFoil
     prices {
       usd
       usd_foil

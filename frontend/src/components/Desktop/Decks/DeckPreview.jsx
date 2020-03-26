@@ -50,7 +50,7 @@ const StyledPreview = styled.div`
 `;
 
 export default ({ imgSrc, name, onOpenDeck }) => {
-  // TODO spin when img not loaded
+  // TODO: spin when img not loaded
   return (
     <StyledPreview>
       <ImageWrapper>

@@ -1,8 +1,17 @@
 const resolver = {
-  cards({ id: wantsListId }, _, { db }) {
-    return db('cardToWantsList')
-      .leftJoin('cards', { 'cards.id': 'cardToWantsList.id' })
-      .where({ wantsListId });
+  async cards({ id: wantsListId }, _, { db }) {
+    const { rows: cards } = await db.raw(
+      `
+        SELECT "cardToWantsList".*, row_to_json(cards) as card 
+        FROM "cardToWantsList" 
+        LEFT JOIN cards 
+          ON cards.id = "cardToWantsList".id 
+        WHERE "wantsListId" = ?;
+    `,
+      [wantsListId]
+    );
+
+    return cards;
   },
   async numberOfCards({ id: wantsListId }, _, { db }) {
     const [{ sum }] = await db('cardToWantsList')

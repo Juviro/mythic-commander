@@ -11,6 +11,7 @@ const resolver = {
   allSets({ oracle_id }, _, { db, user: { id: userId } }) {
     return getAllSets(oracle_id, userId, db);
   },
+
   primaryTypes(card) {
     return getTypes(card).primaryTypes;
   },

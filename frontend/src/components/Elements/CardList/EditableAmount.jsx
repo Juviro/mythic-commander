@@ -15,7 +15,7 @@ export default ({ card, onChangeAmount, isEditing }) => {
         size="small"
         type="number"
         style={{ width: 40 }}
-        onChange={e => onChangeAmount(card.id, e.target.value)}
+        onChange={e => onChangeAmount(Number(e.target.value) || 1)}
         defaultValue={displayedAmount}
         onClick={e => e.stopPropagation()}
       />

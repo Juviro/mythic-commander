@@ -2,18 +2,21 @@ import gql from 'graphql-tag';
 
 const COLLECTION_CARD_FIELDS = `
     id
-    name
-    cmc
-    totalAmount
-    imgKey
-    isTwoFaced
     createdAt
-    subTypes
-    primaryTypes
-    minPrice
-    sumPrice
-    oracle_id
-    color_identity
+    card {
+      id
+      name
+      cmc
+      totalAmount
+      imgKey
+      isTwoFaced
+      subTypes
+      primaryTypes
+      minPrice
+      sumPrice
+      oracle_id
+      color_identity
+    }
 `;
 
 const COLLECTION_FIELDS = `

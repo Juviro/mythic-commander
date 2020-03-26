@@ -113,8 +113,6 @@ export default async (
     })
     .orderByRaw(`${getOrderColumn(order)} ${direction.toUpperCase()}`);
 
-  console.log('query', query.toString());
-
   const cards = await query;
 
   const hasMore = cards.length > limit + offset;

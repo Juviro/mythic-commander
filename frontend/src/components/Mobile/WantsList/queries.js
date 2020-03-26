@@ -2,15 +2,19 @@ import gql from 'graphql-tag';
 
 const CARD_FIELDS = `
   id
-  oracle_id
-  name
-  owned
-  minPrice
-  imgKey
-  isTwoFaced
   amount
-  cmc
   createdAt
+  card {
+    id
+    oracle_id
+    name
+    owned
+    minPrice
+    imgKey
+    isTwoFaced
+    cmc
+    set_name
+  }
 `;
 
 const WANTS_LIST_FIELDS = `
@@ -74,9 +78,17 @@ export const duplicateWantsList = gql`
   }
 `;
 
-export const changeWantsListAmount = gql`
-  mutation changeWantsListAmount($cards: [CardInputType!]!, $wantsListId: String!) {
-    changeWantsListAmount(cards: $cards, wantsListId: $wantsListId) {
+export const editWantsListCard = gql`
+  mutation editWantsListCard(
+    $cardId: String!
+    $wantsListId: String!
+    $newProps: EditWantsListCardInput!
+  ) {
+    editWantsListCard(
+      wantsListId: $wantsListId
+      newProps: $newProps
+      cardId: $cardId
+    ) {
       ${CARD_FIELDS}
     }
   }
