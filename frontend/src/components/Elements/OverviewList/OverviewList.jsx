@@ -71,7 +71,7 @@ const ListItem = ({ onClick, image, name, showRightIcon, numberOfCards }) => (
   </StyledListItem>
 );
 
-const DeckList = ({
+const OverviewList = ({
   addElementText,
   onAddElement,
   elements,
@@ -106,4 +106,4 @@ const DeckList = ({
   );
 };
 
-export default withRouter(DeckList);
+export default withRouter(OverviewList);

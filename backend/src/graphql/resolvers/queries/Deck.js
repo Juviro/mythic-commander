@@ -1,4 +1,5 @@
-import { toDeckCard } from './Card/helper';
+import db from '../../../database';
+import unifyCardFormat from '../unifyCardFormat';
 
 const resolver = {
   async cards({ id: deckId }, _, { db }) {
@@ -6,7 +7,7 @@ const resolver = {
       .leftJoin('cards', { 'cards.id': 'cardToDeck.id' })
       .where({ deckId });
 
-    return cards.map(toDeckCard);
+    return cards.map(unifyCardFormat(deckId));
   },
   async numberOfCards({ id: deckId }, _, { db }) {
     const [{ sum }] = await db('cardToDeck')
@@ -16,4 +17,5 @@ const resolver = {
   },
 };
 
+resolver.cards({ id: 44 }, null, { db });
 export default resolver;

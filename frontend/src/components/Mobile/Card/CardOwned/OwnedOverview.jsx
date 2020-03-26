@@ -5,12 +5,9 @@ import { useMutation } from 'react-apollo';
 
 import { SaveOutlined } from '@ant-design/icons';
 import { EditIcon } from '../../../Elements';
-import {
-  changeCollection,
-  getCollectionNames,
-} from '../../../../queries/collection';
 import AddCard from './AddCard';
 import CardRow from './CardRow';
+import { changeCollection, getCollectionNames } from './queries';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -28,7 +25,7 @@ export default ({
   cardName,
 }) => {
   const ownedCards = cards.filter(
-    ({ amount, amountFoil }) => amount + amountFoil
+    ({ amountOwned, amountOwnedFoil }) => amountOwned + amountOwnedFoil
   );
 
   const [mutate] = useMutation(changeCollection);
@@ -75,8 +72,11 @@ export default ({
             collection: {
               ...existing.collection,
               cards: existing.collection.cards.concat({
-                name: cardName,
-                __typename: 'Card',
+                __typename: 'CollectionCard',
+                card: {
+                  name: cardName,
+                  __typename: 'Card',
+                },
               }),
             },
           },
@@ -87,8 +87,8 @@ export default ({
     onResetEditing();
   };
 
-  const onChangeAmount = cardAlreadyOwned => (amount, cardId, isFoil) => {
-    const key = isFoil ? 'amountFoil' : 'amount';
+  const onChangeAmount = cardAlreadyOwned => (amountOwned, cardId, isFoil) => {
+    const key = isFoil ? 'amountOwnedFoil' : 'amountOwned';
     const [currentValue, setMethod] = cardAlreadyOwned
       ? [editedMap, setEditedMap]
       : [addedMap, setAddedMap];
@@ -96,7 +96,7 @@ export default ({
       ...currentValue,
       [cardId]: {
         ...currentValue[cardId],
-        [key]: Math.max(Number(amount), 0),
+        [key]: Math.max(Number(amountOwned), 0),
       },
     });
   };
@@ -104,7 +104,7 @@ export default ({
   const onAddCard = id => {
     setAddedMap({
       ...addedMap,
-      [id]: { amount: 1, amountFoil: 0 },
+      [id]: { amountOwned: 1, amountOwnedFoil: 0 },
     });
   };
 

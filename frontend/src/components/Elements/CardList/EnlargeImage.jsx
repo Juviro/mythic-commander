@@ -1,16 +1,7 @@
 import React, { useState } from 'react';
-import { PlusOutlined } from '@ant-design/icons';
-import styled from 'styled-components';
+import { EyeOutlined } from '@ant-design/icons';
 import FullscreenCardModal from '../FullscreenCardModal/FullscreenCardModal';
-
-const StyledAddButton = styled(PlusOutlined)`
-  position: absolute;
-  font-size: 50px;
-  color: white;
-  opacity: 0.5;
-  top: 10%;
-  right: 10%;
-`;
+import CardButton from '../CardButton/CardButton';
 
 export default ({ card }) => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -22,7 +13,7 @@ export default ({ card }) => {
 
   return (
     <>
-      <StyledAddButton onClick={onChangeIsOpen} />
+      <CardButton index={2} onClick={onChangeIsOpen} Icon={EyeOutlined} />
       <FullscreenCardModal
         visible={isPreviewOpen}
         card={card}

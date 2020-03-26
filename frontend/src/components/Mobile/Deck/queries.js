@@ -1,20 +1,24 @@
 import gql from 'graphql-tag';
 
-const DECK_CARD_FIELDS = `
+const CARD_FIELDS = `
     id
-    name
-    set
-    imgKey
-    isTwoFaced
-    oracle_id
-    zone
-    owned
-    set_name
-    primaryTypes
-    color_identity
-    isCommanderLegal
     amount
-    minPrice
+    zone
+    createdAt
+    card {
+      id
+      name
+      set
+      imgKey
+      isTwoFaced
+      oracle_id
+      owned
+      set_name
+      primaryTypes
+      color_identity
+      isCommanderLegal
+      minPrice
+    }
 `;
 
 const DECK_FIELDS = `
@@ -25,7 +29,7 @@ const DECK_FIELDS = `
     imgSrc
     numberOfCards
     cards {
-    ${DECK_CARD_FIELDS}
+    ${CARD_FIELDS}
     }
 `;
 
@@ -41,14 +45,14 @@ export const editDeckCard = gql`
   mutation editDeckCard(
     $cardId: String!, 
     $deckId: String! 
-    $newProps: EditCardsPropsInput!
+    $newProps: EditDeckCardInput!
   ) {
     editDeckCard(
       cardId: $cardId, 
       deckId: $deckId, 
       newProps: $newProps
     ) {
-      ${DECK_CARD_FIELDS}
+      ${CARD_FIELDS}
     }
   }
 `;
@@ -56,7 +60,10 @@ export const editDeckCard = gql`
 export const editDeck = gql`
   mutation editDeck($deckId: String!, $newProperties: EditDeckFieldsInput!) {
     editDeck(deckId: $deckId, newProperties: $newProperties) {
-        ${DECK_FIELDS}
+      id
+      name
+      lastEdit
+      imgSrc
     }
   }
 `;

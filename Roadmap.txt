@@ -1,10 +1,28 @@
 BUGFIXES:
+    - backend deployment
+    - basic lands are shown as unowned in deck list
 
 NEXT:
+    - switch deck to list (disable pagination) with new menu
 
 IMPROVEMENTS: 
+    - destroy mobile add card search field when not visible (text stays in input)
+    - when opening preview modal for flip card, set default side
 
 FEATURES:
     - allow link to deck
 
 REFACTORINGS:
+    - remove amount from card
+    - random id for deck and wants
+    - move collectionValue and collectionAmount together
+
+LONG TERM FEATURES
+    - Add option to deck to fill up empty card slots with basic lands, based on mana occurrance
+    - find a way to make collection value work
+
+
+
+CURRENT REFACTORING:
+    - deck color is colorless
+        - check deck color checks

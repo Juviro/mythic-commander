@@ -14,6 +14,7 @@ import {
   filterByName,
 } from '../../../../../utils/cardFilter';
 import { wantsLists as wantsListsQuery } from '../../../WantsLists/queries';
+import unifyCardFormat from '../../../../../utils/unifyCardFormat';
 
 const MAX_RESULTS = 4;
 
@@ -58,7 +59,8 @@ const SearchBar = ({ history, transparentSearchBar }) => {
   const { data: collectionData } = useQuery(getCollectionNames);
   const decks = (decksData && decksData.decks) || [];
   const wantsLists = (wantsListData && wantsListData.wantsLists) || [];
-  const collection = (collectionData && collectionData.collection.cards) || [];
+  const collection =
+    (collectionData && unifyCardFormat(collectionData.collection.cards)) || [];
 
   const [{ query = '' }, setQuery] = useQueryParams({
     query: StringParam,
