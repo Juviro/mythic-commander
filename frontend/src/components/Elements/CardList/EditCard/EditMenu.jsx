@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CloseOutlined, DeleteOutlined, SaveOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import { Button, Input } from 'antd';
@@ -40,6 +40,12 @@ export default ({
   isLarge,
 }) => {
   const [newProps, setNewProps] = useState({});
+
+  useEffect(() => {
+    if (!isEditing) setNewProps({});
+  }, [isEditing]);
+
+  if (!isEditing) return null;
   const displayedAmount = card.amount || card.totalAmount;
 
   const onChangeProp = key => value => {
@@ -94,6 +100,7 @@ export default ({
             icon={<SaveOutlined />}
             onClick={onSave}
             style={{
+              color: canSubmit ? undefined : 'grey',
               marginTop: '15%',
               backgroundColor: 'rgba(0,0,0,0.5)',
               width: '100%',

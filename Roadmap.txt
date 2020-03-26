@@ -1,5 +1,5 @@
 BUGFIXES:
-    - backend deployment
+    - backend deployment not reloading
     - basic lands are shown as unowned in deck list
 
 NEXT:

@@ -31,7 +31,7 @@ export default ({ card, onSelect, width = '100%', size = 'small' }) => {
     <Select
       loading={loading}
       size={size}
-      defaultValue={card.id}
+      defaultValue={card.set_name}
       style={{ width }}
       onSelect={onSelect}
       dropdownStyle={{ minWidth: 200 }}
