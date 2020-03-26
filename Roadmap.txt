@@ -9,6 +9,7 @@ NEXT:
 
 IMPROVEMENTS: 
     - destroy mobile add card search field when not visible (text stays in input)
+    - when opening preview modal for flip card, set default side
 
 FEATURES:
     - allow link to deck
