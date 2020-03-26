@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { CloseOutlined, DeleteOutlined, SaveOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import { Button, InputNumber, Input } from 'antd';
+import { Button, Input } from 'antd';
 import SetPicker from '../../SetPicker';
 
 const StyledWrapper = styled.div`
   height: 100%;
   width: 100%;
-  padding: 0 30px;
+  padding: 10% 10% 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,8 +18,9 @@ const StyledOption = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 50px;
   width: 100%;
+  height: 50px;
+  max-height: 18%;
 `;
 
 const StyedCloseIcon = styled(CloseOutlined)`
@@ -30,7 +31,14 @@ const StyedCloseIcon = styled(CloseOutlined)`
   font-size: 200%;
 `;
 
-export default ({ card, onChangeElement, onDeleteElement, onClose }) => {
+export default ({
+  card,
+  onChangeElement,
+  onDeleteElement,
+  onClose,
+  isEditing,
+  isLarge,
+}) => {
   const [newProps, setNewProps] = useState({});
   const displayedAmount = card.amount || card.totalAmount;
 
@@ -47,23 +55,30 @@ export default ({ card, onChangeElement, onDeleteElement, onClose }) => {
     onClose();
   };
 
+  const canSubmit = Object.keys(newProps).length;
+  const size = isLarge ? 'normal' : 'small';
+
   return (
     <>
       <StyledWrapper>
         <StyledOption>
           <Input
-            addonBefore="Amount"
+            size={size}
+            addonBefore={isLarge ? 'Amount' : undefined}
             style={{ width: '100%' }}
             defaultValue={displayedAmount}
-            onChange={e => onChangeProp('amount')(e.target.value || 1)}
+            onChange={e => onChangeProp('amount')(Number(e.target.value) || 1)}
           />
         </StyledOption>
         <StyledOption>
-          <SetPicker size="normal" card={card} onSelect={onChangeProp('id')} />
+          {isEditing && (
+            <SetPicker size={size} card={card} onSelect={onChangeProp('id')} />
+          )}
         </StyledOption>
         <StyledOption>
           <Button
             danger
+            size={size}
             icon={<DeleteOutlined />}
             onClick={() => onDeleteElement(card.id)}
             style={{ backgroundColor: 'rgba(0,0,0,0.5)', width: '100%' }}
@@ -73,11 +88,13 @@ export default ({ card, onChangeElement, onDeleteElement, onClose }) => {
         </StyledOption>
         <StyledOption>
           <Button
+            size={size}
+            disabled={!canSubmit}
             type="primary"
             icon={<SaveOutlined />}
             onClick={onSave}
             style={{
-              marginTop: 24,
+              marginTop: '15%',
               backgroundColor: 'rgba(0,0,0,0.5)',
               width: '100%',
             }}

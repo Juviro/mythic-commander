@@ -97,13 +97,11 @@ const CardListItem = ({
         avatar={<PreviewCardImage height="48px" card={card} />}
         description={
           <StyledDescription>
-            <span>
-              <EditableAmount
-                card={card}
-                onChangeAmount={onChangeProp('amount')}
-                isEditing={isEditing}
-              />
-            </span>
+            <EditableAmount
+              card={card}
+              onChangeAmount={onChangeProp('amount')}
+              isEditing={isEditing}
+            />
             <span style={{ marginRight: 4 }}>
               {isEditing ? (
                 <SetPicker

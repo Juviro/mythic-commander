@@ -32,7 +32,7 @@ const StyledOverlay = styled.div`
   background-color: black;
 `;
 
-export default ({ card, onChangeElement, onDeleteElement }) => {
+export default ({ card, onChangeElement, onDeleteElement, isLarge }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const onChangeIsEditing = e => {
@@ -48,6 +48,8 @@ export default ({ card, onChangeElement, onDeleteElement }) => {
           <StyledOverlay />
           <EditMenu
             card={card}
+            isLarge={isLarge}
+            isEditing={isEditing}
             onChangeElement={onChangeElement}
             onDeleteElement={onDeleteElement}
             onClose={() => setIsEditing(false)}
