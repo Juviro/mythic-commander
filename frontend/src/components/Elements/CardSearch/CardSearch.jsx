@@ -64,7 +64,7 @@ const getDropdownAlign = alignTop => {
   };
 };
 
-export default class SearchField extends React.Component {
+export default class CardSearch extends React.Component {
   static contextType = CardContext;
 
   inputRef = React.createRef();

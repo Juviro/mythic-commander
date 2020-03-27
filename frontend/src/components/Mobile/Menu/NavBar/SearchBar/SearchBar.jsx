@@ -104,15 +104,6 @@ const SearchBar = ({ history, transparentSearchBar }) => {
 
   const optionCategories = [
     {
-      name: 'Cards',
-      type: 'CARD',
-      options: filteredCards,
-      onShowAll: () => {
-        history.push(`/m/search?name=${query}&autoSearch=true`);
-        onSelect();
-      },
-    },
-    {
       name: 'Decks',
       type: 'DECK',
       options: filteredDecks,
@@ -121,6 +112,15 @@ const SearchBar = ({ history, transparentSearchBar }) => {
       name: 'Wants Lists',
       type: 'WANTS',
       options: filteredWantsLists,
+    },
+    {
+      name: 'Cards',
+      type: 'CARD',
+      options: filteredCards,
+      onShowAll: () => {
+        history.push(`/m/search?name=${query}&autoSearch=true`);
+        onSelect();
+      },
     },
   ];
 

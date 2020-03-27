@@ -8,7 +8,7 @@ import { wantsList as wantsListQuery } from './queries';
 import Header from './Header';
 import AddWants from './AddWants';
 import CardModal from '../Card/CardModal';
-import { ListOrder } from '../../Elements';
+import { LayoutPicker } from '../../Elements';
 import CardsList from './CardsList';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
 
@@ -42,7 +42,7 @@ export default () => {
   return (
     <StyledWrapper>
       <Header wantsList={unifiedWantsList} />
-      <ListOrder showCollectionFilters />
+      <LayoutPicker showCollectionFilters />
       <Divider />
       <CardsList
         cards={cards}

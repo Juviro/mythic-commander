@@ -26,7 +26,7 @@ export default ({ card }) => {
   if (!containingDecks.length)
     return (
       <Typography.Text type="secondary">
-        This card is currently in none of your decks
+        You don&apos;t have any deck containing this card
       </Typography.Text>
     );
 
