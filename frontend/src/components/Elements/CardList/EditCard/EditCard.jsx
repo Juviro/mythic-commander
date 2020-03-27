@@ -8,7 +8,7 @@ const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
   top: 0;
-  z-index: 11;
+  z-index: 8;
   border-radius: 4%;
   overflow: hidden;
   position: absolute;

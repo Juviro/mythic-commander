@@ -1,9 +1,7 @@
 BUGFIXES:
     - backend deployment not reloading
-    - basic lands are shown as unowned in deck list
 
 NEXT:
-    - switch deck to list (disable pagination) with new menu
 
 IMPROVEMENTS: 
     - destroy mobile add card search field when not visible (text stays in input)
@@ -12,16 +10,12 @@ IMPROVEMENTS:
 FEATURES:
 
 REFACTORINGS:
-    - remove amount from card
     - random id for deck and wants
-    - move collectionValue and collectionAmount together
 
 BACKLOG:
     - allow link to deck
     - Add option to deck to fill up empty card slots with basic lands, based on mana occurrance
     - find a way to make collection value work
-
-
 
 CURRENT REFACTORING:
     - deck color is colorless

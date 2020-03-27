@@ -5,7 +5,7 @@ export default ({ Icon, index, onClick }) => {
   const StyledIcon = styled(Icon)`
     position: absolute;
     font-size: 180%;
-    z-index: 10;
+    z-index: 7;
     opacity: 0.5;
     top: ${10 + index * 18}%;
     right: 8%;

@@ -1,7 +1,9 @@
 import { getAllSets, getPreviewImg, getTypes, getImageKey } from './helper';
 
 const resolver = {
-  async owned({ oracle_id }, _, { db, user: { id: userId } }) {
+  async owned({ oracle_id, type_line }, _, { db, user: { id: userId } }) {
+    if (type_line.startsWith('Basic')) return true;
+
     const [owned] = await db('collectionWithOracle').where({
       userId,
       oracle_id,

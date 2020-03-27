@@ -57,17 +57,6 @@ export default ({ card }) => {
         wantsListId: id,
         cards: [{ id: card.id }],
       },
-      optimisticResponse: () => ({
-        __typename: 'Mutation',
-        addCardsToWantsList: [
-          {
-            ...card,
-            containingWantsLists: containingWantsLists
-              .filter(wantsList => wantsList.id !== id)
-              .concat(updatedWantsList),
-          },
-        ],
-      }),
       refetchQueries: ['wantsLists'],
     });
 
