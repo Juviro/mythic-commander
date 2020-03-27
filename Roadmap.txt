@@ -8,7 +8,6 @@ IMPROVEMENTS:
 FEATURES:
 
 REFACTORINGS:
-    - random id for deck and wants
 
 BACKLOG:
     - allow link to deck
