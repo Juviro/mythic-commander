@@ -1,6 +1,6 @@
 import db from '../database';
 
-const updateCollectionValue = async () => {
+export default async () => {
   const users = await db('users').select('id');
   const userIds = users.map(({ id }) => id);
 
@@ -22,13 +22,12 @@ const updateCollectionValue = async () => {
     );
     if (!value) continue;
 
-    await db('collectionValue').insert({ value, userId });
-
     await db.raw(
       `
-      INSERT INTO "collectionAmount" (
+      INSERT INTO "collectionSnapshot" (
         SELECT 
           "userId", 
+          ?, 
           SUM(amount + "amountFoil") as amount,
           count(*) as "amountUnique" 
         FROM collection 
@@ -38,9 +37,7 @@ const updateCollectionValue = async () => {
         GROUP BY "userId"
       )
       `,
-      [userId]
+      [value, userId]
     );
   }
 };
-
-export default updateCollectionValue;
