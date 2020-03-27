@@ -52,7 +52,9 @@ const GridCard = ({ isLarge, card, onClick, onEditCard, onDeleteCard }) => {
       </StyledCardWrapper>
       <Row style={{ width: '100%', padding: '0 4px' }}>
         <Col span={7}>
-          <Typography.Text strong>{`${displayedAmount}x `}</Typography.Text>
+          {displayedAmount && (
+            <Typography.Text strong>{`${displayedAmount}x `}</Typography.Text>
+          )}
         </Col>
         <Col span={9} style={{ display: 'flex', justifyContent: 'center' }}>
           <Typography.Text>{getPriceLabel(minPrice)}</Typography.Text>
