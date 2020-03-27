@@ -26,6 +26,7 @@ export default ({ containedCardNames, isVisible, onClose, onAddCard }) => {
       visible={isVisible}
       onClose={onClose}
       bodyStyle={{ padding: 4 }}
+      destroyOnClose
       afterVisibleChange={afterVisibleChange}
     >
       <SearchField

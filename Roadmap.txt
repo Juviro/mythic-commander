@@ -4,8 +4,6 @@ BUGFIXES:
 NEXT:
 
 IMPROVEMENTS: 
-    - destroy mobile add card search field when not visible (text stays in input)
-    - when opening preview modal for flip card, set side to current side of smaller card
 
 FEATURES:
 
@@ -16,7 +14,3 @@ BACKLOG:
     - allow link to deck
     - Add option to deck to fill up empty card slots with basic lands, based on mana occurrance
     - find a way to make collection value work
-
-CURRENT REFACTORING:
-    - deck color is colorless
-        - check deck color checks
