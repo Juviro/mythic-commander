@@ -17,7 +17,7 @@ export default ({ deck, currentTab, loading }) => {
         <CardList deck={deck} loading={loading} />
       </Tabs.TabPane>
       <Tabs.TabPane tab="3" key="edit">
-        <EditDeck deck={deck} />
+        <EditDeck deck={deck} loading={loading} />
       </Tabs.TabPane>
     </Tabs>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
+import { Skeleton } from 'antd';
 import CardSubList from './CardSubList';
 import { ListOrder } from '../../../Elements';
 import { deleteFromDeck, editDeckCard, getDeck } from '../queries';
@@ -92,16 +93,17 @@ const DeckList = ({ deck, loading }) => {
     <StyledWrapper>
       <ListOrder />
       <div style={{ marginTop: 16 }}>
-        {cardsByType.map(cardGroup => (
-          <CardSubList
-            {...cardGroup}
-            key={cardGroup.type}
-            commander={commander}
-            loading={loading}
-            onEditCard={onEditCard}
-            onDeleteCard={onDeleteCard}
-          />
-        ))}
+        <Skeleton loading={loading} active>
+          {cardsByType.map(cardGroup => (
+            <CardSubList
+              {...cardGroup}
+              key={cardGroup.type}
+              commander={commander}
+              onEditCard={onEditCard}
+              onDeleteCard={onDeleteCard}
+            />
+          ))}
+        </Skeleton>
       </div>
     </StyledWrapper>
   );

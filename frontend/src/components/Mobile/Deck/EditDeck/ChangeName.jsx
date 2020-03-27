@@ -27,7 +27,7 @@ export default ({ deck }) => {
   };
 
   return (
-    <List.Item style={{ padding: '4px 16px' }}>
+    <List.Item>
       <Typography.Paragraph
         ellipsis
         editable={{ onChange: val => onChangeName(val || 'My Deck') }}

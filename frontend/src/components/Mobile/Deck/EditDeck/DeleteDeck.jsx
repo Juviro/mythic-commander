@@ -36,7 +36,7 @@ const DeleteDeck = ({ history }) => {
     <>
       <List.Item
         onClick={() => setIsModalVisible(true)}
-        style={{ color: '#ff4d4f', padding: 16 }}
+        style={{ color: '#ff4d4f' }}
       >
         Delete Deck
       </List.Item>

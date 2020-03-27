@@ -41,9 +41,7 @@ export default ({ deck }) => {
   };
 
   return (
-    <List.Item
-      style={{ padding: 16, display: 'flex', flexDirection: 'column' }}
-    >
+    <List.Item style={{ display: 'flex', flexDirection: 'column' }}>
       <StyledHeader>Deck Image:</StyledHeader>
       <Select
         defaultValue={getImgSrc(currentImage)}

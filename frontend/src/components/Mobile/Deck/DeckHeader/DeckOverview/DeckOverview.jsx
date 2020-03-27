@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Skeleton } from 'antd';
 import NotLegalWarning from './NotLegalWarning';
 import DeckName from './DeckName';
 import { getNumberOfCards } from '../../../../../utils/deck';
@@ -21,7 +22,13 @@ const StyledStat = styled.div`
   font-size: 12px;
 `;
 
-export default ({ deck }) => {
+export default ({ deck, loading }) => {
+  if (loading)
+    return (
+      <StyledInfoBox>
+        <Skeleton active />
+      </StyledInfoBox>
+    );
   const commander = deck.cards.find(({ zone }) => zone === 'COMMANDER');
   const numberOfUnowned = deck.cards.filter(({ owned }) => !owned).length;
   const numberOfCards = `${getNumberOfCards(deck.cards)} cards ${
