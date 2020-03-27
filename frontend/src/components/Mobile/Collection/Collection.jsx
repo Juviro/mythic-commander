@@ -4,11 +4,10 @@ import { useQuery } from 'react-apollo';
 import { Divider } from 'antd';
 import { getMobileCollection } from './queries';
 
-import { ListOrder } from '../../Elements';
+import { LayoutPicker, FilteredCardList } from '../../Elements';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
 import CollectionOverview from './CollectionOverview';
 import CollapsableFilter from '../../Elements/Filter/CollapsableFilter';
-import FilteredCardList from '../../Elements/CardList/FilteredCardList';
 import CardModal from '../Card/CardModal';
 import AddToCollection from './AddToCollection';
 
@@ -30,7 +29,7 @@ export default () => {
     <StyledWrapper>
       <CollectionOverview cards={cards} />
       <CollapsableFilter />
-      <ListOrder showCollectionFilters />
+      <LayoutPicker showCollectionFilters />
       <Divider />
       <FilteredCardList cards={cards} basePath="/m/collection" />
       <AddToCollection />

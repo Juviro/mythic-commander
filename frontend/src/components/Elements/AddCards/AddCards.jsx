@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import SearchField from '../SearchField';
+import CardSearch from '../CardSearch';
 import MultiInput from './MultIinput';
 
 const StyledWrapper = styled.div`
@@ -19,7 +19,7 @@ export default ({ onAddCards, searchInputRef }) => {
   return (
     <StyledWrapper>
       <StyledSearchSection>
-        <SearchField
+        <CardSearch
           ref={searchInputRef}
           onSearch={card => onAddCards([card])}
           defaultActiveFirstOption

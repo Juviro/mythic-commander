@@ -12,7 +12,7 @@ import {
   IconWrapper,
 } from './StyledMultiInput';
 
-import { splitAmountAndName } from '../../SearchField/SearchField';
+import { splitAmountAndName } from '../../CardSearch/CardSearch';
 import CardContext from '../../../CardProvider/CardProvider';
 
 const NO_CARD = 'NO_CARD';
@@ -27,7 +27,7 @@ Forest
 Ignore line with //
 `;
 
-export default class SearchField extends React.Component {
+export default class MultiInput extends React.Component {
   state = {
     cardResults: [],
     isValidInput: false,

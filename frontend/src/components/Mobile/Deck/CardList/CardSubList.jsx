@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import { Divider, Typography } from 'antd';
-import FilteredCardList from '../../../Elements/CardList/FilteredCardList';
+import FilteredCardList from '../../../Elements/CardListMobile/FilteredCardList';
 import { getNumberOfCards } from '../../../../utils/deck';
 
 const typeMap = {
