@@ -41,4 +41,4 @@ export const List = () => {
 
 export const CardImage = () => <StyledImagePreview />;
 
-export default () => <Skeleton />;
+export default () => <Skeleton active />;

@@ -11,7 +11,7 @@ const typeMap = {
 
 const typeToPlural = type => typeMap[type] || `${type}s`;
 
-export default ({ cards, type, loading, onEditCard, onDeleteCard }) => {
+export default ({ cards, type, onEditCard, onDeleteCard }) => {
   const { id } = useParams();
   if (!cards.length) return null;
 
@@ -24,7 +24,6 @@ export default ({ cards, type, loading, onEditCard, onDeleteCard }) => {
       <Typography.Title level={4}>{title}</Typography.Title>
       <FilteredCardList
         cards={cards}
-        loading={loading}
         onEditCard={onEditCard}
         onDeleteCard={onDeleteCard}
         hideFooter

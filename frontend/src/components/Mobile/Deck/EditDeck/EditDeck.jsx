@@ -1,5 +1,5 @@
 import React from 'react';
-import { List } from 'antd';
+import { List, Skeleton } from 'antd';
 import styled from 'styled-components';
 
 import ChangeName from './ChangeName';
@@ -11,22 +11,25 @@ import ChangeCommander from './ChangeCommander';
 const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
 `;
 
-export default ({ deck }) => {
+export default ({ deck, loading }) => {
   return (
     <StyledWrapper>
-      <List style={{ width: '100%' }}>
-        <ChangeName deck={deck} />
-        <ChangeCommander deck={deck} />
-        <ChangeImage deck={deck} />
-        <DuplicateDeck />
-        <DeleteDeck />
-      </List>
+      <Skeleton active loading={loading}>
+        <List style={{ width: '100%' }}>
+          <ChangeName deck={deck} />
+          <ChangeCommander deck={deck} />
+          <ChangeImage deck={deck} />
+          <DuplicateDeck />
+          <DeleteDeck />
+        </List>
+      </Skeleton>
     </StyledWrapper>
   );
 };
