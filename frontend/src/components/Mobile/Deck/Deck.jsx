@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Spin } from 'antd';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
