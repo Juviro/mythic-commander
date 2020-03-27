@@ -33,7 +33,7 @@ const GridCard = ({ isLarge, card, onClick, onEditCard, onDeleteCard }) => {
     ? { fontSize: 16, marginBottom: 8, padding: 20 }
     : { maxWidth: '50%' };
 
-  const { minPrice, name, totalAmount, amount } = card;
+  const { minPrice, name, totalAmount, amount, sumPrice, owned } = card;
   const displayedAmount = amount || totalAmount;
 
   return (
@@ -56,11 +56,20 @@ const GridCard = ({ isLarge, card, onClick, onEditCard, onDeleteCard }) => {
             <Typography.Text strong>{`${displayedAmount}x `}</Typography.Text>
           )}
         </Col>
-        <Col span={9} style={{ display: 'flex', justifyContent: 'center' }}>
+        <Col
+          span={sumPrice ? 6 : 9}
+          style={{ display: 'flex', justifyContent: 'center' }}
+        >
           <Typography.Text>{getPriceLabel(minPrice)}</Typography.Text>
         </Col>
-        <Col span={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          {card.owned && <OwnedBadge marginLeft={0} />}
+        <Col
+          span={sumPrice ? 11 : 8}
+          style={{ display: 'flex', justifyContent: 'flex-end' }}
+        >
+          {owned && <OwnedBadge marginLeft={0} />}
+          {sumPrice && sumPrice !== minPrice && (
+            <Typography.Text>{`(${getPriceLabel(sumPrice)})`}</Typography.Text>
+          )}
         </Col>
       </Row>
       <Typography.Text

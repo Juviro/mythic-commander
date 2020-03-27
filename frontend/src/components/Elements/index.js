@@ -2,6 +2,7 @@ export { default as AddCards, Drawer } from './AddCards';
 export { default as AddCardMobile } from './AddCardMobile';
 export { default as Card } from './Card';
 export { default as CardListMobile } from './CardListMobile';
+export { default as CardListDesktop } from './CardListDesktop';
 export { default as FilteredCardList } from './CardListMobile/FilteredCardList';
 export { default as CustomSkeleton } from './CustomSkeleton';
 export { default as EditableTitle } from './EditableTitle';

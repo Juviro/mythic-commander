@@ -6,25 +6,19 @@ export const getCollectionDesktop = gql`
       id
       cards {
         id
-        name
-        oracle_id
-        createdAt
-        image_uris {
-          small
-          normal
-        }
-        card_faces {
+        card {
+          id
           name
-          image_uris {
-            small
-            normal
-          }
-          colors
-        }
-        prices {
-          eur
-          usd
-          usd_foil
+          cmc
+          totalAmount
+          imgKey
+          isTwoFaced
+          subTypes
+          primaryTypes
+          minPrice
+          sumPrice
+          oracle_id
+          color_identity
         }
       }
     }

@@ -2,18 +2,15 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
 import { getCollectionDesktop as getCollection } from './queries';
-
-import ListView from './ListView';
-import Header from './Header';
+import unifyCardFormat from '../../../utils/unifyCardFormat';
+import Cards from './Cards';
 
 export default () => {
   const { data, loading } = useQuery(getCollection);
-  const cards = data ? data.collection.cards : [];
-
+  const cards = data && unifyCardFormat(data.collection.cards);
   return (
     <>
-      <Header />
-      <ListView cards={cards} loading={loading} />
+      <Cards cards={cards} loading={loading} />
     </>
   );
 };

@@ -1,3 +1,14 @@
+COLLECTION DESKTOP:
+    SHORTCUTS:
+        - arrow left/right for change page
+        - have one table element selected, change with arrow up/down
+        - space to enlarge selected element
+        
+
+
+
+
+
 BUGFIXES:
     - backend deployment not reloading
 
