@@ -59,7 +59,7 @@ export default class MainMenu extends React.Component {
             {MENU_ENTRIES.map(({ title, href, icon }) => (
               <Menu.Item key={href}>
                 <Link to={href}>
-                  {icon}
+                  {/* {icon} */}
                   {title}
                 </Link>
               </Menu.Item>

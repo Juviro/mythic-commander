@@ -29,7 +29,7 @@ const resolver = {
         FROM grouped 
         LEFT JOIN cards 
           ON cards.id = grouped.id
-        ORDER BY "createdAt";
+        ORDER BY "createdAt" DESC;
     `,
       [userId]
     );

@@ -8,7 +8,6 @@ import CustomSkeleton from '../CustomSkeleton';
 const StyledCard = styled.img`
   width: 100%;
   height: 100%;
-  z-index: -1;
   position: absolute;
 `;
 
