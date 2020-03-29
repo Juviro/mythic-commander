@@ -7,7 +7,12 @@ const StyledCard = styled(Card)`
   width: 100%;
 `;
 
-export default ({ cards }) => {
+export default ({
+  cards,
+  size = 'small',
+  layout = 'horizontal',
+  column = 3,
+}) => {
   const numberOfUniqueCards = cards ? cards.length : 0;
   const numberOfCards = (cards || []).reduce(
     (sum, { totalAmount }) => sum + totalAmount,
@@ -19,8 +24,8 @@ export default ({ cards }) => {
   );
 
   return (
-    <StyledCard loading={!cards} title="Your Collection" size="small">
-      <Descriptions size="small">
+    <StyledCard loading={!cards} title="Your Collection" size={size}>
+      <Descriptions size={size} layout={layout} column={column}>
         <Descriptions.Item label="Total Cards">
           {numberOfCards}
         </Descriptions.Item>

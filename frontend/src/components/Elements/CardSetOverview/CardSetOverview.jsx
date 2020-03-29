@@ -10,6 +10,7 @@ export default ({
   onChangeSet,
   isEditing,
   onChangeAmount,
+  onSaveChanges,
   maxHeight = 400,
 }) => {
   return (
@@ -23,7 +24,7 @@ export default ({
         }))
       }
       loading={loading}
-      columns={columns(card, isEditing, onChangeAmount)}
+      columns={columns(card, isEditing, onChangeAmount, onSaveChanges)}
       onRow={({ id }) => ({
         onClick: () => onChangeSet(id),
       })}

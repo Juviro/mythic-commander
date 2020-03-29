@@ -41,7 +41,6 @@ export default ({ card }) => {
   const [selectedCardId, setSelectedCardId] = useState(cardId);
   const { data, loading } = useQuery(cardDetailsDesktop, {
     variables: { oracle_id: card.oracle_id },
-    refetchQueries: ['getCollectionDesktop'],
   });
   const usedCard = loading
     ? card

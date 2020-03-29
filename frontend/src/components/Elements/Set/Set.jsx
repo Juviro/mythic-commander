@@ -30,6 +30,7 @@ export default ({ setKey, name: overwriteName }) => {
         <Link
           to={`/m/search?orderBy=name-asc&set=${setKey}&autoSearch=true`}
           onClick={e => e.stopPropagation()}
+          tabIndex="-1"
         >
           {setName}
         </Link>

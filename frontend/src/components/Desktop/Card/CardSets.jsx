@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
 
 import { message } from 'antd';
-import { CardSetOverview, EditIcon } from '../../Elements';
-import { getCollectionNames } from '../../../queries';
 import { changeCollection } from './queries';
+import { CardSetOverview, EditIcon } from '../../Elements';
+import { getCollectionDesktop } from '../Collection/queries';
+import { useShortcut } from '../../Hooks';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -17,6 +18,7 @@ export default ({ card, loading, selectedCardId, onChangeSet }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedMap, setEditedMap] = useState({});
   const [addedMap, setAddedMap] = useState({});
+  useShortcut('e', () => setIsEditing(true));
 
   const onDiscard = () => {
     setEditedMap({});
@@ -26,7 +28,7 @@ export default ({ card, loading, selectedCardId, onChangeSet }) => {
 
   useEffect(() => {
     onDiscard();
-  }, [card.id]);
+  }, [card.oracle_id]);
 
   const onSaveChanges = async () => {
     const edited = Object.keys(editedMap).map(id => ({
@@ -44,29 +46,42 @@ export default ({ card, loading, selectedCardId, onChangeSet }) => {
         added,
         cardId: card.id,
       },
-      update: cache => {
+      update: (
+        cache,
+        {
+          data: {
+            changeCollection: {
+              card: { totalAmount },
+            },
+          },
+        }
+      ) => {
         const existing = cache.readQuery({
-          query: getCollectionNames,
+          query: getCollectionDesktop,
         });
 
-        const alreadyOwned = existing.collection.cards.some(
-          ({ name }) => name === card.name
-        );
+        const newCards = existing.collection.cards
+          .map(existingCard => {
+            if (existingCard.card.oracle_id !== card.oracle_id) {
+              return existingCard;
+            }
+            if (!totalAmount) return null;
 
-        if (alreadyOwned) return;
-
+            return {
+              ...existingCard,
+              card: {
+                ...existingCard.card,
+                totalAmount,
+              },
+            };
+          })
+          .filter(Boolean);
         cache.writeQuery({
-          query: getCollectionNames,
+          query: getCollectionDesktop,
           data: {
             collection: {
               ...existing.collection,
-              cards: existing.collection.cards.concat({
-                __typename: 'CollectionCard',
-                card: {
-                  name: card.name,
-                  __typename: 'Card',
-                },
-              }),
+              cards: newCards,
             },
           },
         });
@@ -114,6 +129,7 @@ export default ({ card, loading, selectedCardId, onChangeSet }) => {
         onChangeAmount={onChangeAmount}
         selectedCardId={selectedCardId}
         onChangeSet={onChangeSet}
+        onSaveChanges={onSaveChanges}
         maxHeight="auto"
       />
     </StyledWrapper>

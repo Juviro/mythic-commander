@@ -3,29 +3,56 @@ import React from 'react';
 import { getPriceLabel } from '../../../utils/cardStats';
 import PreviewCardImage from '../PreviewCardImage';
 import ManaCost from '../ManaCost';
+import { CARD_TYPES } from '../../CardProvider/staticTypes';
 
-const renderAmount = ({ totalAmount, amount }) => totalAmount; // amount || totalAmount || 0;
+const renderAmount = ({ totalAmount, amount }) => amount || totalAmount || 0;
 const renderType = ({ primaryTypes, subTypes }) => {
   if (!subTypes.length) return primaryTypes.join(' ');
   return `${primaryTypes.join(' ')} - ${subTypes.join(' ')}`;
 };
-const renderPrice = ({ minPrice, sumPrice }) => {
-  if (minPrice === sumPrice) return getPriceLabel(minPrice);
+const renderPrice = ({ minPrice, sumPrice, totalAmount }) => {
+  if (minPrice === sumPrice || totalAmount === 1) {
+    return getPriceLabel(sumPrice);
+  }
 
   return `${getPriceLabel(minPrice)}  (${getPriceLabel(sumPrice)})`;
+};
+
+const sortByAmount = columnKey => (a, b) => {
+  return a[columnKey] - b[columnKey];
+};
+const sortByName = columnKey => (a, b) => {
+  return a[columnKey] > b[columnKey] ? 1 : -1;
+};
+
+const sortType = (a, b) => {
+  const getIndex = ({ primaryTypes }) => {
+    const mainType = primaryTypes[primaryTypes.length - 1];
+    return CARD_TYPES.indexOf(mainType);
+  };
+  return getIndex(a) - getIndex(b);
 };
 
 export default [
   {
     title: 'Card',
     key: 'img',
-    width: 50,
+    width: 70,
     render: card => <PreviewCardImage card={card} />,
   },
   {
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
+    sorter: sortByName('name'),
+  },
+  {
+    title: 'Cmc',
+    key: 'cmc',
+    dataIndex: 'cmc',
+    width: 50,
+    align: 'center',
+    sorter: sortByAmount('cmc'),
   },
   {
     title: 'Mana Cost',
@@ -41,6 +68,7 @@ export default [
     width: 350,
     align: 'center',
     render: renderType,
+    sorter: sortType,
   },
   {
     title: 'Amount',
@@ -48,6 +76,7 @@ export default [
     width: 20,
     align: 'center',
     render: renderAmount,
+    sorter: sortByAmount('totalAmount'),
   },
   {
     title: 'Price',
@@ -55,5 +84,6 @@ export default [
     width: 150,
     align: 'center',
     render: renderPrice,
+    sorter: sortByAmount('minPrice'),
   },
 ];

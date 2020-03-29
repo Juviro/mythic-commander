@@ -17,7 +17,6 @@ const getSelectedCard = (
 };
 
 export default ({ cards, loading }) => {
-  console.log('first cards :', cards && cards[0]);
   const [showDetails, setShowDetails] = useState(false);
   const toggleShowDetail = () => setShowDetails(!showDetails);
   const {
@@ -47,8 +46,8 @@ export default ({ cards, loading }) => {
         }
         onRow={(_, index) => ({
           onClick: () => {
-            setShowDetails(true);
             setSelectedElementPosition(index + 1);
+            setShowDetails(true);
           },
         })}
       />
