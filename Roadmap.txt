@@ -11,8 +11,10 @@ COLLECTION DESKTOP:
 
 BUGFIXES:
     - backend deployment not reloading
+    - can't change deck name [MOBILE]
 
 NEXT:
+    - add to wants list not updating list [DESKTOP]
 
 IMPROVEMENTS: 
 

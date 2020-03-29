@@ -35,6 +35,10 @@ const resolver = {
     if (minPrice) return minPrice;
     return usd || usd_foil || 0;
   },
+  mana_cost({ mana_cost, card_faces }) {
+    if (mana_cost !== null || !card_faces) return mana_cost;
+    return card_faces[0].mana_cost;
+  },
   async containingWantsLists({ oracle_id }, _, { db, user: { id: userId } }) {
     const result = await db('wantsLists')
       .leftJoin('cardToWantsListWithOracle', {

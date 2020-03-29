@@ -3,12 +3,13 @@ import { List, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
-import { CustomSkeleton } from '../../Elements';
+import CustomSkeleton from '../CustomSkeleton';
 
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-bottom: 16px;
 `;
 
 const StyledPreview = styled.img`
@@ -18,8 +19,8 @@ const StyledPreview = styled.img`
   border-radius: 2px;
 `;
 
-export default ({ card }) => {
-  if (!card) return <CustomSkeleton.Line />;
+export default ({ card, large }) => {
+  if (!card || !card.containingDecks) return <CustomSkeleton.Line />;
 
   const { containingDecks } = card;
 
@@ -38,7 +39,7 @@ export default ({ card }) => {
         size="small"
         dataSource={dataSource}
         renderItem={({ id, name, imgSrc }) => (
-          <List.Item style={{ padding: 4 }}>
+          <List.Item style={{ padding: large ? 8 : 4 }}>
             <span>
               <StyledPreview src={imgSrc} />
               <Link to={`/m/decks/${id}`}>{name}</Link>

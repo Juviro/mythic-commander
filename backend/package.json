@@ -11,7 +11,7 @@
     "build": "babel src --out-dir dist",
     "migrate": "babel-node node_modules/.bin/knex migrate:latest",
     "rollback": "babel-node node_modules/.bin/knex migrate:rollback",
-    "updateCards": "babel-node src/cron/updateCardsManually.js",
+    "update-cards": "babel-node src/cron/updateCardsManually.js",
     "lint": "eslint --fix src"
   },
   "dependencies": {

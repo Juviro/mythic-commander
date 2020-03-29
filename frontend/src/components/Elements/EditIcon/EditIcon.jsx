@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Typography } from 'antd';
-import { EditOutlined, RightOutlined } from '@ant-design/icons';
+import { EditOutlined, SaveOutlined } from '@ant-design/icons';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -29,13 +29,17 @@ const StyledLabel = styled.span`
 export default ({
   onClick,
   isEditing,
-  editingText = 'Back',
-  BackIcon = RightOutlined,
+  editingText = 'Save',
+  BackIcon = SaveOutlined,
   onDiscard,
 }) => {
   return (
     <StyledWrapper>
-      <StyledIconWrapper onClick={onClick} isEditing={isEditing}>
+      <StyledIconWrapper
+        onClick={onClick}
+        isEditing={isEditing}
+        style={{ cursor: 'pointer' }}
+      >
         {isEditing ? (
           <BackIcon style={{ color: '#1890ff', marginRight: 4 }} />
         ) : (
@@ -46,7 +50,7 @@ export default ({
       {onDiscard && isEditing && (
         <Typography.Text
           type="danger"
-          style={{ fontSize: 13 }}
+          style={{ fontSize: 13, cursor: 'pointer' }}
           onClick={onDiscard}
         >
           discard changes

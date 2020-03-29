@@ -2,10 +2,14 @@ import React from 'react';
 
 import { Typography, Input } from 'antd';
 
-export default ({ card, onChangeAmount, isEditing }) => {
+export default ({ card, onChangeAmount, isEditing, amountKey, hideOnes }) => {
   const { amount, totalAmount } = card;
-  const displayedAmount = amount || totalAmount;
-  const amountLabel = displayedAmount > 1 ? `${displayedAmount}x` : '';
+  const displayedAmount = card[amountKey] || amount || totalAmount || 0;
+  const amountLabel = !displayedAmount
+    ? ''
+    : displayedAmount > 1 || !hideOnes
+    ? `${displayedAmount}x`
+    : '';
 
   if (!amountLabel && !isEditing) return <span />;
 
@@ -13,9 +17,12 @@ export default ({ card, onChangeAmount, isEditing }) => {
     return (
       <Input
         size="small"
+        min={0}
         type="number"
-        style={{ width: 40 }}
-        onChange={e => onChangeAmount(Number(e.target.value) || 1)}
+        style={{ width: 50 }}
+        onChange={e =>
+          onChangeAmount(Number(e.target.value) || 0, card.id, amountKey)
+        }
         defaultValue={displayedAmount}
         onClick={e => e.stopPropagation()}
       />

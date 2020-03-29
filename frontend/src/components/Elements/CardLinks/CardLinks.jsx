@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import mkmIcon from '../../../assets/purchaseIcons/mkm.png';
 import ckIcon from '../../../assets/purchaseIcons/ck.ico';
-import { CustomSkeleton } from '../../Elements';
+import CustomSkeleton from '../CustomSkeleton';
 
 const StyledPurchaseIcon = styled.img`
   width: 18px;
@@ -15,11 +15,12 @@ const StyledPurchaseIcons = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-around;
 `;
 
-export default ({ card }) => {
-  if (!card) return <CustomSkeleton.Line />;
+export default ({ card, loading }) => {
+  if (!card || loading) return <CustomSkeleton.Line />;
   const { name } = card;
 
   const encodedName = encodeURI(name);

@@ -1,37 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table } from 'antd';
-import { getPriceLabel } from '../../../utils/cardStats';
-import PreviewCardImage from '../PreviewCardImage';
 
-const columns = [
-  {
-    title: 'Card',
-    key: 'img',
-    render: card => <PreviewCardImage card={card} />,
-  },
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Price',
-    dataIndex: 'minPrice',
-    key: 'minPrice',
-    render: getPriceLabel,
-  },
-];
+import useTableShortcuts from './useTableShortcuts';
+import CardModalDesktop from '../CardModalDesktop';
+import columns from './columns';
+
+const getSelectedCard = (
+  cards,
+  { pageSize, current },
+  selectedElementPosition
+) => {
+  if (!cards || !selectedElementPosition) return null;
+
+  const index = selectedElementPosition - 1 + pageSize * (current - 1);
+  return cards[index];
+};
 
 export default ({ cards, loading }) => {
-  console.log('cards :', cards);
+  console.log('first cards :', cards && cards[0]);
+  const [showDetails, setShowDetails] = useState(false);
+  const toggleShowDetail = () => setShowDetails(!showDetails);
+  const {
+    pagination,
+    selectedElementPosition,
+    setSelectedElementPosition,
+  } = useTableShortcuts(cards, toggleShowDetail);
+
+  const selectedCard = getSelectedCard(
+    cards,
+    pagination,
+    selectedElementPosition
+  );
 
   return (
-    <Table
-      style={{ width: '100%', height: '100%' }}
-      size="middle"
-      loading={loading}
-      dataSource={cards}
-      columns={columns}
-    />
+    <>
+      <Table
+        pagination={pagination}
+        rowKey="id"
+        style={{ width: '100%', height: '100%', fontWeight: 500 }}
+        size="middle"
+        loading={loading}
+        dataSource={cards}
+        columns={columns}
+        rowClassName={(_, index) =>
+          index + 1 === selectedElementPosition ? 'selected' : undefined
+        }
+        onRow={(_, index) => ({
+          onClick: () => {
+            setShowDetails(true);
+            setSelectedElementPosition(index + 1);
+          },
+        })}
+      />
+      <CardModalDesktop
+        card={selectedCard}
+        visible={showDetails}
+        onClose={toggleShowDetail}
+      />
+    </>
   );
 };

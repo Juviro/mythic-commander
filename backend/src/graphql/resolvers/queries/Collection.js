@@ -34,7 +34,7 @@ const resolver = {
       [userId]
     );
 
-    return cards.map(unifyCardFormat(userId));
+    return [cards.map(unifyCardFormat(userId))[0]];
   },
 };
 

@@ -13,7 +13,7 @@ const resolver = {
       .where({ id })
       .first();
   },
-  cardsByOracleId(_, { oracle_id }, { db }) {
+  cardByOracleId(_, { oracle_id }, { db }) {
     return db('distinctCards')
       .where({ oracle_id })
       .first();
