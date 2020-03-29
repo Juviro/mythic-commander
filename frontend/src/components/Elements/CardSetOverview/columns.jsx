@@ -21,12 +21,19 @@ const renderPrice = priceKey => price => (
   </StyledPriceWrapper>
 );
 
-const renderOwned = (isEditing, onChangeAmount, amountKey) => card => {
+const renderOwned = (isEditing, onChangeAmount, onSaveChanges, amountKey) => (
+  card,
+  _,
+  index
+) => {
+  const autoFocus = !index && amountKey === 'amountOwned';
   return (
     <EditableAmount
       isEditing={isEditing}
       onChangeAmount={onChangeAmount}
+      onPressEnter={onSaveChanges}
       card={card}
+      autoFocus={autoFocus}
       amountKey={amountKey}
     />
   );
@@ -78,28 +85,40 @@ const getOwnedAmount = (card, key) => {
   return card.allSets.reduce((acc, val) => acc + val[key] || 0, 0);
 };
 
-const ownedColumns = (card, isEditing, onChangeAmount) => [
+const ownedColumns = (card, isEditing, onChangeAmount, onSaveChanges) => [
   {
     key: '4',
     title: `Owned (${getOwnedAmount(card, 'amountOwned')})`,
     sorter: sortByAmount('amountOwned'),
-    render: renderOwned(isEditing, onChangeAmount, 'amountOwned'),
-    width: 110,
+    render: renderOwned(
+      isEditing,
+      onChangeAmount,
+      onSaveChanges,
+      'amountOwned'
+    ),
+    width: 120,
     align: 'center',
   },
   {
     key: '5',
     title: `Foil (${getOwnedAmount(card, 'amountOwnedFoil')})`,
     sorter: sortByAmount('amountOwnedFoil'),
-    render: renderOwned(isEditing, onChangeAmount, 'amountOwnedFoil'),
+    render: renderOwned(
+      isEditing,
+      onChangeAmount,
+      onSaveChanges,
+      'amountOwnedFoil'
+    ),
     width: 100,
     align: 'center',
   },
 ];
 
-export default (card, isEditing, onChangeAmount) => {
+export default (card, isEditing, onChangeAmount, onSaveChanges) => {
   const isMobile = getIsMobile();
   if (isMobile) return baseColumns;
 
-  return baseColumns.concat(ownedColumns(card, isEditing, onChangeAmount));
+  return baseColumns.concat(
+    ownedColumns(card, isEditing, onChangeAmount, onSaveChanges)
+  );
 };
