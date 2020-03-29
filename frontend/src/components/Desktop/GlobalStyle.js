@@ -12,4 +12,17 @@ export default createGlobalStyle`
     width: 100%;
     justify-content: space-between;
   }
+
+  /* Selected table row */ 
+  .ant-table-tbody .selected {
+    background-color: rgba(24, 144, 255, 0.2) !important;
+  }
+
+  .ant-table-tbody .selected:hover > td {
+    background: none !important;
+  }
+
+  .ant-modal-content {
+    overflow: hidden;
+  }
 `;

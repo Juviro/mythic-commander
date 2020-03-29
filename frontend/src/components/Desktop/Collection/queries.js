@@ -10,6 +10,7 @@ export const getCollectionDesktop = gql`
           id
           name
           cmc
+          mana_cost
           totalAmount
           imgKey
           isTwoFaced

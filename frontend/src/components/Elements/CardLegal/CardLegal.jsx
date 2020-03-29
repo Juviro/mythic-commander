@@ -9,12 +9,11 @@ const StyledWrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  margin-top: 16px;
   color: ${({ isLegal }) => (isLegal ? 'green' : 'red')};
 `;
 
-export default ({ card }) => {
-  if (!card) return <Skeleton active paragraph={null} />;
+export default ({ card, loading }) => {
+  if (!card || loading) return <Skeleton active paragraph={null} />;
   const isLegal = card.isCommanderLegal;
   return (
     <StyledWrapper isLegal={isLegal}>

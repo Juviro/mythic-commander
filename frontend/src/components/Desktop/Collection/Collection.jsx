@@ -7,6 +7,7 @@ import Cards from './Cards';
 
 export default () => {
   const { data, loading } = useQuery(getCollection);
+  console.log('data, loading :', data, loading);
   const cards = data && unifyCardFormat(data.collection.cards);
   return (
     <>

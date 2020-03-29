@@ -2,11 +2,10 @@ import React from 'react';
 import { Select, Typography, Col, Row, List } from 'antd';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-apollo';
-
 import styled from 'styled-components';
-import { wantsLists as wantsListsQuery } from '../WantsLists/queries';
-import { CustomSkeleton } from '../../Elements';
-import { addCardsToWantsList } from './queries';
+
+import CustomSkeleton from '../CustomSkeleton';
+import { addCardsToWantsList, wantsLists as wantsListsQuery } from './queries';
 import message from '../../../utils/message';
 
 const StyledWrapper = styled.div`
@@ -34,11 +33,12 @@ const WantsListLink = ({ id, name }) => {
   );
 };
 
-export default ({ card }) => {
+export default ({ card, large, cardId }) => {
   const { data } = useQuery(wantsListsQuery);
   const [mutate] = useMutation(addCardsToWantsList);
 
-  if (!data || !card) return <CustomSkeleton.Line />;
+  if (!data || !card || !card.containingWantsLists)
+    return <CustomSkeleton.Line />;
 
   const { containingWantsLists } = card;
   const { wantsLists } = data;
@@ -47,15 +47,11 @@ export default ({ card }) => {
     const { name } = wantsLists.find(wantsList => wantsList.id === id) || {
       name: 'New Wants List',
     };
-    const updatedWantsList = containingWantsLists.find(
-      wantsList => wantsList.id === id
-    ) || { name, id, amount: 0, __typename: 'ContainingList' };
-    updatedWantsList.amount++;
 
     mutate({
       variables: {
         wantsListId: id,
-        cards: [{ id: card.id }],
+        cards: [{ id: cardId || card.id }],
       },
       refetchQueries: ['wantsLists'],
     });
@@ -76,26 +72,8 @@ export default ({ card }) => {
 
   return (
     <StyledWrapper>
-      {Boolean(containingWantsLists.length) && (
-        <List
-          size="small"
-          dataSource={dataSource}
-          renderItem={({ id, name, amount }) => (
-            <List.Item style={{ padding: 0 }}>
-              <Row style={{ width: '100%' }}>
-                <Col span={2}>
-                  <Typography.Text strong>{`${amount}x`}</Typography.Text>
-                </Col>
-                <Col span={22}>
-                  <WantsListLink id={id} name={name} />
-                </Col>
-              </Row>
-            </List.Item>
-          )}
-        />
-      )}
       <Select
-        style={{ width: '100%', marginTop: 16 }}
+        style={{ width: '100%' }}
         onChange={onAddToList}
         value="Add to wants list..."
       >
@@ -109,6 +87,25 @@ export default ({ card }) => {
           </Select.Option>
         ))}
       </Select>
+      {Boolean(containingWantsLists.length) && (
+        <List
+          size="small"
+          style={{ margin: '16px 0 24px' }}
+          dataSource={dataSource}
+          renderItem={({ id, name, amount }) => (
+            <List.Item style={{ padding: large ? undefined : 0 }}>
+              <Row style={{ width: '100%' }}>
+                <Col span={2}>
+                  <Typography.Text strong>{`${amount}x`}</Typography.Text>
+                </Col>
+                <Col span={22}>
+                  <WantsListLink id={id} name={name} />
+                </Col>
+              </Row>
+            </List.Item>
+          )}
+        />
+      )}
     </StyledWrapper>
   );
 };

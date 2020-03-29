@@ -10,7 +10,7 @@ const StyledRulesWrapper = styled.div`
 `;
 
 export default ({ card = {}, loading }) => {
-  const { rulings_uri, name, oracle_id } = card;
+  const { id, name, oracle_id } = card;
   const [rules, setRules] = useState(null);
   const [isOpen, setIsOpen] = useState(null);
 
@@ -19,7 +19,8 @@ export default ({ card = {}, loading }) => {
 
     const fetchRules = async () => {
       try {
-        const response = await fetch(rulings_uri, {
+        const rulingsUri = `https://api.scryfall.com/cards/${id}/rulings`;
+        const response = await fetch(rulingsUri, {
           signal: abortController.signal,
         });
         const { data } = await response.json();
@@ -30,7 +31,7 @@ export default ({ card = {}, loading }) => {
     };
 
     setRules(null);
-    if (rulings_uri) fetchRules();
+    if (id) fetchRules();
 
     return () => {
       abortController.abort();
@@ -49,16 +50,21 @@ export default ({ card = {}, loading }) => {
 
   return (
     <>
-      <StyledRulesWrapper showBorder={Boolean(rules)} hasRules={hasRules}>
-        {buttonText && !loading ? (
+      {buttonText && !loading ? (
+        <StyledRulesWrapper showBorder={Boolean(rules)} hasRules={hasRules}>
           <Button block onClick={() => setIsOpen(true)} disabled={!hasRules}>
             {buttonText}
           </Button>
-        ) : (
-          <Skeleton active paragraph={null} />
-        )}
-      </StyledRulesWrapper>
-      <Modal footer={null} visible={isOpen} onCancel={() => setIsOpen(false)}>
+        </StyledRulesWrapper>
+      ) : (
+        <Skeleton active paragraph={null} />
+      )}
+      <Modal
+        footer={null}
+        visible={isOpen}
+        onCancel={() => setIsOpen(false)}
+        centered
+      >
         <List
           size="small"
           header={

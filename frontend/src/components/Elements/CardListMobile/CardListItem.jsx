@@ -98,6 +98,7 @@ const CardListItem = ({
         description={
           <StyledDescription>
             <EditableAmount
+              hideOnes
               card={card}
               onChangeAmount={onChangeProp('amount')}
               isEditing={isEditing}

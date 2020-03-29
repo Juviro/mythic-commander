@@ -1,21 +1,25 @@
 import React from 'react';
 import FullscreenSpinner from '../Elements/Spinner';
 
-const MIN_SIZE = 764;
+export const MOBILE_SCREEN_SIZE = 764;
+
+export const getIsMobile = () => {
+  const { orientation, screen } = window;
+  const isMobileDevice =
+    typeof orientation !== 'undefined' ||
+    navigator.userAgent.indexOf('IEMobile') !== -1;
+  return (
+    isMobileDevice &&
+    (screen.height < MOBILE_SCREEN_SIZE || screen.width < MOBILE_SCREEN_SIZE)
+  );
+};
 
 export default ({ children }) => {
   const [isRedirecting, setIsRedirecting] = React.useState(false);
   React.useEffect(() => {
-    const { orientation, screen, location } = window;
-    const isMobileDevice =
-      typeof orientation !== 'undefined' ||
-      navigator.userAgent.indexOf('IEMobile') !== -1;
-    const isMobile =
-      isMobileDevice && (screen.height < MIN_SIZE || screen.width < MIN_SIZE);
-
-    if (isMobile) {
+    if (getIsMobile()) {
       setIsRedirecting(true);
-      location.href = `/m${location.pathname}`;
+      window.location.href = `/m${window.location.pathname}`;
     }
   }, []);
 
