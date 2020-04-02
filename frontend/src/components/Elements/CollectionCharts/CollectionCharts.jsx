@@ -11,7 +11,6 @@ const COLLECTION_VALUE = 'Collection value';
 
 export default () => {
   const { data } = useQuery(collectionDevelopment);
-  console.log('data :', data);
 
   const formattedData =
     data &&
