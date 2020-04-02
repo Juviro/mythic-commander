@@ -95,6 +95,7 @@ export default class MultiInput extends React.Component {
     const { cards } = this.context;
     if (!cards || !cards.length) {
       message.warn('Still initializing.. please try again');
+      return;
     }
 
     const cardNames = cardResults.filter(

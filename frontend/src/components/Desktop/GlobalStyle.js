@@ -19,6 +19,7 @@ export default createGlobalStyle`
   }
   .ant-table-tbody .selected .ant-table-column-sort {
     background: none;
+    transition: background 0s;
   }
 
   .ant-table-tbody .selected:hover > td {

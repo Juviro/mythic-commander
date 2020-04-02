@@ -20,7 +20,7 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledToggleWrapper = styled.div`
-  top: 60px;
+  top: 52px;
   z-index: 99;
   right: -33px;
   cursor: pointer;
@@ -28,8 +28,7 @@ const StyledToggleWrapper = styled.div`
   background-color: #b1b1b1;
   padding: 6px 10px 6px 6px;
 
-  border-left: none;
-  border: 1px solid #8a8888;
+  box-shadow: 5px 0 5px -5px #333;
   border-top-right-radius: 50%;
   border-bottom-right-radius: 50%;
 `;

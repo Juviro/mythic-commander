@@ -4,8 +4,7 @@ BUGFIXES:
     - can't change deck name [MOBILE]
 
 NEXT:
-    - add to wants list not updating list [DESKTOP]
-    - when adding to collection, show owned badge
+    - when adding to collection, show owned badge [MOBILE + DESKTOP]
 
 IMPROVEMENTS: 
 
