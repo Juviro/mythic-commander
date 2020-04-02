@@ -1,16 +1,12 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useMutation } from 'react-apollo';
 
 import { AddCards } from '../../Elements';
 import message from '../../../utils/message';
 import { addToCollectionDesktop, getCollectionDesktop } from './queries';
-import { useShortcut } from '../../Hooks';
 
 export default () => {
   const [mutate] = useMutation(addToCollectionDesktop);
-  const searchInputRef = useRef(null);
-  const focusInput = () => searchInputRef.current.focus();
-  useShortcut('a', focusInput);
 
   const onAddCards = (cards, name) => {
     const addedName = name || `${cards.length} cards`;
@@ -42,11 +38,5 @@ export default () => {
     });
   };
 
-  return (
-    <AddCards
-      onAddCards={onAddCards}
-      searchInputRef={searchInputRef}
-      autoFocus={false}
-    />
-  );
+  return <AddCards onAddCards={onAddCards} autoFocus={false} />;
 };
