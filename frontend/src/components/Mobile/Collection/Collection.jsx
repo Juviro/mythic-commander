@@ -1,19 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
-import { Divider } from 'antd';
+import { Divider, Card } from 'antd';
 import { getMobileCollection } from './queries';
 
-import { LayoutPicker, FilteredCardList } from '../../Elements';
+import {
+  LayoutSorter,
+  FilteredCardList,
+  CollectionOverview,
+} from '../../Elements';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
-import CollectionOverview from './CollectionOverview';
 import CollapsableFilter from '../../Elements/Filter/CollapsableFilter';
 import CardModal from '../Card/CardModal';
 import AddToCollection from './AddToCollection';
 
 const StyledWrapper = styled.div`
   width: 100%;
-  height: 100%;
   padding: 8px;
   display: flex;
   justify-content: center;
@@ -27,9 +29,16 @@ export default () => {
 
   return (
     <StyledWrapper>
-      <CollectionOverview cards={cards} />
+      <Card
+        style={{ width: '100%' }}
+        loading={!cards}
+        title="Your Collection"
+        size="small"
+      >
+        <CollectionOverview cards={cards} column={2} />
+      </Card>
       <CollapsableFilter />
-      <LayoutPicker showCollectionFilters />
+      <LayoutSorter showCollectionFilters />
       <Divider />
       <FilteredCardList cards={cards} basePath="/m/collection" />
       <AddToCollection />

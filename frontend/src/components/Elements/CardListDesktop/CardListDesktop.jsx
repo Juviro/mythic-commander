@@ -1,53 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 
+import { useQueryParam, StringParam } from 'use-query-params';
 import useTableShortcuts from './useTableShortcuts';
 import CardModalDesktop from '../CardModalDesktop';
 import columns from './columns';
-
-const getSelectedCard = (
-  cards,
-  { pageSize, current },
-  selectedElementPosition
-) => {
-  if (!cards || !selectedElementPosition) return null;
-
-  const index = selectedElementPosition - 1 + pageSize * (current - 1);
-  return cards[index];
-};
+import TableHeader from './TableHeader';
+import Flex from '../Flex';
+import { filterByName } from '../../../utils/cardFilter';
 
 export default ({ cards, loading }) => {
   const [showDetails, setShowDetails] = useState(false);
+  const [selectedElementId, setSelectedElementId] = useState(null);
+  const [query] = useQueryParam('name', StringParam);
+  const filteredCards = filterByName(cards, query);
   const toggleShowDetail = () => setShowDetails(!showDetails);
+
   const {
     pagination,
     selectedElementPosition,
     setSelectedElementPosition,
-  } = useTableShortcuts(cards, toggleShowDetail);
+  } = useTableShortcuts(filteredCards, toggleShowDetail);
 
-  const selectedCard = getSelectedCard(
-    cards,
-    pagination,
-    selectedElementPosition
-  );
+  // TODO: find more elegant solution
+  useEffect(() => {
+    const [element] = document.getElementsByClassName('selected');
+    if (!element) return;
+    const currentElementId = element.getAttribute('data-row-key');
+    setSelectedElementId(currentElementId);
+  }, [pagination]);
+
+  const selectedCard =
+    cards && cards.find(({ id }) => id === selectedElementId);
 
   return (
-    <>
+    <Flex direction="column" style={{ width: '100%' }}>
+      <TableHeader />
       <Table
         pagination={pagination}
         rowKey="id"
-        style={{ width: '100%', height: '100%', fontWeight: 500 }}
+        style={{ width: '100%', fontWeight: 500 }}
         size="middle"
         loading={loading}
-        dataSource={cards}
+        dataSource={filteredCards}
         columns={columns}
         rowClassName={(_, index) =>
           index + 1 === selectedElementPosition ? 'selected' : undefined
         }
         onRow={(_, index) => ({
           onClick: () => {
-            setSelectedElementPosition(index + 1);
             setShowDetails(true);
+            setSelectedElementPosition(index + 1);
           },
         })}
       />
@@ -56,6 +59,6 @@ export default ({ cards, loading }) => {
         visible={showDetails}
         onClose={toggleShowDetail}
       />
-    </>
+    </Flex>
   );
 };

@@ -168,6 +168,15 @@ type WantsListCard {
   card: Card!
 }
 
+################################# Collection Snapshot #################################
+
+type CollectionSnapshot {
+  date: String!
+  value: Int
+  amount: Int
+  amountUnique: Int
+}
+
 ################################# Queries #################################
 
 type Query {
@@ -191,6 +200,8 @@ type Query {
 
   wantsList(id: String!): WantsList!
   wantsLists: [WantsList!]!
+
+  collectionDevelopment: [CollectionSnapshot]
 }
 
 input CardsOptionsInput {

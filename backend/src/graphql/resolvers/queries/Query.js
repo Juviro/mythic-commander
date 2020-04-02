@@ -55,6 +55,11 @@ const resolver = {
       .where({ userId })
       .orderBy('createdAt', 'asc');
   },
+  collectionDevelopment(_, __, { user: { id: userId }, db }) {
+    return db('collectionSnapshot')
+      .where({ userId })
+      .orderBy('date');
+  },
 };
 
 export default resolver;

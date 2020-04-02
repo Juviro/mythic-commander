@@ -5,12 +5,12 @@ import { useQuery } from '@apollo/react-hooks';
 import { getCollectionDesktop as getCollection } from './queries';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
 import Cards from './Cards';
-import Overview from './Overview';
+import Sidebar from './Sidebar';
 
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 24px;
+  height: calc(100% - 49px);
 `;
 
 export default () => {
@@ -18,7 +18,7 @@ export default () => {
   const cards = data && unifyCardFormat(data.collection.cards);
   return (
     <StyledWrapper>
-      <Overview cards={cards} />
+      <Sidebar cards={cards} />
       <Cards cards={cards} loading={loading} />
     </StyledWrapper>
   );

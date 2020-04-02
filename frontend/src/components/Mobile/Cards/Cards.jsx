@@ -4,7 +4,7 @@ import { Divider } from 'antd';
 
 import { useApolloClient } from 'react-apollo';
 import { useQueryParams, StringParam, BooleanParam } from 'use-query-params';
-import { LayoutPicker, CardListMobile as CardList } from '../../Elements';
+import { LayoutSorter, CardListMobile as CardList } from '../../Elements';
 import SearchButton from './SearchButton';
 import Header from './Header';
 import { cardSearch } from './queries';
@@ -15,7 +15,6 @@ import { CARDS_PER_PAGE } from '../../Elements/CardListMobile/FilteredCardList';
 
 const StyledWrapper = styled.div`
   width: 100%;
-  height: 100%;
   padding: 8px;
   display: flex;
   justify-content: center;
@@ -100,7 +99,7 @@ export default () => {
           headerText="Advanced"
           onSearch={onSearch}
         />
-        <LayoutPicker />
+        <LayoutSorter />
         <SearchButton onSearch={onSearch} loading={loading} />
         <Divider />
         {allCards && (

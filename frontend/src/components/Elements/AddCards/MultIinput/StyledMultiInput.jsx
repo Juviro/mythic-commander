@@ -8,13 +8,6 @@ export const StyledWrapper = styled.div`
   margin: 20px 0;
 `;
 
-export const StyledButtonWrapper = styled.div`
-  width: 100%;
-  height: 30px;
-  display: flex;
-  justify-content: flex-end;
-`;
-
 export const StyledInputWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -32,4 +25,10 @@ export const StyledStatus = styled.div`
 export const IconWrapper = styled.div`
   height: 21.1px;
   width: 100%;
+`;
+
+export const StyledLink = styled.a`
+  margin-top: 8px;
+  text-align: end;
+  margin-right: 4px;
 `;
