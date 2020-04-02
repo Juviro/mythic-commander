@@ -17,6 +17,9 @@ export default createGlobalStyle`
   .ant-table-tbody .selected {
     background-color: rgba(24, 144, 255, 0.2) !important;
   }
+  .ant-table-tbody .selected .ant-table-column-sort {
+    background: none;
+  }
 
   .ant-table-tbody .selected:hover > td {
     background: none !important;

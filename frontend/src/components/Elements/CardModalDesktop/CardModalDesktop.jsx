@@ -15,7 +15,7 @@ export default ({ card, visible, onClose }) => {
       title={<Typography.Title level={4}>{title}</Typography.Title>}
       destroyOnClose
       width={1150}
-      bodyStyle={{ height: 800 }}
+      bodyStyle={{ height: 850 }}
       style={{ maxWidth: '100%' }}
     >
       {card && <Card card={card} />}

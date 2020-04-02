@@ -93,6 +93,7 @@ export default class CardSearch extends React.Component {
   render() {
     const {
       width = 250,
+      autoFocus = true,
       alignTop = false,
       ownedCardNames,
       containedCardNames,
@@ -108,7 +109,7 @@ export default class CardSearch extends React.Component {
 
     return (
       <AutoComplete
-        autoFocus
+        autoFocus={autoFocus}
         ref={this.inputRef}
         value={searchString}
         placeholder="Search for a card"

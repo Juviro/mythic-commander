@@ -6,27 +6,21 @@ import MultiInput from './MultIinput';
 
 const StyledWrapper = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
+  flex-direction: column;
 `;
 
-const StyledSearchSection = styled.div`
-  height: 100%;
-  display: block;
-`;
-
-export default ({ onAddCards, searchInputRef }) => {
+export default ({ onAddCards, searchInputRef, autoFocus }) => {
   return (
     <StyledWrapper>
-      <StyledSearchSection>
-        <CardSearch
-          ref={searchInputRef}
-          onSearch={card => onAddCards([card])}
-          defaultActiveFirstOption
-          resetSearch
-        />
-        <MultiInput onAddCards={onAddCards} />
-      </StyledSearchSection>
+      <CardSearch
+        ref={searchInputRef}
+        onSearch={(card, name) => onAddCards([card], name)}
+        defaultActiveFirstOption
+        resetSearch
+        autoFocus={autoFocus}
+      />
+      <MultiInput onAddCards={onAddCards} />
     </StyledWrapper>
   );
 };

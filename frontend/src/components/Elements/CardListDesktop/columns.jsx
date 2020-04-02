@@ -4,6 +4,7 @@ import { getPriceLabel } from '../../../utils/cardStats';
 import PreviewCardImage from '../PreviewCardImage';
 import ManaCost from '../ManaCost';
 import { CARD_TYPES } from '../../CardProvider/staticTypes';
+import formatDate from '../../../utils/formatDate';
 
 const renderAmount = ({ totalAmount, amount }) => amount || totalAmount || 0;
 const renderType = ({ primaryTypes, subTypes }) => {
@@ -19,7 +20,7 @@ const renderPrice = ({ minPrice, sumPrice, totalAmount }) => {
 };
 
 const sortByAmount = columnKey => (a, b) => {
-  return a[columnKey] - b[columnKey];
+  return Number(a[columnKey]) - Number(b[columnKey]);
 };
 const sortByName = columnKey => (a, b) => {
   return a[columnKey] > b[columnKey] ? 1 : -1;
@@ -38,7 +39,7 @@ export default [
     title: 'Card',
     key: 'img',
     width: 70,
-    render: card => <PreviewCardImage card={card} />,
+    render: card => <PreviewCardImage card={card} highlightOnHover />,
   },
   {
     title: 'Name',
@@ -85,5 +86,14 @@ export default [
     align: 'center',
     render: renderPrice,
     sorter: sortByAmount('minPrice'),
+  },
+  {
+    title: 'Added',
+    key: 'added',
+    width: 150,
+    align: 'center',
+    dataIndex: 'createdAt',
+    render: formatDate,
+    sorter: sortByAmount('createdAt'),
   },
 ];

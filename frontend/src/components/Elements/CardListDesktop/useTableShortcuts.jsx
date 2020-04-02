@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useQueryParam, NumberParam } from 'use-query-params';
+import { isInputField } from '../../Hooks/useShortcut';
 
 const ENTER = 13;
 const SPACE = 32;
@@ -9,8 +10,7 @@ const ARROW_RIGHT = 39;
 const ARROW_BOTTOM = 40;
 
 export default (cards, toggleShowDetail) => {
-  const pageSize = Math.floor((window.innerHeight - 132) / 74);
-
+  const pageSize = Math.floor((window.innerHeight - 210) / 74);
   const [currentPage = 1, setCurrentPage] = useQueryParam('page', NumberParam);
   const [selectedElementPosition, setSelectedElementPosition] = useState(0);
 
@@ -45,7 +45,7 @@ export default (cards, toggleShowDetail) => {
   };
 
   const onKeyDown = event => {
-    if (!cards || event.target.nodeName === 'INPUT') return;
+    if (!cards || isInputField(event)) return;
     let preventDefault = true;
 
     switch (event.keyCode) {

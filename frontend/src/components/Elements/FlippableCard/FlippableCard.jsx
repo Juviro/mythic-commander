@@ -16,7 +16,7 @@ const StyledImageWrapper = styled.div`
   align-items: center;
 `;
 
-export default ({ loading, card }) => {
+export default ({ loading, card, hideFlipIcon }) => {
   const { id, imgKey, isTwoFaced } = card || {};
   const [flipped, setFlipped] = useState(false);
   const [showHighResImage, setShowHighResImage] = useState(false);
@@ -62,7 +62,9 @@ export default ({ loading, card }) => {
       {(loading || !showHighResImage) && <CustomSkeleton.CardImage />}
       {isTwoFaced && showHighResImage && (
         <>
-          <CardButton Icon={SyncOutlined} index={1} onClick={onFlipCard} />
+          {!hideFlipIcon && (
+            <CardButton Icon={SyncOutlined} index={1} onClick={onFlipCard} />
+          )}
           <a.div
             className="flippable-card "
             style={{
