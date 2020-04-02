@@ -20,7 +20,7 @@ export default ({ wantsList }) => {
           name,
         },
       }),
-      refetchQueries: ['cardsByOracleId'],
+      refetchQueries: ['cardByOracleId'],
     });
   };
 

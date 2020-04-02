@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
 import { Skeleton } from 'antd';
 import CardSubList from './CardSubList';
-import { ListOrder } from '../../../Elements';
+import { LayoutSorter } from '../../../Elements';
 import { deleteFromDeck, editDeckCard, getDeck } from '../queries';
 
 const CARD_TYPES = [
@@ -91,7 +91,7 @@ const DeckList = ({ deck, loading }) => {
 
   return (
     <StyledWrapper>
-      <ListOrder />
+      <LayoutSorter />
       <div style={{ marginTop: 16 }}>
         <Skeleton loading={loading} active>
           {cardsByType.map(cardGroup => (

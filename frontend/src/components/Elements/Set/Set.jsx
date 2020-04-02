@@ -10,15 +10,13 @@ const StyledSetIcon = styled.img`
   margin-right: 4px;
 `;
 
-const StyledSet = styled.div`
-  display: block;
-  align-items: center;
-  flex-direction: row;
-  font-size: 12px;
-  max-width: calc(100vw - 200px);
+const StyledSetName = styled.div`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  @media (max-width: 764px) {
+    font-size: 12px;
+  }
 `;
 
 export default ({ setKey, name: overwriteName }) => {
@@ -26,14 +24,17 @@ export default ({ setKey, name: overwriteName }) => {
   const { name, icon_svg_uri } = sets[setKey];
   const setName = overwriteName || name;
   return (
-    <StyledSet>
-      <StyledSetIcon src={icon_svg_uri} alt={setName} />
-      <Link
-        to={`/m/search?orderBy=name-asc&set=${setKey}&autoSearch=true`}
-        onClick={e => e.stopPropagation()}
-      >
-        {setName}
-      </Link>
-    </StyledSet>
+    <>
+      <StyledSetName>
+        <StyledSetIcon src={icon_svg_uri} alt={setName} />
+        <Link
+          to={`/m/search?orderBy=name-asc&set=${setKey}&autoSearch=true`}
+          onClick={e => e.stopPropagation()}
+          tabIndex="-1"
+        >
+          {setName}
+        </Link>
+      </StyledSetName>
+    </>
   );
 };

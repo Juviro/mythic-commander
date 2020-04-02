@@ -6,6 +6,7 @@ const trimName = str => {
 
 // @Params card: string[] | { name: string }[]
 export const filterByName = (cards, searchString = '') => {
+  if (!cards) return [];
   const cleanSearch = trimName(searchString);
   const searchRegExp = new RegExp(cleanSearch.split('').join('.*'));
 

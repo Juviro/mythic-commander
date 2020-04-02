@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Cards from '../../Elements/Card/ImageView';
-import Search from '../../Elements/SearchField/SearchField';
+import Search from '../../Elements/CardSearch/CardSearch';
 
 const StyledSearch = styled.div`
   padding: 19px;

@@ -51,7 +51,7 @@ export default ({ deck }) => {
       {stats.map(({ title, isValid }) => (
         <StyledStatWrapper key={title} isValid={isValid}>
           <StyledTitle>{title}</StyledTitle>
-          {isValid ? <CheckOutlined /> : <CloseOutlined />} />
+          {isValid ? <CheckOutlined /> : <CloseOutlined />}
         </StyledStatWrapper>
       ))}
     </StyledStats>

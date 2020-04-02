@@ -13,7 +13,7 @@ const resolver = {
       .where({ id })
       .first();
   },
-  cardsByOracleId(_, { oracle_id }, { db }) {
+  cardByOracleId(_, { oracle_id }, { db }) {
     return db('distinctCards')
       .where({ oracle_id })
       .first();
@@ -54,6 +54,11 @@ const resolver = {
     return db('wantsLists')
       .where({ userId })
       .orderBy('createdAt', 'asc');
+  },
+  collectionDevelopment(_, __, { user: { id: userId }, db }) {
+    return db('collectionSnapshot')
+      .where({ userId })
+      .orderBy('date');
   },
 };
 

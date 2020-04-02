@@ -3,9 +3,10 @@ import unifyCardFormat from '../../unifyCardFormat';
 const ON_DUPLICATE =
   ' ON CONFLICT (id, "userId") DO UPDATE SET amount = collection.amount + EXCLUDED.amount, "createdAt" = NOW()';
 
+// TODO: remove cardOracleId
 export default async (
   _,
-  { cardOracleId, added = [], edited = [], deleted = [] },
+  { cardOracleId, added = [], edited = [], deleted = [], cardId },
   { user: { id: userId }, db }
 ) => {
   const promises = [];
@@ -18,7 +19,7 @@ export default async (
     promises.push(promise);
   });
 
-  added.forEach(({ id, amountOwned, amountOwnedFoil }) => {
+  added.forEach(({ id, amountOwned = 0, amountOwnedFoil = 0 }) => {
     const promise = db.raw(
       `
         INSERT INTO collection 
@@ -49,8 +50,10 @@ export default async (
       .del();
   }
 
+  const where = cardId ? { id: cardId } : { oracle_id: cardOracleId };
+
   const updatedCard = await db('cards')
-    .where({ oracle_id: cardOracleId })
+    .where(where)
     .first();
 
   return unifyCardFormat(userId)(updatedCard);

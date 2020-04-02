@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { Popover } from 'antd';
 import { getImageUrl } from '../../../utils/cardImage';
 import FullscreenCardModal from '../FullscreenCardModal';
 import CustomSkeleton from '../CustomSkeleton';
+import FlippableCard from '../FlippableCard';
 
 const StyledCard = styled.img`
   width: 100%;
   height: 100%;
-  z-index: -1;
   position: absolute;
 `;
 
@@ -18,7 +19,7 @@ const StyledPreviewWrapper = styled.div`
   height: ${({ height = '48px' }) => height};
 `;
 
-export default ({ width, height, card }) => {
+export default ({ width, height, card, highlightOnHover }) => {
   const [cardPreviewOpen, setCardPreviewOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const { id, imgKey } = card;
@@ -27,24 +28,48 @@ export default ({ width, height, card }) => {
     event.stopPropagation();
     setCardPreviewOpen(!cardPreviewOpen);
   };
-  return (
-    <>
-      <StyledPreviewWrapper
-        width={width}
-        height={height}
-        onClick={onChangeIsOpen}
-      >
-        <StyledCard
-          src={getImageUrl(id, imgKey)}
-          onLoad={() => setLoading(false)}
-        />
-        {loading && <CustomSkeleton.CardImage />}
-      </StyledPreviewWrapper>
-      <FullscreenCardModal
-        visible={cardPreviewOpen}
-        card={card}
-        onChangeIsOpen={onChangeIsOpen}
+
+  const previewImage = (
+    <StyledPreviewWrapper
+      width={width}
+      height={height}
+      onClick={onChangeIsOpen}
+    >
+      <StyledCard
+        src={getImageUrl(id, imgKey)}
+        onLoad={() => setLoading(false)}
       />
-    </>
+      {loading && <CustomSkeleton.CardImage />}
+    </StyledPreviewWrapper>
+  );
+
+  if (!highlightOnHover)
+    return (
+      <>
+        {previewImage}
+        <FullscreenCardModal
+          visible={cardPreviewOpen}
+          card={card}
+          onChangeIsOpen={onChangeIsOpen}
+        />
+      </>
+    );
+
+  return (
+    <Popover
+      content={
+        <div
+          style={{
+            width: 330,
+            height: 460,
+          }}
+        >
+          <FlippableCard card={card} hideFlipIcon />
+        </div>
+      }
+      placement="right"
+    >
+      {previewImage}
+    </Popover>
   );
 };

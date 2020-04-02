@@ -1,7 +1,10 @@
+  
 BUGFIXES:
     - backend deployment not reloading
+    - can't change deck name [MOBILE]
 
 NEXT:
+    - when adding to collection, show owned badge [MOBILE + DESKTOP]
 
 IMPROVEMENTS: 
 
@@ -13,4 +16,5 @@ BACKLOG:
     - allow link to deck
     - Add option to deck to fill up empty card slots with basic lands, based on mana occurrance
     - find a way to make collection value work
+    - sharable collection / decks / wants
     - prefer owned versions when adding to deck or wants

@@ -1,32 +1,35 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 
-import SearchField from '../SearchField';
+import { Tooltip } from 'antd';
+import CardSearch from '../CardSearch';
 import MultiInput from './MultIinput';
+import { useShortcut } from '../../Hooks';
 
 const StyledWrapper = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
+  flex-direction: column;
 `;
 
-const StyledSearchSection = styled.div`
-  height: 100%;
-  display: block;
-`;
+export default ({ onAddCards, autoFocus }) => {
+  const searchInputRef = useRef(null);
+  const focusInput = () => searchInputRef.current.focus();
+  useShortcut('a', focusInput);
 
-export default ({ onAddCards, searchInputRef }) => {
   return (
-    <StyledWrapper>
-      <StyledSearchSection>
-        <SearchField
+    <Tooltip title="Add card [A]">
+      <StyledWrapper>
+        <CardSearch
           ref={searchInputRef}
-          onSearch={card => onAddCards([card])}
+          onSearch={(card, name) => onAddCards([card], name)}
           defaultActiveFirstOption
           resetSearch
+          autoFocus={autoFocus}
+          width="100%"
         />
         <MultiInput onAddCards={onAddCards} />
-      </StyledSearchSection>
-    </StyledWrapper>
+      </StyledWrapper>
+    </Tooltip>
   );
 };
