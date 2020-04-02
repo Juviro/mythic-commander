@@ -9,5 +9,4 @@ const startCronjobs = () => {
   new CronJob('0 0 21 * * *', updateCards, null, true, 'Europe/Berlin');
   new CronJob('0 0 22 * * *', collectionSnapshot, null, true, 'Europe/Berlin');
 };
-
 startCronjobs();

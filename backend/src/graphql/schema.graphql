@@ -17,7 +17,8 @@ type Card {
   rulings_uri: String!
   colors: [String]
   color_identity: [String]
-  set_name: String
+  set_name: String!
+  mana_cost: String
 
   # Additional card fields
   previewImg: String
@@ -167,6 +168,15 @@ type WantsListCard {
   card: Card!
 }
 
+################################# Collection Snapshot #################################
+
+type CollectionSnapshot {
+  date: String!
+  value: Int
+  amount: Int
+  amountUnique: Int
+}
+
 ################################# Queries #################################
 
 type Query {
@@ -183,13 +193,15 @@ type Query {
     limit: Int
     options: CardsOptionsInput
   ): PaginatedCards!
-  cardsByOracleId(oracle_id: String!): Card!
+  cardByOracleId(oracle_id: String!): Card!
 
   numberOfCachedCards: Int!
   cachedCards: [CachedCard!]!
 
   wantsList(id: String!): WantsList!
   wantsLists: [WantsList!]!
+
+  collectionDevelopment: [CollectionSnapshot]
 }
 
 input CardsOptionsInput {
@@ -232,6 +244,7 @@ type Mutation {
     added: [ChangeCollectionInput!]
     edited: [ChangeCollectionInput!]
     deleted: [String!]
+    cardId: String
   ): CollectionCard!
   deleteFromCollection(cardIds: [String]!): Boolean!
 

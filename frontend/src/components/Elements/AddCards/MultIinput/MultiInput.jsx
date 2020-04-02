@@ -1,18 +1,18 @@
 import React from 'react';
-import { Input, Tooltip, Button } from 'antd';
+import { Input, Tooltip, Button, Modal, message } from 'antd';
 import {
   CheckCircleOutlined,
   ExclamationCircleOutlined,
 } from '@ant-design/icons';
+
 import {
   StyledWrapper,
-  StyledButtonWrapper,
   StyledInputWrapper,
   StyledStatus,
   IconWrapper,
+  StyledLink,
 } from './StyledMultiInput';
-
-import { splitAmountAndName } from '../../SearchField/SearchField';
+import { splitAmountAndName } from '../../CardSearch/CardSearch';
 import CardContext from '../../../CardProvider/CardProvider';
 
 const NO_CARD = 'NO_CARD';
@@ -27,7 +27,7 @@ Forest
 Ignore line with //
 `;
 
-export default class SearchField extends React.Component {
+export default class MultiInput extends React.Component {
   state = {
     cardResults: [],
     isValidInput: false,
@@ -42,6 +42,13 @@ export default class SearchField extends React.Component {
     const { value, cardResults } = this.state;
     const oldValues = prevState.value.split('\n');
     let shouldUpdate = false;
+    // prevents bug with pressing enter in an empty field
+    if (
+      !prevState.value.replace(/[\s]+/g, '') &&
+      !value.replace(/[\s]+/g, '')
+    ) {
+      return;
+    }
 
     const newCardResult = value.split('\n').map((row, index) => {
       if (row === oldValues[index]) return cardResults[index];
@@ -53,7 +60,7 @@ export default class SearchField extends React.Component {
       ) {
         return { name: NO_CARD };
       }
-      // Remove sideboard indicators (currently filtered by the function above)
+      // Removes sideboard indicators (currently filtered by the function above)
       // and second half of a two faced name
       const { amount, name } = splitAmountAndName(row);
       const normalize = str =>
@@ -68,8 +75,9 @@ export default class SearchField extends React.Component {
     if (
       !shouldUpdate &&
       newCardResult.length === prevState.value.split('\n').length
-    )
+    ) {
       return;
+    }
 
     const isValidInput = newCardResult.every(({ name }) => name);
     this.setState({ cardResults: newCardResult, isValidInput });
@@ -81,10 +89,23 @@ export default class SearchField extends React.Component {
   };
 
   onSubmit = () => {
+    // TODO: refactor
     const { onAddCards } = this.props;
     const { cardResults } = this.state;
+    const { cards } = this.context;
+    if (!cards || !cards.length) {
+      message.warn('Still initializing.. please try again');
+      return;
+    }
 
-    onAddCards(cardResults.filter(({ name }) => name && name !== NO_CARD));
+    const cardNames = cardResults.filter(
+      ({ name }) => name && name !== NO_CARD
+    );
+    const cardIds = cardNames.map(({ name, amount }) => ({
+      amount,
+      id: cards.find(card => card.name === name).id,
+    }));
+    onAddCards(cardIds);
 
     this.setState({
       value: '',
@@ -92,12 +113,19 @@ export default class SearchField extends React.Component {
   };
 
   render() {
-    const { cardResults, isValidInput, value } = this.state;
+    const { cardResults, isValidInput, value, isOpen } = this.state;
 
     return (
-      <StyledWrapper>
-        <StyledButtonWrapper>
-          {Boolean(cardResults.length) && (
+      <>
+        <StyledLink onClick={() => this.setState({ isOpen: true })}>
+          Import card list
+        </StyledLink>
+        <Modal
+          destroyOnClose
+          visible={isOpen}
+          title="Import card list"
+          onCancel={() => this.setState({ isOpen: false })}
+          footer={
             <Button
               type="primary"
               onClick={this.onSubmit}
@@ -105,41 +133,45 @@ export default class SearchField extends React.Component {
             >
               Send
             </Button>
-          )}
-        </StyledButtonWrapper>
-        <StyledInputWrapper>
-          <Input.TextArea
-            value={value}
-            onChange={this.onChange}
-            autoSize={{ minRows: 9 }}
-            style={{ whiteSpace: 'pre' }}
-            onPressEnter={e => {
-              const isSubmit = e.metaKey || e.ctrlKey;
-              if (isSubmit && isValidInput) this.onSubmit();
-            }}
-            placeholder={PLACEHOLDER}
-          />
-          <StyledStatus>
-            {cardResults.map(({ name }) => (
-              <IconWrapper key={Math.random()}>
-                {name !== NO_CARD && (
-                  <Tooltip placement="right" title={name}>
-                    {name ? (
-                      <CheckCircleOutlined
-                        style={{ color: 'green', marginLeft: 16 }}
-                      />
-                    ) : (
-                      <ExclamationCircleOutlined
-                        style={{ color: 'red', marginLeft: 16 }}
-                      />
+          }
+        >
+          <StyledWrapper>
+            <StyledInputWrapper>
+              <Input.TextArea
+                value={value}
+                autoFocus
+                onChange={this.onChange}
+                autoSize={{ minRows: 9 }}
+                style={{ whiteSpace: 'pre' }}
+                onPressEnter={e => {
+                  const isSubmit = e.metaKey || e.ctrlKey;
+                  if (isSubmit && isValidInput) this.onSubmit();
+                }}
+                placeholder={PLACEHOLDER}
+              />
+              <StyledStatus>
+                {cardResults.map(({ name }) => (
+                  <IconWrapper key={Math.random()}>
+                    {name !== NO_CARD && (
+                      <Tooltip placement="right" title={name}>
+                        {name ? (
+                          <CheckCircleOutlined
+                            style={{ color: 'green', marginLeft: 16 }}
+                          />
+                        ) : (
+                          <ExclamationCircleOutlined
+                            style={{ color: 'red', marginLeft: 16 }}
+                          />
+                        )}
+                      </Tooltip>
                     )}
-                  </Tooltip>
-                )}
-              </IconWrapper>
-            ))}
-          </StyledStatus>
-        </StyledInputWrapper>
-      </StyledWrapper>
+                  </IconWrapper>
+                ))}
+              </StyledStatus>
+            </StyledInputWrapper>
+          </StyledWrapper>
+        </Modal>
+      </>
     );
   }
 }

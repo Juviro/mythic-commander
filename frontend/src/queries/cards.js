@@ -47,5 +47,4 @@ export const CARD_FIELDS = `
       }
     }
   }
-  rulings_uri
 `;

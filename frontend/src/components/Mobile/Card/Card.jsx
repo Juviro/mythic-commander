@@ -5,15 +5,17 @@ import { useQuery } from 'react-apollo';
 import { useParams, withRouter } from 'react-router';
 import { Divider } from 'antd';
 
-import CardRules from './CardRules';
 import CardImage from './CardImage';
-import CardLegal from './CardLegal';
+import {
+  CardLegal,
+  CardSetOverview,
+  IncludedDecks,
+  IncludedWants,
+  CardLinks,
+  CardRules,
+} from '../../Elements';
 import CardOwned from './CardOwned';
-import CardLinks from './CardLinks';
-import CardOverview from './CardOverview';
 import { getCardByOracleId } from './queries';
-import AddToWants from './AddToWants';
-import IncludedDecks from './IncludedDecks';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -41,7 +43,7 @@ const Card = ({ history, basePath }) => {
     variables: { oracle_id },
   });
 
-  const card = data && data.cardsByOracleId;
+  const card = data && data.cardByOracleId;
 
   const currentCardId = cardId || (card && card.id);
 
@@ -71,7 +73,7 @@ const Card = ({ history, basePath }) => {
       <CardImage card={currentCard} loading={loading} />
       <StyledBodyWrapper>
         <Divider>Overview</Divider>
-        <CardOverview
+        <CardSetOverview
           card={card}
           loading={loading}
           selectedCardId={cardId}
@@ -85,12 +87,14 @@ const Card = ({ history, basePath }) => {
           selectedCardId={cardId}
         />
         <Divider>Wants Lists</Divider>
-        <AddToWants card={card} />
+        <IncludedWants card={card} />
         <Divider>Decks</Divider>
         <IncludedDecks card={card} />
         <Divider>Resources</Divider>
         <CardLinks card={card} />
-        <CardLegal card={card} />
+        <div style={{ marginTop: 16 }}>
+          <CardLegal card={card} />
+        </div>
         <CardRules card={card} loading={loading} />
       </StyledBodyWrapper>
     </StyledWrapper>

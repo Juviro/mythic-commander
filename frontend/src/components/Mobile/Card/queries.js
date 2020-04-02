@@ -7,7 +7,6 @@ const CARD_FIELDS = `
   isCommanderLegal
   imgKey
   isTwoFaced
-  rulings_uri
   
   containingWantsLists {
     id
@@ -38,8 +37,8 @@ const CARD_FIELDS = `
 `;
 
 export const getCardByOracleId = gql`
-  query cardsByOracleId($oracle_id: String!) {
-    cardsByOracleId(oracle_id: $oracle_id) {
+  query cardByOracleId($oracle_id: String!) {
+    cardByOracleId(oracle_id: $oracle_id) {
       ${CARD_FIELDS}
     }
   }
@@ -59,7 +58,6 @@ export const addCardsToWantsList = gql`
         isCommanderLegal
         imgKey
         isTwoFaced
-        rulings_uri
 
         containingWantsLists {
           id

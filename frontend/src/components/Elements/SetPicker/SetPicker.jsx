@@ -20,7 +20,7 @@ export default ({ card, onSelect, width = '100%', size = 'small' }) => {
 
   const allCardSets = loading
     ? []
-    : data.cardsByOracleId.allSets.map(({ set: setKey, id, set_name }) => ({
+    : data.cardByOracleId.allSets.map(({ set: setKey, id, set_name }) => ({
         id,
         setKey,
         ...sets[setKey],
