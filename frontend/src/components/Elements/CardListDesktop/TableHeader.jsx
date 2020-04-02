@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
+import { Tooltip } from 'antd';
 import LayoutPicker from '../LayoutPicker';
 import NameFilter from '../Filter/TextFilter/NameFilter';
 import { useShortcut } from '../../Hooks';
@@ -23,9 +24,11 @@ export default () => {
 
   return (
     <StyledWrapper>
-      <StyledSearchWrapper>
-        <NameFilter size="normal" inputRef={inputRef} />
-      </StyledSearchWrapper>
+      <Tooltip title="Filter for name [F]">
+        <StyledSearchWrapper>
+          <NameFilter size="normal" inputRef={inputRef} />
+        </StyledSearchWrapper>
+      </Tooltip>
       <LayoutPicker />
     </StyledWrapper>
   );

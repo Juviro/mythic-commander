@@ -13,7 +13,7 @@ const StyledWrapper = styled.div`
   font-size: 16px;
   padding: 24px;
   position: relative;
-  transition: all 0.3s;
+  transition: all 0.2s;
   box-shadow: ${({ isVisible }) =>
     isVisible ? '5px 0 5px -5px #333' : 'none'};
   margin-left: ${({ isVisible }) => (isVisible ? 0 : '-400')}px;
@@ -45,12 +45,16 @@ export default ({ cards }) => {
           {isVisible ? <DoubleLeftOutlined /> : <DoubleRightOutlined />}
         </StyledToggleWrapper>
       </Tooltip>
-      <Divider>Overview</Divider>
-      <CollectionOverview cards={cards} size="large" column={1} />
-      <Divider>Add cards</Divider>
-      <AddToCollection />
-      <Divider>History</Divider>
-      <CollectionCharts />
+      {isVisible && (
+        <>
+          <Divider>Overview</Divider>
+          <CollectionOverview cards={cards} size="large" column={1} />
+          <Divider>Add cards</Divider>
+          <AddToCollection />
+          <Divider>History</Divider>
+          <CollectionCharts />
+        </>
+      )}
     </StyledWrapper>
   );
 };
