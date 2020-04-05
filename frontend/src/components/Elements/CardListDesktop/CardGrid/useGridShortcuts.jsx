@@ -15,7 +15,10 @@ export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
 
   const cardsPerPage = cardsPerRow * numberOfRows;
   const numberOfPages = Math.ceil(numberOfCards / cardsPerPage);
-  const cardsOnLastPage = numberOfCards % (cardsPerPage * (numberOfPages - 1));
+  const cardsOnLastPage =
+    numberOfPages === 1
+      ? numberOfCards
+      : numberOfCards % (cardsPerPage * (numberOfPages - 1));
 
   const onLeft = () => {
     if (selectedElementPosition === 1) {

@@ -33,13 +33,19 @@ export default ({ cards, loading }) => {
   return (
     <>
       <Table
-        pagination={{ ...pagination, showSizeChanger: false }}
         rowKey="id"
-        style={{ width: '100%', fontWeight: 500 }}
+        style={{ width: '100%' }}
         size="middle"
         loading={loading}
         dataSource={filteredCards}
         columns={columns}
+        showSorterTooltip={false}
+        pagination={{
+          ...pagination,
+          showSizeChanger: false,
+          showTotal: (total, range) =>
+            `${range[0]}-${range[1]} of ${total} cards`,
+        }}
         rowClassName={(_, index) =>
           index + 1 === selectedElementPosition ? 'selected' : undefined
         }

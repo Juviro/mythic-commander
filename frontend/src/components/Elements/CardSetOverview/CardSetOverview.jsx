@@ -28,8 +28,10 @@ export default ({
       onRow={({ id }) => ({
         onClick: () => onChangeSet(id),
       })}
-      scroll={{ y: 435 }}
+      fixed
+      scroll={{ y: 370 }}
       align="center"
+      showSorterTooltip={false}
       pagination={false}
       size="small"
       style={{

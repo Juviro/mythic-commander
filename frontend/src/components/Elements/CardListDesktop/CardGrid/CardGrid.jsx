@@ -4,20 +4,18 @@ import { useQueryParam, StringParam } from 'use-query-params';
 import styled from 'styled-components';
 
 import { filterByName, sortCards } from '../../../../utils/cardFilter';
-import { useWindowSize } from '../../../Hooks';
 import useGridShortcuts from './useGridShortcuts';
 import CardModalDesktop from '../../CardModalDesktop';
 import GridCard from './GridCard';
 import getNumberOfCards from './getNumberOfCards';
 import usePreloadCards from '../../../Hooks/usePreloadCards';
+import { useWindowSize } from '../../../Hooks';
 
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  overflow: hidden;
   padding-top: 8px;
-  height: ${({ height }) => height}px;
 `;
 
 export default ({ cards, loading, widthOffset }) => {
@@ -29,9 +27,7 @@ export default ({ cards, loading, widthOffset }) => {
   const [query] = useQueryParam('name', StringParam);
   const filteredCards = filterByName(cards, query);
   const sortedCards = sortCards(filteredCards, orderBy);
-  const { cardsPerRow, numberOfRows, CARD_HEIGHT } = getNumberOfCards(
-    widthOffset
-  );
+  const { cardsPerRow, numberOfRows } = getNumberOfCards(widthOffset);
 
   const {
     pagination,
@@ -61,20 +57,23 @@ export default ({ cards, loading, widthOffset }) => {
 
   return (
     <>
-      <StyledWrapper height={numberOfRows * CARD_HEIGHT}>
+      <StyledWrapper>
         {currentCards.map((card, index) => (
           <GridCard
             card={card}
-            index={index}
             key={card.id}
-            onClick={onClick}
-            selectedElementPosition={selectedElementPosition}
+            onClick={() => onClick(index)}
+            widthPercentage={100 / cardsPerRow}
+            isSelected={index + 1 === selectedElementPosition}
           />
         ))}
       </StyledWrapper>
       <Pagination
         {...pagination}
         showSizeChanger={false}
+        showTotal={(total, range) =>
+          `${range[0]}-${range[1]} of ${total} cards`
+        }
         style={{ alignSelf: 'flex-end', margin: '16px 0' }}
       />
       <CardModalDesktop

@@ -1,5 +1,5 @@
-// image, info
-const CARD_HEIGHT = 292 + 42;
+// image, margin
+const CARD_HEIGHT = 292 + 8;
 // image, padding
 const CARD_WIDTH = 210 + 2 * 8;
 // Navbar, Searchbar, Collection margin, pagination, StyledWrapper padding
@@ -15,7 +15,6 @@ export default widthOffset => {
   );
 
   return {
-    CARD_HEIGHT,
     cardsPerRow: Math.max(cardsPerRow, 1),
     numberOfRows: Math.max(numberOfRows, 1),
   };

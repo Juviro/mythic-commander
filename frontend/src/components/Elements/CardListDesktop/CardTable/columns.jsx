@@ -7,6 +7,7 @@ import ManaCost from '../../ManaCost';
 import { CARD_TYPES } from '../../../CardProvider/staticTypes';
 import formatDate from '../../../../utils/formatDate';
 import { highlightText } from '../../../../utils/highlightText';
+import { byColor } from '../../../../utils/cardFilter';
 
 const renderAmount = ({ totalAmount, amount }) => amount || totalAmount || 0;
 
@@ -73,6 +74,7 @@ export default [
     width: 200,
     align: 'center',
     render: manaCost => <ManaCost costString={manaCost} />,
+    sorter: byColor,
   },
   {
     title: 'Type',

@@ -14,6 +14,7 @@ const StyledWrapper = styled.div`
   padding: 24px;
   position: relative;
   transition: all 0.2s;
+  will-change: margin-left;
   box-shadow: ${({ isVisible }) =>
     isVisible ? '5px 0 5px -5px #333' : 'none'};
   margin-left: ${({ isVisible }) => (isVisible ? 0 : '-400')}px;
