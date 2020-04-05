@@ -19,6 +19,14 @@ const resolver = {
       .where({ wantsListId });
     return sum || 0;
   },
+  deck({ deckId, deck }, _, { db }) {
+    if (deck) return deck;
+    if (!deckId) return null;
+
+    return db('decks')
+      .where({ id: deckId })
+      .first();
+  },
 };
 
 export default resolver;
