@@ -50,7 +50,7 @@ const GridCard = ({ isLarge, card, onClick, onEditCard, onDeleteCard }) => {
           />
         )}
       </StyledCardWrapper>
-      <Row style={{ width: '43vw' }}>
+      <Row style={{ width: isLarge ? '100%' : '43vw' }}>
         <Col span={7}>
           {displayedAmount && (
             <Typography.Text strong>{`${displayedAmount}x `}</Typography.Text>
