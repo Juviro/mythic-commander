@@ -1,22 +1,32 @@
 import React from 'react';
 
-import { getPriceLabel } from '../../../utils/cardStats';
-import PreviewCardImage from '../PreviewCardImage';
-import ManaCost from '../ManaCost';
-import { CARD_TYPES } from '../../CardProvider/staticTypes';
-import formatDate from '../../../utils/formatDate';
+import { useQueryParam, StringParam } from 'use-query-params';
+import { getPriceLabel } from '../../../../utils/cardStats';
+import PreviewCardImage from '../../PreviewCardImage';
+import ManaCost from '../../ManaCost';
+import { CARD_TYPES } from '../../../CardProvider/staticTypes';
+import formatDate from '../../../../utils/formatDate';
+import { highlightText } from '../../../../utils/highlightText';
 
 const renderAmount = ({ totalAmount, amount }) => amount || totalAmount || 0;
+
 const renderType = ({ primaryTypes, subTypes }) => {
   if (!subTypes.length) return primaryTypes.join(' ');
   return `${primaryTypes.join(' ')} - ${subTypes.join(' ')}`;
 };
+
 const renderPrice = ({ minPrice, sumPrice, totalAmount }) => {
   if (minPrice === sumPrice || totalAmount === 1) {
     return getPriceLabel(sumPrice);
   }
 
   return `${getPriceLabel(minPrice)}  (${getPriceLabel(sumPrice)})`;
+};
+
+const Name = ({ name }) => {
+  const [searchString] = useQueryParam('name', StringParam);
+
+  return highlightText(searchString, name);
 };
 
 const sortByAmount = columnKey => (a, b) => {
@@ -45,10 +55,11 @@ export default [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
+    render: name => <Name name={name} />,
     sorter: sortByName('name'),
   },
   {
-    title: 'Cmc',
+    title: 'CMC',
     key: 'cmc',
     dataIndex: 'cmc',
     width: 50,

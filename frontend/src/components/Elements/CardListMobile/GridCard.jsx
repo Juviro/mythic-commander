@@ -50,7 +50,7 @@ const GridCard = ({ isLarge, card, onClick, onEditCard, onDeleteCard }) => {
           />
         )}
       </StyledCardWrapper>
-      <Row style={{ width: '100%', padding: '0 4px' }}>
+      <Row style={{ width: '43vw' }}>
         <Col span={7}>
           {displayedAmount && (
             <Typography.Text strong>{`${displayedAmount}x `}</Typography.Text>
@@ -72,10 +72,7 @@ const GridCard = ({ isLarge, card, onClick, onEditCard, onDeleteCard }) => {
           )}
         </Col>
       </Row>
-      <Typography.Text
-        ellipsis
-        style={{ width: 'calc(100% - 8px)', padding: '0 4px' }}
-      >
+      <Typography.Text ellipsis style={{ width: '43vw' }}>
         {name}
       </Typography.Text>
     </StyledWrapper>

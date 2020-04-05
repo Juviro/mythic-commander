@@ -1,17 +1,6 @@
 import React, { useEffect } from 'react';
 import { Select } from 'antd';
 import { StringParam, useQueryParam } from 'use-query-params';
-import styled from 'styled-components';
-import LayoutPicker from '../LayoutPicker';
-
-const StyledListOrder = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: row;
-  margin-top: 16px;
-  width: 100%;
-`;
 
 const DEFAULT_FILTER = [
   {
@@ -60,7 +49,7 @@ const COLLECTION_FILTER = [
   },
 ];
 
-export default ({ showCollectionFilters }) => {
+export default ({ showCollectionFilters, style }) => {
   const orderOptions = showCollectionFilters
     ? COLLECTION_FILTER
     : DEFAULT_FILTER;
@@ -77,20 +66,17 @@ export default ({ showCollectionFilters }) => {
   ).label;
 
   return (
-    <StyledListOrder>
-      <Select
-        defaultValue={defaultValue}
-        dropdownStyle={{ minWidth: 200 }}
-        onSelect={value => setOrderBy(value)}
-        style={{ width: 215, maxWidth: 'calc(100% - 140px)' }}
-      >
-        {orderOptions.map(({ label, value }) => (
-          <Select.Option value={value} key={value}>
-            {label}
-          </Select.Option>
-        ))}
-      </Select>
-      <LayoutPicker />
-    </StyledListOrder>
+    <Select
+      defaultValue={defaultValue}
+      dropdownStyle={{ minWidth: 200 }}
+      onSelect={value => setOrderBy(value)}
+      style={{ width: 215, maxWidth: 'calc(100% - 140px)', ...style }}
+    >
+      {orderOptions.map(({ label, value }) => (
+        <Select.Option value={value} key={value}>
+          {label}
+        </Select.Option>
+      ))}
+    </Select>
   );
 };

@@ -143,3 +143,21 @@ export const sortByAmount = (cards, direction = 'asc') => {
 
   return direction === 'asc' ? sortedCards : sortedCards.reverse();
 };
+
+export const sortCards = (cards, orderBy = '') => {
+  const [order, direction = 'asc'] = orderBy.split('-');
+  switch (order) {
+    case 'cmc':
+      return sortByCmc(cards, direction);
+    case 'added':
+      return sortByAdded(cards, direction);
+    case 'name':
+      return sortByName(cards, direction);
+    case 'price':
+      return sortByPrice(cards, direction);
+    case 'amount':
+      return sortByAmount(cards, direction);
+    default:
+      return cards;
+  }
+};

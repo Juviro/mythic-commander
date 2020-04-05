@@ -4,6 +4,7 @@ import { Tooltip } from 'antd';
 import LayoutPicker from '../LayoutPicker';
 import NameFilter from '../Filter/TextFilter/NameFilter';
 import { useShortcut } from '../../Hooks';
+import SortPicker from '../SortPicker';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -18,7 +19,7 @@ const StyledSearchWrapper = styled.div`
   width: 300px;
 `;
 
-export default () => {
+export default ({ showSorter }) => {
   const inputRef = useRef(null);
   useShortcut('f', () => inputRef.current.focus());
 
@@ -29,7 +30,12 @@ export default () => {
           <NameFilter size="normal" inputRef={inputRef} />
         </StyledSearchWrapper>
       </Tooltip>
-      <LayoutPicker />
+      <span>
+        {showSorter && (
+          <SortPicker style={{ marginRight: 16 }} showCollectionFilters />
+        )}
+        <LayoutPicker hideCard />
+      </span>
     </StyledWrapper>
   );
 };

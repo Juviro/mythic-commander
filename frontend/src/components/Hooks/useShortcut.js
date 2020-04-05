@@ -1,10 +1,6 @@
 import { useEffect } from 'react';
 
 const keyMap = {
-  a: 65,
-  e: 69,
-  f: 70,
-  s: 83,
   ESCAPE: 27,
 };
 
@@ -12,10 +8,15 @@ export const isInputField = event => {
   return ['TEXTAREA', 'INPUT'].includes(event.target.nodeName);
 };
 
+const stopPropagation = event => {
+  const { metaKey, ctrlKey } = event;
+  return isInputField(event) && !metaKey && !ctrlKey;
+};
+
 export default (triggerKey, action) => {
   const onKeyDown = event => {
-    if (isInputField(event)) return;
-    if (event.keyCode === keyMap[triggerKey]) {
+    if (stopPropagation(event)) return;
+    if (event.key === triggerKey || event.keyCode === keyMap[triggerKey]) {
       event.preventDefault();
       event.stopPropagation();
       action();

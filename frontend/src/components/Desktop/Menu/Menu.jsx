@@ -1,13 +1,8 @@
 import React from 'react';
 import { Menu } from 'antd';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { UserAvatar } from '../../Elements';
-
-const StyledApp = styled.div`
-  width: 100%;
-  height: 100%;
-`;
 
 const StyledMenu = styled.div`
   width: 100%;
@@ -36,30 +31,21 @@ const MENU_ENTRIES = [
   },
 ];
 
-export default class MainMenu extends React.Component {
-  render() {
-    const {
-      children,
-      location: { pathname },
-    } = this.props;
+const DesktopMenu = ({ location: { pathname } }) => {
+  return (
+    <StyledMenu>
+      <Menu mode="horizontal" selectedKeys={pathname}>
+        {MENU_ENTRIES.map(({ title, href }) => (
+          <Menu.Item key={href}>
+            <Link to={href}>{title}</Link>
+          </Menu.Item>
+        ))}
+      </Menu>
+      <AvatarWrapper>
+        <UserAvatar />
+      </AvatarWrapper>
+    </StyledMenu>
+  );
+};
 
-    if (pathname === '/login') return children;
-    return (
-      <StyledApp>
-        <StyledMenu>
-          <Menu mode="horizontal" selectedKeys={pathname}>
-            {MENU_ENTRIES.map(({ title, href }) => (
-              <Menu.Item key={href}>
-                <Link to={href}>{title}</Link>
-              </Menu.Item>
-            ))}
-          </Menu>
-          <AvatarWrapper>
-            <UserAvatar />
-          </AvatarWrapper>
-        </StyledMenu>
-        {children}
-      </StyledApp>
-    );
-  }
-}
+export default withRouter(DesktopMenu);

@@ -4,7 +4,10 @@ import { Divider } from 'antd';
 
 import { useApolloClient } from 'react-apollo';
 import { useQueryParams, StringParam, BooleanParam } from 'use-query-params';
-import { LayoutSorter, CardListMobile as CardList } from '../../Elements';
+import {
+  LayoutAndSortPicker,
+  CardListMobile as CardList,
+} from '../../Elements';
 import SearchButton from './SearchButton';
 import Header from './Header';
 import { cardSearch } from './queries';
@@ -99,7 +102,7 @@ export default () => {
           headerText="Advanced"
           onSearch={onSearch}
         />
-        <LayoutSorter />
+        <LayoutAndSortPicker />
         <SearchButton onSearch={onSearch} loading={loading} />
         <Divider />
         {allCards && (
