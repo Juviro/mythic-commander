@@ -27,6 +27,8 @@ const StyledAddIcon = styled(PlusOutlined)`
 `;
 
 const StyledHeader = styled.div`
+  font-size: 24px;
+  font-weight: 400;
   margin-left: 16px;
 `;
 
@@ -44,32 +46,43 @@ const Left = styled.div`
   max-width: 90%;
 `;
 
-const ListItem = ({ onClick, image, name, showRightIcon, numberOfCards }) => (
-  <StyledListItem
-    onClick={onClick}
-    actions={showRightIcon ? [<RightOutlined />] : undefined}
-  >
-    <List.Item.Meta
-      title={
-        <>
-          <Left>
-            <Typography.Text
-              ellipsis
-              strong
-              style={{ fontSize: 16, maxWidth: '100%' }}
-            >
-              {name}
-            </Typography.Text>
-          </Left>
-        </>
-      }
-      avatar={image}
-      description={
-        typeof numberOfCards === 'number' ? `${numberOfCards} Cards` : undefined
-      }
-    />
-  </StyledListItem>
-);
+const ListItem = ({
+  onClick,
+  image,
+  name,
+  showRightIcon,
+  numberOfCards,
+  additionalDescription,
+}) => {
+  let description =
+    typeof numberOfCards === 'number' ? `${numberOfCards} Cards` : '';
+  if (additionalDescription) description += additionalDescription;
+
+  return (
+    <StyledListItem
+      onClick={onClick}
+      actions={showRightIcon ? [<RightOutlined />] : undefined}
+    >
+      <List.Item.Meta
+        title={
+          <>
+            <Left>
+              <Typography.Text
+                ellipsis
+                strong
+                style={{ fontSize: 16, maxWidth: '100%' }}
+              >
+                {name}
+              </Typography.Text>
+            </Left>
+          </>
+        }
+        avatar={image}
+        description={description}
+      />
+    </StyledListItem>
+  );
+};
 
 const OverviewList = ({
   addElementText,
@@ -78,28 +91,35 @@ const OverviewList = ({
   onClick,
   header,
 }) => {
-  const deckComponents = elements.map(({ name, imgSrc, id, numberOfCards }) => (
-    <ListItem
-      name={name}
-      showRightIcon
-      onClick={() => onClick(id)}
-      numberOfCards={numberOfCards}
-      image={imgSrc ? <StyledImage src={imgSrc} alt={name} /> : null}
-    />
-  ));
+  const deckComponents = elements.map(
+    ({ name, imgSrc, id, numberOfCards, additionalDescription }) => (
+      <ListItem
+        name={name}
+        showRightIcon
+        onClick={() => onClick(id)}
+        numberOfCards={numberOfCards}
+        additionalDescription={additionalDescription}
+        image={imgSrc ? <StyledImage src={imgSrc} alt={name} /> : null}
+      />
+    )
+  );
 
-  const addElementComponent = (
+  const addElementComponent = onAddElement ? (
     <ListItem
       name={addElementText}
       onClick={onAddElement}
       image={<StyledAddIcon />}
     />
+  ) : (
+    undefined
   );
+
+  const dataSource = [addElementComponent, ...deckComponents].filter(Boolean);
 
   return (
     <List
       header={<StyledHeader>{header}</StyledHeader>}
-      dataSource={[addElementComponent, ...deckComponents]}
+      dataSource={dataSource}
       style={{ width: '100%' }}
       renderItem={element => element}
     />

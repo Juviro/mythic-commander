@@ -1,5 +1,4 @@
 import React from 'react';
-import { Typography } from 'antd';
 import styled from 'styled-components';
 import ResetFilter from '../../Elements/Filter/ResetFilter';
 
@@ -10,10 +9,16 @@ const StyledWrapper = styled.div`
   justify-content: space-between;
 `;
 
+const StyledTitle = styled.div`
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 8px;
+`;
+
 export default () => {
   return (
     <StyledWrapper>
-      <Typography.Title level={4}>Search for cards</Typography.Title>
+      <StyledTitle>Search for cards</StyledTitle>
       <ResetFilter />
     </StyledWrapper>
   );

@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
-import { MoreOutlined, DeleteOutlined, CopyOutlined } from '@ant-design/icons';
+import {
+  MoreOutlined,
+  DeleteOutlined,
+  CopyOutlined,
+  LinkOutlined,
+} from '@ant-design/icons';
 import { Dropdown, Menu, Popconfirm } from 'antd';
 import { useParams, withRouter } from 'react-router';
 import { useMutation } from 'react-apollo';
-import { deleteWantsList, duplicateWantsList } from '../queries';
+import {
+  deleteWantsList,
+  duplicateWantsList,
+  unlinkWantsList,
+} from '../queries';
 import { wantsLists } from '../../WantsLists/queries';
 import message from '../../../../utils/message';
 
-const WantsListMenu = ({ history }) => {
+const WantsListMenu = ({ history, canUnlink }) => {
   const { id: wantsListId } = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [mutateDelete] = useMutation(deleteWantsList);
   const [mutateDuplicate] = useMutation(duplicateWantsList);
+  const [mutateUnlink] = useMutation(unlinkWantsList);
 
   const onDelete = () => {
     setIsOpen(false);
@@ -63,13 +73,35 @@ const WantsListMenu = ({ history }) => {
     });
   };
 
+  const onUnlink = async () => {
+    setIsOpen(false);
+    mutateUnlink({
+      variables: { wantsListId },
+      optimisticResponse: () => ({
+        __typename: 'Mutation',
+        unlinkWantsList: {
+          id: wantsListId,
+          deck: null,
+          __typename: 'WantsList',
+        },
+      }),
+    });
+    message('Unlinked Deck');
+  };
+
   const menu = (
     <Menu>
       <Menu.Item key="1" onClick={onDuplicate}>
         <CopyOutlined />
         <span>Duplicate</span>
       </Menu.Item>
-      <Menu.Item key="2">
+      {canUnlink && (
+        <Menu.Item key="2" onClick={onUnlink}>
+          <LinkOutlined />
+          <span>Unlink from Deck</span>
+        </Menu.Item>
+      )}
+      <Menu.Item key="3">
         <Popconfirm
           placement="bottomRight"
           title="Are you sure you want to delete this list?"
