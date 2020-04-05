@@ -15,7 +15,7 @@ export default ({ containedCardNames, isVisible, onClose, onAddCard }) => {
   };
 
   const ownedCardNames = data
-    ? data.collection.cards.map(({ name }) => name)
+    ? data.collection.cards.map(({ card: { name } }) => name)
     : [];
 
   return (

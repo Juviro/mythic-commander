@@ -144,7 +144,7 @@ const SearchBar = ({ history, transparentSearchBar }) => {
         defaultActiveFirstOption
         onBlur={() => setIsOpen(false)}
         dropdownMatchSelectWidth={false}
-        listHeight={400}
+        listHeight={360}
         placeholder="Search for card or deck"
         style={{ width: 'calc(100% - 16px)' }}
         className={transparentSearchBar && 'transparent'}
