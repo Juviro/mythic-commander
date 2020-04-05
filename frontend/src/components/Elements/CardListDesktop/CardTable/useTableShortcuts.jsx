@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useQueryParam, NumberParam } from 'use-query-params';
-import { isInputField } from '../../Hooks/useShortcut';
+import { isInputField } from '../../../Hooks/useShortcut';
 
 const ENTER = 13;
 const SPACE = 32;
@@ -78,7 +78,7 @@ export default (cards, toggleShowDetail) => {
   });
 
   useEffect(() => {
-    if (!cards) return;
+    if (!cards || !numberOfPages) return;
     setCurrentPage(Math.max(Math.min(currentPage, numberOfPages), 1));
     // eslint-disable-next-line
   }, [numberOfCards]);

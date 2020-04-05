@@ -1,64 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Table } from 'antd';
+import React from 'react';
+import { StringParam, useQueryParam } from 'use-query-params';
 
-import { useQueryParam, StringParam } from 'use-query-params';
-import useTableShortcuts from './useTableShortcuts';
-import CardModalDesktop from '../CardModalDesktop';
-import columns from './columns';
-import TableHeader from './TableHeader';
+import TableHeader from './Header';
 import Flex from '../Flex';
-import { filterByName } from '../../../utils/cardFilter';
+import CardTable from './CardTable';
+import CardGrid from './CardGrid';
 
-export default ({ cards, loading }) => {
-  const [showDetails, setShowDetails] = useState(false);
-  const [selectedElementId, setSelectedElementId] = useState(null);
-  const [query] = useQueryParam('name', StringParam);
-  const filteredCards = filterByName(cards, query);
-  const toggleShowDetail = () => setShowDetails(!showDetails);
-
-  const {
-    pagination,
-    selectedElementPosition,
-    setSelectedElementPosition,
-  } = useTableShortcuts(filteredCards, toggleShowDetail);
-
-  // TODO: find more elegant solution
-  useEffect(() => {
-    const [element] = document.getElementsByClassName('selected');
-    if (!element) return;
-    const currentElementId = element.getAttribute('data-row-key');
-    setSelectedElementId(currentElementId);
-  }, [pagination]);
-
-  const selectedCard =
-    cards && cards.find(({ id }) => id === selectedElementId);
+export default ({ cards, loading, widthOffset }) => {
+  const [layout] = useQueryParam('layout', StringParam);
 
   return (
-    <Flex direction="column" style={{ width: '100%' }}>
-      <TableHeader />
-      <Table
-        pagination={pagination}
-        rowKey="id"
-        style={{ width: '100%', fontWeight: 500 }}
-        size="middle"
-        loading={loading}
-        dataSource={filteredCards}
-        columns={columns}
-        rowClassName={(_, index) =>
-          index + 1 === selectedElementPosition ? 'selected' : undefined
-        }
-        onRow={(_, index) => ({
-          onClick: () => {
-            setShowDetails(true);
-            setSelectedElementPosition(index + 1);
-          },
-        })}
-      />
-      <CardModalDesktop
-        card={selectedCard}
-        visible={showDetails}
-        onClose={toggleShowDetail}
-      />
+    <Flex direction="column" style={{ width: '100%', height: '100%' }}>
+      <TableHeader showSorter={layout === 'grid'} />
+      {layout === 'list' ? (
+        <CardTable cards={cards} loading={loading} />
+      ) : (
+        <CardGrid cards={cards} loading={loading} widthOffset={widthOffset} />
+      )}
     </Flex>
   );
 };
