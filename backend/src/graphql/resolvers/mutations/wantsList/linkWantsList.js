@@ -7,22 +7,10 @@ export default async (
 ) => {
   await canAccessDeck(userId, deckId);
 
-  await db('wantsLists')
+  const [wantsLists] = await db('wantsLists')
     .update({ deckId })
-    .where({ id: wantsListId, userId });
+    .where({ id: wantsListId, userId })
+    .returning('*');
 
-  const {
-    rows: [wantsList],
-  } = await db.raw(
-    `
-        SELECT "wantsLists".*, row_to_json(decks) as deck
-        FROM "wantsLists" 
-        LEFT JOIN decks 
-          ON decks.id = "wantsLists"."deckId" 
-        WHERE "wantsLists".id = ?;
-    `,
-    [wantsListId]
-  );
-
-  return wantsList;
+  return wantsLists;
 };
