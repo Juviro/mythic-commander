@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
 
-import { message } from 'antd';
+import { message, Typography } from 'antd';
 import { changeCollection } from './queries';
 import { CardSetOverview, EditIcon } from '../../Elements';
 import { getCollectionDesktop } from '../Collection/queries';
@@ -12,8 +12,13 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
+const StyledTitleWrapper = styled.div`
+  display: flex;
+  width: calc(100% - 20px);
+  justify-content: space-between;
+`;
 
-export default ({ card, loading, selectedCardId, onChangeSet }) => {
+export default ({ card, loading, selectedCardId, onChangeSet, title }) => {
   const [mutate] = useMutation(changeCollection);
   const [isEditing, setIsEditing] = useState(false);
   const [editedMap, setEditedMap] = useState({});
@@ -31,6 +36,8 @@ export default ({ card, loading, selectedCardId, onChangeSet }) => {
   }, [card.oracle_id]);
 
   const onSaveChanges = async () => {
+    if (!Object.keys({ ...editedMap, ...addedMap }).length) return;
+
     const edited = Object.keys(editedMap).map(id => ({
       ...editedMap[id],
       id,
@@ -117,11 +124,14 @@ export default ({ card, loading, selectedCardId, onChangeSet }) => {
 
   return (
     <StyledWrapper>
-      <EditIcon
-        onClick={onToggleEdit}
-        isEditing={isEditing}
-        onDiscard={onDiscard}
-      />
+      <StyledTitleWrapper>
+        {title && <Typography.Title level={4}>{title}</Typography.Title>}
+        <EditIcon
+          onClick={onToggleEdit}
+          isEditing={isEditing}
+          onDiscard={onDiscard}
+        />
+      </StyledTitleWrapper>
       <CardSetOverview
         card={card}
         loading={loading}

@@ -28,6 +28,8 @@ const StyledCardImage = styled.div`
   display: flex;
   height: 490px;
   width: 350px;
+  max-width: 30vw;
+  max-height: 41.8vw;
 `;
 
 const CenteredCol = styled(Col)`
@@ -53,6 +55,10 @@ export default ({ card }) => {
     setSelectedCardId(cardId);
   }, [cardId]);
 
+  const { name, totalAmount } = card || {};
+  let title = name;
+  if (totalAmount) title += ` (${totalAmount} collected)`;
+
   return (
     <>
       <Row style={{ width: '100%' }}>
@@ -61,24 +67,17 @@ export default ({ card }) => {
             <FlippableCard card={usedCard} />
           </StyledCardImage>
         </CenteredCol>
-        <CenteredCol span={16} style={{ padding: '0 24px' }}>
+        <CenteredCol
+          span={16}
+          style={{ padding: '0 24px', flexDirection: 'row' }}
+        >
           <CardSets
             card={usedCard}
             loading={loading}
+            title={title}
             selectedCardId={selectedCardId}
             onChangeSet={setSelectedCardId}
           />
-        </CenteredCol>
-      </Row>
-      <Row style={{ width: '100%', height: 50 }}>
-        <CenteredCol span={8} style={{ padding: '0 8px' }}>
-          <CardLegal card={usedCard} loading={loading} />
-        </CenteredCol>
-        <CenteredCol span={8} style={{ padding: '0 8px' }}>
-          <CardLinks card={usedCard} loading={loading} />
-        </CenteredCol>
-        <CenteredCol span={8} style={{ padding: '0 8px' }}>
-          <CardRules card={usedCard} loading={loading} />
         </CenteredCol>
       </Row>
       <Row style={{ width: '100%' }}>
@@ -98,6 +97,17 @@ export default ({ card }) => {
             />
           </StyledBottomWrapper>
         </Col>
+      </Row>
+      <Row style={{ width: '100%', height: 50 }}>
+        <CenteredCol span={8} style={{ padding: '0 8px' }}>
+          <CardLegal card={usedCard} loading={loading} />
+        </CenteredCol>
+        <CenteredCol span={8} style={{ padding: '0 8px' }}>
+          <CardLinks card={usedCard} loading={loading} />
+        </CenteredCol>
+        <CenteredCol span={8} style={{ padding: '0 8px' }}>
+          <CardRules card={usedCard} loading={loading} />
+        </CenteredCol>
       </Row>
     </>
   );

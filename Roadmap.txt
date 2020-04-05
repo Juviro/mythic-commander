@@ -2,9 +2,10 @@
     - backend deployment not reloading
 
 NEXT:
+    - allow wants link to deck
 
 IMPROVEMENTS: 
-    - when adding to collection, show owned badge [MOBILE + DESKTOP]
+    - when adding to collection, update owned badge [MOBILE + DESKTOP]
 
 FEATURES:
 
@@ -13,7 +14,6 @@ REFACTORINGS:
     - mobile card detail view should not change url when in collection / wants / etc
 
 BACKLOG:
-    - allow wants link to deck
     - Add option to deck to fill up empty card slots with basic lands, based on mana occurrance
     - find a way to make collection value work
     - sharable collection / decks / wants

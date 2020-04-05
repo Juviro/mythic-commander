@@ -112,34 +112,59 @@ export const filterAndSortByQuery = (
     .slice(0, maxResults);
 };
 
-export const sortByAdded = (cards, direction = 'asc') => {
+const sortByAdded = (cards, direction = 'asc') => {
   const sortedCards = cards.sort((a, b) => a.createdAt - b.createdAt);
 
   return direction === 'asc' ? sortedCards : sortedCards.reverse();
 };
 
-export const sortByCmc = (cards, direction = 'asc') => {
+const sortByCmc = (cards, direction = 'asc') => {
   const sortedCards = cards.sort((a, b) => a.cmc - b.cmc);
 
   return direction === 'asc' ? sortedCards : sortedCards.reverse();
 };
 
-export const sortByName = (cards, direction = 'asc') => {
+const sortByName = (cards, direction = 'asc') => {
   const sortedCards = cards.sort((a, b) => (a.name < b.name ? -1 : 1));
 
   return direction === 'asc' ? sortedCards : sortedCards.reverse();
 };
 
-export const sortByPrice = (cards, direction = 'asc') => {
+const sortByPrice = (cards, direction = 'asc') => {
   const sortedCards = cards.sort((a, b) => a.minPrice - b.minPrice);
 
   return direction === 'asc' ? sortedCards : sortedCards.reverse();
 };
 
-export const sortByAmount = (cards, direction = 'asc') => {
+const sortByAmount = (cards, direction = 'asc') => {
   const sortedCards = cards.sort(
     (a, b) => (a.amount || a.totalAmount) - (b.amount || b.totalAmount)
   );
+
+  return direction === 'asc' ? sortedCards : sortedCards.reverse();
+};
+
+const COLOR_ORDER = ['W', 'U', 'B', 'R', 'G'];
+export const byColor = (
+  { color_identity: colorsA, cmc: cmcA },
+  { color_identity: colorsB, cmc: cmcB }
+) => {
+  if (colorsA.length !== colorsB.length) {
+    return colorsA.length - colorsB.length;
+  }
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const color of COLOR_ORDER) {
+    if (colorsA.includes(color) !== colorsB.includes(color)) {
+      return colorsA.includes(color) ? -1 : 1;
+    }
+  }
+
+  return cmcA - cmcB;
+};
+
+const sortByColor = (cards, direction = 'asc') => {
+  const sortedCards = cards.sort(byColor);
 
   return direction === 'asc' ? sortedCards : sortedCards.reverse();
 };
@@ -155,6 +180,8 @@ export const sortCards = (cards, orderBy = '') => {
       return sortByName(cards, direction);
     case 'price':
       return sortByPrice(cards, direction);
+    case 'color':
+      return sortByColor(cards, direction);
     case 'amount':
       return sortByAmount(cards, direction);
     default:

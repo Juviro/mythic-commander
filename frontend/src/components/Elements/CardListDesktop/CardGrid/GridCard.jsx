@@ -5,14 +5,18 @@ import styled from 'styled-components';
 import FlippableCard from '../../FlippableCard';
 import { getPriceLabel } from '../../../../utils/cardStats';
 import OwnedBadge from '../../OwnedBadge';
+import { blendIn } from '../../../Animations';
 
 const StyledCardWrapper = styled.div`
-  margin: 0px 8px 0;
+  margin: 0 8px 8px;
   height: fit-content;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  position: relative;
+  animation: ${blendIn} 0.2s ease-out;
+  width: calc(${({ widthPercentage }) => widthPercentage}% - 16px);
 `;
 
 const StyledImageWrapper = styled.div`
@@ -25,38 +29,56 @@ const StyledImageWrapper = styled.div`
 `;
 
 const StyledInfoWrapper = styled(Row)`
-  width: 100%;
   padding: 0 12px;
   align-items: center;
-  margin-top: 8px;
-  font-weight: 500;
+  position: absolute;
+  background-color: #ececec;
+  opacity: 0.8;
+  bottom: 0;
+  width: 170px;
+  align-self: flex-start;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
 `;
 
 const StyledCol = styled(Col)`
   display: flex;
 `;
-export default ({ card, index, selectedElementPosition, onClick }) => {
+const GridCard = ({ card, onClick, isSelected, widthPercentage }) => {
   const displayedAmount = card.amount || card.totalAmount;
   return (
     <StyledCardWrapper
       key={card.id}
-      onClick={() => onClick(index)}
-      isSelected={index + 1 === selectedElementPosition}
+      onClick={onClick}
+      widthPercentage={widthPercentage}
     >
-      <StyledImageWrapper isSelected={index + 1 === selectedElementPosition}>
+      <StyledImageWrapper isSelected={isSelected}>
         <FlippableCard card={card} />
+        <StyledInfoWrapper>
+          <StyledCol span={8} style={{ justifyContent: 'flex-start' }}>
+            {displayedAmount && `${displayedAmount}x`}
+          </StyledCol>
+          <StyledCol span={8} style={{ justifyContent: 'center' }}>
+            {getPriceLabel(card.minPrice)}
+          </StyledCol>
+          <StyledCol span={8} style={{ justifyContent: 'flex-end' }}>
+            {card.owned && <OwnedBadge />}
+          </StyledCol>
+        </StyledInfoWrapper>
       </StyledImageWrapper>
-      <StyledInfoWrapper>
-        <StyledCol span={8} style={{ justifyContent: 'flex-start' }}>
-          {displayedAmount && `${displayedAmount}x`}
-        </StyledCol>
-        <StyledCol span={8} style={{ justifyContent: 'center' }}>
-          {getPriceLabel(card.minPrice)}
-        </StyledCol>
-        <StyledCol span={8} style={{ justifyContent: 'flex-end' }}>
-          {card.owned && <OwnedBadge />}
-        </StyledCol>
-      </StyledInfoWrapper>
     </StyledCardWrapper>
   );
 };
+
+const areEqual = (prevProps, nextProps) => {
+  if (prevProps.isSelected !== nextProps.isSelected) return false;
+  if (prevProps.widthPercentage !== nextProps.widthPercentage) return false;
+
+  return ['id', 'amount', 'totalAmount', 'sumPrice', 'minPrice'].every(
+    propKey => {
+      return prevProps.card[propKey] === nextProps.card[propKey];
+    }
+  );
+};
+
+export default React.memo(GridCard, areEqual);

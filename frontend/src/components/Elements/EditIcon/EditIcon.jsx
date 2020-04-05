@@ -7,22 +7,24 @@ const StyledWrapper = styled.div`
   display: flex;
   margin-bottom: 8px;
   align-items: center;
+  min-width: 200px;
   flex-direction: row-reverse;
   justify-content: space-between;
 `;
 
 const StyledIconWrapper = styled.div`
   display: flex;
-  align-self: flex-end;
   transition: all 0.2s;
   flex-direction: row;
   align-items: center;
   overflow: hidden;
+  cursor: pointer;
+  align-items: center;
 
   width: ${({ isEditing }) => (isEditing ? '50px' : '16px')};
 `;
 
-const StyledLabel = styled.span`
+const StyledLabel = styled.div`
   font-weight: 500;
 `;
 
@@ -35,11 +37,7 @@ export default ({
 }) => {
   return (
     <StyledWrapper>
-      <StyledIconWrapper
-        onClick={onClick}
-        isEditing={isEditing}
-        style={{ cursor: 'pointer' }}
-      >
+      <StyledIconWrapper onClick={onClick} isEditing={isEditing}>
         {isEditing ? (
           <BackIcon style={{ color: '#1890ff', marginRight: 4 }} />
         ) : (

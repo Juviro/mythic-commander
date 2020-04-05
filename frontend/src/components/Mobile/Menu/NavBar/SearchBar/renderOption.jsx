@@ -5,11 +5,11 @@ import { UnorderedListOutlined } from '@ant-design/icons';
 import { highlightText } from '../../../../../utils/highlightText';
 import { getImageUrl } from '../../../../../utils/cardImage';
 
-const StyledCard = styled.div`
+const StyledOption = styled.div`
   display: flex;
   flex-direction: row;
   padding-left: 3px;
-  height: 36px;
+  height: ${({ isCard }) => (isCard ? 36 : 24)}px;
   align-items: center;
 `;
 
@@ -65,7 +65,7 @@ export default (searchString, type) => element => {
   return {
     value: JSON.stringify({ type, id: elementId }),
     label: (
-      <StyledCard>
+      <StyledOption isCard={type === 'CARD'}>
         {preview ? (
           <CardImageWrapper>{preview}</CardImageWrapper>
         ) : (
@@ -75,7 +75,7 @@ export default (searchString, type) => element => {
           {highlightText(searchString, name)}
         </StyledName>
         <StyledOwnedTag>{owned && 'owned'}</StyledOwnedTag>
-      </StyledCard>
+      </StyledOption>
     ),
   };
 };

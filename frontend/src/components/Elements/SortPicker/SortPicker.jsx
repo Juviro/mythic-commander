@@ -40,6 +40,14 @@ const COLLECTION_FILTER = [
   },
   ...DEFAULT_FILTER,
   {
+    label: 'Color (colorless first)',
+    value: 'color-asc',
+  },
+  {
+    label: 'Color (multicolor first)',
+    value: 'color-desc',
+  },
+  {
     label: 'Amount (lowest first)',
     value: 'amount-asc',
   },
@@ -67,6 +75,7 @@ export default ({ showCollectionFilters, style }) => {
 
   return (
     <Select
+      listHeight={390}
       defaultValue={defaultValue}
       dropdownStyle={{ minWidth: 200 }}
       onSelect={value => setOrderBy(value)}

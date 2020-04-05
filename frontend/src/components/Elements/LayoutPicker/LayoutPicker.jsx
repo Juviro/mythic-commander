@@ -7,6 +7,7 @@ import {
 } from '@ant-design/icons';
 import { StringParam, useQueryParam } from 'use-query-params';
 import { useShortcut } from '../../Hooks';
+import { getIsMobile } from '../../Desktop/MobileRedirect';
 
 const nextLayoutMap = {
   list: 'grid',
@@ -23,18 +24,15 @@ const getNextLayout = (layout, hideCard) => {
 export default ({ hideCard }) => {
   const [layout, setLayout] = useQueryParam('layout', StringParam);
   useShortcut('l', () => setLayout(getNextLayout(layout, hideCard)));
+  const isMobile = getIsMobile();
 
   useEffect(() => {
     if (!layout) setLayout('list');
   }, [layout, setLayout]);
 
   return (
-    <Tooltip title="Change Layout [L]">
-      <Radio.Group
-        value={layout}
-        onChange={e => setLayout(e.target.value)}
-        style={{ width: 138 }}
-      >
+    <Tooltip title={isMobile ? undefined : 'Change Layout [L]'}>
+      <Radio.Group value={layout} onChange={e => setLayout(e.target.value)}>
         <Radio.Button value="list">
           <BarsOutlined />
         </Radio.Button>
