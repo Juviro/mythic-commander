@@ -7,7 +7,7 @@ import { getPriceLabel } from '../../../../utils/cardStats';
 import OwnedBadge from '../../OwnedBadge';
 
 const StyledCardWrapper = styled.div`
-  margin: 0 8px 8px;
+  margin: 8px;
   height: fit-content;
   display: flex;
   align-items: center;
