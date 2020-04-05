@@ -55,9 +55,16 @@ export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
   const onDown = () => {
     if (Math.ceil(selectedElementPosition / cardsPerRow) === numberOfRows) {
       if (currentPage === numberOfPages) return;
+      const willBeOnLastPage = currentPage + 1 === numberOfPages;
       setCurrentPage(Math.min(currentPage + 1, numberOfPages));
+      const lastCardOnLastPage = willBeOnLastPage
+        ? cardsOnLastPage
+        : cardsPerRow;
       setSelectedElementPosition(
-        selectedElementPosition % cardsPerRow || cardsPerRow
+        Math.min(
+          selectedElementPosition % cardsPerRow || cardsPerRow,
+          lastCardOnLastPage
+        )
       );
     } else {
       const nextPosition = selectedElementPosition + cardsPerRow;

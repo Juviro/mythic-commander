@@ -13,14 +13,13 @@ import MobileRedirect from './MobileRedirect';
 const App = () => {
   return (
     <MobileRedirect>
+      <Menu />
       <Switch>
-        <Menu>
-          <Route path="/search" component={Search} />
-          <Route path="/collection" component={Collection} />
-          <Route path="/decks" component={Decks} />
-          <Route path="/deck/:id" component={Deck} />
-          <Redirect from="*" to="/collection" />
-        </Menu>
+        <Route path="/search" component={Search} />
+        <Route path="/collection" component={Collection} />
+        <Route path="/decks" component={Decks} />
+        <Route path="/deck/:id" component={Deck} />
+        <Redirect from="*" to="/collection" />
       </Switch>
       <GlobalStyle />
     </MobileRedirect>

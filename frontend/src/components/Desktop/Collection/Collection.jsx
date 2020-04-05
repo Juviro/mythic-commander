@@ -14,7 +14,7 @@ const StyledWrapper = styled.div`
 `;
 
 export default () => {
-  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const { data, loading } = useQuery(getCollection);
   const cards = data && unifyCardFormat(data.collection.cards);
   return (

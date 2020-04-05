@@ -11,7 +11,7 @@ export default ({ cards, loading, widthOffset }) => {
 
   return (
     <Flex direction="column" style={{ width: '100%', height: '100%' }}>
-      <TableHeader />
+      <TableHeader showSorter={layout === 'grid'} />
       {layout === 'list' ? (
         <CardTable cards={cards} loading={loading} />
       ) : (
