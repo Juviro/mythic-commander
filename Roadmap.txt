@@ -6,6 +6,7 @@ NEXT:
 
 IMPROVEMENTS: 
     - when adding to collection, update owned badge [MOBILE + DESKTOP]
+    - show current collection value in chart
 
 FEATURES:
 

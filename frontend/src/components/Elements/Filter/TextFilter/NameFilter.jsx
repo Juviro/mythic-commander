@@ -6,7 +6,7 @@ export default ({ onSearch, size, inputRef }) => {
     <TextFilter
       size={size}
       paramName="name"
-      placeholder="Search for name"
+      placeholder="Filter by card name"
       onSearch={onSearch}
       inputRef={inputRef}
     />

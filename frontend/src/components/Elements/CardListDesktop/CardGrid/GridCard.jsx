@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import FlippableCard from '../../FlippableCard';
 import { getPriceLabel } from '../../../../utils/cardStats';
 import OwnedBadge from '../../OwnedBadge';
-import { blendIn } from '../../../Animations';
 
 const StyledCardWrapper = styled.div`
   margin: 0 8px 8px;
@@ -15,7 +14,6 @@ const StyledCardWrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   position: relative;
-  animation: ${blendIn} 0.2s ease-out;
   width: calc(${({ widthPercentage }) => widthPercentage}% - 16px);
 `;
 

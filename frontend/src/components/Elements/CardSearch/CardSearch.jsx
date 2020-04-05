@@ -15,7 +15,12 @@ export const splitAmountAndName = query => {
 
 const StyledOption = styled.span`
   display: flex;
+  width: 100%;
   justify-content: space-between;
+`;
+
+const StyledOptionWrapper = styled.div`
+  display: flex;
 `;
 
 const getHighlightedOption = (
@@ -123,17 +128,23 @@ export default class CardSearch extends React.Component {
         {suggestions.map(option => (
           <AutoComplete.Option
             text={option.name}
+            style={{ display: 'flex' }}
             key={`${option.id};${option.name}`}
           >
-            {amount > 1 && (
-              <Typography.Text strong>{`${amount}x `}</Typography.Text>
-            )}
-            {getHighlightedOption(
-              name,
-              option.name,
-              containedCardNames,
-              ownedCardNames
-            )}
+            <StyledOptionWrapper>
+              {amount > 1 && (
+                <Typography.Text
+                  strong
+                  style={{ marginRight: 8 }}
+                >{`${amount}x `}</Typography.Text>
+              )}
+              {getHighlightedOption(
+                name,
+                option.name,
+                containedCardNames,
+                ownedCardNames
+              )}
+            </StyledOptionWrapper>
           </AutoComplete.Option>
         ))}
       </AutoComplete>
