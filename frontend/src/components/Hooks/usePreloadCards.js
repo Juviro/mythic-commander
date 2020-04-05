@@ -3,6 +3,7 @@ import { getImageUrl } from '../../utils/cardImage';
 
 export default (cards, firstCard, cardsPerPage) => {
   const numberOfCards = cards.length;
+
   useEffect(() => {
     const nextPageCards = cards.slice(
       firstCard + cardsPerPage,
