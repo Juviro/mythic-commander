@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { getPriceLabel } from '../../../utils/cardStats';
-import PreviewCardImage from '../PreviewCardImage';
-import ManaCost from '../ManaCost';
-import { CARD_TYPES } from '../../CardProvider/staticTypes';
-import formatDate from '../../../utils/formatDate';
+import { getPriceLabel } from '../../../../utils/cardStats';
+import PreviewCardImage from '../../PreviewCardImage';
+import ManaCost from '../../ManaCost';
+import { CARD_TYPES } from '../../../CardProvider/staticTypes';
+import formatDate from '../../../../utils/formatDate';
 
 const renderAmount = ({ totalAmount, amount }) => amount || totalAmount || 0;
 const renderType = ({ primaryTypes, subTypes }) => {
@@ -48,7 +48,7 @@ export default [
     sorter: sortByName('name'),
   },
   {
-    title: 'Cmc',
+    title: 'CMC',
     key: 'cmc',
     dataIndex: 'cmc',
     width: 50,

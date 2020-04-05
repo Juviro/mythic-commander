@@ -4,8 +4,8 @@ import { Typography } from 'antd';
 import { colors as colorIcons } from '../../../assets/icons';
 
 const StyledColorTag = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   margin-right: 2px;
   box-shadow: 1px 1px 2px #5f5f5f;

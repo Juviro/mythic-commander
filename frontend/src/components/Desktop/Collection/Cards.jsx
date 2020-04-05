@@ -7,10 +7,15 @@ const StyledWrapper = styled.div`
   width: 100%;
 `;
 
-export default ({ cards, loading }) => {
+export default ({ cards, loading, isSidebarVisible }) => {
+  const widthOffset = isSidebarVisible ? 400 : 0;
   return (
     <StyledWrapper>
-      <CardListDesktop cards={cards} loading={loading} />
+      <CardListDesktop
+        cards={cards}
+        loading={loading}
+        widthOffset={widthOffset}
+      />
     </StyledWrapper>
   );
 };

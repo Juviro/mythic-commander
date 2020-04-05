@@ -1,16 +1,15 @@
-  
-BUGFIXES:
+ BUGFIXES:
     - backend deployment not reloading
-    - can't change deck name [MOBILE]
 
 NEXT:
-    - when adding to collection, show owned badge [MOBILE + DESKTOP]
 
 IMPROVEMENTS: 
+    - when adding to collection, show owned badge [MOBILE + DESKTOP]
 
 FEATURES:
 
 REFACTORINGS:
+    - mobile card detail view should not change url when in collection / wants / etc
 
 BACKLOG:
     - allow link to deck

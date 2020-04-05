@@ -1,10 +1,6 @@
 import { useEffect } from 'react';
 
 const keyMap = {
-  a: 65,
-  e: 69,
-  f: 70,
-  s: 83,
   ESCAPE: 27,
 };
 
@@ -15,7 +11,7 @@ export const isInputField = event => {
 export default (triggerKey, action) => {
   const onKeyDown = event => {
     if (isInputField(event)) return;
-    if (event.keyCode === keyMap[triggerKey]) {
+    if (event.key === triggerKey || event.keyCode === keyMap[triggerKey]) {
       event.preventDefault();
       event.stopPropagation();
       action();

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -14,12 +14,21 @@ const StyledWrapper = styled.div`
 `;
 
 export default () => {
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
   const { data, loading } = useQuery(getCollection);
   const cards = data && unifyCardFormat(data.collection.cards);
   return (
     <StyledWrapper>
-      <Sidebar cards={cards} />
-      <Cards cards={cards} loading={loading} />
+      <Sidebar
+        cards={cards}
+        isVisible={isSidebarVisible}
+        setIsVisible={setIsSidebarVisible}
+      />
+      <Cards
+        cards={cards}
+        loading={loading}
+        isSidebarVisible={isSidebarVisible}
+      />
     </StyledWrapper>
   );
 };
