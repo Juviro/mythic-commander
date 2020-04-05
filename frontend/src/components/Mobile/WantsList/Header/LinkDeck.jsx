@@ -66,7 +66,7 @@ export default ({ wantsList }) => {
       <Modal
         title={
           <Typography.Text>
-            {wantsList && `Link ${wantsList.name} with a deck`}
+            {wantsList && `Link '${wantsList.name}' to a deck`}
           </Typography.Text>
         }
         visible={modalVisible}
