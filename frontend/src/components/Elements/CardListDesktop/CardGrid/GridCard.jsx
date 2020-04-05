@@ -36,6 +36,7 @@ const StyledCol = styled(Col)`
   display: flex;
 `;
 export default ({ card, index, selectedElementPosition, onClick }) => {
+  const displayedAmount = card.amount || card.totalAmount;
   return (
     <StyledCardWrapper
       key={card.id}
@@ -47,7 +48,7 @@ export default ({ card, index, selectedElementPosition, onClick }) => {
       </StyledImageWrapper>
       <StyledInfoWrapper>
         <StyledCol span={8} style={{ justifyContent: 'flex-start' }}>
-          {card.amount || card.totalAmount || ''}
+          {displayedAmount && `${displayedAmount}x`}
         </StyledCol>
         <StyledCol span={8} style={{ justifyContent: 'center' }}>
           {getPriceLabel(card.minPrice)}
