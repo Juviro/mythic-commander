@@ -44,37 +44,16 @@ const resolver = {
 
   cardSearch,
 
-  async wantsList(_, { id }, { user: { id: userId }, db }) {
-    const {
-      rows: [wantsList],
-    } = await db.raw(
-      `
-        SELECT "wantsLists".*, row_to_json(decks) as deck
-        FROM "wantsLists" 
-        LEFT JOIN decks 
-          ON decks.id = "wantsLists"."deckId" 
-        WHERE "wantsLists".id = ?
-          AND "wantsLists"."userId" = ?;
-    `,
-      [id, userId]
-    );
-
-    return wantsList;
+  wantsList(_, { id }, { user: { id: userId }, db }) {
+    return db('wantsLists')
+      .where({ id, userId })
+      .first();
   },
 
-  async wantsLists(_, __, { user: { id: userId }, db }) {
-    const { rows: wantsLists } = await db.raw(
-      `
-        SELECT "wantsLists".*, row_to_json(decks) as deck
-        FROM "wantsLists" 
-        LEFT JOIN decks 
-          ON decks.id = "wantsLists"."deckId" 
-        WHERE "wantsLists"."userId" = ?;
-    `,
-      [userId]
-    );
-
-    return wantsLists;
+  wantsLists(_, __, { user: { id: userId }, db }) {
+    return db('wantsLists')
+      .where({ userId })
+      .orderBy('createdAt', 'asc');
   },
   collectionDevelopment(_, __, { user: { id: userId }, db }) {
     return db('collectionSnapshot')
