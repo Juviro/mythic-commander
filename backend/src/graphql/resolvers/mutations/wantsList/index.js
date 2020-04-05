@@ -5,6 +5,8 @@ import deleteFromWantsList from './deleteFromWantsList';
 import deleteWantsList from './deleteWantsList';
 import duplicateWantsList from './duplicateWantsList';
 import editWantsList from './editWantsList';
+import linkWantsList from './linkWantsList';
+import unlinkWantsList from './unlinkWantsList';
 
 export default {
   addCardsToWantsList,
@@ -14,4 +16,6 @@ export default {
   deleteWantsList,
   duplicateWantsList,
   editWantsList,
+  linkWantsList,
+  unlinkWantsList,
 };

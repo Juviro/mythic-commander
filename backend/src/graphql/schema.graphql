@@ -158,6 +158,7 @@ type WantsList {
   lastEdit: String!
   createdAt: String!
   numberOfCards: Int!
+  deck: Deck
   cards: [WantsListCard!]!
 }
 
@@ -270,6 +271,8 @@ type Mutation {
     wantsListId: String!
     cards: [CardInputType!]!
   ): [WantsListCard!]!
+  linkWantsList(wantsListId: String!, deckId: String!): WantsList!
+  unlinkWantsList(wantsListId: String!): WantsList!
 }
 
 ################################# Deck #################################
