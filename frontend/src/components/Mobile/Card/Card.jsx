@@ -30,7 +30,6 @@ const StyledBodyWrapper = styled.div`
   display: flex;
   z-index: 1;
   padding: 10px 5vw;
-  margin: 48px 0 32px;
   align-items: center;
   flex-direction: column;
   justify-content: center;
