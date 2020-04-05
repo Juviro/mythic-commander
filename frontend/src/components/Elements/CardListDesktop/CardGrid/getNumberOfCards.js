@@ -1,5 +1,5 @@
 // image, margin
-const CARD_HEIGHT = 292 + 8;
+const CARD_HEIGHT = 292 + 2 * 8;
 // image, padding
 const CARD_WIDTH = 210 + 2 * 8;
 // Navbar, Searchbar, Collection margin, pagination, StyledWrapper padding
