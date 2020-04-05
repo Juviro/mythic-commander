@@ -2,35 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 import { useQueryParams, StringParam } from 'use-query-params';
 import CustomSkeleton from '../CustomSkeleton';
-import {
-  filterCards,
-  sortByCmc,
-  sortByName,
-  sortByPrice,
-  sortByAdded,
-  sortByAmount,
-} from '../../../utils/cardFilter';
+import { filterCards, sortCards } from '../../../utils/cardFilter';
 import CardList from '.';
 
 export const CARDS_PER_PAGE = 30;
-
-const sortCards = (cards, orderBy = '') => {
-  const [order, direction = 'asc'] = orderBy.split('-');
-  switch (order) {
-    case 'cmc':
-      return sortByCmc(cards, direction);
-    case 'added':
-      return sortByAdded(cards, direction);
-    case 'name':
-      return sortByName(cards, direction);
-    case 'price':
-      return sortByPrice(cards, direction);
-    case 'amount':
-      return sortByAmount(cards, direction);
-    default:
-      return cards;
-  }
-};
 
 export default ({
   cards,
@@ -83,7 +58,7 @@ export default ({
     isLegendary,
   });
 
-  const sortedCards = sortCards(filteredCards, orderBy, name);
+  const sortedCards = sortCards(filteredCards, orderBy);
 
   const hasMore = displayedResults < sortedCards.length;
 

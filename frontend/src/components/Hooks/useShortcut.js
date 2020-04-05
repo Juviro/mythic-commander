@@ -8,9 +8,14 @@ export const isInputField = event => {
   return ['TEXTAREA', 'INPUT'].includes(event.target.nodeName);
 };
 
+const stopPropagation = event => {
+  const { metaKey, ctrlKey } = event;
+  return isInputField(event) && !metaKey && !ctrlKey;
+};
+
 export default (triggerKey, action) => {
   const onKeyDown = event => {
-    if (isInputField(event)) return;
+    if (stopPropagation(event)) return;
     if (event.key === triggerKey || event.keyCode === keyMap[triggerKey]) {
       event.preventDefault();
       event.stopPropagation();

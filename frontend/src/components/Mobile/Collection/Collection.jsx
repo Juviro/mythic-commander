@@ -5,7 +5,7 @@ import { Divider, Card } from 'antd';
 import { getMobileCollection } from './queries';
 
 import {
-  LayoutSorter,
+  LayoutAndSortPicker,
   FilteredCardList,
   CollectionOverview,
 } from '../../Elements';
@@ -38,7 +38,7 @@ export default () => {
         <CollectionOverview cards={cards} column={2} />
       </Card>
       <CollapsableFilter />
-      <LayoutSorter showCollectionFilters />
+      <LayoutAndSortPicker showCollectionFilters />
       <Divider />
       <FilteredCardList cards={cards} basePath="/m/collection" />
       <AddToCollection />

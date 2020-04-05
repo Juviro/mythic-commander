@@ -3,7 +3,7 @@ import { Spin, Pagination } from 'antd';
 import { useQueryParam, StringParam } from 'use-query-params';
 import styled from 'styled-components';
 
-import { filterByName } from '../../../../utils/cardFilter';
+import { filterByName, sortCards } from '../../../../utils/cardFilter';
 import { useWindowSize } from '../../../Hooks';
 import useGridShortcuts from './useGridShortcuts';
 import CardModalDesktop from '../../CardModalDesktop';
@@ -20,15 +20,15 @@ const StyledWrapper = styled.div`
   height: ${({ height }) => height}px;
 `;
 
-// TODO: add shortcut to change layout
-// TODO: add sort by
 export default ({ cards, loading, widthOffset }) => {
   useWindowSize();
+  const [orderBy] = useQueryParam('orderBy', StringParam);
   const [showDetails, setShowDetails] = useState(false);
   const toggleShowDetail = () => setShowDetails(!showDetails);
 
   const [query] = useQueryParam('name', StringParam);
   const filteredCards = filterByName(cards, query);
+  const sortedCards = sortCards(filteredCards, orderBy);
   const { cardsPerRow, numberOfRows, CARD_HEIGHT } = getNumberOfCards(
     widthOffset
   );
@@ -41,16 +41,16 @@ export default ({ cards, loading, widthOffset }) => {
     cardsPerRow,
     numberOfRows,
     toggleShowDetail,
-    filteredCards.length
+    sortedCards.length
   );
 
   const firstCard = pagination.pageSize * (pagination.current - 1);
-  const currentCards = filteredCards.slice(
+  const currentCards = sortedCards.slice(
     firstCard,
     firstCard + pagination.pageSize
   );
   const selectedCard = currentCards[selectedElementPosition - 1];
-  usePreloadCards(filteredCards, firstCard, pagination.pageSize);
+  usePreloadCards(sortedCards, firstCard, pagination.pageSize);
 
   if (loading) return <Spin />;
 
