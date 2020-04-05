@@ -114,6 +114,10 @@ export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
 
   useEffect(() => {
     if (!numberOfCards || !numberOfPages) return;
+    const lastPosition =
+      currentPage >= numberOfPages ? cardsOnLastPage : cardsPerPage;
+    setSelectedElementPosition(Math.min(selectedElementPosition, lastPosition));
+
     setCurrentPage(Math.max(Math.min(currentPage, numberOfPages), 1));
     // eslint-disable-next-line
   }, [numberOfPages]);
