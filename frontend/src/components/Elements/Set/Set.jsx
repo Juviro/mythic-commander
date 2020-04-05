@@ -28,7 +28,7 @@ export default ({ setKey, name: overwriteName }) => {
       <StyledSetName>
         <StyledSetIcon src={icon_svg_uri} alt={setName} />
         <Link
-          to={`/m/search?orderBy=name-asc&set=${setKey}&autoSearch=true`}
+          to={`/m/search?set=${setKey}&orderBy=price-desc&autoSearch=true`}
           onClick={e => e.stopPropagation()}
           tabIndex="-1"
         >

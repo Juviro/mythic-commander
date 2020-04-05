@@ -29,7 +29,7 @@ export default () => {
           <NameFilter size="normal" inputRef={inputRef} />
         </StyledSearchWrapper>
       </Tooltip>
-      <LayoutPicker />
+      <LayoutPicker hideCard />
     </StyledWrapper>
   );
 };

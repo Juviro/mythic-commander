@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Divider, Tooltip } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
@@ -20,26 +20,31 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledToggleWrapper = styled.div`
-  top: 52px;
+  top: 56px;
   z-index: 99;
   right: -33px;
   cursor: pointer;
   position: absolute;
   background-color: #b1b1b1;
   padding: 6px 10px 6px 6px;
+  opacity: 0.5;
+  transition: all 0.2s;
 
   box-shadow: 5px 0 5px -5px #333;
   border-top-right-radius: 50%;
   border-bottom-right-radius: 50%;
+
+  &:hover {
+    opacity: 1;
+  }
 `;
 
-export default ({ cards }) => {
-  const [isVisible, setIsVisible] = useState(true);
+export default ({ cards, isVisible, setIsVisible }) => {
   useShortcut('s', () => setIsVisible(!isVisible));
 
   return (
     <StyledWrapper isVisible={isVisible}>
-      <Tooltip title="Toggle Sidebar [S]">
+      <Tooltip title="Toggle Sidebar [S]" placement="right">
         <StyledToggleWrapper onClick={() => setIsVisible(!isVisible)}>
           {isVisible ? <DoubleLeftOutlined /> : <DoubleRightOutlined />}
         </StyledToggleWrapper>
