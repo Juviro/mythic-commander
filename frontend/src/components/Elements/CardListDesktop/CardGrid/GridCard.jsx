@@ -16,8 +16,8 @@ const StyledCardWrapper = styled.div`
 `;
 
 const StyledImageWrapper = styled.div`
-  width: 260px;
-  height: 360px;
+  width: 210px;
+  height: 292px;
   border-radius: 12px;
 
   ${({ isSelected }) =>

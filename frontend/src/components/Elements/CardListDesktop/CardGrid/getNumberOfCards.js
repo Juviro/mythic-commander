@@ -1,7 +1,7 @@
 // image, info
-const CARD_HEIGHT = 360 + 42;
+const CARD_HEIGHT = 292 + 42;
 // image, padding
-const CARD_WIDTH = 260 + 2 * 8;
+const CARD_WIDTH = 210 + 2 * 8;
 // Navbar, Searchbar, Collection margin, pagination, StyledWrapper padding
 const HEIGHT_OFFSET = 50 + 48 + 48 + 48 + 8;
 // Collection margin
