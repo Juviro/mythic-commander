@@ -7,6 +7,11 @@ export const wantsLists = gql`
       name
       lastEdit
       numberOfCards
+      deck {
+        id
+        name
+        imgSrc
+      }
     }
   }
 `;

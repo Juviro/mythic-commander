@@ -3,15 +3,18 @@
 
 NEXT:
     - allow wants link to deck
+    - add warning that wants list will be cascaded when deck is deleted
 
 IMPROVEMENTS: 
     - when adding to collection, update owned badge [MOBILE + DESKTOP]
     - one ESC, blur search and filter
+    - improve grid card info box
 
 FEATURES:
 
 REFACTORINGS:
     - split elements in desktop/mobile/shared
+    - add toggle hook
     - mobile card detail view should not change url when in collection / wants / etc
 
 BACKLOG:

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Spin } from 'antd';
 import styled from 'styled-components';
+import { partition } from 'lodash';
 import { useQuery, useMutation } from 'react-apollo';
 
 import { withRouter } from 'react-router';
@@ -16,9 +17,30 @@ const StyledWrapper = styled.div`
   justify-content: center;
 `;
 
+const splitWantsLists = data => {
+  if (!data) return [[], []];
+  const { wantsLists } = data;
+  const [unlinkedLists, linkedLists] = partition(
+    wantsLists,
+    wantsList => !wantsList.deck
+  );
+
+  return [
+    unlinkedLists,
+    linkedLists
+      .map(({ deck, ...rest }) => ({
+        ...rest,
+        deckId: deck.id,
+        imgSrc: deck.imgSrc,
+        additionalDescription: ` - ${deck.name}`,
+      }))
+      .sort((a, b) => a.deckId - b.deckId),
+  ];
+};
+
 const Wants = ({ history }) => {
   const { data, loading } = useQuery(getWantsLists);
-  const wantsLists = data ? data.wantsLists : [];
+  const [unlinkedLists, linkedLists] = splitWantsLists(data);
   const [mutate] = useMutation(createWantsList);
 
   const onOpenWantsList = id => {
@@ -52,13 +74,22 @@ const Wants = ({ history }) => {
       {loading ? (
         <Spin />
       ) : (
-        <OverviewList
-          header="Your wants lists"
-          elements={wantsLists}
-          addElementText="Add wants list"
-          onAddElement={onAddDeck}
-          onClick={onOpenWantsList}
-        />
+        <>
+          <OverviewList
+            header="Your wants lists"
+            elements={unlinkedLists}
+            addElementText="Add wants list"
+            onAddElement={onAddDeck}
+            onClick={onOpenWantsList}
+          />
+          {Boolean(linkedLists.length) && (
+            <OverviewList
+              header="Linked wants lists"
+              elements={linkedLists}
+              onClick={onOpenWantsList}
+            />
+          )}
+        </>
       )}
     </StyledWrapper>
   );

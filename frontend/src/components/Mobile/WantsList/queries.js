@@ -22,6 +22,11 @@ const WANTS_LIST_FIELDS = `
   name
   lastEdit
   numberOfCards
+  deck {
+    id
+    imgSrc
+    name
+  }
   cards {
     ${CARD_FIELDS}
   }
@@ -74,6 +79,19 @@ export const duplicateWantsList = gql`
   mutation duplicateWantsList($wantsListId: String!) {
     duplicateWantsList(wantsListId: $wantsListId) {
       ${WANTS_LIST_FIELDS}
+    }
+  }
+`;
+
+export const unlinkWantsList = gql`
+  mutation unlinkWantsList($wantsListId: String!) {
+    unlinkWantsList(wantsListId: $wantsListId) {
+      id
+      deck {
+        id
+        imgSrc
+        name
+      }
     }
   }
 `;
