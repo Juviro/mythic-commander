@@ -6,7 +6,7 @@ NEXT:
 
 IMPROVEMENTS: 
     - when adding to collection, update owned badge [MOBILE + DESKTOP]
-    - show current collection value in chart
+    - one ESC, blur search and filter
 
 FEATURES:
 
@@ -15,6 +15,7 @@ REFACTORINGS:
     - mobile card detail view should not change url when in collection / wants / etc
 
 BACKLOG:
+    - show current collection value in chart
     - Add option to deck to fill up empty card slots with basic lands, based on mana occurrance
     - find a way to make collection value work
     - sharable collection / decks / wants
