@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSpring, animated as a } from 'react-spring';
 import { SyncOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
+
 import './index.css';
 import { getImageUrl } from '../../../utils/cardImage';
 import CustomSkeleton from '../CustomSkeleton';
