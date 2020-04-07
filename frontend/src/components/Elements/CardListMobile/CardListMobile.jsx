@@ -84,14 +84,6 @@ const CardList = ({
       </>
     );
 
-  // return (
-  //   <>
-  //     <CustomSkeleton.List />
-  //     <CustomSkeleton.List />
-  //     <CustomSkeleton.List />
-  //   </>
-  // );
-
   return (
     <>
       {totalResultsLabel}
