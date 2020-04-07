@@ -118,6 +118,7 @@ type Deck {
   imgSrc: String!
   numberOfCards: Int!
   cards: [DeckCard!]!
+  wantsLists: [WantsList!]!
 }
 
 type DeckCard {
@@ -200,7 +201,7 @@ type Query {
   cachedCards: [CachedCard!]!
 
   wantsList(id: String!): WantsList!
-  wantsLists: [WantsList!]!
+  wantsLists(deckId: String): [WantsList!]!
 
   collectionDevelopment: [CollectionSnapshot]
 }
@@ -254,7 +255,7 @@ type Mutation {
   logout: Boolean
 
   ########## Wants ##########
-  createWantsList: WantsList!
+  createWantsList(deckId: String): WantsList!
   editWantsList(
     wantsListId: String!
     newProperties: EditWantsListFieldsInput!

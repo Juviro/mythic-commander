@@ -12,6 +12,7 @@ export default ({ isVisible, onCloseDrawer }) => {
       closable
       onClose={onCloseDrawer}
       visible={isVisible}
+      zIndex={1002}
       bodyStyle={{
         padding: 16,
         display: 'flex',

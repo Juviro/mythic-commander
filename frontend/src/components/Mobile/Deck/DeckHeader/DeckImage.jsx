@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Affix, Spin } from 'antd';
 import styled from 'styled-components';
-import { Parallax } from 'react-parallax';
 import { useWindowSize } from '../../../Hooks';
 
 const StyledAffix = styled(Affix)`

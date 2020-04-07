@@ -47,14 +47,13 @@ export default () => {
   return (
     <StyledDeck>
       <DeckHeader deck={unifiedDeck} loading={loading} />
-      <DeckMenu
-        loading={loading}
-        deck={unifiedDeck}
-        currentTab={currentTab}
-        onSetTab={setCurrentTab}
-      />
+      <DeckMenu currentTab={currentTab} onSetTab={setCurrentTab} />
       <DeckBody loading={loading} deck={unifiedDeck} currentTab={currentTab} />
-      <AddCardMobile onAddCard={onAddCard} containedCards={cards} />
+      <AddCardMobile
+        onAddCard={onAddCard}
+        containedCards={cards}
+        visible={currentTab === 'cards'}
+      />
       <CardModal basePath={basePath} />
     </StyledDeck>
   );

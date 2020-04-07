@@ -15,6 +15,11 @@ const resolver = {
       .where({ deckId });
     return sum || 0;
   },
+  wantsLists({ id: deckId }, _, { db }) {
+    return db('wantsLists')
+      .where({ deckId })
+      .orderBy('name');
+  },
 };
 
 resolver.cards({ id: 44 }, null, { db });

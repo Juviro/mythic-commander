@@ -6,6 +6,7 @@ import { useQuery, useMutation } from 'react-apollo';
 import { getDecks, linkWantsList } from './queries';
 
 import message from '../../../../utils/message';
+import { wantsListsForDeckMobile } from '../../Deck/LinkedWants/queries';
 
 const StyledLinkButton = styled.div`
   width: 120px;
@@ -45,6 +46,12 @@ export default ({ wantsList }) => {
         deckId,
         wantsListId: wantsList.id,
       },
+      refetchQueries: [
+        {
+          query: wantsListsForDeckMobile,
+          variables: { deckId },
+        },
+      ],
     });
     setIsChanging(false);
     const deckName = decks.find(({ id }) => id === deckId).name;
