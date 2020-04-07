@@ -43,7 +43,7 @@ const Header = ({ wantsList, history }) => {
     <>
       <StyledTitleWrapper>
         <Title wantsList={wantsList} />
-        {wantsList && <Menu canUnlink={Boolean(deck)} />}
+        {wantsList && <Menu wantsList={wantsList} />}
       </StyledTitleWrapper>
       <Row>
         <Col span={12}>
