@@ -15,6 +15,7 @@ const DeleteDeck = ({ history }) => {
       variables: {
         deckId,
       },
+      refetchQueries: ['wantsListsMobile'],
       update: cache => {
         const existing = cache.readQuery({
           query: getDecks,

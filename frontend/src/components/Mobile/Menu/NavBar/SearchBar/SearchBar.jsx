@@ -13,7 +13,7 @@ import {
   filterAndSortByQuery,
   filterByName,
 } from '../../../../../utils/cardFilter';
-import { wantsLists as wantsListsQuery } from '../../../WantsLists/queries';
+import { wantsListsMobile as wantsListsQuery } from '../../../WantsLists/queries';
 import unifyCardFormat from '../../../../../utils/unifyCardFormat';
 
 const MAX_RESULTS = 4;

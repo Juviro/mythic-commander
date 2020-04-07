@@ -35,14 +35,21 @@ export default createGlobalStyle`
     margin: 0 8px 2px;
   }
 
-  /* single card view owned styling for collapse */
-  .collapse-owned > .ant-collapse-item {
-    border: 1px solid #e4e2e2;
-    border-radius: 8px !important;
-    background-color: white;
-  }
-
   .ant-list-item-meta-content {
     max-width: calc(100% - 50px);
+  }
+
+  /* Used in deck -> wants */
+  .no-padding-collapse > .ant-collapse-item {
+    border: none;
+  }
+  .no-padding-collapse .ant-collapse-content-box {
+    padding: 0;
+  }
+  .no-padding-collapse .ant-collapse-header > span {
+    left: 0 !important;
+  }
+  .no-padding-collapse .ant-collapse-header {
+    padding-left: 20px !important;
   }
 `;

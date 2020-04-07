@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { List, BackTop, Typography } from 'antd';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -33,10 +33,6 @@ const CardList = ({
     name: StringParam,
     layout: StringParam,
   });
-
-  useEffect(() => {
-    setTimeout(() => window.scrollTo(0, 0), 100);
-  }, [basePath]);
 
   if (!cards) {
     return <CustomSkeleton.List />;

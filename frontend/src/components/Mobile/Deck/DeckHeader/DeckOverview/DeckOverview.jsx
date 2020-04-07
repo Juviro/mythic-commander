@@ -23,12 +23,14 @@ const StyledStat = styled.div`
 `;
 
 export default ({ deck, loading }) => {
-  if (loading)
+  if (loading) {
     return (
       <StyledInfoBox>
         <Skeleton active />
       </StyledInfoBox>
     );
+  }
+
   const commander = deck.cards.find(({ zone }) => zone === 'COMMANDER');
   const numberOfUnowned = deck.cards.filter(({ owned }) => !owned).length;
   const numberOfCards = `${getNumberOfCards(deck.cards)} cards ${
