@@ -6,7 +6,7 @@ import { useQuery, useMutation } from 'react-apollo';
 
 import { withRouter } from 'react-router';
 import { wantsListsMobile as getWantsLists, createWantsList } from './queries';
-import OverviewList from '../../Elements/OverviewList/OverviewList';
+import { OverviewList } from '../../Elements/Mobile';
 
 const StyledWrapper = styled.div`
   width: 100%;

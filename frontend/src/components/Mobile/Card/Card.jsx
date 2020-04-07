@@ -13,7 +13,7 @@ import {
   IncludedWants,
   CardLinks,
   CardRules,
-} from '../../Elements';
+} from '../../Elements/Shared';
 import CardOwned from './CardOwned';
 import { getCardByOracleId } from './queries';
 

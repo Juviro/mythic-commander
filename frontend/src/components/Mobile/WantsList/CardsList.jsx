@@ -7,7 +7,7 @@ import {
   wantsList as wantsListQuery,
 } from './queries';
 
-import FilteredCardList from '../../Elements/CardListMobile/FilteredCardList';
+import { FilteredCardList } from '../../Elements/Mobile';
 
 export default ({ basePath, cards, loading, wantsList }) => {
   const { id: wantsListId } = useParams();

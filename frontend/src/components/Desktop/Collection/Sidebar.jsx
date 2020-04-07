@@ -4,7 +4,7 @@ import { Divider, Tooltip } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 
 import AddToCollection from './AddToCollection';
-import { CollectionOverview, CollectionCharts } from '../../Elements';
+import { CollectionOverview, CollectionCharts } from '../../Elements/Shared';
 import { useShortcut } from '../../Hooks';
 
 const StyledWrapper = styled.div`

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CardListDesktop } from '../../Elements';
+import { CardListDesktop } from '../../Elements/Desktop';
 
 const StyledWrapper = styled.div`
   padding: 24px;
