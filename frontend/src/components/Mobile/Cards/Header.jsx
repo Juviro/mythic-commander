@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import ResetFilter from '../../Elements/Filter/ResetFilter';
+import { ResetFilter } from '../../Elements/Shared';
 
 const StyledWrapper = styled.div`
   display: flex;

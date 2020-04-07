@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import { useMutation } from 'react-apollo';
 
-import OverviewList from '../../Elements/OverviewList/OverviewList';
+import { OverviewList } from '../../Elements/Mobile';
 import { createDeck as createDeckMutation, getDecks } from '../../../queries';
 
 const DeckList = ({ decks, history }) => {

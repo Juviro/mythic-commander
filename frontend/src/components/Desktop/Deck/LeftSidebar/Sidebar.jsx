@@ -8,8 +8,8 @@ import {
   UnorderedListOutlined,
   EllipsisOutlined,
 } from '@ant-design/icons';
-import FilterHeader from '../../../Elements/Filter/FilterHeader';
-import { Filter } from '../../../Elements';
+import FilterHeader from '../../../Elements/Shared/Filter/FilterHeader';
+import { Filter } from '../../../Elements/Shared';
 import AddCards from './AddCards';
 import DeckProfile from './DeckProfile';
 import Actions from './Actions';

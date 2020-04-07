@@ -4,13 +4,13 @@ import { useQuery } from 'react-apollo';
 import { Divider, Card } from 'antd';
 import { getMobileCollection } from './queries';
 
+import { FilteredCardList } from '../../Elements/Mobile';
 import {
   LayoutAndSortPicker,
-  FilteredCardList,
   CollectionOverview,
-} from '../../Elements';
+  CollapsableFilter,
+} from '../../Elements/Shared';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
-import CollapsableFilter from '../../Elements/Filter/CollapsableFilter';
 import CardModal from '../Card/CardModal';
 import AddToCollection from './AddToCollection';
 

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRightOutlined } from '@ant-design/icons';
 
 import unifyCardFormat from '../../../../utils/unifyCardFormat';
-import FilteredCardList from '../../../Elements/CardListMobile/FilteredCardList';
+import { FilteredCardList } from '../../../Elements/Mobile';
 
 export default ({ wantsLists, basePath }) => {
   return (

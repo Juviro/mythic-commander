@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 import { useQuery } from 'react-apollo';
 import { Typography } from 'antd';
 
-import { CustomSkeleton, LayoutAndSortPicker } from '../../../Elements';
+import { CustomSkeleton, LayoutAndSortPicker } from '../../../Elements/Shared';
 import { wantsListsForDeckMobile } from './queries';
 import WantsListsCollapse from './WantsListsCollapse';
 import AddWantsList from './AddWantsList';
