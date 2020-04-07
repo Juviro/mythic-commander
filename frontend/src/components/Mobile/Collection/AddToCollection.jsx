@@ -2,7 +2,7 @@ import React from 'react';
 import { useMutation } from 'react-apollo';
 import { getMobileCollection, addToCollectionMobile } from './queries';
 
-import { AddCardMobile } from '../../Elements';
+import { AddCardMobile } from '../../Elements/Mobile';
 import message from '../../../utils/message';
 
 export default () => {

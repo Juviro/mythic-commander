@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Col, Input } from 'antd';
 
-import { FoilIcon } from '../../../Elements';
+import { FoilIcon } from '../../../Elements/Shared';
 
 const StyledAmount = styled.span`
   font-size: 14px;

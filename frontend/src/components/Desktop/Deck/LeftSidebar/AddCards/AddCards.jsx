@@ -2,7 +2,7 @@ import React from 'react';
 import { useMutation } from 'react-apollo';
 import { useParams } from 'react-router';
 
-import { AddCards } from '../../../../Elements';
+import { AddCards } from '../../../../Elements/Desktop';
 import { addCardsToDeck } from '../../../../../queries/deck';
 
 export default () => {

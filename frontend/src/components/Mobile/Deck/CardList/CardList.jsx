@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
 import { Skeleton } from 'antd';
 import CardSubList from './CardSubList';
-import { LayoutAndSortPicker } from '../../../Elements';
+import { LayoutAndSortPicker } from '../../../Elements/Shared';
 import { deleteFromDeck, editDeckCard, getDeck } from '../queries';
 
 const CARD_TYPES = [

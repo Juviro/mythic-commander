@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
 
-import { AddCards } from '../../Elements';
+import { AddCards } from '../../Elements/Desktop';
 import message from '../../../utils/message';
 import { addToCollectionDesktop, getCollectionDesktop } from './queries';
 
