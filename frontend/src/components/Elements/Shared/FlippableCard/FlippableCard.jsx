@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSpring, animated as a } from 'react-spring';
 import { SyncOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
@@ -7,6 +7,7 @@ import './index.css';
 import { getImageUrl } from '../../../../utils/cardImage';
 import CustomSkeleton from '../CustomSkeleton';
 import CardButton from '../CardButton';
+import { useToggle } from '../../../Hooks';
 
 const StyledImageWrapper = styled.div`
   display: flex;
@@ -19,12 +20,12 @@ const StyledImageWrapper = styled.div`
 
 export default ({ loading, card, hideFlipIcon }) => {
   const { id, imgKey, isTwoFaced } = card || {};
-  const [flipped, setFlipped] = useState(false);
-  const [showHighResImage, setShowHighResImage] = useState(false);
+  const [isFlipped, toggleIsFlipped] = useToggle(false);
+  const [showHighResImage, toggleShowHighResImage] = useToggle(false);
 
   const { transform, opacity } = useSpring({
-    opacity: flipped ? 1 : 0,
-    transform: `perspective(600px) rotateY(-${flipped ? 180 : 0}deg)`,
+    opacity: isFlipped ? 1 : 0,
+    transform: `perspective(600px) rotateY(-${isFlipped ? 180 : 0}deg)`,
     config: { mass: 5, tension: 500, friction: 80 },
   });
 
@@ -32,24 +33,25 @@ export default ({ loading, card, hideFlipIcon }) => {
 
   useEffect(() => {
     let isMounted = true;
-    setShowHighResImage(false);
+    toggleShowHighResImage(false);
     if (frontLargeSrc) {
       const img = new Image();
       img.src = frontLargeSrc;
       img.onload = () => {
         if (!isMounted) return;
-        setShowHighResImage(true);
+        toggleShowHighResImage(true);
       };
     }
 
     return () => {
       isMounted = false;
     };
+    // eslint-disable-next-line
   }, [frontLargeSrc]);
 
   const onFlipCard = e => {
     e.stopPropagation();
-    setFlipped(state => !state);
+    toggleIsFlipped();
   };
 
   const frontImgSrc = getImageUrl(

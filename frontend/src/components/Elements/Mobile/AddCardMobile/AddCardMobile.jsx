@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from 'antd';
 import styled from 'styled-components';
 import { PlusOutlined } from '@ant-design/icons';
 import AddCardDrawer from './AddCardDrawer';
+import { useToggle } from '../../../Hooks';
 
 const StyledButton = styled.div`
   position: fixed;
@@ -12,7 +13,7 @@ const StyledButton = styled.div`
 `;
 
 export default ({ onAddCard, containedCards = [], visible }) => {
-  const [isAdding, setIsAdding] = useState(false);
+  const [isAdding, toggleIsAdding] = useToggle(false);
 
   if (!visible) return null;
 
@@ -24,7 +25,7 @@ export default ({ onAddCard, containedCards = [], visible }) => {
         onAddCard={onAddCard}
         containedCardNames={containedCardNames}
         isVisible={isAdding}
-        onClose={() => setIsAdding(false)}
+        onClose={() => toggleIsAdding(false)}
       />
       <StyledButton>
         {!isAdding && (
@@ -33,7 +34,7 @@ export default ({ onAddCard, containedCards = [], visible }) => {
             size="large"
             type="primary"
             shape="circle"
-            onClick={() => setIsAdding(true)}
+            onClick={() => toggleIsAdding(true)}
           />
         )}
       </StyledButton>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { Popover } from 'antd';
@@ -6,6 +6,7 @@ import { getImageUrl } from '../../../../utils/cardImage';
 import FullscreenCardModal from '../../Mobile/FullscreenCardModal';
 import CustomSkeleton from '../CustomSkeleton';
 import FlippableCard from '../FlippableCard';
+import { useToggle } from '../../../Hooks';
 
 const StyledCard = styled.img`
   width: 100%;
@@ -20,13 +21,13 @@ const StyledPreviewWrapper = styled.div`
 `;
 
 export default ({ width, height, card, highlightOnHover }) => {
-  const [cardPreviewOpen, setCardPreviewOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [cardPreviewOpen, toggleCardPreviewOpen] = useToggle(false);
+  const [loading, toggleLoading] = useToggle(true);
   const { id, imgKey } = card;
 
   const onChangeIsOpen = event => {
     event.stopPropagation();
-    setCardPreviewOpen(!cardPreviewOpen);
+    toggleCardPreviewOpen();
   };
 
   const previewImage = (
@@ -37,7 +38,7 @@ export default ({ width, height, card, highlightOnHover }) => {
     >
       <StyledCard
         src={getImageUrl(id, imgKey)}
-        onLoad={() => setLoading(false)}
+        onLoad={() => toggleLoading(false)}
       />
       {loading && <CustomSkeleton.CardImage />}
     </StyledPreviewWrapper>

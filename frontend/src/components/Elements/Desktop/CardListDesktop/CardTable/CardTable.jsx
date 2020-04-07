@@ -6,13 +6,13 @@ import useTableShortcuts from './useTableShortcuts';
 import CardModalDesktop from '../../CardModalDesktop';
 import columns from './columns';
 import { filterByName } from '../../../../../utils/cardFilter';
+import { useToggle } from '../../../../Hooks';
 
 export default ({ cards, loading }) => {
-  const [showDetails, setShowDetails] = useState(false);
+  const [showDetails, toggleShowDetail] = useToggle(false);
   const [selectedElementId, setSelectedElementId] = useState(null);
   const [query] = useQueryParam('name', StringParam);
   const filteredCards = filterByName(cards, query);
-  const toggleShowDetail = () => setShowDetails(!showDetails);
 
   const {
     pagination,
@@ -51,7 +51,7 @@ export default ({ cards, loading }) => {
         }
         onRow={(_, index) => ({
           onClick: () => {
-            setShowDetails(true);
+            toggleShowDetail(true);
             setSelectedElementPosition(index + 1);
           },
         })}
