@@ -4,7 +4,7 @@ import { Divider, message } from 'antd';
 import { useMutation } from 'react-apollo';
 
 import { SaveOutlined } from '@ant-design/icons';
-import { EditIcon } from '../../../Elements';
+import { EditIcon } from '../../../Elements/Shared';
 import AddCard from './AddCard';
 import CardRow from './CardRow';
 import { changeCollection, getCollectionNames } from './queries';

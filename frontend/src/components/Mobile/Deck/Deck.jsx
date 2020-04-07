@@ -7,7 +7,7 @@ import DeckHeader from './DeckHeader';
 import DeckMenu from './DeckMenu';
 import DeckBody from './DeckBody';
 import { getDeck, addCardsToDeck } from './queries';
-import { AddCardMobile } from '../../Elements';
+import { AddCardMobile } from '../../Elements/Mobile';
 import message from '../../../utils/message';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
 import CardModal from '../Card/CardModal';
