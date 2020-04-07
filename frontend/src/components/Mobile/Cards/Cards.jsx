@@ -106,7 +106,6 @@ export default () => {
         {allCards && (
           <CardList
             showTotalResults
-            basePath="/m/search"
             cards={allCards}
             hasMore={hasMore}
             loading={loading}
