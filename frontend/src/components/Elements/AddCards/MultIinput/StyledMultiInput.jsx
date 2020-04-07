@@ -23,7 +23,7 @@ export const StyledStatus = styled.div`
 `;
 
 export const IconWrapper = styled.div`
-  height: 21.1px;
+  height: 22px;
   width: 100%;
 `;
 

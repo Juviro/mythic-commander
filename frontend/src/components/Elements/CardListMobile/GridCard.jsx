@@ -36,6 +36,8 @@ const GridCard = ({ isLarge, card, onClick, onEditCard, onDeleteCard }) => {
   const { minPrice, name, totalAmount, amount, sumPrice, owned } = card;
   const displayedAmount = amount || totalAmount;
 
+  const width = isLarge ? '100%' : '43vw';
+
   return (
     <StyledWrapper style={style} onClick={onClick}>
       <StyledCardWrapper isLarge={isLarge}>
@@ -50,7 +52,7 @@ const GridCard = ({ isLarge, card, onClick, onEditCard, onDeleteCard }) => {
           />
         )}
       </StyledCardWrapper>
-      <Row style={{ width: isLarge ? '100%' : '43vw' }}>
+      <Row style={{ width }}>
         <Col span={7}>
           {displayedAmount && (
             <Typography.Text strong>{`${displayedAmount}x `}</Typography.Text>
@@ -72,7 +74,7 @@ const GridCard = ({ isLarge, card, onClick, onEditCard, onDeleteCard }) => {
           )}
         </Col>
       </Row>
-      <Typography.Text ellipsis style={{ width: '43vw' }}>
+      <Typography.Text ellipsis style={{ width }}>
         {name}
       </Typography.Text>
     </StyledWrapper>
