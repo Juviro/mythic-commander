@@ -5,7 +5,7 @@ import { partition } from 'lodash';
 import { useQuery, useMutation } from 'react-apollo';
 
 import { withRouter } from 'react-router';
-import { wantsLists as getWantsLists, createWantsList } from './queries';
+import { wantsListsMobile as getWantsLists, createWantsList } from './queries';
 import OverviewList from '../../Elements/OverviewList/OverviewList';
 
 const StyledWrapper = styled.div`

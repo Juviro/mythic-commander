@@ -50,9 +50,12 @@ const resolver = {
       .first();
   },
 
-  wantsLists(_, __, { user: { id: userId }, db }) {
+  wantsLists(_, { deckId }, { user: { id: userId }, db }) {
+    const where = { userId };
+    if (deckId) where.deckId = deckId;
+
     return db('wantsLists')
-      .where({ userId })
+      .where(where)
       .orderBy('createdAt', 'asc');
   },
   collectionDevelopment(_, __, { user: { id: userId }, db }) {

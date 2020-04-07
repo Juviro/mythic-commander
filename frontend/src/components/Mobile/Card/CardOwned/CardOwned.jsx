@@ -24,10 +24,9 @@ export default ({ card, loading, onChangeSet, selectedCardId }) => {
 
   return (
     <Collapse
-      style={{ width: '100%', marginTop: 8 }}
+      style={{ width: '100%', backgroundColor: 'white' }}
       bordered={false}
-      className="collapse-owned"
-      expandIconPosition="right"
+      className="no-padding-collapse"
     >
       <Collapse.Panel
         key="1"

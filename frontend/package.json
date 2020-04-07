@@ -24,7 +24,6 @@
     "react-google-login": "^5.0.7",
     "react-infinite-scroller": "^1.2.4",
     "react-linkify": "^1.0.0-alpha",
-    "react-parallax": "^3.0.3",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-spring": "^8.0.27",

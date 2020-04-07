@@ -11,8 +11,10 @@ const StyledButton = styled.div`
   z-index: 1000;
 `;
 
-export default ({ onAddCard, containedCards = [] }) => {
+export default ({ onAddCard, containedCards = [], visible }) => {
   const [isAdding, setIsAdding] = useState(false);
+
+  if (!visible) return null;
 
   const containedCardNames = containedCards.map(({ name }) => name);
 

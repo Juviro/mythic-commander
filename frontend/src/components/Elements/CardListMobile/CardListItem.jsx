@@ -79,7 +79,7 @@ const CardListItem = ({
   return (
     <List.Item
       actions={actions}
-      style={{ paddingTop: 4, paddingBottom: 4 }}
+      style={{ padding: '0 4px' }}
       onClick={!isEditing ? onClick : undefined}
     >
       <List.Item.Meta

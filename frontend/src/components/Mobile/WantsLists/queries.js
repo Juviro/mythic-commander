@@ -1,17 +1,21 @@
 import gql from 'graphql-tag';
 
-export const wantsLists = gql`
-  query wantsLists {
-    wantsLists {
+const WANTS_LIST_FIELDS = `
+    id
+    name
+    lastEdit
+    numberOfCards
+    deck {
       id
       name
-      lastEdit
-      numberOfCards
-      deck {
-        id
-        name
-        imgSrc
-      }
+      imgSrc
+    }
+`;
+
+export const wantsListsMobile = gql`
+  query wantsListsMobile {
+    wantsLists {
+      ${WANTS_LIST_FIELDS}
     }
   }
 `;
@@ -19,10 +23,7 @@ export const wantsLists = gql`
 export const createWantsList = gql`
   mutation createWantsList {
     createWantsList {
-      id
-      name
-      lastEdit
-      numberOfCards
+      ${WANTS_LIST_FIELDS}
     }
   }
 `;

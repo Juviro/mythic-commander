@@ -1,20 +1,29 @@
  BUGFIXES:
     - backend deployment not reloading
+    - add card list -> icons not aligned when ~100 cards
+    - grid card full size: name not 100% width
+    - deck (wants?) owned badge not updating when chaning owned in details
 
 NEXT:
-    - allow wants link to deck
+    - add option to move card: wants <-> deck
     - add warning that wants list will be cascaded when deck is deleted
 
 IMPROVEMENTS: 
     - when adding to collection, update owned badge [MOBILE + DESKTOP]
     - one ESC, blur search and filter
     - improve grid card info box
+    - add 404 page
 
 FEATURES:
 
 REFACTORINGS:
     - split elements in desktop/mobile/shared
     - add toggle hook
+    - try to remove basePath
+    - try to remove "network-only", replace with refetch queries
+    - remove deck zone, add commander field to deck
+    - basic lands modal on desktop too slow - mobile works
+    - add loading component that wraps around content ?
     - mobile card detail view should not change url when in collection / wants / etc
 
 BACKLOG:
