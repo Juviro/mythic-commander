@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Spin, Pagination } from 'antd';
 import { useQueryParam, StringParam } from 'use-query-params';
 import styled from 'styled-components';
@@ -8,7 +8,7 @@ import useGridShortcuts from './useGridShortcuts';
 import CardModalDesktop from '../../CardModalDesktop';
 import GridCard from './GridCard';
 import getNumberOfCards from './getNumberOfCards';
-import { useWindowSize, usePreloadCards } from '../../../../Hooks';
+import { useWindowSize, usePreloadCards, useToggle } from '../../../../Hooks';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -20,8 +20,7 @@ const StyledWrapper = styled.div`
 export default ({ cards, loading, widthOffset }) => {
   useWindowSize();
   const [orderBy] = useQueryParam('orderBy', StringParam);
-  const [showDetails, setShowDetails] = useState(false);
-  const toggleShowDetail = () => setShowDetails(!showDetails);
+  const [showDetails, toggleShowDetail] = useToggle(false);
 
   const [query] = useQueryParam('name', StringParam);
   const filteredCards = filterByName(cards, query);

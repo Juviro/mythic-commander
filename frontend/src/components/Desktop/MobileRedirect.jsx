@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Spinner } from '../Elements/Shared';
 import isMobile from '../../utils/isMobile';
+import { useToggle } from '../Hooks';
 
 export default ({ children }) => {
-  const [isRedirecting, setIsRedirecting] = React.useState(false);
-  React.useEffect(() => {
+  const [isRedirecting, toggleIsRedirecting] = useToggle(false);
+  useEffect(() => {
     if (isMobile()) {
-      setIsRedirecting(true);
+      toggleIsRedirecting();
       window.location.href = `/m${window.location.pathname}`;
     }
+    // eslint-disable-next-line
   }, []);
 
   return isRedirecting ? <Spinner /> : children;

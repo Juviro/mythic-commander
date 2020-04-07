@@ -12,6 +12,7 @@ import { cardSearch } from './queries';
 import CardModal from '../Card/CardModal';
 import NameFilter from '../../Elements/Shared/Filter/TextFilter/NameFilter';
 import { CARDS_PER_PAGE } from '../../Elements/Mobile/CardListMobile/FilteredCardList';
+import { useToggle } from '../../Hooks';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -26,7 +27,7 @@ export default () => {
   const [allCards, setAllCards] = useState(null);
   const [currentOptions, setCurrentOptions] = useState(null);
   const [queryResult, setQueryResult] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, toggleLoading] = useToggle(false);
   const [{ autoSearch, ...options }, setFilter] = useQueryParams({
     autoSearch: StringParam,
 
@@ -52,7 +53,7 @@ export default () => {
 
   const onLoadCards = async (searchOptions, offset = 0) => {
     setCurrentOptions(searchOptions);
-    setLoading(true);
+    toggleLoading(true);
     const { data } = await client.query({
       fetchPolicy: 'cache-first',
       query: cardSearch,
@@ -66,7 +67,7 @@ export default () => {
     const { cards } = data.cardSearch;
     const newCards = offset ? (allCards || []).concat(cards) : cards;
     setAllCards(newCards);
-    setLoading(false);
+    toggleLoading(false);
   };
 
   const onSearch = () => {

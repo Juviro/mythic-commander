@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Drawer from './Drawer';
 import NavBar from './NavBar';
+import { useToggle } from '../../Hooks';
 
 const Menu = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerOpen, toggleIsDrawerOpen] = useToggle(false);
 
   const onToggleDrawer = () => {
-    setIsDrawerOpen(!isDrawerOpen);
+    toggleIsDrawerOpen(!isDrawerOpen);
   };
 
   return (
@@ -15,7 +16,7 @@ const Menu = () => {
       <NavBar onToggleDrawer={onToggleDrawer} />
       <Drawer
         isVisible={isDrawerOpen}
-        onCloseDrawer={() => setIsDrawerOpen(false)}
+        onCloseDrawer={() => toggleIsDrawerOpen(false)}
       />
     </>
   );

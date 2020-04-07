@@ -16,7 +16,6 @@ IMPROVEMENTS:
 FEATURES:
 
 REFACTORINGS:
-    - split elements in desktop/mobile/shared
     - add toggle hook
     - try to remove basePath
     - try to remove "network-only", replace with refetch queries
