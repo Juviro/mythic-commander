@@ -9,7 +9,7 @@ import {
 
 import { FilteredCardList } from '../../Elements/Mobile';
 
-export default ({ basePath, cards, loading, wantsList }) => {
+export default ({ cards, loading, wantsList }) => {
   const { id: wantsListId } = useParams();
   const [mutateDelete] = useMutation(deleteFromWantsList);
   const [mutateEdit] = useMutation(editWantsListCard);
@@ -62,7 +62,6 @@ export default ({ basePath, cards, loading, wantsList }) => {
     <FilteredCardList
       cards={cards}
       loading={loading}
-      basePath={basePath}
       onEditCard={onEditCard}
       onDeleteCard={onDeleteCard}
     />

@@ -6,7 +6,7 @@ import { ArrowRightOutlined } from '@ant-design/icons';
 import unifyCardFormat from '../../../../utils/unifyCardFormat';
 import { FilteredCardList } from '../../../Elements/Mobile';
 
-export default ({ wantsLists, basePath }) => {
+export default ({ wantsLists }) => {
   return (
     <Collapse
       bordered={false}
@@ -26,7 +26,6 @@ export default ({ wantsLists, basePath }) => {
         >
           <FilteredCardList
             cards={unifyCardFormat(wantsList.cards)}
-            basePath={basePath}
             hideFooter
           />
         </Collapse.Panel>

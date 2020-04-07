@@ -40,7 +40,7 @@ export default () => {
       <CollapsableFilter />
       <LayoutAndSortPicker showCollectionFilters />
       <Divider />
-      <FilteredCardList cards={cards} basePath="/m/collection" />
+      <FilteredCardList cards={cards} />
       <AddToCollection />
       <CardModal />
     </StyledWrapper>

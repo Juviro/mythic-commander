@@ -25,7 +25,6 @@ export default () => {
     fetchPolicy: 'network-only',
   });
 
-  const basePath = `/m/wants/${id}`;
   const wantsList = data && data.wantsList;
   const cards = wantsList && unifyCardFormat(wantsList.cards);
   const unifiedWantsList = wantsList && {
@@ -44,14 +43,9 @@ export default () => {
       <Header wantsList={unifiedWantsList} />
       <LayoutAndSortPicker showCollectionFilters />
       <Divider />
-      <CardsList
-        cards={cards}
-        loading={loading}
-        basePath={basePath}
-        wantsList={unifiedWantsList}
-      />
+      <CardsList cards={cards} loading={loading} wantsList={unifiedWantsList} />
       <AddWants containedCards={cards} />
-      <CardModal basePath={basePath} />
+      <CardModal />
     </StyledWrapper>
   );
 };

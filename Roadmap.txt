@@ -16,8 +16,6 @@ IMPROVEMENTS:
 FEATURES:
 
 REFACTORINGS:
-    - add toggle hook
-    - try to remove basePath
     - try to remove "network-only", replace with refetch queries
     - remove deck zone, add commander field to deck
     - basic lands modal on desktop too slow - mobile works
