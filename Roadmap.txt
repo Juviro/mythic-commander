@@ -1,6 +1,5 @@
  BUGFIXES:
     - backend deployment not reloading
-    - deck (wants?) owned badge not updating when changing owned in details
     - collection total owned amount not updating when changing owned in details
 
 NEXT:
@@ -8,7 +7,7 @@ NEXT:
     - add warning that wants list will be cascaded when deck is deleted
 
 IMPROVEMENTS: 
-    - when adding to collection, update owned badge [MOBILE + DESKTOP]
+    - when adding to collection, update owned badge (deck, wants, collection ?) [MOBILE + DESKTOP]
     - one ESC, blur search and filter
     - improve grid card info box design for desktop
     - add 404 page
