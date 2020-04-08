@@ -4,36 +4,39 @@ const CARD_FIELDS = `
   id
   oracle_id
   name
-  isCommanderLegal
   imgKey
-  isTwoFaced
-  
-  containingWantsLists {
-    id
-    name
-    amount
-  }
 
-  containingDecks {
-    id
-    name
-    imgSrc
-  }
-
-  allSets {
-    id
-    set
-    imgKey
+  oracleCard {
+    _id
+    owned
     isTwoFaced
-    amountOwned
-    amountOwnedFoil
-    set_name
-    prices {
-      usd
-      usd_foil
+    totalAmount
+    isCommanderLegal
+    allSets {
+      id
+      set
+      imgKey
+      amountOwned
+      amountOwnedFoil
+      set_name
+      prices {
+        usd
+        usd_foil
+      }
+
+    }
+    containingWantsLists {
+      id
+      name
+      amount
+    }
+  
+    containingDecks {
+      id
+      name
+      imgSrc
     }
   }
-
 `;
 
 export const cardDetailsDesktop = gql`
@@ -57,15 +60,15 @@ export const changeCollection = gql`
       edited: $edited
       cardId: $cardId
     ) {
-      id
-      card {
+      _id
+      owned
+      totalAmount
+      sumPrice
+      minPrice
+      allSets {
         id
-        totalAmount
-        allSets {
-          id
-          amountOwned
-          amountOwnedFoil
-        }
+        amountOwned
+        amountOwnedFoil
       }
     }
   }

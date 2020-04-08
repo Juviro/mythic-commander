@@ -8,12 +8,16 @@ const CARD_FIELDS = `
     id
     oracle_id
     name
-    owned
-    minPrice
     imgKey
-    isTwoFaced
     cmc
     set_name
+    
+    oracleCard {
+      _id
+      owned
+      minPrice
+      isTwoFaced
+    }
   }
 `;
 

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { EditOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import { CardButton } from '../../../Shared';
 import EditMenu from './EditMenu';
+import { useToggle } from '../../../../Hooks';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -33,11 +34,11 @@ const StyledOverlay = styled.div`
 `;
 
 export default ({ card, onEditCard, onDeleteCard, isLarge }) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, toggleIsEditing] = useToggle(false);
 
   const onChangeIsEditing = e => {
     e.stopPropagation();
-    setIsEditing(!isEditing);
+    toggleIsEditing();
   };
 
   return (
@@ -52,7 +53,7 @@ export default ({ card, onEditCard, onDeleteCard, isLarge }) => {
             isEditing={isEditing}
             onEditCard={onEditCard}
             onDeleteCard={onDeleteCard}
-            onClose={() => setIsEditing(false)}
+            onClose={() => toggleIsEditing(false)}
           />
         </StyledBody>
       </StyledWrapper>

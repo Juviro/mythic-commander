@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useState } from 'react';
+import React, { useRef, useContext } from 'react';
 import { Input, AutoComplete } from 'antd';
 import { withRouter } from 'react-router';
 import { useQueryParams, StringParam } from 'use-query-params';
@@ -15,6 +15,7 @@ import {
 } from '../../../../../utils/cardFilter';
 import { wantsListsMobile as wantsListsQuery } from '../../../WantsLists/queries';
 import unifyCardFormat from '../../../../../utils/unifyCardFormat';
+import { useToggle } from '../../../../Hooks';
 
 const MAX_RESULTS = 4;
 
@@ -52,7 +53,7 @@ const blur = () => {
 
 const SearchBar = ({ history, transparentSearchBar }) => {
   const inputEl = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, toggleIsOpen] = useToggle(false);
   const { cards } = useContext(CardContext);
   const { data: decksData } = useQuery(getDecks);
   const { data: wantsListData } = useQuery(wantsListsQuery);
@@ -142,7 +143,7 @@ const SearchBar = ({ history, transparentSearchBar }) => {
         onSelect={onSelect}
         options={dataSource}
         defaultActiveFirstOption
-        onBlur={() => setIsOpen(false)}
+        onBlur={() => toggleIsOpen(false)}
         dropdownMatchSelectWidth={false}
         listHeight={360}
         placeholder="Search for card or deck"
@@ -151,8 +152,8 @@ const SearchBar = ({ history, transparentSearchBar }) => {
       >
         <Input
           className="no-border"
-          onClick={() => setIsOpen(true)}
-          onInput={() => setIsOpen(true)}
+          onClick={() => toggleIsOpen(true)}
+          onInput={() => toggleIsOpen(true)}
         />
       </AutoComplete>
       <StyledBackground isVisible={isOpen} />

@@ -34,7 +34,6 @@ export default () => {
   const { data, loading } = useQuery(wantsListsForDeckMobile, {
     variables: { deckId },
   });
-  const basePath = `/m/decks/${deckId}`;
 
   const numberOfWantsLists = data && data.wantsLists.length;
   const numberOfCards =
@@ -54,10 +53,7 @@ export default () => {
             <AddWantsList deckId={deckId} />
           </StyledTitleWrapper>
           {Boolean(numberOfWantsLists) && <LayoutAndSortPicker />}
-          <WantsListsCollapse
-            basePath={basePath}
-            wantsLists={data.wantsLists}
-          />
+          <WantsListsCollapse wantsLists={data.wantsLists} />
         </StyledWantsWrapper>
       )}
     </StyledWrapper>

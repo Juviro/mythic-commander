@@ -43,6 +43,10 @@ export default ({ containedCards }) => {
   };
 
   return (
-    <AddCardMobile onAddCard={onAddCard} containedCards={containedCards} />
+    <AddCardMobile
+      onAddCard={onAddCard}
+      containedCards={containedCards}
+      visible
+    />
   );
 };

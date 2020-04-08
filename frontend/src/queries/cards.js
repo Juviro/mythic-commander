@@ -3,12 +3,35 @@ export const CARD_FIELDS = `
   set
   name
   rarity
+
+  oracleCard {
+    _id
+    isTwoFaced
+    allSets {
+      id
+      set
+      prices {
+        eur
+        usd
+        usd_foil
+      }
+      image_uris {
+        small
+        normal
+      }
+      card_faces {
+        image_uris {
+          small
+          normal
+        }
+      }
+    }
+  }
   image_uris {
     small
     normal
     art_crop
   }
-  isTwoFaced
   imgKey
   card_faces {
     name
@@ -28,23 +51,4 @@ export const CARD_FIELDS = `
     commander
   }
   oracle_id
-  allSets {
-    id
-    set
-    prices {
-      eur
-      usd
-      usd_foil
-    }
-    image_uris {
-      small
-      normal
-    }
-    card_faces {
-      image_uris {
-        small
-        normal
-      }
-    }
-  }
 `;

@@ -5,8 +5,7 @@ import { useMutation } from 'react-apollo';
 import { message, Typography } from 'antd';
 import { changeCollection } from './queries';
 import { CardSetOverview, EditIcon } from '../../Shared';
-import { getCollectionDesktop } from '../../../Desktop/Collection/queries';
-import { useShortcut } from '../../../Hooks';
+import { useShortcut, useToggle } from '../../../Hooks';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -20,19 +19,20 @@ const StyledTitleWrapper = styled.div`
 
 export default ({ card, loading, selectedCardId, onChangeSet, title }) => {
   const [mutate] = useMutation(changeCollection);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, toggleIsEditing] = useToggle(false);
   const [editedMap, setEditedMap] = useState({});
   const [addedMap, setAddedMap] = useState({});
-  useShortcut('e', () => setIsEditing(true));
+  useShortcut('e', () => toggleIsEditing(true));
 
   const onDiscard = () => {
     setEditedMap({});
     setAddedMap({});
-    setIsEditing(false);
+    toggleIsEditing(false);
   };
 
   useEffect(() => {
     onDiscard();
+    // eslint-disable-next-line
   }, [card.oracle_id]);
 
   const onSaveChanges = async () => {
@@ -53,46 +53,6 @@ export default ({ card, loading, selectedCardId, onChangeSet, title }) => {
         added,
         cardId: card.id,
       },
-      update: (
-        cache,
-        {
-          data: {
-            changeCollection: {
-              card: { totalAmount },
-            },
-          },
-        }
-      ) => {
-        const existing = cache.readQuery({
-          query: getCollectionDesktop,
-        });
-
-        const newCards = existing.collection.cards
-          .map(existingCard => {
-            if (existingCard.card.oracle_id !== card.oracle_id) {
-              return existingCard;
-            }
-            if (!totalAmount) return null;
-
-            return {
-              ...existingCard,
-              card: {
-                ...existingCard.card,
-                totalAmount,
-              },
-            };
-          })
-          .filter(Boolean);
-        cache.writeQuery({
-          query: getCollectionDesktop,
-          data: {
-            collection: {
-              ...existing.collection,
-              cards: newCards,
-            },
-          },
-        });
-      },
     });
     message.success('Updated your collection!');
     onDiscard();
@@ -102,7 +62,7 @@ export default ({ card, loading, selectedCardId, onChangeSet, title }) => {
     if (isEditing) {
       onSaveChanges();
     }
-    setIsEditing(!isEditing);
+    toggleIsEditing();
   };
 
   const onChangeAmount = (newAmount, cardId, amountKey) => {

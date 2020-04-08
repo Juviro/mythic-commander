@@ -10,6 +10,7 @@ import PreviewCardImage from '../../Shared/PreviewCardImage';
 import OwnedBadge from '../../Shared/OwnedBadge';
 import SetPicker from '../../Shared/SetPicker';
 import EditableAmount from '../../Shared/EditableAmount';
+import { useToggle } from '../../../Hooks';
 
 const StyledDescription = styled.div`
   display: flex;
@@ -25,7 +26,7 @@ const CardListItem = ({
   onDeleteCard,
   onEditCard,
 }) => {
-  const [isEditing, setIsEditig] = useState(false);
+  const [isEditing, toggleIsEditing] = useToggle(false);
   const [newProps, setNewProps] = useState({});
 
   const { minPrice, owned } = card;
@@ -33,7 +34,8 @@ const CardListItem = ({
   const cardId = card.id;
 
   useEffect(() => {
-    setIsEditig(false);
+    toggleIsEditing(false);
+    // eslint-disable-next-line
   }, [cardId]);
 
   const onDelete = event => {
@@ -48,7 +50,7 @@ const CardListItem = ({
       onEditCard(card.id, newProps);
       setNewProps({});
     }
-    setIsEditig(!isEditing);
+    toggleIsEditing();
   };
 
   const onChangeProp = key => value => {
@@ -124,9 +126,11 @@ const CardListItem = ({
 const areEqual = (prevProps, nextProps) => {
   if (prevProps.searchString !== nextProps.searchString) return false;
 
-  return ['id', 'amountOwned', 'amountOwnedFoil', 'amount'].every(propKey => {
-    return prevProps.card[propKey] === nextProps.card[propKey];
-  });
+  return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
+    propKey => {
+      return prevProps.card[propKey] === nextProps.card[propKey];
+    }
+  );
 };
 
 export default React.memo(CardListItem, areEqual);

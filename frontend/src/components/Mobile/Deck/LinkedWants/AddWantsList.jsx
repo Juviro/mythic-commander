@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useMutation } from 'react-apollo';
 
 import { withRouter } from 'react-router';
 import { createLinkedWantsList, wantsListsForDeckMobile } from './queries';
+import { useToggle } from '../../../Hooks';
 
 const AddWantsList = ({ deckId, history }) => {
-  const [isCreating, setIsCreating] = useState(false);
+  const [isCreating, toggleIsCreating] = useToggle(false);
   const [mutate] = useMutation(createLinkedWantsList);
 
   const onCreateList = () => {
-    setIsCreating(true);
+    toggleIsCreating(true);
     mutate({
       variables: { deckId },
       update: (cache, { data: { createWantsList } }) => {

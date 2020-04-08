@@ -40,13 +40,13 @@ const StyledToggleWrapper = styled.div`
   }
 `;
 
-export default ({ cards, isVisible, setIsVisible }) => {
-  useShortcut('s', () => setIsVisible(!isVisible));
+export default ({ cards, isVisible, toggleIsVisible }) => {
+  useShortcut('s', toggleIsVisible);
 
   return (
     <StyledWrapper isVisible={isVisible}>
       <Tooltip title="Toggle Sidebar [S]" placement="right">
-        <StyledToggleWrapper onClick={() => setIsVisible(!isVisible)}>
+        <StyledToggleWrapper onClick={toggleIsVisible}>
           {isVisible ? <DoubleLeftOutlined /> : <DoubleRightOutlined />}
         </StyledToggleWrapper>
       </Tooltip>
