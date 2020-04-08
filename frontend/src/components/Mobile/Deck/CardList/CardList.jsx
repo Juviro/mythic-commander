@@ -23,10 +23,9 @@ const StyledWrapper = styled.div`
 `;
 
 const addMainType = card => {
-  const mainType =
-    card.zone === 'COMMANDER'
-      ? 'Commander'
-      : CARD_TYPES.find(type => card.primaryTypes.includes(type));
+  const mainType = card.isCommander
+    ? 'Commander'
+    : CARD_TYPES.find(type => card.primaryTypes.includes(type));
   return {
     ...card,
     mainType,
@@ -43,7 +42,7 @@ const DeckList = ({ deck, loading }) => {
     type,
     cards: cardWithMainType.filter(card => card.mainType === type),
   }));
-  const commander = cards.find(({ zone }) => zone === 'COMMANDER');
+  const commander = cards.find(({ isCommander }) => isCommander);
 
   const onDeleteCard = cardId => {
     const newCards = deck.cards.filter(card => card.id !== cardId);

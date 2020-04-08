@@ -10,7 +10,7 @@ export const isCardLegal = (card, commander) => {
 };
 
 export const isDeckLegal = ({ cards = [] }) => {
-  const commander = cards.find(({ zone }) => zone === 'COMMANDER');
+  const commander = cards.find(({ isCommander }) => isCommander);
 
   return cards.every(card => isCardLegal(card, commander));
 };

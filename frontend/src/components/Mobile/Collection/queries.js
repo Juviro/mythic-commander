@@ -23,17 +23,13 @@ const COLLECTION_CARD_FIELDS = `
     }
 `;
 
-const COLLECTION_FIELDS = `
-  id
-  cards {
-    ${COLLECTION_CARD_FIELDS}
-  }
-`;
-
 export const getMobileCollection = gql`
   query getMobileCollection {
     collection {
-      ${COLLECTION_FIELDS}
+      id
+      cards {
+        ${COLLECTION_CARD_FIELDS}
+      }
     }
   }
 `;

@@ -31,7 +31,7 @@ export default ({ deck, loading }) => {
     );
   }
 
-  const commander = deck.cards.find(({ zone }) => zone === 'COMMANDER');
+  const commander = deck.cards.find(({ isCommander }) => isCommander);
   const numberOfUnowned = deck.cards.filter(({ owned }) => !owned).length;
   const numberOfCards = `${getNumberOfCards(deck.cards)} cards ${
     numberOfUnowned ? `(${numberOfUnowned} not owned)` : ''

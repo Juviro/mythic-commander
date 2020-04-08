@@ -15,6 +15,7 @@ export default () => {
       update: (cache, { data: updateData }) => {
         if (!updateData) return;
         const { addToCollection: newCards } = updateData;
+
         const existing = cache.readQuery({
           query: getMobileCollection,
         });

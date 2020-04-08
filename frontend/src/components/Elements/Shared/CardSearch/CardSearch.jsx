@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import CardContext from '../../../CardProvider/CardProvider';
 import { filterAndSortByQuery } from '../../../../utils/cardFilter';
 import OwnedBadge from '../OwnedBadge';
+import { useBlurOnEsc } from '../../../Hooks';
 
 export const splitAmountAndName = query => {
   const match = query.match(/^(\d*)x{0,1}\s{0,1}(.*)/);
@@ -117,6 +118,7 @@ export default class CardSearch extends React.Component {
         autoFocus={autoFocus}
         ref={this.inputRef}
         value={searchString}
+        onKeyDown={useBlurOnEsc}
         placeholder="Search for a card"
         defaultActiveFirstOption={defaultActiveFirstOption}
         onChange={val => this.setSearch(val)}
