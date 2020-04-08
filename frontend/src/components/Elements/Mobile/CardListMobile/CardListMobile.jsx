@@ -23,7 +23,6 @@ const CardList = ({
   hasMore,
   totalResults,
   history,
-  basePath,
   hideFooter,
   onEditCard,
   onDeleteCard,
@@ -39,7 +38,9 @@ const CardList = ({
   }
 
   const onOpenDetailView = ({ id, oracle_id }) => {
-    history.push(`${basePath}/${oracle_id}/${id}${history.location.search}`);
+    history.push(
+      `${history.location.pathname}/${oracle_id}/${id}${history.location.search}`
+    );
   };
 
   const totalResultsLabel = showTotalResults && (

@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { List, Modal, message } from 'antd';
 import { useMutation } from 'react-apollo';
 import { useParams, withRouter } from 'react-router';
 
 import { deleteDeck, getDecks } from '../../../../queries';
+import { useToggle } from '../../../Hooks';
 
 const DeleteDeck = ({ history }) => {
   const { id: deckId } = useParams();
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, toggleIsModalVisible] = useToggle(false);
   const [deleteDeckMutation] = useMutation(deleteDeck);
 
   const onDeleteDeck = async () => {
@@ -36,7 +37,7 @@ const DeleteDeck = ({ history }) => {
   return (
     <>
       <List.Item
-        onClick={() => setIsModalVisible(true)}
+        onClick={() => toggleIsModalVisible(true)}
         style={{ color: '#ff4d4f' }}
       >
         Delete Deck
@@ -46,7 +47,7 @@ const DeleteDeck = ({ history }) => {
         visible={isModalVisible}
         okText="Delete"
         onOk={onDeleteDeck}
-        onCancel={() => setIsModalVisible(false)}
+        onCancel={() => toggleIsModalVisible(false)}
         bodyStyle={{ display: 'none' }}
         okButtonProps={{ type: 'danger' }}
       />

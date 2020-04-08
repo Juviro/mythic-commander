@@ -16,6 +16,7 @@ import {
 } from '../../Elements/Shared';
 import CardOwned from './CardOwned';
 import { getCardByOracleId } from './queries';
+import { unifySingleCard } from '../../../utils/unifyCardFormat';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -36,13 +37,13 @@ const StyledBodyWrapper = styled.div`
   background-color: white;
 `;
 
-const Card = ({ history, basePath }) => {
+const Card = ({ history }) => {
   const { oracle_id, cardId } = useParams();
   const { data, loading } = useQuery(getCardByOracleId, {
     variables: { oracle_id },
   });
 
-  const card = data && data.cardByOracleId;
+  const card = data && unifySingleCard(data.cardByOracleId);
 
   const currentCardId = cardId || (card && card.id);
 
@@ -53,9 +54,10 @@ const Card = ({ history, basePath }) => {
   const fallbackId = loading || !currentCard ? null : currentCard.id;
 
   const onChangeSet = id => {
-    const match = history.location.pathname.match(/\/m\/([-a-z]+)\//);
-    const defaultBasePath = `/m/${match ? match[1] : 'cards'}`;
-    history.replace(`${basePath || defaultBasePath}/${oracle_id}/${id}`);
+    // select everything before a card id
+    const match = history.location.pathname.match(/(\/m\/[\w/]+)\/\w{8}-\w{4}/);
+    const pathname = match ? match[1] : history.location.pathname;
+    history.replace(`${pathname}/${oracle_id}/${id}`);
   };
 
   useEffect(() => {

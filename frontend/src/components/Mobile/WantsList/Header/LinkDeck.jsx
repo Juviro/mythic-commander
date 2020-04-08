@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { LinkOutlined, LoadingOutlined } from '@ant-design/icons';
 import { Typography, Modal, Select } from 'antd';
@@ -7,6 +7,7 @@ import { getDecks, linkWantsList } from './queries';
 
 import message from '../../../../utils/message';
 import { wantsListsForDeckMobile } from '../../Deck/LinkedWants/queries';
+import { useToggle } from '../../../Hooks';
 
 const StyledLinkButton = styled.div`
   width: 120px;
@@ -29,8 +30,8 @@ const StyledDeckPreview = styled.img`
 `;
 
 export default ({ wantsList }) => {
-  const [modalVisible, setIsModalVisible] = useState(false);
-  const [isChanging, setIsChanging] = useState(false);
+  const [modalVisible, toggleIsModalVisible] = useToggle(false);
+  const [isChanging, toggleIsChanging] = useToggle(false);
   const { data, loading } = useQuery(getDecks);
   const [mutate] = useMutation(linkWantsList);
 
@@ -39,8 +40,8 @@ export default ({ wantsList }) => {
   const decks = data ? data.decks : [];
 
   const onLinkDeck = async deckId => {
-    setIsModalVisible(false);
-    setIsChanging(true);
+    toggleIsModalVisible(false);
+    toggleIsChanging(true);
     await mutate({
       variables: {
         deckId,
@@ -53,14 +54,14 @@ export default ({ wantsList }) => {
         },
       ],
     });
-    setIsChanging(false);
+    toggleIsChanging(false);
     const deckName = decks.find(({ id }) => id === deckId).name;
     message(`Linked to <b>${deckName}</b>!`);
   };
 
   return (
     <>
-      <StyledLinkButton onClick={() => setIsModalVisible(true)}>
+      <StyledLinkButton onClick={() => toggleIsModalVisible(true)}>
         {isChanging ? (
           <LoadingOutlined style={{ fontSize: 24 }} />
         ) : (
@@ -77,7 +78,7 @@ export default ({ wantsList }) => {
           </Typography.Text>
         }
         visible={modalVisible}
-        onCancel={() => setIsModalVisible(false)}
+        onCancel={() => toggleIsModalVisible(false)}
         footer={null}
         centered
       >

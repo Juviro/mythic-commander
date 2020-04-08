@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { EyeOutlined } from '@ant-design/icons';
 import FullscreenCardModal from '../FullscreenCardModal/FullscreenCardModal';
 import CardButton from '../../Shared/CardButton';
+import { useToggle } from '../../../Hooks';
 
 export default ({ card }) => {
-  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [isPreviewOpen, toggleIsPreviewOpen] = useToggle(false);
 
   const onChangeIsOpen = e => {
     e.stopPropagation();
-    setIsPreviewOpen(!isPreviewOpen);
+    toggleIsPreviewOpen();
   };
 
   return (

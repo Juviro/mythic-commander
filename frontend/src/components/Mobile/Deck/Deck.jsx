@@ -42,8 +42,6 @@ export default () => {
     });
   };
 
-  const basePath = `/m/decks/${id}`;
-
   return (
     <StyledDeck>
       <DeckHeader deck={unifiedDeck} loading={loading} />
@@ -54,7 +52,7 @@ export default () => {
         containedCards={cards}
         visible={currentTab === 'cards'}
       />
-      <CardModal basePath={basePath} />
+      <CardModal />
     </StyledDeck>
   );
 };

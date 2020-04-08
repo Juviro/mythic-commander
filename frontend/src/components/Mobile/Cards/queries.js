@@ -9,12 +9,15 @@ export const cardSearch = gql`
       cards {
         id
         name
-        owned
         imgKey
-        owned
-        isTwoFaced
-        minPrice
         oracle_id
+
+        oracleCard {
+          _id
+          isTwoFaced
+          owned
+          minPrice
+        }
       }
     }
   }

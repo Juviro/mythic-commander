@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   MoreOutlined,
   DeleteOutlined,
@@ -16,13 +16,14 @@ import {
 import { wantsListsMobile as wantsLists } from '../../WantsLists/queries';
 import message from '../../../../utils/message';
 import { wantsListsForDeckMobile } from '../../Deck/LinkedWants/queries';
+import { useToggle } from '../../../Hooks';
 
 const WantsListMenu = ({ history, wantsList }) => {
   const { deck } = wantsList;
   const deckId = deck && deck.id;
   const wantsListId = wantsList.id;
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, toggleIsOpen] = useToggle(false);
   const [mutateDelete] = useMutation(deleteWantsList);
   const [mutateDuplicate] = useMutation(duplicateWantsList);
   const [mutateUnlink] = useMutation(unlinkWantsList);
@@ -30,7 +31,7 @@ const WantsListMenu = ({ history, wantsList }) => {
   const canUnlink = Boolean(deck);
 
   const onDelete = () => {
-    setIsOpen(false);
+    toggleIsOpen(false);
     mutateDelete({
       variables: {
         wantsListId,
@@ -62,7 +63,7 @@ const WantsListMenu = ({ history, wantsList }) => {
   };
 
   const onDuplicate = async () => {
-    setIsOpen(false);
+    toggleIsOpen(false);
     mutateDuplicate({
       variables: {
         wantsListId,
@@ -92,7 +93,7 @@ const WantsListMenu = ({ history, wantsList }) => {
   };
 
   const onUnlink = async () => {
-    setIsOpen(false);
+    toggleIsOpen(false);
     mutateUnlink({
       variables: { wantsListId },
       refetchQueries: [
@@ -140,8 +141,8 @@ const WantsListMenu = ({ history, wantsList }) => {
     </Menu>
   );
   return (
-    <Dropdown overlay={menu} visible={isOpen} onVisibleChange={setIsOpen}>
-      <MoreOutlined onClick={() => setIsOpen(!isOpen)} />
+    <Dropdown overlay={menu} visible={isOpen} onVisibleChange={toggleIsOpen}>
+      <MoreOutlined onClick={toggleIsOpen} />
     </Dropdown>
   );
 };

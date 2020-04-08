@@ -1,24 +1,25 @@
  BUGFIXES:
     - backend deployment not reloading
-    - deck (wants?) owned badge not updating when changing owned in details
     - collection total owned amount not updating when changing owned in details
+    - table header too short
+    - changeCollection returns minPrice for one card, not all cards
 
 NEXT:
     - add option to move card: wants <-> deck
     - add warning that wants list will be cascaded when deck is deleted
 
 IMPROVEMENTS: 
-    - when adding to collection, update owned badge [MOBILE + DESKTOP]
+    - when adding to collection, update owned badge (deck, wants, collection ?) [MOBILE + DESKTOP]
     - one ESC, blur search and filter
     - improve grid card info box design for desktop
     - add 404 page
+    - initially hide sidebar for small screens
 
 FEATURES:
 
 REFACTORINGS:
-    - split elements in desktop/mobile/shared
-    - add toggle hook
-    - try to remove basePath
+    - refactor collectionName, this should use oracle card to easily update owned
+    - get rid of queries folder or clean it up
     - try to remove "network-only", replace with refetch queries
     - remove deck zone, add commander field to deck
     - basic lands modal on desktop too slow - mobile works
@@ -28,4 +29,5 @@ BACKLOG:
     - Add option to deck to fill up empty card slots with basic lands, based on mana occurrance
     - find a way to make collection value work
     - sharable collection / decks / wants
+    - prevent user from adding amount / amount foil if card is not available in foil / non-foil
     - prefer owned versions when adding to deck or wants

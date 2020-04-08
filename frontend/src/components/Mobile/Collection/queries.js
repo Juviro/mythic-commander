@@ -7,15 +7,19 @@ const COLLECTION_CARD_FIELDS = `
       id
       name
       cmc
-      totalAmount
       imgKey
-      isTwoFaced
-      subTypes
-      primaryTypes
-      minPrice
-      sumPrice
       oracle_id
       color_identity
+      
+      oracleCard {
+        _id
+        totalAmount
+        isTwoFaced
+        subTypes
+        primaryTypes
+        minPrice
+        sumPrice
+      }
     }
 `;
 

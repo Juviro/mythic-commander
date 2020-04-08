@@ -21,32 +21,27 @@ type Card {
   mana_cost: String
 
   # Additional card fields
-  previewImg: String
   imgKey: String!
+  amountOwned: Int!
+  amountOwnedFoil: Int!
+
+  oracleCard: OracleCard!
+}
+
+type OracleCard {
+  _id: String!
+  sumPrice: Float
+  minPrice: Float!
+  allSets: [Card!]!
+
+  owned: Boolean!
+  totalAmount: Int!
 
   isTwoFaced: Boolean!
   isCommanderLegal: Boolean!
   primaryTypes: [String!]!
   subTypes: [String!]!
 
-  allSets: [Card!]!
-
-  minPrice: Float!
-  sumPrice: Float
-
-  owned: Boolean!
-  amountOwned: Int!
-  amountOwnedFoil: Int!
-  totalAmount: Int!
-
-  # used by Deck and WantsList
-  amount: Int!
-  # Deck specific fields
-  zone: String!
-  # used by collection, deck, wants
-  createdAt: String
-
-  # Find card in lists
   containingDecks: [Deck!]!
   containingWantsLists: [ContainingList!]!
 }
@@ -247,7 +242,7 @@ type Mutation {
     edited: [ChangeCollectionInput!]
     deleted: [String!]
     cardId: String
-  ): CollectionCard!
+  ): OracleCard!
   deleteFromCollection(cardIds: [String]!): Boolean!
 
   ########## Session ##########

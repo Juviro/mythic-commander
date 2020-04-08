@@ -1,5 +1,3 @@
-import unifyCardFormat from '../../unifyCardFormat';
-
 const ON_DUPLICATE =
   ' ON CONFLICT (id, "userId") DO UPDATE SET amount = collection.amount + EXCLUDED.amount, "createdAt" = NOW()';
 
@@ -56,5 +54,5 @@ export default async (
     .where(where)
     .first();
 
-  return unifyCardFormat(userId)(updatedCard);
+  return updatedCard;
 };

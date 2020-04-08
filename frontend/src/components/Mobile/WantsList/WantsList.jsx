@@ -22,10 +22,8 @@ export default () => {
   const { id } = useParams();
   const { data, loading } = useQuery(wantsListQuery, {
     variables: { id },
-    fetchPolicy: 'network-only',
   });
 
-  const basePath = `/m/wants/${id}`;
   const wantsList = data && data.wantsList;
   const cards = wantsList && unifyCardFormat(wantsList.cards);
   const unifiedWantsList = wantsList && {
@@ -47,11 +45,10 @@ export default () => {
       <CardsList
         cards={cards}
         loading={loading}
-        basePath={basePath}
-        wantsList={unifiedWantsList}
+        rawWantsList={data && data.wantsList}
       />
       <AddWants containedCards={cards} />
-      <CardModal basePath={basePath} />
+      <CardModal />
     </StyledWrapper>
   );
 };

@@ -43,24 +43,3 @@ export const deleteFromCollection = gql`
     deleteFromCollection(cardIds: $cardIds)
   }
 `;
-
-export const changeCollection = gql`
-  mutation changeCollection(
-    $cardOracleId: String!
-    $added: [ChangeCollectionInput!]
-    $edited: [ChangeCollectionInput!]
-  ) {
-    changeCollection(
-      cardOracleId: $cardOracleId
-      added: $added
-      edited: $edited
-    ) {
-      id
-      allSets {
-        id
-        amountOwned
-        amountOwnedFoil
-      }
-    }
-  }
-`;
