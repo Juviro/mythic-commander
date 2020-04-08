@@ -16,6 +16,7 @@ import {
 } from '../../Elements/Shared';
 import CardOwned from './CardOwned';
 import { getCardByOracleId } from './queries';
+import { unifySingleCard } from '../../../utils/unifyCardFormat';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -42,7 +43,7 @@ const Card = ({ history }) => {
     variables: { oracle_id },
   });
 
-  const card = data && data.cardByOracleId;
+  const card = data && unifySingleCard(data.cardByOracleId);
 
   const currentCardId = cardId || (card && card.id);
 

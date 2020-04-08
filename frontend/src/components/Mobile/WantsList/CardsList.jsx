@@ -9,20 +9,20 @@ import {
 
 import { FilteredCardList } from '../../Elements/Mobile';
 
-export default ({ cards, loading, wantsList }) => {
+export default ({ cards, loading, rawWantsList }) => {
   const { id: wantsListId } = useParams();
   const [mutateDelete] = useMutation(deleteFromWantsList);
   const [mutateEdit] = useMutation(editWantsListCard);
 
   const onDeleteCard = cardId => {
-    const newCards = wantsList.cards.filter(card => card.id !== cardId);
-    const newNumberOfCards = wantsList.numberOfCards;
+    const newCards = rawWantsList.cards.filter(card => card.id !== cardId);
+    const newNumberOfCards = rawWantsList.numberOfCards;
     mutateDelete({
       variables: { cardId, wantsListId },
       optimisticResponse: () => ({
         __typename: 'Mutation',
         deleteFromWantsList: {
-          ...wantsList,
+          ...rawWantsList,
           cards: newCards,
           numberOfCards: newNumberOfCards,
         },

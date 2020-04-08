@@ -11,14 +11,15 @@ export const changeCollection = gql`
       added: $added
       edited: $edited
     ) {
-      id
-      card {
+      _id
+      owned
+      totalAmount
+      sumPrice
+      minPrice
+      allSets {
         id
-        allSets {
-          id
-          amountOwned
-          amountOwnedFoil
-        }
+        amountOwned
+        amountOwnedFoil
       }
     }
   }

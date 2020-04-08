@@ -10,15 +10,20 @@ const CARD_FIELDS = `
       name
       set
       imgKey
-      isTwoFaced
       oracle_id
-      owned
       cmc
       set_name
-      primaryTypes
       color_identity
-      isCommanderLegal
-      minPrice
+      
+      oracleCard {
+        _id
+        owned
+        isTwoFaced
+        
+        primaryTypes
+        isCommanderLegal
+        minPrice
+      }
     }
 `;
 

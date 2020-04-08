@@ -44,11 +44,15 @@ export default ({ card }) => {
   const { data, loading } = useQuery(cardDetailsDesktop, {
     variables: { oracle_id: card.oracle_id },
   });
+
   const usedCard = loading
     ? card
     : {
         ...data.cardByOracleId,
-        ...data.cardByOracleId.allSets.find(({ id }) => id === selectedCardId),
+        ...data.cardByOracleId.oracleCard,
+        ...data.cardByOracleId.oracleCard.allSets.find(
+          ({ id }) => id === selectedCardId
+        ),
       };
 
   useEffect(() => {

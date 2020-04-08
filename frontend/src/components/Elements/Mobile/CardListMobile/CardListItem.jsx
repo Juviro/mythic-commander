@@ -126,9 +126,11 @@ const CardListItem = ({
 const areEqual = (prevProps, nextProps) => {
   if (prevProps.searchString !== nextProps.searchString) return false;
 
-  return ['id', 'amountOwned', 'amountOwnedFoil', 'amount'].every(propKey => {
-    return prevProps.card[propKey] === nextProps.card[propKey];
-  });
+  return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
+    propKey => {
+      return prevProps.card[propKey] === nextProps.card[propKey];
+    }
+  );
 };
 
 export default React.memo(CardListItem, areEqual);

@@ -37,5 +37,5 @@ export default () => {
     });
   };
 
-  return <AddCardMobile onAddCard={onAddCard} />;
+  return <AddCardMobile onAddCard={onAddCard} visible />;
 };

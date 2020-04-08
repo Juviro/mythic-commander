@@ -20,12 +20,14 @@ export default ({ card, onSelect, width = '100%', size = 'small' }) => {
 
   const allCardSets = loading
     ? []
-    : data.cardByOracleId.allSets.map(({ set: setKey, id, set_name }) => ({
-        id,
-        setKey,
-        ...sets[setKey],
-        name: set_name || sets[setKey].name,
-      }));
+    : data.cardByOracleId.oracleCard.allSets.map(
+        ({ set: setKey, id, set_name }) => ({
+          id,
+          setKey,
+          ...sets[setKey],
+          name: set_name || sets[setKey].name,
+        })
+      );
 
   return (
     <Select

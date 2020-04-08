@@ -5,7 +5,6 @@ import { useMutation } from 'react-apollo';
 import { message, Typography } from 'antd';
 import { changeCollection } from './queries';
 import { CardSetOverview, EditIcon } from '../../Shared';
-import { getCollectionDesktop } from '../../../Desktop/Collection/queries';
 import { useShortcut, useToggle } from '../../../Hooks';
 
 const StyledWrapper = styled.div`
@@ -53,46 +52,6 @@ export default ({ card, loading, selectedCardId, onChangeSet, title }) => {
         edited,
         added,
         cardId: card.id,
-      },
-      update: (
-        cache,
-        {
-          data: {
-            changeCollection: {
-              card: { totalAmount },
-            },
-          },
-        }
-      ) => {
-        const existing = cache.readQuery({
-          query: getCollectionDesktop,
-        });
-
-        const newCards = existing.collection.cards
-          .map(existingCard => {
-            if (existingCard.card.oracle_id !== card.oracle_id) {
-              return existingCard;
-            }
-            if (!totalAmount) return null;
-
-            return {
-              ...existingCard,
-              card: {
-                ...existingCard.card,
-                totalAmount,
-              },
-            };
-          })
-          .filter(Boolean);
-        cache.writeQuery({
-          query: getCollectionDesktop,
-          data: {
-            collection: {
-              ...existing.collection,
-              cards: newCards,
-            },
-          },
-        });
       },
     });
     message.success('Updated your collection!');

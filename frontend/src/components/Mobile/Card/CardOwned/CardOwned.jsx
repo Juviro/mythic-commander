@@ -34,7 +34,6 @@ export default ({ card, loading, onChangeSet, selectedCardId }) => {
       >
         <OwnedOverview
           cardOracleId={card.oracle_id}
-          cardName={card.name}
           cards={card.allSets}
           onChangeSet={onChangeSet}
           selectedCardId={selectedCardId}
