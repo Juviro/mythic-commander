@@ -1,3 +1,3 @@
-import Overview from './Overview';
+import Decks from './Decks';
 
-export default Overview;
+export default Decks;
