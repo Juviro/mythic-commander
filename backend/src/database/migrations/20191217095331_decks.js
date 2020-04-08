@@ -25,7 +25,7 @@ export const up = async knex => {
       .references('decks.id')
       .onDelete('CASCADE');
     table.string('cardId').notNullable();
-    table.enu('zone', ['MAINBOARD', 'SIDEBOARD', 'MAYBEBOARD', 'COMMANDER']);
+    table.enum('zone', ['MAINBOARD', 'SIDEBOARD', 'MAYBEBOARD', 'COMMANDER']);
     table.primary(['deckId', 'cardId']);
   });
 };

@@ -43,14 +43,17 @@ const DeleteDeck = ({ history }) => {
         Delete Deck
       </List.Item>
       <Modal
+        centered
         title="Are you sure you want to delete this deck?"
         visible={isModalVisible}
         okText="Delete"
         onOk={onDeleteDeck}
         onCancel={() => toggleIsModalVisible(false)}
-        bodyStyle={{ display: 'none' }}
         okButtonProps={{ type: 'danger' }}
-      />
+        bodyStyle={{ padding: '8px 24px' }}
+      >
+        This will also delete all linked wants lists and cannot be undone!
+      </Modal>
     </>
   );
 };

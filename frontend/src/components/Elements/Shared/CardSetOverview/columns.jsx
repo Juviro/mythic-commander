@@ -96,7 +96,7 @@ const ownedColumns = (card, isEditing, onChangeAmount, onSaveChanges) => [
       onSaveChanges,
       'amountOwned'
     ),
-    width: 120,
+    width: 140,
     align: 'center',
   },
   {
@@ -109,7 +109,7 @@ const ownedColumns = (card, isEditing, onChangeAmount, onSaveChanges) => [
       onSaveChanges,
       'amountOwnedFoil'
     ),
-    width: 100,
+    width: 110,
     align: 'center',
   },
 ];

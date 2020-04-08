@@ -11,7 +11,6 @@ const StyledHeader = styled.span`
   align-self: flex-start;
 `;
 
-// TODO: unify this with ChangeImage as they share a lot of code
 export default ({ deck }) => {
   // TODO: Add support for partner commanders
   const [editMutation] = useMutation(editDeckCard);
@@ -20,19 +19,18 @@ export default ({ deck }) => {
   const possibleCommanders = deck.cards.filter(card =>
     ['Legendary', 'Creature'].every(type => card.primaryTypes.includes(type))
   );
-  const currentCommander =
-    deck.cards.find(card => card.zone === 'COMMANDER') || {};
+  const currentCommander = deck.cards.find(card => card.isCommander) || {};
 
   const onSetCommander = async newCommanderId => {
-    const changeZone = (cardId, zone) => {
+    const changeZone = (cardId, isCommander) => {
       return editMutation({
-        variables: { cardId, deckId: deck.id, newProps: { zone } },
+        variables: { cardId, deckId: deck.id, newProps: { isCommander } },
       });
     };
 
-    await changeZone(newCommanderId, 'COMMANDER');
+    await changeZone(newCommanderId, true);
     if (currentCommander.id) {
-      await changeZone(currentCommander.id, 'MAINBOARD');
+      await changeZone(currentCommander.id, false);
     }
     message.success('Commander changed!');
   };

@@ -6,8 +6,11 @@ import { EditOutlined, SaveOutlined } from '@ant-design/icons';
 const StyledWrapper = styled.div`
   display: flex;
   margin-bottom: 8px;
+  margin-left: 16px;
   align-items: center;
-  min-width: 200px;
+  min-width: ${({ isEditing }) => (isEditing ? 200 : 0)}px;
+  max-width: 400px;
+  align-self: flex-end;
   flex-direction: row-reverse;
   justify-content: space-between;
 `;
@@ -36,7 +39,7 @@ export default ({
   onDiscard,
 }) => {
   return (
-    <StyledWrapper>
+    <StyledWrapper isEditing={isEditing}>
       <StyledIconWrapper onClick={onClick} isEditing={isEditing}>
         {isEditing ? (
           <BackIcon style={{ color: '#1890ff', marginRight: 4 }} />

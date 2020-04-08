@@ -15,7 +15,10 @@ const StyledWrapper = styled.div`
 `;
 
 export default () => {
-  const [isSidebarVisible, toggleIsSidebarVisible] = useToggle(false);
+  const sidebarInitiallyVisible = window.innerWidth >= 1200;
+  const [isSidebarVisible, toggleIsSidebarVisible] = useToggle(
+    sidebarInitiallyVisible
+  );
   const { data, loading } = useQuery(getCollection);
   const cards = data && unifyCardFormat(data.collection.cards);
 

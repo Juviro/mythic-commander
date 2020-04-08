@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 const CARD_FIELDS = `
     id
     amount
-    zone
+    isCommander
     createdAt
     card {
       id

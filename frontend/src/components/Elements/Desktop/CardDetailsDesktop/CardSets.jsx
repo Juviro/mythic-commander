@@ -53,6 +53,7 @@ export default ({ card, loading, selectedCardId, onChangeSet, title }) => {
         added,
         cardId: card.id,
       },
+      refetchQueries: ['getCollectionNames'],
     });
     message.success('Updated your collection!');
     onDiscard();
@@ -86,12 +87,12 @@ export default ({ card, loading, selectedCardId, onChangeSet, title }) => {
     <StyledWrapper>
       <StyledTitleWrapper>
         {title && <Typography.Title level={4}>{title}</Typography.Title>}
-        <EditIcon
-          onClick={onToggleEdit}
-          isEditing={isEditing}
-          onDiscard={onDiscard}
-        />
       </StyledTitleWrapper>
+      <EditIcon
+        onClick={onToggleEdit}
+        isEditing={isEditing}
+        onDiscard={onDiscard}
+      />
       <CardSetOverview
         card={card}
         loading={loading}
