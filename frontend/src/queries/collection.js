@@ -5,7 +5,9 @@ export const getCollectionNames = gql`
     collection {
       id
       cards {
+        id
         card {
+          id
           name
         }
       }

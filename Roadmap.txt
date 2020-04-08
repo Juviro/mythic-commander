@@ -1,6 +1,6 @@
  BUGFIXES:
     - backend deployment not reloading
-    - table header too short
+    - table header too short (?)
 
 NEXT:
     - add option to move card: wants <-> deck
@@ -12,9 +12,6 @@ IMPROVEMENTS:
 FEATURES:
 
 REFACTORINGS:
-    - split minPrice into min owned price and min card price
-    - refactor collectionName, this should use oracle card to easily update owned or something like that
-    - basic lands modal on desktop too slow - mobile works
 
 BACKLOG:
     - add 404 page

@@ -235,7 +235,7 @@ type Mutation {
   duplicateDeck(deckId: String!): String!
 
   ########## Collection ##########
-  addToCollection(cards: [AddToCollectionInput]!): [CollectionCard]!
+  addToCollection(cards: [AddToCollectionInput]!): [CollectionCard!]!
   changeCollection(
     cardOracleId: String!
     added: [ChangeCollectionInput!]
