@@ -37,23 +37,16 @@ const isCardView = pathname =>
     )
   );
 
-// TODO: overthink this
-const getSearchBarProps = (pathname = '') => {
-  if (pathname.match(/^\/m\/decks\/[0-9]+$/)) {
-    return { transparentSearchBar: true };
-  }
-
-  return {};
+const isTransparentSearchBar = (pathname = '') => {
+  return Boolean(pathname.match(/^\/m\/decks\/[0-9]+$/));
 };
 
 const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
-  const { goBackUrl, transparentSearchBar } = getSearchBarProps(pathname);
+  const transparentSearchBar = isTransparentSearchBar(pathname);
   const canGoBack = isCardView(pathname);
 
   const onClickIcon = () => {
-    if (goBackUrl) {
-      history.push(goBackUrl);
-    } else if (canGoBack) {
+    if (canGoBack) {
       history.goBack();
     } else {
       onToggleDrawer();
@@ -69,7 +62,7 @@ const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
   return (
     <>
       <StyledMenu transparent={transparentSearchBar}>
-        {goBackUrl || canGoBack ? (
+        {canGoBack ? (
           <ArrowLeftOutlined onClick={onClickIcon} style={iconStyle} />
         ) : (
           <MenuOutlined onClick={onClickIcon} style={iconStyle} />
