@@ -11,14 +11,18 @@ export const addCardsToWantsList = gql`
         id
         oracle_id
         name
-        isCommanderLegal
         imgKey
-        isTwoFaced
 
-        containingWantsLists {
-          id
-          name
-          amount
+        oracleCard {
+          _id
+          isCommanderLegal
+          isTwoFaced
+
+          containingWantsLists {
+            id
+            name
+            amount
+          }
         }
       }
     }

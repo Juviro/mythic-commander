@@ -11,14 +11,18 @@ const WANTS_LIST_FIELDS = `
     createdAt
     card {
       id
-      oracle_id
-      name
-      owned
-      minPrice
       imgKey
-      isTwoFaced
+      name
       cmc
       set_name
+      oracle_id
+      
+      oracleCard {
+        _id
+        owned
+        minPrice
+        isTwoFaced
+      }
     }
   }
 `;

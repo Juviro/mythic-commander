@@ -4,36 +4,39 @@ const CARD_FIELDS = `
   id
   oracle_id
   name
-  isCommanderLegal
   imgKey
-  isTwoFaced
   
-  containingWantsLists {
-    id
-    name
-    amount
-  }
-
-  containingDecks {
-    id
-    name
-    imgSrc
-  }
-
-  allSets {
-    id
-    set
-    imgKey
+  oracleCard {
+    _id
     isTwoFaced
-    amountOwned
-    amountOwnedFoil
-    set_name
-    prices {
-      usd
-      usd_foil
+    totalAmount
+    isCommanderLegal
+
+    containingWantsLists {
+      id
+      name
+      amount
+    }
+  
+    containingDecks {
+      id
+      name
+      imgSrc
+    }
+  
+    allSets {
+      id
+      set
+      imgKey
+      amountOwned
+      amountOwnedFoil
+      set_name
+      prices {
+        usd
+        usd_foil
+      }
     }
   }
-
 `;
 
 export const getCardByOracleId = gql`
@@ -55,14 +58,18 @@ export const addCardsToWantsList = gql`
         id
         oracle_id
         name
-        isCommanderLegal
         imgKey
-        isTwoFaced
 
-        containingWantsLists {
-          id
-          name
-          amount
+        oracleCard {
+          _id
+          isCommanderLegal
+          isTwoFaced
+
+          containingWantsLists {
+            id
+            name
+            amount
+          }
         }
       }
     }

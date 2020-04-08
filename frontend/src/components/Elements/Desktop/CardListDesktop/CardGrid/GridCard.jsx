@@ -72,7 +72,7 @@ const areEqual = (prevProps, nextProps) => {
   if (prevProps.isSelected !== nextProps.isSelected) return false;
   if (prevProps.widthPercentage !== nextProps.widthPercentage) return false;
 
-  return ['id', 'amount', 'totalAmount', 'sumPrice', 'minPrice'].every(
+  return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
     propKey => {
       return prevProps.card[propKey] === nextProps.card[propKey];
     }

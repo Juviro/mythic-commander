@@ -22,7 +22,6 @@ export default () => {
   const { id } = useParams();
   const { data, loading } = useQuery(wantsListQuery, {
     variables: { id },
-    fetchPolicy: 'network-only',
   });
 
   const wantsList = data && data.wantsList;
@@ -43,7 +42,11 @@ export default () => {
       <Header wantsList={unifiedWantsList} />
       <LayoutAndSortPicker showCollectionFilters />
       <Divider />
-      <CardsList cards={cards} loading={loading} wantsList={unifiedWantsList} />
+      <CardsList
+        cards={cards}
+        loading={loading}
+        rawWantsList={data && data.wantsList}
+      />
       <AddWants containedCards={cards} />
       <CardModal />
     </StyledWrapper>

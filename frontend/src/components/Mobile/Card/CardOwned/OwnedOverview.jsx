@@ -7,7 +7,7 @@ import { SaveOutlined } from '@ant-design/icons';
 import { EditIcon } from '../../../Elements/Shared';
 import AddCard from './AddCard';
 import CardRow from './CardRow';
-import { changeCollection, getCollectionNames } from './queries';
+import { changeCollection } from './queries';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -17,13 +17,7 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
-export default ({
-  cardOracleId,
-  cards,
-  onChangeSet,
-  selectedCardId,
-  cardName,
-}) => {
+export default ({ cardOracleId, cards, onChangeSet, selectedCardId }) => {
   const ownedCards = cards.filter(
     ({ amountOwned, amountOwnedFoil }) => amountOwned + amountOwnedFoil
   );
@@ -55,33 +49,6 @@ export default ({
         added,
       },
       refetchQueries: ['cardSearch'],
-      update: cache => {
-        const existing = cache.readQuery({
-          query: getCollectionNames,
-        });
-
-        const alreadyOwned = existing.collection.cards.some(
-          ({ name }) => name === cardName
-        );
-
-        if (alreadyOwned) return;
-
-        cache.writeQuery({
-          query: getCollectionNames,
-          data: {
-            collection: {
-              ...existing.collection,
-              cards: existing.collection.cards.concat({
-                __typename: 'CollectionCard',
-                card: {
-                  name: cardName,
-                  __typename: 'Card',
-                },
-              }),
-            },
-          },
-        });
-      },
     });
     message.success('Updated your collection!');
     onResetEditing();

@@ -3,14 +3,17 @@ import { CARD_FIELDS } from './cards';
 
 const DECK_CARD_FIELDS = `
   ${CARD_FIELDS}
-  primaryTypes
   zone
-  owned
   colors
   color_identity
   oracle_id
   amount
   color_identity
+  
+  oracleCard {
+    owned
+    primaryTypes
+  }
 `;
 
 const DECK_FIELDS = `
