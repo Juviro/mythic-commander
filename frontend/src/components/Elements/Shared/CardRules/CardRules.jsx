@@ -51,7 +51,7 @@ export default ({ card = {}, loading }) => {
 
   return (
     <>
-      {loading ? (
+      {loading || !buttonText ? (
         <Skeleton active paragraph={null} />
       ) : (
         <StyledRulesWrapper showBorder={Boolean(rules)} hasRules={hasRules}>

@@ -4,7 +4,6 @@
 
 NEXT:
     - add option to move card: wants <-> deck
-    - allow setting commander in mobile deck  
 
 IMPROVEMENTS: 
     - improve grid card info box design for desktop
