@@ -19,9 +19,9 @@ export default async (_, { deckId }, { user, db }) => {
   await db.raw(
     `
     INSERT INTO "cardToDeck" 
-      ("deckId", "id", zone, amount) 
+      ("deckId", "id", "isCommander", amount) 
     SELECT 
-      ? as "deckId", "id", zone, amount
+      ? as "deckId", "id", "isCommander", amount
     FROM "cardToDeck" WHERE "deckId"=?
     `,
     [newDeckId, deckId]

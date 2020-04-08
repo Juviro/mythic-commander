@@ -1,7 +1,7 @@
-export default resourceId => ({ createdAt, amount, zone, ...card }) => ({
+export default resourceId => ({ createdAt, amount, isCommander, ...card }) => ({
   id: `${card.id}+${resourceId}`,
   createdAt,
   amount,
-  zone,
+  isCommander,
   card,
 });

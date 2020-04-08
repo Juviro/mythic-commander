@@ -120,7 +120,7 @@ type DeckCard {
   id: String!
   amount: Int!
   createdAt: String!
-  zone: String!
+  isCommander: Boolean
   card: Card!
 }
 
@@ -285,8 +285,8 @@ input CardInputType {
 
 input EditDeckCardInput {
   id: String
-  zone: String
   amount: Int
+  isCommander: Boolean
 }
 
 ################################# Collection #################################

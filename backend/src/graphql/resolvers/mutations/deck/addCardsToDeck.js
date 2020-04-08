@@ -1,8 +1,6 @@
 import { updateLastEdit } from './helper';
 import { canAccessDeck } from '../../../../auth/authenticateUser';
 
-const DEFAULT_ZONE = 'MAINBOARD';
-
 export default async (_, { cards, deckId }, { user, db }) => {
   await canAccessDeck(user.id, deckId);
 
@@ -25,7 +23,6 @@ export default async (_, { cards, deckId }, { user, db }) => {
       id,
       amount,
       deckId,
-      zone: DEFAULT_ZONE,
     }));
 
   await db('cardToDeck').insert(cardsToInsert);
