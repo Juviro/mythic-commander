@@ -53,6 +53,7 @@ export default ({ card, loading, selectedCardId, onChangeSet, title }) => {
         added,
         cardId: card.id,
       },
+      refetchQueries: ['getCollectionNames'],
     });
     message.success('Updated your collection!');
     onDiscard();
