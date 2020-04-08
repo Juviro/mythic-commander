@@ -8,7 +8,6 @@ NEXT:
 
 IMPROVEMENTS: 
     - improve grid card info box design for desktop
-    - initially hide sidebar for small screens
 
 FEATURES:
 
