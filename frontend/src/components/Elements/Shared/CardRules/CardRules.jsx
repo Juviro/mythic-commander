@@ -18,6 +18,7 @@ export default ({ card = {}, loading }) => {
     const abortController = new AbortController();
 
     const fetchRules = async () => {
+      setIsOpen(false);
       try {
         const rulingsUri = `https://api.scryfall.com/cards/${id}/rulings`;
         const response = await fetch(rulingsUri, {
@@ -50,14 +51,14 @@ export default ({ card = {}, loading }) => {
 
   return (
     <>
-      {buttonText && !loading ? (
+      {loading ? (
+        <Skeleton active paragraph={null} />
+      ) : (
         <StyledRulesWrapper showBorder={Boolean(rules)} hasRules={hasRules}>
           <Button block onClick={() => setIsOpen(true)} disabled={!hasRules}>
             {buttonText}
           </Button>
         </StyledRulesWrapper>
-      ) : (
-        <Skeleton active paragraph={null} />
       )}
       <Modal
         footer={null}
@@ -70,7 +71,7 @@ export default ({ card = {}, loading }) => {
           header={
             <span style={{ fontWeight: 600 }}>{`Rules for ${name}`}</span>
           }
-          dataSource={rules}
+          dataSource={rules || []}
           onClick={() => setIsOpen(false)}
           renderItem={({ comment }) => (
             <List.Item>
