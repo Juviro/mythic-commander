@@ -4,23 +4,21 @@
 
 NEXT:
     - add option to move card: wants <-> deck
-    - add warning that wants list will be cascaded when deck is deleted
 
 IMPROVEMENTS: 
     - improve grid card info box design for desktop
-    - add 404 page
     - initially hide sidebar for small screens
 
 FEATURES:
 
 REFACTORINGS:
     - split minPrice into min owned price and min card price
-    - refactor collectionName, this should use oracle card to easily update owned
-    - get rid of queries folder or clean it up
+    - refactor collectionName, this should use oracle card to easily update owned or something like that
     - remove deck zone, add commander field to deck
     - basic lands modal on desktop too slow - mobile works
 
 BACKLOG:
+    - add 404 page
     - show current collection value in chart
     - Add option to deck to fill up empty card slots with basic lands, based on mana occurrance
     - find a way to make collection value work

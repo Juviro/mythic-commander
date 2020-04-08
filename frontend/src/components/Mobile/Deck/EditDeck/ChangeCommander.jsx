@@ -11,7 +11,6 @@ const StyledHeader = styled.span`
   align-self: flex-start;
 `;
 
-// TODO: unify this with ChangeImage as they share a lot of code
 export default ({ deck }) => {
   // TODO: Add support for partner commanders
   const [editMutation] = useMutation(editDeckCard);
