@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
-import { useQueryParam, StringParam } from 'use-query-params';
 import { Input } from 'antd';
+import { useQueryParam, StringParam } from 'use-query-params';
+
+import { useBlurOnEsc } from '../../../../Hooks';
 
 export default ({
   paramName,
@@ -23,6 +25,7 @@ export default ({
       onPressEnter={onPressEnter}
       value={value}
       ref={ref}
+      onKeyDown={useBlurOnEsc}
       placeholder={placeholder}
       onChange={e => setSearch(e.target.value)}
       style={{ width: '100%' }}
