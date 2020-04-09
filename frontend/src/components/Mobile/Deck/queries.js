@@ -13,6 +13,7 @@ const CARD_FIELDS = `
       oracle_id
       cmc
       set_name
+      mana_cost
       color_identity
       
       oracleCard {
