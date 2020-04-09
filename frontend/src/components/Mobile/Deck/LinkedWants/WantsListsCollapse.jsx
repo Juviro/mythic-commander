@@ -6,7 +6,12 @@ import { ArrowRightOutlined } from '@ant-design/icons';
 import unifyCardFormat from '../../../../utils/unifyCardFormat';
 import { FilteredCardList } from '../../../Elements/Mobile';
 
-export default ({ wantsLists }) => {
+export default ({ wantsLists, deck = {} }) => {
+  const getMoveToList = wantsListId => ({
+    decks: [deck],
+    wantsLists: wantsLists.filter(({ id }) => id !== wantsListId),
+  });
+
   return (
     <Collapse
       bordered={false}
@@ -25,8 +30,13 @@ export default ({ wantsLists }) => {
           header={`${wantsList.name} (${wantsList.cards.length})`}
         >
           <FilteredCardList
-            cards={unifyCardFormat(wantsList.cards)}
             hideFooter
+            cards={unifyCardFormat(wantsList.cards)}
+            moveToList={{
+              list: getMoveToList(wantsList.id),
+              originType: 'WANTS_LIST',
+              originId: wantsList.id,
+            }}
           />
         </Collapse.Panel>
       ))}

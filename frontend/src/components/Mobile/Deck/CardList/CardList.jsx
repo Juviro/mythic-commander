@@ -1,11 +1,16 @@
 import React from 'react';
-import { withRouter } from 'react-router';
+import { withRouter, useParams } from 'react-router';
 import styled from 'styled-components';
-import { useMutation } from 'react-apollo';
+import { useMutation, useQuery } from 'react-apollo';
 import { Skeleton } from 'antd';
 import CardSubList from './CardSubList';
 import { LayoutAndSortPicker } from '../../../Elements/Shared';
-import { deleteFromDeck, editDeckCard, getDeck } from '../queries';
+import {
+  deleteFromDeck,
+  editDeckCard,
+  getDeck,
+  wantsListsNamesForDeckMobile,
+} from '../queries';
 
 const CARD_TYPES = [
   'Commander',
@@ -33,8 +38,12 @@ const addMainType = card => {
 };
 
 const DeckList = ({ deck, loading }) => {
+  const { id: deckId } = useParams();
   const [mutateDelete] = useMutation(deleteFromDeck);
   const [mutateEdit] = useMutation(editDeckCard);
+  const { data } = useQuery(wantsListsNamesForDeckMobile, {
+    variables: { deckId },
+  });
 
   const cards = deck ? deck.cards : [];
   const cardWithMainType = cards.map(addMainType);
@@ -88,6 +97,16 @@ const DeckList = ({ deck, loading }) => {
     });
   };
 
+  const moveToList = data
+    ? {
+        list: {
+          wantsLists: data.wantsLists,
+        },
+        originType: 'DECK',
+        originId: deckId,
+      }
+    : null;
+
   return (
     <StyledWrapper>
       <LayoutAndSortPicker />
@@ -96,6 +115,7 @@ const DeckList = ({ deck, loading }) => {
           {cardsByType.map(cardGroup => (
             <CardSubList
               {...cardGroup}
+              moveToList={moveToList}
               key={cardGroup.type}
               commander={commander}
               onEditCard={onEditCard}

@@ -5,6 +5,7 @@ import deleteFromDeck from './deleteFromDeck';
 import duplicateDeck from './duplicateDeck';
 import editDeck from './editDeck';
 import editDeckCard from './editDeckCard';
+import moveCard from './moveCard';
 
 export default {
   addCardsToDeck,
@@ -14,4 +15,5 @@ export default {
   duplicateDeck,
   editDeck,
   editDeckCard,
+  moveCard,
 };

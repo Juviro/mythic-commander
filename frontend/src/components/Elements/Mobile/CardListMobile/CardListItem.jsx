@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { List, Typography } from 'antd';
-import { DeleteOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
+import { List, Typography, Menu, Dropdown } from 'antd';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  SaveOutlined,
+  MoreOutlined,
+  SwapRightOutlined,
+} from '@ant-design/icons';
 
 import { highlightText } from '../../../../utils/highlightText';
 import { getPriceLabel } from '../../../../utils/cardStats';
@@ -11,6 +17,8 @@ import OwnedBadge from '../../Shared/OwnedBadge';
 import SetPicker from '../../Shared/SetPicker';
 import EditableAmount from '../../Shared/EditableAmount';
 import { useToggle } from '../../../Hooks';
+import { MoveToModal } from '../../Shared';
+import { primary } from '../../../../constants/colors';
 
 const StyledDescription = styled.div`
   display: flex;
@@ -19,14 +27,17 @@ const StyledDescription = styled.div`
   justify-content: space-between;
 `;
 
-const CardListItem = ({
+export default ({
   card,
   searchString,
   onClick,
   onDeleteCard,
   onEditCard,
+  moveToList,
 }) => {
-  const [isEditing, toggleIsEditing] = useToggle(false);
+  const [isMenuOpen, toggleIsMenuOpen] = useToggle();
+  const [isEditing, toggleIsEditing] = useToggle();
+  const [isMovingCard, toggleIsMovingCard] = useToggle();
   const [newProps, setNewProps] = useState({});
 
   const { minPrice, owned } = card;
@@ -38,14 +49,12 @@ const CardListItem = ({
     // eslint-disable-next-line
   }, [cardId]);
 
-  const onDelete = event => {
-    event.stopPropagation();
+  const onDelete = () => {
     onDeleteCard(card.id);
     message(`Deleted <b>${card.name}</b>!`);
   };
 
-  const onToggleEditing = event => {
-    event.stopPropagation();
+  const onToggleEditing = () => {
     if (isEditing && Object.keys(newProps).length) {
       onEditCard(card.id, newProps);
       setNewProps({});
@@ -60,28 +69,70 @@ const CardListItem = ({
     });
   };
 
-  const actions = [];
+  const menuItems = [];
 
-  if (isEditing && onDelete) {
-    actions.push(
-      <DeleteOutlined
-        onClick={onDelete}
-        type="danger"
-        style={{ color: 'rgb(255, 77, 79)' }}
-      />
-    );
-  }
   if (onEditCard) {
-    const Icon = isEditing ? SaveOutlined : EditOutlined;
-    actions.push(
-      <Icon onClick={onToggleEditing} style={{ color: '#40a9ff' }} />
-    );
+    menuItems.push({
+      Icon: EditOutlined,
+      onClick: onToggleEditing,
+      title: 'Edit',
+    });
   }
+  if (moveToList) {
+    menuItems.push({
+      Icon: SwapRightOutlined,
+      onClick: toggleIsMovingCard,
+      title: 'Move to...',
+    });
+  }
+  if (onDeleteCard) {
+    menuItems.push({
+      Icon: DeleteOutlined,
+      onClick: onDelete,
+      title: 'Delete',
+    });
+  }
+
+  const menu = (
+    <Menu onClick={toggleIsMenuOpen}>
+      {menuItems.map(({ Icon, title, onClick: onClickItem }) => (
+        <Menu.Item
+          key={title}
+          onClick={({ domEvent }) => {
+            domEvent.stopPropagation();
+            onClickItem();
+          }}
+        >
+          <Icon style={{ color: primary }} />
+          {title}
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
+  const menuIcon = (
+    <Dropdown
+      overlay={menu}
+      visible={isMenuOpen}
+      onVisibleChange={toggleIsMenuOpen}
+      onClick={e => e.stopPropagation()}
+    >
+      <MoreOutlined onClick={toggleIsMenuOpen} style={{ fontSize: 18 }} />
+    </Dropdown>
+  );
+
+  const action = isEditing ? (
+    <SaveOutlined onClick={onToggleEditing} style={{ color: primary }} />
+  ) : menuItems.length ? (
+    menuIcon
+  ) : (
+    undefined
+  );
 
   return (
     <List.Item
-      actions={actions}
-      style={{ padding: '0 4px' }}
+      actions={[action]}
+      style={{ padding: 4 }}
       onClick={!isEditing ? onClick : undefined}
     >
       <List.Item.Meta
@@ -119,18 +170,12 @@ const CardListItem = ({
           </StyledDescription>
         }
       />
+      <MoveToModal
+        visible={isMovingCard}
+        onCancel={toggleIsMovingCard}
+        moveToList={moveToList}
+        card={card}
+      />
     </List.Item>
   );
 };
-
-const areEqual = (prevProps, nextProps) => {
-  if (prevProps.searchString !== nextProps.searchString) return false;
-
-  return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
-    propKey => {
-      return prevProps.card[propKey] === nextProps.card[propKey];
-    }
-  );
-};
-
-export default React.memo(CardListItem, areEqual);
