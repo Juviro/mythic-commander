@@ -4,6 +4,8 @@ import { useMutation } from 'react-apollo';
 import { moveCard } from './queries';
 
 import message from '../../../../utils/message';
+import { useToggle } from '../../../Hooks';
+import Spinner from '../Spinner';
 import Sublist from './Sublist';
 
 export default ({
@@ -13,8 +15,10 @@ export default ({
 }) => {
   const { list, originType, originId } = moveToList;
   const [mutate] = useMutation(moveCard);
+  const [isMoving, toggleIsMoving] = useToggle();
 
   const onMove = targetType => async ({ id: targetId, name: targetName }) => {
+    toggleIsMoving();
     const { data } = await mutate({
       variables: {
         cardId,
@@ -41,12 +45,22 @@ export default ({
   return (
     <>
       <Typography.Title level={4}>Move card to other list</Typography.Title>
-      <Sublist title="Decks" elements={list.decks} onClick={onMove('DECK')} />
-      <Sublist
-        title="Wants"
-        elements={list.wantsLists}
-        onClick={onMove('WANTS_LIST')}
-      />
+      {isMoving ? (
+        <Spinner />
+      ) : (
+        <>
+          <Sublist
+            title="Decks"
+            elements={list.decks}
+            onClick={onMove('DECK')}
+          />
+          <Sublist
+            title="Wants"
+            elements={list.wantsLists}
+            onClick={onMove('WANTS_LIST')}
+          />
+        </>
+      )}
     </>
   );
 };
