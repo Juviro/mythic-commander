@@ -29,7 +29,7 @@ const StyledTitleWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export default () => {
+export default ({ deck }) => {
   const { id: deckId } = useParams();
   const { data, loading } = useQuery(wantsListsForDeckMobile, {
     variables: { deckId },
@@ -53,7 +53,7 @@ export default () => {
             <AddWantsList deckId={deckId} />
           </StyledTitleWrapper>
           {Boolean(numberOfWantsLists) && <LayoutAndSortPicker />}
-          <WantsListsCollapse wantsLists={data.wantsLists} />
+          <WantsListsCollapse wantsLists={data.wantsLists} deck={deck} />
         </StyledWantsWrapper>
       )}
     </StyledWrapper>

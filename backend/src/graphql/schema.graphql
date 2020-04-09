@@ -234,6 +234,12 @@ type Mutation {
   deleteFromDeck(cardId: String!, deckId: String!): Deck!
   duplicateDeck(deckId: String!): String!
 
+  moveCard(
+    cardId: String!
+    from: MoveCardInputType!
+    to: MoveCardInputType!
+  ): MoveCardReturnType!
+
   ########## Collection ##########
   addToCollection(cards: [AddToCollectionInput]!): [CollectionCard!]!
   changeCollection(
@@ -269,6 +275,24 @@ type Mutation {
   ): [WantsListCard!]!
   linkWantsList(wantsListId: String!, deckId: String!): WantsList!
   unlinkWantsList(wantsListId: String!): WantsList!
+}
+
+################################# Move Card #################################
+enum MoveToNameType {
+  DECK
+  WANTS_LIST
+}
+
+input MoveCardInputType {
+  id: String!
+  type: MoveToNameType!
+}
+
+union MoveCardListType = WantsList | Deck
+
+type MoveCardReturnType {
+  from: MoveCardListType!
+  to: MoveCardListType!
 }
 
 ################################# Deck #################################

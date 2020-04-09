@@ -23,7 +23,8 @@ const StyledDeck = styled.div`
 
 export default () => {
   const { id } = useParams();
-  const [currentTab, setCurrentTab] = useState('cards');
+  const [currentTab, setCurrentTab] = useState('wants');
+  // const [currentTab, setCurrentTab] = useState('cards');
   const { data, loading } = useQuery(getDeck, { variables: { id } });
   const [mutate] = useMutation(addCardsToDeck);
 

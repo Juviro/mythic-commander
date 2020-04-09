@@ -24,6 +24,7 @@ const CardList = ({
   totalResults,
   history,
   hideFooter,
+  moveToList,
   onEditCard,
   onDeleteCard,
   showTotalResults,
@@ -52,37 +53,34 @@ const CardList = ({
 
   const cardList =
     layout === 'list' ? (
-      <>
-        <List
-          size="small"
-          dataSource={cards}
-          style={{ width: '100%' }}
-          renderItem={card => (
-            <CardListItem
-              card={card}
-              onEditCard={onEditCard}
-              onDeleteCard={onDeleteCard}
-              searchString={name}
-              onClick={() => onOpenDetailView(card)}
-            />
-          )}
-        />
-      </>
+      <List
+        size="small"
+        dataSource={cards}
+        style={{ width: '100%' }}
+        renderItem={card => (
+          <CardListItem
+            card={card}
+            moveToList={moveToList}
+            onEditCard={onEditCard}
+            onDeleteCard={onDeleteCard}
+            searchString={name}
+            onClick={() => onOpenDetailView(card)}
+          />
+        )}
+      />
     ) : (
-      <>
-        <StyledGridWrapper>
-          {cards.map(card => (
-            <GridCard
-              key={card.id}
-              onClick={() => onOpenDetailView(card)}
-              card={card}
-              onEditCard={onEditCard}
-              onDeleteCard={onDeleteCard}
-              isLarge={layout !== 'grid'}
-            />
-          ))}
-        </StyledGridWrapper>
-      </>
+      <StyledGridWrapper>
+        {cards.map(card => (
+          <GridCard
+            key={card.id}
+            onClick={() => onOpenDetailView(card)}
+            card={card}
+            onEditCard={onEditCard}
+            onDeleteCard={onDeleteCard}
+            isLarge={layout !== 'grid'}
+          />
+        ))}
+      </StyledGridWrapper>
     );
 
   return (
