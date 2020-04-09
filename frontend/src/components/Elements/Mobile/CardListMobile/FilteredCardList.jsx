@@ -7,7 +7,14 @@ import CardList from '.';
 
 export const CARDS_PER_PAGE = 30;
 
-export default ({ cards, loading, hideFooter, onDeleteCard, onEditCard }) => {
+export default ({
+  cards,
+  loading,
+  hideFooter,
+  onDeleteCard,
+  onEditCard,
+  moveToList,
+}) => {
   const [
     {
       name,
@@ -59,6 +66,7 @@ export default ({ cards, loading, hideFooter, onDeleteCard, onEditCard }) => {
 
   return (
     <CardList
+      moveToList={moveToList}
       hideFooter={hideFooter}
       hasMore={hasMore}
       loading={loading}

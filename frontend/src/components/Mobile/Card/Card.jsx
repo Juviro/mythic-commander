@@ -48,7 +48,7 @@ const Card = ({ history }) => {
   const currentCardId = cardId || (card && card.id);
 
   const currentCard = card
-    ? card.allSets.find(({ id }) => id === currentCardId)
+    ? { ...card, ...card.allSets.find(({ id }) => id === currentCardId) }
     : null;
 
   const fallbackId = loading || !currentCard ? null : currentCard.id;

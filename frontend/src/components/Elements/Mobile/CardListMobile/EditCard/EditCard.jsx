@@ -33,7 +33,7 @@ const StyledOverlay = styled.div`
   background-color: black;
 `;
 
-export default ({ card, onEditCard, onDeleteCard, isLarge }) => {
+export default ({ moveToList, card, onEditCard, onDeleteCard, isLarge }) => {
   const [isEditing, toggleIsEditing] = useToggle(false);
 
   const onChangeIsEditing = e => {
@@ -51,6 +51,7 @@ export default ({ card, onEditCard, onDeleteCard, isLarge }) => {
             card={card}
             isLarge={isLarge}
             isEditing={isEditing}
+            moveToList={moveToList}
             onEditCard={onEditCard}
             onDeleteCard={onDeleteCard}
             onClose={() => toggleIsEditing(false)}

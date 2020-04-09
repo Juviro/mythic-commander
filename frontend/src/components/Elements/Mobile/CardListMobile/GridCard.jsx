@@ -26,7 +26,14 @@ const StyledCardWrapper = styled.div`
   position: inherit;
 `;
 
-const GridCard = ({ isLarge, card, onClick, onEditCard, onDeleteCard }) => {
+export default ({
+  moveToList,
+  isLarge,
+  card,
+  onClick,
+  onEditCard,
+  onDeleteCard,
+}) => {
   const imgSrc = getImageUrl(card.id, card.imgKey, 'normal');
 
   const style = isLarge
@@ -43,10 +50,11 @@ const GridCard = ({ isLarge, card, onClick, onEditCard, onDeleteCard }) => {
       <StyledCardWrapper isLarge={isLarge}>
         <FlippableCard card={card} />
         {!isLarge && <EnlargeImage src={imgSrc} card={card} />}
-        {onEditCard && (
+        {(onEditCard || moveToList) && (
           <EditCard
             card={card}
             isLarge={isLarge}
+            moveToList={moveToList}
             onEditCard={onEditCard}
             onDeleteCard={onDeleteCard}
           />
@@ -80,15 +88,3 @@ const GridCard = ({ isLarge, card, onClick, onEditCard, onDeleteCard }) => {
     </StyledWrapper>
   );
 };
-
-const areEqual = (prevProps, nextProps) => {
-  if (prevProps.isLarge !== nextProps.isLarge) return false;
-  if (prevProps.loading !== nextProps.loading) return false;
-  return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
-    propKey => {
-      return prevProps.card[propKey] === nextProps.card[propKey];
-    }
-  );
-};
-
-export default React.memo(GridCard, areEqual);

@@ -22,6 +22,8 @@ export { default as LayoutAndSortPicker } from './LayoutAndSortPicker';
 export { default as LayoutPicker } from './LayoutPicker';
 export { default as Login } from './Login';
 export { default as ManaCost } from './ManaCost';
+export { default as MoveTo } from './MoveTo';
+export { default as MoveToModal } from './MoveTo/MoveToModal';
 export { default as OwnedBadge } from './OwnedBadge';
 export { default as PreviewCardImage } from './PreviewCardImage';
 export { default as Set } from './Set';
