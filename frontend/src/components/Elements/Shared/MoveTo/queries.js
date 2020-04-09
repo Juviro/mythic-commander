@@ -1,31 +1,13 @@
 import gql from 'graphql-tag';
 
-const getListFields = isDeck => `
+const CARD_FIELDS = `
   id
   cards {
     id
     amount
-    ${isDeck ? 'isCommander' : ''}
     createdAt
     card {
       id
-      name
-      set
-      imgKey
-      oracle_id
-      cmc
-      set_name
-      color_identity
-
-      oracleCard {
-        _id
-        owned
-        isTwoFaced
-
-        primaryTypes
-        isCommanderLegal
-        minPrice
-      }
     }
   }
 `;
@@ -40,19 +22,19 @@ export const moveCard = gql`
       from {
         __typename
         ... on WantsList {
-          ${getListFields(false)}
+          ${CARD_FIELDS}
         }
         ... on Deck {
-          ${getListFields(true)}
+          ${CARD_FIELDS}
         }
       }
       to {
         __typename
         ... on WantsList {
-          ${getListFields(false)}
+          ${CARD_FIELDS}
         }
         ... on Deck {
-          ${getListFields(true)}
+          ${CARD_FIELDS}
         }
       }
     }
