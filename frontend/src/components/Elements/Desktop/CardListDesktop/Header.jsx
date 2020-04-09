@@ -19,6 +19,11 @@ const StyledSearchWrapper = styled.div`
   width: 300px;
 `;
 
+const StyledLayoutWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 export default ({ showSorter }) => {
   const inputRef = useRef(null);
   useShortcut('f', () => inputRef.current.focus());
@@ -30,12 +35,12 @@ export default ({ showSorter }) => {
           <NameFilter size="normal" inputRef={inputRef} />
         </StyledSearchWrapper>
       </Tooltip>
-      <span>
+      <StyledLayoutWrapper>
         {showSorter && (
           <SortPicker style={{ marginRight: 16 }} showCollectionFilters />
         )}
         <LayoutPicker hideCard />
-      </span>
+      </StyledLayoutWrapper>
     </StyledWrapper>
   );
 };

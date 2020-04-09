@@ -65,7 +65,7 @@ export default ({ card }) => {
 
   return (
     <>
-      <Row style={{ width: '100%' }}>
+      <Row style={{ width: '100%', maxHeight: 490 }}>
         <CenteredCol span={8}>
           <StyledCardImage>
             <FlippableCard card={usedCard} />
