@@ -38,10 +38,17 @@ export default async (
           .select(['id', 'amount'])
           .first();
 
-  if (to.type === DECK) {
-    await db('cardToDeck').insert({ ...currentCard, deckId: to.id });
-  } else {
-    await db('cardToWantsList').insert({ ...currentCard, wantsListId: to.id });
+  try {
+    if (to.type === DECK) {
+      await db('cardToDeck').insert({ ...currentCard, deckId: to.id });
+    } else {
+      await db('cardToWantsList').insert({
+        ...currentCard,
+        wantsListId: to.id,
+      });
+    }
+  } catch {
+    throw new Error('The target already contains this card');
   }
 
   if (from.type === DECK) {

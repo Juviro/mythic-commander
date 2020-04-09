@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import FlippableCard from '../../../Shared/FlippableCard';
 import { getPriceLabel } from '../../../../../utils/cardStats';
 import OwnedBadge from '../../../Shared/OwnedBadge';
+import { primary } from '../../../../../constants/colors';
 
 const StyledCardWrapper = styled.div`
   margin: 8px;
@@ -23,7 +24,7 @@ const StyledImageWrapper = styled.div`
   border-radius: 12px;
 
   ${({ isSelected }) =>
-    isSelected ? 'box-shadow: 0px 0px 6px 6px #1890ff;' : ''}
+    isSelected ? `box-shadow: 0px 0px 6px 6px ${primary};` : ''}
 `;
 
 const StyledInfoWrapper = styled(Row)`
