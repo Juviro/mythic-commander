@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Typography } from 'antd';
 import { EditOutlined, SaveOutlined } from '@ant-design/icons';
+import DesktopTooltip from '../../Desktop/DesktopTooltip/DesktopTooltip';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -44,7 +45,9 @@ export default ({
         {isEditing ? (
           <BackIcon style={{ color: '#1890ff', marginRight: 4 }} />
         ) : (
-          <EditOutlined style={{ color: '#1890ff', marginRight: 4 }} />
+          <DesktopTooltip title="Edit [E]">
+            <EditOutlined style={{ color: '#1890ff', marginRight: 4 }} />
+          </DesktopTooltip>
         )}
         <StyledLabel>{editingText}</StyledLabel>
       </StyledIconWrapper>

@@ -3,6 +3,7 @@
     - table header too short (?)
 
 NEXT:
+    - desktop details modal too high when few sets
     - add option to move card: wants <-> deck
 
 IMPROVEMENTS: 

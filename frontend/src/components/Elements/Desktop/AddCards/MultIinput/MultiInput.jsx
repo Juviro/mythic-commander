@@ -153,7 +153,10 @@ export default class MultiInput extends React.Component {
                 {cardResults.map(({ name }) => (
                   <IconWrapper key={Math.random()}>
                     {name !== NO_CARD && (
-                      <Tooltip placement="right" title={name}>
+                      <Tooltip
+                        placement="right"
+                        title={name || 'Could not find card'}
+                      >
                         {name ? (
                           <CheckCircleOutlined
                             style={{ color: 'green', marginLeft: 16 }}

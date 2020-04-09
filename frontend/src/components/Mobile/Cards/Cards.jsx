@@ -13,6 +13,7 @@ import CardModal from '../Card/CardModal';
 import NameFilter from '../../Elements/Shared/Filter/TextFilter/NameFilter';
 import { CARDS_PER_PAGE } from '../../Elements/Mobile/CardListMobile/FilteredCardList';
 import { useToggle } from '../../Hooks';
+import { unifySingleCard } from '../../../utils/unifyCardFormat';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -66,7 +67,7 @@ export default () => {
     setQueryResult(data.cardSearch);
     const { cards } = data.cardSearch;
     const newCards = offset ? (allCards || []).concat(cards) : cards;
-    setAllCards(newCards);
+    setAllCards(newCards.map(unifySingleCard));
     toggleLoading(false);
   };
 
