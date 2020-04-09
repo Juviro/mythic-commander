@@ -14,7 +14,7 @@ export default ({ cards, type, onEditCard, onDeleteCard, moveToList }) => {
   if (!cards.length) return null;
 
   const numberOfCards = getNumberOfCards(cards);
-  const nameSuffix = type !== 'Commander' ? `12` : `1`;
+  const nameSuffix = type !== 'Commander' ? `(${numberOfCards})` : '';
   const title = `${typeToPlural(type)} ${nameSuffix}`;
 
   return (
