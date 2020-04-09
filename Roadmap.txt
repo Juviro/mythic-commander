@@ -3,7 +3,7 @@
     - table header too short (?)
 
 NEXT:
-    - add option to move card: wants <-> deck
+    - edit grid card in deck slow on table
 
 IMPROVEMENTS: 
     - improve grid card info box design for desktop

@@ -72,12 +72,11 @@ const DeckList = ({ deck, loading }) => {
   const onEditCard = (cardId, newProps) => {
     mutateEdit({
       variables: { deckId: deck.id, newProps, cardId },
-      update: (cache, { data }) => {
+      update: (cache, { data: { editDeckCard: newCard } }) => {
         const existing = cache.readQuery({
           query: getDeck,
           variables: { id: deck.id },
         });
-        const { editDeckCard: newCard } = data;
 
         const newCards = existing.deck.cards.map(card => {
           if (card.card.id !== cardId) return card;
