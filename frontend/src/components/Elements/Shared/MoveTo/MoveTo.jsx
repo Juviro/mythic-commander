@@ -1,32 +1,10 @@
 import React from 'react';
-import { List, Divider, Typography } from 'antd';
+import { Typography } from 'antd';
 import { useMutation } from 'react-apollo';
 import { moveCard } from './queries';
 
 import message from '../../../../utils/message';
-import { primary } from '../../../../constants/colors';
-
-const Sublist = ({ title, elements = [], onClick }) => {
-  if (!elements.length) return null;
-  return (
-    <>
-      <Divider>{title}</Divider>
-      <List style={{ color: primary }}>
-        {elements.map(({ name, id }) => (
-          <List.Item
-            key={id}
-            onClick={e => {
-              e.stopPropagation();
-              onClick({ name, id });
-            }}
-          >
-            {name}
-          </List.Item>
-        ))}
-      </List>
-    </>
-  );
-};
+import Sublist from './Sublist';
 
 export default ({
   moveToList,
