@@ -3,7 +3,7 @@ import { Modal } from 'antd';
 
 import MoveTo from './MoveTo';
 
-export default ({ moveToList, onCancel, visible, cardId }) => {
+export default ({ moveToList, onCancel, visible, card }) => {
   return (
     <Modal
       centered
@@ -16,7 +16,7 @@ export default ({ moveToList, onCancel, visible, cardId }) => {
       destroyOnClose
       title="Move card to other list"
     >
-      <MoveTo moveToList={moveToList} onClose={onCancel} cardId={cardId} />
+      <MoveTo moveToList={moveToList} onClose={onCancel} card={card} />
     </Modal>
   );
 };

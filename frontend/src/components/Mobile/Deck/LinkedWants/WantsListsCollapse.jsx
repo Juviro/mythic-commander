@@ -8,10 +8,8 @@ import { FilteredCardList } from '../../../Elements/Mobile';
 
 export default ({ wantsLists, deck = {} }) => {
   const getMoveToList = wantsListId => ({
-    decks: [{ id: deck.id, name: deck.name }],
-    wantsLists: wantsLists
-      .filter(({ id }) => id !== wantsListId)
-      .map(({ name, id }) => ({ name, id })),
+    decks: [deck],
+    wantsLists: wantsLists.filter(({ id }) => id !== wantsListId),
   });
 
   return (
