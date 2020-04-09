@@ -8,13 +8,13 @@ const typeMap = {
   Commander: 'Commander',
 };
 
-const typeToPlural = type => typeMap[type] || `${type}s`;
+const typeToPlural = type => typeMap[type] || `${type}s`;
 
 export default ({ cards, type, onEditCard, onDeleteCard, moveToList }) => {
   if (!cards.length) return null;
 
   const numberOfCards = getNumberOfCards(cards);
-  const nameSuffix = type !== 'Commander' ? `12` : '1';
+  const nameSuffix = type !== 'Commander' ? `12` : `1`;
   const title = `${typeToPlural(type)} ${nameSuffix}`;
 
   return (
