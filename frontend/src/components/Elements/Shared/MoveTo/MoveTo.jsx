@@ -49,7 +49,9 @@ export default ({
         },
       },
     });
-    message(`Moved ${cardName} to ${targetName}!`);
+    const targetListName =
+      targetType === 'DECK' ? 'the deck' : `<b>${targetName}</b>`;
+    message(`Moved <b>${cardName}</b> to ${targetListName}!`);
     onClose();
   };
 

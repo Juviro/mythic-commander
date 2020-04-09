@@ -89,3 +89,12 @@ export const deleteFromDeck = gql`
     }
   }
 `;
+
+export const wantsListsNamesForDeckMobile = gql`
+  query wantsListsNamesForDeckMobile($deckId: String) {
+    wantsLists(deckId: $deckId) {
+      id
+      name
+    }
+  }
+`;
