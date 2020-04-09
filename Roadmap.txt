@@ -3,13 +3,14 @@
     - table header too short (?)
 
 NEXT:
-    - desktop details modal too high when few sets
     - add option to move card: wants <-> deck
 
 IMPROVEMENTS: 
     - improve grid card info box design for desktop
+    - when pressing esc while editing in desktop modal, don't close modal, just cancel editing
 
 FEATURES:
+    - add edhrec and scryfall to card links
 
 REFACTORINGS:
 
