@@ -184,7 +184,7 @@ export default ({
                   onSelect={onChangeProp('id')}
                 />
               ) : (
-                !owned && <OwnedBadge marginLeft={0} />
+                owned && <OwnedBadge marginLeft={0} />
               )}
             </Col>
           </Row>
