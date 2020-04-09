@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Divider } from 'antd';
+import { List, Divider, Typography } from 'antd';
 import { useMutation } from 'react-apollo';
 import { moveCard } from './queries';
 
@@ -57,6 +57,7 @@ export default ({
 
   return (
     <>
+      <Typography.Title level={4}>Move card to other list</Typography.Title>
       <Sublist title="Decks" elements={list.decks} onClick={onMove('DECK')} />
       <Sublist
         title="Wants"

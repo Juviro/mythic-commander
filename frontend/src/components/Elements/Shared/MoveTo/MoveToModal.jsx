@@ -14,7 +14,6 @@ export default ({ moveToList, onCancel, visible, card }) => {
       }}
       visible={visible}
       destroyOnClose
-      title="Move card to other list"
     >
       <MoveTo moveToList={moveToList} onClose={onCancel} card={card} />
     </Modal>
