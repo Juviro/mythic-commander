@@ -9,6 +9,7 @@ const COLLECTION_CARD_FIELDS = `
       cmc
       imgKey
       oracle_id
+      mana_cost
       color_identity
       
       oracleCard {

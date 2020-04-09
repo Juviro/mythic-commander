@@ -10,6 +10,7 @@ const CARD_FIELDS = `
     name
     imgKey
     cmc
+    mana_cost
     set_name
     
     oracleCard {

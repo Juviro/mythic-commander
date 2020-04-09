@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { List, Typography, Menu, Dropdown } from 'antd';
+import { List, Typography, Menu, Dropdown, Row, Col } from 'antd';
 import {
   DeleteOutlined,
   EditOutlined,
@@ -17,7 +17,7 @@ import OwnedBadge from '../../Shared/OwnedBadge';
 import SetPicker from '../../Shared/SetPicker';
 import EditableAmount from '../../Shared/EditableAmount';
 import { useToggle } from '../../../Hooks';
-import { MoveToModal } from '../../Shared';
+import { MoveToModal, ManaCost } from '../../Shared';
 import { primary } from '../../../../constants/colors';
 
 const StyledDescription = styled.div`
@@ -25,6 +25,12 @@ const StyledDescription = styled.div`
   align-items: center;
   min-height: 24px;
   justify-content: space-between;
+`;
+
+const StyledManaCost = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 `;
 
 export default ({
@@ -129,6 +135,8 @@ export default ({
     undefined
   );
 
+  const showManaCosts = typeof card.mana_cost === 'string';
+
   return (
     <List.Item
       actions={[action]}
@@ -149,14 +157,26 @@ export default ({
         }
         avatar={<PreviewCardImage height="48px" card={card} />}
         description={
-          <StyledDescription>
-            <EditableAmount
-              hideOnes
-              card={card}
-              onChangeAmount={onChangeProp('amount')}
-              isEditing={isEditing}
-            />
-            <span style={{ marginRight: 4 }}>
+          <Row>
+            {showManaCosts && (
+              <Col span={12}>
+                <StyledManaCost>
+                  <ManaCost costString={card.mana_cost} size={14} />
+                </StyledManaCost>
+              </Col>
+            )}
+            <Col span={6}>
+              <EditableAmount
+                hideOnes
+                card={card}
+                onChangeAmount={onChangeProp('amount')}
+                isEditing={isEditing}
+              />
+            </Col>
+            <Col
+              span={6}
+              style={{ display: 'flex', justifyContent: 'flex-end' }}
+            >
               {isEditing ? (
                 <SetPicker
                   width={150}
@@ -164,10 +184,10 @@ export default ({
                   onSelect={onChangeProp('id')}
                 />
               ) : (
-                owned && <OwnedBadge marginLeft={0} />
+                !owned && <OwnedBadge marginLeft={0} />
               )}
-            </span>
-          </StyledDescription>
+            </Col>
+          </Row>
         }
       />
       <MoveToModal
