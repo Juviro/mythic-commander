@@ -18,6 +18,7 @@ import SetPicker from '../../Shared/SetPicker';
 import EditableAmount from '../../Shared/EditableAmount';
 import { useToggle } from '../../../Hooks';
 import { MoveToModal } from '../../Shared';
+import { primary } from '../../../../constants/colors';
 
 const StyledDescription = styled.div`
   display: flex;
@@ -26,7 +27,7 @@ const StyledDescription = styled.div`
   justify-content: space-between;
 `;
 
-const CardListItem = ({
+export default ({
   card,
   searchString,
   onClick,
@@ -102,7 +103,7 @@ const CardListItem = ({
             onClickItem();
           }}
         >
-          <Icon style={{ color: '#1890ff' }} />
+          <Icon style={{ color: primary }} />
           {title}
         </Menu.Item>
       ))}
@@ -120,8 +121,8 @@ const CardListItem = ({
     </Dropdown>
   );
 
-  const actions = isEditing ? (
-    <SaveOutlined onClick={onToggleEditing} style={{ color: '#1890ff' }} />
+  const action = isEditing ? (
+    <SaveOutlined onClick={onToggleEditing} style={{ color: primary }} />
   ) : menuItems.length ? (
     menuIcon
   ) : (
@@ -130,7 +131,7 @@ const CardListItem = ({
 
   return (
     <List.Item
-      actions={[actions]}
+      actions={[action]}
       style={{ padding: 4 }}
       onClick={!isEditing ? onClick : undefined}
     >
@@ -178,15 +179,3 @@ const CardListItem = ({
     </List.Item>
   );
 };
-
-const areEqual = (prevProps, nextProps) => {
-  if (prevProps.searchString !== nextProps.searchString) return false;
-
-  return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
-    propKey => {
-      return prevProps.card[propKey] === nextProps.card[propKey];
-    }
-  );
-};
-
-export default React.memo(CardListItem, areEqual);

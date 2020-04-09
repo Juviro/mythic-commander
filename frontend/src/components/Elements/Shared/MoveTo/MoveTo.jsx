@@ -4,13 +4,14 @@ import { useMutation } from 'react-apollo';
 import { moveCard } from './queries';
 
 import message from '../../../../utils/message';
+import { primary } from '../../../../constants/colors';
 
 const Sublist = ({ title, elements = [], onClick }) => {
   if (!elements.length) return null;
   return (
     <>
       <Divider>{title}</Divider>
-      <List>
+      <List style={{ color: primary }}>
         {elements.map(({ name, id }) => (
           <List.Item
             key={id}
@@ -35,8 +36,8 @@ export default ({
   const { list, originType, originId } = moveToList;
   const [mutate] = useMutation(moveCard);
 
-  const onMove = targetType => ({ id: targetId, name: targetName }) => {
-    mutate({
+  const onMove = targetType => async ({ id: targetId, name: targetName }) => {
+    const { data } = await mutate({
       variables: {
         cardId,
         from: {
@@ -48,11 +49,15 @@ export default ({
           type: targetType,
         },
       },
+      errorPolicy: 'ignore',
     });
     const targetListName =
       targetType === 'DECK' ? 'the deck' : `<b>${targetName}</b>`;
-    message(`Moved <b>${cardName}</b> to ${targetListName}!`);
-    onClose();
+
+    if (data) {
+      message(`Moved <b>${cardName}</b> to ${targetListName}!`);
+      onClose();
+    }
   };
 
   return (
