@@ -174,7 +174,7 @@ export default ({
               />
             </Col>
             <Col
-              span={6}
+              span={showManaCosts ? 6 : 18}
               style={{ display: 'flex', justifyContent: 'flex-end' }}
             >
               {isEditing ? (

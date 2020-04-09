@@ -15,6 +15,7 @@ const WANTS_LIST_FIELDS = `
       name
       cmc
       set_name
+      mana_cost
       oracle_id
       
       oracleCard {
