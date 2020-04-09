@@ -101,6 +101,24 @@ export default ({
             </StyledOption>
           </>
         )}
+        {onEditCard && (
+          <StyledOption>
+            <Button
+              size={size}
+              disabled={!canSubmit}
+              type="primary"
+              icon={<SaveOutlined />}
+              onClick={onSave}
+              style={{
+                color: canSubmit ? undefined : 'grey',
+                backgroundColor: 'rgba(0,0,0,0.5)',
+                width: '100%',
+              }}
+            >
+              Save
+            </Button>
+          </StyledOption>
+        )}
         {moveToList && (
           <StyledOption>
             <Button
@@ -108,7 +126,11 @@ export default ({
               type="primary"
               icon={<SwapRightOutlined />}
               onClick={toggleIsMovingCard}
-              style={{ backgroundColor: 'rgba(0,0,0,0.5)', width: '100%' }}
+              style={{
+                backgroundColor: 'rgba(0,0,0,0.5)',
+                width: '100%',
+                marginTop: '15%',
+              }}
             >
               Move to...
             </Button>
@@ -121,28 +143,13 @@ export default ({
               size={size}
               icon={<DeleteOutlined />}
               onClick={() => onDeleteCard(card.id)}
-              style={{ backgroundColor: 'rgba(0,0,0,0.5)', width: '100%' }}
-            >
-              Delete
-            </Button>
-          </StyledOption>
-        )}
-        {onEditCard && (
-          <StyledOption>
-            <Button
-              size={size}
-              disabled={!canSubmit}
-              type="primary"
-              icon={<SaveOutlined />}
-              onClick={onSave}
               style={{
-                color: canSubmit ? undefined : 'grey',
-                marginTop: '15%',
                 backgroundColor: 'rgba(0,0,0,0.5)',
                 width: '100%',
+                marginTop: '5%',
               }}
             >
-              Save
+              Delete
             </Button>
           </StyledOption>
         )}
