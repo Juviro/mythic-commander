@@ -128,6 +128,7 @@ type DeckCard {
 
 type Collection {
   id: String!
+  snapshot: CollectionSnapshot!
   cards: [CollectionCard!]!
 }
 
@@ -198,7 +199,7 @@ type Query {
   wantsList(id: String!): WantsList!
   wantsLists(deckId: String): [WantsList!]!
 
-  collectionDevelopment: [CollectionSnapshot]
+  collectionSnapshots: [CollectionSnapshot]
 }
 
 input CardsOptionsInput {

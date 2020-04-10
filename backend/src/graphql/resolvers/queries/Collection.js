@@ -1,6 +1,16 @@
 import unifyCardFormat from '../unifyCardFormat';
 
-const resolver = {
+const REFERENCE_SNAPSHOT_DAYS = 7;
+
+export default {
+  async snapshot(_, __, { db, user: { id: userId } }) {
+    const snapshots = await db('collectionSnapshot')
+      .where({ userId })
+      .orderBy('date', 'desc')
+      .limit(REFERENCE_SNAPSHOT_DAYS);
+
+    return snapshots[snapshots.length - 1];
+  },
   async cards(_, __, { db, user: { id: userId } }) {
     const { rows: cards } = await db.raw(
       `
@@ -37,5 +47,3 @@ const resolver = {
     return cards.map(unifyCardFormat(userId));
   },
 };
-
-export default resolver;

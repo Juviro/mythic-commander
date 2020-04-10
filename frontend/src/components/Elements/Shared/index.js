@@ -5,7 +5,7 @@ export { default as CardRules } from './CardRules';
 export { default as CardSearch } from './CardSearch';
 export { default as CardSetOverview } from './CardSetOverview';
 export { default as CollectionCharts } from './CollectionCharts';
-export { default as CollectionOverview } from './CollectionOverview';
+export { default as CollectionStats } from './CollectionStats';
 export { default as CustomSkeleton } from './CustomSkeleton';
 export { default as EditableAmount } from './EditableAmount';
 export { default as EditableTitle } from './EditableTitle';

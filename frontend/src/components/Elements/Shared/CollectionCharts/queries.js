@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
-export const collectionDevelopment = gql`
-  query collectionDevelopment {
-    collectionDevelopment {
+export const collectionSnapshots = gql`
+  query collectionSnapshots {
+    collectionSnapshots {
       date
       value
       amount

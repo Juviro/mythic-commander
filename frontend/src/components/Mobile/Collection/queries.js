@@ -28,6 +28,12 @@ export const getMobileCollection = gql`
   query getMobileCollection {
     collection {
       id
+      snapshot {
+        date
+        value
+        amount
+        amountUnique
+      }
       cards {
         ${COLLECTION_CARD_FIELDS}
       }

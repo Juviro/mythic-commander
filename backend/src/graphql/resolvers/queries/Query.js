@@ -58,7 +58,7 @@ const resolver = {
       .where(where)
       .orderBy('createdAt', 'asc');
   },
-  collectionDevelopment(_, __, { user: { id: userId }, db }) {
+  collectionSnapshots(_, __, { user: { id: userId }, db }) {
     return db('collectionSnapshot')
       .where({ userId })
       .orderBy('date');
