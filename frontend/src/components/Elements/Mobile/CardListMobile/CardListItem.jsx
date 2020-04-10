@@ -33,13 +33,13 @@ const StyledManaCost = styled.div`
   justify-content: flex-start;
 `;
 
-export default ({
+const CardListItem = ({
   card,
-  searchString,
   onClick,
-  onDeleteCard,
   onEditCard,
   moveToList,
+  searchString,
+  onDeleteCard,
 }) => {
   const [isMenuOpen, toggleIsMenuOpen] = useToggle();
   const [isEditing, toggleIsEditing] = useToggle();
@@ -199,3 +199,17 @@ export default ({
     </List.Item>
   );
 };
+
+const areEqual = (prevProps, nextProps) => {
+  if (prevProps.moveToList !== nextProps.moveToList) return false;
+  if (prevProps.searchString !== nextProps.searchString) return false;
+  if (prevProps.onDeleteCard !== nextProps.onDeleteCard) return false;
+  if (prevProps.onEditCard !== nextProps.onEditCard) return false;
+
+  return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
+    propKey => {
+      return prevProps.card[propKey] === nextProps.card[propKey];
+    }
+  );
+};
+export default React.memo(CardListItem, areEqual);

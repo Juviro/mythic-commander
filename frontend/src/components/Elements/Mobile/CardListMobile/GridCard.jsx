@@ -26,7 +26,7 @@ const StyledCardWrapper = styled.div`
   position: inherit;
 `;
 
-export default ({
+const GridCard = ({
   moveToList,
   isLarge,
   card,
@@ -88,3 +88,17 @@ export default ({
     </StyledWrapper>
   );
 };
+
+const areEqual = (prevProps, nextProps) => {
+  if (prevProps.moveToList !== nextProps.moveToList) return false;
+  if (prevProps.searchString !== nextProps.searchString) return false;
+  if (prevProps.onDeleteCard !== nextProps.onDeleteCard) return false;
+  if (prevProps.onEditCard !== nextProps.onEditCard) return false;
+
+  return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
+    propKey => {
+      return prevProps.card[propKey] === nextProps.card[propKey];
+    }
+  );
+};
+export default React.memo(GridCard, areEqual);
