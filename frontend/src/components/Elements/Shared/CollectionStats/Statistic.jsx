@@ -26,23 +26,33 @@ const getSpecificProps = development => {
   }
   if (development < 0) {
     return {
+      prefix: '-',
       icon: ArrowDownOutlined,
       valueStyle: { color: '#cf1322' },
     };
   }
-  return { prefix: '±', icon: MinusOutlined };
+  return {
+    icon: MinusOutlined,
+    valueStyle: { color: 'rgba(0, 0, 0, 0.55)' },
+  };
 };
 
-export default ({ small, displayedValue, title, value, referenceValue }) => {
+export default ({ small, title, value, referenceValue, suffix }) => {
   const development = ((value - referenceValue) / referenceValue) * 100;
 
   return (
     <StyledWrapper small={small}>
-      <Statistic loading title={title} value={displayedValue || value} />
+      <Statistic
+        loading
+        title={title}
+        value={value}
+        suffix={suffix}
+        precision={0}
+      />
       {referenceValue !== undefined && (
         <Statistic
           style={{ width: 110 }}
-          value={development}
+          value={Math.abs(development)}
           precision={2}
           title="Last 7 days"
           {...getSpecificProps(development)}

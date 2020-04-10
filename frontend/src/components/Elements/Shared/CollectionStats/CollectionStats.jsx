@@ -3,7 +3,6 @@ import { Skeleton } from 'antd';
 import styled from 'styled-components';
 
 import Statistic from './Statistic';
-import { getPriceLabel } from '../../../../utils/cardStats';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -43,7 +42,7 @@ export default ({ snapshot = {}, cards, small, loading }) => {
             small={small}
             title="Total value"
             value={collectionValue}
-            displayedValue={getPriceLabel(collectionValue, { round: true })}
+            suffix="$"
             referenceValue={snapshot.value}
           />
         </>
