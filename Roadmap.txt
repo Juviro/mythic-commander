@@ -5,6 +5,7 @@
     - add to collection mobile: after adding prev unowned card (gitrok monster), wrong minPrice in wantsList
 
 NEXT:
+    - allow edit wants in deck, use shared component for mutations
     - when scrolling down collection, slow on tablet. evaluate re-adding react.memo, maybe without custom compare function
     - edit grid card in deck slow on table
     - move collection charts to info:
@@ -16,6 +17,7 @@ IMPROVEMENTS:
     - improve grid card info box design for desktop
     - when pressing esc while editing in desktop modal, don't close modal, just cancel editing
     - when adding to deck or linked wants: show if card is in linked wants / deck
+    - preload mana symbols
 
 FEATURES:
     - add edhrec and scryfall to card links
