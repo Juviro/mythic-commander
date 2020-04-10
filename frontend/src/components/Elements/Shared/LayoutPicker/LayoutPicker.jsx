@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import { StringParam, useQueryParam } from 'use-query-params';
 import { useShortcut } from '../../../Hooks';
-import { DesktopTooltip } from '../../Desktop';
+import DesktopTooltip from '../../Desktop/DesktopTooltip';
 
 const nextLayoutMap = {
   list: 'grid',

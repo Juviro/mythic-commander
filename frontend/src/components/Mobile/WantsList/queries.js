@@ -66,14 +66,6 @@ export const editWantsList = gql`
   }
 `;
 
-export const deleteFromWantsList = gql`
-  mutation deleteFromWantsList($cardId: String!, $wantsListId: String!) {
-    deleteFromWantsList(cardId: $cardId, wantsListId: $wantsListId) {
-      ${WANTS_LIST_FIELDS}
-    }
-  }
-`;
-
 export const deleteWantsList = gql`
   mutation deleteWantsList($wantsListId: String!) {
     deleteWantsList(wantsListId: $wantsListId)
@@ -97,22 +89,6 @@ export const unlinkWantsList = gql`
         imgSrc
         name
       }
-    }
-  }
-`;
-
-export const editWantsListCard = gql`
-  mutation editWantsListCard(
-    $cardId: String!
-    $wantsListId: String!
-    $newProps: EditWantsListCardInput!
-  ) {
-    editWantsListCard(
-      wantsListId: $wantsListId
-      newProps: $newProps
-      cardId: $cardId
-    ) {
-      ${CARD_FIELDS}
     }
   }
 `;

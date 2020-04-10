@@ -135,7 +135,7 @@ const CardListItem = ({
     undefined
   );
 
-  const showManaCosts = typeof card.mana_cost === 'string';
+  const showManaCosts = typeof card.mana_cost === 'string' && !isEditing;
 
   return (
     <List.Item

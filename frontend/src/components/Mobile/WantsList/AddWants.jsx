@@ -16,7 +16,6 @@ export default ({ containedCards }) => {
         wantsListId,
         cards: [card],
       },
-      refetchQueries: ['wantsList'],
       update: (cache, { data }) => {
         if (!data) return;
         const { addCardsToWantsList: newCards } = data;

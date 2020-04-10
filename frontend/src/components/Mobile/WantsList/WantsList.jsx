@@ -9,8 +9,9 @@ import Header from './Header';
 import AddWants from './AddWants';
 import CardModal from '../Card/CardModal';
 import { LayoutAndSortPicker } from '../../Elements/Shared';
-import CardsList from './CardsList';
+
 import unifyCardFormat from '../../../utils/unifyCardFormat';
+import { WantsListMobile } from '../../Elements/Mobile';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -42,7 +43,7 @@ export default () => {
       <Header wantsList={unifiedWantsList} />
       <LayoutAndSortPicker showCollectionFilters />
       <Divider />
-      <CardsList
+      <WantsListMobile
         cards={cards}
         loading={loading}
         rawWantsList={data && data.wantsList}
