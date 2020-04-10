@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
-import { Divider, Card } from 'antd';
+import { Divider, Collapse } from 'antd';
 import { getMobileCollection } from './queries';
 
 import { FilteredCardList } from '../../Elements/Mobile';
 import {
   LayoutAndSortPicker,
-  CollectionOverview,
+  CollectionStats,
   CollapsableFilter,
 } from '../../Elements/Shared';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
@@ -26,17 +26,25 @@ const StyledWrapper = styled.div`
 export default () => {
   const { data } = useQuery(getMobileCollection);
   const cards = unifyCardFormat(data && data.collection.cards);
+  const snapshot = data && data.collection.snapshot;
 
   return (
     <StyledWrapper>
-      <Card
-        style={{ width: '100%' }}
-        loading={!cards}
-        title="Your Collection"
-        size="small"
+      <Collapse
+        style={{ width: '100%', backgroundColor: 'white' }}
+        expandIcon={() => <div />}
+        expandIconPosition="right"
+        defaultActiveKey="1"
       >
-        <CollectionOverview cards={cards} column={2} />
-      </Card>
+        <Collapse.Panel key="1" size="small" header="Your Collection">
+          <CollectionStats
+            cards={cards}
+            snapshot={snapshot}
+            small
+            loading={!cards}
+          />
+        </Collapse.Panel>
+      </Collapse>
       <CollapsableFilter />
       <LayoutAndSortPicker showCollectionFilters />
       <Divider />

@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from 'react-apollo';
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 
-import { collectionDevelopment } from './queries';
+import { collectionSnapshots } from './queries';
 import formatDate from '../../../../utils/formatDate';
 
 const COLLECTED_CARDS = 'Unique cards';
@@ -10,11 +10,11 @@ const UNIQUE_CARDS = 'Collected cards';
 const COLLECTION_VALUE = 'Collection value';
 
 export default () => {
-  const { data } = useQuery(collectionDevelopment);
+  const { data } = useQuery(collectionSnapshots);
 
   const formattedData =
     data &&
-    data.collectionDevelopment.map(({ amount, amountUnique, value, date }) => ({
+    data.collectionSnapshots.map(({ amount, amountUnique, value, date }) => ({
       date: formatDate(date, true),
       [COLLECTED_CARDS]: amount,
       [UNIQUE_CARDS]: amountUnique,

@@ -4,7 +4,7 @@ import { Divider, Tooltip } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 
 import AddToCollection from './AddToCollection';
-import { CollectionOverview, CollectionCharts } from '../../Elements/Shared';
+import { CollectionStats } from '../../Elements/Shared';
 import { useShortcut } from '../../Hooks';
 
 const StyledWrapper = styled.div`
@@ -40,7 +40,7 @@ const StyledToggleWrapper = styled.div`
   }
 `;
 
-export default ({ cards, isVisible, toggleIsVisible }) => {
+export default ({ snapshot, cards, isVisible, toggleIsVisible, loading }) => {
   useShortcut('s', toggleIsVisible);
 
   return (
@@ -53,11 +53,13 @@ export default ({ cards, isVisible, toggleIsVisible }) => {
       {isVisible && (
         <>
           <Divider>Overview</Divider>
-          <CollectionOverview cards={cards} size="large" column={1} />
+          <CollectionStats
+            snapshot={snapshot}
+            cards={cards}
+            loading={loading}
+          />
           <Divider>Add cards</Divider>
           <AddToCollection />
-          <Divider>History</Divider>
-          <CollectionCharts />
         </>
       )}
     </StyledWrapper>

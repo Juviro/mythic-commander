@@ -20,12 +20,15 @@ export default () => {
     sidebarInitiallyVisible
   );
   const { data, loading } = useQuery(getCollection);
+  const snapshot = data && data.collection.snapshot;
   const cards = data && unifyCardFormat(data.collection.cards);
 
   return (
     <StyledWrapper>
       <Sidebar
         cards={cards}
+        loading={loading}
+        snapshot={snapshot}
         isVisible={isSidebarVisible}
         toggleIsVisible={toggleIsSidebarVisible}
       />

@@ -28,6 +28,11 @@ export const getCollectionDesktop = gql`
   query getCollectionDesktop {
     collection {
       id
+      snapshot {
+        value
+        amount
+        amountUnique
+      }
       cards {
         ${COLLECTION_CARD_FIELDS}
       }
