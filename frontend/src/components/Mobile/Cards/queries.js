@@ -10,6 +10,7 @@ export const cardSearch = gql`
         id
         name
         imgKey
+        mana_cost
         oracle_id
 
         oracleCard {

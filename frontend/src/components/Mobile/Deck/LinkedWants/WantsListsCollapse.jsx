@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRightOutlined } from '@ant-design/icons';
 
 import unifyCardFormat from '../../../../utils/unifyCardFormat';
-import { FilteredCardList } from '../../../Elements/Mobile';
+import { WantsListMobile } from '../../../Elements/Mobile';
 
 export default ({ wantsLists, deck = {} }) => {
   const getMoveToList = wantsListId => ({
@@ -29,7 +29,7 @@ export default ({ wantsLists, deck = {} }) => {
           }
           header={`${wantsList.name} (${wantsList.cards.length})`}
         >
-          <FilteredCardList
+          <WantsListMobile
             hideFooter
             cards={unifyCardFormat(wantsList.cards)}
             moveToList={{
@@ -37,6 +37,8 @@ export default ({ wantsLists, deck = {} }) => {
               originType: 'WANTS_LIST',
               originId: wantsList.id,
             }}
+            deckId={deck.id}
+            rawWantsList={wantsList}
           />
         </Collapse.Panel>
       ))}

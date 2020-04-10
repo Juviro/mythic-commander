@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import CustomSkeleton from '../CustomSkeleton';
 import { addCardsToWantsList, wantsLists as wantsListsQuery } from './queries';
 import message from '../../../../utils/message';
+import { wantsList as wantsListQuery } from '../../../Mobile/WantsList/queries';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -53,7 +54,12 @@ export default ({ card, large, cardId }) => {
         wantsListId: id,
         cards: [{ id: cardId || card.id }],
       },
-      refetchQueries: ['wantsLists'],
+      refetchQueries: [
+        {
+          query: wantsListQuery,
+          variables: { id },
+        },
+      ],
     });
 
     message(`Added to <b>${name}</b>!`);

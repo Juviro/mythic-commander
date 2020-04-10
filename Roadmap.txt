@@ -1,31 +1,25 @@
  BUGFIXES:
     - backend deployment not reloading
     - table header too short (?)
-    - mobile card detail add to collection: collection icons not displayed in select dropdown
     - add to collection mobile: after adding prev unowned card (gitrok monster), wrong minPrice in wantsList
 
 NEXT:
-    - allow edit wants in deck, use shared component for mutations
-    - when scrolling down collection, slow on tablet. evaluate re-adding react.memo, maybe without custom compare function
-    - edit grid card in deck slow on table
     - move collection charts to info:
         - total cards: 8001   [arrow-up] + 12% (tooltip: last 7 days development - click for more) 
         - on click: show popover with chart or modal with all charts
-    - card search
 
 IMPROVEMENTS: 
     - improve grid card info box design for desktop
-    - when pressing esc while editing in desktop modal, don't close modal, just cancel editing
-    - when adding to deck or linked wants: show if card is in linked wants / deck
-    - preload mana symbols
 
 FEATURES:
+    - card search
     - add edhrec and scryfall to card links
 
 REFACTORINGS:
 
 BACKLOG:
-    - add 404 page
+    - add error page
+    - when adding to deck or linked wants: show if card is in linked wants / deck
     - show current collection value in chart
     - Add option to deck to fill up empty card slots with basic lands, based on mana occurrance
     - find a way to make collection value work
