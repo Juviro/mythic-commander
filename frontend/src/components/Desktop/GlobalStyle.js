@@ -29,4 +29,8 @@ export default createGlobalStyle`
   .ant-modal-content {
     overflow: hidden;
   }
+
+  .recharts-surface {
+    overflow: visible !important;
+  }
 `;
