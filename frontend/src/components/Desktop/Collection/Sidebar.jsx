@@ -4,7 +4,7 @@ import { Divider, Tooltip } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 
 import AddToCollection from './AddToCollection';
-import { CollectionStats, CollectionCharts } from '../../Elements/Shared';
+import { CollectionStats } from '../../Elements/Shared';
 import { useShortcut } from '../../Hooks';
 
 const StyledWrapper = styled.div`
@@ -57,8 +57,8 @@ export default ({ snapshot, cards, isVisible, toggleIsVisible, loading }) => {
             snapshot={snapshot}
             cards={cards}
             loading={loading}
+            showCharts
           />
-          <CollectionCharts />
           <Divider>Add cards</Divider>
           <AddToCollection />
         </>

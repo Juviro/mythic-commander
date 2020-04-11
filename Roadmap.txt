@@ -15,13 +15,13 @@ IMPROVEMENTS:
 FEATURES:
     - card search
     - add edhrec and scryfall to card links
+    - in search field: *foil* suffix should add as foil
 
 REFACTORINGS:
 
 BACKLOG:
     - add error page
     - when adding to deck or linked wants: show if card is in linked wants / deck
-    - show current collection value in chart
     - Add option to deck to fill up empty card slots with basic lands, based on mana occurrance
     - find a way to make collection value work
     - sharable collection / decks / wants

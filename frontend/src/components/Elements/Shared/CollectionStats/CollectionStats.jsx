@@ -3,13 +3,14 @@ import { Skeleton } from 'antd';
 import styled from 'styled-components';
 
 import Statistic from './Statistic';
+import CollectionCharts from '../CollectionCharts';
 
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-export default ({ snapshot = {}, cards, small, loading }) => {
+export default ({ snapshot = {}, cards, small, loading, showCharts }) => {
   const numberOfUniqueCards = cards ? cards.length : 0;
   const numberOfCards = (cards || []).reduce(
     (sum, { totalAmount }) => sum + totalAmount,
@@ -19,6 +20,13 @@ export default ({ snapshot = {}, cards, small, loading }) => {
     (sum, { sumPrice }) => sum + sumPrice,
     0
   );
+
+  const currentSnapshot = {
+    dateLabel: 'Now',
+    value: Math.ceil(collectionValue),
+    amount: numberOfCards,
+    amountUnique: numberOfUniqueCards,
+  };
 
   return (
     <StyledWrapper>
@@ -47,6 +55,8 @@ export default ({ snapshot = {}, cards, small, loading }) => {
           />
         </>
       )}
+
+      {showCharts && <CollectionCharts currentSnapshot={currentSnapshot} />}
     </StyledWrapper>
   );
 };
