@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 const keyMap = {
   ESCAPE: 27,
+  SPACE: 32,
 };
 
 export const isInputField = event => {
