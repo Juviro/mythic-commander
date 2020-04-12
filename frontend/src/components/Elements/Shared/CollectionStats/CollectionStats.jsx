@@ -23,7 +23,7 @@ export default ({ snapshot = {}, cards, small, loading, showCharts }) => {
 
   const currentSnapshot = {
     dateLabel: 'Now',
-    value: Math.ceil(collectionValue),
+    value: Math.round(collectionValue),
     amount: numberOfCards,
     amountUnique: numberOfUniqueCards,
   };

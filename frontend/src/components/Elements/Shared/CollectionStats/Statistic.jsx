@@ -6,6 +6,7 @@ import {
 } from '@ant-design/icons';
 import { Statistic } from 'antd';
 import styled from 'styled-components';
+import DesktopTooltip from '../../Desktop/DesktopTooltip';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -38,7 +39,11 @@ const getSpecificProps = development => {
 };
 
 export default ({ small, title, value, referenceValue, suffix }) => {
-  const development = ((value - referenceValue) / referenceValue) * 100;
+  const absoluteDevelopment = value - referenceValue;
+  const development = (absoluteDevelopment / referenceValue) * 100;
+  const absoluteDevelopmentValue = `${
+    absoluteDevelopment > 0 ? '+' : ''
+  }${Math.round(absoluteDevelopment)}${suffix || ' cards'}`;
 
   return (
     <StyledWrapper small={small}>
@@ -50,14 +55,18 @@ export default ({ small, title, value, referenceValue, suffix }) => {
         precision={0}
       />
       {referenceValue !== undefined && (
-        <Statistic
-          style={{ width: 110 }}
-          value={Math.abs(development)}
-          precision={2}
-          title="Last 7 days"
-          {...getSpecificProps(development)}
-          suffix="%"
-        />
+        <DesktopTooltip title={absoluteDevelopmentValue} placement="bottom">
+          <span>
+            <Statistic
+              style={{ width: 110 }}
+              value={Math.abs(development)}
+              precision={2}
+              title="Last 7 days"
+              {...getSpecificProps(development)}
+              suffix="%"
+            />
+          </span>
+        </DesktopTooltip>
       )}
     </StyledWrapper>
   );

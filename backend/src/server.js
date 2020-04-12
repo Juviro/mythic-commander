@@ -45,7 +45,7 @@ export default new ApolloServer({
     console.error('error', error);
     return error;
   },
-  tracing: true,
+  tracing: process.env.NODE_ENV !== 'production',
   introspection: true,
   playground: {
     settings: {
