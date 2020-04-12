@@ -3,3 +3,4 @@ export { default as CardDetailsDesktop } from './CardDetailsDesktop';
 export { default as CardListDesktop } from './CardListDesktop';
 export { default as CardModalDesktop } from './CardModalDesktop';
 export { default as DesktopTooltip } from './DesktopTooltip';
+export { default as Sidebar } from './Sidebar';
