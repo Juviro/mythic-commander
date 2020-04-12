@@ -49,8 +49,8 @@ export default ({ cards, loading, widthOffset }) => {
   if (loading) return <Spin />;
 
   const onClick = index => {
+    toggleShowDetail(true);
     setSelectedElementPosition(index + 1);
-    toggleShowDetail();
   };
 
   return (

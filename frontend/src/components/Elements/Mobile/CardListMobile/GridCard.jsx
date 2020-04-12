@@ -94,6 +94,7 @@ const areEqual = (prevProps, nextProps) => {
   if (prevProps.searchString !== nextProps.searchString) return false;
   if (prevProps.onDeleteCard !== nextProps.onDeleteCard) return false;
   if (prevProps.onEditCard !== nextProps.onEditCard) return false;
+  if (prevProps.isLarge !== nextProps.isLarge) return false;
 
   return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
     propKey => {
