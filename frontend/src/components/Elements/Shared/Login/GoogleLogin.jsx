@@ -29,7 +29,7 @@ export default ({ history }) => {
     window.localStorage.setItem('session', data.login.session);
     // TODO: redirect to next in params
     // TODO: keep mobile in href
-    history.push('/decks');
+    history.push('/');
   };
 
   return (
