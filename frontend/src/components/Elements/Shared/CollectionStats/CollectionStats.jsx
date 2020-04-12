@@ -38,20 +38,20 @@ export default ({ snapshot = {}, cards, small, loading, showCharts }) => {
             small={small}
             title="Total Cards"
             value={numberOfCards}
-            referenceValue={snapshot.amount}
+            referenceValue={snapshot && snapshot.amount}
           />
           <Statistic
             small={small}
             title="Unique Cards"
             value={numberOfUniqueCards}
-            referenceValue={snapshot.amountUnique}
+            referenceValue={snapshot && snapshot.amountUnique}
           />
           <Statistic
             small={small}
             title="Total value"
             value={collectionValue}
             suffix="$"
-            referenceValue={snapshot.value}
+            referenceValue={snapshot && snapshot.value}
           />
         </>
       )}
