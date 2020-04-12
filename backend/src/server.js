@@ -3,7 +3,7 @@ import { ApolloServer, AuthenticationError } from 'apollo-server-koa';
 import schema from './graphql';
 import db from './database';
 
-const UNAUTHENTICATED_ACTIONS = ['login', 'cachedCards'];
+const UNAUTHENTICATED_ACTIONS = ['login', 'cachedCards', 'numberOfCachedCards'];
 
 export default new ApolloServer({
   schema,
