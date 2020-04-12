@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const StyledWrapper = styled.div`
   display: flex;
   width: 100%;
-  margin-top: 24px
+  margin-top: 24px;
   align-items: center;
   justify-content: center;
 `;

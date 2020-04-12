@@ -3,10 +3,13 @@ import styled from 'styled-components';
 import { Divider } from 'antd';
 
 import { useApolloClient } from 'react-apollo';
-import { useQueryParams, StringParam, BooleanParam } from 'use-query-params';
-import { LayoutAndSortPicker, CollapsableFilter } from '../../Elements/Shared';
+import { useQueryParams, StringParam } from 'use-query-params';
+import {
+  LayoutAndSortPicker,
+  CollapsableFilter,
+  SearchButton,
+} from '../../Elements/Shared';
 import { CardListMobile as CardList } from '../../Elements/Mobile';
-import SearchButton from './SearchButton';
 import Header from './Header';
 import { cardSearch } from './queries';
 import CardModal from '../Card/CardModal';
@@ -14,6 +17,7 @@ import NameFilter from '../../Elements/Shared/Filter/TextFilter/NameFilter';
 import { CARDS_PER_PAGE } from '../../Elements/Mobile/CardListMobile/FilteredCardList';
 import { useToggle } from '../../Hooks';
 import { unifySingleCard } from '../../../utils/unifyCardFormat';
+import searchParams from '../../../constants/searchParams';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -32,20 +36,7 @@ export default () => {
   const [{ autoSearch, ...options }, setFilter] = useQueryParams({
     autoSearch: StringParam,
 
-    name: StringParam,
-    rarity: StringParam,
-    cmc: StringParam,
-    power: StringParam,
-    toughness: StringParam,
-    set: StringParam,
-    text: StringParam,
-    colors: StringParam,
-    creatureType: StringParam,
-    cardType: StringParam,
-    isLegendary: StringParam,
-    isOwned: BooleanParam,
-    isCommanderLegal: BooleanParam,
-    orderBy: StringParam,
+    ...searchParams,
   });
 
   const client = useApolloClient();
