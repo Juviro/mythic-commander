@@ -3,14 +3,15 @@
     - table header too short (?)
     - collection: when one price is null, 0 is displayed even if one owned card has a value
     - add to collection mobile: after adding prev unowned card (gitrok monster), wrong minPrice in wantsList
+    - snapshot can be null, throws error because not nullable in schema
+    - clicking on grid card in desktop not opening modal if already selected
+    - hide *show charts' when collection not loaded OR ignore snapshot if null
 
 NEXT:
-    - move collection charts to info:
-        - on hover stat: show absolute development (+50$)
-        - add link below: show modal with all charts
 
 IMPROVEMENTS: 
     - improve grid card info box design for desktop
+    - add range picker to collection to only show cards added in specific timeframe (1h, 24h, 7d, 3m, 1y)
 
 FEATURES:
     - card search
@@ -20,6 +21,7 @@ FEATURES:
 REFACTORINGS:
 
 BACKLOG:
+    - when adding cards, allow picking set/version, with preview
     - add error page
     - when adding to deck or linked wants: show if card is in linked wants / deck
     - Add option to deck to fill up empty card slots with basic lands, based on mana occurrance
@@ -27,3 +29,4 @@ BACKLOG:
     - sharable collection / decks / wants
     - prevent user from adding amount / amount foil if card is not available in foil / non-foil
     - prefer owned versions when adding to deck or wants
+    - suggest similar cards when having invalid cardname in multiinput

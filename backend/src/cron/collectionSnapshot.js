@@ -28,16 +28,21 @@ export default async () => {
         SELECT 
           "userId", 
           ?, 
-          SUM(amount + "amountFoil") as amount,
+          SUM(amount) as amount,
           count(*) as "amountUnique" 
-        FROM collection 
-        LEFT JOIN cards 
-          ON cards.id = collection.id 
+          FROM (
+            SELECT 
+              SUM(amount + "amountFoil") as amount, 
+              "userId" 
+            FROM "collectionWithOracle"
+            WHERE "userId" = ?
+            GROUP BY oracle_id, "userId"
+          ) as grouped
         WHERE "userId" = ?
         GROUP BY "userId"
       )
       `,
-      [value, userId]
+      [value, userId, userId]
     );
   }
 };
