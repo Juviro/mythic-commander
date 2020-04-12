@@ -53,10 +53,9 @@ export default ({ snapshot = {}, cards, small, loading, showCharts }) => {
             suffix="$"
             referenceValue={snapshot && snapshot.value}
           />
+          {showCharts && <CollectionCharts currentSnapshot={currentSnapshot} />}
         </>
       )}
-
-      {showCharts && <CollectionCharts currentSnapshot={currentSnapshot} />}
     </StyledWrapper>
   );
 };
