@@ -54,7 +54,7 @@ export default ({ small, title, value, referenceValue, suffix }) => {
         suffix={suffix}
         precision={0}
       />
-      {referenceValue !== undefined && (
+      {typeof referenceValue === 'number' && (
         <DesktopTooltip title={absoluteDevelopmentValue} placement="bottom">
           <span>
             <Statistic
