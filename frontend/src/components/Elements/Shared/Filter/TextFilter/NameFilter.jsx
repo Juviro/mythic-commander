@@ -1,12 +1,7 @@
 import React from 'react';
 import TextFilter from './TextFilter';
 
-export default ({
-  onSearch,
-  size,
-  inputRef,
-  placeholder = 'Filter by card name',
-}) => {
+export default ({ onSearch, size, inputRef, placeholder = 'Card Name' }) => {
   return (
     <TextFilter
       size={size}

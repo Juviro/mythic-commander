@@ -10,10 +10,6 @@ export default () => {
     .sort((a, b) => (a.name > b.name ? 1 : -1));
 
   return (
-    <SelectFilter
-      options={allSets}
-      paramName="set"
-      placeholder="Search for a set"
-    />
+    <SelectFilter options={allSets} paramName="set" placeholder="Set Name" />
   );
 };

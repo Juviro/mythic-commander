@@ -37,7 +37,7 @@ export default ({ paramName, onSearch }) => {
     <StyledWrapper>
       <Input
         size="small"
-        style={{ width: 55 }}
+        style={{ width: 60 }}
         type="number"
         value={from}
         placeholder="from"
@@ -48,7 +48,7 @@ export default ({ paramName, onSearch }) => {
       <Typography.Text>-</Typography.Text>
       <Input
         size="small"
-        style={{ width: 55 }}
+        style={{ width: 60 }}
         type="number"
         value={to}
         placeholder="to"

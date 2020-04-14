@@ -11,6 +11,8 @@ const StyledWrapper = styled.div`
   padding: 24px;
   position: relative;
   transition: all 0.2s;
+  max-height: 100%;
+  overflow: auto;
   will-change: margin-left;
   box-shadow: ${({ isVisible }) =>
     isVisible ? '5px 0 5px -5px #333' : 'none'};
@@ -43,10 +45,11 @@ export default ({
   toggleIsVisible,
   width = 400,
   style,
+  wrapperStyle,
 }) => {
   useShortcut('s', toggleIsVisible);
   return (
-    <StyledWrapper isVisible={isVisible} width={width}>
+    <StyledWrapper isVisible={isVisible} width={width} style={wrapperStyle}>
       <Tooltip title="Toggle Sidebar [S]" placement="right">
         <StyledToggleWrapper onClick={toggleIsVisible}>
           {isVisible ? <DoubleLeftOutlined /> : <DoubleRightOutlined />}

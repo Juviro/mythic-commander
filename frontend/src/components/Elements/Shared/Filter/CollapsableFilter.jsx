@@ -7,7 +7,7 @@ import Filter from './Filter';
 import FilterHeader from './FilterHeader';
 
 export default ({
-  advacedSearch,
+  advancedSearch,
   onSearch,
   hideNameFilter,
   headerText,
@@ -42,7 +42,7 @@ export default ({
         }
       >
         <Filter
-          advacedSearch={advacedSearch}
+          advancedSearch={advancedSearch}
           onSearch={onSearch}
           hideNameFilter={hideNameFilter}
         />
