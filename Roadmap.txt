@@ -1,7 +1,9 @@
 BUGFIXES:
+    - backend crashes when searching for power bc * cannot be casted to float
 
 NEXT:
     - card search
+        - preload card images for next page
 
 IMPROVEMENTS: 
     - improve grid card info box design for desktop
@@ -13,6 +15,8 @@ FEATURES:
 REFACTORINGS:
 
 BACKLOG:
+    - query params for search should only change on search
+    - allow searching for multiple sets/types?
     - when adding cards, allow picking set/version, with preview
     - add error page
     - in search field: *foil* suffix should add as foil

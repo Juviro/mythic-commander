@@ -189,7 +189,7 @@ type Query {
   cardSearch(
     offset: Int
     limit: Int
-    options: CardsOptionsInput
+    options: CardsOptionsInput!
   ): PaginatedCards!
   cardByOracleId(oracle_id: String!): Card!
 

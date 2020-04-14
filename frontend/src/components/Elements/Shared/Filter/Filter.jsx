@@ -20,23 +20,23 @@ const FilterWrapper = styled.div`
   flex-direction: column;
 `;
 
-const Label = ({ title }) => (
+const Label = ({ title, style }) => (
   <Typography.Text
     strong
-    style={{ marginTop: 16, marginBottom: 4 }}
+    style={{ marginTop: 8, marginBottom: 4, ...style }}
   >{`${title}:`}</Typography.Text>
 );
 
-const Filter = ({ advacedSearch, onSearch, hideNameFilter }) => {
+const Filter = ({ advancedSearch, onSearch, hideNameFilter }) => {
   return (
     <FilterWrapper>
       {!hideNameFilter && (
         <>
-          <Label title="Card name" />
+          <Label title="Card name" style={{ marginTop: 0 }} />
           <NameFilter onSearch={onSearch} />
         </>
       )}
-      {advacedSearch && (
+      {advancedSearch && (
         <>
           <Label title="Set" />
           <SetSelection />
@@ -50,7 +50,7 @@ const Filter = ({ advacedSearch, onSearch, hideNameFilter }) => {
       <CreatureTypeSelection />
       <Label title="Color identity" />
       <ColorSelection />
-      {advacedSearch && (
+      {advancedSearch && (
         <>
           <Label title="Rarity" />
           <RarityFilter />

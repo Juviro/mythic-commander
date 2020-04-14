@@ -87,7 +87,7 @@ export default () => {
         <NameFilter onSearch={onSearch} size="large" />
         <CollapsableFilter
           hideReset
-          advacedSearch
+          advancedSearch
           hideNameFilter
           headerText="Advanced"
           onSearch={onSearch}

@@ -45,6 +45,7 @@ const StyledColorTag = styled.img`
   height: 25px;
   cursor: pointer;
   border-radius: 50%;
+  margin: 0 2px;
   ${getColorTagProps(false)}
 
   &:active {

@@ -27,16 +27,18 @@ export default () => {
       <SelectFilter
         options={cardTypes}
         paramName="cardType"
-        placeholder="Search for card type"
+        placeholder="Supertype"
       />
       <div style={{ marginTop: 8 }}>
         <Checkbox
           onChange={displayLegendary('true')}
           checked={isLegendary === 'true'}
+          style={{ marginRight: 16 }}
         >
           Legendary only
         </Checkbox>
         <Checkbox
+          style={{ marginLeft: 0 }}
           onChange={displayLegendary('false')}
           checked={isLegendary === 'false'}
         >

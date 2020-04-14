@@ -1,15 +1,15 @@
 import gql from 'graphql-tag';
 
 export const cardSearch = gql`
-  query cardSearch($offset: Int, $limit: Int, $options: CardsOptionsInput) {
+  query cardSearch($offset: Int, $limit: Int, $options: CardsOptionsInput!) {
     cardSearch(offset: $offset, limit: $limit, options: $options) {
-      hasMore
-      nextOffset
       totalResults
+      hasMore
       cards {
         id
         name
         imgKey
+        cmc
         mana_cost
         oracle_id
 
@@ -18,6 +18,8 @@ export const cardSearch = gql`
           isTwoFaced
           owned
           minPrice
+          primaryTypes
+          subTypes
         }
       }
     }
