@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useQueryParam, NumberParam } from 'use-query-params';
 import { isInputField } from '../../../../Hooks/useShortcut';
-import { useWindowSize } from '../../../../Hooks';
+import { useWindowSize, useStoredQueryParam } from '../../../../Hooks';
 
 const ENTER = 13;
 const SPACE = 32;
@@ -13,17 +13,11 @@ const ARROW_BOTTOM = 40;
 export default (numberOfCards, toggleShowDetail) => {
   useWindowSize();
   const [currentPage = 1, setCurrentPage] = useQueryParam('page', NumberParam);
-  const [pageSize, setPageSize] = useQueryParam('pageSize', NumberParam);
+  const [pageSize, setPageSize] = useStoredQueryParam('pageSize', NumberParam);
   const [selectedElementPosition, setSelectedElementPosition] = useState(0);
 
-  const numberOfPages =
-    numberOfCards && pageSize ? Math.ceil(numberOfCards / pageSize) : 1;
+  const numberOfPages = numberOfCards ? Math.ceil(numberOfCards / pageSize) : 1;
 
-  useEffect(() => {
-    const newPageSize = Math.floor((window.innerHeight - 210) / 74);
-    if (pageSize === newPageSize) return;
-    setPageSize(newPageSize);
-  });
   useEffect(() => {
     if (numberOfPages === 1 || numberOfPages >= currentPage) return;
     setCurrentPage(numberOfPages);
@@ -101,9 +95,11 @@ export default (numberOfCards, toggleShowDetail) => {
   }, [currentPage]);
 
   const pagination = {
-    pageSize: pageSize || 1,
+    pageSize,
     current: currentPage,
     total: numberOfCards,
+    onShowSizeChange: (_, newPageSize) => setPageSize(newPageSize),
+    pageSizeOptions: [10, 25, 50, 100],
     onChange: val => setCurrentPage(val),
   };
 

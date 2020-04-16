@@ -27,7 +27,7 @@ export default () => {
       <SelectFilter
         options={cardTypes}
         paramName="cardType"
-        placeholder="Supertype"
+        placeholder="Creature, Enchantment, ..."
       />
       <div style={{ marginTop: 8 }}>
         <Checkbox

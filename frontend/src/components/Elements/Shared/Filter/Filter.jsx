@@ -40,7 +40,7 @@ const Filter = ({ advancedSearch, onSearch, hideNameFilter }) => {
         <>
           <Label title="Set" />
           <SetSelection />
-          <Label title="Oracle text" />
+          <Label title="Card text" />
           <OracleTextFilter onSearch={onSearch} />
         </>
       )}

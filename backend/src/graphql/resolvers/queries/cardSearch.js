@@ -66,6 +66,14 @@ const addRarityClause = (q, rarity) => {
   q.whereIn('rarity', rarities);
 };
 
+const addNameClause = (q, name) => {
+  const searchPattern = name
+    .replace(/[^\w\s]/g, '')
+    .split(' ')
+    .join('%');
+  q.whereRaw(`REGEXP_REPLACE(name, '\\W', '', 'g') ILIKE '%${searchPattern}%'`);
+};
+
 export default async (
   _,
   { offset = 0, limit = 30, options = {} },
@@ -94,7 +102,7 @@ export default async (
 
   const query = db(database)
     .where(q => {
-      if (name) q.where('name', 'ILIKE', `%${name}%`);
+      if (name) addNameClause(q, name);
       if (text) q.where('oracle_text', 'ILIKE', `%${text}%`);
       if (creatureType) q.where('type_line', 'LIKE', `%${creatureType}%`);
       if (cardType) q.where('type_line', 'ILIKE', `%${cardType}%`);

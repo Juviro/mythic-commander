@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal } from 'antd';
 import CardDetailsDesktop from '../CardDetailsDesktop';
 
-export default ({ card, visible, onClose }) => {
+export default ({ card, visible, onClose, loading }) => {
   return (
     <Modal
       centered
@@ -14,7 +14,7 @@ export default ({ card, visible, onClose }) => {
       bodyStyle={{ height: 850 }}
       style={{ maxWidth: '100%' }}
     >
-      {card ? <CardDetailsDesktop card={card} /> : null}
+      {card && <CardDetailsDesktop card={card} loading={loading} />}
     </Modal>
   );
 };

@@ -11,12 +11,15 @@ const StyledWrapper = styled.div`
   padding: 24px;
   position: relative;
   transition: all 0.2s;
-  max-height: 100%;
-  overflow: auto;
   will-change: margin-left;
   box-shadow: ${({ isVisible }) =>
     isVisible ? '5px 0 5px -5px #333' : 'none'};
   margin-left: ${({ isVisible }) => (isVisible ? 0 : '-400')}px;
+`;
+
+const StyledChildWrapper = styled.div`
+  max-height: 100%;
+  overflow-y: auto;
 `;
 
 const StyledToggleWrapper = styled.div`
@@ -55,7 +58,9 @@ export default ({
           {isVisible ? <DoubleLeftOutlined /> : <DoubleRightOutlined />}
         </StyledToggleWrapper>
       </Tooltip>
-      {isVisible && <div {...style}> {children}</div>}
+      {isVisible && (
+        <StyledChildWrapper {...style}> {children}</StyledChildWrapper>
+      )}
     </StyledWrapper>
   );
 };

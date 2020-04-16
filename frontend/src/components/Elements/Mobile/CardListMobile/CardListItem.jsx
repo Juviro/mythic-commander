@@ -155,7 +155,7 @@ const CardListItem = ({
             )}
           </StyledDescription>
         }
-        avatar={<PreviewCardImage height="48px" card={card} />}
+        avatar={<PreviewCardImage card={card} />}
         description={
           <Row>
             {showManaCosts && (

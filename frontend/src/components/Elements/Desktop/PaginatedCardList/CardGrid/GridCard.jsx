@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Row, Col } from 'antd';
 import styled from 'styled-components';
 
@@ -6,21 +6,21 @@ import FlippableCard from '../../../Shared/FlippableCard';
 import { getPriceLabel } from '../../../../../utils/cardStats';
 import OwnedBadge from '../../../Shared/OwnedBadge';
 import { primary } from '../../../../../constants/colors';
+import scrollIntoView from '../../../../../utils/scrollIntoView';
 
 const StyledCardWrapper = styled.div`
-  margin: 8px;
+  padding: 8px;
   height: fit-content;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   position: relative;
-  width: calc(${({ widthPercentage }) => widthPercentage}% - 16px);
+  width: ${({ widthPercentage }) => widthPercentage}%;
 `;
 
 const StyledImageWrapper = styled.div`
-  width: 210px;
-  height: 292px;
+  position: relative;
   border-radius: 12px;
 
   ${({ isSelected }) =>
@@ -34,7 +34,7 @@ const StyledInfoWrapper = styled(Row)`
   background-color: #ececec;
   opacity: 0.8;
   bottom: 0;
-  width: 170px;
+  width: 80%;
   align-self: flex-start;
   border-top-right-radius: 8px;
   border-bottom-left-radius: 8px;
@@ -43,27 +43,49 @@ const StyledInfoWrapper = styled(Row)`
 const StyledCol = styled(Col)`
   display: flex;
 `;
-const GridCard = ({ card, onClick, isSelected, widthPercentage }) => {
+const GridCard = ({
+  card,
+  onClick,
+  isSelected,
+  widthPercentage,
+  width,
+  loading,
+}) => {
   const displayedAmount = card.amount || card.totalAmount;
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (!isSelected || !ref) return;
+    scrollIntoView(ref.current);
+  }, [isSelected]);
+
+  const cardSize = { width, height: width * 1.39 };
+
   return (
     <StyledCardWrapper
       key={card.id}
-      onClick={onClick}
       widthPercentage={widthPercentage}
+      ref={ref}
     >
-      <StyledImageWrapper isSelected={isSelected}>
-        <FlippableCard card={card} />
-        <StyledInfoWrapper>
-          <StyledCol span={8} style={{ justifyContent: 'flex-start' }}>
-            {displayedAmount && `${displayedAmount}x`}
-          </StyledCol>
-          <StyledCol span={8} style={{ justifyContent: 'center' }}>
-            {getPriceLabel(card.minPrice)}
-          </StyledCol>
-          <StyledCol span={8} style={{ justifyContent: 'flex-end' }}>
-            {card.owned && <OwnedBadge />}
-          </StyledCol>
-        </StyledInfoWrapper>
+      <StyledImageWrapper
+        isSelected={isSelected}
+        onClick={onClick}
+        style={cardSize}
+      >
+        <FlippableCard card={card} loading={loading} />
+        {!loading && (
+          <StyledInfoWrapper>
+            <StyledCol span={8} style={{ justifyContent: 'flex-start' }}>
+              {displayedAmount && `${displayedAmount}x`}
+            </StyledCol>
+            <StyledCol span={8} style={{ justifyContent: 'center' }}>
+              {getPriceLabel(card.minPrice)}
+            </StyledCol>
+            <StyledCol span={8} style={{ justifyContent: 'flex-end' }}>
+              {card.owned && <OwnedBadge />}
+            </StyledCol>
+          </StyledInfoWrapper>
+        )}
       </StyledImageWrapper>
     </StyledCardWrapper>
   );
@@ -72,6 +94,8 @@ const GridCard = ({ card, onClick, isSelected, widthPercentage }) => {
 const areEqual = (prevProps, nextProps) => {
   if (prevProps.isSelected !== nextProps.isSelected) return false;
   if (prevProps.widthPercentage !== nextProps.widthPercentage) return false;
+  if (prevProps.width !== nextProps.width) return false;
+  if (prevProps.loading !== nextProps.loading) return false;
 
   return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
     propKey => {

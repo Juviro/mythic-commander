@@ -1,7 +1,7 @@
 import React from 'react';
 import ManaSymbol from './ManaSymbol';
 
-export default ({ costString, size }) => {
+const ManaCost = ({ costString, size }) => {
   if (!costString) return '';
   const costs = costString.match(/[\w/]+/g);
   if (!costs) return '';
@@ -14,3 +14,5 @@ export default ({ costString, size }) => {
     </span>
   );
 };
+
+export default React.memo(ManaCost);

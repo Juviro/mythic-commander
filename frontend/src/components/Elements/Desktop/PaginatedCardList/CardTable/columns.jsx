@@ -27,11 +27,11 @@ const renderPrice = ({ minPrice, sumPrice, totalAmount }) => {
   return `${getPriceLabel(minPrice)}  (${getPriceLabel(sumPrice)})`;
 };
 
-const Name = ({ name }) => {
+const Name = React.memo(({ name }) => {
   const [searchString] = useQueryParam('name', StringParam);
 
   return highlightText(searchString, name);
-};
+});
 
 const sortByAmount = columnKey => (a, b) => {
   return Number(a[columnKey]) - Number(b[columnKey]);
@@ -52,12 +52,13 @@ const columns = [
   {
     title: 'Card',
     key: 'img',
-    width: 70,
+    width: 90,
     render: card => <PreviewCardImage card={card} highlightOnHover />,
   },
   {
     title: 'Name',
     dataIndex: 'name',
+    width: 300,
     key: 'name',
     render: name => <Name name={name} />,
     sorter: sortByName('name'),
@@ -66,7 +67,7 @@ const columns = [
     title: 'CMC',
     key: 'cmc',
     dataIndex: 'cmc',
-    width: 50,
+    width: 70,
     align: 'center',
     sorter: sortByAmount('cmc'),
   },

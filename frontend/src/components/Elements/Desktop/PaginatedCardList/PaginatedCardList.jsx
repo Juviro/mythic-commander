@@ -4,7 +4,6 @@ import { StringParam, useQueryParam } from 'use-query-params';
 import Flex from '../../Shared/Flex';
 import CardTable from './CardTable';
 import CardGrid from './CardGrid';
-import { LayoutPicker } from '../../Shared';
 import Header from './Header';
 
 export default ({
@@ -16,14 +15,15 @@ export default ({
   hiddenColumns,
 }) => {
   const [layout] = useQueryParam('layout', StringParam);
+  const width = `calc(100% - ${widthOffset}px)`;
 
   const cardList =
     layout === 'list' ? (
       <CardTable
-        showSorter={showSorter}
-        hiddenColumns={hiddenColumns}
         cards={cards}
         loading={loading}
+        showSorter={showSorter}
+        hiddenColumns={hiddenColumns}
         numberOfCards={numberOfCards}
       />
     ) : (
@@ -38,7 +38,7 @@ export default ({
   return (
     <Flex
       direction="column"
-      style={{ width: '100%', height: '100%', padding: 24 }}
+      style={{ width, height: '100%', padding: 24, transition: 'width 0.2s' }}
     >
       <Header />
       {(loading || cards) && cardList}
