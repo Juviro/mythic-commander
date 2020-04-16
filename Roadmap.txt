@@ -3,10 +3,16 @@ BUGFIXES:
 
 NEXT:
     - card search
-        - preload card images for next page
+        - ignore key input for layout picker
+        - owned badge for small zoom
+        - improve size for table when zoomed
+        - allow reset search
+        - add sortBy picker
 
 IMPROVEMENTS: 
     - improve grid card info box design for desktop
+    - when switching wants list via search bar, hide add cards
+    - add delete button to collection
     - add range picker to collection to only show cards added in specific timeframe (1h, 24h, 7d, 3m, 1y)
 
 FEATURES:

@@ -9,6 +9,7 @@ import { useToggle } from '../../Hooks';
 import searchParams from '../../../constants/searchParams';
 import { unifySingleCard } from '../../../utils/unifyCardFormat';
 import { PaginatedCardList } from '../../Elements/Desktop';
+import preloadImages from '../../../utils/preloadImages';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -46,7 +47,7 @@ export default () => {
         limit: pageSize,
       },
     });
-    if (isPreload) return;
+    if (isPreload) return data.cardSearch.cards;
 
     const { cards, totalResults } = data.cardSearch;
     // hotfix if offset is incorrect due to layout switch
@@ -64,7 +65,8 @@ export default () => {
 
   // search when page changes or site is reloaded
   useEffect(() => {
-    if (!pageSize || !page) return;
+    const hasOptions = Object.values(options).some(val => val !== undefined);
+    if (!pageSize || !page || !hasOptions) return;
     const offset = (page - 1) * pageSize;
     fetchCards(currentOptions || options, offset);
     // eslint-disable-next-line
@@ -73,8 +75,16 @@ export default () => {
   // preload next page
   useEffect(() => {
     if (!currentCards || !currentCards.length || !queryResult.hasMore) return;
-    const nextPageOffset = page * pageSize;
-    fetchCards(currentOptions, nextPageOffset, true);
+    const prefetchCards = async () => {
+      const nextPageOffset = page * pageSize;
+      const nextPageCards = await fetchCards(
+        currentOptions,
+        nextPageOffset,
+        true
+      );
+      preloadImages(nextPageCards, ['small', 'normal']);
+    };
+    prefetchCards();
     // eslint-disable-next-line
   }, [currentCards]);
 
@@ -85,6 +95,7 @@ export default () => {
     setCurrentOptions(null);
     setQueryResult({});
     toggleLoading(false);
+    // eslint-disable-next-line
   }, [page]);
 
   return (
@@ -99,7 +110,7 @@ export default () => {
         showSorter={false}
         hiddenColumns={['added', 'amount']}
         cards={currentCards}
-        widthOffset={isSidebarVisible ? 321 : 0}
+        widthOffset={isSidebarVisible ? 329 : 0}
         numberOfCards={queryResult.totalResults}
       />
     </StyledWrapper>

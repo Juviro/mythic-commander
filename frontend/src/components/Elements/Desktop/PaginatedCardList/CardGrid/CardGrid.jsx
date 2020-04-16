@@ -1,27 +1,31 @@
 import React from 'react';
-import { Spin, Pagination } from 'antd';
-import { useQueryParam, StringParam } from 'use-query-params';
+import { Pagination } from 'antd';
 import styled from 'styled-components';
 
-import { filterByName, sortCards } from '../../../../../utils/cardFilter';
 import useGridShortcuts from './useGridShortcuts';
 import CardModalDesktop from '../../CardModalDesktop';
 import GridCard from './GridCard';
-import getNumberOfCards from './getNumberOfCards';
-import { useWindowSize, usePreloadCards, useToggle } from '../../../../Hooks';
+import useNumberOfCards from './useNumberOfCards';
+import { useWindowSize, useToggle } from '../../../../Hooks';
 
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   padding-top: 8px;
+  width: 100%;
+  align-self: center;
+  max-height: 100%;
+  overflow-y: auto;
 `;
 
 export default ({ cards, loading, widthOffset, numberOfCards }) => {
   useWindowSize();
   const [showDetails, toggleShowDetail] = useToggle(false);
 
-  const { cardsPerRow, numberOfRows } = getNumberOfCards(widthOffset);
+  const { cardsPerRow, numberOfRows, cardWidth } = useNumberOfCards(
+    widthOffset
+  );
 
   const {
     pagination,
@@ -36,8 +40,6 @@ export default ({ cards, loading, widthOffset, numberOfCards }) => {
 
   const selectedCard = cards[selectedElementPosition - 1];
 
-  if (loading) return <Spin />;
-
   const onClick = index => {
     toggleShowDetail(true);
     setSelectedElementPosition(index + 1);
@@ -49,8 +51,10 @@ export default ({ cards, loading, widthOffset, numberOfCards }) => {
         {cards.map((card, index) => (
           <GridCard
             card={card}
+            loading={loading}
             key={card.id}
             onClick={() => onClick(index)}
+            width={cardWidth}
             widthPercentage={100 / cardsPerRow}
             isSelected={index + 1 === selectedElementPosition}
           />
@@ -58,13 +62,13 @@ export default ({ cards, loading, widthOffset, numberOfCards }) => {
       </StyledWrapper>
       <Pagination
         {...pagination}
-        showSizeChanger={false}
         showTotal={(total, range) =>
           `${range[0]}-${range[1]} of ${total} cards`
         }
         style={{ alignSelf: 'flex-end', margin: '16px 0' }}
       />
       <CardModalDesktop
+        loading={loading}
         card={selectedCard}
         visible={showDetails}
         onClose={toggleShowDetail}

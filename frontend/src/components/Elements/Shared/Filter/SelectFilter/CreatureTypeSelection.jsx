@@ -10,7 +10,7 @@ export default () => {
     <SelectFilter
       options={creatureTypes}
       paramName="creatureType"
-      placeholder="Creature Type"
+      placeholder="Shark, Bird, ..."
     />
   );
 };

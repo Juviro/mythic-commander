@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { LayoutPicker } from '../../Shared';
+import { LayoutPicker } from '../../../Shared';
+import ZoomSlider from './ZoomSlider';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -12,6 +13,7 @@ const StyledWrapper = styled.div`
 export default () => {
   return (
     <StyledWrapper>
+      <ZoomSlider />
       <LayoutPicker hideCard />
     </StyledWrapper>
   );

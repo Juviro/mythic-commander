@@ -22,7 +22,15 @@ const SelectFilter = ({ paramName, options, placeholder }) => {
   );
 
   useEffect(() => {
-    if (!param) setValue('');
+    if (!param) {
+      setValue('');
+    } else {
+      const currentOption = unifiedOptions.find(
+        ({ value: optionValue }) => optionValue === param
+      );
+      if (!currentOption) return;
+      setValue(currentOption.name);
+    }
   }, [param]);
 
   const filteredOptions = unifiedOptions
