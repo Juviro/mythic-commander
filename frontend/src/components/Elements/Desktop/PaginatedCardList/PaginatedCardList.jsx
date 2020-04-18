@@ -38,7 +38,12 @@ export default ({
   return (
     <Flex
       direction="column"
-      style={{ width, height: '100%', padding: 24, transition: 'width 0.2s' }}
+      style={{
+        width,
+        overflowY: 'auto',
+        padding: 24,
+        transition: 'width 0.2s',
+      }}
     >
       <Header />
       {(loading || cards) && cardList}

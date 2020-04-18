@@ -10,6 +10,7 @@ export default ({
   onSearch,
   size = 'small',
   inputRef,
+  autoFocus,
 }) => {
   const [value, setSearch] = useQueryParam(paramName, StringParam);
 
@@ -27,6 +28,7 @@ export default ({
       ref={ref}
       onKeyDown={useBlurOnEsc}
       placeholder={placeholder}
+      autoFocus={autoFocus}
       onChange={e => setSearch(e.target.value)}
       style={{ width: '100%' }}
       size={size}

@@ -7,7 +7,7 @@ export default () => {
   const [isOwned, setChecked] = useQueryParam('isOwned', BooleanParam);
 
   const onChange = e => {
-    setChecked(e.target.checked);
+    setChecked(e.target.checked || undefined);
   };
 
   return (

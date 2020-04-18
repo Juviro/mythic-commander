@@ -26,7 +26,7 @@ const filterAttrs = [
   'rarity',
 ];
 
-export default () => {
+export default ({ title = 'reset filter' }) => {
   const [filter, setFilter] = useQueryParams(
     filterAttrs.reduce((acc, val) => ({ ...acc, [val]: StringParam }), {})
   );
@@ -47,7 +47,7 @@ export default () => {
       onClick={onResetSearch}
       style={{ height: 14, lineHeight: 0 }}
     >
-      reset filter
+      {title}
     </StyledButton>
   );
 };

@@ -5,6 +5,7 @@ export default ({
   onSearch,
   size,
   inputRef,
+  autoFocus,
   placeholder = 'Black Lotus, Blacker Lotus ...',
 }) => {
   return (
@@ -12,6 +13,7 @@ export default ({
       size={size}
       paramName="name"
       placeholder={placeholder}
+      autoFocus={autoFocus}
       onSearch={onSearch}
       inputRef={inputRef}
     />

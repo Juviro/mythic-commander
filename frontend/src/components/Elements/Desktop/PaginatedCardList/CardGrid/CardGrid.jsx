@@ -15,8 +15,6 @@ const StyledWrapper = styled.div`
   padding-top: 8px;
   width: 100%;
   align-self: center;
-  max-height: 100%;
-  overflow-y: auto;
 `;
 
 export default ({ cards, loading, widthOffset, numberOfCards }) => {
@@ -60,13 +58,16 @@ export default ({ cards, loading, widthOffset, numberOfCards }) => {
           />
         ))}
       </StyledWrapper>
-      <Pagination
-        {...pagination}
-        showTotal={(total, range) =>
-          `${range[0]}-${range[1]} of ${total} cards`
-        }
-        style={{ alignSelf: 'flex-end', margin: '16px 0' }}
-      />
+      {Boolean(cards.length) && (
+        <Pagination
+          {...pagination}
+          showSizeChanger
+          showTotal={(total, range) =>
+            `${range[0]}-${range[1]} of ${total} cards`
+          }
+          style={{ alignSelf: 'flex-end', margin: '16px 0' }}
+        />
+      )}
       <CardModalDesktop
         loading={loading}
         card={selectedCard}

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 const keyMap = {
+  ENTER: 13,
   ESCAPE: 27,
   SPACE: 32,
 };

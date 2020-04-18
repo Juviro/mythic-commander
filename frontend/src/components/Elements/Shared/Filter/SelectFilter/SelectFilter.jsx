@@ -31,6 +31,7 @@ const SelectFilter = ({ paramName, options, placeholder }) => {
       if (!currentOption) return;
       setValue(currentOption.name);
     }
+    // eslint-disable-next-line
   }, [param]);
 
   const filteredOptions = unifiedOptions

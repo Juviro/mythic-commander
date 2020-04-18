@@ -1,17 +1,15 @@
 BUGFIXES:
     - backend crashes when searching for power bc * cannot be casted to float
+    - if only foil owned, show foil price as min price
 
 NEXT:
     - card search
-        - ignore key input for layout picker
         - owned badge for small zoom
-        - improve size for table when zoomed
-        - allow reset search
-        - add sortBy picker
+        - query params for search should only change on search
 
 IMPROVEMENTS: 
     - improve grid card info box design for desktop
-    - when switching wants list via search bar, hide add cards
+    - when switching wants list via search bar, hide add cards (mobile)
     - add delete button to collection
     - add range picker to collection to only show cards added in specific timeframe (1h, 24h, 7d, 3m, 1y)
 
@@ -21,13 +19,12 @@ FEATURES:
 REFACTORINGS:
 
 BACKLOG:
-    - query params for search should only change on search
     - allow searching for multiple sets/types?
     - when adding cards, allow picking set/version, with preview
     - add error page
     - in search field: *foil* suffix should add as foil
     - when adding to deck or linked wants: show if card is in linked wants / deck
-    - Add option to deck to fill up empty card slots with basic lands, based on mana occurrance
+    - Add option to deck to fill up empty card slots with basic lands, based on mana occurrance ?
     - find a way to make collection value work
     - sharable collection / decks / wants
     - prevent user from adding amount / amount foil if card is not available in foil / non-foil

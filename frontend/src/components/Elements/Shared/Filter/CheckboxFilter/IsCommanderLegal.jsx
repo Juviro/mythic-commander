@@ -10,7 +10,7 @@ export default () => {
   );
 
   const onChange = e => {
-    setChecked(e.target.checked);
+    setChecked(e.target.checked || undefined);
   };
 
   return (

@@ -23,7 +23,7 @@ export default () => {
   const [currentOptions, setCurrentOptions] = useState(null);
   const [loading, toggleLoading] = useToggle(false);
   const [queryResult, setQueryResult] = useState({});
-  const [{ page, pageSize, ...options }, setParams] = useQueryParams({
+  const [{ page, pageSize, orderBy, ...options }, setParams] = useQueryParams({
     pageSize: NumberParam,
     page: NumberParam,
     ...searchParams,
@@ -35,27 +35,25 @@ export default () => {
     setCurrentOptions(searchOptions);
     if (!isPreload) {
       toggleLoading(true);
-      //   setCurrentCards([]);
     }
 
     const { data } = await client.query({
-      fetchPolicy: 'cache-first',
       query: cardSearch,
       variables: {
         offset: offset || 0,
-        options: searchOptions,
+        options: { ...searchOptions, orderBy },
         limit: pageSize,
       },
     });
     if (isPreload) return data.cardSearch.cards;
 
     const { cards, totalResults } = data.cardSearch;
-    // hotfix if offset is incorrect due to layout switch
-    if (!cards.length && totalResults) return;
+    if (!cards.length && totalResults) return null;
 
     setQueryResult(data.cardSearch);
     setCurrentCards(cards.map(unifySingleCard));
     toggleLoading(false);
+    return null;
   };
 
   const onSearch = () => {
@@ -63,14 +61,14 @@ export default () => {
     fetchCards(options, 0);
   };
 
-  // search when page changes or site is reloaded
+  // search when page changes or site is reloaded or order is changed
   useEffect(() => {
     const hasOptions = Object.values(options).some(val => val !== undefined);
     if (!pageSize || !page || !hasOptions) return;
     const offset = (page - 1) * pageSize;
     fetchCards(currentOptions || options, offset);
     // eslint-disable-next-line
-  }, [page, pageSize]);
+  }, [page, pageSize, orderBy]);
 
   // preload next page
   useEffect(() => {
