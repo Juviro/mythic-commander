@@ -27,13 +27,13 @@ const Label = ({ title, style }) => (
   >{`${title}:`}</Typography.Text>
 );
 
-const Filter = ({ advancedSearch, onSearch, hideNameFilter }) => {
+const Filter = ({ advancedSearch, onSearch, hideNameFilter, autoFocus }) => {
   return (
     <FilterWrapper>
       {!hideNameFilter && (
         <>
           <Label title="Card name" style={{ marginTop: 0 }} />
-          <NameFilter onSearch={onSearch} />
+          <NameFilter onSearch={onSearch} autoFocus={autoFocus} />
         </>
       )}
       {advancedSearch && (

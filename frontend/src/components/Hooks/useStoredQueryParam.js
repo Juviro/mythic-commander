@@ -6,6 +6,7 @@ import useLocalStorage from './useLocalStorage';
 const initialValues = {
   zoom: 100,
   pageSize: 10,
+  layout: 'list',
 };
 
 export default (key, paramType) => {

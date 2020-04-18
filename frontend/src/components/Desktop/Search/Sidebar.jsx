@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Sidebar } from '../../Elements/Desktop';
-import { SearchButton, Filter } from '../../Elements/Shared';
+import { SearchButton, Filter, Flex, ResetFilter } from '../../Elements/Shared';
 
 export default ({ isVisible, toggleIsVisible, onSearch, loading }) => {
   return (
@@ -10,9 +10,19 @@ export default ({ isVisible, toggleIsVisible, onSearch, loading }) => {
       toggleIsVisible={toggleIsVisible}
       wrapperStyle={{ padding: '12px 24px' }}
     >
-      <Filter advancedSearch onSearch={onSearch} />
+      <Filter advancedSearch onSearch={onSearch} autoFocus />
 
-      <SearchButton onSearch={onSearch} loading={loading} />
+      <Flex
+        direction="row"
+        justify="space-between"
+        align="center"
+        style={{ marginTop: 24 }}
+      >
+        <span>
+          <ResetFilter title="reset" />
+        </span>
+        <SearchButton onSearch={onSearch} loading={loading} />
+      </Flex>
     </Sidebar>
   );
 };
