@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 import { AutoComplete } from 'antd';
-import { StringParam, useQueryParam } from 'use-query-params';
 import CustomSkeleton from '../../CustomSkeleton';
 
-const SelectFilter = ({ paramName, options, placeholder }) => {
+const SelectFilter = ({ onChange, options, placeholder, value = '' }) => {
   const inputRef = React.useRef(null);
   const unifiedOptions = options.map(option => {
     if (option.value) return option;
@@ -13,56 +12,54 @@ const SelectFilter = ({ paramName, options, placeholder }) => {
       name: option,
     };
   });
-  const [param, setParam] = useQueryParam(paramName, StringParam);
-  const initialValue = unifiedOptions.find(
-    ({ value: optionValue }) => optionValue === param
-  );
-  const [value = '', setValue] = useState(
-    initialValue ? initialValue.name : ''
-  );
+  const [currentValue, setCurrentValue] = useState('');
 
   useEffect(() => {
-    if (!param) {
-      setValue('');
-    } else {
-      const currentOption = unifiedOptions.find(
-        ({ value: optionValue }) => optionValue === param
-      );
-      if (!currentOption) return;
-      setValue(currentOption.name);
-    }
+    const newValue = unifiedOptions.find(
+      ({ value: optionValue }) => value === optionValue
+    );
+    if (!newValue) return;
+    setCurrentValue(newValue.name);
     // eslint-disable-next-line
-  }, [param]);
+  }, [value]);
 
   const filteredOptions = unifiedOptions
-    .filter(({ name }) => name.toLowerCase().includes(value.toLowerCase()))
-
+    .filter(({ name }) =>
+      name.toLowerCase().startsWith(currentValue.toLowerCase())
+    )
     .map(({ name, value: optionValue }) => (
       <AutoComplete.Option value={optionValue} key={optionValue}>
         {name}
       </AutoComplete.Option>
     ));
 
+  const onChangeInput = (inputValue = '') => {
+    if (!inputValue) onChange('');
+    setCurrentValue(inputValue);
+  };
+
   const onSelect = (_, { key, children: optionValue }) => {
-    setParam(key);
-    setValue(optionValue);
+    onChange(key);
+    setCurrentValue(optionValue);
     setTimeout(() => inputRef.current.blur(), 100);
   };
 
+  // reset current input when parent is reset
+  useEffect(() => {
+    if (value) return;
+    setCurrentValue('');
+  }, [value]);
+
   return (
     <AutoComplete
-      size="small"
-      value={value}
       allowClear
+      size="small"
+      value={currentValue}
       ref={inputRef}
-      defaultActiveFirstOption
       style={{ width: '100%' }}
       placeholder={placeholder}
-      onChange={val => {
-        setValue(val);
-        setParam('');
-      }}
       onSelect={onSelect}
+      onChange={onChangeInput}
     >
       {filteredOptions}
     </AutoComplete>
@@ -71,14 +68,15 @@ const SelectFilter = ({ paramName, options, placeholder }) => {
 
 // Wrap around loader so default value is set correctly
 // even if options are not loaded from provider yet
-export default ({ paramName, options, placeholder }) => {
+export default ({ onChange, options, placeholder, value }) => {
   if (!options.length) return <CustomSkeleton.Line />;
 
   return (
     <SelectFilter
-      paramName={paramName}
       options={options}
+      value={value}
       placeholder={placeholder}
+      onChange={onChange}
     />
   );
 };

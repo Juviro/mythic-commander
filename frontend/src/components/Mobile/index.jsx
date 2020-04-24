@@ -6,7 +6,7 @@ import Menu from './Menu';
 import Deck from './Deck';
 import Decks from './Decks';
 import Card from './Card';
-import Cards from './Cards';
+import Search from './Search';
 import Collection from './Collection';
 import WantsList from './WantsList';
 import WantsLists from './WantsLists';
@@ -24,7 +24,7 @@ const App = () => {
     <>
       <Menu />
       <Switch>
-        <Route path="/m/search/:oracle_id?/:cardId?" exact component={Cards} />
+        <Route path="/m/search/:oracle_id?/:cardId?" exact component={Search} />
         <Route path="/m/decks" exact component={Decks} />
         <Route
           path="/m/decks/:id/:oracle_id?/:cardId?"

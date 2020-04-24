@@ -1,32 +1,25 @@
 import React, { useContext } from 'react';
 
 import { Checkbox } from 'antd';
-import { StringParam, useQueryParams } from 'use-query-params';
 import CardContext from '../../../../CardProvider/CardProvider';
 import SelectFilter from './SelectFilter';
 
-export default () => {
-  const [{ isLegendary }, setFilter] = useQueryParams({
-    isLegendary: StringParam,
-  });
-
+export default ({ onChangeOption, value, isLegendary }) => {
   const { cardTypes } = useContext(CardContext);
 
   const displayLegendary = shouldDisplay => e => {
     const isChecked = e.target.checked;
+    const newValue = isChecked ? shouldDisplay : '';
 
-    if (!isChecked) {
-      setFilter({ isLegendary: '' });
-    } else {
-      setFilter({ isLegendary: shouldDisplay });
-    }
+    onChangeOption('isLegendary')(newValue);
   };
 
   return (
     <span>
       <SelectFilter
+        value={value}
+        onChange={onChangeOption('cardType')}
         options={cardTypes}
-        paramName="cardType"
         placeholder="Creature, Enchantment, ..."
       />
       <div style={{ marginTop: 8 }}>

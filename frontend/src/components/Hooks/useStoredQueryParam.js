@@ -7,10 +7,14 @@ const initialValues = {
   zoom: 100,
   pageSize: 10,
   layout: 'list',
+  orderBy: 'name-asc',
 };
 
 export default (key, paramType) => {
-  if (!key || !paramType || !initialValues[key]) throw new Error();
+  if (!key || !paramType || !initialValues[key]) {
+    throw new Error('param or initial value missing');
+  }
+
   const [storedValue, setStoredValue] = useLocalStorage(
     key,
     initialValues[key]

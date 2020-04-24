@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useQueryParams, NumberParam } from 'use-query-params';
+import { useQueryParams, NumberParam, StringParam } from 'use-query-params';
 import { useApolloClient } from 'react-apollo';
 import styled from 'styled-components';
+import { withRouter } from 'react-router';
+import { isEqual } from 'lodash';
 
 import Sidebar from './Sidebar';
 import { cardSearch } from './queries';
-import { useToggle } from '../../Hooks';
+import { useToggle, useStoredQueryParam } from '../../Hooks';
 import searchParams from '../../../constants/searchParams';
 import { unifySingleCard } from '../../../utils/unifyCardFormat';
 import { PaginatedCardList } from '../../Elements/Desktop';
@@ -17,24 +19,26 @@ const StyledWrapper = styled.div`
   height: calc(100% - 49px);
 `;
 
-export default () => {
+const Search = ({ history }) => {
   const [currentCards, setCurrentCards] = useState([]);
   const [isSidebarVisible, toggleIsSidebarVisible] = useToggle(true);
-  const [currentOptions, setCurrentOptions] = useState(null);
   const [loading, toggleLoading] = useToggle(false);
   const [queryResult, setQueryResult] = useState({});
-  const [{ page, pageSize, orderBy, ...options }, setParams] = useQueryParams({
-    pageSize: NumberParam,
+  const [pageSize] = useStoredQueryParam('pageSize', NumberParam);
+  const [lastSearchOptions, setLastSearchOptions] = useState({});
+  const [orderBy] = useStoredQueryParam('orderBy', StringParam);
+  const [{ page = 1, ...options }, setParams] = useQueryParams({
     page: NumberParam,
     ...searchParams,
   });
+  const [currentOptions, setCurrentOptions] = useState(options);
 
   const client = useApolloClient();
 
-  const fetchCards = async (searchOptions = options, offset, isPreload) => {
-    setCurrentOptions(searchOptions);
+  const fetchCards = async (searchOptions, offset, isPreload) => {
     if (!isPreload) {
       toggleLoading(true);
+      setLastSearchOptions(searchOptions);
     }
 
     const { data } = await client.query({
@@ -57,29 +61,28 @@ export default () => {
   };
 
   const onSearch = () => {
-    setParams({ page: 1 });
-    fetchCards(options, 0);
+    setParams({ page: 1, ...currentOptions });
   };
 
-  // search when page changes or site is reloaded or order is changed
+  // start a new search if query params change
   useEffect(() => {
-    const hasOptions = Object.values(options).some(val => val !== undefined);
-    if (!pageSize || !page || !hasOptions) return;
+    if (!pageSize) return;
     const offset = (page - 1) * pageSize;
-    fetchCards(currentOptions || options, offset);
+
+    // reset cards list (including element position) when re-searching
+    const shouldReset = !isEqual(lastSearchOptions, options);
+    if (shouldReset) setCurrentCards([]);
+    setCurrentOptions(options);
+    fetchCards(options, offset);
     // eslint-disable-next-line
-  }, [page, pageSize, orderBy]);
+  }, [history.location.search]);
 
   // preload next page
   useEffect(() => {
     if (!currentCards || !currentCards.length || !queryResult.hasMore) return;
     const prefetchCards = async () => {
       const nextPageOffset = page * pageSize;
-      const nextPageCards = await fetchCards(
-        currentOptions,
-        nextPageOffset,
-        true
-      );
+      const nextPageCards = await fetchCards(options, nextPageOffset, true);
       preloadImages(nextPageCards, ['small', 'normal']);
     };
     prefetchCards();
@@ -90,16 +93,32 @@ export default () => {
   useEffect(() => {
     if (page) return;
     setCurrentCards([]);
-    setCurrentOptions(null);
+    setCurrentOptions(options);
     setQueryResult({});
     toggleLoading(false);
     // eslint-disable-next-line
   }, [page]);
 
+  const onChangeOption = key => value => {
+    setCurrentOptions({ ...currentOptions, [key]: value });
+  };
+
+  const onResetOptions = () => {
+    const defaultOptions = Object.keys(options).reduce(
+      (acc, val) => ({ ...acc, [val]: undefined }),
+      {}
+    );
+    setCurrentOptions(defaultOptions);
+  };
+
   return (
     <StyledWrapper>
       <Sidebar
+        loading={loading}
         onSearch={onSearch}
+        onResetOptions={onResetOptions}
+        onChangeOption={onChangeOption}
+        options={currentOptions}
         isVisible={isSidebarVisible}
         toggleIsVisible={toggleIsSidebarVisible}
       />
@@ -114,3 +133,5 @@ export default () => {
     </StyledWrapper>
   );
 };
+
+export default withRouter(Search);

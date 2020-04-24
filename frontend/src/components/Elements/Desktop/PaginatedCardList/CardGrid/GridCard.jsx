@@ -2,11 +2,13 @@ import React, { useRef, useEffect } from 'react';
 import { Row, Col } from 'antd';
 import styled from 'styled-components';
 
+import { NumberParam } from 'use-query-params';
 import FlippableCard from '../../../Shared/FlippableCard';
 import { getPriceLabel } from '../../../../../utils/cardStats';
 import OwnedBadge from '../../../Shared/OwnedBadge';
 import { primary } from '../../../../../constants/colors';
 import scrollIntoView from '../../../../../utils/scrollIntoView';
+import { useStoredQueryParam } from '../../../../Hooks';
 
 const StyledCardWrapper = styled.div`
   padding: 8px;
@@ -21,23 +23,28 @@ const StyledCardWrapper = styled.div`
 
 const StyledImageWrapper = styled.div`
   position: relative;
-  border-radius: 12px;
+  overflow: hidden;
+  border-radius: 4%;
 
   ${({ isSelected }) =>
     isSelected ? `box-shadow: 0px 0px 6px 6px ${primary};` : ''}
 `;
 
-const StyledInfoWrapper = styled(Row)`
-  padding: 0 12px;
-  align-items: center;
+const StyledAmountWrapper = styled.div`
+  padding: 1% 12px;
   position: absolute;
-  background-color: #ececec;
+  background-color: #aebde6;
   opacity: 0.8;
   bottom: 0;
-  width: 80%;
   align-self: flex-start;
   border-top-right-radius: 8px;
-  border-bottom-left-radius: 8px;
+`;
+
+const StyledInfoWrapper = styled(Row)`
+  width: ${({ width }) => width}px;
+  margin-top: 4px;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const StyledCol = styled(Col)`
@@ -51,6 +58,7 @@ const GridCard = ({
   width,
   loading,
 }) => {
+  const [zoom = 100] = useStoredQueryParam('zoom', NumberParam);
   const displayedAmount = card.amount || card.totalAmount;
   const ref = useRef(null);
 
@@ -60,6 +68,7 @@ const GridCard = ({
   }, [isSelected]);
 
   const cardSize = { width, height: width * 1.39 };
+  const textSize = Math.max(10 + 4 * (zoom / 100));
 
   return (
     <StyledCardWrapper
@@ -73,20 +82,22 @@ const GridCard = ({
         style={cardSize}
       >
         <FlippableCard card={card} loading={loading} />
-        {!loading && (
-          <StyledInfoWrapper>
-            <StyledCol span={8} style={{ justifyContent: 'flex-start' }}>
-              {displayedAmount && `${displayedAmount}x`}
-            </StyledCol>
-            <StyledCol span={8} style={{ justifyContent: 'center' }}>
-              {getPriceLabel(card.minPrice)}
-            </StyledCol>
-            <StyledCol span={8} style={{ justifyContent: 'flex-end' }}>
-              {card.owned && <OwnedBadge />}
-            </StyledCol>
-          </StyledInfoWrapper>
+        {displayedAmount > 1 && (
+          <StyledAmountWrapper
+            style={{ fontSize: textSize }}
+          >{`${displayedAmount}x`}</StyledAmountWrapper>
         )}
       </StyledImageWrapper>
+      {!loading && (
+        <StyledInfoWrapper width={width} style={{ fontSize: textSize }}>
+          <StyledCol span={8} style={{ justifyContent: 'flex-start' }}>
+            {getPriceLabel(card.minPrice)}
+          </StyledCol>
+          <StyledCol span={8} style={{ justifyContent: 'flex-end' }}>
+            {card.owned && <OwnedBadge style={{ fontSize: textSize }} />}
+          </StyledCol>
+        </StyledInfoWrapper>
+      )}
     </StyledCardWrapper>
   );
 };

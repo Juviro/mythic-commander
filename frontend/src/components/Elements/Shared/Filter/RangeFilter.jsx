@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import { Input, Typography } from 'antd';
-import { useQueryParam, StringParam } from 'use-query-params';
 import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
@@ -11,8 +10,7 @@ const StyledWrapper = styled.div`
   justify-content: space-around;
 `;
 
-export default ({ paramName, onSearch }) => {
-  const [value = '', setSearch] = useQueryParam(paramName, StringParam);
+export default ({ onSearch, onChange: onSubmit, value = '' }) => {
   const inputRefFrom = useRef(null);
   const inputRefTo = useRef(null);
 
@@ -21,8 +19,9 @@ export default ({ paramName, onSearch }) => {
 
   const onChange = isFirst => event => {
     const val = event.target.value && Math.min(event.target.value, 99);
-    if (isFirst) setSearch(`${val}-${to}`);
-    if (!isFirst) setSearch(`${from}-${val}`);
+    const newValue = isFirst ? `${val}-${to}` : `${from}-${val}`;
+
+    onSubmit(newValue);
   };
 
   const onPressEnter = () => {

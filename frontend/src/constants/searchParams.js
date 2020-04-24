@@ -14,5 +14,4 @@ export default {
   isLegendary: StringParam,
   isOwned: BooleanParam,
   isCommanderLegal: BooleanParam,
-  orderBy: StringParam,
 };

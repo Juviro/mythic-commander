@@ -54,15 +54,9 @@ const GridCard = ({ card, onClick, isSelected, widthPercentage }) => {
       <StyledImageWrapper isSelected={isSelected}>
         <FlippableCard card={card} />
         <StyledInfoWrapper>
-          <StyledCol span={8} style={{ justifyContent: 'flex-start' }}>
-            {displayedAmount && `${displayedAmount}x`}
-          </StyledCol>
-          <StyledCol span={8} style={{ justifyContent: 'center' }}>
-            {getPriceLabel(card.minPrice)}
-          </StyledCol>
-          <StyledCol span={8} style={{ justifyContent: 'flex-end' }}>
-            {card.owned && <OwnedBadge />}
-          </StyledCol>
+          <span>{displayedAmount && `${displayedAmount}x`}</span>
+          <span>{getPriceLabel(card.minPrice)}</span>
+          <span>{card.owned && <OwnedBadge />}</span>
         </StyledInfoWrapper>
       </StyledImageWrapper>
     </StyledCardWrapper>

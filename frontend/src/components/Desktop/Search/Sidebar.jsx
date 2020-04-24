@@ -3,14 +3,30 @@ import React from 'react';
 import { Sidebar } from '../../Elements/Desktop';
 import { SearchButton, Filter, Flex, ResetFilter } from '../../Elements/Shared';
 
-export default ({ isVisible, toggleIsVisible, onSearch, loading }) => {
+export default ({
+  onChangeOption,
+  isVisible,
+  toggleIsVisible,
+  onSearch,
+  loading,
+  options,
+  onResetOptions,
+}) => {
+  const isFilterResettable = Object.values(options).some(Boolean);
+
   return (
     <Sidebar
       isVisible={isVisible}
       toggleIsVisible={toggleIsVisible}
       wrapperStyle={{ padding: '12px 24px' }}
     >
-      <Filter advancedSearch onSearch={onSearch} autoFocus />
+      <Filter
+        advancedSearch
+        onSearch={onSearch}
+        autoFocus
+        options={options}
+        onChangeOption={onChangeOption}
+      />
 
       <Flex
         direction="row"
@@ -19,7 +35,9 @@ export default ({ isVisible, toggleIsVisible, onSearch, loading }) => {
         style={{ marginTop: 24 }}
       >
         <span>
-          <ResetFilter title="reset" />
+          {isFilterResettable && (
+            <ResetFilter title="reset" onReset={onResetOptions} />
+          )}
         </span>
         <SearchButton onSearch={onSearch} loading={loading} />
       </Flex>

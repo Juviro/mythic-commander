@@ -6,13 +6,16 @@ export default ({
   size,
   inputRef,
   autoFocus,
+  onChange,
+  value,
   placeholder = 'Black Lotus, Blacker Lotus ...',
 }) => {
   return (
     <TextFilter
       size={size}
-      paramName="name"
+      value={value}
       placeholder={placeholder}
+      onChange={onChange}
       autoFocus={autoFocus}
       onSearch={onSearch}
       inputRef={inputRef}

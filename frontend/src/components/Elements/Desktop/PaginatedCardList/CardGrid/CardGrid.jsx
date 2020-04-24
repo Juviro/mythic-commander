@@ -43,8 +43,18 @@ export default ({ cards, loading, widthOffset, numberOfCards }) => {
     setSelectedElementPosition(index + 1);
   };
 
+  const paginationComponent = (
+    <Pagination
+      {...pagination}
+      showSizeChanger
+      showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} cards`}
+      style={{ alignSelf: 'flex-end', margin: '16px 0' }}
+    />
+  );
+
   return (
     <>
+      {Boolean(cards.length) && paginationComponent}
       <StyledWrapper>
         {cards.map((card, index) => (
           <GridCard
@@ -58,16 +68,7 @@ export default ({ cards, loading, widthOffset, numberOfCards }) => {
           />
         ))}
       </StyledWrapper>
-      {Boolean(cards.length) && (
-        <Pagination
-          {...pagination}
-          showSizeChanger
-          showTotal={(total, range) =>
-            `${range[0]}-${range[1]} of ${total} cards`
-          }
-          style={{ alignSelf: 'flex-end', margin: '16px 0' }}
-        />
-      )}
+      {Boolean(cards.length) && paginationComponent}
       <CardModalDesktop
         loading={loading}
         card={selectedCard}

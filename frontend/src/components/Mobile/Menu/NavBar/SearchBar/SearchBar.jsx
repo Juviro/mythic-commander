@@ -119,7 +119,7 @@ const SearchBar = ({ history, transparentSearchBar }) => {
       type: 'CARD',
       options: filteredCards,
       onShowAll: () => {
-        history.push(`/m/search?name=${query}&autoSearch=true`);
+        history.push(`/m/search?name=${query}`);
         onSelect();
       },
     },
@@ -135,7 +135,6 @@ const SearchBar = ({ history, transparentSearchBar }) => {
   return (
     <>
       <AutoComplete
-        allowClear
         open={isOpen}
         value={query}
         ref={inputEl}
@@ -151,6 +150,7 @@ const SearchBar = ({ history, transparentSearchBar }) => {
         className={transparentSearchBar && 'transparent'}
       >
         <Input
+          allowClear
           className="no-border"
           onClick={() => toggleIsOpen(true)}
           onInput={() => toggleIsOpen(true)}

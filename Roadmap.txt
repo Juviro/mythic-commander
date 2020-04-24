@@ -1,31 +1,41 @@
 BUGFIXES:
     - backend crashes when searching for power bc * cannot be casted to float
     - if only foil owned, show foil price as min price
+    - minPrice wrong for cards with multiple layouts (uro)
 
 NEXT:
     - card search
-        - owned badge for small zoom
-        - query params for search should only change on search
+        - only reset search when re-searching, not when going to first page
+        - move collection to paginated cardlist
 
 IMPROVEMENTS: 
-    - improve grid card info box design for desktop
     - when switching wants list via search bar, hide add cards (mobile)
-    - add delete button to collection
+    - on mobile: advanced search -> click card -> search card throught searchBar -> click back: show show advanced search without card modal. Maybe use replace history.
+    - only show distinct cards on search, but in a way that the set still works. DistinctCardsPerSets view?
     - add range picker to collection to only show cards added in specific timeframe (1h, 24h, 7d, 3m, 1y)
 
 FEATURES:
+    - add delete button to collection
+    - add mass delete to collection
     - add edhrec and scryfall to card links
+    - detail card view - like current desktop modal plus:
+        - oracle text
+        - all legalities (?)
+        - synergies (EDHrec)
+        - related cards (token, partner, meld etc - should be in db? or skryfall?)
 
 REFACTORINGS:
 
 BACKLOG:
-    - allow searching for multiple sets/types?
+    - add possible combos section to detail card view (https://discordapp.com/channels/673601282946236417/673601283609067559, no api yet)
+    - add expandable (lazy load) edhrec synergies to card view
+    - add info tooltip for search: explain amount prefix, fuzzy search
+    - allow searching for multiple sets/types/subtypes?
     - when adding cards, allow picking set/version, with preview
     - add error page
+    - show % owned of all cards (unique cards / distinct cards)
     - in search field: *foil* suffix should add as foil
     - when adding to deck or linked wants: show if card is in linked wants / deck
-    - Add option to deck to fill up empty card slots with basic lands, based on mana occurrance ?
-    - find a way to make collection value work
     - sharable collection / decks / wants
     - prevent user from adding amount / amount foil if card is not available in foil / non-foil
     - prefer owned versions when adding to deck or wants
