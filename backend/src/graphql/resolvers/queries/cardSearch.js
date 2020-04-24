@@ -48,8 +48,8 @@ const addRangeClause = (q, encodedValue, columnName) => {
   // eslint-disable-next-line no-unused-vars
   const [_, from = '', __, to = ''] = encodedValue.match(/(\d*)(-)(\d*)/);
 
-  if (from) q.whereRaw(`"${columnName}"::float >= ${from}`);
-  if (to) q.whereRaw(`"${columnName}"::float <= ${to}`);
+  if (from) q.whereRaw(`try_cast_float("${columnName}") >= ${from}`);
+  if (to) q.whereRaw(`try_cast_float("${columnName}") <= ${to}`);
 };
 
 const addRarityClause = (q, rarity) => {

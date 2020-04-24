@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Set from '../Set';
 import EditableAmount from '../EditableAmount';
 import getIsMobile from '../../../../utils/isMobile';
+import { getPriceLabel } from '../../../../utils/cardStats';
 
 const StyledPriceWrapper = styled.div`
   @media (max-width: 764px) {
@@ -16,9 +17,7 @@ const renderSet = card => {
 };
 
 const renderPrice = priceKey => price => (
-  <StyledPriceWrapper>
-    {price[priceKey] ? `$${price[priceKey]}` : '-'}
-  </StyledPriceWrapper>
+  <StyledPriceWrapper>{getPriceLabel(price[priceKey])}</StyledPriceWrapper>
 );
 
 const renderOwned = (isEditing, onChangeAmount, onSaveChanges, amountKey) => (

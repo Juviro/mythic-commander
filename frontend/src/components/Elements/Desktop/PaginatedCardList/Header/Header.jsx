@@ -10,12 +10,12 @@ const StyledWrapper = styled.div`
   margin-bottom: 16px;
 `;
 
-export default () => {
+export default ({ showZoomSlider }) => {
   return (
     <StyledWrapper>
       <SortPicker />
       <Flex direction="row">
-        <ZoomSlider />
+        {showZoomSlider && <ZoomSlider />}
         <LayoutPicker hideCard />
       </Flex>
     </StyledWrapper>

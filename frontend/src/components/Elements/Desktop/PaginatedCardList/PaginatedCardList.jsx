@@ -5,6 +5,7 @@ import Flex from '../../Shared/Flex';
 import CardTable from './CardTable';
 import CardGrid from './CardGrid';
 import Header from './Header';
+import FullscreenSpinner from '../../Shared/Spinner';
 
 export default ({
   cards,
@@ -16,6 +17,7 @@ export default ({
 }) => {
   const [layout] = useQueryParam('layout', StringParam);
   const width = `calc(100% - ${widthOffset}px)`;
+  const showCardList = Boolean(cards.length);
 
   const cardList =
     layout === 'list' ? (
@@ -45,8 +47,8 @@ export default ({
         transition: 'width 0.2s',
       }}
     >
-      <Header />
-      {(loading || cards) && cardList}
+      <Header showZoomSlider={layout === 'grid'} />
+      {showCardList ? cardList : loading && <FullscreenSpinner />}
     </Flex>
   );
 };

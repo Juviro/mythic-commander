@@ -4,6 +4,7 @@ import { useQueryParams, StringParam } from 'use-query-params';
 import CustomSkeleton from '../../Shared/CustomSkeleton';
 import { filterCards, sortCards } from '../../../../utils/cardFilter';
 import CardList from '.';
+import { useStoredQueryParam } from '../../../Hooks';
 
 export const CARDS_PER_PAGE = 30;
 
@@ -14,17 +15,10 @@ export default ({
   onDeleteCard,
   onEditCard,
   moveToList,
+  name: nameQuery,
 }) => {
   const [
-    {
-      name,
-      colors,
-      layout,
-      creatureType,
-      cardType,
-      isLegendary,
-      orderBy = 'added-desc',
-    },
+    { name, colors, layout, creatureType, cardType, isLegendary },
   ] = useQueryParams({
     name: StringParam,
     colors: StringParam,
@@ -32,8 +26,8 @@ export default ({
     cardType: StringParam,
     isLegendary: StringParam,
     layout: StringParam,
-    orderBy: StringParam,
   });
+  const [orderBy = 'added-desc'] = useStoredQueryParam('orderBy', StringParam);
 
   const [displayedResults, setDisplayedResults] = useState(CARDS_PER_PAGE);
 
@@ -52,7 +46,7 @@ export default ({
 
   const filteredCards = filterCards(cards, {
     colors,
-    name,
+    name: name || nameQuery,
     creatureType,
     cardType,
     isLegendary,

@@ -2,13 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Popover } from 'antd';
-import { NumberParam } from 'use-query-params';
 import { getImageUrl } from '../../../../utils/cardImage';
 import FullscreenCardModal from '../../Mobile/FullscreenCardModal';
 import CustomSkeleton from '../CustomSkeleton';
 import FlippableCard from '../FlippableCard';
-import { useToggle, useStoredQueryParam } from '../../../Hooks';
-import isMobile from '../../../../utils/isMobile';
+import { useToggle } from '../../../Hooks';
 
 const StyledCard = styled.img`
   width: 100%;
@@ -28,13 +26,9 @@ const PreviewCardImage = ({
   card,
   highlightOnHover,
 }) => {
-  const [zoom] = useStoredQueryParam('zoom', NumberParam);
   const [cardPreviewOpen, toggleCardPreviewOpen] = useToggle(false);
   const [loading, toggleLoading] = useToggle(true);
   const { id, imgKey } = card;
-
-  const scaledWidth = isMobile() ? width : width * (zoom / 100);
-  const scaledHeight = isMobile() ? height : height * (zoom / 100);
 
   const onChangeIsOpen = event => {
     event.stopPropagation();
@@ -43,8 +37,8 @@ const PreviewCardImage = ({
 
   const previewImage = (
     <StyledPreviewWrapper
-      width={scaledWidth}
-      height={scaledHeight}
+      width={width}
+      height={height}
       onClick={onChangeIsOpen}
     >
       <StyledCard

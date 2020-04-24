@@ -191,7 +191,7 @@ type Query {
     limit: Int
     options: CardsOptionsInput!
   ): PaginatedCards!
-  cardByOracleId(oracle_id: String!): Card!
+  cardByOracleId(oracle_id: String!): Card
 
   numberOfCachedCards: Int!
   cachedCards: [CachedCard!]!

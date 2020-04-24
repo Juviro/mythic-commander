@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Select } from 'antd';
-import { StringParam, useQueryParam } from 'use-query-params';
+import { StringParam } from 'use-query-params';
+import { useStoredQueryParam } from '../../../Hooks';
 
 const DEFAULT_FILTER = [
   {
@@ -62,21 +63,16 @@ export default ({ showCollectionFilters, style }) => {
     ? COLLECTION_FILTER
     : DEFAULT_FILTER;
 
-  const [orderBy, setOrderBy] = useQueryParam('orderBy', StringParam);
+  const [orderBy, setOrderBy] = useStoredQueryParam('orderBy', StringParam);
 
-  useEffect(() => {
-    if (!orderBy) setOrderBy(orderOptions[0].value);
-    // eslint-disable-next-line
-  }, [orderBy]);
-
-  const defaultValue = orderOptions.find(
+  const currentValue = orderOptions.find(
     ({ value }) => value === (orderBy || orderOptions[0].value)
   ).label;
 
   return (
     <Select
       listHeight={390}
-      defaultValue={defaultValue}
+      value={currentValue}
       dropdownStyle={{ minWidth: 200 }}
       onSelect={value => setOrderBy(value)}
       style={{ width: 215, maxWidth: 'calc(100% - 140px)', ...style }}

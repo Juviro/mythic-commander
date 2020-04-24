@@ -1,12 +1,13 @@
 import React from 'react';
 import TextFilter from './TextFilter';
 
-export default ({ onSearch }) => {
+export default ({ onSearch, onChange, value }) => {
   return (
     <TextFilter
-      paramName="text"
       placeholder="Undying, +1/+1 counter, ..."
+      value={value}
       onSearch={onSearch}
+      onChange={onChange}
     />
   );
 };

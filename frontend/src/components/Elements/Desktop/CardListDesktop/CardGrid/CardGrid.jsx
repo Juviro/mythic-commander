@@ -8,7 +8,12 @@ import useGridShortcuts from './useGridShortcuts';
 import CardModalDesktop from '../../CardModalDesktop';
 import GridCard from './GridCard';
 import getNumberOfCards from './getNumberOfCards';
-import { useWindowSize, usePreloadCards, useToggle } from '../../../../Hooks';
+import {
+  useWindowSize,
+  usePreloadCards,
+  useToggle,
+  useStoredQueryParam,
+} from '../../../../Hooks';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -19,7 +24,7 @@ const StyledWrapper = styled.div`
 
 export default ({ cards, loading, widthOffset }) => {
   useWindowSize();
-  const [orderBy] = useQueryParam('orderBy', StringParam);
+  const [orderBy] = useStoredQueryParam('orderBy', StringParam);
   const [showDetails, toggleShowDetail] = useToggle(false);
 
   const [query] = useQueryParam('name', StringParam);

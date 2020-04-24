@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Divider } from 'antd';
-
+import { withRouter } from 'react-router';
 import { useApolloClient } from 'react-apollo';
 import { useQueryParams, StringParam } from 'use-query-params';
+
 import {
   LayoutAndSortPicker,
   CollapsableFilter,
@@ -15,7 +16,7 @@ import { cardSearch } from './queries';
 import CardModal from '../Card/CardModal';
 import NameFilter from '../../Elements/Shared/Filter/TextFilter/NameFilter';
 import { CARDS_PER_PAGE } from '../../Elements/Mobile/CardListMobile/FilteredCardList';
-import { useToggle } from '../../Hooks';
+import { useToggle, useStoredQueryParam } from '../../Hooks';
 import { unifySingleCard } from '../../../utils/unifyCardFormat';
 import searchParams from '../../../constants/searchParams';
 
@@ -28,23 +29,19 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
-export default () => {
+const Search = ({ history }) => {
   const [allCards, setAllCards] = useState(null);
-  const [currentOptions, setCurrentOptions] = useState(null);
   const [queryResult, setQueryResult] = useState({});
   const [loading, toggleLoading] = useToggle(false);
-  const [{ autoSearch, ...options }, setFilter] = useQueryParams({
-    autoSearch: StringParam,
-
-    ...searchParams,
-  });
+  const [orderBy] = useStoredQueryParam('orderBy', StringParam);
+  const [options, setParams] = useQueryParams(searchParams);
+  const [currentOptions, setCurrentOptions] = useState(options);
 
   const client = useApolloClient();
 
   const { hasMore, nextOffset = 0, totalResults = 0 } = queryResult;
 
-  const onLoadCards = async (searchOptions, offset = 0) => {
-    setCurrentOptions(searchOptions);
+  const fetchCards = async (searchOptions, offset = 0) => {
     toggleLoading(true);
     const { data } = await client.query({
       fetchPolicy: 'cache-first',
@@ -52,7 +49,7 @@ export default () => {
       variables: {
         offset,
         limit: CARDS_PER_PAGE,
-        options: searchOptions,
+        options: { ...searchOptions, orderBy },
       },
     });
     setQueryResult(data.cardSearch);
@@ -63,34 +60,60 @@ export default () => {
   };
 
   const onSearch = () => {
-    onLoadCards(options);
+    setParams(currentOptions);
+    fetchCards(currentOptions);
   };
 
   const onLoadMore = () => {
-    onLoadCards(currentOptions, nextOffset);
+    fetchCards(options, nextOffset);
   };
 
+  // search when initial values are set or params change
   useEffect(() => {
-    if (!autoSearch) return;
-    const autoLoadCards = async () => {
-      await onLoadCards(options);
-      setFilter({ autoSearch: '' });
-    };
-    autoLoadCards();
+    const hasOptions = Object.values(options).some(val => val !== undefined);
+    if (!hasOptions) return;
+    // TODO:: only scroll to top if options changed
+    setTimeout(() => window.scrollTo(0, 0), 100);
+    setCurrentOptions(options);
+    fetchCards(options);
     // eslint-disable-next-line
-  }, [autoSearch]);
+  }, [history.location.search]);
+
+  const onChangeOption = key => value => {
+    setCurrentOptions({ ...currentOptions, [key]: value });
+  };
+
+  const onResetOptions = () => {
+    const defaultOptions = Object.keys(options).reduce(
+      (acc, val) => ({ ...acc, [val]: undefined }),
+      {}
+    );
+    setCurrentOptions(defaultOptions);
+  };
+
+  const isFilterResettable = Object.values(currentOptions).some(Boolean);
 
   return (
     <>
       <StyledWrapper>
-        <Header />
-        <NameFilter onSearch={onSearch} size="large" />
+        <Header
+          onResetOptions={onResetOptions}
+          isFilterResettable={isFilterResettable}
+        />
+        <NameFilter
+          onSearch={onSearch}
+          size="large"
+          value={currentOptions.name}
+          onChange={onChangeOption('name')}
+        />
         <CollapsableFilter
           hideReset
           advancedSearch
           hideNameFilter
           headerText="Advanced"
           onSearch={onSearch}
+          onChangeOption={onChangeOption}
+          options={currentOptions}
         />
         <LayoutAndSortPicker />
         <SearchButton onSearch={onSearch} loading={loading} />
@@ -110,3 +133,5 @@ export default () => {
     </>
   );
 };
+
+export default withRouter(Search);
