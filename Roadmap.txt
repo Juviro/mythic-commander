@@ -5,7 +5,6 @@ BUGFIXES:
 
 NEXT:
     - card search
-        - only reset search when re-searching, not when going to first page
         - move collection to paginated cardlist
 
 IMPROVEMENTS: 

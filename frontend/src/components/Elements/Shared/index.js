@@ -24,6 +24,7 @@ export { default as Login } from './Login';
 export { default as ManaCost } from './ManaCost';
 export { default as MoveTo } from './MoveTo';
 export { default as MoveToModal } from './MoveTo/MoveToModal';
+export { default as MythicCommanderBanner } from './MythicCommanderBanner';
 export { default as OwnedBadge } from './OwnedBadge';
 export { default as PreviewCardImage } from './PreviewCardImage';
 export { default as SearchButton } from './SearchButton';

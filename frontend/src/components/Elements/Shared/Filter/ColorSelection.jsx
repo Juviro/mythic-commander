@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Checkbox } from 'antd';
-import { colors as colorIcons } from '../../../../assets/icons';
+import { colors as colorIcons } from '../../../../assets/mtgIcons';
 
 const colors = ['w', 'u', 'b', 'r', 'g'];
 

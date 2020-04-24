@@ -36,6 +36,12 @@ const SelectFilter = ({ onChange, options, placeholder, value = '' }) => {
   const onChangeInput = (inputValue = '') => {
     if (!inputValue) onChange('');
     setCurrentValue(inputValue);
+    const isValidOption = unifiedOptions.find(
+      ({ name }) => name.toLowerCase() === inputValue.toLowerCase()
+    );
+    if (isValidOption) {
+      onChange(isValidOption.value);
+    }
   };
 
   const onSelect = (_, { key, children: optionValue }) => {

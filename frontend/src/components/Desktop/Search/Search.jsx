@@ -38,7 +38,7 @@ const Search = ({ history }) => {
   const fetchCards = async (searchOptions, offset, isPreload) => {
     if (!isPreload) {
       toggleLoading(true);
-      setLastSearchOptions(searchOptions);
+      setLastSearchOptions({ ...searchOptions, orderBy });
     }
 
     const { data } = await client.query({
@@ -70,7 +70,7 @@ const Search = ({ history }) => {
     const offset = (page - 1) * pageSize;
 
     // reset cards list (including element position) when re-searching
-    const shouldReset = !isEqual(lastSearchOptions, options);
+    const shouldReset = !isEqual(lastSearchOptions, { ...options, orderBy });
     if (shouldReset) setCurrentCards([]);
     setCurrentOptions(options);
     fetchCards(options, offset);

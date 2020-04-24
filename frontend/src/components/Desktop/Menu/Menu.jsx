@@ -2,14 +2,16 @@ import React from 'react';
 import { Menu } from 'antd';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
-import { UserAvatar } from '../../Elements/Shared';
+import { UserAvatar, MythicCommanderBanner } from '../../Elements/Shared';
+import { darkBackground } from '../../../constants/colors';
 
 const StyledMenu = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   border-bottom: 1px solid #e8e8e8;
+  background-color: ${darkBackground};
 `;
 
 const AvatarWrapper = styled.div`
@@ -34,9 +36,15 @@ const MENU_ENTRIES = [
 const DesktopMenu = ({ location: { pathname } }) => {
   return (
     <StyledMenu>
-      <Menu mode="horizontal" selectedKeys={pathname}>
+      <MythicCommanderBanner />
+      <Menu mode="horizontal" selectedKeys={pathname} theme="dark">
         {MENU_ENTRIES.map(({ title, href }) => (
-          <Menu.Item key={href}>
+          <Menu.Item
+            key={href}
+            style={{
+              padding: '0 64px',
+            }}
+          >
             <Link to={href}>{title}</Link>
           </Menu.Item>
         ))}
