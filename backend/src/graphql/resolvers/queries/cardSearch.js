@@ -123,12 +123,25 @@ export default async (
 
   const cards = await query;
 
-  const hasMore = cards.length > limit + offset;
+  const shouldFilter = cards.length < 500;
+  console.log('cards.length :', cards.length);
+
+  const filteredCards = shouldFilter
+    ? cards.filter(({ oracle_id }, index) => {
+        const firstIndex = cards.findIndex(
+          card => card.oracle_id === oracle_id
+        );
+        if (firstIndex !== index) return false;
+        return true;
+      })
+    : cards;
+
+  const hasMore = filteredCards.length > limit + offset;
 
   return {
     hasMore,
-    totalResults: cards.length,
+    totalResults: filteredCards.length,
     nextOffset: hasMore ? offset + limit : null,
-    cards: cards.slice(offset, offset + limit),
+    cards: filteredCards.slice(offset, offset + limit),
   };
 };

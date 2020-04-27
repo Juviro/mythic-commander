@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { Sidebar } from '../../Elements/Desktop';
 import { SearchButton, Filter, Flex, ResetFilter } from '../../Elements/Shared';
@@ -12,7 +12,15 @@ const StyledContent = styled.div`
   justify-content: center;
   flex-direction: column;
   background-color: white;
-  padding: 24px;
+  padding: 12px;
+  overflow: auto;
+  ${({ isFullscreen }) =>
+    isFullscreen
+      ? css`
+          margin: 8px;
+          box-shadow: 0px 0px 5px 3px #d0d0d0;
+        `
+      : ''}
 `;
 
 export default ({
@@ -36,10 +44,9 @@ export default ({
         padding: 0,
         display: 'flex',
         justifyContent: 'center',
-        backgroundColor: '#f1f2f5',
       }}
     >
-      <StyledContent>
+      <StyledContent isFullscreen={isFullscreen}>
         <Filter
           advancedSearch
           onSearch={onSearch}

@@ -4,8 +4,8 @@ BUGFIXES:
 
 NEXT:
     - card search
+        - add card name to grid card
         - move collection to paginated cardlist
-        - only show distinct cards on search, but in a way that the set still works. DistinctCardsPerSets view?
 
 IMPROVEMENTS: 
     - when switching wants list via search bar, hide add cards (mobile)
@@ -29,6 +29,7 @@ REFACTORINGS:
 BACKLOG:
     - refresh google access ?
     - add possible combos section to detail card view (https://discordapp.com/channels/673601282946236417/673601283609067559, no api yet)
+    - only show distinct cards on search, but in a way that the set still works. DistinctCardsPerSets view?
     - add expandable (lazy load) edhrec synergies to card view
     - add info tooltip for search: explain amount prefix, fuzzy search
     - allow searching for multiple sets/types/subtypes?
