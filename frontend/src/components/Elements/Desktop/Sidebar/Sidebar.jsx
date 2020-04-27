@@ -17,11 +17,6 @@ const StyledWrapper = styled.div`
   margin-left: ${({ isVisible }) => (isVisible ? 0 : '-400')}px;
 `;
 
-const StyledChildWrapper = styled.div`
-  max-height: 100%;
-  overflow-y: auto;
-`;
-
 const StyledToggleWrapper = styled.div`
   top: 56px;
   z-index: 99;
@@ -66,7 +61,7 @@ export default ({
           </StyledToggleWrapper>
         </Tooltip>
       )}
-      {isVisible && <StyledChildWrapper> {children}</StyledChildWrapper>}
+      {isVisible && children}
     </StyledWrapper>
   );
 };

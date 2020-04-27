@@ -2,13 +2,7 @@ import { useEffect, useState } from 'react';
 import { useQueryParam, NumberParam } from 'use-query-params';
 import { isInputField } from '../../../../Hooks/useShortcut';
 import { useWindowSize } from '../../../../Hooks';
-
-const ENTER = 13;
-const SPACE = 32;
-const ARROW_LEFT = 37;
-const ARROW_TOP = 38;
-const ARROW_RIGHT = 39;
-const ARROW_BOTTOM = 40;
+import keyCodes from '../../../../../constants/keyCodes';
 
 export default (numberOfCards, toggleShowDetail) => {
   useWindowSize();
@@ -60,20 +54,20 @@ export default (numberOfCards, toggleShowDetail) => {
     let preventDefault = true;
 
     switch (event.keyCode) {
-      case ENTER:
-      case SPACE:
+      case keyCodes.ENTER:
+      case keyCodes.SPACE:
         toggleShowDetail();
         break;
-      case ARROW_LEFT:
+      case keyCodes.ARROW_LEFT:
         onLeft();
         break;
-      case ARROW_RIGHT:
+      case keyCodes.ARROW_RIGHT:
         onRight();
         break;
-      case ARROW_TOP:
+      case keyCodes.ARROW_TOP:
         onUp();
         break;
-      case ARROW_BOTTOM:
+      case keyCodes.ARROW_BOTTOM:
         onDown();
         break;
       default:

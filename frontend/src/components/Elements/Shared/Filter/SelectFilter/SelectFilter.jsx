@@ -2,8 +2,17 @@ import React, { useState, useEffect } from 'react';
 
 import { AutoComplete } from 'antd';
 import CustomSkeleton from '../../CustomSkeleton';
+import isMobile from '../../../../../utils/isMobile';
+import keyCodes from '../../../../../constants/keyCodes';
+import { useToggle } from '../../../../Hooks';
 
-const SelectFilter = ({ onChange, options, placeholder, value = '' }) => {
+const SelectFilter = ({
+  onChange,
+  options,
+  placeholder,
+  value = '',
+  onSearch,
+}) => {
   const inputRef = React.useRef(null);
   const unifiedOptions = options.map(option => {
     if (option.value) return option;
@@ -13,6 +22,7 @@ const SelectFilter = ({ onChange, options, placeholder, value = '' }) => {
     };
   });
   const [currentValue, setCurrentValue] = useState('');
+  const [isDropdownVisible, toggleIsVisible] = useToggle(false);
 
   useEffect(() => {
     const newValue = unifiedOptions.find(
@@ -47,7 +57,9 @@ const SelectFilter = ({ onChange, options, placeholder, value = '' }) => {
   const onSelect = (_, { key, children: optionValue }) => {
     onChange(key);
     setCurrentValue(optionValue);
-    setTimeout(() => inputRef.current.blur(), 100);
+    if (isMobile()) {
+      setTimeout(() => inputRef.current.blur(), 100);
+    }
   };
 
   // reset current input when parent is reset
@@ -55,6 +67,13 @@ const SelectFilter = ({ onChange, options, placeholder, value = '' }) => {
     if (value) return;
     setCurrentValue('');
   }, [value]);
+
+  const searchOnEnter = e => {
+    if (e.keyCode === keyCodes.ENTER && !isDropdownVisible) {
+      onSearch();
+      setTimeout(() => inputRef.current.blur(), 100);
+    }
+  };
 
   return (
     <AutoComplete
@@ -65,7 +84,9 @@ const SelectFilter = ({ onChange, options, placeholder, value = '' }) => {
       style={{ width: '100%' }}
       placeholder={placeholder}
       onSelect={onSelect}
+      onKeyDown={searchOnEnter}
       onChange={onChangeInput}
+      onDropdownVisibleChange={toggleIsVisible}
     >
       {filteredOptions}
     </AutoComplete>
@@ -74,13 +95,14 @@ const SelectFilter = ({ onChange, options, placeholder, value = '' }) => {
 
 // Wrap around loader so default value is set correctly
 // even if options are not loaded from provider yet
-export default ({ onChange, options, placeholder, value }) => {
+export default ({ onSearch, onChange, options, placeholder, value }) => {
   if (!options.length) return <CustomSkeleton.Line />;
 
   return (
     <SelectFilter
-      options={options}
       value={value}
+      options={options}
+      onSearch={onSearch}
       placeholder={placeholder}
       onChange={onChange}
     />

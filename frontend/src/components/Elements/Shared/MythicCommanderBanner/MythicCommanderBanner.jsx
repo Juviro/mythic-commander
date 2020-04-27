@@ -7,20 +7,20 @@ import icon from '../../../../assets/icons/favicon.ico';
 const StyledWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 40px;
+  height: 32px;
 `;
 
 const StyledIcon = styled.img`
-  height: 80%;
-  margin: 16px;
+  height: 100%;
 `;
 
-export default ({ fontSize = 20 }) => {
+export default ({ fontSize = 20, style }) => {
   return (
-    <StyledWrapper>
+    <StyledWrapper style={style}>
       <StyledIcon src={icon} />
-      <Typography.Text style={{ fontSize, color: 'rgba(255, 255, 255, 0.8)' }}>
+      <Typography.Text
+        style={{ fontSize, color: 'rgba(255, 255, 255, 0.8)', marginLeft: 16 }}
+      >
         Mythic Commander
       </Typography.Text>
     </StyledWrapper>

@@ -10,7 +10,6 @@ const StyledMenu = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #e8e8e8;
   background-color: ${darkBackground};
 `;
 
@@ -40,7 +39,7 @@ const MENU_ENTRIES = [
 const DesktopMenu = ({ location: { pathname } }) => {
   return (
     <StyledMenu>
-      <MythicCommanderBanner />
+      <MythicCommanderBanner style={{ marginLeft: 8 }} />
       <Menu mode="horizontal" selectedKeys={pathname} theme="dark">
         {MENU_ENTRIES.map(({ title, href }) => (
           <Menu.Item

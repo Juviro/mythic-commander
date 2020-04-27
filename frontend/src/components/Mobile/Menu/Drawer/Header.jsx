@@ -4,12 +4,10 @@ import { MythicCommanderBanner } from '../../../Elements/Shared';
 
 const StyledHeader = styled.div`
   width: 100%;
-  height: 50px;
+  padding: 8px;
   display: flex;
-  align-items: center;
-  flex-direction: row;
+  flex-direction: column;
 `;
-
 export default () => {
   return (
     <StyledHeader>

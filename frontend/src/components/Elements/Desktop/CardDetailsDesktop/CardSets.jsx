@@ -86,7 +86,11 @@ export default ({ card, loading, selectedCardId, onChangeSet, title }) => {
   return (
     <StyledWrapper>
       <StyledTitleWrapper>
-        {title && <Typography.Title level={4}>{title}</Typography.Title>}
+        {title && (
+          <Typography.Title level={4} style={{ userSelect: 'text' }}>
+            {title}
+          </Typography.Title>
+        )}
       </StyledTitleWrapper>
       <EditIcon
         onClick={onToggleEdit}

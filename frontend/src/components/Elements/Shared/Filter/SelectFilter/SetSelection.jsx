@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import CardContext from '../../../../CardProvider/CardProvider';
 import SelectFilter from './SelectFilter';
 
-export default ({ onChange, value }) => {
+export default ({ onChange, value, onSearch }) => {
   const { sets } = useContext(CardContext);
   const allSets = Object.keys(sets)
     .map(key => ({ value: key, ...sets[key] }))
@@ -12,6 +12,7 @@ export default ({ onChange, value }) => {
   return (
     <SelectFilter
       value={value}
+      onSearch={onSearch}
       options={allSets}
       onChange={onChange}
       paramName="set"

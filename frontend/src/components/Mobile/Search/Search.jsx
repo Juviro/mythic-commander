@@ -116,7 +116,11 @@ const Search = ({ history }) => {
           options={currentOptions}
         />
         <LayoutAndSortPicker />
-        <SearchButton onSearch={onSearch} loading={loading} />
+        <SearchButton
+          onSearch={onSearch}
+          loading={loading}
+          style={{ marginTop: 24 }}
+        />
         <Divider />
         {allCards && (
           <CardList

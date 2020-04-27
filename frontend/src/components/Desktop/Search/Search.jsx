@@ -21,7 +21,6 @@ const StyledWrapper = styled.div`
 `;
 
 const Search = ({ history }) => {
-  console.log('Search -> history', history.location.search);
   const [currentCards, setCurrentCards] = useState([]);
   const [isSidebarVisible, toggleIsSidebarVisible] = useToggle(true);
   const [loading, toggleLoading] = useToggle(false);

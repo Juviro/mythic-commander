@@ -73,18 +73,24 @@ const Filter = ({
             onChange={onChangeOption('text')}
           />
           <Label title="Set" />
-          <SetSelection onChange={onChangeOption('set')} value={set} />
+          <SetSelection
+            onChange={onChangeOption('set')}
+            value={set}
+            onSearch={onSearch}
+          />
         </>
       )}
       <Label title="Card type" />
       <CardTypeSelection
         onChangeOption={onChangeOption}
         value={cardType}
+        onSearch={onSearch}
         isLegendary={isLegendary}
       />
       <Label title="Creature type" />
       <CreatureTypeSelection
         onChange={onChangeOption('creatureType')}
+        onSearch={onSearch}
         value={creatureType}
       />
       <Label title="Color identity" />

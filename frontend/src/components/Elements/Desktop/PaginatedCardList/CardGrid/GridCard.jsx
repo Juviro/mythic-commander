@@ -2,13 +2,11 @@ import React, { useRef, useEffect } from 'react';
 import { Row, Col } from 'antd';
 import styled from 'styled-components';
 
-import { NumberParam } from 'use-query-params';
 import FlippableCard from '../../../Shared/FlippableCard';
 import { getPriceLabel } from '../../../../../utils/cardStats';
 import OwnedBadge from '../../../Shared/OwnedBadge';
 import { primary } from '../../../../../constants/colors';
 import scrollIntoView from '../../../../../utils/scrollIntoView';
-import { useStoredQueryParam } from '../../../../Hooks';
 
 const StyledCardWrapper = styled.div`
   padding: 8px;
@@ -23,7 +21,6 @@ const StyledCardWrapper = styled.div`
 
 const StyledImageWrapper = styled.div`
   position: relative;
-  overflow: hidden;
   border-radius: 4%;
 
   ${({ isSelected }) =>
@@ -69,6 +66,7 @@ const GridCard = ({
 
   const cardSize = { width, height: width * 1.39 };
   const textSize = Math.max(10 + 4 * (zoom / 100));
+  const displayedPrice = card.price || card.minPrice;
 
   return (
     <StyledCardWrapper
@@ -91,7 +89,7 @@ const GridCard = ({
       {!loading && (
         <StyledInfoWrapper width={width} style={{ fontSize: textSize }}>
           <StyledCol span={8} style={{ justifyContent: 'flex-start' }}>
-            {getPriceLabel(card.minPrice)}
+            {getPriceLabel(displayedPrice)}
           </StyledCol>
           <StyledCol span={8} style={{ justifyContent: 'flex-end' }}>
             {card.owned && <OwnedBadge style={{ fontSize: textSize }} />}
