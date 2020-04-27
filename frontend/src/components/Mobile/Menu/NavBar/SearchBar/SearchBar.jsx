@@ -147,7 +147,8 @@ const SearchBar = ({ history, transparentSearchBar }) => {
         listHeight={360}
         placeholder="Search for something..."
         style={{ width: 'calc(100% - 16px)' }}
-        className={transparentSearchBar && 'transparent'}
+        size="large"
+        className={transparentSearchBar ? 'transparent' : 'dark-placeholder'}
       >
         <Input
           allowClear

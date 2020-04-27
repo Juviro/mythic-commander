@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Slider } from 'antd';
-import { NumberParam } from 'use-query-params';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { useShortcut, useStoredQueryParam } from '../../../../Hooks';
+import { useShortcut } from '../../../../Hooks';
 import DesktopTooltip from '../../DesktopTooltip';
 
 const StyledWrapper = styled.div`
@@ -20,9 +19,7 @@ const MAX_ZOOM = 200;
 const DEFAULT_ZOOM = 100;
 const ZOOM_STEP = 10;
 
-export default () => {
-  const [zoom, setZoom] = useStoredQueryParam('zoom', NumberParam);
-
+export default ({ zoom, setZoom }) => {
   const onPlus = () => setZoom(Math.min(MAX_ZOOM, zoom + ZOOM_STEP));
   const onMinus = () => setZoom(Math.max(MIN_ZOOM, zoom - ZOOM_STEP));
   const onReset = () => setZoom(DEFAULT_ZOOM);

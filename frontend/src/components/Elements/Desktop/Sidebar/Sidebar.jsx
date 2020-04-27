@@ -5,7 +5,7 @@ import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import { useShortcut } from '../../../Hooks';
 
 const StyledWrapper = styled.div`
-  width: ${({ width }) => width}px;
+  width: ${({ width }) => width};
   height: 100%;
   font-size: 16px;
   padding: 24px;
@@ -47,20 +47,26 @@ export default ({
   isVisible,
   toggleIsVisible,
   width = 400,
-  style,
   wrapperStyle,
+  isFullscreen,
 }) => {
   useShortcut('s', toggleIsVisible);
+  const sidebarWidth = isFullscreen ? '100%' : `${width}px`;
+
   return (
-    <StyledWrapper isVisible={isVisible} width={width} style={wrapperStyle}>
-      <Tooltip title="Toggle Sidebar [S]" placement="right">
-        <StyledToggleWrapper onClick={toggleIsVisible}>
-          {isVisible ? <DoubleLeftOutlined /> : <DoubleRightOutlined />}
-        </StyledToggleWrapper>
-      </Tooltip>
-      {isVisible && (
-        <StyledChildWrapper {...style}> {children}</StyledChildWrapper>
+    <StyledWrapper
+      isVisible={isVisible}
+      width={sidebarWidth}
+      style={wrapperStyle}
+    >
+      {!isFullscreen && (
+        <Tooltip title="Toggle Sidebar [S]" placement="right">
+          <StyledToggleWrapper onClick={toggleIsVisible}>
+            {isVisible ? <DoubleLeftOutlined /> : <DoubleRightOutlined />}
+          </StyledToggleWrapper>
+        </Tooltip>
       )}
+      {isVisible && <StyledChildWrapper> {children}</StyledChildWrapper>}
     </StyledWrapper>
   );
 };

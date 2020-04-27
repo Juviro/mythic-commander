@@ -16,13 +16,11 @@ const StyledIcon = styled.img`
   margin: 16px;
 `;
 
-export default () => {
+export default ({ fontSize = 20 }) => {
   return (
     <StyledWrapper>
       <StyledIcon src={icon} />
-      <Typography.Text
-        style={{ fontSize: 20, color: 'rgba(255, 255, 255, 0.65)' }}
-      >
+      <Typography.Text style={{ fontSize, color: 'rgba(255, 255, 255, 0.8)' }}>
         Mythic Commander
       </Typography.Text>
     </StyledWrapper>

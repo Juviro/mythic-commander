@@ -17,12 +17,13 @@ const StyledWrapper = styled.div`
   align-self: center;
 `;
 
-export default ({ cards, loading, widthOffset, numberOfCards }) => {
+export default ({ cards, loading, widthOffset, numberOfCards, zoom }) => {
   useWindowSize();
   const [showDetails, toggleShowDetail] = useToggle(false);
 
   const { cardsPerRow, numberOfRows, cardWidth } = useNumberOfCards(
-    widthOffset
+    widthOffset,
+    zoom
   );
 
   const {
@@ -59,6 +60,7 @@ export default ({ cards, loading, widthOffset, numberOfCards }) => {
         {cards.map((card, index) => (
           <GridCard
             card={card}
+            zoom={zoom}
             loading={loading}
             key={card.id}
             onClick={() => onClick(index)}

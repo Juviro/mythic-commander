@@ -66,14 +66,14 @@ const Filter = ({
       )}
       {advancedSearch && (
         <>
-          <Label title="Set" />
-          <SetSelection onChange={onChangeOption('set')} value={set} />
           <Label title="Card text" />
           <OracleTextFilter
             value={text}
             onSearch={onSearch}
             onChange={onChangeOption('text')}
           />
+          <Label title="Set" />
+          <SetSelection onChange={onChangeOption('set')} value={set} />
         </>
       )}
       <Label title="Card type" />

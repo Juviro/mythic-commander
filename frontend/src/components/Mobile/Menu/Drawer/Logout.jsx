@@ -1,5 +1,6 @@
 import React from 'react';
-import { List } from 'antd';
+import { List, Typography } from 'antd';
+import { UserAvatar } from '../../../Elements/Shared';
 
 export default () => {
   const logOut = () => {
@@ -10,7 +11,18 @@ export default () => {
 
   return (
     <List>
-      <List.Item onClick={logOut}>Logout</List.Item>
+      <List.Item
+        onClick={logOut}
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+          paddingBottom: 0,
+        }}
+      >
+        <UserAvatar />
+        <Typography.Text style={{ marginLeft: 16 }}>Logout</Typography.Text>
+      </List.Item>
     </List>
   );
 };
