@@ -19,17 +19,21 @@ const AvatarWrapper = styled.div`
 `;
 
 const MENU_ENTRIES = [
-  {
-    title: 'Search',
-    href: '/search',
-  },
+  // {
+  //   title: 'Decks',
+  //   href: '/decks',
+  // },
+  // {
+  //   title: 'Wants',
+  //   href: '/wants',
+  // },
   {
     title: 'Collection',
     href: '/collection',
   },
   {
-    title: 'Decks',
-    href: '/decks',
+    title: 'Advanced Search',
+    href: '/search',
   },
 ];
 

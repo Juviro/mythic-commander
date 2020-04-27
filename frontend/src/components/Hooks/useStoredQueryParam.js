@@ -28,8 +28,9 @@ export default (key, paramType) => {
   }, [value]);
 
   useEffect(() => {
+    // console.log('replacing', key, value, storedValue);
     if (value) return;
-    setValue(storedValue);
+    setValue(storedValue, 'replaceIn');
     // eslint-disable-next-line
   }, [value, storedValue]);
 

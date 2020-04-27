@@ -12,6 +12,7 @@ import searchParams from '../../../constants/searchParams';
 import { unifySingleCard } from '../../../utils/unifyCardFormat';
 import { PaginatedCardList } from '../../Elements/Desktop';
 import preloadImages from '../../../utils/preloadImages';
+import useLocalStorage from '../../Hooks/useLocalStorage';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -20,25 +21,34 @@ const StyledWrapper = styled.div`
 `;
 
 const Search = ({ history }) => {
+  console.log('Search -> history', history.location.search);
   const [currentCards, setCurrentCards] = useState([]);
   const [isSidebarVisible, toggleIsSidebarVisible] = useToggle(true);
   const [loading, toggleLoading] = useToggle(false);
   const [queryResult, setQueryResult] = useState({});
-  const [pageSize] = useStoredQueryParam('pageSize', NumberParam);
+  const [initialPageSize, setInitialPageSize] = useLocalStorage(
+    'pageSize',
+    100
+  );
   const [lastSearchOptions, setLastSearchOptions] = useState({});
   const [orderBy] = useStoredQueryParam('orderBy', StringParam);
-  const [{ page = 1, ...options }, setParams] = useQueryParams({
+  const [params, setParams] = useQueryParams({
     page: NumberParam,
+    pageSize: NumberParam,
     ...searchParams,
   });
+  const { page, pageSize, ...options } = params;
+  const hasSearchOptions = Object.values(options).some(Boolean);
+  const [isSearching, setIsSearching] = useToggle(hasSearchOptions);
   const [currentOptions, setCurrentOptions] = useState(options);
 
   const client = useApolloClient();
 
-  const fetchCards = async (searchOptions, offset, isPreload) => {
+  const fetchCards = async (searchOptions, offset = 0, isPreload = false) => {
+    if (!orderBy) return null;
     if (!isPreload) {
       toggleLoading(true);
-      setLastSearchOptions({ ...searchOptions, orderBy });
+      setLastSearchOptions({ ...searchOptions, orderBy, pageSize });
     }
 
     const { data } = await client.query({
@@ -46,7 +56,7 @@ const Search = ({ history }) => {
       variables: {
         offset: offset || 0,
         options: { ...searchOptions, orderBy },
-        limit: pageSize,
+        limit: pageSize || Number(initialPageSize),
       },
     });
     if (isPreload) return data.cardSearch.cards;
@@ -61,18 +71,52 @@ const Search = ({ history }) => {
   };
 
   const onSearch = () => {
-    setParams({ page: 1, ...currentOptions });
+    setParams(
+      {
+        page: 1,
+        pageSize: pageSize || initialPageSize,
+        ...currentOptions,
+      },
+      'pushIn'
+    );
+    setIsSearching(true);
+    fetchCards(currentOptions);
   };
 
-  // start a new search if query params change
+  // start a new search if page or pageSize changes
   useEffect(() => {
-    if (!pageSize) return;
-    const offset = (page - 1) * pageSize;
+    if (!isSearching && !hasSearchOptions) return;
+    if (!isSearching) {
+      setIsSearching(true);
+      setCurrentOptions(options);
+    }
+
+    if (pageSize) {
+      setInitialPageSize(pageSize);
+    } else {
+      setParams({ pageSize: initialPageSize }, 'replaceIn');
+    }
+
+    const didOptionsChange = !isEqual(lastSearchOptions, {
+      ...options,
+      orderBy,
+      pageSize,
+    });
 
     // reset cards list (including element position) when re-searching
-    const shouldReset = !isEqual(lastSearchOptions, { ...options, orderBy });
-    if (shouldReset) setCurrentCards([]);
-    setCurrentOptions(options);
+    if (didOptionsChange) {
+      setCurrentCards([]);
+      setCurrentOptions(options);
+    }
+
+    let nextPage = page;
+    // reset page when search order changes
+    if (lastSearchOptions.orderBy !== orderBy) {
+      setParams({ page: 1 }, 'replaceIn');
+      nextPage = 1;
+    }
+
+    const offset = (nextPage - 1) * pageSize;
     fetchCards(options, offset);
     // eslint-disable-next-line
   }, [history.location.search]);
@@ -91,11 +135,17 @@ const Search = ({ history }) => {
 
   // reset search when clicking search again
   useEffect(() => {
-    if (page) return;
+    if (page || loading) return;
     setCurrentCards([]);
     setCurrentOptions(options);
     setQueryResult({});
     toggleLoading(false);
+    if (!hasSearchOptions) {
+      setIsSearching(false);
+      setParams({}, 'replace');
+    } else {
+      setIsSearching(true);
+    }
     // eslint-disable-next-line
   }, [page]);
 
@@ -120,16 +170,19 @@ const Search = ({ history }) => {
         onChangeOption={onChangeOption}
         options={currentOptions}
         isVisible={isSidebarVisible}
+        isFullscreen={!isSearching}
         toggleIsVisible={toggleIsSidebarVisible}
       />
-      <PaginatedCardList
-        loading={loading}
-        showSorter={false}
-        hiddenColumns={['added', 'amount']}
-        cards={currentCards}
-        widthOffset={isSidebarVisible ? 329 : 0}
-        numberOfCards={queryResult.totalResults}
-      />
+      {isSearching && (
+        <PaginatedCardList
+          loading={loading}
+          showSorter={false}
+          hiddenColumns={['added', 'amount']}
+          cards={currentCards}
+          widthOffset={isSidebarVisible ? 329 : 0}
+          numberOfCards={queryResult.totalResults}
+        />
+      )}
     </StyledWrapper>
   );
 };

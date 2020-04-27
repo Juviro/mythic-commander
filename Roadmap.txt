@@ -2,15 +2,22 @@ BUGFIXES:
     - backend crashes when searching for power bc * cannot be casted to float
     - if only foil owned, show foil price as min price
     - minPrice wrong for cards with multiple layouts (uro)
+    - refresh google access 
 
 NEXT:
     - card search
+        - onEnter in any field should start search
+
         - move collection to paginated cardlist
+        - mobile: move profile avatar to top, add name, add logout icon
+        - don't use minPrice for search, use actual card price instead
+        - only show distinct cards on search, but in a way that the set still works. DistinctCardsPerSets view?
 
 IMPROVEMENTS: 
     - when switching wants list via search bar, hide add cards (mobile)
     - on mobile: advanced search -> click card -> search card throught searchBar -> click back: show show advanced search without card modal. Maybe use replace history.
-    - only show distinct cards on search, but in a way that the set still works. DistinctCardsPerSets view?
+    - switch to german date format in collection stats
+    - ignore keyboard shortcuts if modifier key is pressed (browser back has arrow etc)
     - add range picker to collection to only show cards added in specific timeframe (1h, 24h, 7d, 3m, 1y)
 
 FEATURES:
@@ -24,14 +31,17 @@ FEATURES:
         - related cards (token, partner, meld etc - should be in db? or skryfall?)
 
 REFACTORINGS:
-
+ 
 BACKLOG:
     - add possible combos section to detail card view (https://discordapp.com/channels/673601282946236417/673601283609067559, no api yet)
     - add expandable (lazy load) edhrec synergies to card view
     - add info tooltip for search: explain amount prefix, fuzzy search
     - allow searching for multiple sets/types/subtypes?
+    - add logout context menu to desktop profile avatar
     - when adding cards, allow picking set/version, with preview
     - add error page
+    - clickable creature type in card details?
+    - home page: quick stats for collection, quick access for last edited decks + wants
     - show % owned of all cards (unique cards / distinct cards)
     - in search field: *foil* suffix should add as foil
     - when adding to deck or linked wants: show if card is in linked wants / deck

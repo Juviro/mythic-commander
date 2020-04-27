@@ -7,7 +7,6 @@ const StyledWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 16px;
 `;
 
 export default ({ onSearch, loading }) => {

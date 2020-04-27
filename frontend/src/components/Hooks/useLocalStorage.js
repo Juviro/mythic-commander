@@ -3,7 +3,11 @@ import { useState } from 'react';
 export default (key, initialValue) => {
   const [storedValue, setStoredValue] = useState(() => {
     const item = window.localStorage.getItem(key);
-    return item || initialValue;
+    try {
+      return JSON.parse(item);
+    } catch {
+      return item || initialValue;
+    }
   });
 
   const setValue = value => {

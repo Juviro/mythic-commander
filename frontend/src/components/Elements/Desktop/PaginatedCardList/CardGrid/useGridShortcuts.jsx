@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useQueryParam, NumberParam } from 'use-query-params';
 import { isInputField } from '../../../../Hooks/useShortcut';
-import { useStoredQueryParam } from '../../../../Hooks';
 
 const ENTER = 13;
 const SPACE = 32;
@@ -11,8 +10,12 @@ const ARROW_RIGHT = 39;
 const ARROW_BOTTOM = 40;
 
 export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
-  const [currentPage = 1, setCurrentPage] = useQueryParam('page', NumberParam);
-  const [pageSize, setPageSize] = useStoredQueryParam('pageSize', NumberParam);
+  const [currentPage = 1, setPageParam] = useQueryParam('page', NumberParam);
+  const [pageSize, setPageSizeParam] = useQueryParam('pageSize', NumberParam);
+
+  const setCurrentPage = (newPage, shouldReplace) =>
+    setPageParam(newPage, shouldReplace ? 'replaceIn' : 'pushIn');
+  const setPageSize = newPageSize => setPageSizeParam(newPageSize, 'replaceIn');
 
   const [selectedElementPosition, setSelectedElementPosition] = useState(0);
 
@@ -24,7 +27,7 @@ export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
 
   useEffect(() => {
     if (numberOfPages === 1 || numberOfPages >= currentPage) return;
-    setCurrentPage(numberOfPages);
+    setCurrentPage(numberOfPages, true);
   });
 
   const onLeft = () => {
@@ -130,7 +133,7 @@ export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
       currentPage >= numberOfPages ? cardsOnLastPage : pageSize;
     setSelectedElementPosition(Math.min(selectedElementPosition, lastPosition));
 
-    setCurrentPage(Math.max(Math.min(currentPage, numberOfPages), 1));
+    setCurrentPage(Math.max(Math.min(currentPage, numberOfPages), 1), true);
     // eslint-disable-next-line
   }, [numberOfPages]);
 

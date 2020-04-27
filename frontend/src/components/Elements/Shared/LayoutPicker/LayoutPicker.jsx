@@ -22,7 +22,11 @@ const getNextLayout = (layout, hideCard) => {
 };
 
 export default ({ hideCard }) => {
-  const [layout, setLayout] = useStoredQueryParam('layout', StringParam);
+  const [layout = 'list', setLayoutParam] = useStoredQueryParam(
+    'layout',
+    StringParam
+  );
+  const setLayout = newLayout => setLayoutParam(newLayout, 'replaceIn');
   useShortcut('l', () => setLayout(getNextLayout(layout, hideCard)));
 
   return (

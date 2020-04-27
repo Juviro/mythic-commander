@@ -57,8 +57,8 @@ const GridCard = ({
   widthPercentage,
   width,
   loading,
+  zoom,
 }) => {
-  const [zoom = 100] = useStoredQueryParam('zoom', NumberParam);
   const displayedAmount = card.amount || card.totalAmount;
   const ref = useRef(null);
 
