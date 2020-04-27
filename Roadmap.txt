@@ -5,7 +5,6 @@ BUGFIXES:
 NEXT:
     - card search
         - add card name to grid card
-        - move collection to paginated cardlist
 
 IMPROVEMENTS: 
     - when switching wants list via search bar, hide add cards (mobile)
@@ -15,6 +14,7 @@ IMPROVEMENTS:
     - add range picker to collection to only show cards added in specific timeframe (1h, 24h, 7d, 3m, 1y)
 
 FEATURES:
+    - add logout context menu to desktop profile avatar
     - add delete button to collection
     - add mass delete to collection
     - add edhrec and scryfall to card links
@@ -33,7 +33,6 @@ BACKLOG:
     - add expandable (lazy load) edhrec synergies to card view
     - add info tooltip for search: explain amount prefix, fuzzy search
     - allow searching for multiple sets/types/subtypes?
-    - add logout context menu to desktop profile avatar
     - when adding cards, allow picking set/version, with preview
     - add error page
     - clickable creature type in card details?

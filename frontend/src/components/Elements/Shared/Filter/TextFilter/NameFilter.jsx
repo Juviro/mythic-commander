@@ -7,12 +7,14 @@ export default ({
   inputRef,
   autoFocus,
   onChange,
+  style,
   value,
   placeholder = 'Black Lotus, Blacker Lotus ...',
 }) => {
   return (
     <TextFilter
       size={size}
+      style={style}
       value={value}
       placeholder={placeholder}
       onChange={onChange}

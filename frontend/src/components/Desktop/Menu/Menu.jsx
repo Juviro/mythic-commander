@@ -2,7 +2,7 @@ import React from 'react';
 import { Menu } from 'antd';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
-import { UserAvatar, MythicCommanderBanner } from '../../Elements/Shared';
+import { UserAvatar, MythicCommanderBanner, Flex } from '../../Elements/Shared';
 import { darkBackground } from '../../../constants/colors';
 
 const StyledMenu = styled.div`
@@ -39,19 +39,26 @@ const MENU_ENTRIES = [
 const DesktopMenu = ({ location: { pathname } }) => {
   return (
     <StyledMenu>
-      <MythicCommanderBanner style={{ marginLeft: 8 }} />
-      <Menu mode="horizontal" selectedKeys={pathname} theme="dark">
-        {MENU_ENTRIES.map(({ title, href }) => (
-          <Menu.Item
-            key={href}
-            style={{
-              padding: '0 64px',
-            }}
-          >
-            <Link to={href}>{title}</Link>
-          </Menu.Item>
-        ))}
-      </Menu>
+      <Flex direction="row" align="center">
+        <MythicCommanderBanner style={{ marginLeft: 8 }} />
+        <Menu
+          mode="horizontal"
+          selectedKeys={pathname}
+          theme="dark"
+          style={{ marginLeft: 24 }}
+        >
+          {MENU_ENTRIES.map(({ title, href }) => (
+            <Menu.Item
+              key={href}
+              style={{
+                padding: '0 64px',
+              }}
+            >
+              <Link to={href}>{title}</Link>
+            </Menu.Item>
+          ))}
+        </Menu>
+      </Flex>
       <AvatarWrapper>
         <UserAvatar />
       </AvatarWrapper>

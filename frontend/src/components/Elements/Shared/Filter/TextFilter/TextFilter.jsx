@@ -11,6 +11,7 @@ export default ({
   autoFocus,
   onChange,
   value,
+  style,
 }) => {
   const ref = inputRef !== undefined ? inputRef : useRef(null);
 
@@ -28,7 +29,7 @@ export default ({
       placeholder={placeholder}
       autoFocus={autoFocus}
       onChange={e => onChange(e.target.value)}
-      style={{ width: '100%' }}
+      style={{ width: '100%', ...style }}
       size={size}
     />
   );

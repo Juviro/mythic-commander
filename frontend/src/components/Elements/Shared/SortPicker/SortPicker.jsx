@@ -75,7 +75,7 @@ export default ({ showCollectionFilters, style }) => {
       value={currentValue}
       dropdownStyle={{ minWidth: 200 }}
       onSelect={value => setOrderBy(value)}
-      style={{ width: 215, maxWidth: 'calc(100% - 140px)', ...style }}
+      style={{ width: 215, ...style }}
     >
       {orderOptions.map(({ label, value }) => (
         <Select.Option value={value} key={value}>
