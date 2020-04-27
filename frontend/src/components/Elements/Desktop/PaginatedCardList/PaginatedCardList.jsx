@@ -26,6 +26,7 @@ export default ({
   numberOfCards,
   showSorter,
   hiddenColumns,
+  showNameSearch,
 }) => {
   const [zoom, setZoom] = useLocalStorage('zoom', 100);
   const [layout] = useQueryParam('layout', StringParam);
@@ -63,6 +64,7 @@ export default ({
       }}
     >
       <Header
+        showNameSearch={showNameSearch}
         showZoomSlider={layout === 'grid'}
         zoom={zoom}
         setZoom={setZoom}

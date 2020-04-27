@@ -31,7 +31,11 @@ export default ({ hideCard }) => {
 
   return (
     <DesktopTooltip title="Change Layout [L]">
-      <Radio.Group value={layout} onChange={e => setLayout(e.target.value)}>
+      <Radio.Group
+        value={layout}
+        onChange={e => setLayout(e.target.value)}
+        style={{ display: 'flex' }}
+      >
         <Radio.Button value="list">
           <BarsOutlined />
         </Radio.Button>

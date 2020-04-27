@@ -124,7 +124,6 @@ export default async (
   const cards = await query;
 
   const shouldFilter = cards.length < 500;
-  console.log('cards.length :', cards.length);
 
   const filteredCards = shouldFilter
     ? cards.filter(({ oracle_id }, index) => {

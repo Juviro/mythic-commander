@@ -14,7 +14,7 @@ const StyledWrapper = styled.div`
   will-change: margin-left;
   box-shadow: ${({ isVisible }) =>
     isVisible ? '5px 0 5px -5px #333' : 'none'};
-  margin-left: ${({ isVisible }) => (isVisible ? 0 : '-400')}px;
+  margin-left: ${({ isVisible }) => (isVisible ? 0 : -300)}px;
 `;
 
 const StyledToggleWrapper = styled.div`
@@ -41,14 +41,13 @@ export default ({
   children,
   isVisible,
   toggleIsVisible,
-  width = 400,
+  width = 300,
   wrapperStyle,
   isFullscreen,
 }) => {
   useShortcut('s', toggleIsVisible);
   const sidebarWidth = isFullscreen ? '100%' : `${width}px`;
 
-  console.log('isVisible :', isVisible);
   return (
     <StyledWrapper
       isVisible={isVisible}

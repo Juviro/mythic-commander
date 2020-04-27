@@ -35,6 +35,7 @@ const StyledAmountWrapper = styled.div`
   bottom: 0;
   align-self: flex-start;
   border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
 `;
 
 const StyledInfoWrapper = styled(Row)`
