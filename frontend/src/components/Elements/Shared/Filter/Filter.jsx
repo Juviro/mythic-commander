@@ -16,6 +16,7 @@ import RarityFilter from './RarityFilter';
 
 const FilterWrapper = styled.div`
   width: 100%;
+  overflow: auto;
   display: flex;
   flex-direction: column;
 `;

@@ -139,6 +139,7 @@ const Search = ({ history }) => {
     setCurrentOptions(options);
     setQueryResult({});
     toggleLoading(false);
+    toggleIsSidebarVisible(true);
     if (!hasSearchOptions) {
       setIsSearching(false);
       setParams({}, 'replace');

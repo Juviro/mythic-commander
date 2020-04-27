@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 
-import { Col, Row, Divider } from 'antd';
+import { Col, Row, Divider, Alert } from 'antd';
 import {
   FlippableCard,
   IncludedDecks,
@@ -46,6 +46,20 @@ export default ({ card, loading: parentLoading }) => {
   });
   const loading = cardLoading || parentLoading;
 
+  useEffect(() => {
+    setSelectedCardId(cardId);
+  }, [cardId]);
+
+  if (!loading && !data.cardByOracleId) {
+    return (
+      <Alert
+        style={{ marginTop: '30%' }}
+        message="No Info available"
+        type="warning"
+      />
+    );
+  }
+
   const usedCard = loading
     ? card
     : {
@@ -55,10 +69,6 @@ export default ({ card, loading: parentLoading }) => {
           ({ id }) => id === selectedCardId
         ),
       };
-
-  useEffect(() => {
-    setSelectedCardId(cardId);
-  }, [cardId]);
 
   const { name, totalAmount } = card || {};
   let title = name;

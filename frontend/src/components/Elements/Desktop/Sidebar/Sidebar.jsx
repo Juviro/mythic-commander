@@ -48,6 +48,7 @@ export default ({
   useShortcut('s', toggleIsVisible);
   const sidebarWidth = isFullscreen ? '100%' : `${width}px`;
 
+  console.log('isVisible :', isVisible);
   return (
     <StyledWrapper
       isVisible={isVisible}
