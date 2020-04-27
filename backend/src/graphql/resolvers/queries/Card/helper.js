@@ -26,7 +26,18 @@ export const getAllSets = async (oracle_id, userId, db) => {
 
   return cards
     .map(card => {
-      const cardsWithSameSet = cards.filter(({ set }) => set === card.set);
+      const cardsWithSameSet = cards
+        .filter(({ set }) => set === card.set)
+        .sort((a, b) => {
+          const premiumFrameEffects = ['extendedart', 'showcase', 'inverted'];
+          const isSpecialCard = card =>
+            card.frame_effects &&
+            premiumFrameEffects.some(effect =>
+              card.frame_effects.includes(effect)
+            );
+          if (isSpecialCard(a) === isSpecialCard(b)) return 0;
+          return isSpecialCard(a) ? 1 : -1;
+        });
       if (cardsWithSameSet.length === 1) return card;
       const version =
         cardsWithSameSet.findIndex(({ id }) => id === card.id) + 1;

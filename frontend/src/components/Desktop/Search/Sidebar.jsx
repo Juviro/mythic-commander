@@ -5,12 +5,14 @@ import { Sidebar } from '../../Elements/Desktop';
 import { SearchButton, Filter, Flex, ResetFilter } from '../../Elements/Shared';
 
 const StyledContent = styled.div`
+  width: 100%;
   display: flex;
+  max-width: 500px;
   align-items: center;
   justify-content: center;
-  max-width: 600px;
-  width: 100%;
   flex-direction: column;
+  background-color: white;
+  padding: 24px;
 `;
 
 export default ({
@@ -31,9 +33,10 @@ export default ({
       isFullscreen={isFullscreen}
       toggleIsVisible={toggleIsVisible}
       wrapperStyle={{
-        padding: '12px 24px',
+        padding: 0,
         display: 'flex',
         justifyContent: 'center',
+        backgroundColor: '#f1f2f5',
       }}
     >
       <StyledContent>

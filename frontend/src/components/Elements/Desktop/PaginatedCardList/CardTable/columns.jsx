@@ -16,15 +16,16 @@ const renderType = ({ primaryTypes, subTypes }) => {
   return `${primaryTypes.join(' ')} - ${subTypes.join(' ')}`;
 };
 
-const renderPrice = ({ minPrice, sumPrice, totalAmount }) => {
+const renderPrice = ({ price, minPrice, sumPrice, totalAmount }) => {
+  const displayedPrice = price || minPrice;
   if (!sumPrice) {
-    return getPriceLabel(minPrice);
+    return getPriceLabel(displayedPrice);
   }
-  if (minPrice === sumPrice || totalAmount === 1) {
+  if (displayedPrice === sumPrice || totalAmount === 1) {
     return getPriceLabel(sumPrice);
   }
 
-  return `${getPriceLabel(minPrice)}  (${getPriceLabel(sumPrice)})`;
+  return `${getPriceLabel(displayedPrice)}  (${getPriceLabel(sumPrice)})`;
 };
 
 const Name = React.memo(({ name }) => {

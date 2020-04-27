@@ -1,16 +1,10 @@
 BUGFIXES:
     - backend crashes when searching for power bc * cannot be casted to float
     - if only foil owned, show foil price as min price
-    - minPrice wrong for cards with multiple layouts (uro)
-    - refresh google access 
 
 NEXT:
     - card search
-        - onEnter in any field should start search
-
         - move collection to paginated cardlist
-        - mobile: move profile avatar to top, add name, add logout icon
-        - don't use minPrice for search, use actual card price instead
         - only show distinct cards on search, but in a way that the set still works. DistinctCardsPerSets view?
 
 IMPROVEMENTS: 
@@ -33,6 +27,7 @@ FEATURES:
 REFACTORINGS:
  
 BACKLOG:
+    - refresh google access ?
     - add possible combos section to detail card view (https://discordapp.com/channels/673601282946236417/673601283609067559, no api yet)
     - add expandable (lazy load) edhrec synergies to card view
     - add info tooltip for search: explain amount prefix, fuzzy search

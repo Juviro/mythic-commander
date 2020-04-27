@@ -4,7 +4,7 @@ import { Checkbox } from 'antd';
 import CardContext from '../../../../CardProvider/CardProvider';
 import SelectFilter from './SelectFilter';
 
-export default ({ onChangeOption, value, isLegendary }) => {
+export default ({ onChangeOption, value, isLegendary, onSearch }) => {
   const { cardTypes } = useContext(CardContext);
 
   const displayLegendary = shouldDisplay => e => {
@@ -17,6 +17,7 @@ export default ({ onChangeOption, value, isLegendary }) => {
   return (
     <span>
       <SelectFilter
+        onSearch={onSearch}
         value={value}
         onChange={onChangeOption('cardType')}
         options={cardTypes}

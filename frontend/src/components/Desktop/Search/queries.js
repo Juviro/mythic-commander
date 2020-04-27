@@ -12,12 +12,12 @@ export const cardSearch = gql`
         cmc
         mana_cost
         oracle_id
+        price
 
         oracleCard {
           _id
           isTwoFaced
           owned
-          minPrice
           primaryTypes
           subTypes
         }

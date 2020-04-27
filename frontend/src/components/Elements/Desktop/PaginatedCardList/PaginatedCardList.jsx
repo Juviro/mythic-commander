@@ -31,7 +31,6 @@ export default ({
   const [layout] = useQueryParam('layout', StringParam);
   const width = `calc(100% - ${widthOffset}px)`;
   const isEmptySearch = !loading && !cards.length;
-  console.log('isEmptySearch :', isEmptySearch);
 
   const cardList = isEmptySearch ? (
     <StyledEmpty description="No cards found" />

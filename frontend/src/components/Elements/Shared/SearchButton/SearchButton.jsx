@@ -9,13 +9,13 @@ const StyledWrapper = styled.div`
   justify-content: center;
 `;
 
-export default ({ onSearch, loading }) => {
+export default ({ onSearch, loading, style }) => {
   return (
     <StyledWrapper>
       <Button
         loading={loading}
         type="primary"
-        style={{ minWidth: 150 }}
+        style={{ minWidth: 150, ...style }}
         onClick={onSearch}
       >
         Search
