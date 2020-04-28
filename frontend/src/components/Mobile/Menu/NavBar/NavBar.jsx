@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import { withRouter } from 'react-router';
 import { ArrowLeftOutlined, MenuOutlined } from '@ant-design/icons';
+
 import SearchBar from './SearchBar';
+import { darkBackground } from '../../../../constants/colors';
 
 const StyledMenu = styled.div`
   width: 100%;
@@ -12,7 +13,7 @@ const StyledMenu = styled.div`
   flex-direction: row;
   z-index: 1001;
   position: fixed;
-  background-color: white;
+  background-color: ${darkBackground};
 
   ${({ transparent }) =>
     transparent
@@ -55,7 +56,7 @@ const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
 
   const iconStyle = transparentSearchBar
     ? { color: '#fff', filter: 'drop-shadow( 0px 0px 1px rgba(0, 0, 0, .7))' }
-    : {};
+    : { color: 'white' };
 
   iconStyle.padding = '10px 15px 10px 10px';
 

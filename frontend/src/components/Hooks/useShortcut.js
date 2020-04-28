@@ -1,9 +1,5 @@
 import { useEffect } from 'react';
-
-const keyMap = {
-  ESCAPE: 27,
-  SPACE: 32,
-};
+import keyCodes from '../../constants/keyCodes';
 
 export const isInputField = event => {
   return ['TEXTAREA', 'INPUT'].includes(event.target.nodeName);
@@ -12,7 +8,7 @@ export const isInputField = event => {
 export default (triggerKey, action) => {
   const onKeyDown = event => {
     if (isInputField(event)) return;
-    if (event.key === triggerKey || event.keyCode === keyMap[triggerKey]) {
+    if (event.key === triggerKey || event.keyCode === keyCodes[triggerKey]) {
       event.preventDefault();
       event.stopPropagation();
       action();

@@ -29,7 +29,8 @@ export const getPrice = ({ prices: { usd, usd_foil } }) => {
 };
 
 export const getPriceLabel = (amountInUsd, { round = false } = {}) => {
-  const numberOfDigits = round ? 0 : 2;
+  const isLong = amountInUsd >= 1000;
+  const numberOfDigits = round || isLong ? 0 : 2;
   const formatPrice = amount =>
     Number(amount).toLocaleString('de-DE', {
       style: 'currency',

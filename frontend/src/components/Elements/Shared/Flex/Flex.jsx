@@ -22,6 +22,11 @@ const Flex = styled.div`
     css`
       flex: ${props.flex};
     `};
+  ${props =>
+    props.direction &&
+    css`
+      flex-direction: ${props.direction};
+    `};
 `;
 
 export default Flex;

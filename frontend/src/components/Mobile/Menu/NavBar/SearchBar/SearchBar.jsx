@@ -119,7 +119,7 @@ const SearchBar = ({ history, transparentSearchBar }) => {
       type: 'CARD',
       options: filteredCards,
       onShowAll: () => {
-        history.push(`/m/search?name=${query}&autoSearch=true`);
+        history.push(`/m/search?name=${query}`);
         onSelect();
       },
     },
@@ -135,7 +135,6 @@ const SearchBar = ({ history, transparentSearchBar }) => {
   return (
     <>
       <AutoComplete
-        allowClear
         open={isOpen}
         value={query}
         ref={inputEl}
@@ -146,11 +145,13 @@ const SearchBar = ({ history, transparentSearchBar }) => {
         onBlur={() => toggleIsOpen(false)}
         dropdownMatchSelectWidth={false}
         listHeight={360}
-        placeholder="Search for card or deck"
+        placeholder="Search for something..."
         style={{ width: 'calc(100% - 16px)' }}
-        className={transparentSearchBar && 'transparent'}
+        size="large"
+        className={transparentSearchBar ? 'transparent' : 'dark-placeholder'}
       >
         <Input
+          allowClear
           className="no-border"
           onClick={() => toggleIsOpen(true)}
           onInput={() => toggleIsOpen(true)}

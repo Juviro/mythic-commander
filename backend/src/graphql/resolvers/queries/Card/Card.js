@@ -4,6 +4,9 @@ const resolver = {
   oracleCard(card) {
     return card;
   },
+  price({ prices: { usd, usd_foil } }) {
+    return usd || usd_foil || 0;
+  },
   imgKey(card) {
     return getImageKey(card);
   },

@@ -7,6 +7,7 @@ type Card {
   name: String!
   image_uris: ImageUris
   card_faces: [CardFace!]
+  price: Float!
   prices: Prices!
   rarity: String!
   oracle_text: String
@@ -189,9 +190,9 @@ type Query {
   cardSearch(
     offset: Int
     limit: Int
-    options: CardsOptionsInput
+    options: CardsOptionsInput!
   ): PaginatedCards!
-  cardByOracleId(oracle_id: String!): Card!
+  cardByOracleId(oracle_id: String!): Card
 
   numberOfCachedCards: Int!
   cachedCards: [CachedCard!]!

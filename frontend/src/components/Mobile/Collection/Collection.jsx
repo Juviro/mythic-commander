@@ -1,18 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 import { Divider, Collapse } from 'antd';
 import { getMobileCollection } from './queries';
 
 import { FilteredCardList } from '../../Elements/Mobile';
-import {
-  LayoutAndSortPicker,
-  CollectionStats,
-  CollapsableFilter,
-} from '../../Elements/Shared';
+import { LayoutAndSortPicker, CollectionStats } from '../../Elements/Shared';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
 import CardModal from '../Card/CardModal';
 import AddToCollection from './AddToCollection';
+import NameFilter from '../../Elements/Shared/Filter/TextFilter/NameFilter';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -23,8 +20,14 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
+const StyledFilterWrapper = styled.div`
+  margin-top: 16px;
+  width: 100%;
+`;
+
 export default () => {
   const { data } = useQuery(getMobileCollection);
+  const [query, setQuery] = useState('');
   const cards = unifyCardFormat(data && data.collection.cards);
   const snapshot = data && data.collection.snapshot;
 
@@ -45,10 +48,17 @@ export default () => {
           />
         </Collapse.Panel>
       </Collapse>
-      <CollapsableFilter />
+      <StyledFilterWrapper>
+        <NameFilter
+          value={query}
+          onChange={setQuery}
+          size="middle"
+          placeholder="Search for a card"
+        />
+      </StyledFilterWrapper>
       <LayoutAndSortPicker showCollectionFilters />
       <Divider />
-      <FilteredCardList cards={cards} />
+      <FilteredCardList cards={cards} name={query} />
       <AddToCollection />
       <CardModal />
     </StyledWrapper>

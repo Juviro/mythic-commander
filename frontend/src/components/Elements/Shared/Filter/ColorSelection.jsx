@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Checkbox } from 'antd';
-import { useQueryParam, StringParam } from 'use-query-params';
-import { colors as colorIcons } from '../../../../assets/icons';
+import { colors as colorIcons } from '../../../../assets/mtgIcons';
 
 const colors = ['w', 'u', 'b', 'r', 'g'];
 
@@ -45,6 +44,7 @@ const StyledColorTag = styled.img`
   height: 25px;
   cursor: pointer;
   border-radius: 50%;
+  margin: 0 2px;
   ${getColorTagProps(false)}
 
   &:active {
@@ -52,23 +52,23 @@ const StyledColorTag = styled.img`
   }
 `;
 
-export default () => {
-  const [selectedColors = '', setColors] = useQueryParam('colors', StringParam);
+export default ({ onChange, value = '' }) => {
+  const isColorSelected = letter => value && value.includes(letter);
 
-  const isColorSelected = letter =>
-    selectedColors && selectedColors.includes(letter);
   const onSelectColor = letter => {
     const isSelected = isColorSelected(letter);
     const newColors = isSelected
-      ? selectedColors.replace(letter, '')
-      : addColor(selectedColors, letter);
-    setColors(newColors);
+      ? value.replace(letter, '')
+      : addColor(value, letter);
+    onChange(newColors);
   };
+
   const onSetExcluded = symbol => e => {
     const isExclude = e.target.checked;
-    const withoutSymbol = selectedColors.replace(new RegExp(symbol, 'g'), '');
+    const withoutSymbol = value.replace(new RegExp(symbol, 'g'), '');
     const newColors = isExclude ? symbol.concat(withoutSymbol) : withoutSymbol;
-    setColors(newColors);
+
+    onChange(newColors);
   };
 
   return (
@@ -91,8 +91,8 @@ export default () => {
             marginLeft: 8,
             marginBottom: 5,
           }}
-          disabled={selectedColors.includes('x')}
-          checked={selectedColors.includes('-')}
+          disabled={value.includes('x')}
+          checked={value.includes('-')}
           onChange={onSetExcluded('-')}
         >
           Exclude others
@@ -105,7 +105,7 @@ export default () => {
             alignItems: 'center',
             marginRight: '0',
           }}
-          checked={selectedColors.includes('x')}
+          checked={value.includes('x')}
           onChange={onSetExcluded('x')}
         >
           Exact match

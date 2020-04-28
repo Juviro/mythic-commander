@@ -16,6 +16,7 @@ const StyledImageWrapper = styled.div`
   position: relative;
   justify-content: center;
   align-items: center;
+  border-radius: 4%;
 `;
 
 export default ({ loading, card, hideFlipIcon }) => {

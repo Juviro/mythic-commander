@@ -2,14 +2,15 @@ import React from 'react';
 import { Menu } from 'antd';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
-import { UserAvatar } from '../../Elements/Shared';
+import { UserAvatar, MythicCommanderBanner, Flex } from '../../Elements/Shared';
+import { darkBackground } from '../../../constants/colors';
 
 const StyledMenu = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #e8e8e8;
+  justify-content: space-between;
+  background-color: ${darkBackground};
 `;
 
 const AvatarWrapper = styled.div`
@@ -17,30 +18,47 @@ const AvatarWrapper = styled.div`
 `;
 
 const MENU_ENTRIES = [
-  {
-    title: 'Search',
-    href: '/search',
-  },
+  // {
+  //   title: 'Decks',
+  //   href: '/decks',
+  // },
+  // {
+  //   title: 'Wants',
+  //   href: '/wants',
+  // },
   {
     title: 'Collection',
     href: '/collection',
   },
   {
-    title: 'Decks',
-    href: '/decks',
+    title: 'Advanced Search',
+    href: '/search',
   },
 ];
 
 const DesktopMenu = ({ location: { pathname } }) => {
   return (
     <StyledMenu>
-      <Menu mode="horizontal" selectedKeys={pathname}>
-        {MENU_ENTRIES.map(({ title, href }) => (
-          <Menu.Item key={href}>
-            <Link to={href}>{title}</Link>
-          </Menu.Item>
-        ))}
-      </Menu>
+      <Flex direction="row" align="center">
+        <MythicCommanderBanner style={{ marginLeft: 8 }} />
+        <Menu
+          mode="horizontal"
+          selectedKeys={pathname}
+          theme="dark"
+          style={{ marginLeft: 24 }}
+        >
+          {MENU_ENTRIES.map(({ title, href }) => (
+            <Menu.Item
+              key={href}
+              style={{
+                padding: '0 64px',
+              }}
+            >
+              <Link to={href}>{title}</Link>
+            </Menu.Item>
+          ))}
+        </Menu>
+      </Flex>
       <AvatarWrapper>
         <UserAvatar />
       </AvatarWrapper>

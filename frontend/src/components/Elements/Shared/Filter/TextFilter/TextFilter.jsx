@@ -1,18 +1,18 @@
 import React, { useRef } from 'react';
 import { Input } from 'antd';
-import { useQueryParam, StringParam } from 'use-query-params';
 
 import { useBlurOnEsc } from '../../../../Hooks';
 
 export default ({
-  paramName,
   placeholder,
   onSearch,
   size = 'small',
   inputRef,
+  autoFocus,
+  onChange,
+  value,
+  style,
 }) => {
-  const [value, setSearch] = useQueryParam(paramName, StringParam);
-
   const ref = inputRef !== undefined ? inputRef : useRef(null);
 
   const onPressEnter = () => {
@@ -27,8 +27,9 @@ export default ({
       ref={ref}
       onKeyDown={useBlurOnEsc}
       placeholder={placeholder}
-      onChange={e => setSearch(e.target.value)}
-      style={{ width: '100%' }}
+      autoFocus={autoFocus}
+      onChange={e => onChange(e.target.value)}
+      style={{ width: '100%', ...style }}
       size={size}
     />
   );

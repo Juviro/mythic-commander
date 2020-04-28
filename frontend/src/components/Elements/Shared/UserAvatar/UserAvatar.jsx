@@ -1,26 +1,30 @@
 import React from 'react';
-import { Spin } from 'antd';
+import { Spin, Typography } from 'antd';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/react-hooks';
 
 import { getUser } from '../../../../queries';
 
 const StyledWrapper = styled.div`
-  width: 30px;
   height: 30px;
   display: flex;
-  justify-content: center;
   align-items: center;
 `;
 
 const StyledAvatar = styled.img`
-  width: 100%;
+  height: ${({ isSmall }) => (isSmall ? 80 : 100)}%;
   border-radius: 50%;
   cursor: pointer;
   font-size: 8px;
 `;
 
-export default () => {
+const StyledUsername = styled(Typography.Text)`
+  font-size: 16px;
+  margin-left: 8px;
+  max-width: 120px;
+`;
+
+export default ({ showName }) => {
   const { data, loading } = useQuery(getUser);
 
   return (
@@ -28,7 +32,16 @@ export default () => {
       {loading ? (
         <Spin />
       ) : (
-        <StyledAvatar src={data.user.avatar} alt="avatar" />
+        <>
+          <StyledAvatar
+            src={data.user.avatar}
+            alt="avatar"
+            isSmall={showName}
+          />
+          {showName && (
+            <StyledUsername ellipsis>{data.user.name}</StyledUsername>
+          )}
+        </>
       )}
     </StyledWrapper>
   );

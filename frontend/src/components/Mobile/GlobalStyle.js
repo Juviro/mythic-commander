@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { darkBackground } from '../../constants/colors';
 
 export default createGlobalStyle`
   /* transparent search field for deck view */
@@ -12,11 +13,18 @@ export default createGlobalStyle`
     
   }
   .transparent .ant-select-selection-placeholder {
-      color: white;
-      opacity: 0.7;
-    }
-  .transparent .ant-select-selection__clear {
-    background-color: transparent;
+    color: white;
+    opacity: 0.7;
+  }
+  .dark-placeholder .ant-select-selection-placeholder {
+    color: ${darkBackground};
+    opacity: 0.5;
+  }
+  .transparent .ant-select-selection-search-input  {
+    background-color: rgba(45,45,45, 1);
+    border: none;
+    opacity: 0.6;
+    border-radius: 2px;
   }
 
   /* center items in Select component horizontally */

@@ -1,5 +1,8 @@
 import React from 'react';
-import { List } from 'antd';
+import { Typography, Statistic } from 'antd';
+import { LogoutOutlined } from '@ant-design/icons';
+
+import { UserAvatar, Flex } from '../../../Elements/Shared';
 
 export default () => {
   const logOut = () => {
@@ -9,8 +12,15 @@ export default () => {
   };
 
   return (
-    <List>
-      <List.Item onClick={logOut}>Logout</List.Item>
-    </List>
+    <Flex justify="space-between" align="flex-end">
+      <Statistic
+        title="Logged in as"
+        formatter={() => <UserAvatar showName />}
+      />
+      <Flex onClick={logOut} align="baseline">
+        <LogoutOutlined />
+        <Typography.Text style={{ marginLeft: 16 }}>Logout</Typography.Text>
+      </Flex>
+    </Flex>
   );
 };

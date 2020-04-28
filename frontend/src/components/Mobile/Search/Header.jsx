@@ -15,11 +15,11 @@ const StyledTitle = styled.div`
   margin-bottom: 8px;
 `;
 
-export default () => {
+export default ({ onResetOptions, isFilterResettable }) => {
   return (
     <StyledWrapper>
       <StyledTitle>Search for cards</StyledTitle>
-      <ResetFilter />
+      {isFilterResettable && <ResetFilter onReset={onResetOptions} />}
     </StyledWrapper>
   );
 };

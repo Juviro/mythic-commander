@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Select } from 'antd';
-import { StringParam, useQueryParam } from 'use-query-params';
+import { StringParam } from 'use-query-params';
+import { useStoredQueryParam } from '../../../Hooks';
 
 const DEFAULT_FILTER = [
   {
@@ -57,29 +58,27 @@ const COLLECTION_FILTER = [
   },
 ];
 
-export default ({ showCollectionFilters, style }) => {
+export default ({ showCollectionFilters, style, paramName = 'orderBy' }) => {
   const orderOptions = showCollectionFilters
     ? COLLECTION_FILTER
     : DEFAULT_FILTER;
 
-  const [orderBy, setOrderBy] = useQueryParam('orderBy', StringParam);
+  const [orderBy, setOrderBy] = useStoredQueryParam(paramName, StringParam);
 
-  useEffect(() => {
-    if (!orderBy) setOrderBy(orderOptions[0].value);
-    // eslint-disable-next-line
-  }, [orderBy]);
+  const currentOptions =
+    orderOptions.find(
+      ({ value }) => value === (orderBy || orderOptions[0].value)
+    ) || orderOptions[0];
 
-  const defaultValue = orderOptions.find(
-    ({ value }) => value === (orderBy || orderOptions[0].value)
-  ).label;
+  const currentValue = currentOptions.label;
 
   return (
     <Select
       listHeight={390}
-      defaultValue={defaultValue}
+      value={currentValue}
       dropdownStyle={{ minWidth: 200 }}
       onSelect={value => setOrderBy(value)}
-      style={{ width: 215, maxWidth: 'calc(100% - 140px)', ...style }}
+      style={{ width: 215, ...style }}
     >
       {orderOptions.map(({ label, value }) => (
         <Select.Option value={value} key={value}>

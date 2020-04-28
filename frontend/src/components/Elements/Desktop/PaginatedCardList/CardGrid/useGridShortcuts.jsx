@@ -1,37 +1,41 @@
 import { useEffect, useState } from 'react';
 import { useQueryParam, NumberParam } from 'use-query-params';
 import { isInputField } from '../../../../Hooks/useShortcut';
-
-const ENTER = 13;
-const SPACE = 32;
-const ARROW_LEFT = 37;
-const ARROW_TOP = 38;
-const ARROW_RIGHT = 39;
-const ARROW_BOTTOM = 40;
+import keyCodes from '../../../../../constants/keyCodes';
 
 export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
-  const [currentPage = 1, setCurrentPage] = useQueryParam('page', NumberParam);
+  const [currentPage = 1, setPageParam] = useQueryParam('page', NumberParam);
+  const [pageSize, setPageSizeParam] = useQueryParam('pageSize', NumberParam);
+
+  const setCurrentPage = (newPage, shouldReplace) =>
+    setPageParam(newPage, shouldReplace ? 'replaceIn' : 'pushIn');
+  const setPageSize = newPageSize => setPageSizeParam(newPageSize, 'replaceIn');
+
   const [selectedElementPosition, setSelectedElementPosition] = useState(0);
 
-  const cardsPerPage = cardsPerRow * numberOfRows;
-  const numberOfPages = Math.ceil(numberOfCards / cardsPerPage);
+  const numberOfPages = Math.ceil(numberOfCards / pageSize) || 1;
   const cardsOnLastPage =
     numberOfPages === 1
       ? numberOfCards
-      : numberOfCards % (cardsPerPage * (numberOfPages - 1));
+      : numberOfCards % (pageSize * (numberOfPages - 1));
+
+  useEffect(() => {
+    if (numberOfPages === 1 || numberOfPages >= currentPage) return;
+    setCurrentPage(numberOfPages, true);
+  });
 
   const onLeft = () => {
     if (selectedElementPosition === 1) {
       const nextPage = currentPage - 1;
       if (!nextPage) return;
       setCurrentPage(nextPage);
-      setSelectedElementPosition(cardsPerPage);
+      setSelectedElementPosition(pageSize);
     } else {
       setSelectedElementPosition(selectedElementPosition - 1);
     }
   };
   const onRight = () => {
-    if (selectedElementPosition === cardsPerPage) {
+    if (selectedElementPosition === pageSize) {
       if (currentPage === numberOfPages) return;
       setCurrentPage(Math.min(currentPage + 1, numberOfPages));
       setSelectedElementPosition(1);
@@ -48,9 +52,11 @@ export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
       const nextPage = currentPage - 1;
       if (!nextPage) return;
       setCurrentPage(nextPage);
-      setSelectedElementPosition(
-        cardsPerRow * (numberOfRows - 1) + selectedElementPosition
+      const newElementPosition = Math.min(
+        cardsPerRow * (numberOfRows - 1) + selectedElementPosition,
+        pageSize
       );
+      setSelectedElementPosition(newElementPosition);
     } else {
       setSelectedElementPosition(selectedElementPosition - cardsPerRow);
     }
@@ -70,7 +76,10 @@ export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
         )
       );
     } else {
-      const nextPosition = selectedElementPosition + cardsPerRow;
+      const nextPosition = Math.min(
+        selectedElementPosition + cardsPerRow,
+        pageSize
+      );
       const hasNoNext =
         currentPage === numberOfPages && nextPosition > cardsOnLastPage;
       if (hasNoNext) return;
@@ -84,20 +93,20 @@ export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
     let preventDefault = true;
 
     switch (event.keyCode) {
-      case ENTER:
-      case SPACE:
+      case keyCodes.ENTER:
+      case keyCodes.SPACE:
         toggleShowDetail();
         break;
-      case ARROW_LEFT:
+      case keyCodes.ARROW_LEFT:
         onLeft();
         break;
-      case ARROW_RIGHT:
+      case keyCodes.ARROW_RIGHT:
         onRight();
         break;
-      case ARROW_TOP:
+      case keyCodes.ARROW_TOP:
         onUp();
         break;
-      case ARROW_BOTTOM:
+      case keyCodes.ARROW_BOTTOM:
         onDown();
         break;
       default:
@@ -115,10 +124,10 @@ export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
   useEffect(() => {
     if (!numberOfCards || !numberOfPages) return;
     const lastPosition =
-      currentPage >= numberOfPages ? cardsOnLastPage : cardsPerPage;
+      currentPage >= numberOfPages ? cardsOnLastPage : pageSize;
     setSelectedElementPosition(Math.min(selectedElementPosition, lastPosition));
 
-    setCurrentPage(Math.max(Math.min(currentPage, numberOfPages), 1));
+    setCurrentPage(Math.max(Math.min(currentPage, numberOfPages), 1), true);
     // eslint-disable-next-line
   }, [numberOfPages]);
 
@@ -127,9 +136,11 @@ export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
   }, [currentPage]);
 
   const pagination = {
-    pageSize: cardsPerPage,
+    pageSize: pageSize || 10,
     current: currentPage,
     total: numberOfCards,
+    onShowSizeChange: (_, newPageSize) => setPageSize(newPageSize),
+    pageSizeOptions: [10, 25, 50, 100],
     onChange: val => setCurrentPage(val),
   };
 

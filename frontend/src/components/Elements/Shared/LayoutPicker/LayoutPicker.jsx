@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Radio } from 'antd';
 import {
   BarsOutlined,
   AppstoreOutlined,
   BorderOutlined,
 } from '@ant-design/icons';
-import { StringParam, useQueryParam } from 'use-query-params';
-import { useShortcut } from '../../../Hooks';
+import { StringParam } from 'use-query-params';
+import { useShortcut, useStoredQueryParam } from '../../../Hooks';
 import DesktopTooltip from '../../Desktop/DesktopTooltip';
 
 const nextLayoutMap = {
@@ -22,16 +22,20 @@ const getNextLayout = (layout, hideCard) => {
 };
 
 export default ({ hideCard }) => {
-  const [layout, setLayout] = useQueryParam('layout', StringParam);
+  const [layout = 'list', setLayoutParam] = useStoredQueryParam(
+    'layout',
+    StringParam
+  );
+  const setLayout = newLayout => setLayoutParam(newLayout, 'replaceIn');
   useShortcut('l', () => setLayout(getNextLayout(layout, hideCard)));
-
-  useEffect(() => {
-    if (!layout) setLayout('list');
-  }, [layout, setLayout]);
 
   return (
     <DesktopTooltip title="Change Layout [L]">
-      <Radio.Group value={layout} onChange={e => setLayout(e.target.value)}>
+      <Radio.Group
+        value={layout}
+        onChange={e => setLayout(e.target.value)}
+        style={{ display: 'flex' }}
+      >
         <Radio.Button value="list">
           <BarsOutlined />
         </Radio.Button>
