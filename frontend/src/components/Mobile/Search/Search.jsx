@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Divider } from 'antd';
 import { withRouter } from 'react-router';
@@ -30,6 +30,7 @@ const StyledWrapper = styled.div`
 `;
 
 const Search = ({ history }) => {
+  const buttonRef = useRef(null);
   const [allCards, setAllCards] = useState(null);
   const [queryResult, setQueryResult] = useState({});
   const [loading, toggleLoading] = useToggle(false);
@@ -72,8 +73,9 @@ const Search = ({ history }) => {
   useEffect(() => {
     const hasOptions = Object.values(options).some(val => val !== undefined);
     if (!hasOptions) return;
-    // TODO:: only scroll to top if options changed
-    setTimeout(() => window.scrollTo(0, 0), 100);
+    if (loading && buttonRef) {
+      buttonRef.current.scrollIntoView({ behavior: 'smooth', inline: 'start' });
+    }
     setCurrentOptions(options);
     fetchCards(options);
     // eslint-disable-next-line
@@ -117,6 +119,7 @@ const Search = ({ history }) => {
         />
         <LayoutAndSortPicker />
         <SearchButton
+          buttonRef={buttonRef}
           onSearch={onSearch}
           loading={loading}
           style={{ marginTop: 24 }}
