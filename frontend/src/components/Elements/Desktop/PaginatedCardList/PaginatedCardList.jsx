@@ -27,6 +27,8 @@ export default ({
   showSorter,
   hiddenColumns,
   showNameSearch,
+  showCollectionFilters,
+  orderByParamName,
 }) => {
   const [zoom, setZoom] = useLocalStorage('zoom', 100);
   const [layout] = useQueryParam('layout', StringParam);
@@ -65,6 +67,8 @@ export default ({
     >
       <Header
         showNameSearch={showNameSearch}
+        orderByParamName={orderByParamName}
+        showCollectionFilters={showCollectionFilters}
         showZoomSlider={layout === 'grid'}
         zoom={zoom}
         setZoom={setZoom}

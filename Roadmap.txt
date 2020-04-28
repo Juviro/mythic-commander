@@ -4,7 +4,6 @@ BUGFIXES:
 
 NEXT:
     - card search
-        - add card name to grid card
 
 IMPROVEMENTS: 
     - when switching wants list via search bar, hide add cards (mobile)
@@ -22,6 +21,7 @@ FEATURES:
         - oracle text
         - all legalities (?)
         - synergies (EDHrec)
+        - mkm prices via their api (min, avg)
         - related cards (token, partner, meld etc - should be in db? or skryfall?)
 
 REFACTORINGS:

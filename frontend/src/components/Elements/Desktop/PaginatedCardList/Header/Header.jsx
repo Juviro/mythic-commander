@@ -15,7 +15,14 @@ const StyledWrapper = styled.div`
   margin-bottom: 16px;
 `;
 
-export default ({ showNameSearch, showZoomSlider, zoom, setZoom }) => {
+export default ({
+  showNameSearch,
+  showZoomSlider,
+  zoom,
+  setZoom,
+  showCollectionFilters,
+  orderByParamName,
+}) => {
   const [name, setName] = useQueryParam('name', StringParam);
   const searchInputRef = useRef(null);
   const focusInput = () => searchInputRef.current.focus();
@@ -24,7 +31,10 @@ export default ({ showNameSearch, showZoomSlider, zoom, setZoom }) => {
   return (
     <StyledWrapper>
       <Flex direction="row">
-        <SortPicker />
+        <SortPicker
+          showCollectionFilters={showCollectionFilters}
+          paramName={orderByParamName}
+        />
         {showNameSearch && (
           <Tooltip title="Filter for card name [F]">
             <span>
