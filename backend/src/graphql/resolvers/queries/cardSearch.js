@@ -48,8 +48,8 @@ const addRangeClause = (q, encodedValue, columnName) => {
   // eslint-disable-next-line no-unused-vars
   const [_, from = '', __, to = ''] = encodedValue.match(/(\d*)(-)(\d*)/);
 
-  if (from) q.whereRaw(`"${columnName}"::float >= ${from}`);
-  if (to) q.whereRaw(`"${columnName}"::float <= ${to}`);
+  if (from) q.whereRaw(`try_cast_float("${columnName}") >= ${from}`);
+  if (to) q.whereRaw(`try_cast_float("${columnName}") <= ${to}`);
 };
 
 const addRarityClause = (q, rarity) => {
@@ -64,6 +64,14 @@ const addRarityClause = (q, rarity) => {
     .map(letter => rarityMap[letter])
     .filter(Boolean);
   q.whereIn('rarity', rarities);
+};
+
+const addNameClause = (q, name) => {
+  const searchPattern = name
+    .replace(/[^\w\s]/g, '')
+    .split(' ')
+    .join('%');
+  q.whereRaw(`REGEXP_REPLACE(name, '\\W', '', 'g') ILIKE '%${searchPattern}%'`);
 };
 
 export default async (
@@ -94,7 +102,7 @@ export default async (
 
   const query = db(database)
     .where(q => {
-      if (name) q.where('name', 'ILIKE', `%${name}%`);
+      if (name) addNameClause(q, name);
       if (text) q.where('oracle_text', 'ILIKE', `%${text}%`);
       if (creatureType) q.where('type_line', 'LIKE', `%${creatureType}%`);
       if (cardType) q.where('type_line', 'ILIKE', `%${cardType}%`);
@@ -115,12 +123,24 @@ export default async (
 
   const cards = await query;
 
-  const hasMore = cards.length > limit + offset;
+  const shouldFilter = cards.length < 500;
+
+  const filteredCards = shouldFilter
+    ? cards.filter(({ oracle_id }, index) => {
+        const firstIndex = cards.findIndex(
+          card => card.oracle_id === oracle_id
+        );
+        if (firstIndex !== index) return false;
+        return true;
+      })
+    : cards;
+
+  const hasMore = filteredCards.length > limit + offset;
 
   return {
     hasMore,
-    totalResults: cards.length,
+    totalResults: filteredCards.length,
     nextOffset: hasMore ? offset + limit : null,
-    cards: cards.slice(offset, offset + limit),
+    cards: filteredCards.slice(offset, offset + limit),
   };
 };

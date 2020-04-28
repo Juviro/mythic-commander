@@ -1,22 +1,25 @@
 import { useEffect, useState } from 'react';
 import { useQueryParam, NumberParam } from 'use-query-params';
 import { isInputField } from '../../../../Hooks/useShortcut';
+import { useWindowSize } from '../../../../Hooks';
+import keyCodes from '../../../../../constants/keyCodes';
 
-const ENTER = 13;
-const SPACE = 32;
-const ARROW_LEFT = 37;
-const ARROW_TOP = 38;
-const ARROW_RIGHT = 39;
-const ARROW_BOTTOM = 40;
-
-export default (cards, toggleShowDetail) => {
-  const pageSize = Math.floor((window.innerHeight - 210) / 74);
-  const [currentPage = 1, setCurrentPage] = useQueryParam('page', NumberParam);
+export default (numberOfCards, toggleShowDetail) => {
+  useWindowSize();
+  const [currentPage = 1, setPageParam] = useQueryParam('page', NumberParam);
+  const [pageSize, setPageSizeParam] = useQueryParam('pageSize', NumberParam);
   const [selectedElementPosition, setSelectedElementPosition] = useState(0);
 
-  const numberOfCards = cards && cards.length;
+  const setCurrentPage = (newPage, shouldReplace) =>
+    setPageParam(newPage, shouldReplace ? 'replaceIn' : 'pushIn');
+  const setPageSize = newPageSize => setPageSizeParam(newPageSize, 'pushIn');
 
-  const numberOfPages = cards && Math.ceil(cards.length / pageSize);
+  const numberOfPages = numberOfCards ? Math.ceil(numberOfCards / pageSize) : 1;
+
+  useEffect(() => {
+    if (numberOfPages === 1 || numberOfPages >= currentPage) return;
+    setCurrentPage(numberOfPages, true);
+  });
 
   const onLeft = () => {
     setCurrentPage(Math.max(currentPage - 1, 1));
@@ -37,7 +40,9 @@ export default (cards, toggleShowDetail) => {
       onRight();
     } else {
       const elementsOnCurrentPage =
-        currentPage === numberOfPages ? numberOfCards % pageSize : pageSize;
+        currentPage === numberOfPages
+          ? numberOfCards % pageSize || pageSize
+          : pageSize;
       setSelectedElementPosition(
         Math.min(selectedElementPosition + 1, elementsOnCurrentPage)
       );
@@ -45,24 +50,24 @@ export default (cards, toggleShowDetail) => {
   };
 
   const onKeyDown = event => {
-    if (!cards || isInputField(event)) return;
+    if (!numberOfCards || isInputField(event)) return;
     let preventDefault = true;
 
     switch (event.keyCode) {
-      case ENTER:
-      case SPACE:
+      case keyCodes.ENTER:
+      case keyCodes.SPACE:
         toggleShowDetail();
         break;
-      case ARROW_LEFT:
+      case keyCodes.ARROW_LEFT:
         onLeft();
         break;
-      case ARROW_RIGHT:
+      case keyCodes.ARROW_RIGHT:
         onRight();
         break;
-      case ARROW_TOP:
+      case keyCodes.ARROW_TOP:
         onUp();
         break;
-      case ARROW_BOTTOM:
+      case keyCodes.ARROW_BOTTOM:
         onDown();
         break;
       default:
@@ -78,8 +83,8 @@ export default (cards, toggleShowDetail) => {
   });
 
   useEffect(() => {
-    if (!cards || !numberOfPages) return;
-    setCurrentPage(Math.max(Math.min(currentPage, numberOfPages), 1));
+    if (!numberOfCards) return;
+    setCurrentPage(Math.max(Math.min(currentPage, numberOfPages), 1), true);
     // eslint-disable-next-line
   }, [numberOfCards]);
 
@@ -90,6 +95,9 @@ export default (cards, toggleShowDetail) => {
   const pagination = {
     pageSize,
     current: currentPage,
+    total: numberOfCards,
+    onShowSizeChange: (_, newPageSize) => setPageSize(newPageSize),
+    pageSizeOptions: [10, 25, 50, 100],
     onChange: val => setCurrentPage(val),
   };
 

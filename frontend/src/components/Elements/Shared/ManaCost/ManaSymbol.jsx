@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Typography } from 'antd';
-import { colors as colorIcons } from '../../../../assets/icons';
+import { colors as colorIcons } from '../../../../assets/mtgIcons';
 
 const StyledColorTag = styled.img`
   width: ${({ size }) => size}px;

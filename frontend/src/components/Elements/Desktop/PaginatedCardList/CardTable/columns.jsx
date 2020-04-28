@@ -16,19 +16,23 @@ const renderType = ({ primaryTypes, subTypes }) => {
   return `${primaryTypes.join(' ')} - ${subTypes.join(' ')}`;
 };
 
-const renderPrice = ({ minPrice, sumPrice, totalAmount }) => {
-  if (minPrice === sumPrice || totalAmount === 1) {
+const renderPrice = ({ price, minPrice, sumPrice, totalAmount }) => {
+  const displayedPrice = price || minPrice;
+  if (!sumPrice) {
+    return getPriceLabel(displayedPrice);
+  }
+  if (displayedPrice === sumPrice || totalAmount === 1) {
     return getPriceLabel(sumPrice);
   }
 
-  return `${getPriceLabel(minPrice)}  (${getPriceLabel(sumPrice)})`;
+  return `${getPriceLabel(displayedPrice)}  (${getPriceLabel(sumPrice)})`;
 };
 
-const Name = ({ name }) => {
+const Name = React.memo(({ name }) => {
   const [searchString] = useQueryParam('name', StringParam);
 
   return highlightText(searchString, name);
-};
+});
 
 const sortByAmount = columnKey => (a, b) => {
   return Number(a[columnKey]) - Number(b[columnKey]);
@@ -45,16 +49,17 @@ const sortType = (a, b) => {
   return getIndex(a) - getIndex(b);
 };
 
-export default [
+const columns = [
   {
     title: 'Card',
     key: 'img',
-    width: 70,
+    width: 90,
     render: card => <PreviewCardImage card={card} highlightOnHover />,
   },
   {
     title: 'Name',
     dataIndex: 'name',
+    width: 300,
     key: 'name',
     render: name => <Name name={name} />,
     sorter: sortByName('name'),
@@ -63,13 +68,13 @@ export default [
     title: 'CMC',
     key: 'cmc',
     dataIndex: 'cmc',
-    width: 50,
+    width: 70,
     align: 'center',
     sorter: sortByAmount('cmc'),
   },
   {
     title: 'Mana Cost',
-    key: 'mana_cost',
+    key: 'manaCost',
     dataIndex: 'mana_cost',
     width: 200,
     align: 'center',
@@ -87,7 +92,7 @@ export default [
   {
     title: 'Amount',
     key: 'amount',
-    width: 20,
+    width: 60,
     align: 'center',
     render: renderAmount,
     sorter: sortByAmount('totalAmount'),
@@ -110,3 +115,12 @@ export default [
     sorter: sortByAmount('createdAt'),
   },
 ];
+
+export default ({ showSorter = true, hiddenColumns }) => {
+  return columns
+    .map(({ sorter, ...rest }) => ({
+      sorter: showSorter && sorter,
+      ...rest,
+    }))
+    .filter(({ key }) => !hiddenColumns || !hiddenColumns.includes(key));
+};

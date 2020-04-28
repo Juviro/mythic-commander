@@ -33,4 +33,9 @@ export default createGlobalStyle`
   .recharts-surface {
     overflow: visible !important;
   }
+
+  /* To allow full width tables */
+  .ant-table-small {
+    display: inherit;
+  }
 `;

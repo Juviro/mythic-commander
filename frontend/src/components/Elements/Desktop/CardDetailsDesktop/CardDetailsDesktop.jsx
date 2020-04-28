@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 
-import { Col, Row, Divider } from 'antd';
+import { Col, Row, Divider, Alert } from 'antd';
 import {
   FlippableCard,
   IncludedDecks,
@@ -38,12 +38,27 @@ const CenteredCol = styled(Col)`
   justify-content: center;
 `;
 
-export default ({ card }) => {
+export default ({ card, loading: parentLoading }) => {
   const cardId = card.id;
   const [selectedCardId, setSelectedCardId] = useState(cardId);
-  const { data, loading } = useQuery(cardDetailsDesktop, {
+  const { data, loading: cardLoading } = useQuery(cardDetailsDesktop, {
     variables: { oracle_id: card.oracle_id },
   });
+  const loading = cardLoading || parentLoading;
+
+  useEffect(() => {
+    setSelectedCardId(cardId);
+  }, [cardId]);
+
+  if (!loading && !data.cardByOracleId) {
+    return (
+      <Alert
+        style={{ marginTop: '30%' }}
+        message="No Info available"
+        type="warning"
+      />
+    );
+  }
 
   const usedCard = loading
     ? card
@@ -55,20 +70,17 @@ export default ({ card }) => {
         ),
       };
 
-  useEffect(() => {
-    setSelectedCardId(cardId);
-  }, [cardId]);
-
   const { name, totalAmount } = card || {};
   let title = name;
   if (totalAmount) title += ` (${totalAmount} collected)`;
+  if (parentLoading) title = '';
 
   return (
     <>
       <Row style={{ width: '100%', maxHeight: 490 }}>
         <CenteredCol span={8}>
           <StyledCardImage>
-            <FlippableCard card={usedCard} />
+            <FlippableCard card={usedCard} loading={loading} />
           </StyledCardImage>
         </CenteredCol>
         <CenteredCol

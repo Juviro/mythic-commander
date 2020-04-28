@@ -16,11 +16,16 @@ const StyledCard = styled.img`
 
 const StyledPreviewWrapper = styled.div`
   position: relative;
-  width: ${({ width = '36px' }) => width};
-  height: ${({ height = '48px' }) => height};
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
 `;
 
-export default ({ width, height, card, highlightOnHover }) => {
+const PreviewCardImage = ({
+  width = 36,
+  height = 48,
+  card,
+  highlightOnHover,
+}) => {
   const [cardPreviewOpen, toggleCardPreviewOpen] = useToggle(false);
   const [loading, toggleLoading] = useToggle(true);
   const { id, imgKey } = card;
@@ -75,3 +80,5 @@ export default ({ width, height, card, highlightOnHover }) => {
     </Popover>
   );
 };
+
+export default React.memo(PreviewCardImage);

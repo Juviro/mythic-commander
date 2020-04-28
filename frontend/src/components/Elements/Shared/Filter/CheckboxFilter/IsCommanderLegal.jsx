@@ -1,16 +1,12 @@
 import React from 'react';
 
 import { Checkbox } from 'antd';
-import { BooleanParam, useQueryParam } from 'use-query-params';
 
-export default () => {
-  const [isCommanderLegal, setChecked] = useQueryParam(
-    'isCommanderLegal',
-    BooleanParam
-  );
-
+export default ({ onChange: onSubmit, isCommanderLegal }) => {
   const onChange = e => {
-    setChecked(e.target.checked);
+    const newValue = e.target.checked || undefined;
+
+    onSubmit(newValue);
   };
 
   return (

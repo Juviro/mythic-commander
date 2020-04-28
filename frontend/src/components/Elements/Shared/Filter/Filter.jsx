@@ -16,53 +16,114 @@ import RarityFilter from './RarityFilter';
 
 const FilterWrapper = styled.div`
   width: 100%;
+  overflow: auto;
   display: flex;
   flex-direction: column;
 `;
 
-const Label = ({ title }) => (
+const Label = ({ title, style }) => (
   <Typography.Text
     strong
-    style={{ marginTop: 16, marginBottom: 4 }}
+    style={{ marginTop: 8, marginBottom: 4, ...style }}
   >{`${title}:`}</Typography.Text>
 );
 
-const Filter = ({ advacedSearch, onSearch, hideNameFilter }) => {
+const Filter = ({
+  advancedSearch,
+  onSearch,
+  hideNameFilter,
+  autoFocus,
+  options,
+  onChangeOption,
+}) => {
+  const {
+    name,
+    rarity,
+    cmc,
+    power,
+    toughness,
+    set,
+    text,
+    colors,
+    creatureType,
+    cardType,
+    isLegendary,
+    isOwned,
+    isCommanderLegal,
+  } = options;
+
   return (
     <FilterWrapper>
       {!hideNameFilter && (
         <>
-          <Label title="Card name" />
-          <NameFilter onSearch={onSearch} />
+          <Label title="Card name" style={{ marginTop: 0 }} />
+          <NameFilter
+            value={name}
+            onSearch={onSearch}
+            autoFocus={autoFocus}
+            onChange={onChangeOption('name')}
+          />
         </>
       )}
-      {advacedSearch && (
+      {advancedSearch && (
         <>
+          <Label title="Card text" />
+          <OracleTextFilter
+            value={text}
+            onSearch={onSearch}
+            onChange={onChangeOption('text')}
+          />
           <Label title="Set" />
-          <SetSelection />
-          <Label title="Oracle text" />
-          <OracleTextFilter onSearch={onSearch} />
+          <SetSelection
+            onChange={onChangeOption('set')}
+            value={set}
+            onSearch={onSearch}
+          />
         </>
       )}
       <Label title="Card type" />
-      <CardTypeSelection />
+      <CardTypeSelection
+        onChangeOption={onChangeOption}
+        value={cardType}
+        onSearch={onSearch}
+        isLegendary={isLegendary}
+      />
       <Label title="Creature type" />
-      <CreatureTypeSelection />
+      <CreatureTypeSelection
+        onChange={onChangeOption('creatureType')}
+        onSearch={onSearch}
+        value={creatureType}
+      />
       <Label title="Color identity" />
-      <ColorSelection />
-      {advacedSearch && (
+      <ColorSelection onChange={onChangeOption('colors')} value={colors} />
+      {advancedSearch && (
         <>
           <Label title="Rarity" />
-          <RarityFilter />
+          <RarityFilter onChange={onChangeOption('rarity')} value={rarity} />
           <Label title="Converted mana cost" />
-          <RangeFilter paramName="cmc" onSearch={onSearch} />
+          <RangeFilter
+            value={cmc}
+            onSearch={onSearch}
+            onChange={onChangeOption('cmc')}
+          />
           <Label title="Power" />
-          <RangeFilter paramName="power" onSearch={onSearch} />
+          <RangeFilter
+            value={power}
+            onSearch={onSearch}
+            onChange={onChangeOption('power')}
+          />
           <Label title="Toughness" />
-          <RangeFilter paramName="toughness" onSearch={onSearch} />
+          <RangeFilter
+            value={toughness}
+            onSearch={onSearch}
+            onChange={onChangeOption('toughness')}
+          />
           <Label title="Other" />
-          <IsCommanderLegal />
-          <IsOwned />
+          <IsCommanderLegal
+            onChange={onChangeOption('isCommanderLegal')}
+            isCommanderLegal={isCommanderLegal}
+          />
+          <IsOwned onChange={onChangeOption('isOwned')} isOwned={isOwned} />
         </>
       )}
     </FilterWrapper>
