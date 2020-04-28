@@ -9,9 +9,9 @@ const StyledWrapper = styled.div`
   justify-content: center;
 `;
 
-export default ({ onSearch, loading, style }) => {
+export default ({ onSearch, loading, style, buttonRef }) => {
   return (
-    <StyledWrapper>
+    <StyledWrapper ref={buttonRef}>
       <Button
         loading={loading}
         type="primary"
