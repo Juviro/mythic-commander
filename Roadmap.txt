@@ -1,21 +1,17 @@
 BUGFIXES:
-    - backend crashes when searching for power bc * cannot be casted to float
     - if only foil owned, show foil price as min price
 
 NEXT:
-    - card search
-
-IMPROVEMENTS: 
-    - when switching wants list via search bar, hide add cards (mobile)
-    - on mobile: advanced search -> click card -> search card throught searchBar -> click back: show show advanced search without card modal. Maybe use replace history.
     - switch to german date format in collection stats
     - ignore keyboard shortcuts if modifier key is pressed (browser back has arrow etc)
     - add range picker to collection to only show cards added in specific timeframe (1h, 24h, 7d, 3m, 1y)
-
-FEATURES:
-    - add logout context menu to desktop profile avatar
+    - add logout context menu to desktop profile avatar to logout
     - add delete button to collection
     - add mass delete to collection
+
+IMPROVEMENTS: 
+
+FEATURES:
     - add edhrec and scryfall to card links
     - detail card view - like current desktop modal plus:
         - oracle text
@@ -28,6 +24,8 @@ REFACTORINGS:
  
 BACKLOG:
     - refresh google access ?
+    - delete session when logging out
+    - on mobile: advanced search -> click card -> search card throught searchBar -> click back: show show advanced search without card modal. Maybe use replace history.
     - add possible combos section to detail card view (https://discordapp.com/channels/673601282946236417/673601283609067559, no api yet)
     - only show distinct cards on search, but in a way that the set still works. DistinctCardsPerSets view?
     - add expandable (lazy load) edhrec synergies to card view
