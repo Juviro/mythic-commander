@@ -20,8 +20,10 @@ export default () => {
     sidebarInitiallyVisible
   );
   const { data, loading } = useQuery(getCollection);
+  console.log('data :', data);
   const snapshot = data && data.collection.snapshot;
   const cards = data && unifyCardFormat(data.collection.cards);
+  console.log('cards :', cards);
 
   return (
     <StyledWrapper>
