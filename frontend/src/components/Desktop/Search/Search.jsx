@@ -22,7 +22,6 @@ const StyledWrapper = styled.div`
 
 const Search = ({ history }) => {
   const [currentCards, setCurrentCards] = useState([]);
-  console.log('currentCards :', currentCards);
   const [isSidebarVisible, toggleIsSidebarVisible] = useToggle(true);
   const [loading, toggleLoading] = useToggle(false);
   const [queryResult, setQueryResult] = useState({});
@@ -105,7 +104,6 @@ const Search = ({ history }) => {
 
     // reset cards list (including element position) when re-searching
     if (didOptionsChange) {
-      console.log('reset cards');
       setCurrentCards([]);
       setCurrentOptions(options);
     }
@@ -137,7 +135,6 @@ const Search = ({ history }) => {
   // reset search when clicking search again
   useEffect(() => {
     if (page || loading) return;
-    console.log('reset cards 2');
     setCurrentCards([]);
     setCurrentOptions(options);
     setQueryResult({});
