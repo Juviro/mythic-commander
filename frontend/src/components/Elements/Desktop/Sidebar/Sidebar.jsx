@@ -14,7 +14,8 @@ const StyledWrapper = styled.div`
   will-change: margin-left;
   box-shadow: ${({ isVisible }) =>
     isVisible ? '5px 0 5px -5px #333' : 'none'};
-  margin-left: ${({ isVisible }) => (isVisible ? 0 : -300)}px;
+  margin-left: ${({ isVisible, marginLeft }) =>
+    isVisible ? 0 : -marginLeft}px;
 `;
 
 const StyledToggleWrapper = styled.div`
@@ -51,6 +52,7 @@ export default ({
   return (
     <StyledWrapper
       isVisible={isVisible}
+      marginLeft={width}
       width={sidebarWidth}
       style={wrapperStyle}
     >

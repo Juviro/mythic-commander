@@ -9,7 +9,7 @@ const StyledContent = styled.div`
   display: flex;
   max-width: 500px;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
   background-color: white;
   padding: 12px;
@@ -37,11 +37,12 @@ export default ({
 
   return (
     <Sidebar
+      width={350}
       isVisible={isVisible}
       isFullscreen={isFullscreen}
       toggleIsVisible={toggleIsVisible}
       wrapperStyle={{
-        padding: 0,
+        padding: '0 12px',
         display: 'flex',
         justifyContent: 'center',
       }}

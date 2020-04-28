@@ -8,6 +8,7 @@ const initialValues = {
   pageSize: 10,
   layout: 'list',
   orderBy: 'name-asc',
+  orderByCollection: 'added-desc',
 };
 
 export default (key, paramType) => {

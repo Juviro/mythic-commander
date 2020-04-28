@@ -1,10 +1,11 @@
 import React, { useRef, useEffect } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Typography } from 'antd';
 import styled from 'styled-components';
 
 import FlippableCard from '../../../Shared/FlippableCard';
 import { getPriceLabel } from '../../../../../utils/cardStats';
 import OwnedBadge from '../../../Shared/OwnedBadge';
+import Flex from '../../../Shared/Flex';
 import { primary } from '../../../../../constants/colors';
 import scrollIntoView from '../../../../../utils/scrollIntoView';
 
@@ -39,8 +40,7 @@ const StyledAmountWrapper = styled.div`
 `;
 
 const StyledInfoWrapper = styled(Row)`
-  width: ${({ width }) => width}px;
-  margin-top: 4px;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
 `;
@@ -88,14 +88,23 @@ const GridCard = ({
         )}
       </StyledImageWrapper>
       {!loading && (
-        <StyledInfoWrapper width={width} style={{ fontSize: textSize }}>
-          <StyledCol span={8} style={{ justifyContent: 'flex-start' }}>
-            {getPriceLabel(displayedPrice)}
-          </StyledCol>
-          <StyledCol span={8} style={{ justifyContent: 'flex-end' }}>
-            {card.owned && <OwnedBadge style={{ fontSize: textSize }} />}
-          </StyledCol>
-        </StyledInfoWrapper>
+        <Flex
+          direction="column"
+          justify="center"
+          style={{ width, marginTop: 4 }}
+        >
+          <Typography.Text ellipsis style={{ fontSize: textSize }}>
+            {card.name}
+          </Typography.Text>
+          <StyledInfoWrapper style={{ fontSize: textSize }}>
+            <StyledCol span={8} style={{ justifyContent: 'flex-start' }}>
+              {getPriceLabel(displayedPrice)}
+            </StyledCol>
+            <StyledCol span={8} style={{ justifyContent: 'flex-end' }}>
+              {card.owned && <OwnedBadge style={{ fontSize: textSize }} />}
+            </StyledCol>
+          </StyledInfoWrapper>
+        </Flex>
       )}
     </StyledCardWrapper>
   );

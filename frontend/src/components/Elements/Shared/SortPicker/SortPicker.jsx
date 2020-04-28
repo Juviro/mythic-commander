@@ -58,16 +58,19 @@ const COLLECTION_FILTER = [
   },
 ];
 
-export default ({ showCollectionFilters, style }) => {
+export default ({ showCollectionFilters, style, paramName = 'orderBy' }) => {
   const orderOptions = showCollectionFilters
     ? COLLECTION_FILTER
     : DEFAULT_FILTER;
 
-  const [orderBy, setOrderBy] = useStoredQueryParam('orderBy', StringParam);
+  const [orderBy, setOrderBy] = useStoredQueryParam(paramName, StringParam);
 
-  const currentValue = orderOptions.find(
-    ({ value }) => value === (orderBy || orderOptions[0].value)
-  ).label;
+  const currentOptions =
+    orderOptions.find(
+      ({ value }) => value === (orderBy || orderOptions[0].value)
+    ) || orderOptions[0];
+
+  const currentValue = currentOptions.label;
 
   return (
     <Select
