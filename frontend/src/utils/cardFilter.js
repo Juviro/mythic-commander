@@ -60,12 +60,18 @@ const filterByLegendary = isLegendary => ({ primaryTypes }) => {
   const isCardLegendary = primaryTypes.includes('Legendary');
   return isLegendary === 'true' ? isCardLegendary : !isCardLegendary;
 };
+const filterByAddedWithin = addedWithin => ({ createdAt }) => {
+  if (!addedWithin || !createdAt) return true;
+  const spanInMillies = addedWithin * 60 * 60 * 1000;
+  return Date.now() - spanInMillies < createdAt;
+};
 
 export const filterCards = (
   cards,
-  { name, colors, creatureType, cardType, isLegendary }
+  { name, colors, creatureType, cardType, isLegendary, addedWithin }
 ) => {
   return filterByName(cards, name)
+    .filter(filterByAddedWithin(addedWithin))
     .filter(filterByColor(colors))
     .filter(filterByCardType(cardType))
     .filter(filterByLegendary(isLegendary))

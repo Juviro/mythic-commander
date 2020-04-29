@@ -176,7 +176,6 @@ const Search = ({ history }) => {
       {isSearching && (
         <PaginatedCardList
           loading={loading}
-          showSorter={false}
           hiddenColumns={['added', 'amount']}
           cards={currentCards}
           widthOffset={isSidebarVisible ? 329 : 0}

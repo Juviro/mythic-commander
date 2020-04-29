@@ -3,7 +3,12 @@ import { Tooltip } from 'antd';
 import styled from 'styled-components';
 import { useQueryParam, StringParam } from 'use-query-params';
 
-import { LayoutPicker, SortPicker, Flex } from '../../../Shared';
+import {
+  LayoutPicker,
+  SortPicker,
+  Flex,
+  AddedBeforeFilter,
+} from '../../../Shared';
 import ZoomSlider from './ZoomSlider';
 import NameFilter from '../../../Shared/Filter/TextFilter/NameFilter';
 import { useShortcut } from '../../../../Hooks';
@@ -22,6 +27,7 @@ export default ({
   setZoom,
   showCollectionFilters,
   orderByParamName,
+  showAddedBeforeFilter,
 }) => {
   const [name, setName] = useQueryParam('name', StringParam);
   const searchInputRef = useRef(null);
@@ -49,6 +55,7 @@ export default ({
             </span>
           </Tooltip>
         )}
+        {showAddedBeforeFilter && <AddedBeforeFilter />}
       </Flex>
       <Flex direction="row">
         {showZoomSlider && <ZoomSlider zoom={zoom} setZoom={setZoom} />}

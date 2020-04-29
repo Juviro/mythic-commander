@@ -3,7 +3,8 @@ import { Spin, Typography } from 'antd';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/react-hooks';
 
-import { getUser } from '../../../../queries';
+import { getUser } from './queries';
+import Flex from '../Flex';
 
 const StyledWrapper = styled.div`
   height: 30px;
@@ -12,7 +13,7 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledAvatar = styled.img`
-  height: ${({ isSmall }) => (isSmall ? 80 : 100)}%;
+  height: 100%;
   border-radius: 50%;
   cursor: pointer;
   font-size: 8px;
@@ -20,26 +21,26 @@ const StyledAvatar = styled.img`
 
 const StyledUsername = styled(Typography.Text)`
   font-size: 16px;
-  margin-left: 8px;
-  max-width: 120px;
+  line-height: 1;
 `;
 
-export default ({ showName }) => {
+export default ({ showName, onClick }) => {
   const { data, loading } = useQuery(getUser);
 
   return (
-    <StyledWrapper>
+    <StyledWrapper onClick={onClick}>
       {loading ? (
         <Spin />
       ) : (
         <>
-          <StyledAvatar
-            src={data.user.avatar}
-            alt="avatar"
-            isSmall={showName}
-          />
+          <StyledAvatar src={data.user.avatar} alt="avatar" />
           {showName && (
-            <StyledUsername ellipsis>{data.user.name}</StyledUsername>
+            <Flex direction="column" style={{ marginLeft: 16, maxWidth: 190 }}>
+              <Typography.Text type="secondary" style={{ fontSize: 10 }}>
+                Logged in as
+              </Typography.Text>
+              <StyledUsername ellipsis>{data.user.name}</StyledUsername>
+            </Flex>
           )}
         </>
       )}

@@ -8,9 +8,10 @@ import { useStoredQueryParam } from '../../Hooks';
 export default ({ cards, loading, isSidebarVisible }) => {
   const widthOffset = isSidebarVisible ? 300 : 0;
   const [pageSize] = useStoredQueryParam('pageSize', NumberParam);
-  const [{ page = 1, orderByCollection, name }] = useQueryParams({
+  const [{ page = 1, orderByCollection, name, addedWithin }] = useQueryParams({
     page: NumberParam,
     name: StringParam,
+    addedWithin: NumberParam,
     orderByCollection: StringParam,
   });
 
@@ -18,6 +19,7 @@ export default ({ cards, loading, isSidebarVisible }) => {
 
   const filteredCards = filterCards(cards, {
     name,
+    addedWithin,
   });
   const sortedCards = sortCards(filteredCards, orderByCollection);
 
@@ -26,10 +28,10 @@ export default ({ cards, loading, isSidebarVisible }) => {
   return (
     <>
       <PaginatedCardList
-        showSorter
-        orderByParamName="orderByCollection"
-        showCollectionFilters
         showNameSearch
+        showAddedBeforeFilter
+        showCollectionFilters
+        orderByParamName="orderByCollection"
         loading={loading}
         cards={slicedCards}
         widthOffset={widthOffset}
