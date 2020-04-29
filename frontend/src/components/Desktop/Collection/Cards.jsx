@@ -26,7 +26,6 @@ export default ({ cards, loading, isSidebarVisible }) => {
   return (
     <>
       <PaginatedCardList
-        showSorter
         orderByParamName="orderByCollection"
         showCollectionFilters
         showNameSearch

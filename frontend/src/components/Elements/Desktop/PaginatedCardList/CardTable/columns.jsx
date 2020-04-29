@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useQueryParam, StringParam } from 'use-query-params';
+import { Typography } from 'antd';
 import PreviewCardImage from '../../../Shared/PreviewCardImage';
 import ManaCost from '../../../Shared/ManaCost';
 import { CARD_TYPES } from '../../../../CardProvider/staticTypes';
@@ -8,12 +9,23 @@ import { getPriceLabel } from '../../../../../utils/cardStats';
 import formatDate from '../../../../../utils/formatDate';
 import { highlightText } from '../../../../../utils/highlightText';
 import { byColor } from '../../../../../utils/cardFilter';
+import { Flex } from '../../../Shared';
 
 const renderAmount = ({ totalAmount, amount }) => amount || totalAmount || 0;
 
 const renderType = ({ primaryTypes, subTypes }) => {
-  if (!subTypes.length) return primaryTypes.join(' ');
-  return `${primaryTypes.join(' ')} - ${subTypes.join(' ')}`;
+  const primaryTypesLabel = primaryTypes.join(' ');
+  if (!subTypes.length) {
+    return <Typography.Text>{primaryTypesLabel}</Typography.Text>;
+  }
+  const subTypesLabel = subTypes.join(' ');
+
+  return (
+    <Flex direction="column">
+      <Typography.Text>{`${primaryTypesLabel} -`}</Typography.Text>
+      <Typography.Text>{subTypesLabel}</Typography.Text>
+    </Flex>
+  );
 };
 
 const renderPrice = ({ price, minPrice, sumPrice, totalAmount }) => {
@@ -84,7 +96,7 @@ const columns = [
   {
     title: 'Type',
     key: 'type',
-    width: 350,
+    width: 200,
     align: 'center',
     render: renderType,
     sorter: sortType,
@@ -92,7 +104,7 @@ const columns = [
   {
     title: 'Amount',
     key: 'amount',
-    width: 60,
+    width: 65,
     align: 'center',
     render: renderAmount,
     sorter: sortByAmount('totalAmount'),
@@ -116,7 +128,7 @@ const columns = [
   },
 ];
 
-export default ({ showSorter = true, hiddenColumns }) => {
+export default ({ showSorter, hiddenColumns }) => {
   return columns
     .map(({ sorter, ...rest }) => ({
       sorter: showSorter && sorter,
