@@ -2,12 +2,14 @@ import React, { useRef, useEffect } from 'react';
 import { Row, Col, Typography } from 'antd';
 import styled from 'styled-components';
 
+import { StringParam, useQueryParam } from 'use-query-params';
 import FlippableCard from '../../../Shared/FlippableCard';
 import { getPriceLabel } from '../../../../../utils/cardStats';
 import OwnedBadge from '../../../Shared/OwnedBadge';
 import Flex from '../../../Shared/Flex';
 import { primary } from '../../../../../constants/colors';
 import scrollIntoView from '../../../../../utils/scrollIntoView';
+import { highlightText } from '../../../../../utils/highlightText';
 
 const StyledCardWrapper = styled.div`
   padding: 8px;
@@ -58,6 +60,7 @@ const GridCard = ({
   zoom,
 }) => {
   const displayedAmount = card.amount || card.totalAmount;
+  const [query] = useQueryParam('name', StringParam);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -94,7 +97,7 @@ const GridCard = ({
           style={{ width, marginTop: 4 }}
         >
           <Typography.Text ellipsis style={{ fontSize: textSize }}>
-            {card.name}
+            {highlightText(query, card.name)}
           </Typography.Text>
           <StyledInfoWrapper style={{ fontSize: textSize }}>
             <StyledCol span={8} style={{ justifyContent: 'flex-start' }}>

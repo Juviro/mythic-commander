@@ -1,4 +1,9 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const StyledBoldLetter = styled.span`
+  font-weight: 700;
+`;
 
 export const highlightText = (searchString, option) => {
   if (!searchString) return option;
@@ -11,7 +16,7 @@ export const highlightText = (searchString, option) => {
       return char;
     }
     currentSearchString = currentSearchString.substr(1);
-    return <b key={Math.random()}>{char}</b>;
+    return <StyledBoldLetter key={Math.random()}>{char}</StyledBoldLetter>;
   });
 
   return highlightedoption;
