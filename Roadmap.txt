@@ -1,6 +1,8 @@
 BUGFIXES:
 
 NEXT:
+    - add name highlight to mobile
+
     - add delete button to collection
     - add mass delete to collection
 
