@@ -1,13 +1,9 @@
 BUGFIXES:
 
 NEXT:
-    - switch to german date format in collection stats
-    - ignore keyboard shortcuts if modifier key is pressed (browser back has arrow etc)
     - add range picker to collection to only show cards added in specific timeframe (1h, 24h, 7d, 3m, 1y)
-    - add logout context menu to desktop profile avatar to logout
     - add delete button to collection
     - add mass delete to collection
-    - re-design logout mobile
 
 IMPROVEMENTS: 
 
@@ -25,6 +21,7 @@ REFACTORINGS:
 BACKLOG:
     - refresh google access ?
     - delete session when logging out
+    - allow sort by mana cost to collection
     - on mobile: advanced search -> click card -> search card throught searchBar -> click back: show show advanced search without card modal. Maybe use replace history.
     - add possible combos section to detail card view (https://discordapp.com/channels/673601282946236417/673601283609067559, no api yet)
     - only show distinct cards on search, but in a way that the set still works. DistinctCardsPerSets view?
@@ -42,6 +39,7 @@ BACKLOG:
     - prevent user from adding amount / amount foil if card is not available in foil / non-foil
     - prefer owned versions when adding to deck or wants
     - suggest similar cards when having invalid cardname in multiinput
+    - show all current search options for advanced search (M/D)
 
 BACKLOG BUGFIXES:
     - if only foil owned, show foil price as min price

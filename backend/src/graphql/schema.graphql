@@ -254,8 +254,8 @@ type Mutation {
   deleteFromCollection(cardIds: [String]!): Boolean!
 
   ########## Session ##########
-  login(token: String): LoginResponse!
-  logout: Boolean
+  login(token: String!): LoginResponse!
+  logout(sessionId: String!): Boolean
 
   ########## Wants ##########
   createWantsList(deckId: String): WantsList!

@@ -2,8 +2,9 @@ import React from 'react';
 import { Menu } from 'antd';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
-import { UserAvatar, MythicCommanderBanner, Flex } from '../../Elements/Shared';
+import { MythicCommanderBanner, Flex } from '../../Elements/Shared';
 import { darkBackground } from '../../../constants/colors';
+import UserMenu from './UserMenu';
 
 const StyledMenu = styled.div`
   width: 100%;
@@ -11,10 +12,6 @@ const StyledMenu = styled.div`
   align-items: center;
   justify-content: space-between;
   background-color: ${darkBackground};
-`;
-
-const AvatarWrapper = styled.div`
-  margin-right: 16px;
 `;
 
 const MENU_ENTRIES = [
@@ -59,9 +56,7 @@ const DesktopMenu = ({ location: { pathname } }) => {
           ))}
         </Menu>
       </Flex>
-      <AvatarWrapper>
-        <UserAvatar />
-      </AvatarWrapper>
+      <UserMenu />
     </StyledMenu>
   );
 };

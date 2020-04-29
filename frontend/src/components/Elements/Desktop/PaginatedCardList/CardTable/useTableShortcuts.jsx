@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useQueryParam, NumberParam } from 'use-query-params';
-import { isInputField } from '../../../../Hooks/useShortcut';
+import { isInputField, isModifierKey } from '../../../../Hooks/useShortcut';
 import { useWindowSize } from '../../../../Hooks';
 import keyCodes from '../../../../../constants/keyCodes';
 
@@ -50,7 +50,7 @@ export default (numberOfCards, toggleShowDetail) => {
   };
 
   const onKeyDown = event => {
-    if (!numberOfCards || isInputField(event)) return;
+    if (!numberOfCards || isInputField(event) || isModifierKey(event)) return;
     let preventDefault = true;
 
     switch (event.keyCode) {

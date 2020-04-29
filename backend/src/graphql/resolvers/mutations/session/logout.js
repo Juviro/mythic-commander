@@ -1,7 +1,7 @@
-export default async (_, __, { user, db, session }) => {
+export default async (_, { sessionId }, { user: { id: userId }, db }) => {
   await db('sessions')
-    .where({ id: user.id })
+    .where({ userId, sessionId })
     .del();
 
-  return session;
+  return true;
 };
