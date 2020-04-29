@@ -4,7 +4,7 @@ const shortOptions = { year: '2-digit', month: 'numeric', day: 'numeric' };
 export default (dateString, isShort) => {
   const date = typeof dateString === 'string' ? Number(dateString) : dateString;
   return new Date(date).toLocaleDateString(
-    'en-US',
+    'de-DE',
     isShort ? shortOptions : options
   );
 };

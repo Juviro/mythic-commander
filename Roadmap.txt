@@ -1,5 +1,4 @@
 BUGFIXES:
-    - if only foil owned, show foil price as min price
 
 NEXT:
     - switch to german date format in collection stats
@@ -8,6 +7,7 @@ NEXT:
     - add logout context menu to desktop profile avatar to logout
     - add delete button to collection
     - add mass delete to collection
+    - re-design logout mobile
 
 IMPROVEMENTS: 
 
@@ -43,7 +43,8 @@ BACKLOG:
     - prefer owned versions when adding to deck or wants
     - suggest similar cards when having invalid cardname in multiinput
 
-BUGFIXES:
+BACKLOG BUGFIXES:
+    - if only foil owned, show foil price as min price
     - backend deployment not reloading
     - collection: when one price is null, 0 is displayed even if one owned card has a value
     - add to collection mobile: after adding prev unowned card (gitrok monster), wrong minPrice in wantsList
