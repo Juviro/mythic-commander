@@ -5,9 +5,14 @@ export const isInputField = event => {
   return ['TEXTAREA', 'INPUT'].includes(event.target.nodeName);
 };
 
+export const isModifierKey = event => {
+  const { altKey, ctrlKey, metaKey, shiftKey } = event;
+  return altKey || ctrlKey || metaKey || shiftKey;
+};
+
 export default (triggerKey, action) => {
   const onKeyDown = event => {
-    if (isInputField(event)) return;
+    if (isInputField(event) || isModifierKey(event)) return;
     if (event.key === triggerKey || event.keyCode === keyCodes[triggerKey]) {
       event.preventDefault();
       event.stopPropagation();

@@ -1,8 +1,9 @@
 import React from 'react';
-import { Drawer } from 'antd';
+import { Drawer, Divider } from 'antd';
+
 import Header from './Header';
 import Navigation from './Navigation';
-import Logout from './Logout';
+import { Logout, UserAvatar } from '../../../Elements/Shared';
 import { darkBackground } from '../../../../constants/colors';
 
 export default ({ isVisible, onCloseDrawer }) => {
@@ -26,7 +27,11 @@ export default ({ isVisible, onCloseDrawer }) => {
         justifyContent: 'space-between',
       }}
     >
-      <Navigation onCloseDrawer={onCloseDrawer} />
+      <span>
+        <UserAvatar showName />
+        <Divider style={{ width: '120%', margin: '16px -24px 8px' }} />
+        <Navigation onCloseDrawer={onCloseDrawer} />
+      </span>
       <Logout />
     </Drawer>
   );
