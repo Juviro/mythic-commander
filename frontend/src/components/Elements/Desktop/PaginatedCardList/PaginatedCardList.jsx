@@ -27,13 +27,14 @@ export default ({
   showSorter,
   hiddenColumns,
   showNameSearch,
+  showAddedBeforeFilter,
   showCollectionFilters,
   orderByParamName,
 }) => {
   const [zoom, setZoom] = useLocalStorage('zoom', 100);
   const [layout] = useQueryParam('layout', StringParam);
   const width = `calc(100% - ${widthOffset}px)`;
-  const isEmptySearch = !loading && !cards.length;
+  const isEmptySearch = !loading && !numberOfCards;
 
   const cardList = isEmptySearch ? (
     <StyledEmpty description="No cards found" />
@@ -68,12 +69,13 @@ export default ({
       <Header
         showNameSearch={showNameSearch}
         orderByParamName={orderByParamName}
+        showAddedBeforeFilter={showAddedBeforeFilter}
         showCollectionFilters={showCollectionFilters}
         showZoomSlider={layout === 'grid'}
         zoom={zoom}
         setZoom={setZoom}
       />
-      {loading && !cards.length ? <FullscreenSpinner /> : cardList}
+      {loading && !numberOfCards ? <FullscreenSpinner /> : cardList}
     </Flex>
   );
 };

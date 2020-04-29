@@ -1,3 +1,4 @@
+export { default as AddedBeforeFilter } from './AddedBeforeFilter';
 export { default as CardButton } from './CardButton';
 export { default as CardLegal } from './CardLegal';
 export { default as CardLinks } from './CardLinks';
