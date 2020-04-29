@@ -7,17 +7,31 @@ const StyledBoldLetter = styled.span`
 
 export const highlightText = (searchString, option) => {
   if (!searchString) return option;
-  let currentSearchString = searchString;
-  const highlightedoption = option.split('').map(char => {
-    if (
-      !currentSearchString.length ||
-      char.toLowerCase() !== currentSearchString[0].toLowerCase()
-    ) {
-      return char;
+
+  const searchTerms = searchString.toLowerCase().split(' ');
+  let remainingOption = option;
+  const optionChars = [];
+
+  searchTerms.forEach(searchTerm => {
+    const startingIndex = remainingOption.toLowerCase().indexOf(searchTerm);
+    const termLength = searchTerm.length;
+    let i = 0;
+
+    while (i < startingIndex + termLength) {
+      const currentChar = remainingOption[0];
+      if (i < startingIndex) {
+        optionChars.push(currentChar);
+      } else {
+        optionChars.push(
+          <StyledBoldLetter key={Math.random()}>{currentChar}</StyledBoldLetter>
+        );
+      }
+
+      remainingOption = remainingOption.slice(1);
+      i++;
     }
-    currentSearchString = currentSearchString.substr(1);
-    return <StyledBoldLetter key={Math.random()}>{char}</StyledBoldLetter>;
   });
 
-  return highlightedoption;
+  const remainingText = remainingOption.split('');
+  return optionChars.concat(remainingText);
 };
