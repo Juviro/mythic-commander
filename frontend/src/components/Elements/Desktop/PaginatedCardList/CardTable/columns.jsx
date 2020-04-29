@@ -104,7 +104,7 @@ const columns = [
   {
     title: 'Amount',
     key: 'amount',
-    width: 65,
+    width: 70,
     align: 'center',
     render: renderAmount,
     sorter: sortByAmount('totalAmount'),

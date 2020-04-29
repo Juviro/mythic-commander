@@ -1,9 +1,10 @@
 BUGFIXES:
 
 NEXT:
-    - add range picker to collection to only show cards added in specific timeframe (1h, 24h, 7d, 3m, 1y)
     - add delete button to collection
     - add mass delete to collection
+
+    - simple search + card details
 
 IMPROVEMENTS: 
 
@@ -20,6 +21,7 @@ REFACTORINGS:
  
 BACKLOG:
     - refresh google access ?
+    - when opening login, redirect to / if user is logged in
     - delete session when logging out
     - allow sort by mana cost to collection
     - on mobile: advanced search -> click card -> search card throught searchBar -> click back: show show advanced search without card modal. Maybe use replace history.
