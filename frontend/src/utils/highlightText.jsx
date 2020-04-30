@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { trimName } from './cardFilter';
 
 const StyledBoldLetter = styled.span`
   font-weight: 700;
@@ -8,7 +9,7 @@ const StyledBoldLetter = styled.span`
 export const highlightText = (searchString, option) => {
   if (!searchString) return option;
 
-  const searchTerms = searchString.toLowerCase().split(' ');
+  const searchTerms = trimName(searchString).split(' ');
   let remainingOption = option;
   const optionChars = [];
 
