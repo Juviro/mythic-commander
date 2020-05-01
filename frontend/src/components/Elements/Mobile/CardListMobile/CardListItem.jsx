@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { List, Typography, Menu, Dropdown, Row, Col } from 'antd';
+import { List, Typography, Row, Col } from 'antd';
 import {
   DeleteOutlined,
   EditOutlined,
   SaveOutlined,
-  MoreOutlined,
   SwapRightOutlined,
 } from '@ant-design/icons';
 
@@ -17,7 +16,7 @@ import OwnedBadge from '../../Shared/OwnedBadge';
 import SetPicker from '../../Shared/SetPicker';
 import EditableAmount from '../../Shared/EditableAmount';
 import { useToggle } from '../../../Hooks';
-import { MoveToModal, ManaCost } from '../../Shared';
+import { MoveToModal, ManaCost, ContextMenu } from '../../Shared';
 import { primary } from '../../../../constants/colors';
 
 const StyledDescription = styled.div`
@@ -41,7 +40,6 @@ const CardListItem = ({
   searchString,
   onDeleteCard,
 }) => {
-  const [isMenuOpen, toggleIsMenuOpen] = useToggle();
   const [isEditing, toggleIsEditing] = useToggle();
   const [isMovingCard, toggleIsMovingCard] = useToggle();
   const [newProps, setNewProps] = useState({});
@@ -99,40 +97,10 @@ const CardListItem = ({
     });
   }
 
-  const menu = (
-    <Menu onClick={toggleIsMenuOpen}>
-      {menuItems.map(({ Icon, title, onClick: onClickItem }) => (
-        <Menu.Item
-          key={title}
-          onClick={({ domEvent }) => {
-            domEvent.stopPropagation();
-            onClickItem();
-          }}
-        >
-          <Icon style={{ color: primary }} />
-          {title}
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
-
-  const menuIcon = (
-    <Dropdown
-      overlay={menu}
-      visible={isMenuOpen}
-      onVisibleChange={toggleIsMenuOpen}
-      onClick={e => e.stopPropagation()}
-    >
-      <MoreOutlined onClick={toggleIsMenuOpen} style={{ fontSize: 18 }} />
-    </Dropdown>
-  );
-
   const action = isEditing ? (
     <SaveOutlined onClick={onToggleEditing} style={{ color: primary }} />
-  ) : menuItems.length ? (
-    menuIcon
   ) : (
-    undefined
+    <ContextMenu menuItems={menuItems} />
   );
 
   const showManaCosts = typeof card.mana_cost === 'string' && !isEditing;

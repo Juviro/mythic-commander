@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Table } from 'antd';
 
 import columns from './columns';
@@ -16,27 +16,24 @@ export default ({
   numberOfCards,
   showSorter,
   hiddenColumns,
+  onDeleteCards,
 }) => {
   const [showDetails, toggleShowDetail] = useToggle(false);
-  const [selectedElementId, setSelectedElementId] = useState(null);
   const {
     pagination,
     selectedElementPosition,
     setSelectedElementPosition,
   } = useTableShortcuts(numberOfCards, toggleShowDetail);
 
+  const selectedCard =
+    cards && cards.find((_, index) => index === selectedElementPosition - 1);
+
   useEffect(() => {
     const [element] = document.getElementsByClassName('selected');
-    if (!element) return;
-    const currentElementId = element.getAttribute('data-row-key');
-    if (currentElementId === selectedElementId) return;
-    setSelectedElementId(currentElementId);
-    scrollIntoView(element);
-    // eslint-disable-next-line
-  }, [pagination]);
 
-  const selectedCard =
-    cards && cards.find(({ id }) => id === selectedElementId);
+    if (!element) return;
+    scrollIntoView(element);
+  }, [selectedElementPosition]);
 
   const innerTableWidth = window.innerHeight - HEIGHT_OFFSET;
 
@@ -49,7 +46,7 @@ export default ({
         fixed={false}
         loading={loading}
         dataSource={cards}
-        columns={columns({ showSorter, hiddenColumns })}
+        columns={columns({ showSorter, hiddenColumns, onDeleteCards })}
         showSorterTooltip={false}
         pagination={{
           ...pagination,

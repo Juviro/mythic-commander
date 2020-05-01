@@ -6,7 +6,7 @@ import useLocalStorage from './useLocalStorage';
 const initialValues = {
   zoom: 100,
   pageSize: 10,
-  layout: 'list',
+  layout: 'grid',
   orderBy: 'name-asc',
   orderByCollection: 'added-desc',
 };

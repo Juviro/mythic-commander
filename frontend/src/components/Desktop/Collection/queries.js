@@ -47,3 +47,9 @@ export const addToCollectionDesktop = gql`
     }
   }
 `;
+
+export const deleteAllFromCollection = gql`
+  mutation deleteAllFromCollection($oracleIds: [String!]!) {
+    deleteAllFromCollection(oracleIds: $oracleIds)
+  }
+`;
