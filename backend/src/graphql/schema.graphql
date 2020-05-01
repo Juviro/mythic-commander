@@ -251,8 +251,8 @@ type Mutation {
     deleted: [String!]
     cardId: String
   ): OracleCard!
-  deleteFromCollection(cardIds: [String]!): Boolean!
-  deleteAllFromCollection(oracleIds: [String]!): Boolean!
+  deleteFromCollection(cardIds: [String]!): Boolean
+  deleteAllFromCollection(oracleIds: [String!]!): Boolean
 
   ########## Session ##########
   login(token: String!): LoginResponse!

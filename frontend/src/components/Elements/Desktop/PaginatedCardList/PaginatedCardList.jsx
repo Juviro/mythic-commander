@@ -30,6 +30,7 @@ export default ({
   showAddedBeforeFilter,
   showCollectionFilters,
   orderByParamName,
+  onDeleteCards,
 }) => {
   const [zoom, setZoom] = useLocalStorage('zoom', 100);
   const [layout] = useQueryParam('layout', StringParam);
@@ -45,6 +46,7 @@ export default ({
       showSorter={showSorter}
       hiddenColumns={hiddenColumns}
       numberOfCards={numberOfCards}
+      onDeleteCards={onDeleteCards}
     />
   ) : (
     <CardGrid
