@@ -77,6 +77,7 @@ const GridCard = ({
             style={{ fontSize: textSize }}
           >{`${displayedAmount}x`}</StyledAmountWrapper>
         )}
+        <ContextMenu loading={loading} onDeleteCard={onDeleteCard} />
       </StyledImageWrapper>
       <CardInfo
         loading={loading}
@@ -84,7 +85,6 @@ const GridCard = ({
         textSize={textSize}
         width={width}
       />
-      <ContextMenu loading={loading} onDeleteCard={onDeleteCard} />
     </StyledCardWrapper>
   );
 };

@@ -6,15 +6,15 @@ import { ContextMenu } from '../../../Shared';
 
 const StyledContextMenu = styled.div`
   position: absolute;
-  right: 30px;
-  top: 34px;
+  right: 6%;
+  top: 10%;
   border-radius: 50%;
-  padding: 4px;
+  padding: 5px;
   background-color: rgba(255, 255, 255, 0.6);
   display: flex;
 
-  &:hover {
-    transform: scale(1.1);
+  &:active {
+    transform: scale(0.95);
   }
 `;
 
