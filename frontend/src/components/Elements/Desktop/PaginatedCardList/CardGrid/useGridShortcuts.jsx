@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useQueryParam, NumberParam } from 'use-query-params';
+import { useQueryParam, NumberParam, BooleanParam } from 'use-query-params';
 import { isInputField, isModifierKey } from '../../../../Hooks/useShortcut';
 import keyCodes from '../../../../../constants/keyCodes';
 
 export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
+  const [isBlocked] = useQueryParam('blockShortcuts', BooleanParam);
   const [currentPage = 1, setPageParam] = useQueryParam('page', NumberParam);
   const [pageSize, setPageSizeParam] = useQueryParam('pageSize', NumberParam);
 
@@ -89,7 +90,13 @@ export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
   };
 
   const onKeyDown = event => {
-    if (!numberOfCards || isInputField(event) || isModifierKey(event)) return;
+    if (
+      !numberOfCards ||
+      isInputField(event) ||
+      isModifierKey(event) ||
+      isBlocked
+    )
+      return;
     let preventDefault = true;
 
     switch (event.keyCode) {

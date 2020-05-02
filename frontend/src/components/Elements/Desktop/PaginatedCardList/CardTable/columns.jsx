@@ -1,7 +1,8 @@
 import React from 'react';
-
 import { useQueryParam, StringParam } from 'use-query-params';
 import { Typography } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
+
 import PreviewCardImage from '../../../Shared/PreviewCardImage';
 import ManaCost from '../../../Shared/ManaCost';
 import { CARD_TYPES } from '../../../../CardProvider/staticTypes';
@@ -9,7 +10,7 @@ import { getPriceLabel } from '../../../../../utils/cardStats';
 import formatDate from '../../../../../utils/formatDate';
 import { highlightText } from '../../../../../utils/highlightText';
 import { byColor } from '../../../../../utils/cardFilter';
-import { Flex } from '../../../Shared';
+import { Flex, ContextMenu } from '../../../Shared';
 
 const renderAmount = ({ totalAmount, amount }) => amount || totalAmount || 0;
 
@@ -59,6 +60,17 @@ const sortType = (a, b) => {
     return CARD_TYPES.indexOf(mainType);
   };
   return getIndex(a) - getIndex(b);
+};
+
+const renderActions = onDeleteCard => ({ oracle_id }) => {
+  const menuItems = [
+    {
+      Icon: DeleteOutlined,
+      onClick: () => onDeleteCard(oracle_id),
+      title: 'Delete',
+    },
+  ];
+  return <ContextMenu menuItems={menuItems} />;
 };
 
 const columns = [
@@ -128,11 +140,27 @@ const columns = [
   },
 ];
 
-export default ({ showSorter, hiddenColumns }) => {
-  return columns
+const getActionColumn = ({ onDeleteCard }) => {
+  if (!onDeleteCard) return [];
+
+  return {
+    title: '',
+    key: 'actions',
+    width: 40,
+    align: 'left',
+    render: renderActions(onDeleteCard),
+  };
+};
+
+export default ({ showSorter, hiddenColumns, onDeleteCard }) => {
+  const baseColumns = columns
     .map(({ sorter, ...rest }) => ({
       sorter: showSorter && sorter,
       ...rest,
     }))
     .filter(({ key }) => !hiddenColumns || !hiddenColumns.includes(key));
+
+  const actionColumn = getActionColumn({ onDeleteCard });
+
+  return baseColumns.concat(actionColumn);
 };

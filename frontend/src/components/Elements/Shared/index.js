@@ -7,6 +7,8 @@ export { default as CardSearch } from './CardSearch';
 export { default as CardSetOverview } from './CardSetOverview';
 export { default as CollectionCharts } from './CollectionCharts';
 export { default as CollectionStats } from './CollectionStats';
+export { default as ConfirmDelete } from './ConfirmDelete';
+export { default as ContextMenu } from './ContextMenu';
 export { default as CustomSkeleton } from './CustomSkeleton';
 export { default as EditableAmount } from './EditableAmount';
 export { default as EditableTitle } from './EditableTitle';

@@ -1,14 +1,14 @@
 const MAX_RESULTS = 30;
 
-const trimName = str => {
-  return str.replace(/[,';"().\][*\s]+/g, '').toLowerCase();
+export const trimName = str => {
+  return str.replace(/[^a-zA-Z0-9\s]+/g, '').toLowerCase();
 };
 
 // @Params card: string[] | { name: string }[]
 export const filterByName = (cards, searchString = '') => {
   if (!cards) return [];
   const cleanSearch = trimName(searchString);
-  const searchRegExp = new RegExp(cleanSearch.split('').join('.*'));
+  const searchRegExp = new RegExp(cleanSearch.split(' ').join('.*'));
 
   return cards.filter(card => {
     const name = typeof card === 'string' ? card : card.name;

@@ -1,8 +1,15 @@
 import { useEffect } from 'react';
+import { useQueryParam, BooleanParam } from 'use-query-params';
 import keyCodes from '../../constants/keyCodes';
 
 export const isInputField = event => {
-  return ['TEXTAREA', 'INPUT'].includes(event.target.nodeName);
+  const { nodeName, type } = event.target;
+  const ignoredInputTypes = ['checkbox', 'radio'];
+
+  if (nodeName === 'TEXTAREA') return true;
+  if (nodeName === 'INPUT' && !ignoredInputTypes.includes(type)) return true;
+
+  return false;
 };
 
 export const isModifierKey = event => {
@@ -10,9 +17,15 @@ export const isModifierKey = event => {
   return altKey || ctrlKey || metaKey || shiftKey;
 };
 
-export default (triggerKey, action) => {
+export default (triggerKey, action, ignoreBlock) => {
+  const [isBlocked] = useQueryParam('blockShortcuts', BooleanParam);
+
   const onKeyDown = event => {
-    if (isInputField(event) || isModifierKey(event)) return;
+    const shouldBlock = !ignoreBlock && isBlocked;
+    if (!action || isInputField(event) || isModifierKey(event) || shouldBlock) {
+      return;
+    }
+
     if (event.key === triggerKey || event.keyCode === keyCodes[triggerKey]) {
       event.preventDefault();
       event.stopPropagation();

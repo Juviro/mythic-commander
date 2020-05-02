@@ -45,8 +45,7 @@ const getOrderColumn = orderBy => {
 };
 
 const addRangeClause = (q, encodedValue, columnName) => {
-  // eslint-disable-next-line no-unused-vars
-  const [_, from = '', __, to = ''] = encodedValue.match(/(\d*)(-)(\d*)/);
+  const [, from = '', , to = ''] = encodedValue.match(/(\d*)(-)(\d*)/);
 
   if (from) q.whereRaw(`try_cast_float("${columnName}") >= ${from}`);
   if (to) q.whereRaw(`try_cast_float("${columnName}") <= ${to}`);
@@ -68,10 +67,12 @@ const addRarityClause = (q, rarity) => {
 
 const addNameClause = (q, name) => {
   const searchPattern = name
-    .replace(/[^\w\s]/g, '')
+    .replace(/[^a-zA-Z0-9\s]+/g, '')
     .split(' ')
     .join('%');
-  q.whereRaw(`REGEXP_REPLACE(name, '\\W', '', 'g') ILIKE '%${searchPattern}%'`);
+  q.whereRaw(
+    `REGEXP_REPLACE(name, '[^a-zA-Z0-9\\s]+', '', 'g') ILIKE '%${searchPattern}%'`
+  );
 };
 
 export default async (

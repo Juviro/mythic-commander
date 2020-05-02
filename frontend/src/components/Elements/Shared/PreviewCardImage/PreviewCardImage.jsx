@@ -81,4 +81,14 @@ const PreviewCardImage = ({
   );
 };
 
-export default React.memo(PreviewCardImage);
+const isEqual = (prevProps, nextProps) => {
+  if (prevProps.width !== nextProps.width) return false;
+  if (prevProps.height !== nextProps.height) return false;
+  if (prevProps.highlightOnHover !== nextProps.highlightOnHover) return false;
+
+  return ['id', 'imgKey'].every(propKey => {
+    return prevProps.card[propKey] === nextProps.card[propKey];
+  });
+};
+
+export default React.memo(PreviewCardImage, isEqual);

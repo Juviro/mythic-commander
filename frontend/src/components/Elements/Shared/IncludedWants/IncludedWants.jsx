@@ -49,17 +49,22 @@ export default ({ card, large, cardId }) => {
       name: 'New Wants List',
     };
 
+    const refetchQueries =
+      id === NEW_LIST_DUMMY_ID
+        ? undefined
+        : [
+            {
+              query: wantsListQuery,
+              variables: { id },
+            },
+          ];
+
     mutate({
       variables: {
         wantsListId: id,
         cards: [{ id: cardId || card.id }],
       },
-      refetchQueries: [
-        {
-          query: wantsListQuery,
-          variables: { id },
-        },
-      ],
+      refetchQueries,
     });
 
     message(`Added to <b>${name}</b>!`);
