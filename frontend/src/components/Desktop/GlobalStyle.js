@@ -14,7 +14,7 @@ export default createGlobalStyle`
   }
 
   /* Selected table row */ 
-  .ant-table-tbody .selected {
+  .ant-table-tbody .selected  td {
     background-color: rgba(24, 144, 255, 0.2) !important;
   }
   .ant-table-tbody .selected .ant-table-column-sort {

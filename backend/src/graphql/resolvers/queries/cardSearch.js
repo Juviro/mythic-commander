@@ -45,8 +45,7 @@ const getOrderColumn = orderBy => {
 };
 
 const addRangeClause = (q, encodedValue, columnName) => {
-  // eslint-disable-next-line no-unused-vars
-  const [_, from = '', __, to = ''] = encodedValue.match(/(\d*)(-)(\d*)/);
+  const [, from = '', , to = ''] = encodedValue.match(/(\d*)(-)(\d*)/);
 
   if (from) q.whereRaw(`try_cast_float("${columnName}") >= ${from}`);
   if (to) q.whereRaw(`try_cast_float("${columnName}") <= ${to}`);

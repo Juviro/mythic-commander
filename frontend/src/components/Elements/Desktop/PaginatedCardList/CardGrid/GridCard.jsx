@@ -1,15 +1,12 @@
 import React, { useRef, useEffect } from 'react';
-import { Row, Col, Typography } from 'antd';
 import styled from 'styled-components';
 
-import { StringParam, useQueryParam } from 'use-query-params';
 import FlippableCard from '../../../Shared/FlippableCard';
-import { getPriceLabel } from '../../../../../utils/cardStats';
-import OwnedBadge from '../../../Shared/OwnedBadge';
-import Flex from '../../../Shared/Flex';
 import { primary } from '../../../../../constants/colors';
 import scrollIntoView from '../../../../../utils/scrollIntoView';
-import { highlightText } from '../../../../../utils/highlightText';
+import { useShortcut } from '../../../../Hooks';
+import CardInfo from './CardInfo';
+import ContextMenu from './ContextMenu';
 
 const StyledCardWrapper = styled.div`
   padding: 8px;
@@ -41,17 +38,9 @@ const StyledAmountWrapper = styled.div`
   border-bottom-left-radius: 8px;
 `;
 
-const StyledInfoWrapper = styled(Row)`
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const StyledCol = styled(Col)`
-  display: flex;
-`;
 const GridCard = ({
   card,
+  onDeleteCard,
   onClick,
   isSelected,
   widthPercentage,
@@ -60,7 +49,7 @@ const GridCard = ({
   zoom,
 }) => {
   const displayedAmount = card.amount || card.totalAmount;
-  const [query] = useQueryParam('name', StringParam);
+  useShortcut('DEL', isSelected ? onDeleteCard : null);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -70,7 +59,6 @@ const GridCard = ({
 
   const cardSize = { width, height: width * 1.39 };
   const textSize = Math.max(10 + 4 * (zoom / 100));
-  const displayedPrice = card.price || card.minPrice;
 
   return (
     <StyledCardWrapper
@@ -90,25 +78,13 @@ const GridCard = ({
           >{`${displayedAmount}x`}</StyledAmountWrapper>
         )}
       </StyledImageWrapper>
-      {!loading && (
-        <Flex
-          direction="column"
-          justify="center"
-          style={{ width, marginTop: 4 }}
-        >
-          <Typography.Text ellipsis style={{ fontSize: textSize }}>
-            {highlightText(query, card.name)}
-          </Typography.Text>
-          <StyledInfoWrapper style={{ fontSize: textSize }}>
-            <StyledCol span={8} style={{ justifyContent: 'flex-start' }}>
-              {getPriceLabel(displayedPrice)}
-            </StyledCol>
-            <StyledCol span={8} style={{ justifyContent: 'flex-end' }}>
-              {card.owned && <OwnedBadge style={{ fontSize: textSize }} />}
-            </StyledCol>
-          </StyledInfoWrapper>
-        </Flex>
-      )}
+      <CardInfo
+        loading={loading}
+        card={card}
+        textSize={textSize}
+        width={width}
+      />
+      <ContextMenu loading={loading} onDeleteCard={onDeleteCard} />
     </StyledCardWrapper>
   );
 };

@@ -2,10 +2,10 @@ import React from 'react';
 import { Pagination } from 'antd';
 import styled from 'styled-components';
 
-import useGridShortcuts from './useGridShortcuts';
-import CardModalDesktop from '../../CardModalDesktop';
 import GridCard from './GridCard';
 import useNumberOfCards from './useNumberOfCards';
+import useGridShortcuts from './useGridShortcuts';
+import CardModalDesktop from '../../CardModalDesktop';
 import { useWindowSize, useToggle } from '../../../../Hooks';
 
 const StyledWrapper = styled.div`
@@ -17,7 +17,15 @@ const StyledWrapper = styled.div`
   align-self: center;
 `;
 
-export default ({ cards, loading, widthOffset, numberOfCards, zoom }) => {
+export default ({
+  cards,
+  loading,
+  widthOffset,
+  numberOfCards,
+  zoom,
+  setCardIdsToDelete,
+  onDeleteCards,
+}) => {
   useWindowSize();
   const [showDetails, toggleShowDetail] = useToggle(false);
 
@@ -44,6 +52,11 @@ export default ({ cards, loading, widthOffset, numberOfCards, zoom }) => {
     setSelectedElementPosition(index + 1);
   };
 
+  const deleteCard = ({ oracle_id }) => {
+    setCardIdsToDelete([oracle_id]);
+    onDeleteCards();
+  };
+
   const paginationComponent = (
     <Pagination
       {...pagination}
@@ -61,10 +74,11 @@ export default ({ cards, loading, widthOffset, numberOfCards, zoom }) => {
           <GridCard
             card={card}
             zoom={zoom}
-            loading={loading}
             key={card.id}
-            onClick={() => onClick(index)}
+            onDeleteCard={onDeleteCards ? () => deleteCard(card) : undefined}
+            loading={loading}
             width={cardWidth}
+            onClick={() => onClick(index)}
             widthPercentage={100 / cardsPerRow}
             isSelected={index + 1 === selectedElementPosition}
           />

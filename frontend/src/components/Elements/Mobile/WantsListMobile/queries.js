@@ -38,7 +38,7 @@ const WANTS_LIST_FIELDS = `
 `;
 
 export const wantsList = gql`
-  query wantsList($id: String!) {
+  query wantsListElements($id: String!) {
     wantsList(id: $id) {
       ${WANTS_LIST_FIELDS}
     }

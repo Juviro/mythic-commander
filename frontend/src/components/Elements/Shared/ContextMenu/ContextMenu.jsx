@@ -31,6 +31,7 @@ export default ({ menuItems }) => {
       style={{ padding: 8 }}
       overlay={menu}
       trigger="click"
+      placement="bottomRight"
       visible={isMenuOpen}
       onVisibleChange={toggleIsMenuOpen}
       onClick={e => e.stopPropagation()}

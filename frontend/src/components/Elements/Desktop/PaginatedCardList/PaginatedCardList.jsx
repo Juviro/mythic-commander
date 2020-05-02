@@ -30,7 +30,9 @@ export default ({
   showAddedBeforeFilter,
   showCollectionFilters,
   orderByParamName,
+  setCardIdsToDelete,
   onDeleteCards,
+  cardIdsToDelete,
 }) => {
   const [zoom, setZoom] = useLocalStorage('zoom', 100);
   const [layout] = useQueryParam('layout', StringParam);
@@ -46,7 +48,9 @@ export default ({
       showSorter={showSorter}
       hiddenColumns={hiddenColumns}
       numberOfCards={numberOfCards}
+      setCardIdsToDelete={setCardIdsToDelete}
       onDeleteCards={onDeleteCards}
+      cardIdsToDelete={cardIdsToDelete}
     />
   ) : (
     <CardGrid
@@ -55,6 +59,8 @@ export default ({
       loading={loading}
       widthOffset={widthOffset}
       numberOfCards={numberOfCards}
+      onDeleteCards={onDeleteCards}
+      setCardIdsToDelete={setCardIdsToDelete}
     />
   );
 
@@ -66,6 +72,7 @@ export default ({
         overflowY: 'auto',
         padding: 24,
         transition: 'width 0.2s',
+        position: 'relative',
       }}
     >
       <Header
