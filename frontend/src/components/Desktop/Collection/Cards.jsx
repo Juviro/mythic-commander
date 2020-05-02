@@ -72,6 +72,11 @@ export default ({ cards, loading, isSidebarVisible }) => {
     // eslint-disable-next-line
   }, [cardsToDelete.length]);
 
+  useEffect(() => {
+    setCardIdsToDelete([]);
+    // eslint-disable-next-line
+  }, [page]);
+
   return (
     <>
       <PaginatedCardList
