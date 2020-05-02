@@ -14,8 +14,7 @@ export default ({ onSearch, onChange: onSubmit, value = '' }) => {
   const inputRefFrom = useRef(null);
   const inputRefTo = useRef(null);
 
-  // eslint-disable-next-line no-unused-vars
-  const [_, from = '', __, to = ''] = value.match(/(\d*)(-)(\d*)/) || [];
+  const [, from = '', , to = ''] = value.match(/(\d*)(-)(\d*)/) || [];
 
   const onChange = isFirst => event => {
     const val = event.target.value && Math.min(event.target.value, 99);

@@ -2,12 +2,14 @@ import React from 'react';
 import { Typography, Row, Col } from 'antd';
 import styled from 'styled-components';
 
+import { useQueryParam, StringParam } from 'use-query-params';
 import { getImageUrl } from '../../../../utils/cardImage';
 import { getPriceLabel } from '../../../../utils/cardStats';
 import EnlargeImage from './EnlargeImage';
 import FlippableCard from '../../Shared/FlippableCard';
 import OwnedBadge from '../../Shared/OwnedBadge';
 import EditCard from './EditCard';
+import { highlightText } from '../../../../utils/highlightText';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -35,6 +37,7 @@ const GridCard = ({
   onDeleteCard,
 }) => {
   const imgSrc = getImageUrl(card.id, card.imgKey, 'normal');
+  const [query] = useQueryParam('name', StringParam);
 
   const style = isLarge
     ? { fontSize: 16, marginBottom: 8, padding: 20 }
@@ -83,7 +86,7 @@ const GridCard = ({
         </Col>
       </Row>
       <Typography.Text ellipsis style={{ width }}>
-        {name}
+        {highlightText(query, name)}
       </Typography.Text>
     </StyledWrapper>
   );

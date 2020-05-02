@@ -5,25 +5,6 @@ import { cachedCards, numberOfCachedCards } from './queries';
 
 const REFRESH_PERIOD = 24 * 60 * 60 * 1000;
 
-const filteredCardOracleIds = [
-  '94a3b2af-0741-48c5-b827-6ff529bafae3',
-  '9adc9df1-bab0-4458-9453-7028f23693b8',
-  '8d8b9933-d7a2-4adc-85ee-ac62b23e784f',
-  '4e536142-4ebe-4062-887b-5dd123c41d39',
-];
-// Special cases for the three cards named
-// "Our Market Research Shows That Players Like Really Long bla bla bla"
-// and
-// "The Ultimate Nightmare of Wizards of the Coast® Customer Service"
-// and
-// "Curse of the Fire Penguin // Curse of the Fire Penguin Creature"
-// that kind of break the search
-// and the card "_____"
-// that can't be found by the scryfall api
-const filterProblematicCards = ({ o }) => {
-  return !filteredCardOracleIds.includes(o);
-};
-
 const getCards = async (currentCards = [], shouldForceUpdate) => {
   const {
     data: { numberOfCachedCards: updatedCardCount },
@@ -31,17 +12,14 @@ const getCards = async (currentCards = [], shouldForceUpdate) => {
     query: numberOfCachedCards,
   });
 
-  const filteredUpdatedCardCount =
-    updatedCardCount - filteredCardOracleIds.length;
-
-  if (filteredUpdatedCardCount === currentCards.length && !shouldForceUpdate) {
+  if (updatedCardCount === currentCards.length && !shouldForceUpdate) {
     return currentCards;
   }
 
   message.info('Updating cards... this may take some time');
   const { data } = await client.query({ query: cachedCards });
   message.success('Cards updated successfully!');
-  return data.cachedCards.filter(filterProblematicCards) || [];
+  return data.cachedCards || [];
 };
 
 const getSets = async () => {

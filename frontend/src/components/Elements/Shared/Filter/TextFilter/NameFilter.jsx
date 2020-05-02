@@ -9,7 +9,7 @@ export default ({
   onChange,
   style,
   value,
-  placeholder = 'Black Lotus, Blacker Lotus ...',
+  placeholder = 'Sol Ring, Lili Veil, ...',
 }) => {
   return (
     <TextFilter

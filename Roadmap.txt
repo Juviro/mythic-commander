@@ -1,33 +1,32 @@
 BUGFIXES:
 
 NEXT:
-    - add delete button to collection
-    - add mass delete to collection
-
+    - only show distinct cards on search, but in a way that the set still works. DistinctCardsPerSets view?
     - simple search + card details
 
 IMPROVEMENTS: 
 
 FEATURES:
-    - add edhrec and scryfall to card links
     - detail card view - like current desktop modal plus:
         - oracle text
-        - all legalities (?)
-        - synergies (EDHrec)
         - mkm prices via their api (min, avg)
+        - add edhrec and scryfall to card links
         - related cards (token, partner, meld etc - should be in db? or skryfall?)
 
 REFACTORINGS:
  
 BACKLOG:
+    - allow search for unowned cards only
     - refresh google access ?
+    - shortcuts should use modifier key ?
+    - when adding cards (to collection?), allow displaying only cards from specific set
     - when opening login, redirect to / if user is logged in
     - delete session when logging out
+    - add to advanced search: number of owned copies
     - allow sort by mana cost to collection
+    - show info for search boxes: % for wildcard
     - on mobile: advanced search -> click card -> search card throught searchBar -> click back: show show advanced search without card modal. Maybe use replace history.
     - add possible combos section to detail card view (https://discordapp.com/channels/673601282946236417/673601283609067559, no api yet)
-    - only show distinct cards on search, but in a way that the set still works. DistinctCardsPerSets view?
-    - add expandable (lazy load) edhrec synergies to card view
     - add info tooltip for search: explain amount prefix, fuzzy search
     - allow searching for multiple sets/types/subtypes?
     - when adding cards, allow picking set/version, with preview
@@ -44,7 +43,6 @@ BACKLOG:
     - show all current search options for advanced search (M/D)
 
 BACKLOG BUGFIXES:
-    - if only foil owned, show foil price as min price
     - backend deployment not reloading
     - collection: when one price is null, 0 is displayed even if one owned card has a value
     - add to collection mobile: after adding prev unowned card (gitrok monster), wrong minPrice in wantsList
