@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation } from 'react-apollo';
 import { useQueryParams, NumberParam, StringParam } from 'use-query-params';
 
 import { PaginatedCardList } from '../../Elements/Desktop';
 import { filterCards, sortCards } from '../../../utils/cardFilter';
-import { useStoredQueryParam } from '../../Hooks';
+import { useStoredQueryParam, useToggle } from '../../Hooks';
 import { deleteAllFromCollection, getCollectionDesktop } from './queries';
 import message from '../../../utils/message';
 import { ConfirmDelete } from '../../Elements/Shared';
@@ -12,7 +12,8 @@ import { ConfirmDelete } from '../../Elements/Shared';
 export default ({ cards, loading, isSidebarVisible }) => {
   const [pageSize] = useStoredQueryParam('pageSize', NumberParam);
   const [mutate] = useMutation(deleteAllFromCollection);
-  const [cardIdsToDelete, setCardIdsToDelete] = useState(null);
+  const [cardIdsToDelete, setCardIdsToDelete] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] = useToggle();
   const [{ page = 1, orderByCollection, name, addedWithin }] = useQueryParams({
     page: NumberParam,
     name: StringParam,
@@ -30,11 +31,12 @@ export default ({ cards, loading, isSidebarVisible }) => {
 
   const widthOffset = isSidebarVisible ? 300 : 0;
 
-  const deleteByOracle = () => {
+  const deleteByOracle = numberOfCards => {
     const oracleIds = cardIdsToDelete;
-    setCardIdsToDelete(null);
+    setCardIdsToDelete([]);
     const numberOfCardsLabel =
-      oracleIds.length > 1 ? `<b>${oracleIds.length}</b> cards` : '';
+      numberOfCards > 1 ? `<b>${numberOfCards}</b> cards` : '';
+
     message(`Deleted ${numberOfCardsLabel} from your collection!`);
     mutate({
       variables: { oracleIds },
@@ -60,14 +62,16 @@ export default ({ cards, loading, isSidebarVisible }) => {
       },
     });
   };
-
-  const onDeleteCards = oracleIds => {
-    setCardIdsToDelete(oracleIds);
-  };
-
   const cardsToDelete =
     cardIdsToDelete &&
-    cards.filter(({ oracle_id }) => cardIdsToDelete.includes(oracle_id));
+    slicedCards.filter(({ oracle_id }) => cardIdsToDelete.includes(oracle_id));
+
+  useEffect(() => {
+    if (cardsToDelete.length) return;
+    setShowDeleteModal(false);
+    // eslint-disable-next-line
+  }, [cardsToDelete.length]);
+
   return (
     <>
       <PaginatedCardList
@@ -79,13 +83,17 @@ export default ({ cards, loading, isSidebarVisible }) => {
         cards={slicedCards}
         widthOffset={widthOffset}
         numberOfCards={filteredCards.length}
-        onDeleteCards={onDeleteCards}
+        setCardIdsToDelete={setCardIdsToDelete}
+        onDeleteCards={setShowDeleteModal}
+        cardIdsToDelete={cardIdsToDelete}
       />
-      <ConfirmDelete
-        onCancel={() => setCardIdsToDelete(null)}
-        onOk={deleteByOracle}
-        cardsToDelete={cardsToDelete}
-      />
+      {showDeleteModal && (
+        <ConfirmDelete
+          onCancel={() => setCardIdsToDelete([])}
+          onOk={deleteByOracle}
+          cardsToDelete={cardsToDelete}
+        />
+      )}
     </>
   );
 };

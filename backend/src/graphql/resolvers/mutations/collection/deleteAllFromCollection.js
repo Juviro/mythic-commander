@@ -7,10 +7,10 @@ export default async (_, { oracleIds }, { user: { id: userId }, db }) => {
       col.id = colOra.id
     WHERE
       collection.id = col.id AND
-      colOra.oracle_id IN :oracleIds
-      AND col."userId" = :userId;
+      colOra.oracle_id = ANY(?)
+      AND col."userId" = ?;
   `,
-    { userId, oracleIds }
+    [oracleIds, userId]
   );
 
   return true;

@@ -37,7 +37,10 @@ const DesktopMenu = ({ location: { pathname } }) => {
   return (
     <StyledMenu>
       <Flex direction="row" align="center">
-        <MythicCommanderBanner style={{ marginLeft: 8 }} />
+        <MythicCommanderBanner
+          style={{ marginLeft: 8 }}
+          showCollectionOnClick
+        />
         <Menu
           mode="horizontal"
           selectedKeys={pathname}

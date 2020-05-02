@@ -1,23 +1,30 @@
 import React from 'react';
 import { Modal, List, Typography, Space } from 'antd';
 import PreviewCardImage from '../PreviewCardImage';
+import useBlockShortcuts from '../../../Hooks/useBlockShortcuts';
+import { useShortcut } from '../../../Hooks';
 
 export default ({ onCancel, cardsToDelete, onOk }) => {
-  if (!cardsToDelete) return null;
-
   const cardSum = cardsToDelete.reduce((sum, { amount, totalAmount }) => {
     const usedAmount = amount || totalAmount || 1;
     return sum + usedAmount;
   }, 0);
 
-  const title = `Are you sure you want these ${cardSum} cards?`;
+  const onDeleteCards = () => onOk(cardSum);
+  useBlockShortcuts();
+  useShortcut('ENTER', onDeleteCards, true);
+  if (!cardsToDelete.length) return null;
+
+  const title = `Are you sure you want to delete ${cardSum} ${
+    cardSum === 1 ? 'card' : 'cards'
+  }?`;
 
   return (
     <Modal
       visible
       title={title}
       okText="Delete"
-      okButtonProps={{ type: 'danger', onClick: onOk }}
+      okButtonProps={{ type: 'danger', onClick: onDeleteCards }}
       onCancel={onCancel}
       bodyStyle={{ maxHeight: 400, overflowY: 'auto' }}
     >

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Typography } from 'antd';
+import { withRouter } from 'react-router';
 import icon from '../../../../assets/icons/favicon.ico';
 
 const StyledWrapper = styled.div`
@@ -14,9 +15,18 @@ const StyledIcon = styled.img`
   height: 100%;
 `;
 
-export default ({ fontSize = 20, style }) => {
+const MythicCommanderBanner = ({
+  fontSize = 20,
+  style,
+  showCollectionOnClick,
+  history,
+}) => {
+  const navigateToCollection = () => history.push('/collection');
   return (
-    <StyledWrapper style={style}>
+    <StyledWrapper
+      style={{ ...style, cursor: showCollectionOnClick && 'pointer' }}
+      onClick={showCollectionOnClick && navigateToCollection}
+    >
       <StyledIcon src={icon} />
       <Typography.Text
         style={{ fontSize, color: 'rgba(255, 255, 255, 0.8)', marginLeft: 16 }}
@@ -26,3 +36,4 @@ export default ({ fontSize = 20, style }) => {
     </StyledWrapper>
   );
 };
+export default withRouter(MythicCommanderBanner);
