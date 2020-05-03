@@ -109,7 +109,7 @@ const SearchBar = ({ history, transparentSearchBar }) => {
         onBlur={() => toggleIsOpen(false)}
         dropdownMatchSelectWidth={false}
         listHeight={360}
-        placeholder="Search for something..."
+        placeholder="Search for a card..."
         style={{ width: 'calc(100% - 16px)' }}
         className={transparentSearchBar ? 'transparent' : 'dark-placeholder'}
       >

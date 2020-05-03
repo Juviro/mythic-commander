@@ -1,21 +1,18 @@
 BUGFIXES:
+    - don't allow duplicates in deck
 
 CURRENT:
-    - simple search + card details
-        - remove decks and wants lists from search bar
-        - rename *advanced search* to *show all*
-        - increase # of displayed results
+    - detail card view - like current desktop modal plus:
+        - oracle text
+        - mkm prices via their api (min, avg)
+        - add edhrec and scryfall to card links
+        - related cards (token, partner, meld etc - should be in db? or skryfall?)
 
 NEXT:
 
 IMPROVEMENTS: 
 
 FEATURES:
-    - detail card view - like current desktop modal plus:
-        - oracle text
-        - mkm prices via their api (min, avg)
-        - add edhrec and scryfall to card links
-        - related cards (token, partner, meld etc - should be in db? or skryfall?)
 
 REFACTORINGS:
  
