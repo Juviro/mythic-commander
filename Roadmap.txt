@@ -1,17 +1,14 @@
 BUGFIXES:
-    - can't put duplicate card in deck
 
 CURRENT:
-    - only show distinct cards on search, but in a way that the set still works. DistinctCardsPerSets view?
-
-NEXT:
     - simple search + card details
         - remove decks and wants lists from search bar
         - rename *advanced search* to *show all*
         - increase # of displayed results
 
+NEXT:
+
 IMPROVEMENTS: 
-    - ignore // in cards search. "Dusk dawn" should find dusk // dawn
 
 FEATURES:
     - detail card view - like current desktop modal plus:
@@ -32,7 +29,6 @@ BACKLOG:
     - when opening login, redirect to / if user is logged in
     - add to advanced search: number of owned copies
     - allow sort by mana cost to collection
-    - show info for search boxes: % for wildcard
     - on mobile: advanced search -> click card -> search card throught searchBar -> click back: show show advanced search without card modal. Maybe use replace history.
     - add possible combos section to detail card view (https://discordapp.com/channels/673601282946236417/673601283609067559, no api yet)
     - add info tooltip for search: explain amount prefix, fuzzy search

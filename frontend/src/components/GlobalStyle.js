@@ -37,4 +37,9 @@ export default createGlobalStyle`
     max-width: 100vw;
     padding-bottom: 0;
   }
+
+  /* Darken selected color of auto completes to improve clarity for ben's laptop */
+  .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+    background-color: #ececec;
+  }
 `;

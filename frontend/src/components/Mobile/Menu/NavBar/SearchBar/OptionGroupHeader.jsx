@@ -1,13 +1,15 @@
 import React from 'react';
 import { Button } from 'antd';
 
-export default ({ title, onShowAll }) => (
-  <span>
-    {title}
+import { Flex } from '../../../../Elements/Shared';
+
+export default ({ numberOfCards, onShowAll }) => (
+  <Flex justify="space-between" align="center">
+    {`Found ${numberOfCards} cards`}
     {onShowAll && (
-      <Button type="link" style={{ float: 'right' }} onClick={onShowAll}>
-        advanced
+      <Button type="link" onClick={onShowAll}>
+        show all
       </Button>
     )}
-  </span>
+  </Flex>
 );
