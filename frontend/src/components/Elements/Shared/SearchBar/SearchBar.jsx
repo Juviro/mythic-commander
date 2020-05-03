@@ -5,13 +5,13 @@ import { useQueryParams, StringParam } from 'use-query-params';
 import { useQuery } from 'react-apollo';
 
 import styled from 'styled-components';
-import { getCollectionNames } from '../../../../../queries';
+import { getCollectionNames } from '../../../../queries';
 import OptionGroupHeader from './OptionGroupHeader';
-import CardContext from '../../../../CardProvider/CardProvider';
+import CardContext from '../../../CardProvider/CardProvider';
 import renderOption from './renderOption';
-import { filterAndSortByQuery } from '../../../../../utils/cardFilter';
-import unifyCardFormat from '../../../../../utils/unifyCardFormat';
-import { useToggle } from '../../../../Hooks';
+import { filterAndSortByQuery } from '../../../../utils/cardFilter';
+import unifyCardFormat from '../../../../utils/unifyCardFormat';
+import { useToggle } from '../../../Hooks';
 
 const MAX_RESULTS = 20;
 
@@ -42,7 +42,7 @@ const blur = () => {
   }, 50);
 };
 
-const SearchBar = ({ history, transparentSearchBar }) => {
+const SearchBar = ({ history, transparent, style, hideLayover }) => {
   const inputEl = useRef(null);
   const [isOpen, toggleIsOpen] = useToggle(false);
   const { cards } = useContext(CardContext);
@@ -110,24 +110,24 @@ const SearchBar = ({ history, transparentSearchBar }) => {
         dropdownMatchSelectWidth={false}
         listHeight={360}
         placeholder="Search for a card..."
-        style={{ width: 'calc(100% - 16px)' }}
-        className={transparentSearchBar ? 'transparent' : 'dark-placeholder'}
+        style={{ width: 'calc(100% - 16px)', ...style }}
+        className={transparent ? 'transparent' : 'dark-placeholder'}
       >
         <Input
           allowClear
+          theme="dark"
           className="no-border"
           onClick={() => toggleIsOpen(true)}
           onInput={() => toggleIsOpen(true)}
         />
       </AutoComplete>
-      <StyledBackground isVisible={isOpen} />
+      {!hideLayover && <StyledBackground isVisible={isOpen} />}
     </>
   );
 };
 
 const areEqual = (prevProps, nextProps) => {
-  if (prevProps.transparentSearchBar !== nextProps.transparentSearchBar)
-    return false;
+  if (prevProps.transparent !== nextProps.transparent) return false;
   if (prevProps.location.search !== nextProps.location.search) return false;
 
   return true;

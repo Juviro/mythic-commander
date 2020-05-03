@@ -31,6 +31,7 @@ export { default as MoveToModal } from './MoveTo/MoveToModal';
 export { default as MythicCommanderBanner } from './MythicCommanderBanner';
 export { default as OwnedBadge } from './OwnedBadge';
 export { default as PreviewCardImage } from './PreviewCardImage';
+export { default as SearchBar } from './SearchBar';
 export { default as SearchButton } from './SearchButton';
 export { default as Set } from './Set';
 export { default as SetPicker } from './SetPicker';

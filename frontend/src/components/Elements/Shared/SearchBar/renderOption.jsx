@@ -1,8 +1,8 @@
 import React from 'react';
 
 import styled from 'styled-components';
-import { highlightText } from '../../../../../utils/highlightText';
-import { getImageUrl } from '../../../../../utils/cardImage';
+import { highlightText } from '../../../../utils/highlightText';
+import { getImageUrl } from '../../../../utils/cardImage';
 
 const StyledOption = styled.div`
   display: flex;
