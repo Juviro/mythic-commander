@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { withRouter } from 'react-router';
 import { ArrowLeftOutlined, MenuOutlined } from '@ant-design/icons';
 
-import SearchBar from './SearchBar';
 import { darkBackground } from '../../../../constants/colors';
+import { SearchBar } from '../../../Elements/Shared';
 
 const StyledMenu = styled.div`
   width: 100%;
@@ -43,7 +43,7 @@ const isTransparentSearchBar = (pathname = '') => {
 };
 
 const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
-  const transparentSearchBar = isTransparentSearchBar(pathname);
+  const transparent = isTransparentSearchBar(pathname);
   const canGoBack = isCardView(pathname);
 
   const onClickIcon = () => {
@@ -54,7 +54,7 @@ const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
     }
   };
 
-  const iconStyle = transparentSearchBar
+  const iconStyle = transparent
     ? { color: '#fff', filter: 'drop-shadow( 0px 0px 1px rgba(0, 0, 0, .7))' }
     : { color: 'white' };
 
@@ -62,15 +62,15 @@ const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
 
   return (
     <>
-      <StyledMenu transparent={transparentSearchBar}>
+      <StyledMenu transparent={transparent}>
         {canGoBack ? (
           <ArrowLeftOutlined onClick={onClickIcon} style={iconStyle} />
         ) : (
           <MenuOutlined onClick={onClickIcon} style={iconStyle} />
         )}
-        <SearchBar transparentSearchBar={transparentSearchBar} />
+        <SearchBar transparent={transparent} />
       </StyledMenu>
-      {!transparentSearchBar && <StyledInvisibleWrapper />}
+      {!transparent && <StyledInvisibleWrapper />}
     </>
   );
 };

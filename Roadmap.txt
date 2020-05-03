@@ -1,5 +1,4 @@
 BUGFIXES:
-    - don't allow duplicates in deck
 
 CURRENT:
     - detail card view - like current desktop modal plus:
