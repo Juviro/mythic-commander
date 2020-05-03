@@ -6,8 +6,8 @@ import { ContextMenu } from '../../../Shared';
 
 const StyledContextMenu = styled.div`
   position: absolute;
-  right: 6%;
-  top: 10%;
+  right: 8%;
+  top: 12%;
   border-radius: 50%;
   padding: 5px;
   background-color: rgba(255, 255, 255, 0.6);
