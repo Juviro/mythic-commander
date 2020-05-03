@@ -14,9 +14,7 @@ const addColorClause = (q, colors) => {
   const { colorList, excludeOtherColors, exactColors } = getColorProps(colors);
   const placeholder = colorList.map(() => '?');
 
-  if (!colorList) {
-    q.whereRaw('cardinality(color_identity) = 0');
-  } else if (exactColors) {
+  if (exactColors) {
     q.whereRaw(
       `color_identity <@ ARRAY[${placeholder}]::text[] AND ARRAY[${placeholder}]::text[] <@ color_identity`,
       [colorList, colorList].flat()
@@ -99,9 +97,9 @@ export default async (
 
   const [order, direction = 'asc'] = orderBy.split('-');
 
-  const database = set ? 'cards' : 'distinctCards';
+  const tableName = set ? 'distinctCardsPerSet' : 'distinctCards';
 
-  const query = db(database)
+  const query = db(tableName)
     .where(q => {
       if (name) addNameClause(q, name);
       if (text) q.where('oracle_text', 'ILIKE', `%${text}%`);
@@ -124,24 +122,12 @@ export default async (
 
   const cards = await query;
 
-  const shouldFilter = cards.length < 500;
-
-  const filteredCards = shouldFilter
-    ? cards.filter(({ oracle_id }, index) => {
-        const firstIndex = cards.findIndex(
-          card => card.oracle_id === oracle_id
-        );
-        if (firstIndex !== index) return false;
-        return true;
-      })
-    : cards;
-
-  const hasMore = filteredCards.length > limit + offset;
+  const hasMore = cards.length > limit + offset;
 
   return {
     hasMore,
-    totalResults: filteredCards.length,
+    totalResults: cards.length,
     nextOffset: hasMore ? offset + limit : null,
-    cards: filteredCards.slice(offset, offset + limit),
+    cards: cards.slice(offset, offset + limit),
   };
 };
