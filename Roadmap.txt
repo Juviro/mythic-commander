@@ -1,11 +1,17 @@
 BUGFIXES:
+    - can't put duplicate card in deck
+
+CURRENT:
+    - only show distinct cards on search, but in a way that the set still works. DistinctCardsPerSets view?
 
 NEXT:
-    - only show gridcard menu on hover
-    - only show distinct cards on search, but in a way that the set still works. DistinctCardsPerSets view?
     - simple search + card details
+        - remove decks and wants lists from search bar
+        - rename *advanced search* to *show all*
+        - increase # of displayed results
 
 IMPROVEMENTS: 
+    - ignore // in cards search. "Dusk dawn" should find dusk // dawn
 
 FEATURES:
     - detail card view - like current desktop modal plus:
@@ -19,10 +25,11 @@ REFACTORINGS:
 BACKLOG:
     - allow search for unowned cards only
     - refresh google access ?
+    - swipe card preview on mobile
+    - show *add commander* in deck list when no commander selected
     - shortcuts should use modifier key ?
     - when adding cards (to collection?), allow displaying only cards from specific set
     - when opening login, redirect to / if user is logged in
-    - delete session when logging out
     - add to advanced search: number of owned copies
     - allow sort by mana cost to collection
     - show info for search boxes: % for wildcard
