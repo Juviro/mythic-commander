@@ -15,9 +15,9 @@ export default ({ onCancel, cardsToDelete, onOk }) => {
   useShortcut('ENTER', onDeleteCards, true);
   if (!cardsToDelete.length) return null;
 
-  const title = `Are you sure you want to delete ${cardSum} ${
+  const title = `Delete ${cardSum} ${
     cardSum === 1 ? 'card' : 'cards'
-  }?`;
+  } from your collection?`;
 
   return (
     <Modal
