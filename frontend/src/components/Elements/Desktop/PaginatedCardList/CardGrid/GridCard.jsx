@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import FlippableCard from '../../../Shared/FlippableCard';
 import { primary } from '../../../../../constants/colors';
 import scrollIntoView from '../../../../../utils/scrollIntoView';
-import { useShortcut } from '../../../../Hooks';
+import { useShortcut, useToggle } from '../../../../Hooks';
 import CardInfo from './CardInfo';
 import ContextMenu from './ContextMenu';
 
@@ -48,6 +48,7 @@ const GridCard = ({
   loading,
   zoom,
 }) => {
+  const [showMenu, toggleShowMenu] = useToggle();
   const displayedAmount = card.amount || card.totalAmount;
   useShortcut('DEL', isSelected ? onDeleteCard : null);
   const ref = useRef(null);
@@ -65,6 +66,8 @@ const GridCard = ({
       key={card.id}
       widthPercentage={widthPercentage}
       ref={ref}
+      onMouseEnter={() => toggleShowMenu(true)}
+      onMouseLeave={() => toggleShowMenu(false)}
     >
       <StyledImageWrapper
         isSelected={isSelected}
@@ -77,7 +80,9 @@ const GridCard = ({
             style={{ fontSize: textSize }}
           >{`${displayedAmount}x`}</StyledAmountWrapper>
         )}
-        <ContextMenu loading={loading} onDeleteCard={onDeleteCard} />
+        {showMenu && (
+          <ContextMenu loading={loading} onDeleteCard={onDeleteCard} />
+        )}
       </StyledImageWrapper>
       <CardInfo
         loading={loading}
@@ -94,6 +99,7 @@ const areEqual = (prevProps, nextProps) => {
   if (prevProps.widthPercentage !== nextProps.widthPercentage) return false;
   if (prevProps.width !== nextProps.width) return false;
   if (prevProps.loading !== nextProps.loading) return false;
+  if (prevProps.onClick !== nextProps.onClick) return false;
 
   return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
     propKey => {

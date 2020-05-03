@@ -55,14 +55,23 @@ export default ({
     toggleShowDetail,
     toggleElementSelection
   );
-
-  const deleteWhenSelected = () => {
-    if (!cardIdsToDelete || !cardIdsToDelete.length) return;
-    onDeleteCards();
-  };
-  useShortcut('DEL', deleteWhenSelected);
-
   const selectedCard = cards && cards[selectedElementPosition - 1];
+
+  const onDeleteSingleCard = onDeleteCards
+    ? oracleId => {
+        setCardIdsToDelete([oracleId]);
+        onDeleteCards();
+      }
+    : undefined;
+
+  const onPressDelete = () => {
+    if (cardIdsToDelete.length) {
+      onDeleteCards();
+    } else {
+      onDeleteSingleCard(selectedCard.oracle_id);
+    }
+  };
+  useShortcut('DEL', onPressDelete);
 
   useEffect(() => {
     const [element] = document.getElementsByClassName('selected');
@@ -77,13 +86,6 @@ export default ({
     onChange: selectedRows => setCardIdsToDelete(selectedRows),
     selectedRowKeys: cardIdsToDelete,
   };
-
-  const onDeleteSingleCard = onDeleteCards
-    ? oracleId => {
-        setCardIdsToDelete([oracleId]);
-        onDeleteCards();
-      }
-    : undefined;
 
   return (
     <>

@@ -1,6 +1,7 @@
 BUGFIXES:
 
 NEXT:
+    - only show gridcard menu on hover
     - only show distinct cards on search, but in a way that the set still works. DistinctCardsPerSets view?
     - simple search + card details
 
