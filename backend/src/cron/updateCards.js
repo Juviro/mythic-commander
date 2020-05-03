@@ -75,6 +75,7 @@ const updateCards = async (showLogs = false) => {
       .update({ value: hasNext ? String(currentPage + 1) : '0' });
   }
   await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCards"`);
+  await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCardsPerSet"`);
   console.info(
     'Finished updating cards after',
     Math.round((Date.now() - start) / (1000 * 60)),
