@@ -1,5 +1,3 @@
-const MAX_RESULTS = 30;
-
 export const trimName = str => {
   return str.replace(/[^a-zA-Z0-9\s]+/g, '').toLowerCase();
 };
@@ -12,8 +10,7 @@ export const filterByName = (cards, searchString = '') => {
 
   return cards.filter(card => {
     const name = typeof card === 'string' ? card : card.name;
-    const cardParts = searchString.includes('/') ? [name] : name.split(' // ');
-    return cardParts.some(cardPart => searchRegExp.test(trimName(cardPart)));
+    return searchRegExp.test(trimName(name));
   });
 };
 
@@ -108,14 +105,10 @@ export const sortCardsBySearch = (searchString = '') => (
     : 1;
 };
 
-export const filterAndSortByQuery = (
-  cards,
-  searchString,
-  maxResults = MAX_RESULTS
-) => {
-  return filterByName(cards, searchString)
-    .sort(sortCardsBySearch(searchString))
-    .slice(0, maxResults);
+export const filterAndSortByQuery = (cards, searchString) => {
+  return filterByName(cards, searchString).sort(
+    sortCardsBySearch(searchString)
+  );
 };
 
 const sortByAdded = (cards, direction = 'asc') => {

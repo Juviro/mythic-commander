@@ -14,7 +14,7 @@ const StyledColorTag = styled.img`
 export default ({ symbol, size = 18 }) => {
   if (symbol === '//') {
     return (
-      <Typography.Text strong style={{ fontSize: 20, margin: '0 6px' }}>
+      <Typography.Text strong style={{ fontSize: size, margin: '0 6px' }}>
         {symbol}
       </Typography.Text>
     );

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import styled from 'styled-components';
-import { UnorderedListOutlined } from '@ant-design/icons';
 import { highlightText } from '../../../../../utils/highlightText';
 import { getImageUrl } from '../../../../../utils/cardImage';
 
@@ -9,7 +8,7 @@ const StyledOption = styled.div`
   display: flex;
   flex-direction: row;
   padding-left: 3px;
-  height: ${({ isCard }) => (isCard ? 36 : 24)}px;
+  height: 36px;
   align-items: center;
 `;
 
@@ -34,43 +33,22 @@ const StyledOwnedTag = styled.span`
   position: absolute;
 `;
 
-const StyledDeckImage = styled.img`
-  margin: 0 8px 0 0;
-  border-radius: 2px;
-  overflow: hidden;
-  height: 23px;
-  min-width: 32px;
-  max-width: 32px;
-  display: block;
-`;
-
 const StyledCardImage = styled.img`
   height: 36px;
   width: 26px;
   display: flex;
 `;
 
-export default (searchString, type) => element => {
-  const { name, id, oracle_id, imgSrc, imgKey, owned } = element;
-
-  const elementId = type === 'CARD' ? oracle_id : id;
-
-  const preview =
-    type === 'WANTS' ? null : imgSrc ? (
-      <StyledDeckImage src={imgSrc} />
-    ) : (
-      <StyledCardImage src={getImageUrl(id, imgKey)} />
-    );
+export default searchString => element => {
+  const { name, id, oracle_id, imgKey, owned } = element;
 
   return {
-    value: JSON.stringify({ type, id: elementId }),
+    value: oracle_id,
     label: (
-      <StyledOption isCard={type === 'CARD'}>
-        {preview ? (
-          <CardImageWrapper>{preview}</CardImageWrapper>
-        ) : (
-          <UnorderedListOutlined style={{ width: 24 }} />
-        )}
+      <StyledOption>
+        <CardImageWrapper>
+          <StyledCardImage src={getImageUrl(id, imgKey)} />
+        </CardImageWrapper>
         <StyledName isShort={owned}>
           {highlightText(searchString, name)}
         </StyledName>
