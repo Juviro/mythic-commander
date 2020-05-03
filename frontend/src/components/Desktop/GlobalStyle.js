@@ -14,8 +14,11 @@ export default createGlobalStyle`
   }
 
   /* Selected table row */ 
+  .ant-table-tbody .selected {
+    background-color: rgba(24, 144, 255, 0.1) !important;
+  }
   .ant-table-tbody .selected  td {
-    background-color: rgba(24, 144, 255, 0.2) !important;
+    background-color: rgba(24, 144, 255, 0.1) !important;
   }
   .ant-table-tbody .selected .ant-table-column-sort {
     background: none;
