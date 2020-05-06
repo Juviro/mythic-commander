@@ -6,6 +6,7 @@ import Search from './Search';
 import Collection from './Collection';
 import Decks from './Decks';
 import Deck from './Deck';
+import Card from './Card';
 
 import GlobalStyle from './GlobalStyle';
 import MobileRedirect from './MobileRedirect';
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/collection" component={Collection} />
         <Route path="/decks" component={Decks} />
         <Route path="/deck/:id" component={Deck} />
+        <Route path="/cards/:oracle_id" component={Card} />
         <Redirect from="*" to="/collection" />
       </Switch>
       <GlobalStyle />

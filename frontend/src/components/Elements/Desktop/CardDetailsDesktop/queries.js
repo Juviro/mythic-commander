@@ -1,10 +1,20 @@
 import gql from 'graphql-tag';
+import { COLLECTION_CARD_FIELDS } from '../../../Desktop/Collection/queries';
 
 const CARD_FIELDS = `
   id
   oracle_id
   name
   imgKey
+  oracle_text
+  scryfall_uri
+
+  relatedCards {
+    id
+    name
+    imgKey
+    oracle_id
+  }
 
   oracleCard {
     _id
@@ -60,16 +70,7 @@ export const changeCollection = gql`
       edited: $edited
       cardId: $cardId
     ) {
-      _id
-      owned
-      totalAmount
-      sumPrice
-      minPrice
-      allSets {
-        id
-        amountOwned
-        amountOwnedFoil
-      }
+      ${COLLECTION_CARD_FIELDS}
     }
   }
 `;

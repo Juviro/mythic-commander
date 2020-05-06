@@ -1,24 +1,18 @@
 BUGFIXES:
-    - can't put duplicate card in deck
 
 CURRENT:
-    - only show distinct cards on search, but in a way that the set still works. DistinctCardsPerSets view?
 
 NEXT:
-    - simple search + card details
-        - remove decks and wants lists from search bar
-        - rename *advanced search* to *show all*
-        - increase # of displayed results
+    - evaluate performance boost when moving collection name search to useState
 
-IMPROVEMENTS: 
-    - ignore // in cards search. "Dusk dawn" should find dusk // dawn
+IMPROVEMENTS:
+    - don't show go back button for wants/decks ?
+    - show owned badge if amount not displayed (advanced search)
+    - better tooltips for multi input
+    - don't change line height when editing card in list (sets in desktop details, mobile list)
+    - grid list: when switching to first (last) card row, scroll header (footer) into view
 
 FEATURES:
-    - detail card view - like current desktop modal plus:
-        - oracle text
-        - mkm prices via their api (min, avg)
-        - add edhrec and scryfall to card links
-        - related cards (token, partner, meld etc - should be in db? or skryfall?)
 
 REFACTORINGS:
  
@@ -32,7 +26,7 @@ BACKLOG:
     - when opening login, redirect to / if user is logged in
     - add to advanced search: number of owned copies
     - allow sort by mana cost to collection
-    - show info for search boxes: % for wildcard
+    - hide collection list checkboxes unless in some sort of editing modus?
     - on mobile: advanced search -> click card -> search card throught searchBar -> click back: show show advanced search without card modal. Maybe use replace history.
     - add possible combos section to detail card view (https://discordapp.com/channels/673601282946236417/673601283609067559, no api yet)
     - add info tooltip for search: explain amount prefix, fuzzy search
@@ -55,3 +49,4 @@ BACKLOG BUGFIXES:
     - collection: when one price is null, 0 is displayed even if one owned card has a value
     - add to collection mobile: after adding prev unowned card (gitrok monster), wrong minPrice in wantsList
     - add to collection -> remove -> re-add -> edit: amount is 0
+    - mobile: collection -> card details view -> remvoe from collection -> back to collection: card not deleted

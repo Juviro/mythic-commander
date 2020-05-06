@@ -93,7 +93,7 @@ const Card = ({ history }) => {
         <IncludedDecks card={card} />
         <Divider>Resources</Divider>
         <CardLinks card={card} />
-        <div style={{ marginTop: 16 }}>
+        <div style={{ margin: '16px 0' }}>
           <CardLegal card={card} />
         </div>
         <CardRules card={card} loading={loading} />

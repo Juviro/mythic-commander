@@ -43,6 +43,7 @@ const Search = ({ history }) => {
   const { hasMore, nextOffset = 0, totalResults = 0 } = queryResult;
 
   const fetchCards = async (searchOptions, offset = 0) => {
+    if (!orderBy) return;
     toggleLoading(true);
     const { data } = await client.query({
       fetchPolicy: 'cache-first',

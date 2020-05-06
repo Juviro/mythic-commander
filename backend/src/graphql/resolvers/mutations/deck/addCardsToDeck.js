@@ -11,11 +11,30 @@ const ON_CONFLICT = `
 export default async (_, { cards, deckId }, { user, db }) => {
   await canAccessDeck(user.id, deckId);
 
-  const cardsToInsert = cards.map(({ id, amount = 1 }) => ({
-    id,
-    amount,
-    deckId,
-  }));
+  const { rows: cardsAlreadyInDeck } = await db.raw(
+    `
+    SELECT cards.id as "addingId", "cardToDeckWithOracle".id as "existingId"
+    FROM cards 
+    LEFT JOIN "cardToDeckWithOracle" 
+    ON "cardToDeckWithOracle".oracle_id = cards.oracle_id 
+    WHERE cards.id = ANY(?)
+    AND "deckId" = ?;
+    `,
+    [cards.map(({ id }) => id), deckId]
+  );
+
+  const cardsToInsert = cards.map(({ id, amount = 1 }) => {
+    const existingCard = cardsAlreadyInDeck.find(
+      ({ addingId }) => addingId === id
+    );
+    const insertId = existingCard ? existingCard.existingId : id;
+
+    return {
+      id: insertId,
+      amount,
+      deckId,
+    };
+  });
 
   const query = db('cardToDeck').insert(cardsToInsert);
 

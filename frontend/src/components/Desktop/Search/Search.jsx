@@ -13,11 +13,14 @@ import { unifySingleCard } from '../../../utils/unifyCardFormat';
 import { PaginatedCardList } from '../../Elements/Desktop';
 import preloadImages from '../../../utils/preloadImages';
 import useLocalStorage from '../../Hooks/useLocalStorage';
+import { lightBackground } from '../../../constants/colors';
 
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: row;
   height: calc(100% - 49px);
+  background-color: ${({ isFullscreen }) =>
+    isFullscreen ? lightBackground : 'white'};
 `;
 
 const Search = ({ history }) => {
@@ -110,7 +113,7 @@ const Search = ({ history }) => {
 
     let nextPage = page;
     // reset page when search order changes
-    if (lastSearchOptions.orderBy !== orderBy) {
+    if (lastSearchOptions.orderBy && lastSearchOptions.orderBy !== orderBy) {
       setParams({ page: 1 }, 'replaceIn');
       nextPage = 1;
     }
@@ -161,8 +164,10 @@ const Search = ({ history }) => {
     setCurrentOptions(defaultOptions);
   };
 
+  const isFullscreen = !isSearching;
+
   return (
-    <StyledWrapper>
+    <StyledWrapper isFullscreen={isFullscreen}>
       <Sidebar
         loading={loading}
         onSearch={onSearch}
@@ -170,7 +175,7 @@ const Search = ({ history }) => {
         onChangeOption={onChangeOption}
         options={currentOptions}
         isVisible={isSidebarVisible}
-        isFullscreen={!isSearching}
+        isFullscreen={isFullscreen}
         toggleIsVisible={toggleIsSidebarVisible}
       />
       {isSearching && (

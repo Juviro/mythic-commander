@@ -155,6 +155,12 @@ export const CARD_FIELDS_ADDITION_4 = [
     type: 'jsonb',
   },
 ];
+export const CARD_FIELDS_ADDITION_5 = [
+  {
+    key: 'scryfall_uri',
+    type: 'string',
+  },
+];
 
 export const ALL_CARD_FIELDS = [
   CARD_FIELDS_INITIAL,
@@ -162,4 +168,5 @@ export const ALL_CARD_FIELDS = [
   CARD_FIELDS_ADDITION_2,
   CARD_FIELDS_ADDITION_3,
   CARD_FIELDS_ADDITION_4,
+  CARD_FIELDS_ADDITION_5,
 ].flat();

@@ -13,8 +13,13 @@ const resolver = {
       .where({ id })
       .first();
   },
-  cardByOracleId(_, { oracle_id }, { db }) {
-    return db('distinctCards')
+  async cardByOracleId(_, { oracle_id }, { db }) {
+    const card = await db('distinctCards')
+      .where({ oracle_id })
+      .first();
+    if (card) return card;
+
+    return db('cards')
       .where({ oracle_id })
       .first();
   },

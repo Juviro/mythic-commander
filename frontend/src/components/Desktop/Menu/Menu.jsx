@@ -2,7 +2,7 @@ import React from 'react';
 import { Menu } from 'antd';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
-import { MythicCommanderBanner, Flex } from '../../Elements/Shared';
+import { MythicCommanderBanner, Flex, SearchBar } from '../../Elements/Shared';
 import { darkBackground } from '../../../constants/colors';
 import UserMenu from './UserMenu';
 
@@ -45,20 +45,16 @@ const DesktopMenu = ({ location: { pathname } }) => {
           mode="horizontal"
           selectedKeys={pathname}
           theme="dark"
-          style={{ marginLeft: 24 }}
+          style={{ marginLeft: 12 }}
         >
           {MENU_ENTRIES.map(({ title, href }) => (
-            <Menu.Item
-              key={href}
-              style={{
-                padding: '0 64px',
-              }}
-            >
+            <Menu.Item key={href} style={{ padding: '0 3vw' }}>
               <Link to={href}>{title}</Link>
             </Menu.Item>
           ))}
         </Menu>
       </Flex>
+      <SearchBar hideLayover style={{ margin: '0 8px', width: 330 }} />
       <UserMenu />
     </StyledMenu>
   );

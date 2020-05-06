@@ -6,6 +6,8 @@ import W from './W.svg';
 import C from './C.svg';
 import S from './S.svg';
 import X from './X.svg';
+import T from './T.svg';
+import Q from './Q.svg';
 
 import cost_2R from './2R.svg';
 import cost_2U from './2U.svg';
@@ -52,6 +54,10 @@ import cost_18 from './18.svg';
 import cost_19 from './19.svg';
 import cost_20 from './20.svg';
 
+import loyalityUp from './loyality_up.png';
+import loyalityNeutral from './loyality_neutral.png';
+import loyalityDown from './loyality_down.png';
+
 import land from './land.svg';
 import instant from './instant.svg';
 import sorcery from './sorcery.svg';
@@ -70,6 +76,8 @@ export const colors = {
   C,
   S,
   X,
+  T,
+  Q,
 
   '2/R': cost_2R,
   '2/U': cost_2U,
@@ -116,6 +124,13 @@ export const colors = {
   19: cost_19,
   20: cost_20,
 };
+
+export const loyalities = {
+  up: loyalityUp,
+  neutral: loyalityNeutral,
+  down: loyalityDown,
+};
+
 export const types = {
   land,
   instant,
