@@ -113,7 +113,7 @@ const Search = ({ history }) => {
 
     let nextPage = page;
     // reset page when search order changes
-    if (lastSearchOptions.orderBy !== orderBy) {
+    if (lastSearchOptions.orderBy && lastSearchOptions.orderBy !== orderBy) {
       setParams({ page: 1 }, 'replaceIn');
       nextPage = 1;
     }
