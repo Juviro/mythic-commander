@@ -3,7 +3,6 @@ BUGFIXES:
 CURRENT:
 
 NEXT:
-    - evaluate performance boost when moving collection name search to useState
 
 IMPROVEMENTS:
     - don't show go back button for wants/decks ?
@@ -20,6 +19,7 @@ BACKLOG:
     - allow search for unowned cards only
     - refresh google access ?
     - swipe card preview on mobile
+    - going back to list should preserve scroll position
     - show *add commander* in deck list when no commander selected
     - shortcuts should use modifier key ?
     - when adding cards (to collection?), allow displaying only cards from specific set

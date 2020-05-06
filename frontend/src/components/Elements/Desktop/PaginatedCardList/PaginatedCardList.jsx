@@ -26,7 +26,8 @@ export default ({
   numberOfCards,
   showSorter,
   hiddenColumns,
-  showNameSearch,
+  setSearch,
+  search,
   showAddedBeforeFilter,
   showCollectionFilters,
   orderByParamName,
@@ -44,6 +45,7 @@ export default ({
   ) : layout === 'list' ? (
     <CardTable
       cards={cards}
+      search={search}
       loading={loading}
       showSorter={showSorter}
       hiddenColumns={hiddenColumns}
@@ -55,6 +57,7 @@ export default ({
   ) : (
     <CardGrid
       zoom={zoom}
+      search={search}
       cards={cards}
       loading={loading}
       widthOffset={widthOffset}
@@ -76,7 +79,7 @@ export default ({
       }}
     >
       <Header
-        showNameSearch={showNameSearch}
+        setSearch={setSearch}
         orderByParamName={orderByParamName}
         showAddedBeforeFilter={showAddedBeforeFilter}
         showCollectionFilters={showCollectionFilters}

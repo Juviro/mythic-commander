@@ -23,6 +23,7 @@ export default ({
   widthOffset,
   numberOfCards,
   zoom,
+  search,
   setCardIdsToDelete,
   onDeleteCards,
 }) => {
@@ -78,6 +79,8 @@ export default ({
             onDeleteCard={onDeleteCards ? () => deleteCard(card) : undefined}
             loading={loading}
             width={cardWidth}
+            index={index}
+            search={search}
             onClick={() => onClick(index)}
             widthPercentage={100 / cardsPerRow}
             isSelected={index + 1 === selectedElementPosition}

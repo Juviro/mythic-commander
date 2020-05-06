@@ -2,7 +2,6 @@ import React from 'react';
 import { Row, Col, Typography } from 'antd';
 import styled from 'styled-components';
 
-import { StringParam, useQueryParam } from 'use-query-params';
 import { getPriceLabel } from '../../../../../utils/cardStats';
 import OwnedBadge from '../../../Shared/OwnedBadge';
 import Flex from '../../../Shared/Flex';
@@ -18,16 +17,15 @@ const StyledCol = styled(Col)`
   display: flex;
 `;
 
-export default ({ card, width, textSize, loading }) => {
+export default ({ card, width, textSize, loading, search }) => {
   if (loading) return null;
-  const [query] = useQueryParam('name', StringParam);
 
   const displayedPrice = card.price || card.minPrice;
 
   return (
     <Flex direction="column" justify="center" style={{ width, marginTop: 4 }}>
       <Typography.Text ellipsis style={{ fontSize: textSize }}>
-        {highlightText(query, card.name)}
+        {highlightText(search, card.name)}
       </Typography.Text>
       <StyledInfoWrapper style={{ fontSize: textSize }}>
         <StyledCol span={8} style={{ justifyContent: 'flex-start' }}>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useQueryParam, StringParam } from 'use-query-params';
 import { Typography } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 
@@ -41,12 +40,6 @@ const renderPrice = ({ price, minPrice, sumPrice, totalAmount }) => {
   return `${getPriceLabel(displayedPrice)}  (${getPriceLabel(sumPrice)})`;
 };
 
-const Name = React.memo(({ name }) => {
-  const [searchString] = useQueryParam('name', StringParam);
-
-  return highlightText(searchString, name);
-});
-
 const sortByAmount = columnKey => (a, b) => {
   return Number(a[columnKey]) - Number(b[columnKey]);
 };
@@ -73,7 +66,7 @@ const renderActions = onDeleteCard => ({ oracle_id }) => {
   return <ContextMenu menuItems={menuItems} />;
 };
 
-const columns = [
+const columns = search => [
   {
     title: 'Card',
     key: 'img',
@@ -85,7 +78,7 @@ const columns = [
     dataIndex: 'name',
     width: 300,
     key: 'name',
-    render: name => <Name name={name} />,
+    render: name => highlightText(search, name),
     sorter: sortByName('name'),
   },
   {
@@ -152,8 +145,8 @@ const getActionColumn = ({ onDeleteCard }) => {
   };
 };
 
-export default ({ showSorter, hiddenColumns, onDeleteCard }) => {
-  const baseColumns = columns
+export default ({ showSorter, hiddenColumns, onDeleteCard, search = '' }) => {
+  const baseColumns = columns(search)
     .map(({ sorter, ...rest }) => ({
       sorter: showSorter && sorter,
       ...rest,

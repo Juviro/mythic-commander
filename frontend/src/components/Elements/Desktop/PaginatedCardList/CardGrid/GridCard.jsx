@@ -47,7 +47,9 @@ const GridCard = ({
   width,
   loading,
   zoom,
+  search,
 }) => {
+  // console.log('render 2');
   const [showMenu, toggleShowMenu] = useToggle();
   const displayedAmount = card.amount || card.totalAmount;
   useShortcut('DEL', isSelected ? onDeleteCard : null);
@@ -87,6 +89,7 @@ const GridCard = ({
       <CardInfo
         loading={loading}
         card={card}
+        search={search}
         textSize={textSize}
         width={width}
       />
@@ -99,13 +102,18 @@ const areEqual = (prevProps, nextProps) => {
   if (prevProps.widthPercentage !== nextProps.widthPercentage) return false;
   if (prevProps.width !== nextProps.width) return false;
   if (prevProps.loading !== nextProps.loading) return false;
-  if (prevProps.onClick !== nextProps.onClick) return false;
+  if (prevProps.index !== nextProps.index) return false;
+  if (prevProps.search !== nextProps.search) return false;
 
   return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
-    propKey => {
-      return prevProps.card[propKey] === nextProps.card[propKey];
-    }
+    propKey => prevProps.card[propKey] === nextProps.card[propKey]
   );
 };
 
-export default React.memo(GridCard, areEqual);
+const t = (prevProps, nextProps) => {
+  const res = areEqual(prevProps, nextProps);
+  // console.log('res :', res, prevProps.card.name);
+  return res;
+};
+
+export default React.memo(GridCard, t);
