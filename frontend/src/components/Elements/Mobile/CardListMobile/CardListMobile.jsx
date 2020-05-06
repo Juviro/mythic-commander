@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { List, BackTop, Typography } from 'antd';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -9,6 +9,7 @@ import CardListItem from './CardListItem';
 import CustomSkeleton from '../../Shared/CustomSkeleton';
 import GridCard from './GridCard';
 import Footer from './Footer';
+import CardModal from '../../../Mobile/Card/CardModal';
 
 const StyledGridWrapper = styled.div`
   display: flex;
@@ -29,6 +30,7 @@ const CardList = ({
   onDeleteCard,
   showTotalResults,
 }) => {
+  const [detailCard, setDetailCard] = useState(null);
   const [{ name, layout = 'list' }] = useQueryParams({
     name: StringParam,
     layout: StringParam,
@@ -38,11 +40,13 @@ const CardList = ({
     return <CustomSkeleton.List />;
   }
 
-  const onOpenDetailView = ({ id, oracle_id }) => {
+  const onOpenDetailView = card => {
+    setDetailCard(card);
     history.push(
-      `${history.location.pathname}/${oracle_id}/${id}${history.location.search}`
+      `${history.location.pathname}${history.location.search}#details`
     );
   };
+  const onCloseModal = () => setDetailCard(null);
 
   const totalResultsLabel = showTotalResults && (
     <Typography.Text
@@ -105,6 +109,7 @@ const CardList = ({
         />
       )}
       <BackTop style={{ left: 20, bottom: 20 }} />
+      <CardModal {...detailCard} onClose={onCloseModal} />
     </>
   );
 };

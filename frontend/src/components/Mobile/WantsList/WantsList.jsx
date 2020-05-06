@@ -7,7 +7,6 @@ import { wantsList as wantsListQuery } from './queries';
 
 import Header from './Header';
 import AddWants from './AddWants';
-import CardModal from '../Card/CardModal';
 import { LayoutAndSortPicker } from '../../Elements/Shared';
 
 import unifyCardFormat from '../../../utils/unifyCardFormat';
@@ -49,7 +48,6 @@ export default () => {
         rawWantsList={data && data.wantsList}
       />
       <AddWants containedCards={cards} />
-      <CardModal />
     </StyledWrapper>
   );
 };

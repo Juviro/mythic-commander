@@ -6,10 +6,6 @@ NEXT:
 
 IMPROVEMENTS:
     - don't show go back button for wants/decks ?
-    - show owned badge if amount not displayed (advanced search)
-    - better tooltips for multi input
-    - don't change line height when editing card in list (sets in desktop details, mobile list)
-    - grid list: when switching to first (last) card row, scroll header (footer) into view
 
 FEATURES:
 
@@ -18,6 +14,7 @@ REFACTORINGS:
 BACKLOG:
     - allow search for unowned cards only
     - refresh google access ?
+    - better tooltips for multi input
     - swipe card preview on mobile
     - going back to list should preserve scroll position
     - show *add commander* in deck list when no commander selected
@@ -27,7 +24,6 @@ BACKLOG:
     - add to advanced search: number of owned copies
     - allow sort by mana cost to collection
     - hide collection list checkboxes unless in some sort of editing modus?
-    - on mobile: advanced search -> click card -> search card throught searchBar -> click back: show show advanced search without card modal. Maybe use replace history.
     - add possible combos section to detail card view (https://discordapp.com/channels/673601282946236417/673601283609067559, no api yet)
     - add info tooltip for search: explain amount prefix, fuzzy search
     - allow searching for multiple sets/types/subtypes?

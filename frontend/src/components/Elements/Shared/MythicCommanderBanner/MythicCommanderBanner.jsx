@@ -20,9 +20,9 @@ const StyledText = styled(Typography.Text)`
   margin-left: 16px;
   white-space: nowrap;
 
-  @media (max-width: 1000px) {
+  /* @media only screen and (max-width: 1000px) {
     display: none;
-  }
+  } */
 `;
 
 const MythicCommanderBanner = ({

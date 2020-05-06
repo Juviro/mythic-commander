@@ -49,7 +49,6 @@ const GridCard = ({
   zoom,
   search,
 }) => {
-  // console.log('render 2');
   const [showMenu, toggleShowMenu] = useToggle();
   const displayedAmount = card.amount || card.totalAmount;
   useShortcut('DEL', isSelected ? onDeleteCard : null);
@@ -110,10 +109,4 @@ const areEqual = (prevProps, nextProps) => {
   );
 };
 
-const t = (prevProps, nextProps) => {
-  const res = areEqual(prevProps, nextProps);
-  // console.log('res :', res, prevProps.card.name);
-  return res;
-};
-
-export default React.memo(GridCard, t);
+export default React.memo(GridCard, areEqual);
