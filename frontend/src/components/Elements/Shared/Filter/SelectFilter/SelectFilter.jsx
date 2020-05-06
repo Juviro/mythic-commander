@@ -5,6 +5,7 @@ import CustomSkeleton from '../../CustomSkeleton';
 import isMobile from '../../../../../utils/isMobile';
 import keyCodes from '../../../../../constants/keyCodes';
 import { useToggle } from '../../../../Hooks';
+import { filterAndSortByQuery } from '../../../../../utils/cardFilter';
 
 const SelectFilter = ({
   onChange,
@@ -33,15 +34,14 @@ const SelectFilter = ({
     // eslint-disable-next-line
   }, [value]);
 
-  const filteredOptions = unifiedOptions
-    .filter(({ name }) =>
-      name.toLowerCase().startsWith(currentValue.toLowerCase())
-    )
-    .map(({ name, value: optionValue }) => (
-      <AutoComplete.Option value={optionValue} key={optionValue}>
-        {name}
-      </AutoComplete.Option>
-    ));
+  const filteredOptions = filterAndSortByQuery(
+    unifiedOptions,
+    currentValue
+  ).map(({ name, value: optionValue }) => (
+    <AutoComplete.Option value={optionValue} key={optionValue}>
+      {name}
+    </AutoComplete.Option>
+  ));
 
   const onChangeInput = (inputValue = '') => {
     if (!inputValue) onChange('');

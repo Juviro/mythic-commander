@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Skeleton, List, Modal, Button, Typography } from 'antd';
+import { List, Modal, Button, Typography } from 'antd';
 import styled from 'styled-components';
 import Linkify from 'react-linkify';
 
 const StyledRulesWrapper = styled.div`
   width: 100%;
+  max-width: 250px;
   height: 32px;
-  margin: 12px 0 32px;
 `;
 
 export default ({ card = {}, loading }) => {
@@ -45,21 +45,24 @@ export default ({ card = {}, loading }) => {
   const hasRules = rules && rules.length;
   const buttonText = rules
     ? hasRules
-      ? 'Show Rulings for this card'
-      : 'No rules found'
-    : null;
+      ? 'Rules and Notes'
+      : 'No Rules Found'
+    : 'Searching for Rules...';
+
+  const displayAsLoading = loading || !rules;
 
   return (
     <>
-      {loading || !buttonText ? (
-        <Skeleton active paragraph={null} />
-      ) : (
-        <StyledRulesWrapper showBorder={Boolean(rules)} hasRules={hasRules}>
-          <Button block onClick={() => setIsOpen(true)} disabled={!hasRules}>
-            {buttonText}
-          </Button>
-        </StyledRulesWrapper>
-      )}
+      <StyledRulesWrapper showBorder={Boolean(rules)} hasRules={hasRules}>
+        <Button
+          block
+          onClick={() => setIsOpen(true)}
+          disabled={!hasRules}
+          loading={displayAsLoading}
+        >
+          {buttonText}
+        </Button>
+      </StyledRulesWrapper>
       <Modal
         footer={null}
         visible={isOpen}

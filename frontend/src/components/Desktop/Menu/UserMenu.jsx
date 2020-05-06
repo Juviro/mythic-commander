@@ -26,6 +26,7 @@ export default () => {
       visible={isOpen}
       onVisibleChange={toggleIsOpen}
       trigger="click"
+      style={{ width: 30 }}
     >
       <StyledAvatarWrapper>
         <UserAvatar onClick={toggleIsOpen} />

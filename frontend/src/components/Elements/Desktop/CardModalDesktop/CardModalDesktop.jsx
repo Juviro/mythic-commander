@@ -1,8 +1,26 @@
 import React from 'react';
 import { Modal } from 'antd';
+import { useQuery } from 'react-apollo';
 import CardDetailsDesktop from '../CardDetailsDesktop';
 
-export default ({ card, visible, onClose, loading }) => {
+import { cardDetailsDesktop } from '../CardDetailsDesktop/queries';
+import { unifySingleCard } from '../../../../utils/unifyCardFormat';
+
+const CardModalDesktop = ({
+  card,
+  visible,
+  onClose,
+  loading: parentLoading,
+}) => {
+  const { data, loading: cardLoading } = useQuery(cardDetailsDesktop, {
+    variables: { oracle_id: card.oracle_id },
+  });
+  const loading = cardLoading || parentLoading;
+
+  const unifiedCard = data && unifySingleCard(data.cardByOracleId);
+
+  const usedCard = { ...unifiedCard, ...card };
+
   return (
     <Modal
       centered
@@ -11,10 +29,19 @@ export default ({ card, visible, onClose, loading }) => {
       footer={null}
       destroyOnClose
       width={1100}
-      bodyStyle={{ height: 850 }}
+      bodyStyle={{
+        overflow: 'auto',
+        maxHeight: 'calc(100vh - 32px)',
+      }}
       style={{ maxWidth: '100%' }}
     >
-      {card && <CardDetailsDesktop card={card} loading={loading} />}
+      {card && <CardDetailsDesktop card={usedCard} loading={loading} />}
     </Modal>
   );
+};
+
+export default ({ card, ...props }) => {
+  if (!card) return null;
+
+  return <CardModalDesktop card={card} {...props} />;
 };

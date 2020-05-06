@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Typography } from 'antd';
 import { colors as colorIcons } from '../../../../assets/mtgIcons';
+import Loyality from './Loyality';
 
 const StyledColorTag = styled.img`
   width: ${({ size }) => size}px;
@@ -10,18 +11,22 @@ const StyledColorTag = styled.img`
   margin-right: 2px;
   box-shadow: 1px 1px 2px #5f5f5f;
 `;
-
 export default ({ symbol, size = 18 }) => {
   if (symbol === '//') {
     return (
-      <Typography.Text strong style={{ fontSize: 20, margin: '0 6px' }}>
+      <Typography.Text strong style={{ fontSize: size, margin: '0 6px' }}>
         {symbol}
       </Typography.Text>
     );
   }
+  const plainSymbol = symbol.replace(/[{}]/g, '');
 
-  const src = colorIcons[symbol];
-  if (!src) return `{${symbol}}`;
+  if (plainSymbol.includes(':')) {
+    return <Loyality symbol={plainSymbol} size={size} />;
+  }
 
-  return <StyledColorTag src={src} size={size} />;
+  const src = colorIcons[plainSymbol];
+  if (!src) return `{${plainSymbol}}`;
+
+  return <StyledColorTag src={src} size={size} alt={`{${plainSymbol}}`} />;
 };

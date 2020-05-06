@@ -15,6 +15,16 @@ const StyledIcon = styled.img`
   height: 100%;
 `;
 
+const StyledText = styled(Typography.Text)`
+  color: rgba(255, 255, 255, 0.8);
+  margin-left: 16px;
+  white-space: nowrap;
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
+`;
+
 const MythicCommanderBanner = ({
   fontSize = 20,
   style,
@@ -28,11 +38,7 @@ const MythicCommanderBanner = ({
       onClick={showCollectionOnClick && navigateToCollection}
     >
       <StyledIcon src={icon} />
-      <Typography.Text
-        style={{ fontSize, color: 'rgba(255, 255, 255, 0.8)', marginLeft: 16 }}
-      >
-        Mythic Commander
-      </Typography.Text>
+      <StyledText style={{ fontSize }}>Mythic Commander</StyledText>
     </StyledWrapper>
   );
 };

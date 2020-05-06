@@ -111,7 +111,7 @@ export default class CardSearch extends React.Component {
 
     const { name, amount } = splitAmountAndName(searchString);
 
-    const suggestions = filterAndSortByQuery(cards, name);
+    const suggestions = filterAndSortByQuery(cards, name).slice(0, 20);
 
     return (
       <AutoComplete

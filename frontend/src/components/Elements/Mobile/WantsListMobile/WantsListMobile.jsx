@@ -43,10 +43,11 @@ export default ({
       update: (cache, { data }) => {
         const existing = {};
         if (!deckId) {
-          existing.wantsList = cache.readQuery({
+          const { wantsList } = cache.readQuery({
             query: wantsListQuery,
             variables: { id: wantsListId },
           });
+          existing.wantsList = wantsList;
         } else {
           const wantsListsForDeck = cache.readQuery({
             query: wantsListsForDeckMobile,

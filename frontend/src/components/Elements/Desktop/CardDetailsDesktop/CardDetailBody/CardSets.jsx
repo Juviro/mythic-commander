@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
 
 import { message, Typography } from 'antd';
-import { changeCollection } from './queries';
-import { CardSetOverview, EditIcon } from '../../Shared';
-import { useShortcut, useToggle } from '../../../Hooks';
+import { changeCollection, cardDetailsDesktop } from '../queries';
+import { CardSetOverview, EditIcon } from '../../../Shared';
+import { useShortcut, useToggle } from '../../../../Hooks';
+import { getCollectionDesktop } from '../../../../Desktop/Collection/queries';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -17,7 +18,7 @@ const StyledTitleWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export default ({ card, loading, selectedCardId, onChangeSet, title }) => {
+export default ({ card, loading, selectedCardId, onChangeSet, showTitle }) => {
   const [mutate] = useMutation(changeCollection);
   const [isEditing, toggleIsEditing] = useToggle(false);
   const [editedMap, setEditedMap] = useState({});
@@ -53,7 +54,33 @@ export default ({ card, loading, selectedCardId, onChangeSet, title }) => {
         added,
         cardId: card.id,
       },
-      refetchQueries: ['getCollectionNames'],
+      update: (cache, { data: updateData }) => {
+        const { changeCollection: newCard } = updateData;
+        const existing = cache.readQuery({
+          query: getCollectionDesktop,
+        });
+
+        const filteredCards = existing.collection.cards.filter(
+          ({ oracle_id }) => oracle_id !== card.oracle_id
+        );
+
+        cache.writeQuery({
+          query: getCollectionDesktop,
+          data: {
+            collection: {
+              ...existing.collection,
+              cards: filteredCards.concat(newCard || []),
+            },
+          },
+        });
+      },
+      refetchQueries: [
+        'getCollectionNames',
+        {
+          query: cardDetailsDesktop,
+          variables: { oracle_id: card.oracle_id },
+        },
+      ],
     });
     message.success('Updated your collection!');
     onDiscard();
@@ -83,10 +110,15 @@ export default ({ card, loading, selectedCardId, onChangeSet, title }) => {
     });
   };
 
+  const { name, totalAmount } = card || {};
+  let title = name;
+  if (totalAmount) title += ` (${totalAmount} collected)`;
+  if (loading) title = '';
+
   return (
     <StyledWrapper>
       <StyledTitleWrapper>
-        {title && (
+        {showTitle && (
           <Typography.Title level={4} style={{ userSelect: 'text' }}>
             {title}
           </Typography.Title>
