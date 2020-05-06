@@ -60,6 +60,7 @@ export default ({ overwriteOracleId, defaultCardId }) => {
   useEffect(() => {
     if (overwriteOracleId || defaultCardId) return;
     setTimeout(() => window.scrollTo(0, 0), 10);
+    // eslint-disable-next-line
   }, [oracle_id]);
 
   const fullCard = { ...card, ...currentCard };
