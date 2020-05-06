@@ -12,6 +12,7 @@ import { wantsList as wantsListQuery } from '../../../Mobile/WantsList/queries';
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 100%;
 `;
 
@@ -38,8 +39,9 @@ export default ({ card, large, cardId }) => {
   const { data } = useQuery(wantsListsQuery);
   const [mutate] = useMutation(addCardsToWantsList);
 
-  if (!data || !card || !card.containingWantsLists)
+  if (!data || !card || !card.containingWantsLists) {
     return <CustomSkeleton.Line />;
+  }
 
   const { containingWantsLists } = card;
   const { wantsLists } = data;
@@ -98,7 +100,7 @@ export default ({ card, large, cardId }) => {
           </Select.Option>
         ))}
       </Select>
-      {Boolean(containingWantsLists.length) && (
+      {containingWantsLists.length ? (
         <List
           size="small"
           style={{ margin: '16px 0 24px' }}
@@ -116,6 +118,10 @@ export default ({ card, large, cardId }) => {
             </List.Item>
           )}
         />
+      ) : (
+        <Typography.Text type="secondary" style={{ marginTop: 32 }}>
+          You don&apos;t have any wants lists containing this card
+        </Typography.Text>
       )}
     </StyledWrapper>
   );

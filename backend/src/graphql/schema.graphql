@@ -11,6 +11,7 @@ type Card {
   prices: Prices!
   rarity: String!
   oracle_text: String
+  scryfall_uri: String
   cmc: Float!
   legalities: Legalities!
   purchase_uris: PurchaseUris!
@@ -27,6 +28,7 @@ type Card {
   amountOwnedFoil: Int!
 
   oracleCard: OracleCard!
+  relatedCards: [Card!]
 }
 
 type OracleCard {
@@ -250,7 +252,7 @@ type Mutation {
     edited: [ChangeCollectionInput!]
     deleted: [String!]
     cardId: String
-  ): OracleCard!
+  ): CollectionCard
   deleteFromCollection(cardIds: [String]!): Boolean
   deleteAllFromCollection(oracleIds: [String!]!): Boolean
 

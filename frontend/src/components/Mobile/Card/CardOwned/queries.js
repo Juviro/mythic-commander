@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { COLLECTION_CARD_FIELDS } from '../../../Desktop/Collection/queries';
 
 export const changeCollection = gql`
   mutation changeCollection(
@@ -11,16 +12,7 @@ export const changeCollection = gql`
       added: $added
       edited: $edited
     ) {
-      _id
-      owned
-      totalAmount
-      sumPrice
-      minPrice
-      allSets {
-        id
-        amountOwned
-        amountOwnedFoil
-      }
+      ${COLLECTION_CARD_FIELDS}
     }
   }
 `;

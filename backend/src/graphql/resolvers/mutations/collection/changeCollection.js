@@ -1,3 +1,5 @@
+import unifyCardFormat from '../../unifyCardFormat';
+
 const ON_DUPLICATE =
   ' ON CONFLICT (id, "userId") DO UPDATE SET amount = collection.amount + EXCLUDED.amount, "createdAt" = NOW()';
 
@@ -48,11 +50,10 @@ export default async (
       .del();
   }
 
-  const where = cardId ? { id: cardId } : { oracle_id: cardOracleId };
+  const updatedCards = await db('collection')
+    .leftJoin('cards', { 'cards.id': 'collection.id' })
+    .where({ oracle_id: cardOracleId })
+    .andWhere({ userId });
 
-  const updatedCard = await db('cards')
-    .where(where)
-    .first();
-
-  return updatedCard;
+  return updatedCards.map(unifyCardFormat(userId))[0];
 };

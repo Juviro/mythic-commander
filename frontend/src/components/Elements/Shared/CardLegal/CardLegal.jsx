@@ -13,7 +13,13 @@ const StyledWrapper = styled.div`
 `;
 
 export default ({ card, loading }) => {
-  if (!card || loading) return <Skeleton active paragraph={null} />;
+  if (!card || loading) {
+    return (
+      <span style={{ width: '100%', margin: '0 4px' }}>
+        <Skeleton active paragraph={null} />
+      </span>
+    );
+  }
   const isLegal = card.isCommanderLegal;
 
   return (

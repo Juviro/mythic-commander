@@ -66,13 +66,13 @@ const GridCard = ({
       key={card.id}
       widthPercentage={widthPercentage}
       ref={ref}
-      onMouseEnter={() => toggleShowMenu(true)}
-      onMouseLeave={() => toggleShowMenu(false)}
     >
       <StyledImageWrapper
         isSelected={isSelected}
         onClick={onClick}
         style={cardSize}
+        onMouseEnter={() => toggleShowMenu(true)}
+        onMouseLeave={() => toggleShowMenu(false)}
       >
         <FlippableCard card={card} loading={loading} />
         {displayedAmount > 1 && (
@@ -80,7 +80,7 @@ const GridCard = ({
             style={{ fontSize: textSize }}
           >{`${displayedAmount}x`}</StyledAmountWrapper>
         )}
-        {showMenu && (
+        {(showMenu || isSelected) && (
           <ContextMenu loading={loading} onDeleteCard={onDeleteCard} />
         )}
       </StyledImageWrapper>

@@ -18,7 +18,7 @@ const StyledIcon = styled.img`
 const StyledText = styled(Typography.Text)`
   color: rgba(255, 255, 255, 0.8);
   margin-left: 16px;
-  white-space: no-wrap;
+  white-space: nowrap;
 
   @media (max-width: 1000px) {
     display: none;

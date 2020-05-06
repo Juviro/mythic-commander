@@ -8,6 +8,7 @@ import { EditIcon } from '../../../Elements/Shared';
 import AddCard from './AddCard';
 import CardRow from './CardRow';
 import { changeCollection } from './queries';
+import { getCardByOracleId } from '../queries';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -48,7 +49,14 @@ export default ({ cardOracleId, cards, onChangeSet, selectedCardId }) => {
         edited,
         added,
       },
-      refetchQueries: ['cardSearch', 'getCollectionNames'],
+      refetchQueries: [
+        {
+          query: getCardByOracleId,
+          variables: { oracle_id: cardOracleId },
+        },
+
+        'getCollectionNames',
+      ],
     });
     message.success('Updated your collection!');
     onResetEditing();

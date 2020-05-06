@@ -54,7 +54,7 @@ const DesktopMenu = ({ location: { pathname } }) => {
           ))}
         </Menu>
       </Flex>
-      <SearchBar hideLayover style={{ marginRight: 32, width: 330 }} />
+      <SearchBar hideLayover style={{ margin: '0 8px', width: 330 }} />
       <UserMenu />
     </StyledMenu>
   );

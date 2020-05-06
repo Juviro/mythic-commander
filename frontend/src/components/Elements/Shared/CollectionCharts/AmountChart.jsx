@@ -12,7 +12,12 @@ export default ({ formattedData }) => (
         <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
       </linearGradient>
     </defs>
-    <XAxis dataKey="date" interval={3} allowDataOverflow />
+    <XAxis
+      dataKey="date"
+      tickCount={10}
+      interval="preserveStartEnd"
+      allowDataOverflow
+    />
     <YAxis yAxisId="amount" />
     <Tooltip />
     <Area
