@@ -82,7 +82,7 @@ const GridCard = ({
             style={{ fontSize: textSize }}
           >{`${displayedAmount}x`}</StyledAmountWrapper>
         )}
-        {(showMenu || isSelected) && (
+        {showMenu && (
           <ContextMenu loading={loading} onDeleteCard={onDeleteCard} />
         )}
       </StyledImageWrapper>
