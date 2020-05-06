@@ -4,7 +4,6 @@ CURRENT:
     - detail card view - like current desktop modal plus:
         - navbar briefly dissappearing when opening card details from search bar
         - mkm prices via their api (min, avg)
-        - replace planeswalker abilities
 
 NEXT:
     - evaluate performance boost when moving collection name search to useState

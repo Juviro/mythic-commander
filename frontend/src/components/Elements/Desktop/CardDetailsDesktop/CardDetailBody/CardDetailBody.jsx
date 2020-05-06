@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import DecksAndWants from './DecksAndWants';
 import PreviewAndSets from './PreviewAndSets';
@@ -14,12 +14,6 @@ export default ({
   largeHeader,
 }) => {
   const [isFlipped, toggleIsFlipped] = useToggle(false);
-
-  const cardId = card && card.id;
-  useEffect(() => {
-    toggleIsFlipped(false);
-    // eslint-disable-next-line
-  }, [cardId]);
 
   return (
     <>

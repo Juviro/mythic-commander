@@ -38,8 +38,13 @@ export default ({
   const frontLargeSrc = imgKey && getImageUrl(id, imgKey, 'normal');
 
   useEffect(() => {
-    let isMounted = true;
+    if (isTwoFaced) return;
     toggleIsFlipped(false);
+    // eslint-disable-next-line
+  }, [isTwoFaced]);
+
+  useEffect(() => {
+    let isMounted = true;
     toggleShowHighResImage(false);
     if (frontLargeSrc) {
       const img = new Image();
