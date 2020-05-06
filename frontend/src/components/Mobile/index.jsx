@@ -24,25 +24,13 @@ const App = () => {
     <>
       <Menu />
       <Switch>
-        <Route path="/m/search/:oracle_id?/:cardId?" exact component={Search} />
+        <Route path="/m/search" exact component={Search} />
         <Route path="/m/decks" exact component={Decks} />
-        <Route
-          path="/m/decks/:id/:oracle_id?/:cardId?"
-          exact
-          component={Deck}
-        />
-        <Route path="/m/cards/:oracle_id/:cardId?" component={Card} />
-        <Route
-          path="/m/collection/:oracle_id?/:cardId?"
-          exact
-          component={Collection}
-        />
+        <Route path="/m/decks/:id" exact component={Deck} />
+        <Route path="/m/cards/:oracle_id" component={Card} />
+        <Route path="/m/collection" exact component={Collection} />
         <Route path="/m/wants" exact component={WantsLists} />
-        <Route
-          path="/m/wants/:id/:oracle_id?/:cardId?"
-          exact
-          component={WantsList}
-        />
+        <Route path="/m/wants/:id" exact component={WantsList} />
         <Redirect from="*" to="/m/collection" />
       </Switch>
       <GlobalStyle />

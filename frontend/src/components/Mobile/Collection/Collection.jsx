@@ -7,7 +7,6 @@ import { getMobileCollection } from './queries';
 import { FilteredCardList } from '../../Elements/Mobile';
 import { LayoutAndSortPicker, CollectionStats } from '../../Elements/Shared';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
-import CardModal from '../Card/CardModal';
 import AddToCollection from './AddToCollection';
 import NameFilter from '../../Elements/Shared/Filter/TextFilter/NameFilter';
 
@@ -60,7 +59,6 @@ export default () => {
       <Divider />
       <FilteredCardList cards={cards} name={query} />
       <AddToCollection />
-      <CardModal />
     </StyledWrapper>
   );
 };

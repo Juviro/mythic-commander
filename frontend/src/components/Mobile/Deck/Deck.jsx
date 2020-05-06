@@ -10,7 +10,6 @@ import { getDeck, addCardsToDeck } from './queries';
 import { AddCardMobile } from '../../Elements/Mobile';
 import message from '../../../utils/message';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
-import CardModal from '../Card/CardModal';
 
 const StyledDeck = styled.div`
   width: 100%;
@@ -52,7 +51,6 @@ export default () => {
         containedCards={cards}
         visible={currentTab === 'cards'}
       />
-      <CardModal />
     </StyledDeck>
   );
 };

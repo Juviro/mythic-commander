@@ -13,7 +13,6 @@ import {
 import { CardListMobile as CardList } from '../../Elements/Mobile';
 import Header from './Header';
 import { cardSearch } from './queries';
-import CardModal from '../Card/CardModal';
 import NameFilter from '../../Elements/Shared/Filter/TextFilter/NameFilter';
 import { CARDS_PER_PAGE } from '../../Elements/Mobile/CardListMobile/FilteredCardList';
 import { useToggle, useStoredQueryParam } from '../../Hooks';
@@ -137,7 +136,6 @@ const Search = ({ history }) => {
           />
         )}
       </StyledWrapper>
-      <CardModal />
     </>
   );
 };

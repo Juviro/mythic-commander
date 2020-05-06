@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 
-import { useParams, withRouter } from 'react-router';
+import { useParams } from 'react-router';
 import { Divider } from 'antd';
 
 import CardImage from './CardImage';
@@ -37,55 +37,50 @@ const StyledBodyWrapper = styled.div`
   background-color: white;
 `;
 
-const Card = ({ history }) => {
-  const { oracle_id, cardId } = useParams();
+export default ({ overwriteOracleId, defaultCardId }) => {
+  const { oracle_id: paramOracleId } = useParams();
+  const [selectedCardId, setSelectedCardId] = useState(null);
+  const oracle_id = overwriteOracleId || paramOracleId;
   const { data, loading } = useQuery(getCardByOracleId, {
     variables: { oracle_id },
   });
 
   const card = data && unifySingleCard(data.cardByOracleId);
 
-  const currentCardId = cardId || (card && card.id);
-
-  const currentCard = card
-    ? { ...card, ...card.allSets.find(({ id }) => id === currentCardId) }
-    : null;
-
-  const fallbackId = loading || !currentCard ? null : currentCard.id;
-
-  const onChangeSet = id => {
-    // select everything before a card id
-    const match = history.location.pathname.match(/(\/m\/[\w/]+)\/\w{8}-\w{4}/);
-    const pathname = match ? match[1] : history.location.pathname;
-    history.replace(`${pathname}/${oracle_id}/${id}`);
-  };
+  const currentCard =
+    card && card.allSets.find(({ id }) => id === selectedCardId);
 
   useEffect(() => {
-    if (cardId) return;
-    if (fallbackId) {
-      onChangeSet(fallbackId);
-    }
-    setTimeout(() => window.scrollTo(0, 0), 100);
+    if (currentCard) return;
+    const initialCardId = defaultCardId || (card && card.id);
+    setSelectedCardId(initialCardId);
     // eslint-disable-next-line
-  }, [cardId, fallbackId]);
+  }, [defaultCardId, card]);
+
+  useEffect(() => {
+    if (overwriteOracleId || defaultCardId) return;
+    setTimeout(() => window.scrollTo(0, 0), 10);
+  }, [oracle_id]);
+
+  const fullCard = { ...card, ...currentCard };
 
   return (
     <StyledWrapper>
-      <CardImage card={currentCard} loading={loading} />
+      <CardImage card={fullCard} loading={loading} />
       <StyledBodyWrapper>
         <Divider>Overview</Divider>
         <CardSetOverview
           card={card}
           loading={loading}
-          selectedCardId={cardId}
-          onChangeSet={onChangeSet}
+          selectedCardId={selectedCardId}
+          onChangeSet={setSelectedCardId}
         />
         <Divider>Your Collection</Divider>
         <CardOwned
           card={card}
           loading={loading}
-          onChangeSet={onChangeSet}
-          selectedCardId={cardId}
+          onChangeSet={setSelectedCardId}
+          selectedCardId={selectedCardId}
         />
         <Divider>Wants Lists</Divider>
         <IncludedWants card={card} />
@@ -101,5 +96,3 @@ const Card = ({ history }) => {
     </StyledWrapper>
   );
 };
-
-export default withRouter(Card);
