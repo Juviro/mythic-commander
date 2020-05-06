@@ -1,7 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Tooltip } from 'antd';
 import styled from 'styled-components';
-import { useQueryParam, StringParam } from 'use-query-params';
 
 import {
   LayoutPicker,
@@ -21,7 +20,7 @@ const StyledWrapper = styled.div`
 `;
 
 export default ({
-  showNameSearch,
+  setSearch,
   showZoomSlider,
   zoom,
   setZoom,
@@ -29,10 +28,14 @@ export default ({
   orderByParamName,
   showAddedBeforeFilter,
 }) => {
-  const [name, setName] = useQueryParam('name', StringParam);
   const searchInputRef = useRef(null);
+  const [currentSearch, setCurrentSearch] = useState('');
   const focusInput = () => searchInputRef.current.focus();
   useShortcut('f', focusInput);
+
+  const onSearch = () => {
+    setSearch(currentSearch);
+  };
 
   return (
     <StyledWrapper>
@@ -41,14 +44,15 @@ export default ({
           showCollectionFilters={showCollectionFilters}
           paramName={orderByParamName}
         />
-        {showNameSearch && (
+        {setSearch && (
           <Tooltip title="Filter for card name [F]">
             <span>
               <NameFilter
+                onSearch={onSearch}
                 inputRef={searchInputRef}
                 style={{ marginLeft: 16 }}
-                value={name}
-                onChange={setName}
+                value={currentSearch}
+                onChange={setCurrentSearch}
                 size="middle"
                 placeholder="Search for a card"
               />

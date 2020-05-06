@@ -23,6 +23,7 @@ export default ({
   return (
     <Input.Search
       onPressEnter={onPressEnter}
+      onSearch={onPressEnter}
       value={value}
       ref={ref}
       onKeyDown={useBlurOnEsc}

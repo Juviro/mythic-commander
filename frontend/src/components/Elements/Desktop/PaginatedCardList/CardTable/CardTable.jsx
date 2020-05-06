@@ -24,6 +24,7 @@ const StyledButtonWrapper = styled.div`
 export default ({
   cards,
   loading,
+  search,
   numberOfCards,
   showSorter,
   hiddenColumns,
@@ -65,6 +66,7 @@ export default ({
     : undefined;
 
   const onPressDelete = () => {
+    if (!onDeleteCards) return;
     if (cardIdsToDelete.length) {
       onDeleteCards();
     } else {
@@ -105,6 +107,7 @@ export default ({
         dataSource={cards}
         columns={columns({
           showSorter,
+          search,
           hiddenColumns,
           onDeleteCard: onDeleteSingleCard,
         })}

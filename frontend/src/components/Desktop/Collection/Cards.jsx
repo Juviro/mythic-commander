@@ -14,16 +14,18 @@ export default ({ cards, loading, isSidebarVisible }) => {
   const [mutate] = useMutation(deleteAllFromCollection);
   const [cardIdsToDelete, setCardIdsToDelete] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useToggle();
-  const [{ page = 1, orderByCollection, name, addedWithin }] = useQueryParams({
+  const [{ page = 1, orderByCollection, addedWithin }] = useQueryParams({
     page: NumberParam,
-    name: StringParam,
+    // name: StringParam,
     addedWithin: NumberParam,
     orderByCollection: StringParam,
   });
 
+  const [search, setSearch] = useState('');
+
   const offset = pageSize * (page - 1);
   const filteredCards = filterCards(cards, {
-    name,
+    name: search,
     addedWithin,
   });
   const sortedCards = sortCards(filteredCards, orderByCollection);
@@ -80,11 +82,12 @@ export default ({ cards, loading, isSidebarVisible }) => {
   return (
     <>
       <PaginatedCardList
-        showNameSearch
         showAddedBeforeFilter
         showCollectionFilters
         orderByParamName="orderByCollection"
         loading={loading}
+        setSearch={setSearch}
+        search={search}
         cards={slicedCards}
         widthOffset={widthOffset}
         numberOfCards={filteredCards.length}
