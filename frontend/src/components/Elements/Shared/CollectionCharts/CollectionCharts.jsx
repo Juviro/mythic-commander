@@ -9,6 +9,7 @@ import formatDate from '../../../../utils/formatDate';
 import { primary } from '../../../../constants/colors';
 import AmountChart, { COLLECTED_CARDS, UNIQUE_CARDS } from './AmountChart';
 import ValueChart, { COLLECTION_VALUE } from './ValueChart';
+import useBlockShortcuts from '../../../Hooks/useBlockShortcuts';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -18,6 +19,7 @@ const StyledWrapper = styled.div`
 
 export default ({ currentSnapshot }) => {
   const [isVisible, toggleIsVisible] = useToggle();
+  useBlockShortcuts(isVisible);
   const { data } = useQuery(collectionSnapshots);
 
   const snapshots =

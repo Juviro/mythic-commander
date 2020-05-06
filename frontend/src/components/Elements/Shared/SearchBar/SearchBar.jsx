@@ -1,7 +1,6 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, useState } from 'react';
 import { Input, AutoComplete } from 'antd';
 import { withRouter } from 'react-router';
-import { useQueryParams, StringParam } from 'use-query-params';
 import { useQuery } from 'react-apollo';
 
 import styled from 'styled-components';
@@ -11,7 +10,9 @@ import CardContext from '../../../CardProvider/CardProvider';
 import renderOption from './renderOption';
 import { filterAndSortByQuery } from '../../../../utils/cardFilter';
 import unifyCardFormat from '../../../../utils/unifyCardFormat';
-import { useToggle } from '../../../Hooks';
+import { useToggle, useBlurOnEsc } from '../../../Hooks';
+import getDynamicUrl from '../../../../utils/getDynamicUrl';
+import isMobile from '../../../../utils/isMobile';
 
 const MAX_RESULTS = 20;
 
@@ -50,13 +51,11 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
   const collection =
     (collectionData && unifyCardFormat(collectionData.collection.cards)) || [];
 
-  const [{ query = '' }, setQuery] = useQueryParams({
-    query: StringParam,
-  });
+  const [query, setQuery] = useState('');
 
   const onSetSearch = (value = '') => {
     const newQuery = value.startsWith('{') ? '' : value.split(';')[0];
-    setQuery({ query: newQuery });
+    setQuery(newQuery);
   };
 
   const onSelect = oracleId => {
@@ -65,9 +64,10 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
     inputEl.current.blur();
     if (!oracleId) return;
 
-    const isCardView = history.location.pathname.match(/\/cards\/.+/);
-    history[isCardView ? 'replace' : 'push'](
-      `/m/cards/${oracleId}?query=${query}`
+    const shouldReplace =
+      history.location.pathname.match(/\/cards\/.+/) && isMobile();
+    history[shouldReplace ? 'replace' : 'push'](
+      getDynamicUrl(`/cards/${oracleId}`)
     );
   };
 
@@ -80,7 +80,7 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
 
   const onShowAll = () => {
     setTimeout(() => window.scrollTo(0, 0), 100);
-    history.push(`/m/search?name=${query}`);
+    history.push(getDynamicUrl(`/search?name=${query}`));
     onSelect();
   };
 
@@ -105,6 +105,7 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
         onChange={onSetSearch}
         onSelect={onSelect}
         options={dataSource}
+        onKeyDown={useBlurOnEsc}
         defaultActiveFirstOption
         onBlur={() => toggleIsOpen(false)}
         dropdownMatchSelectWidth={false}

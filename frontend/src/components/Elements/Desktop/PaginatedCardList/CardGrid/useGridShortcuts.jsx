@@ -67,13 +67,13 @@ export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
       if (currentPage === numberOfPages) return;
       const willBeOnLastPage = currentPage + 1 === numberOfPages;
       setCurrentPage(Math.min(currentPage + 1, numberOfPages));
-      const lastCardOnLastPage = willBeOnLastPage
+      const lastCardOnNextPage = willBeOnLastPage
         ? cardsOnLastPage
         : cardsPerRow;
       setSelectedElementPosition(
         Math.min(
           selectedElementPosition % cardsPerRow || cardsPerRow,
-          lastCardOnLastPage
+          lastCardOnNextPage
         )
       );
     } else {
@@ -83,9 +83,12 @@ export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
       );
       const hasNoNext =
         currentPage === numberOfPages && nextPosition > cardsOnLastPage;
-      if (hasNoNext) return;
-
-      setSelectedElementPosition(nextPosition);
+      if (hasNoNext) {
+        const isLastPage = currentPage === numberOfPages;
+        setSelectedElementPosition(isLastPage ? cardsOnLastPage : cardsPerRow);
+      } else {
+        setSelectedElementPosition(nextPosition);
+      }
     }
   };
 

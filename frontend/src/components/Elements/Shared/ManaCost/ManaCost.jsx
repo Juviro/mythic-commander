@@ -6,6 +6,7 @@ const ManaCost = ({ costString, size }) => {
   if (!costString) return '';
   const costs = costString.match(/[\w/]+/g);
   if (!costs) return '';
+
   return (
     <Flex direction="row" align="center" justify="center">
       {costs.map((cost, index) => (

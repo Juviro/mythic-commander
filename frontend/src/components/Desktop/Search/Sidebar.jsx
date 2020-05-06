@@ -7,17 +7,19 @@ import { SearchButton, Filter, Flex, ResetFilter } from '../../Elements/Shared';
 const StyledContent = styled.div`
   width: 100%;
   display: flex;
-  max-width: 500px;
+  max-width: 600px;
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
   background-color: white;
-  padding: 12px;
   overflow: auto;
+  padding: 12px;
   ${({ isFullscreen }) =>
     isFullscreen
       ? css`
           margin: 8px;
+          padding: 32px;
+          height: fit-content;
           box-shadow: 0px 0px 5px 3px #d0d0d0;
         `
       : ''}

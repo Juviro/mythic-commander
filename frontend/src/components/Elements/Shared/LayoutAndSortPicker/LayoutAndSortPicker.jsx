@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import LayoutPicker from '../LayoutPicker';
-import SortPicker from '../SortPicker';
+import OrderBy from '../OrderBy';
 
 const StyledListOrder = styled.div`
   display: flex;
@@ -15,7 +15,7 @@ const StyledListOrder = styled.div`
 export default ({ showCollectionFilters }) => {
   return (
     <StyledListOrder>
-      <SortPicker showCollectionFilters={showCollectionFilters} />
+      <OrderBy showCollectionFilters={showCollectionFilters} />
       <LayoutPicker />
     </StyledListOrder>
   );

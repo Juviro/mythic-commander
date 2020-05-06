@@ -5,6 +5,7 @@ const CARD_FIELDS = `
   oracle_id
   name
   imgKey
+  scryfall_uri
   
   oracleCard {
     _id

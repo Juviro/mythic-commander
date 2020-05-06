@@ -5,7 +5,7 @@ import { useQueryParam, StringParam } from 'use-query-params';
 
 import {
   LayoutPicker,
-  SortPicker,
+  OrderBy,
   Flex,
   AddedBeforeFilter,
 } from '../../../Shared';
@@ -37,7 +37,7 @@ export default ({
   return (
     <StyledWrapper>
       <Flex direction="row">
-        <SortPicker
+        <OrderBy
           showCollectionFilters={showCollectionFilters}
           paramName={orderByParamName}
         />

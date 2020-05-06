@@ -19,7 +19,12 @@ const StyledImageWrapper = styled.div`
   border-radius: 4%;
 `;
 
-export default ({ loading, card, hideFlipIcon }) => {
+export default ({
+  loading,
+  card,
+  hideFlipIcon,
+  onFlipCard: onFlipCardCallback,
+}) => {
   const { id, imgKey, isTwoFaced } = card || {};
   const [isFlipped, toggleIsFlipped] = useToggle(false);
   const [showHighResImage, toggleShowHighResImage] = useToggle(false);
@@ -34,6 +39,7 @@ export default ({ loading, card, hideFlipIcon }) => {
 
   useEffect(() => {
     let isMounted = true;
+    toggleIsFlipped(false);
     toggleShowHighResImage(false);
     if (frontLargeSrc) {
       const img = new Image();
@@ -52,6 +58,7 @@ export default ({ loading, card, hideFlipIcon }) => {
 
   const onFlipCard = e => {
     e.stopPropagation();
+    if (onFlipCardCallback) onFlipCardCallback(!isFlipped);
     toggleIsFlipped();
   };
 

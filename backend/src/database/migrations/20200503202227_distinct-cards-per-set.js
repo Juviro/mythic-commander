@@ -1,6 +1,6 @@
 export const up = async knex => {
   await knex.schema.raw(`
-            CREATE VIEW "distinctCardsPerSet" AS 
+            CREATE MATERIALIZED VIEW "distinctCardsPerSet" AS 
             WITH _cards AS (
               SELECT
                 *,
@@ -22,9 +22,8 @@ export const up = async knex => {
           `);
 };
 
-// eslint-disable-next-line
 export const down = async knex => {
   await knex.schema.raw(`
-    DROP VIEW "distinctCardsPerSet"
+    DROP MATERIALIZED VIEW "distinctCardsPerSet"
   `);
 };

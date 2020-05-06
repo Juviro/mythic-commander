@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-const COLLECTION_CARD_FIELDS = `
+export const COLLECTION_CARD_FIELDS = `
   id
   createdAt
   card {

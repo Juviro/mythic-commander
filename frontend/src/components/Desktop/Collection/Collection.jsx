@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { getCollectionDesktop as getCollection } from './queries';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
 import Cards from './Cards';
-import Sidebar from './Sidebar';
+import CollectionSidebar from './CollectionSidebar';
 import { useToggle } from '../../Hooks';
 
 const StyledWrapper = styled.div`
@@ -25,7 +25,7 @@ export default () => {
 
   return (
     <StyledWrapper>
-      <Sidebar
+      <CollectionSidebar
         cards={cards}
         loading={loading}
         snapshot={snapshot}
