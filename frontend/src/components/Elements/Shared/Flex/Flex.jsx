@@ -13,14 +13,14 @@ const Flex = styled.div`
   align-items: ${props => props.align};
   justify-content: ${props => props.justify};
   ${props =>
-    props.nowrap &&
-    css`
-      flex-wrap: nowrap;
-    `};
-  ${props =>
     props.flex &&
     css`
       flex: ${props.flex};
+    `};
+  ${props =>
+    props.wrap &&
+    css`
+      flex-wrap: ${props.wrap};
     `};
   ${props =>
     props.direction &&

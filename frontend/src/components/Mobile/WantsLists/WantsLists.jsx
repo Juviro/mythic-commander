@@ -17,11 +17,14 @@ const StyledWrapper = styled.div`
   justify-content: center;
 `;
 
-const splitWantsLists = data => {
+export const splitWantsLists = (data, search = '') => {
   if (!data) return [[], []];
   const { wantsLists } = data;
+  const filteredWantsLists = wantsLists.filter(({ name }) =>
+    name.toLowerCase().includes(search.toLowerCase())
+  );
   const [unlinkedLists, linkedLists] = partition(
-    wantsLists,
+    filteredWantsLists,
     wantsList => !wantsList.deck
   );
 
