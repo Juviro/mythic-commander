@@ -3,11 +3,23 @@ BUGFIXES:
 CURRENT:
 
 NEXT:
+    - Wants
+        - Sidebar:
+            - Name
+                - Everything from mobile
+                - (shared toggle)
+            - Add
+                - like collection
+            - Actions
+                - export as text
+                - proxy view (only unowned cards, only cards in more decks than owned, all cards)
+                - duplicate
+                - delete
 
 IMPROVEMENTS:
-    - don't show go back button for wants/decks ?
 
 FEATURES:
+    - sharable collection / decks / wants
 
 REFACTORINGS:
  
@@ -16,7 +28,7 @@ BACKLOG:
     - refresh google access ?
     - better tooltips for multi input
     - swipe card preview on mobile
-    - going back to list should preserve scroll position
+    - going back to list should preserve scroll position (desktop)
     - show *add commander* in deck list when no commander selected
     - shortcuts should use modifier key ?
     - when adding cards (to collection?), allow displaying only cards from specific set
@@ -30,11 +42,10 @@ BACKLOG:
     - when adding cards, allow picking set/version, with preview
     - add error page
     - clickable creature type in card details?
-    - home page: quick stats for collection, quick access for last edited decks + wants
+    - home page: quick stats for collection, quick access for last edited decks + wants ?
     - show % owned of all cards (unique cards / distinct cards)
     - in search field: *foil* suffix should add as foil
     - when adding to deck or linked wants: show if card is in linked wants / deck
-    - sharable collection / decks / wants
     - prevent user from adding amount / amount foil if card is not available in foil / non-foil
     - prefer owned versions when adding to deck or wants
     - suggest similar cards when having invalid cardname in multiinput

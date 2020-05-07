@@ -27,7 +27,10 @@ export default ({
     isLegendary: StringParam,
     layout: StringParam,
   });
-  const [orderBy = 'added-desc'] = useStoredQueryParam('orderBy', StringParam);
+  const [orderBy = 'added-desc'] = useStoredQueryParam(
+    'orderByAdvanced',
+    StringParam
+  );
 
   const [displayedResults, setDisplayedResults] = useState(CARDS_PER_PAGE);
 

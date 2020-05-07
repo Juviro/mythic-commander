@@ -19,10 +19,10 @@ const MENU_ENTRIES = [
   //   title: 'Decks',
   //   href: '/decks',
   // },
-  // {
-  //   title: 'Wants',
-  //   href: '/wants',
-  // },
+  {
+    title: 'Wants',
+    href: '/wants',
+  },
   {
     title: 'Collection',
     href: '/collection',
@@ -40,6 +40,7 @@ const DesktopMenu = ({ location: { pathname } }) => {
         <MythicCommanderBanner
           style={{ marginLeft: 8 }}
           showCollectionOnClick
+          hideWhenSmall
         />
         <Menu
           mode="horizontal"
