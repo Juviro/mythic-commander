@@ -85,7 +85,7 @@ const columns = search => [
   {
     title: 'Name',
     dataIndex: 'name',
-    width: 300,
+    width: 200,
     key: 'name',
     render: name => highlightText(search, name),
     sorter: sortByName('name'),
@@ -93,7 +93,7 @@ const columns = search => [
   {
     title: 'Owned',
     dataIndex: 'owned',
-    width: 55,
+    width: 65,
     key: 'owned',
     render: owned => (owned ? <OwnedBadge marginLeft={0} /> : null),
   },

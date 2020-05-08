@@ -25,7 +25,8 @@ export default ({ containedCards }) => {
         });
 
         const existingCards = existing.wantsList.cards.filter(
-          ({ id }) => !newCards.some(newCard => newCard.id === id)
+          ({ card: { oracle_id } }) =>
+            !newCards.some(newCard => newCard.card.oracle_id === oracle_id)
         );
 
         cache.writeQuery({

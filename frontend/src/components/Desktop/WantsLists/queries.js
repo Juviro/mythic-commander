@@ -4,6 +4,7 @@ const WANTS_LIST_FIELDS = `
     id
     name
     lastEdit
+    createdAt
     numberOfCards
     deck {
       id
