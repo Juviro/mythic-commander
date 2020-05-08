@@ -27,6 +27,7 @@ Forest
 Ignore line with //
 `;
 
+// TODO: refactor
 export default class MultiInput extends React.Component {
   state = {
     cardResults: [],
@@ -51,7 +52,7 @@ export default class MultiInput extends React.Component {
     }
 
     const newCardResult = value.split('\n').map((row, index) => {
-      if (row === oldValues[index]) return cardResults[index];
+      if (row === oldValues[index]) return cardResults[index] || '';
       shouldUpdate = true;
       if (
         !row.replace(/[\s]+/g, '') ||
@@ -89,7 +90,6 @@ export default class MultiInput extends React.Component {
   };
 
   onSubmit = () => {
-    // TODO: refactor
     const { onAddCards } = this.props;
     const { cardResults } = this.state;
     const { cards } = this.context;

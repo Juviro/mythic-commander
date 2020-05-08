@@ -178,6 +178,14 @@ type CollectionSnapshot {
   amountUnique: Int
 }
 
+################################# Proxy #################################
+
+type ProxyCard {
+  id: String!
+  amount: Int!
+  imgKey: String!
+}
+
 ################################# Queries #################################
 
 type Query {
@@ -203,6 +211,8 @@ type Query {
   wantsLists(deckId: String): [WantsList!]!
 
   collectionSnapshots: [CollectionSnapshot]
+
+  proxies(type: String!, id: String!, filter: String): [ProxyCard!]!
 }
 
 input CardsOptionsInput {
@@ -271,7 +281,7 @@ type Mutation {
     wantsListId: String!
     newProps: EditWantsListCardInput!
   ): WantsListCard!
-  deleteFromWantsList(cardId: String!, wantsListId: String!): WantsList!
+  deleteFromWantsList(oracleIds: [String!]!, wantsListId: String!): WantsList!
   deleteWantsList(wantsListId: String!): Boolean!
   duplicateWantsList(wantsListId: String!): WantsList!
   addCardsToWantsList(

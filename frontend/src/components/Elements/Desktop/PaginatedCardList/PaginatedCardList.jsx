@@ -2,7 +2,7 @@ import React from 'react';
 import { StringParam, useQueryParam } from 'use-query-params';
 
 import styled from 'styled-components';
-import { Empty } from 'antd';
+import { Empty, Typography } from 'antd';
 import Flex from '../../Shared/Flex';
 import CardTable from './CardTable';
 import CardGrid from './CardGrid';
@@ -31,14 +31,17 @@ export default ({
   showAddedBeforeFilter,
   showCollectionFilters,
   orderByParamName,
-  setCardIdsToDelete,
+  setSelectedCardIds,
   onDeleteCards,
-  cardIdsToDelete,
+  selectedCardIds,
+  title,
 }) => {
   const [zoom, setZoom] = useLocalStorage('zoom', 100);
   const [layout] = useQueryParam('layout', StringParam);
   const width = `calc(100% - ${widthOffset}px)`;
   const isEmptySearch = !loading && !numberOfCards;
+
+  const heightOffset = title ? 40 : 0;
 
   const cardList = isEmptySearch ? (
     <StyledEmpty description="No cards found" />
@@ -48,11 +51,12 @@ export default ({
       search={search}
       loading={loading}
       showSorter={showSorter}
+      heightOffset={heightOffset}
       hiddenColumns={hiddenColumns}
       numberOfCards={numberOfCards}
-      setCardIdsToDelete={setCardIdsToDelete}
+      setSelectedCardIds={setSelectedCardIds}
       onDeleteCards={onDeleteCards}
-      cardIdsToDelete={cardIdsToDelete}
+      selectedCardIds={selectedCardIds}
     />
   ) : (
     <CardGrid
@@ -63,7 +67,7 @@ export default ({
       widthOffset={widthOffset}
       numberOfCards={numberOfCards}
       onDeleteCards={onDeleteCards}
-      setCardIdsToDelete={setCardIdsToDelete}
+      setSelectedCardIds={setSelectedCardIds}
     />
   );
 
@@ -78,6 +82,11 @@ export default ({
         position: 'relative',
       }}
     >
+      {title && (
+        <Typography.Title level={2} style={{ marginTop: -16 }}>
+          {title}
+        </Typography.Title>
+      )}
       <Header
         setSearch={setSearch}
         orderByParamName={orderByParamName}

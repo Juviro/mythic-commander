@@ -8,14 +8,14 @@ import { useToggle, useShortcut } from '../../../../Hooks';
 import CardModalDesktop from '../../CardModalDesktop';
 import scrollIntoView from '../../../../../utils/scrollIntoView';
 
-// navbar, layout picker row, table header, inner margin, footer
-const HEIGHT_OFFSET = 49 + 48 + 39 + 32 + 56;
+// navbar, layout picker row, table header, inner margin, footer, ?
+const DEFAULT_HEIGHT_OFFSET = 49 + 48 + 39 + 32 + 56 + 16;
 
 const StyledButtonWrapper = styled.div`
   width: 150px;
   margin: 16px;
   position: absolute;
-  top: 64px;
+  top: ${({ heightOffset = 0 }) => 64 + heightOffset}px;
   z-index: 1;
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   transition: opacity 0.3s;
@@ -25,26 +25,27 @@ export default ({
   cards,
   loading,
   search,
+  heightOffset,
   numberOfCards,
   showSorter,
   hiddenColumns,
   onDeleteCards,
-  cardIdsToDelete,
-  setCardIdsToDelete,
+  selectedCardIds,
+  setSelectedCardIds,
 }) => {
   const [showDetails, toggleShowDetail] = useToggle(false);
   const toggleElementSelection = elementPosition => {
     const elementToToggle = cards && cards[elementPosition - 1];
     if (!elementToToggle) return;
     const { oracle_id } = elementToToggle;
-    const filteredCardIdsToDelete = cardIdsToDelete.filter(
+    const filteredCardIdsToDelete = selectedCardIds.filter(
       id => id !== oracle_id
     );
     const newSelectedIds =
-      cardIdsToDelete.length !== filteredCardIdsToDelete.length
+      selectedCardIds.length !== filteredCardIdsToDelete.length
         ? filteredCardIdsToDelete
         : filteredCardIdsToDelete.concat(oracle_id);
-    setCardIdsToDelete(newSelectedIds);
+    setSelectedCardIds(newSelectedIds);
   };
 
   const {
@@ -60,14 +61,14 @@ export default ({
 
   const onDeleteSingleCard = onDeleteCards
     ? oracleId => {
-        setCardIdsToDelete([oracleId]);
+        setSelectedCardIds([oracleId]);
         onDeleteCards();
       }
     : undefined;
 
   const onPressDelete = () => {
     if (!onDeleteCards) return;
-    if (cardIdsToDelete.length) {
+    if (selectedCardIds.length) {
       onDeleteCards();
     } else {
       onDeleteSingleCard(selectedCard.oracle_id);
@@ -82,17 +83,19 @@ export default ({
     scrollIntoView(element);
   }, [selectedElementPosition]);
 
-  const innerTableWidth = window.innerHeight - HEIGHT_OFFSET;
+  const innerTableWidth =
+    window.innerHeight - DEFAULT_HEIGHT_OFFSET - heightOffset;
 
   const rowSelection = onDeleteCards && {
-    onChange: selectedRows => setCardIdsToDelete(selectedRows),
-    selectedRowKeys: cardIdsToDelete,
+    onChange: selectedRows => setSelectedCardIds(selectedRows),
+    selectedRowKeys: selectedCardIds,
   };
 
   return (
     <>
       <StyledButtonWrapper
-        isVisible={Boolean(cardIdsToDelete && cardIdsToDelete.length)}
+        heightOffset={heightOffset}
+        isVisible={Boolean(selectedCardIds && selectedCardIds.length)}
       >
         <Button type="danger" onClick={onDeleteCards}>
           Delete

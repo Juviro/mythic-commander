@@ -29,6 +29,5 @@ export const IconWrapper = styled.div`
 
 export const StyledLink = styled.a`
   margin-top: 8px;
-  text-align: end;
-  margin-right: 4px;
+  margin-left: 4px;
 `;

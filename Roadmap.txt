@@ -3,27 +3,28 @@ BUGFIXES:
 CURRENT:
 
 NEXT:
+    - prevent multiple copies of one card in the same wants list
     - Wants
+        - Card Actions
+            - add to collection
+            - move to list / deck
+        - Single card Actions
+            - change set
         - Sidebar:
             - Name
-                - Everything from mobile
+                - unlink
                 - (shared toggle)
-            - Add
-                - like collection
-            - Actions
-                - export as text
-                - proxy view (only unowned cards, only cards in more decks than owned, all cards)
-                - duplicate
-                - delete
 
 IMPROVEMENTS:
 
 FEATURES:
+    - allow multiple selected elements in grid list with shift
     - sharable collection / decks / wants
 
 REFACTORINGS:
  
 BACKLOG:
+    - move decks and wants to random id
     - allow search for unowned cards only
     - refresh google access ?
     - better tooltips for multi input

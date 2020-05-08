@@ -1,107 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useMutation } from 'react-apollo';
-import { useQueryParams, NumberParam, StringParam } from 'use-query-params';
 
-import { PaginatedCardList } from '../../Elements/Desktop';
-import { filterCards, sortCards } from '../../../utils/cardFilter';
-import { useStoredQueryParam, useToggle } from '../../Hooks';
+import { CardListWithActions } from '../../Elements/Desktop';
 import message from '../../../utils/message';
-import { ConfirmDelete } from '../../Elements/Shared';
+import { deleteFromWantsListDesktop } from './queries';
 
-export default ({ cards, loading, isSidebarVisible }) => {
-  return null;
-  // const [pageSize] = useStoredQueryParam('pageSize', NumberParam);
-  // const [mutate] = useMutation(deleteAllFromCollection);
-  // const [cardIdsToDelete, setCardIdsToDelete] = useState([]);
-  // const [showDeleteModal, setShowDeleteModal] = useToggle();
-  // const [{ page = 1, orderByAdvanced, addedWithin }] = useQueryParams({
-  //   page: NumberParam,
-  //   // name: StringParam,
-  //   addedWithin: NumberParam,
-  //   orderByAdvanced: StringParam,
-  // });
+export default ({ cards, loading, widthOffset, wantsList }) => {
+  const [mutateDelete] = useMutation(deleteFromWantsListDesktop);
 
-  // const [search, setSearch] = useState('');
+  const deleteByOracle = (oracleIds, numberOfCards) => {
+    const cardsLabel = numberOfCards > 1 ? 'cards' : 'card';
+    message(
+      `Deleted <b>${numberOfCards}</b> ${cardsLabel} from ${wantsList.name}!`
+    );
+    mutateDelete({
+      variables: { oracleIds, wantsListId: wantsList.id },
+    });
+  };
 
-  // const offset = pageSize * (page - 1);
-  // const filteredCards = filterCards(cards, {
-  //   name: search,
-  //   addedWithin,
-  // });
-  // const sortedCards = sortCards(filteredCards, orderByAdvanced);
-  // const slicedCards = sortedCards.slice(offset, offset + pageSize);
+  const title = wantsList && `${wantsList.name} - Wants`;
 
-  // const widthOffset = isSidebarVisible ? 300 : 0;
-
-  // const deleteByOracle = numberOfCards => {
-  //   const oracleIds = cardIdsToDelete;
-  //   setCardIdsToDelete([]);
-  //   const numberOfCardsLabel =
-  //     numberOfCards > 1 ? `<b>${numberOfCards}</b> cards` : '';
-
-  //   message(`Deleted ${numberOfCardsLabel} from your collection!`);
-  //   mutate({
-  //     variables: { oracleIds },
-  //     update: cache => {
-  //       const existing = cache.readQuery({
-  //         query: getCollectionDesktop,
-  //       });
-
-  //       const updatedCards = existing.collection.cards.filter(
-  //         ({ card }) =>
-  //           !oracleIds.some(oracle_id => card.oracle_id === oracle_id)
-  //       );
-
-  //       cache.writeQuery({
-  //         query: getCollectionDesktop,
-  //         data: {
-  //           collection: {
-  //             ...existing.collection,
-  //             cards: updatedCards,
-  //           },
-  //         },
-  //       });
-  //     },
-  //   });
-  // };
-  // const cardsToDelete =
-  //   cardIdsToDelete &&
-  //   slicedCards.filter(({ oracle_id }) => cardIdsToDelete.includes(oracle_id));
-
-  // useEffect(() => {
-  //   if (cardsToDelete.length) return;
-  //   setShowDeleteModal(false);
-  //   // eslint-disable-next-line
-  // }, [cardsToDelete.length]);
-
-  // useEffect(() => {
-  //   setCardIdsToDelete([]);
-  //   // eslint-disable-next-line
-  // }, [page]);
-
-  // return (
-  //   <>
-  //     <PaginatedCardList
-  //       showAddedBeforeFilter
-  //       showCollectionFilters
-  //       orderByParamName="orderByAdvanced"
-  //       loading={loading}
-  //       setSearch={setSearch}
-  //       search={search}
-  //       cards={slicedCards}
-  //       widthOffset={widthOffset}
-  //       numberOfCards={filteredCards.length}
-  //       setCardIdsToDelete={setCardIdsToDelete}
-  //       onDeleteCards={setShowDeleteModal}
-  //       cardIdsToDelete={cardIdsToDelete}
-  //     />
-  //     {showDeleteModal && (
-  //       <ConfirmDelete
-  //         onCancel={() => setCardIdsToDelete([])}
-  //         onOk={deleteByOracle}
-  //         cardsToDelete={cardsToDelete}
-  //       />
-  //     )}
-  //   </>
-  // );
+  return (
+    <CardListWithActions
+      deleteByOracle={deleteByOracle}
+      loading={loading}
+      cards={cards}
+      title={title}
+      widthOffset={widthOffset}
+    />
+  );
 };

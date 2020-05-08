@@ -7,9 +7,10 @@ import {
 } from '@ant-design/icons';
 import styled from 'styled-components';
 import { Button, Input } from 'antd';
-import SetPicker from '../../../Shared/SetPicker';
-import { useToggle } from '../../../../Hooks';
-import { MoveToModal } from '../../../Shared';
+
+import SetPicker from '../SetPicker';
+import { useToggle } from '../../../Hooks';
+import MoveToModal from '../MoveTo/MoveToModal';
 
 const StyledWrapper = styled.div`
   height: 100%;

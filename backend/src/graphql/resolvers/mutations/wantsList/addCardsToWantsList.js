@@ -5,7 +5,8 @@ import unifyCardFormat from '../../unifyCardFormat';
 const ON_CONFLICT = `
     ON CONFLICT (id, "wantsListId") 
     DO UPDATE SET 
-      amount = "cardToWantsList".amount + EXCLUDED.amount
+      amount = "cardToWantsList".amount + EXCLUDED.amount, 
+      "createdAt" = NOW()
   `;
 
 export default async (
@@ -13,7 +14,7 @@ export default async (
   { cards, wantsListId },
   { user: { id: userId }, db }
 ) => {
-  if (wantsListId === 'new-deck') {
+  if (wantsListId === 'new-wants-list') {
     const [id] = await db('wantsLists')
       .insert({ userId })
       .returning('id');
@@ -22,15 +23,32 @@ export default async (
 
   await canAccessWantsList(userId, wantsListId);
 
-  const cardsToInsert = cards.map(({ id, amount = 1 }) => ({
-    id,
-    amount,
-    wantsListId,
-  }));
+  const { rows: cardsAlreadyInWantsList } = await db.raw(
+    `
+    SELECT cards.id as "addingId", "cardToWantsListWithOracle".id as "existingId"
+    FROM cards 
+    LEFT JOIN "cardToWantsListWithOracle" 
+    ON "cardToWantsListWithOracle".oracle_id = cards.oracle_id 
+    WHERE cards.id = ANY(?)
+    AND "wantsListId" = ?;
+    `,
+    [cards.map(({ id }) => id), wantsListId]
+  );
 
-  const query = db('cardToWantsList')
-    .insert(cardsToInsert)
-    .toString();
+  const cardsToInsert = cards.map(({ id, amount = 1 }) => {
+    const existingCard = cardsAlreadyInWantsList.find(
+      ({ addingId }) => addingId === id
+    );
+    const insertId = existingCard ? existingCard.existingId : id;
+
+    return {
+      id: insertId,
+      amount,
+      wantsListId,
+    };
+  });
+
+  const query = db('cardToWantsList').insert(cardsToInsert);
 
   await db.raw(query + ON_CONFLICT);
 
@@ -41,7 +59,7 @@ export default async (
     .where({ wantsListId })
     .whereIn(
       'cards.id',
-      cards.map(({ id }) => id)
+      cardsToInsert.map(({ id }) => id)
     );
 
   return insertedCards.map(unifyCardFormat(wantsListId));

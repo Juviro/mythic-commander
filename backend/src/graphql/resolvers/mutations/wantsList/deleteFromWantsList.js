@@ -1,12 +1,22 @@
 import { canAccessWantsList } from '../../../../auth/authenticateUser';
 import { updateLastEdit } from './helper';
 
-export default async (_, { cardId, wantsListId }, { user, db }) => {
+export default async (_, { oracleIds, wantsListId }, { user, db }) => {
   await canAccessWantsList(user.id, wantsListId);
 
-  await db('cardToWantsList')
-    .where({ id: cardId, wantsListId })
-    .del();
+  await db.raw(
+    `
+      DELETE FROM "cardToWantsList"
+      USING "cardToWantsList" AS wants
+      LEFT JOIN "cardToWantsListWithOracle" AS wantsOracle ON
+        wants.id = wantsOracle.id
+      WHERE
+        "cardToWantsList".id = wants.id AND
+        wantsOracle.oracle_id = ANY(?)
+        AND "cardToWantsList"."wantsListId" = ?;
+    `,
+    [oracleIds, wantsListId]
+  );
 
   await updateLastEdit(wantsListId, db);
 

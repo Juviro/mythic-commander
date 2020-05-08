@@ -1,5 +1,6 @@
 import getCachedCards from './getCachedCards';
 import cardSearch from './cardSearch';
+import proxies from './proxies';
 
 const resolver = {
   user(_, __, { db, user: { id } }) {
@@ -67,6 +68,10 @@ const resolver = {
     return db('collectionSnapshot')
       .where({ userId })
       .orderBy('date');
+  },
+
+  proxies(_, { type, id, filter }, { user: { id: userId } }) {
+    return proxies({ type, id, filter }, userId);
   },
 };
 
