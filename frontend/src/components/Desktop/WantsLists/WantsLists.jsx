@@ -74,11 +74,13 @@ const Wants = ({ history }) => {
         lists={unlinkedLists}
         onClick={onOpenWantsList}
       />
-      <OverviewList
-        loading={loading}
-        lists={linkedLists}
-        onClick={onOpenWantsList}
-      />
+      {Boolean(linkedLists.length) && (
+        <OverviewList
+          loading={loading}
+          lists={linkedLists}
+          onClick={onOpenWantsList}
+        />
+      )}
     </StyledWrapper>
   );
 };
