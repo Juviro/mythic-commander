@@ -11,7 +11,10 @@ const resolver = {
       [wantsListId]
     );
 
-    return cards;
+    return cards.map(({ id, ...rest }) => ({
+      id: `wants-${wantsListId}-${id}`,
+      ...rest,
+    }));
   },
   async numberOfCards({ id: wantsListId }, _, { db }) {
     const [{ sum }] = await db('cardToWantsList')

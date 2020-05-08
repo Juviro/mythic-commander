@@ -8,7 +8,10 @@ import UserMenu from './UserMenu';
 
 const StyledMenu = styled.div`
   width: 100%;
+  top: 0;
+  z-index: 100;
   display: flex;
+  position: fixed;
   align-items: center;
   justify-content: space-between;
   background-color: ${darkBackground};

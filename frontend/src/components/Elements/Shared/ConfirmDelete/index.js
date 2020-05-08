@@ -1,3 +1,1 @@
-import ConfirmDelete from './ConfirmDelete';
-
-export default ConfirmDelete;
+export { default } from './ConfirmDelete';

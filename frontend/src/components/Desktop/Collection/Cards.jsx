@@ -2,15 +2,15 @@ import React from 'react';
 import { useMutation } from 'react-apollo';
 
 import message from '../../../utils/message';
-import { CardListWithDelete } from '../../Elements/Desktop';
+import { CardListWithActions } from '../../Elements/Desktop';
 import { deleteAllFromCollection, getCollectionDesktop } from './queries';
 
 export default ({ cards, loading, isSidebarVisible }) => {
   const [mutate] = useMutation(deleteAllFromCollection);
   const widthOffset = isSidebarVisible ? 300 : 0;
 
-  const deleteByOracle = (cardIdsToDelete, numberOfCards) => {
-    const oracleIds = cardIdsToDelete;
+  const deleteByOracle = (selectedCardIds, numberOfCards) => {
+    const oracleIds = selectedCardIds;
     const numberOfCardsLabel =
       numberOfCards > 1 ? `<b>${numberOfCards}</b> cards` : '';
 
@@ -41,10 +41,11 @@ export default ({ cards, loading, isSidebarVisible }) => {
   };
 
   return (
-    <CardListWithDelete
+    <CardListWithActions
       deleteByOracle={deleteByOracle}
       loading={loading}
       cards={cards}
+      hiddenColumns={['owned']}
       widthOffset={widthOffset}
     />
   );

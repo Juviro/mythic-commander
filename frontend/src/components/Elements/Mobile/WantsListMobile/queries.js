@@ -61,9 +61,9 @@ export const editWantsListCard = gql`
   }
 `;
 
-export const deleteFromWantsList = gql`
-  mutation deleteFromWantsList($cardId: String!, $wantsListId: String!) {
-    deleteFromWantsList(cardId: $cardId, wantsListId: $wantsListId) {
+export const deleteFromWantsListMobile = gql`
+  mutation deleteFromWantsListMobile($oracleIds: [String!]!, $wantsListId: String!) {
+    deleteFromWantsList(oracleIds: $oracleIds, wantsListId: $wantsListId) {
       ${WANTS_LIST_FIELDS}
     }
   }

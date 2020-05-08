@@ -6,38 +6,44 @@ import { useQuery } from '@apollo/react-hooks';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
 import Cards from './Cards';
 import WantsListSidebar from './WantsListSidebar';
-import { useToggle } from '../../Hooks';
 import { wantsListDesktop } from './queries';
+import useLocalStorage from '../../Hooks/useLocalStorage';
 
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  height: calc(100% - 49px);
+  height: 100%;
 `;
+
+const SIDEBAR_WIDTH = 350;
 
 export default () => {
   const { id } = useParams();
-  const sidebarInitiallyVisible = window.innerWidth >= 1200;
-  const [isSidebarVisible, toggleIsSidebarVisible] = useToggle(
-    sidebarInitiallyVisible
+  const [isSidebarVisible, setIsSidebarVisible] = useLocalStorage(
+    'isSidebarVisible',
+    true
   );
+  const toggleIsSidebarVisible = () => setIsSidebarVisible(!isSidebarVisible);
   const { data, loading } = useQuery(wantsListDesktop, { variables: { id } });
-  const snapshot = data && data.collection.snapshot;
-  const cards = data && unifyCardFormat(data.collection.cards);
+  const cards = data && unifyCardFormat(data.wantsList.cards);
+  const wantsList = data && { ...data.wantsList, cards };
+
+  const widthOffset = isSidebarVisible ? SIDEBAR_WIDTH : 0;
 
   return (
     <StyledWrapper>
       <WantsListSidebar
-        cards={cards}
         loading={loading}
-        snapshot={snapshot}
+        wantsList={wantsList}
         isVisible={isSidebarVisible}
+        width={SIDEBAR_WIDTH}
         toggleIsVisible={toggleIsSidebarVisible}
       />
       <Cards
         cards={cards}
         loading={loading}
-        isSidebarVisible={isSidebarVisible}
+        wantsList={wantsList}
+        widthOffset={widthOffset}
       />
     </StyledWrapper>
   );

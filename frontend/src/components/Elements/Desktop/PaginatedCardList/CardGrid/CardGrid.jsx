@@ -24,7 +24,7 @@ export default ({
   numberOfCards,
   zoom,
   search,
-  setCardIdsToDelete,
+  setSelectedCardIds,
   onDeleteCards,
 }) => {
   useWindowSize();
@@ -54,7 +54,7 @@ export default ({
   };
 
   const deleteCard = ({ oracle_id }) => {
-    setCardIdsToDelete([oracle_id]);
+    setSelectedCardIds([oracle_id]);
     onDeleteCards();
   };
 

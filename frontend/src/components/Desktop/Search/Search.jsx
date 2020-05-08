@@ -18,7 +18,7 @@ import { lightBackground } from '../../../constants/colors';
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  height: calc(100% - 49px);
+  height: 100%;
   background-color: ${({ isFullscreen }) =>
     isFullscreen ? lightBackground : 'white'};
 `;

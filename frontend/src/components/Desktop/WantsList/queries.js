@@ -12,10 +12,13 @@ const CARD_FIELDS = `
     cmc
     mana_cost
     set_name
+    color_identity
     
     oracleCard {
       _id
       owned
+      subTypes
+      primaryTypes
       minPrice
       isTwoFaced
     }
@@ -49,6 +52,14 @@ export const addCardsToWantsListDesktop = gql`
   mutation addCardsToWantsListDesktop($cards: [CardInputType!]!, $wantsListId: String!) {
     addCardsToWantsList(cards: $cards, wantsListId: $wantsListId) {
       ${CARD_FIELDS}
+    }
+  }
+`;
+
+export const deleteFromWantsListDesktop = gql`
+  mutation deleteFromWantsListDesktop($oracleIds: [String!]!, $wantsListId: String!) {
+    deleteFromWantsList(oracleIds: $oracleIds, wantsListId: $wantsListId) {
+      ${WANTS_LIST_FIELDS}
     }
   }
 `;

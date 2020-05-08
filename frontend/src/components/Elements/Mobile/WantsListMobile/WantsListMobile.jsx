@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
 import {
-  deleteFromWantsList,
+  deleteFromWantsListMobile as deleteFromWantsList,
   editWantsListCard,
   wantsList as wantsListQuery,
 } from './queries';
@@ -22,10 +22,11 @@ export default ({
   const [mutateEdit] = useMutation(editWantsListCard);
 
   const onDeleteCard = cardId => {
+    const { oracle_id } = cards.find(({ id }) => id === cardId);
     const newCards = rawWantsList.cards.filter(card => card.id !== cardId);
     const newNumberOfCards = rawWantsList.numberOfCards;
     mutateDelete({
-      variables: { cardId, wantsListId },
+      variables: { oracleIds: [oracle_id], wantsListId },
       optimisticResponse: () => ({
         __typename: 'Mutation',
         deleteFromWantsList: {

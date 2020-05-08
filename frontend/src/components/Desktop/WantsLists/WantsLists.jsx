@@ -8,17 +8,15 @@ import {
   createWantsListDesktop,
 } from './queries';
 import { splitWantsLists } from '../../Mobile/WantsLists/WantsLists';
-import { OverviewList } from '../../Elements/Desktop';
-import Header from './Header';
+import { OverviewList, OverviewListHeader } from '../../Elements/Desktop';
 import { lightBackground } from '../../../constants/colors';
 
 const StyledWrapper = styled.div`
   width: 100%;
   display: flex;
-  min-height: 100px;
+  height: 100%;
   flex-direction: column;
   align-items: center;
-  min-height: calc(100% - 46px);
   background-color: ${lightBackground};
 `;
 
@@ -63,11 +61,12 @@ const Wants = ({ history }) => {
 
   return (
     <StyledWrapper>
-      <Header
+      <OverviewListHeader
         onAddWantsList={onAddWantsList}
         search={search}
         setSearch={setSearch}
         loading={loading}
+        buttonText="New Wants List"
         onEnter={onOpenFirstDeck}
       />
       <OverviewList

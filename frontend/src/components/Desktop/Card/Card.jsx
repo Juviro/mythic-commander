@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 import { useParams } from 'react-router';
@@ -11,18 +11,19 @@ import { lightBackground } from '../../../constants/colors';
 const StyledOuterWrapper = styled.div`
   width: 100%;
   display: flex;
+  min-height: 100%;
   justify-content: center;
-  height: calc(100% - 46px);
   background-color: ${lightBackground};
 `;
 
 const StyledWrapper = styled.div`
-  height: 100%;
+  height: fit-content;
   padding: 16px;
+  margin: 16px;
   overflow: auto;
   max-width: 1200px;
   background-color: white;
-  box-shadow: rgb(208, 208, 208) 0px 5px 5px 3px;
+  box-shadow: rgb(208, 208, 208) 0px 0px 7px 3px;
 `;
 
 export default () => {
@@ -31,6 +32,10 @@ export default () => {
     variables: { oracle_id },
   });
   const card = data && unifySingleCard(data.cardByOracleId);
+
+  useEffect(() => {
+    setTimeout(() => window.scrollTo(0, 0), 100);
+  }, [oracle_id]);
 
   return (
     <StyledOuterWrapper>

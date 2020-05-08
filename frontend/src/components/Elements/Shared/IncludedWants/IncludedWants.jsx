@@ -16,7 +16,7 @@ const StyledWrapper = styled.div`
   width: 100%;
 `;
 
-const NEW_LIST_DUMMY_ID = 'new-deck';
+const NEW_LIST_DUMMY_ID = 'new-wants-list';
 
 const WantsListLink = ({ id, name }) => {
   if (id === NEW_LIST_DUMMY_ID) return name;

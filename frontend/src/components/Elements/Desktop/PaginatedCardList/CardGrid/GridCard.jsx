@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import FlippableCard from '../../../Shared/FlippableCard';
 import { primary } from '../../../../../constants/colors';
 import scrollIntoView from '../../../../../utils/scrollIntoView';
-import { useShortcut, useToggle } from '../../../../Hooks';
+import { useShortcut } from '../../../../Hooks';
 import CardInfo from './CardInfo';
-import ContextMenu from './ContextMenu';
+import { EditGridCard } from '../../../Shared';
 
 const StyledCardWrapper = styled.div`
   padding: 8px;
@@ -19,12 +19,21 @@ const StyledCardWrapper = styled.div`
   width: ${({ widthPercentage }) => widthPercentage}%;
 `;
 
+const StyledMenuWrapper = styled.div`
+  display: none;
+`;
+
 const StyledImageWrapper = styled.div`
   position: relative;
   border-radius: 4%;
+  background-color: black;
 
   ${({ isSelected }) =>
     isSelected ? `box-shadow: 0px 0px 6px 6px ${primary};` : ''}
+
+  &:hover  ${StyledMenuWrapper} {
+    display: inherit;
+  }
 `;
 
 const StyledAmountWrapper = styled.div`
@@ -49,7 +58,6 @@ const GridCard = ({
   zoom,
   search,
 }) => {
-  const [showMenu, toggleShowMenu] = useToggle();
   const displayedAmount = card.amount || card.totalAmount;
   useShortcut('DEL', isSelected ? onDeleteCard : null);
   const ref = useRef(null);
@@ -72,8 +80,6 @@ const GridCard = ({
         isSelected={isSelected}
         onClick={onClick}
         style={cardSize}
-        onMouseEnter={() => toggleShowMenu(true)}
-        onMouseLeave={() => toggleShowMenu(false)}
       >
         <FlippableCard card={card} loading={loading} />
         {displayedAmount > 1 && (
@@ -81,9 +87,15 @@ const GridCard = ({
             style={{ fontSize: textSize }}
           >{`${displayedAmount}x`}</StyledAmountWrapper>
         )}
-        {showMenu && (
-          <ContextMenu loading={loading} onDeleteCard={onDeleteCard} />
-        )}
+        <StyledMenuWrapper>
+          <EditGridCard
+            isLarge
+            card={card}
+            // moveToList={moveToList}
+            // onEditCard={onEditCard}
+            onDeleteCard={onDeleteCard}
+          />
+        </StyledMenuWrapper>
       </StyledImageWrapper>
       <CardInfo
         loading={loading}

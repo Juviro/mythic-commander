@@ -9,7 +9,7 @@ import { getPriceLabel } from '../../../../../utils/cardStats';
 import formatDate from '../../../../../utils/formatDate';
 import { highlightText } from '../../../../../utils/highlightText';
 import { byColor } from '../../../../../utils/cardFilter';
-import { Flex, ContextMenu } from '../../../Shared';
+import { Flex, ContextMenu, OwnedBadge } from '../../../Shared';
 
 const renderAmount = ({ totalAmount, amount }) => amount || totalAmount || 0;
 
@@ -40,8 +40,9 @@ const renderPrice = ({ price, minPrice, sumPrice, totalAmount }) => {
   return `${getPriceLabel(displayedPrice)}  (${getPriceLabel(sumPrice)})`;
 };
 
-const sortByAmount = columnKey => (a, b) => {
-  return Number(a[columnKey]) - Number(b[columnKey]);
+const sortByAmount = (columnKey, fallbackKey) => (a, b) => {
+  const key = a[columnKey] === undefined ? fallbackKey : columnKey;
+  return Number(a[key]) - Number(b[key]);
 };
 const sortByName = columnKey => (a, b) => {
   return a[columnKey] > b[columnKey] ? 1 : -1;
@@ -74,12 +75,27 @@ const columns = search => [
     render: card => <PreviewCardImage card={card} highlightOnHover />,
   },
   {
+    title: 'Amount',
+    key: 'amount',
+    width: 70,
+    align: 'center',
+    render: renderAmount,
+    sorter: sortByAmount('totalAmount', 'amount'),
+  },
+  {
     title: 'Name',
     dataIndex: 'name',
     width: 300,
     key: 'name',
     render: name => highlightText(search, name),
     sorter: sortByName('name'),
+  },
+  {
+    title: 'Owned',
+    dataIndex: 'owned',
+    width: 55,
+    key: 'owned',
+    render: owned => (owned ? <OwnedBadge marginLeft={0} /> : null),
   },
   {
     title: 'CMC',
@@ -105,14 +121,6 @@ const columns = search => [
     align: 'center',
     render: renderType,
     sorter: sortType,
-  },
-  {
-    title: 'Amount',
-    key: 'amount',
-    width: 70,
-    align: 'center',
-    render: renderAmount,
-    sorter: sortByAmount('totalAmount'),
   },
   {
     title: 'Price',

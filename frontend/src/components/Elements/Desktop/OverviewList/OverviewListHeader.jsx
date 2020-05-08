@@ -1,9 +1,16 @@
 import React from 'react';
 import { Card, Input, Button, Tooltip } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { Flex } from '../../Elements/Shared';
+import { Flex } from '../../Shared';
 
-export default ({ onEnter, onAddWantsList, search, setSearch, loading }) => {
+export default ({
+  onEnter,
+  onAddWantsList,
+  search,
+  setSearch,
+  loading,
+  buttonText,
+}) => {
   return (
     <Card
       loading={loading}
@@ -16,7 +23,7 @@ export default ({ onEnter, onAddWantsList, search, setSearch, loading }) => {
       <Flex direction="row" justify="space-between">
         <Tooltip
           trigger={['click']}
-          title="Press ↵ to open the first result"
+          title={onEnter && 'Press ↵ to open the first result'}
           placement="bottomLeft"
         >
           <Input.Search
@@ -30,7 +37,7 @@ export default ({ onEnter, onAddWantsList, search, setSearch, loading }) => {
           />
         </Tooltip>
         <Button onClick={onAddWantsList} type="primary" icon={<PlusOutlined />}>
-          New Wants List
+          {buttonText}
         </Button>
       </Flex>
     </Card>
