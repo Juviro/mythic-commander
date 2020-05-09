@@ -1,22 +1,21 @@
 import React from 'react';
-import { Modal, List, Typography, Space } from 'antd';
-import PreviewCardImage from '../PreviewCardImage';
+import { Modal } from 'antd';
 import useBlockShortcuts from '../../../Hooks/useBlockShortcuts';
 import { useShortcut } from '../../../Hooks';
+import SimpleCardsList from '../SimpleCardsList';
 
-export default ({ onCancel, cardsToDelete, onOk }) => {
-  const cardSum = cardsToDelete.reduce((sum, { amount, totalAmount }) => {
-    const usedAmount = amount || totalAmount || 1;
-    return sum + usedAmount;
-  }, 0);
-
-  const onDeleteCards = () => onOk(cardSum);
+export default ({
+  onCancel,
+  cardsToDelete,
+  numberOfSelectedCards,
+  onDelete,
+}) => {
   useBlockShortcuts();
-  useShortcut('ENTER', onDeleteCards, true);
+  useShortcut('ENTER', onDelete, true);
   if (!cardsToDelete.length) return null;
 
-  const title = `Delete ${cardSum} ${
-    cardSum === 1 ? 'card' : 'cards'
+  const title = `Delete ${numberOfSelectedCards} ${
+    numberOfSelectedCards === 1 ? 'card' : 'cards'
   } from your collection?`;
 
   return (
@@ -24,23 +23,11 @@ export default ({ onCancel, cardsToDelete, onOk }) => {
       visible
       title={title}
       okText="Delete"
-      okButtonProps={{ type: 'danger', onClick: onDeleteCards }}
+      okButtonProps={{ type: 'danger', onClick: onDelete }}
       onCancel={onCancel}
       bodyStyle={{ maxHeight: 400, overflowY: 'auto' }}
     >
-      <List>
-        {cardsToDelete.map(card => (
-          <List.Item key={card.id}>
-            <Space>
-              <PreviewCardImage card={card} />
-              <Typography.Text strong>
-                {`${card.amount || card.totalAmount || 1}x`}
-              </Typography.Text>
-              <Typography.Text ellipsis>{card.name}</Typography.Text>
-            </Space>
-          </List.Item>
-        ))}
-      </List>
+      <SimpleCardsList cards={cardsToDelete} />
     </Modal>
   );
 };

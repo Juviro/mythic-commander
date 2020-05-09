@@ -77,6 +77,22 @@ export const editWantsListDesktop = gql`
   }
 `;
 
+export const editWantsListCardDesktop = gql`
+  mutation editWantsListCardDesktop(
+    $cardId: String!
+    $wantsListId: String!
+    $newProps: EditWantsListCardInput!
+  ) {
+    editWantsListCard(
+      wantsListId: $wantsListId
+      newProps: $newProps
+      cardId: $cardId
+    ) {
+      ${CARD_FIELDS}
+    }
+  }
+`;
+
 export const deleteWantsListDesktop = gql`
   mutation deleteWantsListDesktop($wantsListId: String!) {
     deleteWantsList(wantsListId: $wantsListId)

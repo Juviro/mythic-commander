@@ -5,14 +5,12 @@ export const StyledWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  margin: 20px 0;
 `;
 
 export const StyledInputWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  margin-top: 20px;
 `;
 
 export const StyledStatus = styled.div`

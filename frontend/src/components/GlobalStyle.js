@@ -68,4 +68,8 @@ export default createGlobalStyle`
   .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
     background-color: #ececec;
   }
+
+  .no-padding-collapse .ant-collapse-content > .ant-collapse-content-box {
+    padding: 0 !important;
+  }
 `;

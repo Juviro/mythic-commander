@@ -3,10 +3,15 @@ import { useMutation } from 'react-apollo';
 
 import { CardListWithActions } from '../../Elements/Desktop';
 import message from '../../../utils/message';
-import { deleteFromWantsListDesktop } from './queries';
+import {
+  deleteFromWantsListDesktop,
+  editWantsListCardDesktop,
+  wantsListDesktop,
+} from './queries';
 
 export default ({ cards, loading, widthOffset, wantsList }) => {
   const [mutateDelete] = useMutation(deleteFromWantsListDesktop);
+  const [mutateEdit] = useMutation(editWantsListCardDesktop);
 
   const deleteByOracle = (oracleIds, numberOfCards) => {
     const cardsLabel = numberOfCards > 1 ? 'cards' : 'card';
@@ -18,7 +23,35 @@ export default ({ cards, loading, widthOffset, wantsList }) => {
     });
   };
 
-  const title = wantsList && `${wantsList.name} - Wants`;
+  const onEditCard = (cardId, newProps) => {
+    mutateEdit({
+      variables: { wantsListId: wantsList.id, newProps, cardId },
+      update: (cache, { data }) => {
+        const existing = cache.readQuery({
+          query: wantsListDesktop,
+          variables: { id: wantsList.id },
+        });
+        const { editWantsListCard: newCard } = data;
+
+        const newCards = existing.wantsList.cards.map(card => {
+          if (card.card.id !== cardId) return card;
+          return newCard;
+        });
+
+        cache.writeQuery({
+          query: wantsListDesktop,
+          data: {
+            wantsList: {
+              ...existing.wantsList,
+              cards: newCards,
+            },
+          },
+        });
+      },
+    });
+  };
+
+  const title = wantsList && wantsList.name;
 
   return (
     <CardListWithActions
@@ -26,6 +59,7 @@ export default ({ cards, loading, widthOffset, wantsList }) => {
       loading={loading}
       cards={cards}
       title={title}
+      onEditCard={onEditCard}
       widthOffset={widthOffset}
     />
   );

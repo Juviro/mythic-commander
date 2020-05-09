@@ -4,12 +4,6 @@ CURRENT:
 
 NEXT:
     - Wants
-        - add sort wants lists by name/last edit/created/
-        - Card Actions
-            - add to collection
-            - move to list / deck
-        - Single card Actions
-            - change set
         - Sidebar:
             - Name
                 - unlink
@@ -17,6 +11,7 @@ NEXT:
 
 IMPROVEMENTS:
     - improve re-rendering of table columns 
+    - enable table actions for search
 
 FEATURES:
     - allow multiple selected elements in grid list with shift

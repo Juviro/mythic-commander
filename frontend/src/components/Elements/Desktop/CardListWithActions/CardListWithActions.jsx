@@ -3,19 +3,24 @@ import { useQueryParams, NumberParam, StringParam } from 'use-query-params';
 import { useStoredQueryParam, useToggle } from '../../../Hooks';
 import { filterCards, sortCards } from '../../../../utils/cardFilter';
 import PaginatedCardList from '../PaginatedCardList';
-import { ConfirmDeleteCards } from '../../Shared';
+import { ConfirmDeleteCards, AddCardsTo, EditCardModal } from '../../Shared';
+import sumCardAmount from '../../../../utils/sumCardAmount';
 
 export default ({
   cards,
   loading,
   widthOffset,
+  hideAddToCollection,
   deleteByOracle,
   title,
   hiddenColumns,
+  onEditCard,
 }) => {
   const [pageSize] = useStoredQueryParam('pageSize', NumberParam);
-  const [selectedCardIds, setSelectedCardIds] = useState([]);
-  const [showDeleteModal, setShowDeleteModal] = useToggle();
+  const [selectedCards, setSelectedCards] = useState([]);
+  const [showDeleteModal, toggleShowDeleteModal] = useToggle();
+  const [showMoveModal, toggleShowMoveModal] = useToggle();
+  const [showEditModal, toggleShowEditModal] = useToggle();
   const [{ page = 1, layout, orderByAdvanced, addedWithin }] = useQueryParams({
     page: NumberParam,
     addedWithin: NumberParam,
@@ -33,25 +38,35 @@ export default ({
   const sortedCards = sortCards(filteredCards, orderByAdvanced);
   const slicedCards = sortedCards.slice(offset, offset + pageSize);
 
-  const cardsToDelete =
-    selectedCardIds &&
-    slicedCards.filter(({ oracle_id }) => selectedCardIds.includes(oracle_id));
+  const numberOfSelectedCards = sumCardAmount(selectedCards);
 
-  const onDelete = numberOfCards => {
-    deleteByOracle(selectedCardIds, numberOfCards);
-    setSelectedCardIds([]);
+  const onDelete = () => {
+    deleteByOracle(
+      selectedCards.map(({ oracle_id }) => oracle_id),
+      numberOfSelectedCards
+    );
+    setSelectedCards([]);
   };
 
   useEffect(() => {
-    if (cardsToDelete.length) return;
-    setShowDeleteModal(false);
+    if (selectedCards.length) return;
+    toggleShowDeleteModal(false);
     // eslint-disable-next-line
-  }, [cardsToDelete.length]);
+  }, [selectedCards.length]);
 
   useEffect(() => {
-    setSelectedCardIds([]);
+    setSelectedCards([]);
     // eslint-disable-next-line
   }, [page, layout]);
+
+  const onCancel = () => {
+    toggleShowDeleteModal(false);
+    toggleShowMoveModal(false);
+    toggleShowEditModal(false);
+    setSelectedCards([]);
+  };
+
+  const isAnyModalVisible = showDeleteModal || showMoveModal;
 
   return (
     <>
@@ -63,19 +78,37 @@ export default ({
         setSearch={setSearch}
         search={search}
         cards={slicedCards}
+        onEditCard={toggleShowEditModal}
         widthOffset={widthOffset}
         numberOfCards={filteredCards.length}
-        setSelectedCardIds={setSelectedCardIds}
-        onDeleteCards={setShowDeleteModal}
-        selectedCardIds={selectedCardIds}
+        setSelectedCards={setSelectedCards}
+        selectedCards={isAnyModalVisible ? [] : selectedCards}
         hiddenColumns={hiddenColumns}
         title={title}
+        onDeleteCards={toggleShowDeleteModal}
+        onMoveCards={toggleShowMoveModal}
       />
       {showDeleteModal && (
         <ConfirmDeleteCards
-          onCancel={() => setSelectedCardIds([])}
-          onOk={onDelete}
-          cardsToDelete={cardsToDelete}
+          onDelete={onDelete}
+          cardsToDelete={selectedCards}
+          onCancel={onCancel}
+          numberOfSelectedCards={numberOfSelectedCards}
+        />
+      )}
+      {showMoveModal && (
+        <AddCardsTo
+          hideAddToCollection={hideAddToCollection}
+          cardsToAdd={selectedCards}
+          onCancel={onCancel}
+          numberOfSelectedCards={numberOfSelectedCards}
+        />
+      )}
+      {showEditModal && (
+        <EditCardModal
+          onEdit={onEditCard}
+          card={selectedCards[0]}
+          onCancel={onCancel}
         />
       )}
     </>
