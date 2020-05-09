@@ -1,6 +1,5 @@
 import React from 'react';
 import { Typography } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
 
 import PreviewCardImage from '../../../Shared/PreviewCardImage';
 import ManaCost from '../../../Shared/ManaCost';
@@ -56,15 +55,9 @@ const sortType = (a, b) => {
   return getIndex(a) - getIndex(b);
 };
 
-const renderActions = onDeleteCard => ({ oracle_id }) => {
-  const menuItems = [
-    {
-      Icon: DeleteOutlined,
-      onClick: () => onDeleteCard(oracle_id),
-      title: 'Delete',
-    },
-  ];
-  return <ContextMenu menuItems={menuItems} />;
+const renderActions = actions => card => {
+  console.log('actions :', actions);
+  return <ContextMenu menuItems={actions} card={card} />;
 };
 
 const columns = search => [
@@ -141,19 +134,19 @@ const columns = search => [
   },
 ];
 
-const getActionColumn = ({ onDeleteCard }) => {
-  if (!onDeleteCard) return [];
+const getActionColumn = actions => {
+  if (!actions) return [];
 
   return {
     title: '',
     key: 'actions',
     width: 40,
     align: 'left',
-    render: renderActions(onDeleteCard),
+    render: renderActions(actions),
   };
 };
 
-export default ({ showSorter, hiddenColumns, onDeleteCard, search = '' }) => {
+export default ({ showSorter, hiddenColumns, actions, search = '' }) => {
   const baseColumns = columns(search)
     .map(({ sorter, ...rest }) => ({
       sorter: showSorter && sorter,
@@ -161,7 +154,7 @@ export default ({ showSorter, hiddenColumns, onDeleteCard, search = '' }) => {
     }))
     .filter(({ key }) => !hiddenColumns || !hiddenColumns.includes(key));
 
-  const actionColumn = getActionColumn({ onDeleteCard });
+  const actionColumn = getActionColumn(actions);
 
   return baseColumns.concat(actionColumn);
 };

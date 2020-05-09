@@ -3,6 +3,7 @@ import { StringParam, useQueryParam } from 'use-query-params';
 
 import styled from 'styled-components';
 import { Empty, Typography } from 'antd';
+import { DeleteOutlined, SendOutlined, EditOutlined } from '@ant-design/icons';
 import Flex from '../../Shared/Flex';
 import CardTable from './CardTable';
 import CardGrid from './CardGrid';
@@ -31,10 +32,12 @@ export default ({
   showAddedBeforeFilter,
   showCollectionFilters,
   orderByParamName,
-  setSelectedCardIds,
+  setSelectedCards,
   onDeleteCards,
-  selectedCardIds,
+  selectedCards,
   title,
+  onEditCard,
+  onMoveCards,
 }) => {
   const [zoom, setZoom] = useLocalStorage('zoom', 100);
   const [layout] = useQueryParam('layout', StringParam);
@@ -43,6 +46,38 @@ export default ({
 
   const heightOffset = title ? 40 : 0;
 
+  const singleCardActions = [];
+  if (onEditCard) {
+    singleCardActions.push({
+      title: 'Edit...',
+      Icon: EditOutlined,
+      onClick: card => {
+        setSelectedCards([card]);
+        onEditCard();
+      },
+    });
+  }
+  if (onMoveCards) {
+    singleCardActions.push({
+      title: 'Add to...',
+      Icon: SendOutlined,
+      onClick: card => {
+        setSelectedCards([card]);
+        onMoveCards();
+      },
+    });
+  }
+  if (onDeleteCards) {
+    singleCardActions.push({
+      title: 'Delete',
+      Icon: DeleteOutlined,
+      onClick: card => {
+        setSelectedCards([card]);
+        onDeleteCards();
+      },
+    });
+  }
+
   const cardList = isEmptySearch ? (
     <StyledEmpty description="No cards found" />
   ) : layout === 'list' ? (
@@ -50,13 +85,15 @@ export default ({
       cards={cards}
       search={search}
       loading={loading}
+      onMoveCards={onMoveCards}
       showSorter={showSorter}
       heightOffset={heightOffset}
       hiddenColumns={hiddenColumns}
       numberOfCards={numberOfCards}
-      setSelectedCardIds={setSelectedCardIds}
+      setSelectedCards={setSelectedCards}
       onDeleteCards={onDeleteCards}
-      selectedCardIds={selectedCardIds}
+      selectedCards={selectedCards}
+      actions={singleCardActions}
     />
   ) : (
     <CardGrid
@@ -66,8 +103,7 @@ export default ({
       loading={loading}
       widthOffset={widthOffset}
       numberOfCards={numberOfCards}
-      onDeleteCards={onDeleteCards}
-      setSelectedCardIds={setSelectedCardIds}
+      actions={singleCardActions}
     />
   );
 

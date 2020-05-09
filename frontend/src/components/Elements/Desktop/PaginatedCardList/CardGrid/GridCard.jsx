@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import FlippableCard from '../../../Shared/FlippableCard';
 import { primary } from '../../../../../constants/colors';
 import scrollIntoView from '../../../../../utils/scrollIntoView';
-import { useShortcut } from '../../../../Hooks';
+import { useShortcut, useToggle } from '../../../../Hooks';
 import CardInfo from './CardInfo';
-import { EditGridCard } from '../../../Shared';
+import { ContextMenu } from '../../../Shared';
 
 const StyledCardWrapper = styled.div`
   padding: 8px;
@@ -19,8 +19,15 @@ const StyledCardWrapper = styled.div`
   width: ${({ widthPercentage }) => widthPercentage}%;
 `;
 
-const StyledMenuWrapper = styled.div`
-  display: none;
+const StyledContextMenu = styled.div`
+  position: absolute;
+  right: 8%;
+  top: 11%;
+  border-radius: 50%;
+  padding: 4px;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  transition: scale 0.2s;
 `;
 
 const StyledImageWrapper = styled.div`
@@ -30,10 +37,6 @@ const StyledImageWrapper = styled.div`
 
   ${({ isSelected }) =>
     isSelected ? `box-shadow: 0px 0px 6px 6px ${primary};` : ''}
-
-  &:hover  ${StyledMenuWrapper} {
-    display: inherit;
-  }
 `;
 
 const StyledAmountWrapper = styled.div`
@@ -52,6 +55,7 @@ const GridCard = ({
   onDeleteCard,
   onClick,
   isSelected,
+  actions,
   widthPercentage,
   width,
   loading,
@@ -59,6 +63,7 @@ const GridCard = ({
   search,
 }) => {
   const displayedAmount = card.amount || card.totalAmount;
+  const [showMenu, toggleShowMenu] = useToggle();
   useShortcut('DEL', isSelected ? onDeleteCard : null);
   const ref = useRef(null);
 
@@ -80,6 +85,8 @@ const GridCard = ({
         isSelected={isSelected}
         onClick={onClick}
         style={cardSize}
+        onMouseMove={() => toggleShowMenu(true)}
+        onMouseLeave={() => toggleShowMenu(false)}
       >
         <FlippableCard card={card} loading={loading} />
         {displayedAmount > 1 && (
@@ -87,15 +94,11 @@ const GridCard = ({
             style={{ fontSize: textSize }}
           >{`${displayedAmount}x`}</StyledAmountWrapper>
         )}
-        <StyledMenuWrapper>
-          <EditGridCard
-            isLarge
-            card={card}
-            // moveToList={moveToList}
-            // onEditCard={onEditCard}
-            onDeleteCard={onDeleteCard}
-          />
-        </StyledMenuWrapper>
+        {showMenu && actions.length && (
+          <StyledContextMenu>
+            <ContextMenu card={card} menuItems={actions} />
+          </StyledContextMenu>
+        )}
       </StyledImageWrapper>
       <CardInfo
         loading={loading}

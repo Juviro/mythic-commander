@@ -186,6 +186,13 @@ type ProxyCard {
   imgKey: String!
 }
 
+################################# AllLists #################################
+
+type AllLists {
+  decks: [Deck!]!
+  wantsLists: [WantsList!]!
+}
+
 ################################# Queries #################################
 
 type Query {
@@ -213,6 +220,7 @@ type Query {
   collectionSnapshots: [CollectionSnapshot]
 
   proxies(type: String!, id: String!, filter: String): [ProxyCard!]!
+  allLists: AllLists!
 }
 
 input CardsOptionsInput {
@@ -255,7 +263,7 @@ type Mutation {
   ): MoveCardReturnType!
 
   ########## Collection ##########
-  addToCollection(cards: [AddToCollectionInput]!): [CollectionCard!]!
+  addToCollection(cards: [CardInputType]!): [CollectionCard!]!
   changeCollection(
     cardOracleId: String!
     added: [ChangeCollectionInput!]
@@ -329,11 +337,6 @@ input EditDeckCardInput {
 }
 
 ################################# Collection #################################
-
-input AddToCollectionInput {
-  id: String!
-  amount: Int
-}
 
 input ChangeCollectionInput {
   id: String!

@@ -5,7 +5,7 @@ import { MoreOutlined } from '@ant-design/icons';
 import { primary } from '../../../../constants/colors';
 import { useToggle } from '../../../Hooks';
 
-export default ({ menuItems }) => {
+export default ({ menuItems, card }) => {
   const [isMenuOpen, toggleIsMenuOpen] = useToggle();
   if (!menuItems.length) return null;
 
@@ -16,10 +16,10 @@ export default ({ menuItems }) => {
           key={title}
           onClick={({ domEvent }) => {
             domEvent.stopPropagation();
-            onClick();
+            onClick(card);
           }}
         >
-          <Icon style={{ color: primary }} />
+          {Icon && <Icon style={{ color: primary }} />}
           {title}
         </Menu.Item>
       ))}
@@ -36,7 +36,10 @@ export default ({ menuItems }) => {
       onVisibleChange={toggleIsMenuOpen}
       onClick={e => e.stopPropagation()}
     >
-      <MoreOutlined onClick={toggleIsMenuOpen} style={{ fontSize: 18 }} />
+      <MoreOutlined
+        onClick={toggleIsMenuOpen}
+        style={{ fontSize: 20, padding: 6 }}
+      />
     </Dropdown>
   );
 };

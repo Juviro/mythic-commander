@@ -24,8 +24,7 @@ export default ({
   numberOfCards,
   zoom,
   search,
-  setSelectedCardIds,
-  onDeleteCards,
+  actions,
 }) => {
   useWindowSize();
   const [showDetails, toggleShowDetail] = useToggle(false);
@@ -53,11 +52,6 @@ export default ({
     setSelectedElementPosition(index + 1);
   };
 
-  const deleteCard = ({ oracle_id }) => {
-    setSelectedCardIds([oracle_id]);
-    onDeleteCards();
-  };
-
   const paginationComponent = (
     <Pagination
       {...pagination}
@@ -76,7 +70,7 @@ export default ({
             card={card}
             zoom={zoom}
             key={card.id}
-            onDeleteCard={onDeleteCards ? () => deleteCard(card) : undefined}
+            actions={actions}
             loading={loading}
             width={cardWidth}
             index={index}

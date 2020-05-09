@@ -45,6 +45,7 @@ export default ({ cards, loading, isSidebarVisible }) => {
       deleteByOracle={deleteByOracle}
       loading={loading}
       cards={cards}
+      hideAddToCollection
       hiddenColumns={['owned']}
       widthOffset={widthOffset}
     />
