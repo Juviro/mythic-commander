@@ -5,7 +5,6 @@ import CardDetailsDesktop from '../CardDetailsDesktop';
 
 import { cardDetailsDesktop } from '../CardDetailsDesktop/queries';
 import { unifySingleCard } from '../../../../utils/unifyCardFormat';
-import useBlockShortcuts from '../../../Hooks/useBlockShortcuts';
 import { useShortcut } from '../../../Hooks';
 
 const CardModalDesktop = ({
@@ -14,7 +13,6 @@ const CardModalDesktop = ({
   onClose,
   loading: parentLoading,
 }) => {
-  // useBlockShortcuts(visible);
   useShortcut('ENTER', onClose, visible);
   const { data, loading: cardLoading } = useQuery(cardDetailsDesktop, {
     variables: { oracle_id: card.oracle_id },

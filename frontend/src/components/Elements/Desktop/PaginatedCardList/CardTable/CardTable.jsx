@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Table, Button, Space } from 'antd';
 import styled, { css } from 'styled-components';
 
+import { withRouter } from 'react-router';
 import columns from './columns';
 import useTableShortcuts from './useTableShortcuts';
 import { useToggle, useShortcut } from '../../../../Hooks';
@@ -27,7 +28,7 @@ const StyledButtonWrapper = styled.div`
     `}
 `;
 
-export default ({
+const CardTable = ({
   cards,
   loading,
   search,
@@ -42,6 +43,7 @@ export default ({
   actions,
   onEditCard,
   onDeleteCard,
+  history,
 }) => {
   const [showDetails, toggleShowDetail] = useToggle(false);
   const toggleElementSelection = elementPosition => {
@@ -72,8 +74,18 @@ export default ({
     if (!onDeleteCard) return;
     onDeleteCard(selectedCard);
   };
-  useShortcut('DEL', onPressDelete);
-  useShortcut('e', () => onEditCard(selectedCard));
+  useShortcut('DEL', !showDetails ? onPressDelete : null);
+  useShortcut(
+    'e',
+    !showDetails && onEditCard ? () => onEditCard(selectedCard) : null
+  );
+
+  // close modal when list changes
+  useEffect(() => {
+    toggleShowDetail(false);
+    setSelectedElementPosition(1);
+    // eslint-disable-next-line
+  }, [history.location.pathname]);
 
   useEffect(() => {
     const [element] = document.getElementsByClassName('selected');
@@ -85,7 +97,7 @@ export default ({
   const innerTableWidth =
     window.innerHeight - DEFAULT_HEIGHT_OFFSET - heightOffset;
 
-  // TODO: enable for all
+  // TODO: enable for all (search)
   const rowSelection = onDeleteCards && {
     onChange: selectedRows =>
       setSelectedCards(cards.filter(({ id }) => selectedRows.includes(id))),
@@ -150,3 +162,5 @@ export default ({
     </>
   );
 };
+
+export default withRouter(CardTable);

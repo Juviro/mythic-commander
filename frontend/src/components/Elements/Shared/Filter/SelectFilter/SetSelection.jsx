@@ -16,7 +16,7 @@ export default ({ onChange, value, onSearch }) => {
       options={allSets}
       onChange={onChange}
       paramName="set"
-      placeholder="Gatecrash, Zendikar..."
+      placeholder={'e.g. "Theros"'}
     />
   );
 };

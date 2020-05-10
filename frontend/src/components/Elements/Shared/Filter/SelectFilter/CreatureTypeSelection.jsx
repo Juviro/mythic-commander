@@ -13,7 +13,7 @@ export default ({ onChange, value, onSearch }) => {
       value={value}
       onSearch={onSearch}
       paramName="creatureType"
-      placeholder="Shark, Bird, ..."
+      placeholder={'e.g. "Brushwagg"'}
     />
   );
 };

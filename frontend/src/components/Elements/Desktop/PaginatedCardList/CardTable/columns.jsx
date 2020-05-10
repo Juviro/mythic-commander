@@ -64,7 +64,7 @@ const columns = search => [
   {
     title: 'Card',
     key: 'img',
-    width: 90,
+    width: 50,
     render: card => <PreviewCardImage card={card} highlightOnHover />,
   },
   {

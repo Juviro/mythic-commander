@@ -8,6 +8,7 @@ import CustomSkeleton from '../CustomSkeleton';
 import { addCardsToWantsList, wantsLists as wantsListsQuery } from './queries';
 import message from '../../../../utils/message';
 import { wantsList as wantsListQuery } from '../../../Mobile/WantsList/queries';
+import getDynamicUrl from '../../../../utils/getDynamicUrl';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -21,7 +22,7 @@ const NEW_LIST_DUMMY_ID = 'new-wants-list';
 const WantsListLink = ({ id, name }) => {
   if (id === NEW_LIST_DUMMY_ID) return name;
   return (
-    <Link to={`/m/wants/${id}`}>
+    <Link to={getDynamicUrl(`/wants/${id}`)}>
       <Typography.Text
         ellipsis
         style={{

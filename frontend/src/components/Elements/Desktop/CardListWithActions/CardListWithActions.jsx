@@ -78,7 +78,7 @@ export default ({
         setSearch={setSearch}
         search={search}
         cards={slicedCards}
-        onEditCard={toggleShowEditModal}
+        onEditCard={onEditCard && toggleShowEditModal}
         widthOffset={widthOffset}
         numberOfCards={filteredCards.length}
         setSelectedCards={setSelectedCards}
