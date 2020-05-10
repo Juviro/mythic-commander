@@ -1,4 +1,6 @@
+import keyCodes from '../../constants/keyCodes';
+
 export default event => {
-  if (event.keyCode !== 27) return;
+  if (event.keyCode !== keyCodes.ESCAPE) return;
   event.target.blur();
 };

@@ -10,6 +10,7 @@ import { highlightText } from '../../../../../utils/highlightText';
 import { byColor } from '../../../../../utils/cardFilter';
 import { Flex, ContextMenu, OwnedBadge } from '../../../Shared';
 
+// TODO: move columns to table file, simplify, remove sorters
 const renderAmount = ({ totalAmount, amount }) => amount || totalAmount || 0;
 
 const renderType = ({ primaryTypes, subTypes }) => {
@@ -56,7 +57,6 @@ const sortType = (a, b) => {
 };
 
 const renderActions = actions => card => {
-  console.log('actions :', actions);
   return <ContextMenu menuItems={actions} card={card} />;
 };
 

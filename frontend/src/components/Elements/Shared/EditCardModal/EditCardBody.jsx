@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { Row, Col, Typography } from 'antd';
@@ -13,11 +13,13 @@ const StyledImageWrapper = styled.div`
 `;
 
 export default ({ card, onChangeProp, canSubmit, onSubmit }) => {
+  const [selectedCard, setSelectedCard] = useState(null);
+
   return (
     <Row>
       <Col span={12}>
         <StyledImageWrapper>
-          <FlippableCard card={card} />
+          <FlippableCard card={selectedCard || card} />
         </StyledImageWrapper>
       </Col>
       <Col span={12}>
@@ -31,12 +33,19 @@ export default ({ card, onChangeProp, canSubmit, onSubmit }) => {
             style={{ width: '100%', fontSize: 20 }}
           >{`Edit ${card.name}`}</Typography.Text>
           <AmountInput
+            autoFocus
             canSubmit={canSubmit}
             card={card}
             onSubmit={onSubmit}
             onChange={onChangeProp('amount')}
           />
-          <SetPicker size="default" card={card} onSelect={onChangeProp('id')} />
+          <SetPicker
+            onSubmit={canSubmit && onSubmit}
+            size="default"
+            card={card}
+            onSelectCard={setSelectedCard}
+            onSelect={onChangeProp('id')}
+          />
         </Flex>
       </Col>
     </Row>

@@ -25,6 +25,8 @@ export default ({
   zoom,
   search,
   actions,
+  onEditCard,
+  onDeleteCard,
 }) => {
   useWindowSize();
   const [showDetails, toggleShowDetail] = useToggle(false);
@@ -75,6 +77,8 @@ export default ({
             width={cardWidth}
             index={index}
             search={search}
+            onEditCard={() => onEditCard(card)}
+            onDeleteCard={() => onDeleteCard(card)}
             onClick={() => onClick(index)}
             widthPercentage={100 / cardsPerRow}
             isSelected={index + 1 === selectedElementPosition}

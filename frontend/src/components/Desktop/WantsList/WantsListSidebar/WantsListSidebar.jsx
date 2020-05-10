@@ -11,7 +11,6 @@ import {
 import Actions from './Actions';
 
 export default ({ width, wantsList, isVisible, toggleIsVisible, loading }) => {
-  console.log('wantsList :', wantsList);
   return (
     <Sidebar
       isVisible={isVisible}

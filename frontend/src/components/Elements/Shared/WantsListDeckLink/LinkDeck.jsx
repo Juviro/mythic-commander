@@ -20,6 +20,7 @@ const StyledLinkButton = styled.div`
   flex-direction: column;
   border: 1px solid #dddddd;
   justify-content: space-evenly;
+  cursor: pointer;
 `;
 
 const StyledDeckPreview = styled.img`
@@ -86,7 +87,7 @@ export default ({ wantsList }) => {
           overflow: 'scroll',
         }}
       >
-        <List loading={loading} style={{ width: '100%' }}>
+        <List loading={loading} style={{ width: '100%' }} className="hoverable">
           {decks.map(({ id, name, imgSrc }) => (
             <List.Item key={id} onClick={() => onLinkDeck(id)}>
               <StyledDeckPreview src={imgSrc} />

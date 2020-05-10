@@ -16,7 +16,7 @@ export default ({
 
   const title = `Delete ${numberOfSelectedCards} ${
     numberOfSelectedCards === 1 ? 'card' : 'cards'
-  } from your collection?`;
+  }?`;
 
   return (
     <Modal

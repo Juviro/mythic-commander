@@ -41,4 +41,14 @@ export default createGlobalStyle`
   .ant-table-small {
     display: inherit;
   }
+
+  /* Hoverable list */
+  .hoverable .ant-list-item {
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: aliceblue;
+    }
+  }
 `;
