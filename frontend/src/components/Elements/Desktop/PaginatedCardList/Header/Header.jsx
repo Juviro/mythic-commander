@@ -37,6 +37,11 @@ export default ({
     setSearch(currentSearch);
   };
 
+  const onSetCurrentSearch = val => {
+    setCurrentSearch(val);
+    if (!val) setSearch('');
+  };
+
   return (
     <StyledWrapper>
       <Flex direction="row">
@@ -47,7 +52,7 @@ export default ({
                 onSearch={onSearch}
                 inputRef={searchInputRef}
                 value={currentSearch}
-                onChange={setCurrentSearch}
+                onChange={onSetCurrentSearch}
                 size="middle"
                 placeholder="Search for a card"
               />
