@@ -4,14 +4,19 @@ const resolver = {
   _id({ oracle_id }) {
     return oracle_id;
   },
-  async owned({ oracle_id, type_line }, _, { db, user: { id: userId } }) {
+  async owned(
+    { oracle_id, type_line, owned },
+    _,
+    { db, user: { id: userId } }
+  ) {
+    if (typeof owned === 'boolean') return owned;
     if (type_line.startsWith('Basic')) return true;
 
-    const [owned] = await db('collectionWithOracle').where({
+    const [cardOwned] = await db('collectionWithOracle').where({
       userId,
       oracle_id,
     });
-    return Boolean(owned);
+    return Boolean(cardOwned);
   },
 
   allSets({ oracle_id }, _, { db, user: { id: userId } }) {
