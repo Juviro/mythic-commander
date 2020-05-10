@@ -48,6 +48,5 @@ BACKLOG BUGFIXES:
     - backend deployment not reloading
     - collection: when one price is null, 0 is displayed even if one owned card has a value
     - add to collection mobile: after adding prev unowned card (gitrok monster), wrong minPrice in wantsList
-    - add to collection -> remove -> re-add -> edit: amount is 0
     - mobile: collection -> card details view -> remvoe from collection -> back to collection: card not deleted
     - open desktop wants -> go to collection -> add card -> go back to wants -> card not shown as owned in wants list
