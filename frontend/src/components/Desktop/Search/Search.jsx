@@ -19,6 +19,8 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: row;
   height: 100%;
+  height: fit-content;
+  min-height: 100%;
   background-color: ${({ isFullscreen }) =>
     isFullscreen ? lightBackground : 'white'};
 `;
