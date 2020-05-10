@@ -40,17 +40,12 @@ export default ({
   return (
     <StyledWrapper>
       <Flex direction="row">
-        <OrderBy
-          showCollectionFilters={showCollectionFilters}
-          paramName={orderByParamName}
-        />
         {setSearch && (
           <Tooltip title="Filter for card name [F]">
             <span>
               <NameFilter
                 onSearch={onSearch}
                 inputRef={searchInputRef}
-                style={{ marginLeft: 16 }}
                 value={currentSearch}
                 onChange={setCurrentSearch}
                 size="middle"
@@ -59,6 +54,11 @@ export default ({
             </span>
           </Tooltip>
         )}
+        <OrderBy
+          showCollectionFilters={showCollectionFilters}
+          paramName={orderByParamName}
+          style={{ marginLeft: 16 }}
+        />
         {showAddedBeforeFilter && <AddedBeforeFilter />}
       </Flex>
       <Flex direction="row">

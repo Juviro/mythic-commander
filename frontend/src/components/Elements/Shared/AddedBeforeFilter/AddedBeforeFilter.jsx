@@ -44,7 +44,7 @@ export default () => {
       placeholder="Show recently added..."
       dropdownStyle={{ minWidth: 200 }}
       onSelect={value => setAddedWithing(value)}
-      style={{ width: 200, marginLeft: 32 }}
+      style={{ width: 200, marginLeft: 16 }}
       onChange={onChange}
     >
       {options.map(({ label, value }) => (

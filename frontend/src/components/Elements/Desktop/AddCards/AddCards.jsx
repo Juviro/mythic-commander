@@ -14,7 +14,7 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
-export default ({ onAddCards, autoFocus }) => {
+export default ({ onAddCards, autoFocus, containedCardNames }) => {
   const searchInputRef = useRef(null);
   const { data } = useQuery(getCollectionNames);
   const focusInput = () => searchInputRef.current.focus();
@@ -30,6 +30,7 @@ export default ({ onAddCards, autoFocus }) => {
         <CardSearch
           ref={searchInputRef}
           ownedCardNames={ownedCardNames}
+          containedCardNames={containedCardNames}
           onSearch={(card, name) => onAddCards([card], name)}
           defaultActiveFirstOption
           resetSearch

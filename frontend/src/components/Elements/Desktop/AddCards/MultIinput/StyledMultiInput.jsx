@@ -5,14 +5,12 @@ export const StyledWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  margin: 20px 0;
 `;
 
 export const StyledInputWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  margin-top: 20px;
 `;
 
 export const StyledStatus = styled.div`
@@ -29,6 +27,5 @@ export const IconWrapper = styled.div`
 
 export const StyledLink = styled.a`
   margin-top: 8px;
-  text-align: end;
-  margin-right: 4px;
+  margin-left: 4px;
 `;

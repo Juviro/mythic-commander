@@ -8,8 +8,8 @@ import { getPriceLabel } from '../../../../utils/cardStats';
 import EnlargeImage from './EnlargeImage';
 import FlippableCard from '../../Shared/FlippableCard';
 import OwnedBadge from '../../Shared/OwnedBadge';
-import EditCard from './EditCard';
 import { highlightText } from '../../../../utils/highlightText';
+import EditGridCard from '../../Shared/EditGridCard';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -53,15 +53,13 @@ const GridCard = ({
       <StyledCardWrapper isLarge={isLarge}>
         <FlippableCard card={card} />
         {!isLarge && <EnlargeImage src={imgSrc} card={card} />}
-        {(onEditCard || moveToList) && (
-          <EditCard
-            card={card}
-            isLarge={isLarge}
-            moveToList={moveToList}
-            onEditCard={onEditCard}
-            onDeleteCard={onDeleteCard}
-          />
-        )}
+        <EditGridCard
+          card={card}
+          isLarge={isLarge}
+          moveToList={moveToList}
+          onEditCard={onEditCard}
+          onDeleteCard={onDeleteCard}
+        />
       </StyledCardWrapper>
       <Row style={{ width }}>
         <Col span={7}>

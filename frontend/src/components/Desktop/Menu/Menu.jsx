@@ -8,7 +8,10 @@ import UserMenu from './UserMenu';
 
 const StyledMenu = styled.div`
   width: 100%;
+  top: 0;
+  z-index: 100;
   display: flex;
+  position: fixed;
   align-items: center;
   justify-content: space-between;
   background-color: ${darkBackground};
@@ -19,10 +22,10 @@ const MENU_ENTRIES = [
   //   title: 'Decks',
   //   href: '/decks',
   // },
-  // {
-  //   title: 'Wants',
-  //   href: '/wants',
-  // },
+  {
+    title: 'Wants',
+    href: '/wants',
+  },
   {
     title: 'Collection',
     href: '/collection',
@@ -40,6 +43,7 @@ const DesktopMenu = ({ location: { pathname } }) => {
         <MythicCommanderBanner
           style={{ marginLeft: 8 }}
           showCollectionOnClick
+          hideWhenSmall
         />
         <Menu
           mode="horizontal"

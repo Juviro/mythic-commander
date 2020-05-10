@@ -11,7 +11,7 @@ const StyledWrapper = styled.div`
   justify-content: flex-end;
   flex-direction: row;
   width: 200px;
-  margin-right: 16px;
+  margin: 0 16px;
 `;
 
 const MIN_ZOOM = 50;

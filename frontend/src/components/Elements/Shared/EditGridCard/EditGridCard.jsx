@@ -1,9 +1,9 @@
 import React from 'react';
 import { EditOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import { CardButton } from '../../../Shared';
 import EditMenu from './EditMenu';
-import { useToggle } from '../../../../Hooks';
+import { useToggle } from '../../../Hooks';
+import CardButton from '../CardButton';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -40,6 +40,8 @@ export default ({ moveToList, card, onEditCard, onDeleteCard, isLarge }) => {
     e.stopPropagation();
     toggleIsEditing();
   };
+
+  if (!moveToList && !onEditCard && !onDeleteCard) return null;
 
   return (
     <>

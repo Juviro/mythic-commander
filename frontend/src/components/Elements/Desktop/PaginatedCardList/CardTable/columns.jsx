@@ -1,6 +1,5 @@
 import React from 'react';
 import { Typography } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
 
 import PreviewCardImage from '../../../Shared/PreviewCardImage';
 import ManaCost from '../../../Shared/ManaCost';
@@ -9,8 +8,9 @@ import { getPriceLabel } from '../../../../../utils/cardStats';
 import formatDate from '../../../../../utils/formatDate';
 import { highlightText } from '../../../../../utils/highlightText';
 import { byColor } from '../../../../../utils/cardFilter';
-import { Flex, ContextMenu } from '../../../Shared';
+import { Flex, ContextMenu, OwnedBadge } from '../../../Shared';
 
+// TODO: move columns to table file, simplify, remove sorters
 const renderAmount = ({ totalAmount, amount }) => amount || totalAmount || 0;
 
 const renderType = ({ primaryTypes, subTypes }) => {
@@ -40,8 +40,9 @@ const renderPrice = ({ price, minPrice, sumPrice, totalAmount }) => {
   return `${getPriceLabel(displayedPrice)}  (${getPriceLabel(sumPrice)})`;
 };
 
-const sortByAmount = columnKey => (a, b) => {
-  return Number(a[columnKey]) - Number(b[columnKey]);
+const sortByAmount = (columnKey, fallbackKey) => (a, b) => {
+  const key = a[columnKey] === undefined ? fallbackKey : columnKey;
+  return Number(a[key]) - Number(b[key]);
 };
 const sortByName = columnKey => (a, b) => {
   return a[columnKey] > b[columnKey] ? 1 : -1;
@@ -55,31 +56,39 @@ const sortType = (a, b) => {
   return getIndex(a) - getIndex(b);
 };
 
-const renderActions = onDeleteCard => ({ oracle_id }) => {
-  const menuItems = [
-    {
-      Icon: DeleteOutlined,
-      onClick: () => onDeleteCard(oracle_id),
-      title: 'Delete',
-    },
-  ];
-  return <ContextMenu menuItems={menuItems} />;
+const renderActions = actions => card => {
+  return <ContextMenu menuItems={actions} card={card} />;
 };
 
 const columns = search => [
   {
     title: 'Card',
     key: 'img',
-    width: 90,
+    width: 50,
     render: card => <PreviewCardImage card={card} highlightOnHover />,
+  },
+  {
+    title: 'Amount',
+    key: 'amount',
+    width: 70,
+    align: 'center',
+    render: renderAmount,
+    sorter: sortByAmount('totalAmount', 'amount'),
   },
   {
     title: 'Name',
     dataIndex: 'name',
-    width: 300,
+    width: 200,
     key: 'name',
     render: name => highlightText(search, name),
     sorter: sortByName('name'),
+  },
+  {
+    title: 'Owned',
+    dataIndex: 'owned',
+    width: 65,
+    key: 'owned',
+    render: owned => (owned ? <OwnedBadge marginLeft={0} /> : null),
   },
   {
     title: 'CMC',
@@ -107,14 +116,6 @@ const columns = search => [
     sorter: sortType,
   },
   {
-    title: 'Amount',
-    key: 'amount',
-    width: 70,
-    align: 'center',
-    render: renderAmount,
-    sorter: sortByAmount('totalAmount'),
-  },
-  {
     title: 'Price',
     key: 'minPrice',
     width: 150,
@@ -133,19 +134,19 @@ const columns = search => [
   },
 ];
 
-const getActionColumn = ({ onDeleteCard }) => {
-  if (!onDeleteCard) return [];
+const getActionColumn = actions => {
+  if (!actions) return [];
 
   return {
     title: '',
     key: 'actions',
     width: 40,
     align: 'left',
-    render: renderActions(onDeleteCard),
+    render: renderActions(actions),
   };
 };
 
-export default ({ showSorter, hiddenColumns, onDeleteCard, search = '' }) => {
+export default ({ showSorter, hiddenColumns, actions, search = '' }) => {
   const baseColumns = columns(search)
     .map(({ sorter, ...rest }) => ({
       sorter: showSorter && sorter,
@@ -153,7 +154,7 @@ export default ({ showSorter, hiddenColumns, onDeleteCard, search = '' }) => {
     }))
     .filter(({ key }) => !hiddenColumns || !hiddenColumns.includes(key));
 
-  const actionColumn = getActionColumn({ onDeleteCard });
+  const actionColumn = getActionColumn(actions);
 
   return baseColumns.concat(actionColumn);
 };

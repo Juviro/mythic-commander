@@ -1,9 +1,9 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
-import { EditableTitle } from '../../../Elements/Shared';
-import { editWantsList } from '../queries';
+import { EditableTitle } from '..';
+import { editWantsList } from './queries';
 
-export default ({ wantsList }) => {
+export default ({ wantsList, level }) => {
   const [mutate] = useMutation(editWantsList);
   const onChangeName = name => {
     mutate({
@@ -25,6 +25,10 @@ export default ({ wantsList }) => {
   };
 
   return (
-    <EditableTitle name={wantsList && wantsList.name} onChange={onChangeName} />
+    <EditableTitle
+      level={level}
+      name={wantsList && wantsList.name}
+      onChange={onChangeName}
+    />
   );
 };

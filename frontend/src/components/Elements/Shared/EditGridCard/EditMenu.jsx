@@ -6,10 +6,12 @@ import {
   SwapRightOutlined,
 } from '@ant-design/icons';
 import styled from 'styled-components';
-import { Button, Input } from 'antd';
-import SetPicker from '../../../Shared/SetPicker';
-import { useToggle } from '../../../../Hooks';
-import { MoveToModal } from '../../../Shared';
+import { Button } from 'antd';
+
+import SetPicker from '../SetPicker';
+import { useToggle } from '../../../Hooks';
+import MoveToModal from '../MoveTo/MoveToModal';
+import AmountInput from '../AmountInput';
 
 const StyledWrapper = styled.div`
   height: 100%;
@@ -55,7 +57,6 @@ export default ({
   }, [isEditing]);
 
   if (!isEditing) return null;
-  const displayedAmount = card.amount || card.totalAmount;
 
   const onChangeProp = key => value => {
     setNewProps({
@@ -64,7 +65,7 @@ export default ({
     });
   };
 
-  const onSave = () => {
+  const onSubmit = () => {
     onEditCard(card.id, newProps);
     setNewProps({});
     onClose();
@@ -79,15 +80,12 @@ export default ({
         {onEditCard && (
           <>
             <StyledOption>
-              <Input
+              <AmountInput
                 size={size}
-                addonBefore={isLarge ? 'Amount' : undefined}
-                style={{ width: '100%' }}
-                defaultValue={displayedAmount}
-                onPressEnter={canSubmit ? onSave : undefined}
-                onChange={e =>
-                  onChangeProp('amount')(Number(e.target.value) || 1)
-                }
+                canSubmit={canSubmit}
+                card={card}
+                onSubmit={onSubmit}
+                onChange={onChangeProp('amount')}
               />
             </StyledOption>
             <StyledOption>
@@ -99,25 +97,23 @@ export default ({
                 />
               )}
             </StyledOption>
+            <StyledOption>
+              <Button
+                size={size}
+                disabled={!canSubmit}
+                type="primary"
+                icon={<SaveOutlined />}
+                onClick={onSubmit}
+                style={{
+                  color: canSubmit ? undefined : 'grey',
+                  backgroundColor: 'rgba(0,0,0,0.5)',
+                  width: '100%',
+                }}
+              >
+                Save
+              </Button>
+            </StyledOption>
           </>
-        )}
-        {onEditCard && (
-          <StyledOption>
-            <Button
-              size={size}
-              disabled={!canSubmit}
-              type="primary"
-              icon={<SaveOutlined />}
-              onClick={onSave}
-              style={{
-                color: canSubmit ? undefined : 'grey',
-                backgroundColor: 'rgba(0,0,0,0.5)',
-                width: '100%',
-              }}
-            >
-              Save
-            </Button>
-          </StyledOption>
         )}
         {moveToList && (
           <StyledOption>

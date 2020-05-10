@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Tooltip } from 'antd';
+import { Tooltip, Skeleton } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import { useShortcut } from '../../../Hooks';
 
@@ -19,7 +19,7 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledToggleWrapper = styled.div`
-  top: 56px;
+  top: 110px;
   z-index: 99;
   right: -33px;
   cursor: pointer;
@@ -45,6 +45,7 @@ export default ({
   width = 300,
   wrapperStyle,
   isFullscreen,
+  loading,
 }) => {
   useShortcut('s', toggleIsVisible);
   const sidebarWidth = isFullscreen ? '100%' : `${width}px`;
@@ -63,7 +64,7 @@ export default ({
           </StyledToggleWrapper>
         </Tooltip>
       )}
-      {isVisible && children}
+      {isVisible && (loading ? <Skeleton /> : children)}
     </StyledWrapper>
   );
 };

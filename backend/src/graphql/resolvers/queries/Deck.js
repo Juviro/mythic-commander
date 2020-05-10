@@ -1,4 +1,3 @@
-import db from '../../../database';
 import unifyCardFormat from '../unifyCardFormat';
 
 const resolver = {
@@ -22,5 +21,4 @@ const resolver = {
   },
 };
 
-resolver.cards({ id: 44 }, null, { db });
 export default resolver;

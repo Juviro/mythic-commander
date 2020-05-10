@@ -4,6 +4,7 @@ import { useQueryParam, BooleanParam } from 'use-query-params';
 
 import Desktop from './Desktop';
 import Mobile from './Mobile';
+import Proxy from './Proxy';
 import { Login } from './Elements/Shared';
 import GlobalStyle from './GlobalStyle';
 
@@ -14,6 +15,7 @@ const App = () => {
   return (
     <>
       <Switch>
+        <Route path="/proxy/:type/:id" exact component={Proxy} />
         <Route path="/login" component={Login} />
         <Route path="/m/" component={Mobile} />
         <Route component={Desktop} />
