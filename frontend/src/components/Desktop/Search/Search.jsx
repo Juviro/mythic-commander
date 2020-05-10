@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQueryParams, NumberParam, StringParam } from 'use-query-params';
 import { useApolloClient } from 'react-apollo';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { withRouter } from 'react-router';
 import { isEqual } from 'lodash';
 
@@ -19,10 +19,15 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: row;
   height: 100%;
-  height: fit-content;
-  min-height: 100%;
-  background-color: ${({ isFullscreen }) =>
-    isFullscreen ? lightBackground : 'white'};
+  background-color: 'white';
+  ${({ isFullscreen }) =>
+    isFullscreen
+      ? css`
+          height: fit-content;
+          min-height: 100%;
+          background-color: ${lightBackground};
+        `
+      : ''};
 `;
 
 const Search = ({ history }) => {
