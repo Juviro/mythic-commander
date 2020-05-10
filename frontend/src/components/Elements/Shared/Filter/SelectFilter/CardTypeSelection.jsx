@@ -21,7 +21,7 @@ export default ({ onChangeOption, value, isLegendary, onSearch }) => {
         value={value}
         onChange={onChangeOption('cardType')}
         options={cardTypes}
-        placeholder="Creature, Enchantment, ..."
+        placeholder={'e.g. "Planeswalker"'}
       />
       <div style={{ marginTop: 8 }}>
         <Checkbox

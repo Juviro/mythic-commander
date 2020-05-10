@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { Typography } from 'antd';
 import { withRouter } from 'react-router';
@@ -15,14 +15,18 @@ const StyledIcon = styled.img`
   height: 100%;
 `;
 
-const StyledText = styled(Typography.Text)`
-  color: rgba(255, 255, 255, 0.8);
+const StyledTextWrapper = styled.span`
   margin-left: 16px;
   white-space: nowrap;
 
-  /* @media only screen and (max-width: 1000px) {
-    display: none;
-  } */
+  ${({ hideWhenSmall }) =>
+    hideWhenSmall
+      ? css`
+          @media only screen and (max-width: 900px) {
+            display: none;
+          }
+        `
+      : ''}
 `;
 
 const MythicCommanderBanner = ({
@@ -30,6 +34,7 @@ const MythicCommanderBanner = ({
   style,
   showCollectionOnClick,
   history,
+  hideWhenSmall,
 }) => {
   const navigateToCollection = () => history.push('/collection');
   return (
@@ -38,7 +43,13 @@ const MythicCommanderBanner = ({
       onClick={showCollectionOnClick && navigateToCollection}
     >
       <StyledIcon src={icon} />
-      <StyledText style={{ fontSize }}>Mythic Commander</StyledText>
+      <StyledTextWrapper hideWhenSmall={hideWhenSmall}>
+        <Typography.Text
+          style={{ fontSize, color: 'rgba(255, 255, 255, 0.8)' }}
+        >
+          Mythic Commander
+        </Typography.Text>
+      </StyledTextWrapper>
     </StyledWrapper>
   );
 };

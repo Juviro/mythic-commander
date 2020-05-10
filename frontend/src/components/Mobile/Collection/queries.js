@@ -42,7 +42,7 @@ export const getMobileCollection = gql`
 `;
 
 export const addToCollectionMobile = gql`
-  mutation addToCollectionMobile($cards: [AddToCollectionInput]!) {
+  mutation addToCollectionMobile($cards: [CardInputType]!) {
     addToCollection(cards: $cards) {
       ${COLLECTION_CARD_FIELDS}
     }

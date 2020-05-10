@@ -1,40 +1,45 @@
 BUGFIXES:
+    - advanced search -> add card to collection: owned badge not displayed
 
 CURRENT:
 
 NEXT:
+    - styling
 
 IMPROVEMENTS:
-    - don't show go back button for wants/decks ?
+    - improve re-rendering of table columns and grid card
 
 FEATURES:
+    - enable table actions for search
+    - sharable collection / decks / wants
 
 REFACTORINGS:
+    - evaluate removing all caching, using network only everywhere
  
 BACKLOG:
+    - allow multiple selected elements in grid list with shift
+    - move decks and wants to random id
     - allow search for unowned cards only
     - refresh google access ?
-    - better tooltips for multi input
+    - better tooltips for multi input icon
     - swipe card preview on mobile
-    - going back to list should preserve scroll position
+    - going back to list should preserve scroll position (desktop)
     - show *add commander* in deck list when no commander selected
     - shortcuts should use modifier key ?
     - when adding cards (to collection?), allow displaying only cards from specific set
     - when opening login, redirect to / if user is logged in
     - add to advanced search: number of owned copies
     - allow sort by mana cost to collection
-    - hide collection list checkboxes unless in some sort of editing modus?
     - add possible combos section to detail card view (https://discordapp.com/channels/673601282946236417/673601283609067559, no api yet)
     - add info tooltip for search: explain amount prefix, fuzzy search
     - allow searching for multiple sets/types/subtypes?
     - when adding cards, allow picking set/version, with preview
     - add error page
     - clickable creature type in card details?
-    - home page: quick stats for collection, quick access for last edited decks + wants
+    - home page: quick stats for collection, quick access for last edited decks + wants ?
     - show % owned of all cards (unique cards / distinct cards)
     - in search field: *foil* suffix should add as foil
     - when adding to deck or linked wants: show if card is in linked wants / deck
-    - sharable collection / decks / wants
     - prevent user from adding amount / amount foil if card is not available in foil / non-foil
     - prefer owned versions when adding to deck or wants
     - suggest similar cards when having invalid cardname in multiinput
@@ -46,3 +51,4 @@ BACKLOG BUGFIXES:
     - add to collection mobile: after adding prev unowned card (gitrok monster), wrong minPrice in wantsList
     - add to collection -> remove -> re-add -> edit: amount is 0
     - mobile: collection -> card details view -> remvoe from collection -> back to collection: card not deleted
+    - open desktop wants -> go to collection -> add card -> go back to wants -> card not shown as owned in wants list

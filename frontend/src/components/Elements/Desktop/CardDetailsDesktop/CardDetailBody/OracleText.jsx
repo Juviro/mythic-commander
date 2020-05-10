@@ -10,7 +10,7 @@ export default ({ card, loading, isFlipped }) => {
   const cardFace =
     isFlipped && cardFaces.length > 1 ? cardFaces[1] : cardFaces[0];
 
-  const cardLines = cardFace.split('\n');
+  const cardLines = cardFace.split('\n').filter(Boolean);
 
   return (
     <Flex justify="center" style={{ margin: '16px 0' }} direction="column">

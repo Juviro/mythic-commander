@@ -1,5 +1,6 @@
 import getCachedCards from './getCachedCards';
 import cardSearch from './cardSearch';
+import proxies from './proxies';
 
 const resolver = {
   user(_, __, { db, user: { id } }) {
@@ -67,6 +68,26 @@ const resolver = {
     return db('collectionSnapshot')
       .where({ userId })
       .orderBy('date');
+  },
+
+  proxies(_, { type, id, filter }, { user: { id: userId } }) {
+    return proxies({ type, id, filter }, userId);
+  },
+
+  async allLists(_, __, { user: { id: userId }, db }) {
+    const wantsLists = await db('wantsLists')
+      .where({ userId })
+      .orderBy('deckId', 'asc')
+      .orderBy('name', 'asc');
+
+    const decks = db('decks')
+      .where({ userId })
+      .orderBy('name', 'asc');
+
+    return {
+      decks,
+      wantsLists,
+    };
   },
 };
 

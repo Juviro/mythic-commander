@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import { Select } from 'antd';
 import styled from 'styled-components';
-
 import { useQuery } from 'react-apollo';
+
 import CardContext from '../../../CardProvider/CardProvider';
 import { allCardSets as allCardSetsQuery } from './queries';
+import useSubmitOnEnter from '../../../Hooks/useSubmitOnEnter';
+import { useToggle } from '../../../Hooks';
 
 const StyledSetIcon = styled.img`
   height: 16px;
@@ -12,7 +14,15 @@ const StyledSetIcon = styled.img`
   margin-right: 4px;
 `;
 
-export default ({ card, onSelect, width = '100%', size = 'small' }) => {
+export default ({
+  card,
+  onSubmit,
+  onSelect,
+  onSelectCard,
+  width = '100%',
+  size = 'small',
+}) => {
+  const [isOpen, toggleIsOpen] = useToggle();
   const { sets } = useContext(CardContext);
   const { data, loading } = useQuery(allCardSetsQuery, {
     variables: { oracle_id: card.oracle_id },
@@ -21,13 +31,22 @@ export default ({ card, onSelect, width = '100%', size = 'small' }) => {
   const allCardSets = loading
     ? []
     : data.cardByOracleId.oracleCard.allSets.map(
-        ({ set: setKey, id, set_name }) => ({
+        ({ set: setKey, id, set_name, imgKey }) => ({
           id,
+          imgKey,
           setKey,
           ...sets[setKey],
           name: set_name || sets[setKey].name,
         })
       );
+
+  const onSelectOption = cardId => {
+    if (onSelect) onSelect(cardId);
+    if (onSelectCard) {
+      const selectedCard = allCardSets.find(({ id }) => cardId === id);
+      onSelectCard(selectedCard);
+    }
+  };
 
   return (
     <Select
@@ -35,9 +54,11 @@ export default ({ card, onSelect, width = '100%', size = 'small' }) => {
       size={size}
       defaultValue={card.set_name}
       style={{ width }}
-      onSelect={onSelect}
+      onKeyDown={useSubmitOnEnter(!isOpen && onSubmit)}
+      onSelect={onSelectOption}
       dropdownStyle={{ minWidth: 200 }}
       onClick={e => e.stopPropagation()}
+      onDropdownVisibleChange={toggleIsOpen}
       disabled={allCardSets.length <= 1}
     >
       {allCardSets.map(({ name, icon_svg_uri, id }) => (

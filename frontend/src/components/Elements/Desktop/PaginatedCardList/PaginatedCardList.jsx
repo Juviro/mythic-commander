@@ -2,7 +2,8 @@ import React from 'react';
 import { StringParam, useQueryParam } from 'use-query-params';
 
 import styled from 'styled-components';
-import { Empty } from 'antd';
+import { Empty, Typography } from 'antd';
+import { DeleteOutlined, SendOutlined, EditOutlined } from '@ant-design/icons';
 import Flex from '../../Shared/Flex';
 import CardTable from './CardTable';
 import CardGrid from './CardGrid';
@@ -31,14 +32,57 @@ export default ({
   showAddedBeforeFilter,
   showCollectionFilters,
   orderByParamName,
-  setCardIdsToDelete,
+  setSelectedCards,
   onDeleteCards,
-  cardIdsToDelete,
+  selectedCards,
+  title,
+  onEditCard,
+  onMoveCards,
 }) => {
   const [zoom, setZoom] = useLocalStorage('zoom', 100);
   const [layout] = useQueryParam('layout', StringParam);
   const width = `calc(100% - ${widthOffset}px)`;
   const isEmptySearch = !loading && !numberOfCards;
+
+  const heightOffset = title ? 40 : 0;
+
+  const singleCardActions = [];
+  const onEdit = onEditCard
+    ? card => {
+        setSelectedCards([card]);
+        onEditCard();
+      }
+    : undefined;
+  const onDelete = onDeleteCards
+    ? card => {
+        setSelectedCards([card]);
+        onDeleteCards();
+      }
+    : undefined;
+  if (onEditCard) {
+    singleCardActions.push({
+      title: 'Edit... [e]',
+      Icon: EditOutlined,
+      onClick: onEdit,
+    });
+  }
+  if (onMoveCards) {
+    singleCardActions.push({
+      title: 'Add to...',
+      Icon: SendOutlined,
+      onClick: card => {
+        setSelectedCards([card]);
+        onMoveCards();
+      },
+    });
+  }
+  if (onDeleteCards) {
+    singleCardActions.push({
+      title: 'Delete [⌫]',
+      Icon: DeleteOutlined,
+      onClick: onDelete,
+    });
+  }
 
   const cardList = isEmptySearch ? (
     <StyledEmpty description="No cards found" />
@@ -47,12 +91,17 @@ export default ({
       cards={cards}
       search={search}
       loading={loading}
+      onMoveCards={onMoveCards}
       showSorter={showSorter}
+      heightOffset={heightOffset}
       hiddenColumns={hiddenColumns}
       numberOfCards={numberOfCards}
-      setCardIdsToDelete={setCardIdsToDelete}
+      setSelectedCards={setSelectedCards}
       onDeleteCards={onDeleteCards}
-      cardIdsToDelete={cardIdsToDelete}
+      selectedCards={selectedCards}
+      actions={singleCardActions}
+      onEditCard={onEdit}
+      onDeleteCard={onDelete}
     />
   ) : (
     <CardGrid
@@ -62,8 +111,9 @@ export default ({
       loading={loading}
       widthOffset={widthOffset}
       numberOfCards={numberOfCards}
-      onDeleteCards={onDeleteCards}
-      setCardIdsToDelete={setCardIdsToDelete}
+      actions={singleCardActions}
+      onEditCard={onEdit}
+      onDeleteCard={onDelete}
     />
   );
 
@@ -78,6 +128,11 @@ export default ({
         position: 'relative',
       }}
     >
+      {title && (
+        <Typography.Title level={2} style={{ marginTop: -16 }}>
+          {title}
+        </Typography.Title>
+      )}
       <Header
         setSearch={setSearch}
         orderByParamName={orderByParamName}

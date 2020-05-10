@@ -8,7 +8,7 @@ const initialValues = {
   pageSize: 10,
   layout: 'grid',
   orderBy: 'name-asc',
-  orderByCollection: 'added-desc',
+  orderByAdvanced: 'added-desc',
 };
 
 export default (key, paramType) => {

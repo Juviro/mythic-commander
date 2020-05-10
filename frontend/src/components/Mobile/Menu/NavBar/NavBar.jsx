@@ -11,7 +11,7 @@ const StyledMenu = styled.div`
   padding: 8px;
   display: flex;
   flex-direction: row;
-  z-index: 1001;
+  z-index: 999;
   position: fixed;
   background-color: ${darkBackground};
 

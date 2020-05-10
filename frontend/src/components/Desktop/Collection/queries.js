@@ -14,6 +14,7 @@ export const COLLECTION_CARD_FIELDS = `
 
     oracleCard {
       _id
+      owned
       totalAmount
       isTwoFaced
       subTypes
@@ -41,7 +42,7 @@ export const getCollectionDesktop = gql`
 `;
 
 export const addToCollectionDesktop = gql`
-  mutation addToCollectionDesktop($cards: [AddToCollectionInput]!) {
+  mutation addToCollectionDesktop($cards: [CardInputType]!) {
     addToCollection(cards: $cards) {
       ${COLLECTION_CARD_FIELDS}
     }

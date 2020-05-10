@@ -1,50 +1,62 @@
 import React, { useEffect } from 'react';
-import { Table, Button } from 'antd';
-import styled from 'styled-components';
+import { Table, Button, Space } from 'antd';
+import styled, { css } from 'styled-components';
 
+import { withRouter } from 'react-router';
 import columns from './columns';
 import useTableShortcuts from './useTableShortcuts';
 import { useToggle, useShortcut } from '../../../../Hooks';
 import CardModalDesktop from '../../CardModalDesktop';
 import scrollIntoView from '../../../../../utils/scrollIntoView';
 
-// navbar, layout picker row, table header, inner margin, footer
-const HEIGHT_OFFSET = 49 + 48 + 39 + 32 + 56;
+// navbar, layout picker row, table header, inner margin, footer, ?
+const DEFAULT_HEIGHT_OFFSET = 49 + 48 + 39 + 32 + 56 + 16;
 
 const StyledButtonWrapper = styled.div`
   width: 150px;
   margin: 16px;
   position: absolute;
-  top: 64px;
+  top: ${({ heightOffset = 0 }) => 64 + heightOffset}px;
   z-index: 1;
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   transition: opacity 0.3s;
+
+  ${({ isVisible }) =>
+    !isVisible &&
+    css`
+      display: none;
+    `}
 `;
 
-export default ({
+const CardTable = ({
   cards,
   loading,
   search,
+  heightOffset,
   numberOfCards,
   showSorter,
   hiddenColumns,
   onDeleteCards,
-  cardIdsToDelete,
-  setCardIdsToDelete,
+  selectedCards,
+  setSelectedCards,
+  onMoveCards,
+  actions,
+  onEditCard,
+  onDeleteCard,
+  history,
 }) => {
   const [showDetails, toggleShowDetail] = useToggle(false);
   const toggleElementSelection = elementPosition => {
     const elementToToggle = cards && cards[elementPosition - 1];
     if (!elementToToggle) return;
-    const { oracle_id } = elementToToggle;
-    const filteredCardIdsToDelete = cardIdsToDelete.filter(
-      id => id !== oracle_id
+    const filteredCardsToDelete = selectedCards.filter(
+      ({ id }) => id !== elementToToggle.id
     );
     const newSelectedIds =
-      cardIdsToDelete.length !== filteredCardIdsToDelete.length
-        ? filteredCardIdsToDelete
-        : filteredCardIdsToDelete.concat(oracle_id);
-    setCardIdsToDelete(newSelectedIds);
+      selectedCards.length !== filteredCardsToDelete.length
+        ? filteredCardsToDelete
+        : filteredCardsToDelete.concat(elementToToggle);
+    setSelectedCards(newSelectedIds);
   };
 
   const {
@@ -58,22 +70,22 @@ export default ({
   );
   const selectedCard = cards && cards[selectedElementPosition - 1];
 
-  const onDeleteSingleCard = onDeleteCards
-    ? oracleId => {
-        setCardIdsToDelete([oracleId]);
-        onDeleteCards();
-      }
-    : undefined;
-
   const onPressDelete = () => {
-    if (!onDeleteCards) return;
-    if (cardIdsToDelete.length) {
-      onDeleteCards();
-    } else {
-      onDeleteSingleCard(selectedCard.oracle_id);
-    }
+    if (!onDeleteCard) return;
+    onDeleteCard(selectedCard);
   };
-  useShortcut('DEL', onPressDelete);
+  useShortcut('DEL', !showDetails ? onPressDelete : null);
+  useShortcut(
+    'e',
+    !showDetails && onEditCard ? () => onEditCard(selectedCard) : null
+  );
+
+  // close modal when list changes
+  useEffect(() => {
+    toggleShowDetail(false);
+    setSelectedElementPosition(1);
+    // eslint-disable-next-line
+  }, [history.location.pathname]);
 
   useEffect(() => {
     const [element] = document.getElementsByClassName('selected');
@@ -82,24 +94,33 @@ export default ({
     scrollIntoView(element);
   }, [selectedElementPosition]);
 
-  const innerTableWidth = window.innerHeight - HEIGHT_OFFSET;
+  const innerTableWidth =
+    window.innerHeight - DEFAULT_HEIGHT_OFFSET - heightOffset;
 
+  // TODO: enable for all (search)
   const rowSelection = onDeleteCards && {
-    onChange: selectedRows => setCardIdsToDelete(selectedRows),
-    selectedRowKeys: cardIdsToDelete,
+    onChange: selectedRows =>
+      setSelectedCards(cards.filter(({ id }) => selectedRows.includes(id))),
+    selectedRowKeys: selectedCards.map(({ id }) => id),
   };
 
   return (
     <>
       <StyledButtonWrapper
-        isVisible={Boolean(cardIdsToDelete && cardIdsToDelete.length)}
+        heightOffset={heightOffset}
+        isVisible={Boolean(selectedCards && selectedCards.length)}
       >
-        <Button type="danger" onClick={onDeleteCards}>
-          Delete
-        </Button>
+        <Space>
+          <Button type="primary" ghost onClick={onMoveCards}>
+            Add to...
+          </Button>
+          <Button type="danger" onClick={onDeleteCards}>
+            Delete
+          </Button>
+        </Space>
       </StyledButtonWrapper>
       <Table
-        rowKey="oracle_id"
+        rowKey="id"
         style={{ width: '100%' }}
         size="small"
         fixed={false}
@@ -109,7 +130,7 @@ export default ({
           showSorter,
           search,
           hiddenColumns,
-          onDeleteCard: onDeleteSingleCard,
+          actions,
         })}
         showSorterTooltip={false}
         pagination={{
@@ -141,3 +162,5 @@ export default ({
     </>
   );
 };
+
+export default withRouter(CardTable);

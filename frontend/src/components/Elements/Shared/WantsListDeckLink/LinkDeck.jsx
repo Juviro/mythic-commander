@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { LinkOutlined, LoadingOutlined } from '@ant-design/icons';
-import { Typography, Modal, Select } from 'antd';
+import { Typography, Modal, List } from 'antd';
 import { useQuery, useMutation } from 'react-apollo';
-import { getDecks, linkWantsList } from './queries';
 
-import message from '../../../../utils/message';
-import { wantsListsForDeckMobile } from '../../Deck/LinkedWants/queries';
 import { useToggle } from '../../../Hooks';
+import message from '../../../../utils/message';
+import { getDecks, linkWantsList } from './queries';
+import { wantsListsForDeckMobile } from '../../../Mobile/Deck/LinkedWants/queries';
 
 const StyledLinkButton = styled.div`
   width: 120px;
@@ -20,6 +20,7 @@ const StyledLinkButton = styled.div`
   flex-direction: column;
   border: 1px solid #dddddd;
   justify-content: space-evenly;
+  cursor: pointer;
 `;
 
 const StyledDeckPreview = styled.img`
@@ -81,20 +82,19 @@ export default ({ wantsList }) => {
         onCancel={() => toggleIsModalVisible(false)}
         footer={null}
         centered
+        bodyStyle={{
+          maxHeight: '70vh',
+          overflow: 'scroll',
+        }}
       >
-        <Select
-          loading={loading}
-          style={{ width: '100%' }}
-          onChange={onLinkDeck}
-          placeholder="Select a Deck..."
-        >
+        <List loading={loading} style={{ width: '100%' }} className="hoverable">
           {decks.map(({ id, name, imgSrc }) => (
-            <Select.Option value={id} key={id}>
+            <List.Item key={id} onClick={() => onLinkDeck(id)}>
               <StyledDeckPreview src={imgSrc} />
               {name}
-            </Select.Option>
+            </List.Item>
           ))}
-        </Select>
+        </List>
       </Modal>
     </>
   );

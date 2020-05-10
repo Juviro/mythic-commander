@@ -12,10 +12,6 @@ const StyledContextMenu = styled.div`
   padding: 5px;
   background-color: rgba(255, 255, 255, 0.6);
   display: flex;
-
-  &:hover {
-    transform: scale(1.05);
-  }
 `;
 
 export default ({ onDeleteCard, loading }) => {
