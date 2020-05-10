@@ -40,6 +40,8 @@ export default ({
   setSelectedCards,
   onMoveCards,
   actions,
+  onEditCard,
+  onDeleteCard,
 }) => {
   const [showDetails, toggleShowDetail] = useToggle(false);
   const toggleElementSelection = elementPosition => {
@@ -67,10 +69,11 @@ export default ({
   const selectedCard = cards && cards[selectedElementPosition - 1];
 
   const onPressDelete = () => {
-    if (!onDeleteCards || !selectedCards.length) return;
-    onDeleteCards();
+    if (!onDeleteCard) return;
+    onDeleteCard(selectedCard);
   };
   useShortcut('DEL', onPressDelete);
+  useShortcut('e', () => onEditCard(selectedCard));
 
   useEffect(() => {
     const [element] = document.getElementsByClassName('selected');

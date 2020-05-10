@@ -5,7 +5,7 @@ import { useMutation } from 'react-apollo';
 import { message, Typography } from 'antd';
 import { changeCollection, cardDetailsDesktop } from '../queries';
 import { CardSetOverview, EditIcon } from '../../../Shared';
-import { useShortcut, useToggle } from '../../../../Hooks';
+import { useToggle, useShortcut } from '../../../../Hooks';
 import { getCollectionDesktop } from '../../../../Desktop/Collection/queries';
 
 const StyledWrapper = styled.div`
@@ -23,7 +23,7 @@ export default ({ card, loading, selectedCardId, onChangeSet, showTitle }) => {
   const [isEditing, toggleIsEditing] = useToggle(false);
   const [editedMap, setEditedMap] = useState({});
   const [addedMap, setAddedMap] = useState({});
-  useShortcut('e', () => toggleIsEditing(true));
+  useShortcut('e', () => toggleIsEditing(true), true);
 
   const onDiscard = () => {
     setEditedMap({});

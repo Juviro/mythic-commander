@@ -4,6 +4,7 @@ export const allCardSets = gql`
   query allCardSets($oracle_id: String!) {
     cardByOracleId(oracle_id: $oracle_id) {
       id
+      imgKey
       oracleCard {
         _id
         allSets {

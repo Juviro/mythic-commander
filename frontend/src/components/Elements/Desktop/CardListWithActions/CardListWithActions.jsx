@@ -66,7 +66,7 @@ export default ({
     setSelectedCards([]);
   };
 
-  const isAnyModalVisible = showDeleteModal || showMoveModal;
+  const isAnyModalVisible = showEditModal || showDeleteModal || showMoveModal;
 
   return (
     <>

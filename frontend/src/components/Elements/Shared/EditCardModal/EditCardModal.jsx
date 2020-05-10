@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Modal } from 'antd';
 import EditCardBody from './EditCardBody';
+import useBlockShortcuts from '../../../Hooks/useBlockShortcuts';
 
 export default ({ onEdit, card, onCancel }) => {
+  useBlockShortcuts();
   const [newProps, setNewProps] = useState({});
 
   const onSubmit = () => {

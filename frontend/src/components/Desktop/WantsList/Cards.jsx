@@ -40,6 +40,7 @@ export default ({ cards, loading, widthOffset, wantsList }) => {
 
         cache.writeQuery({
           query: wantsListDesktop,
+          variables: { id: wantsList.id },
           data: {
             wantsList: {
               ...existing.wantsList,

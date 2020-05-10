@@ -47,14 +47,23 @@ export default ({
   const heightOffset = title ? 40 : 0;
 
   const singleCardActions = [];
-  if (onEditCard) {
-    singleCardActions.push({
-      title: 'Edit...',
-      Icon: EditOutlined,
-      onClick: card => {
+  const onEdit = onEditCard
+    ? card => {
         setSelectedCards([card]);
         onEditCard();
-      },
+      }
+    : undefined;
+  const onDelete = onDeleteCards
+    ? card => {
+        setSelectedCards([card]);
+        onDeleteCards();
+      }
+    : undefined;
+  if (onEditCard) {
+    singleCardActions.push({
+      title: 'Edit... [e]',
+      Icon: EditOutlined,
+      onClick: onEdit,
     });
   }
   if (onMoveCards) {
@@ -69,12 +78,9 @@ export default ({
   }
   if (onDeleteCards) {
     singleCardActions.push({
-      title: 'Delete',
+      title: 'Delete [⌫]',
       Icon: DeleteOutlined,
-      onClick: card => {
-        setSelectedCards([card]);
-        onDeleteCards();
-      },
+      onClick: onDelete,
     });
   }
 
@@ -94,6 +100,8 @@ export default ({
       onDeleteCards={onDeleteCards}
       selectedCards={selectedCards}
       actions={singleCardActions}
+      onEditCard={onEdit}
+      onDeleteCard={onDelete}
     />
   ) : (
     <CardGrid
@@ -104,6 +112,8 @@ export default ({
       widthOffset={widthOffset}
       numberOfCards={numberOfCards}
       actions={singleCardActions}
+      onEditCard={onEdit}
+      onDeleteCard={onDelete}
     />
   );
 

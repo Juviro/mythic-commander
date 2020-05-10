@@ -61,10 +61,12 @@ const GridCard = ({
   loading,
   zoom,
   search,
+  onEditCard,
 }) => {
   const displayedAmount = card.amount || card.totalAmount;
   const [showMenu, toggleShowMenu] = useToggle();
   useShortcut('DEL', isSelected ? onDeleteCard : null);
+  useShortcut('e', isSelected ? onEditCard : null);
   const ref = useRef(null);
 
   useEffect(() => {
