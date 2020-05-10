@@ -14,9 +14,10 @@ import { lightBackground } from '../../../constants/colors';
 const StyledWrapper = styled.div`
   width: 100%;
   display: flex;
-  height: 100%;
+  height: fit-content;
   flex-direction: column;
   align-items: center;
+  min-height: 100%;
   background-color: ${lightBackground};
 `;
 
