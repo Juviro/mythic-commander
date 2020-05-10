@@ -16,6 +16,7 @@ const CardModalDesktop = ({
   useShortcut('ENTER', onClose, visible);
   const { data, loading: cardLoading } = useQuery(cardDetailsDesktop, {
     variables: { oracle_id: card.oracle_id },
+    fetchPolicy: 'network-only',
   });
   const loading = cardLoading || parentLoading;
 

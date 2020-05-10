@@ -30,6 +30,7 @@ export default () => {
   const { oracle_id } = useParams();
   const { data, loading } = useQuery(cardDetailsDesktop, {
     variables: { oracle_id },
+    fetchPolicy: 'network-only',
   });
   const card = data && unifySingleCard(data.cardByOracleId);
 

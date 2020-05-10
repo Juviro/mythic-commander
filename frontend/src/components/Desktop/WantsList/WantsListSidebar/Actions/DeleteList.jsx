@@ -7,41 +7,19 @@ import { useToggle } from '../../../../Hooks';
 import { ConfirmDelete } from '../../../../Elements/Shared';
 import boldText from '../../../../../utils/boldText';
 import { deleteWantsListDesktop } from '../../queries';
-import { wantsListsDesktop } from '../../../WantsLists/queries';
 
 const DeleteList = ({ wantsList: { id: wantsListId, name }, history }) => {
   const [isDeleting, toggleisDeleting] = useToggle();
   const [mutate] = useMutation(deleteWantsListDesktop);
 
-  const onDeleteList = () => {
+  const onDeleteList = async () => {
     toggleisDeleting(false);
-    mutate({
+    await mutate({
       variables: {
         wantsListId,
       },
-      //   refetchQueries: [
-      //     {
-      //       query: wantsListsForDeckMobile,
-      //       variables: { deckId },
-      //     },
-      //   ],
-      update: cache => {
-        const existing = cache.readQuery({
-          query: wantsListsDesktop,
-        });
-        if (!existing) return;
-
-        const newWantsLists = existing.wantsLists.filter(
-          ({ id }) => id !== wantsListId
-        );
-
-        cache.writeQuery({
-          query: wantsListsDesktop,
-          data: { wantsLists: newWantsLists },
-        });
-        message.success('Deleted wants list!');
-      },
     });
+    message.success('Deleted wants list!');
     history.replace('/wants');
   };
 

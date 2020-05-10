@@ -35,7 +35,7 @@ export default {
           )
           GROUP BY cards.oracle_id
         )
-        SELECT * 
+        SELECT *, true as owned 
         FROM grouped 
         LEFT JOIN cards 
           ON cards.id = grouped.id
