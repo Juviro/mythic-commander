@@ -62,11 +62,12 @@ const GridCard = ({
   zoom,
   search,
   onEditCard,
+  shortcutsActive,
 }) => {
   const displayedAmount = card.amount || card.totalAmount;
   const [showMenu, toggleShowMenu] = useToggle();
-  useShortcut('DEL', isSelected ? onDeleteCard : null);
-  useShortcut('e', isSelected ? onEditCard : null);
+  useShortcut('DEL', shortcutsActive && onDeleteCard ? onDeleteCard : null);
+  useShortcut('e', shortcutsActive && onEditCard ? onEditCard : null);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -96,7 +97,7 @@ const GridCard = ({
             style={{ fontSize: textSize }}
           >{`${displayedAmount}x`}</StyledAmountWrapper>
         )}
-        {showMenu && actions.length && (
+        {Boolean(showMenu && actions.length) && (
           <StyledContextMenu>
             <ContextMenu card={card} menuItems={actions} />
           </StyledContextMenu>
@@ -120,6 +121,7 @@ const areEqual = (prevProps, nextProps) => {
   if (prevProps.loading !== nextProps.loading) return false;
   if (prevProps.index !== nextProps.index) return false;
   if (prevProps.search !== nextProps.search) return false;
+  if (prevProps.shortcutsActive !== nextProps.shortcutsActive) return false;
 
   return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
     propKey => prevProps.card[propKey] === nextProps.card[propKey]

@@ -16,8 +16,10 @@ import {
   addCardsToWantsListDesktop,
   wantsListDesktop,
 } from '../../../Desktop/WantsList/queries';
+import useBlockShortcuts from '../../../Hooks/useBlockShortcuts';
 
 export default ({ onCancel, cardsToAdd, numberOfSelectedCards }) => {
+  useBlockShortcuts();
   const { data, loading } = useQuery(allLists);
   const [addToDeck] = useMutation(addCardsToDeckDesktop);
   const [addToWantsList] = useMutation(addCardsToWantsListDesktop);

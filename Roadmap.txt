@@ -1,23 +1,23 @@
 BUGFIXES:
+    - advanced search -> add card to collection: owned badge not displayed
 
 CURRENT:
 
 NEXT:
     - styling
-    - revert arrow navigation block
 
 IMPROVEMENTS:
-    - improve re-rendering of table columns 
-    - enable table actions for search
+    - improve re-rendering of table columns and grid card
 
 FEATURES:
-    - allow multiple selected elements in grid list with shift
+    - enable table actions for search
     - sharable collection / decks / wants
 
 REFACTORINGS:
     - evaluate removing all caching, using network only everywhere
  
 BACKLOG:
+    - allow multiple selected elements in grid list with shift
     - move decks and wants to random id
     - allow search for unowned cards only
     - refresh google access ?
