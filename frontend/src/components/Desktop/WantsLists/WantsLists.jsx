@@ -21,7 +21,9 @@ const StyledWrapper = styled.div`
 `;
 
 const Wants = ({ history }) => {
-  const { data, loading } = useQuery(getWantsLists);
+  const { data, loading } = useQuery(getWantsLists, {
+    fetchPolicy: 'network-only',
+  });
   const [search, setSearch] = useState('');
   const [mutate] = useMutation(createWantsListDesktop);
 

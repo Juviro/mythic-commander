@@ -24,7 +24,10 @@ export default () => {
     true
   );
   const toggleIsSidebarVisible = () => setIsSidebarVisible(!isSidebarVisible);
-  const { data, loading } = useQuery(wantsListDesktop, { variables: { id } });
+  const { data, loading } = useQuery(wantsListDesktop, {
+    variables: { id },
+    fetchPolicy: 'network-only',
+  });
   const cards = data && unifyCardFormat(data.wantsList.cards);
   const wantsList = data && { ...data.wantsList, cards };
 

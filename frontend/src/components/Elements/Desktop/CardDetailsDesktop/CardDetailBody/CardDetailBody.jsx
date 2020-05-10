@@ -26,8 +26,8 @@ export default ({
         selectedCardId={selectedCardId}
         setSelectedCardId={setSelectedCardId}
       />
-      <AdditionalInfos card={card} loading={loading} isFlipped={isFlipped} />
       <DecksAndWants card={card} />
+      <AdditionalInfos card={card} loading={loading} isFlipped={isFlipped} />
     </>
   );
 };

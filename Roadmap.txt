@@ -1,5 +1,6 @@
 BUGFIXES:
     - advanced search -> add card to collection: owned badge not displayed
+    - delete wants list -> wants list overview: old list still displayed (only sometimes. racing condition? await deleting before redirecting?)
 
 CURRENT:
 
