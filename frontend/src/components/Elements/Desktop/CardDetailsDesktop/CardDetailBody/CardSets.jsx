@@ -56,12 +56,10 @@ export default ({ card, loading, selectedCardId, onChangeSet, showTitle }) => {
       },
       update: (cache, { data: updateData }) => {
         const { changeCollection: newCard } = updateData;
-        console.log('newCard :', newCard);
         const existing = cache.readQuery({
           query: getCollectionDesktop,
         });
 
-        console.log('existing :', existing);
         const filteredCards = existing.collection.cards.filter(
           ({ oracle_id }) => oracle_id !== card.oracle_id
         );
