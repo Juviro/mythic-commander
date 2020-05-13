@@ -43,6 +43,21 @@ const resolver = {
     if (colors !== null || !card_faces) return colors;
     return card_faces[0].colors;
   },
+
+  possiblePartner({ oracle_text }) {
+    if (!oracle_text) return null;
+    const isGeneralPartner = oracle_text.includes('Partner (You can have');
+    if (isGeneralPartner) {
+      return 'ALL';
+    }
+    const isPartnerWith = oracle_text.includes('Partner with ');
+    if (isPartnerWith) {
+      const partner = oracle_text.match(/Partner with ([\w, ]+)[(\n]+/);
+      return partner && partner[1].trim();
+    }
+
+    return null;
+  },
 };
 
 export default resolver;

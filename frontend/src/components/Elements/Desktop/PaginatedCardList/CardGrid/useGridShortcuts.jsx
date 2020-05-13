@@ -112,7 +112,7 @@ export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
       case keyCodes.ARROW_RIGHT:
         onRight();
         break;
-      case keyCodes.ARROW_TOP:
+      case keyCodes.ARROW_UP:
         onUp();
         break;
       case keyCodes.ARROW_DOWN:

@@ -6,11 +6,13 @@ import { Flex } from '../../../../Elements/Shared';
 import { CARD_WIDTH } from './CardList/Card';
 import getCardsByType from '../../../../../utils/getCardsByType';
 import CardLists from './CardLists';
+import { sortByCmc, sortByName } from '../../../../../utils/cardFilter';
 
 const getCardColumns = (cards, numberOfCols) => {
   if (!cards || numberOfCols === null) return [];
 
-  const { cardsByType } = getCardsByType(cards);
+  const sortedCards = sortByCmc(sortByName(cards));
+  const { cardsByType } = getCardsByType(sortedCards);
   const displayedCardsByType = cardsByType
     .filter(({ cards: _cards }) => _cards.length)
     .sort((a, b) => b.cards.length - a.cards.length);
@@ -20,21 +22,23 @@ const getCardColumns = (cards, numberOfCols) => {
     columns.push([]);
   }
 
-  return displayedCardsByType.reduce((acc, val) => {
+  const cardColumns = displayedCardsByType.reduce((acc, val) => {
     const columnWithLeastCards = acc
       .map((column, index) => ({
-        numberOfCards: column.reduce(
+        height: column.reduce(
           // The 8 is is an offset for column title and fully displayed card
           (sum, { cards: columnCards }) => sum + columnCards.length + 8,
           0
         ),
         index,
       }))
-      .sort((a, b) => a.numberOfCards - b.numberOfCards)[0].index;
+      .sort((a, b) => a.height - b.height)[0].index;
 
     acc[columnWithLeastCards].push(val);
     return acc;
   }, columns);
+
+  return cardColumns.filter(column => column.length);
 };
 
 export default ({ deck, loading }) => {

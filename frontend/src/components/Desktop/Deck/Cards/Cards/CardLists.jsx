@@ -1,35 +1,42 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
 
-import { Flex } from '../../../../Elements/Shared';
+import { Flex, ConfirmDelete } from '../../../../Elements/Shared';
 import CardList from './CardList';
 import useCardListShortcuts from './useCardListShortcuts';
 import { useToggle, useShortcut } from '../../../../Hooks';
 import CardModalDesktop from '../../../../Elements/Desktop/CardModalDesktop';
 import { deleteFromDeckDesktop } from '../../queries';
-import keyCodes from '../../../../../constants/keyCodes';
+import boldText from '../../../../../utils/boldText';
 
 const getColumnKey = column => column.map(({ type }) => type).join('');
 
 export default ({ columns, deck }) => {
   const [showDetails, toggleShowDetail] = useToggle(false);
   const {
-    selectedCardId,
-    setSelectedCardId,
+    selectedCardOracleId,
+    setSelectedCardOracleId,
     selectNextCard,
   } = useCardListShortcuts(columns);
+  const [isDeleting, setIsDeleting] = useToggle();
   const [mutateDelete] = useMutation(deleteFromDeckDesktop);
 
+  const selectedCard = columns
+    .flat()
+    .map(({ cards }) => cards)
+    .flat()
+    .find(({ oracle_id }) => oracle_id === selectedCardOracleId);
+
   const onDeleteCard = () => {
-    console.log('selectedCardId :', selectedCardId);
-    if (!selectedCardId) return;
+    if (!selectedCard) return;
     selectNextCard();
+    setIsDeleting(false);
     const newCards = deck.originalCards.filter(
-      card => card.id !== selectedCardId
+      card => card.id !== selectedCard.id
     );
     const newNumberOfCards = deck.numberOfCards;
     mutateDelete({
-      variables: { cardId: selectedCardId, deckId: deck.id },
+      variables: { cardId: selectedCard.id, deckId: deck.id },
       optimisticResponse: () => ({
         __typename: 'Mutation',
         deleteFromWantsList: {
@@ -40,14 +47,14 @@ export default ({ columns, deck }) => {
       }),
     });
   };
-  useShortcut('ENTER', selectedCardId ? toggleShowDetail : null);
-  useShortcut('DEL', onDeleteCard);
+  const onOpenDeleteModal = () => {
+    if (!selectedCard) return;
+    setIsDeleting(true);
+  };
 
-  const selectedCard = columns
-    .flat()
-    .map(({ cards }) => cards)
-    .flat()
-    .find(({ id }) => id === selectedCardId);
+  useShortcut('ENTER', selectedCard ? toggleShowDetail : null);
+  useShortcut('DEL', onOpenDeleteModal);
+  useShortcut('SPACE', () => setSelectedCardOracleId(null));
 
   return (
     <>
@@ -58,9 +65,10 @@ export default ({ columns, deck }) => {
               type={type}
               key={type}
               cards={cardGroup}
-              setSelectedCardId={setSelectedCardId}
+              onDelete={onOpenDeleteModal}
+              setSelectedCardOracleId={setSelectedCardOracleId}
               onOpenDetails={toggleShowDetail}
-              selectedCardId={selectedCardId}
+              selectedCardId={selectedCard && selectedCard.id}
             />
           ))}
         </Flex>
@@ -70,6 +78,13 @@ export default ({ columns, deck }) => {
         visible={showDetails}
         onClose={toggleShowDetail}
       />
+      {isDeleting && (
+        <ConfirmDelete
+          text={boldText(`Delete <b>${selectedCard.name}</b> from this deck?`)}
+          onCancel={() => setIsDeleting(false)}
+          onOk={onDeleteCard}
+        />
+      )}
     </>
   );
 };
