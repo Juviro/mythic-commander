@@ -10,6 +10,7 @@ import CardGrid from './CardGrid';
 import Header from './Header';
 import FullscreenSpinner from '../../Shared/Spinner';
 import useLocalStorage from '../../../Hooks/useLocalStorage';
+import keySymbols from '../../../../constants/keySymbols';
 
 const StyledEmpty = styled(Empty)`
   width: 100%;
@@ -42,7 +43,6 @@ export default ({
   const [zoom, setZoom] = useLocalStorage('zoom', 100);
   const [layout] = useQueryParam('layout', StringParam);
   const width = `calc(100% - ${widthOffset}px)`;
-  const isEmptySearch = !loading && !numberOfCards;
 
   const heightOffset = title ? 40 : 0;
 
@@ -61,7 +61,7 @@ export default ({
     : undefined;
   if (onEditCard) {
     singleCardActions.push({
-      title: 'Edit... [e]',
+      title: 'Edit... [E]',
       Icon: EditOutlined,
       onClick: onEdit,
     });
@@ -78,44 +78,49 @@ export default ({
   }
   if (onDeleteCards) {
     singleCardActions.push({
-      title: 'Delete [⌫]',
+      title: `Delete [${keySymbols.BACKSPACE}]`,
       Icon: DeleteOutlined,
       onClick: onDelete,
     });
   }
 
-  const cardList = isEmptySearch ? (
-    <StyledEmpty description="No cards found" />
-  ) : layout === 'list' ? (
-    <CardTable
-      cards={cards}
-      search={search}
-      loading={loading}
-      onMoveCards={onMoveCards}
-      showSorter={showSorter}
-      heightOffset={heightOffset}
-      hiddenColumns={hiddenColumns}
-      numberOfCards={numberOfCards}
-      setSelectedCards={setSelectedCards}
-      onDeleteCards={onDeleteCards}
-      selectedCards={selectedCards}
-      actions={singleCardActions}
-      onEditCard={onEdit}
-      onDeleteCard={onDelete}
-    />
-  ) : (
-    <CardGrid
-      zoom={zoom}
-      search={search}
-      cards={cards}
-      loading={loading}
-      widthOffset={widthOffset}
-      numberOfCards={numberOfCards}
-      actions={singleCardActions}
-      onEditCard={onEdit}
-      onDeleteCard={onDelete}
-    />
-  );
+  let cardList;
+  if (layout === 'list') {
+    cardList = (
+      <CardTable
+        cards={cards}
+        search={search}
+        loading={loading}
+        onMoveCards={onMoveCards}
+        showSorter={showSorter}
+        heightOffset={heightOffset}
+        hiddenColumns={hiddenColumns}
+        numberOfCards={numberOfCards}
+        setSelectedCards={setSelectedCards}
+        onDeleteCards={onDeleteCards}
+        selectedCards={selectedCards}
+        actions={singleCardActions}
+        onEditCard={onEdit}
+        onDeleteCard={onDelete}
+      />
+    );
+  } else if (layout === 'grid') {
+    cardList = (
+      <CardGrid
+        zoom={zoom}
+        search={search}
+        cards={cards}
+        loading={loading}
+        widthOffset={widthOffset}
+        numberOfCards={numberOfCards}
+        actions={singleCardActions}
+        onEditCard={onEdit}
+        onDeleteCard={onDelete}
+      />
+    );
+  } else {
+    cardList = <StyledEmpty description="No cards found" />;
+  }
 
   return (
     <Flex

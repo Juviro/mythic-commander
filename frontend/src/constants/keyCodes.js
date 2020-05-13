@@ -5,7 +5,7 @@ const SPACE = 32;
 const ARROW_LEFT = 37;
 const ARROW_TOP = 38;
 const ARROW_RIGHT = 39;
-const ARROW_BOTTOM = 40;
+const ARROW_DOWN = 40;
 
 export default {
   ENTER,
@@ -15,5 +15,5 @@ export default {
   ARROW_LEFT,
   ARROW_TOP,
   ARROW_RIGHT,
-  ARROW_BOTTOM,
+  ARROW_DOWN,
 };

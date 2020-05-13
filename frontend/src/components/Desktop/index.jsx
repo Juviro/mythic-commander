@@ -29,7 +29,7 @@ const App = () => {
           <Route path="/search" exact component={Search} />
           <Route path="/collection" exact component={Collection} />
           <Route path="/decks" exact component={Decks} />
-          <Route path="/deck/:id" exact component={Deck} />
+          <Route path="/decks/:id" exact component={Deck} />
           <Route path="/wants" exact component={WantsLists} />
           <Route path="/wants/:id" exact component={WantsList} />
           <Route path="/cards/:oracle_id" exact component={Card} />

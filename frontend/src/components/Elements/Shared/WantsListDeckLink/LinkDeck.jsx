@@ -84,7 +84,7 @@ export default ({ wantsList }) => {
         centered
         bodyStyle={{
           maxHeight: '70vh',
-          overflow: 'scroll',
+          overflow: 'auto',
         }}
       >
         <List loading={loading} style={{ width: '100%' }} className="hoverable">

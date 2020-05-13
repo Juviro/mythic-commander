@@ -48,10 +48,48 @@ export const getDeckDesktop = gql`
   }
 `;
 
+export const editDeckCardDesktop = gql`
+  mutation editDeckCardDesktop(
+    $cardId: String!, 
+    $deckId: String! 
+    $newProps: EditDeckCardInput!
+  ) {
+    editDeckCard(
+      cardId: $cardId, 
+      deckId: $deckId, 
+      newProps: $newProps
+    ) {
+      ${CARD_FIELDS}
+    }
+  }
+`;
+
+export const editDeckDesktop = gql`
+  mutation editDeckDesktop(
+    $deckId: String!
+    $newProperties: EditDeckFieldsInput!
+  ) {
+    editDeck(deckId: $deckId, newProperties: $newProperties) {
+      id
+      name
+      lastEdit
+      imgSrc
+    }
+  }
+`;
+
 export const addCardsToDeckDesktop = gql`
   mutation addCardsToDeckDesktop($cards: [CardInputType!]!, $deckId: String!) {
     addCardsToDeck(cards: $cards, deckId: $deckId) {
         ${DECK_FIELDS}
+    }
+  }
+`;
+
+export const deleteFromDeckDesktop = gql`
+  mutation deleteFromDeckDesktop($cardId: String!, $deckId: String!) {
+    deleteFromDeck(cardId: $cardId, deckId: $deckId) {
+      ${DECK_FIELDS}
     }
   }
 `;

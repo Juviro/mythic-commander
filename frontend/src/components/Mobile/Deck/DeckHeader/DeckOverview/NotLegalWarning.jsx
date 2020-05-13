@@ -18,7 +18,7 @@ const messages = {
   has100Cards: '• This deck does not contain exactly 100 cards',
 };
 
-export default ({ deck }) => {
+export default ({ deck, size = 16 }) => {
   const isLegal = isDeckLegal(deck);
   const isOwned = isDeckOwned(deck);
   const has100Cards = getNumberOfCards(deck.cards) === 100;
@@ -41,7 +41,7 @@ export default ({ deck }) => {
       content={renderIssues}
       trigger="click"
     >
-      <ExclamationCircleOutlined style={{ color: 'orange', fontSize: 16 }} />
+      <ExclamationCircleOutlined style={{ color: 'orange', fontSize: size }} />
     </Popover>
   );
 };
