@@ -11,7 +11,7 @@ const StyledColorTag = styled.img`
   margin-right: 2px;
   box-shadow: 1px 1px 2px #5f5f5f;
 `;
-export default ({ symbol, size = 18 }) => {
+export default ({ symbol, size = 18, margin = 0 }) => {
   if (symbol === '//') {
     return (
       <Typography.Text strong style={{ fontSize: size, margin: '0 6px' }}>
@@ -28,5 +28,12 @@ export default ({ symbol, size = 18 }) => {
   const src = colorIcons[plainSymbol];
   if (!src) return `{${plainSymbol}}`;
 
-  return <StyledColorTag src={src} size={size} alt={`{${plainSymbol}}`} />;
+  return (
+    <StyledColorTag
+      src={src}
+      size={size}
+      alt={`{${plainSymbol}}`}
+      style={{ margin }}
+    />
+  );
 };

@@ -71,7 +71,7 @@ const PreviewCardImage = ({
             height: 460,
           }}
         >
-          <FlippableCard card={card} hideFlipIcon />
+          <FlippableCard card={card} />
         </div>
       }
       placement="right"

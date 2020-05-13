@@ -76,7 +76,7 @@ export default (numberOfCards, toggleShowDetail, toggleElementSelection) => {
       case keyCodes.ARROW_TOP:
         onUp();
         break;
-      case keyCodes.ARROW_BOTTOM:
+      case keyCodes.ARROW_DOWN:
         onDown();
         break;
       default:

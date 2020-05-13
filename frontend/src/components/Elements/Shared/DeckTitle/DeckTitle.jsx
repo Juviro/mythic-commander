@@ -1,9 +1,9 @@
 import React from 'react';
-import { List, Typography, message } from 'antd';
+import { Typography, message } from 'antd';
 import { useMutation } from 'react-apollo';
-import { editDeck } from '../queries';
+import { editDeck } from './queries';
 
-export default ({ deck }) => {
+export default ({ deck, fontSize = 14 }) => {
   const [editDeckMutation] = useMutation(editDeck);
 
   const onChangeName = async name => {
@@ -29,20 +29,19 @@ export default ({ deck }) => {
   };
 
   return (
-    <List.Item>
-      <Typography.Paragraph
-        ellipsis
-        editable={{ onChange: val => onChangeName(val || 'My Deck') }}
-        style={{
-          marginTop: 10,
-          fontSize: 14,
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        {deck.name}
-      </Typography.Paragraph>
-    </List.Item>
+    <Typography.Paragraph
+      ellipsis
+      editable={{ onChange: val => onChangeName(val || 'My Deck') }}
+      style={{
+        marginBottom: 0,
+        fontSize,
+        fontWeight: 600,
+        width: 'fit-content',
+        display: 'flex',
+        justifyContent: 'space-between',
+      }}
+    >
+      {deck.name}
+    </Typography.Paragraph>
   );
 };

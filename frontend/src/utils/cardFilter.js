@@ -117,7 +117,7 @@ const sortByAdded = (cards, direction = 'asc') => {
   return direction === 'asc' ? sortedCards : sortedCards.reverse();
 };
 
-const sortByCmc = (cards, direction = 'asc') => {
+export const sortByCmc = (cards, direction = 'asc') => {
   const sortedCards = cards.sort((a, b) => a.cmc - b.cmc);
 
   return direction === 'asc' ? sortedCards : sortedCards.reverse();

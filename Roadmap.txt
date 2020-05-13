@@ -1,9 +1,20 @@
 BUGFIXES:
     - advanced search -> add card to collection: owned badge not displayed
+    - search name overflowing owned badge
 
 CURRENT:
 
 NEXT:
+    - add to selected card:
+        - details [ENTER] - normal details modal
+        - edit [E] -> same as wants modal
+        - delete [BACKSAPCE] - deleeete
+
+    - create deck not working (desktop)
+    - amount display
+    - add value sum to each type
+    - add color identity to decks overview, add to deck resolver
+    - sort cards by name after cmc
 
 IMPROVEMENTS:
     - improve re-rendering of table columns and grid card
@@ -43,9 +54,13 @@ BACKLOG:
     - prefer owned versions when adding to deck or wants
     - suggest similar cards when having invalid cardname in multiinput
     - show all current search options for advanced search (M/D)
+    - dark mode
+    - update document title based on content
+    - allow text export/proxy of selected cards
 
 BACKLOG BUGFIXES:
     - backend deployment not reloading
+    - duplicate card in multi import will throw an error in backend (group those)
     - collection: when one price is null, 0 is displayed even if one owned card has a value
     - add to collection mobile: after adding prev unowned card (gitrok monster), wrong minPrice in wantsList
     - mobile: collection -> card details view -> remvoe from collection -> back to collection: card not deleted

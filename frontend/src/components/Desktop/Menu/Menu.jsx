@@ -18,10 +18,10 @@ const StyledMenu = styled.div`
 `;
 
 const MENU_ENTRIES = [
-  // {
-  //   title: 'Decks',
-  //   href: '/decks',
-  // },
+  {
+    title: 'Decks',
+    href: '/decks',
+  },
   {
     title: 'Wants',
     href: '/wants',

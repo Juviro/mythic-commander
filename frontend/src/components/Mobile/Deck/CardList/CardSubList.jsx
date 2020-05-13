@@ -3,19 +3,12 @@ import { Divider, Typography } from 'antd';
 import { FilteredCardList } from '../../../Elements/Mobile';
 import { getNumberOfCards } from '../../../../utils/deck';
 
-const typeMap = {
-  Sorcery: 'Sorceries',
-  Commander: 'Commander',
-};
-
-const typeToPlural = type => typeMap[type] || `${type}s`;
-
 export default ({ cards, type, onEditCard, onDeleteCard, moveToList }) => {
   if (!cards.length) return null;
 
   const numberOfCards = getNumberOfCards(cards);
   const nameSuffix = type !== 'Commander' ? `(${numberOfCards})` : '';
-  const title = `${typeToPlural(type)} ${nameSuffix}`;
+  const title = `${type} ${nameSuffix}`;
 
   return (
     <>

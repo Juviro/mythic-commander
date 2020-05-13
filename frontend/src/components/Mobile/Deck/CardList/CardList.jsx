@@ -3,6 +3,7 @@ import { withRouter, useParams } from 'react-router';
 import styled from 'styled-components';
 import { useMutation, useQuery } from 'react-apollo';
 import { Skeleton } from 'antd';
+
 import CardSubList from './CardSubList';
 import { LayoutAndSortPicker } from '../../../Elements/Shared';
 import {
@@ -11,31 +12,11 @@ import {
   getDeck,
   wantsListsNamesForDeckMobile,
 } from '../queries';
-
-const CARD_TYPES = [
-  'Commander',
-  'Creature',
-  'Enchantment',
-  'Artifact',
-  'Instant',
-  'Sorcery',
-  'Planeswalker',
-  'Land',
-];
+import getCardsByType from '../../../../utils/getCardsByType';
 
 const StyledWrapper = styled.div`
   padding: 0 16px 32px;
 `;
-
-const addMainType = card => {
-  const mainType = card.isCommander
-    ? 'Commander'
-    : CARD_TYPES.find(type => card.primaryTypes.includes(type));
-  return {
-    ...card,
-    mainType,
-  };
-};
 
 const DeckList = ({ deck, loading }) => {
   const { id: deckId } = useParams();
@@ -45,13 +26,9 @@ const DeckList = ({ deck, loading }) => {
     variables: { deckId },
   });
 
-  const cards = deck ? deck.cards : [];
-  const cardWithMainType = cards.map(addMainType);
-  const cardsByType = CARD_TYPES.map(type => ({
-    type,
-    cards: cardWithMainType.filter(card => card.mainType === type),
-  }));
-  const commander = cards.find(({ isCommander }) => isCommander);
+  const cards = deck && deck.cards;
+
+  const { cardsByType = [], commander } = getCardsByType(cards);
 
   const onDeleteCard = cardId => {
     const newCards = deck.cards.filter(card => card.id !== cardId);
