@@ -1,7 +1,12 @@
 import React from 'react';
 import { Modal, Typography } from 'antd';
+import useBlockShortcuts from '../../../Hooks/useBlockShortcuts';
+import { useShortcut } from '../../../Hooks';
 
 export default ({ onCancel, text, onOk }) => {
+  useBlockShortcuts();
+  useShortcut('ENTER', onOk, true);
+
   return (
     <Modal
       visible

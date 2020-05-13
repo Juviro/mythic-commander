@@ -5,15 +5,14 @@ import styled from 'styled-components';
 import { getNumberOfCards } from '../../../../utils/deck';
 import { getPriceLabel } from '../../../../utils/cardStats';
 import Flex from '../Flex';
+import CommanderPicker from '../CommanderPicker';
 
 const StyledLabel = styled(Typography.Text).attrs({ type: 'secondary' })`
   margin: 8px;
-  height: 33%;
   font-size: 16px;
 `;
 
 export default ({ deck }) => {
-  const commander = deck.cards.find(({ isCommander }) => isCommander);
   const numberOfUnowned = deck.cards.filter(({ owned }) => !owned).length;
   const numberOfCardsLabel = `${getNumberOfCards(deck.cards)} cards ${
     numberOfUnowned ? `(${numberOfUnowned} not owned)` : ''
@@ -33,10 +32,9 @@ export default ({ deck }) => {
       : ''
   }`;
 
-  // TODO: always show commander, make editable, support 2nd commander
   return (
-    <Flex direction="column">
-      {commander && <StyledLabel strong>{`${commander.name}`}</StyledLabel>}
+    <Flex direction="column" justify="space-around">
+      <CommanderPicker deck={deck} />
       <StyledLabel>{numberOfCardsLabel}</StyledLabel>
       <StyledLabel>{valueLabel}</StyledLabel>
     </Flex>

@@ -20,7 +20,10 @@ const StyledDeck = styled.div`
 export default () => {
   const { id } = useParams();
   const [currentTab, setCurrentTab] = useState('cards');
-  const { data, loading } = useQuery(getDeckDesktop, { variables: { id } });
+  const { data, loading } = useQuery(getDeckDesktop, {
+    variables: { id },
+    fetchPolicy: 'network-only',
+  });
   const [mutate] = useMutation(addCardsToDeckDesktop);
 
   const deck = data && data.deck;

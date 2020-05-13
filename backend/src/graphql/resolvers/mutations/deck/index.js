@@ -6,6 +6,7 @@ import duplicateDeck from './duplicateDeck';
 import editDeck from './editDeck';
 import editDeckCard from './editDeckCard';
 import moveCard from './moveCard';
+import setCommander from './setCommander';
 
 export default {
   addCardsToDeck,
@@ -16,4 +17,5 @@ export default {
   editDeck,
   editDeckCard,
   moveCard,
+  setCommander,
 };

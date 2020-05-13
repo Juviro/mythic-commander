@@ -13,19 +13,21 @@ const getPossibleNewPosition = (x, y, direction) => {
       return { x: x + 1, y };
     case keyCodes.ARROW_DOWN:
       return { x, y: y + 1 };
-    case keyCodes.ARROW_TOP:
+    case keyCodes.ARROW_UP:
       return { x, y: y - 1 };
     default:
       return { x, y };
   }
 };
 
-const getNextItem = (cardGrid, selectedCardId, direction) => {
-  if (!selectedCardId) return cardGrid[0][0];
+const getNextItem = (cardGrid, selectedCardOracleId, direction) => {
+  if (!selectedCardOracleId) return cardGrid[0][0];
   const x = cardGrid.findIndex(columns =>
-    columns.find(({ id }) => id === selectedCardId)
+    columns.find(({ oracle_id }) => oracle_id === selectedCardOracleId)
   );
-  const y = cardGrid[x].findIndex(({ id }) => id === selectedCardId);
+  const y = cardGrid[x].findIndex(
+    ({ oracle_id }) => oracle_id === selectedCardOracleId
+  );
   const lastColumnIndex = cardGrid.length - 1;
   const lastRowIndex = cardGrid[x].length - 1;
   const possibleNewPosition = getPossibleNewPosition(x, y, direction);
@@ -44,7 +46,7 @@ const getNextItem = (cardGrid, selectedCardId, direction) => {
 
 export default columns => {
   const [isBlocked] = useQueryParam('blockShortcuts', BooleanParam);
-  const [selectedCardId, setSelectedCardId] = useState(null);
+  const [selectedCardOracleId, setSelectedCardOracleId] = useState(null);
 
   const numberOfCards = sumBy(columns.flat(), ({ cards }) => cards.length);
   const cardGrid = columns.map(column =>
@@ -52,8 +54,8 @@ export default columns => {
   );
 
   const moveSelected = direction => {
-    const nextElement = getNextItem(cardGrid, selectedCardId, direction);
-    setSelectedCardId(nextElement.id);
+    const nextElement = getNextItem(cardGrid, selectedCardOracleId, direction);
+    setSelectedCardOracleId(nextElement.oracle_id);
   };
 
   const selectNextCard = () => {
@@ -65,18 +67,17 @@ export default columns => {
     ];
     // eslint-disable-next-line
     for (const direction of directions) {
-      console.log('direction :', direction);
       const possibleNextElement = getNextItem(
         cardGrid,
-        selectedCardId,
+        selectedCardOracleId,
         direction
       );
-      if (possibleNextElement.id !== selectedCardId) {
-        setSelectedCardId(possibleNextElement.id);
+      if (possibleNextElement.oracle_id !== selectedCardOracleId) {
+        setSelectedCardOracleId(possibleNextElement.oracle_id);
         return;
       }
     }
-    setSelectedCardId(null);
+    setSelectedCardOracleId(null);
   };
 
   const onKeyDown = event => {
@@ -92,7 +93,7 @@ export default columns => {
     switch (event.keyCode) {
       case keyCodes.ARROW_LEFT:
       case keyCodes.ARROW_RIGHT:
-      case keyCodes.ARROW_TOP:
+      case keyCodes.ARROW_UP:
       case keyCodes.ARROW_DOWN:
         moveSelected(event.keyCode);
         break;
@@ -108,5 +109,5 @@ export default columns => {
     return () => document.removeEventListener('keydown', onKeyDown, false);
   });
 
-  return { selectedCardId, setSelectedCardId, selectNextCard };
+  return { selectedCardOracleId, setSelectedCardOracleId, selectNextCard };
 };

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const StyledImage = styled.img`
   width: 200px;
   height: 140px;
-  background-color: grey;
+  background-color: #cecece;
   border-radius: 4px;
 `;
 

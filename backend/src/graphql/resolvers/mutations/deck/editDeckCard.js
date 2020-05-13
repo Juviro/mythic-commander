@@ -6,6 +6,8 @@ export default async (_, { cardId, deckId, newProps }, { user, db }) => {
   await canAccessDeck(user.id, deckId);
 
   try {
+    newProps.amount =
+      newProps.amount && Math.min(Math.max(newProps.amount, 0), 99);
     await db('cardToDeck')
       .where({ id: cardId, deckId })
       .update(newProps);

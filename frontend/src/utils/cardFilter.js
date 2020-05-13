@@ -123,7 +123,7 @@ export const sortByCmc = (cards, direction = 'asc') => {
   return direction === 'asc' ? sortedCards : sortedCards.reverse();
 };
 
-const sortByName = (cards, direction = 'asc') => {
+export const sortByName = (cards, direction = 'asc') => {
   const sortedCards = cards.sort((a, b) => (a.name < b.name ? -1 : 1));
 
   return direction === 'asc' ? sortedCards : sortedCards.reverse();

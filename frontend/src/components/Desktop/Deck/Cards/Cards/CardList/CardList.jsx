@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Card from './Card';
-import { sortByCmc } from '../../../../../../utils/cardFilter';
 import sumCardAmount from '../../../../../../utils/sumCardAmount';
 import { getPriceLabel } from '../../../../../../utils/cardStats';
 import { Flex } from '../../../../../Elements/Shared';
@@ -20,9 +19,9 @@ export default ({
   cards,
   selectedCardId,
   onOpenDetails,
-  setSelectedCardId,
+  setSelectedCardOracleId,
+  onDelete,
 }) => {
-  const sortedCards = sortByCmc(cards);
   const nameSuffix =
     type !== 'Commander' || cards.length !== 1
       ? `(${sumCardAmount(cards)})`
@@ -45,11 +44,12 @@ export default ({
           <span>{valueLabel}</span>
         </Flex>
         <div style={{ position: 'relative', height: '100%' }}>
-          {sortedCards.map(card => (
+          {cards.map(card => (
             <Card
               card={card}
+              onDelete={onDelete}
               key={card.id}
-              setSelectedCardId={setSelectedCardId}
+              setSelectedCardOracleId={setSelectedCardOracleId}
               onOpenDetails={onOpenDetails}
               isSelected={selectedCardId === card.id}
             />
