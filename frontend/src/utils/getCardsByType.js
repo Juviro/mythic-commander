@@ -1,4 +1,4 @@
-import { CARD_TYPES } from '../components/CardProvider/staticTypes';
+import { CARD_TYPES } from '../components/Provider/CardProvider/staticTypes';
 
 const typeMap = {
   Sorcery: 'Sorceries',

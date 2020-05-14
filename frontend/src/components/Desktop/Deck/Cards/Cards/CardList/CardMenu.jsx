@@ -20,7 +20,7 @@ export default ({ card, onOpenDetails, onDelete }) => {
   const value = getPriceLabel(card.minPrice);
   const [isEditing, toggleIsEditing] = useToggle();
   const [mutateEdit] = useMutation(editDeckCardDesktop);
-  useShortcut('e', toggleIsEditing);
+  useShortcut('e', toggleIsEditing, 'deck.cards');
 
   const onEditCard = (cardId, newProps) => {
     mutateEdit({

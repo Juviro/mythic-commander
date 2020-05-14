@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
+import Cards from './Cards';
+import Sidebar from './Sidebar';
+import Header from './Header/Header';
 import message from '../../../utils/message';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
 import { getDeckDesktop, addCardsToDeckDesktop } from './queries';
-import Cards from './Cards';
-import { Flex } from '../../Elements/Shared';
-import Header from './Header/Header';
+import { Flex, ShortcutFocus } from '../../Elements/Shared';
 
 const StyledDeck = styled.div`
   width: 100%;
@@ -19,7 +20,7 @@ const StyledDeck = styled.div`
 
 export default () => {
   const { id } = useParams();
-  const [currentTab, setCurrentTab] = useState('cards');
+  const [currentTab, setCurrentTab] = useState('add');
   const { data, loading } = useQuery(getDeckDesktop, {
     variables: { id },
     fetchPolicy: 'network-only',
@@ -44,13 +45,13 @@ export default () => {
 
   return (
     <StyledDeck>
+      <Sidebar currentTab={currentTab} setCurrentTab={setCurrentTab} />
       <Flex style={{ overflow: 'auto', width: '100%' }} direction="column">
-        <Header deck={unifiedDeck} />
-        <Cards deck={unifiedDeck} loading={loading} />
+        <ShortcutFocus focusId="deck.cards">
+          <Header deck={unifiedDeck} />
+          <Cards deck={unifiedDeck} loading={loading} currentTab={currentTab} />
+        </ShortcutFocus>
       </Flex>
-      {/* <div
-        style={{ backgroundColor: 'aliceblue', width: 300, height: '100%' }}
-      /> */}
     </StyledDeck>
   );
 };

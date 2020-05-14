@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
-import { Modal, Typography, Divider } from 'antd';
+import { Typography, Divider } from 'antd';
 
 import { useToggle } from '../../../Hooks';
 import { collectionSnapshots } from './queries';
@@ -9,7 +9,7 @@ import formatDate from '../../../../utils/formatDate';
 import { primary } from '../../../../constants/colors';
 import AmountChart, { COLLECTED_CARDS, UNIQUE_CARDS } from './AmountChart';
 import ValueChart, { COLLECTION_VALUE } from './ValueChart';
-import useBlockShortcuts from '../../../Hooks/useBlockShortcuts';
+import FocussedModal from '../FocussedModal';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -18,8 +18,7 @@ const StyledWrapper = styled.div`
 `;
 
 export default ({ currentSnapshot }) => {
-  const [isVisible, toggleIsVisible] = useToggle();
-  useBlockShortcuts(isVisible);
+  const [visible, toggleVisible] = useToggle();
   const { data } = useQuery(collectionSnapshots);
 
   const snapshots =
@@ -38,24 +37,25 @@ export default ({ currentSnapshot }) => {
     <StyledWrapper>
       <Typography.Text
         style={{ color: primary, cursor: 'pointer' }}
-        onClick={toggleIsVisible}
+        onClick={toggleVisible}
       >
         show trend
       </Typography.Text>
-      <Modal
+      <FocussedModal
         destroyOnClose
-        visible={isVisible}
-        onCancel={toggleIsVisible}
+        visible={visible}
+        onCancel={toggleVisible}
         style={{ height: 500 }}
         width={800}
         footer={null}
         title="Collection Trend"
+        focusId="modal.collectionCharts"
       >
         <Divider>Collected Cards</Divider>
         <AmountChart formattedData={formattedData} />
         <Divider>Collection Value</Divider>
         <ValueChart formattedData={formattedData} />
-      </Modal>
+      </FocussedModal>
     </StyledWrapper>
   );
 };

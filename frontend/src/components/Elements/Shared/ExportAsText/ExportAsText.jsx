@@ -1,9 +1,10 @@
 import React from 'react';
-import { Modal, Input, Switch, Typography, Space, Button } from 'antd';
+import { Input, Switch, Typography, Space, Button } from 'antd';
 import styled from 'styled-components';
 import Flex from '../Flex';
 import useLocalStorage from '../../../Hooks/useLocalStorage';
 import { useToggle } from '../../../Hooks';
+import FocussedModal from '../FocussedModal';
 
 const StyledInputWrapper = styled.div`
   overflow: auto;
@@ -19,13 +20,14 @@ export default ({ title, cards }) => {
 
   return (
     <>
-      <Modal
+      <FocussedModal
         title={title}
         footer={null}
         destroyOnClose
         visible={exportViewOpen}
         onCancel={toggleExportViewOpen}
         bodyStyle={{ maxHeight: '80vh', overflow: 'auto' }}
+        focusId="modal.exportAsText"
       >
         <Flex
           justify="space-between"
@@ -54,7 +56,7 @@ export default ({ title, cards }) => {
             autoSize={{ maxRows: 25 }}
           />
         </StyledInputWrapper>
-      </Modal>
+      </FocussedModal>
       <Button type="link" onClick={toggleExportViewOpen}>
         Export as Text
       </Button>

@@ -29,7 +29,6 @@ const Wants = ({ history }) => {
   };
 
   const onAddDeck = async () => {
-    console.log('add deck');
     const {
       data: {
         createDeck: { id },

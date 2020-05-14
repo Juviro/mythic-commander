@@ -1,15 +1,17 @@
 import React from 'react';
-import { Modal, Button } from 'antd';
+import { Button } from 'antd';
 
 import Flex from '../Flex';
+import FocussedModal from '../FocussedModal';
 
 export default ({ onCancel, url, isVisible }) => {
   return (
-    <Modal
+    <FocussedModal
       footer={null}
       onCancel={onCancel}
       visible={isVisible}
       title="Proxy cards"
+      focusId="modal.exportAsText"
     >
       <Flex direction="row" justify="space-around">
         <a target="_blank" rel="noopener noreferrer" href={url}>
@@ -32,6 +34,6 @@ export default ({ onCancel, url, isVisible }) => {
           </Button>
         </a>
       </Flex>
-    </Modal>
+    </FocussedModal>
   );
 };

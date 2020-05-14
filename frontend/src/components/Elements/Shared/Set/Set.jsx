@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import CardContext from '../../../CardProvider/CardProvider';
+import CardContext from '../../../Provider/CardProvider';
 import getDynamicUrl from '../../../../utils/getDynamicUrl';
 import DesktopTooltip from '../../Desktop/DesktopTooltip';
 

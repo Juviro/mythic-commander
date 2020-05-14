@@ -1,8 +1,8 @@
 import React from 'react';
-import { Modal } from 'antd';
-import useBlockShortcuts from '../../../Hooks/useBlockShortcuts';
+
 import { useShortcut } from '../../../Hooks';
 import SimpleCardsList from '../SimpleCardsList';
+import FocussedModal from '../FocussedModal';
 
 export default ({
   onCancel,
@@ -10,8 +10,7 @@ export default ({
   numberOfSelectedCards,
   onDelete,
 }) => {
-  useBlockShortcuts();
-  useShortcut('ENTER', onDelete, true);
+  useShortcut('ENTER', onDelete, 'modal.confirmDeleteCards');
   if (!cardsToDelete.length) return null;
 
   const title = `Delete ${numberOfSelectedCards} ${
@@ -19,15 +18,16 @@ export default ({
   }?`;
 
   return (
-    <Modal
+    <FocussedModal
       visible
       title={title}
       okText="Delete"
       okButtonProps={{ type: 'danger', onClick: onDelete }}
       onCancel={onCancel}
       bodyStyle={{ maxHeight: 400, overflowY: 'auto' }}
+      focusId="modal.confirmDeleteCards"
     >
       <SimpleCardsList cards={cardsToDelete} />
-    </Modal>
+    </FocussedModal>
   );
 };

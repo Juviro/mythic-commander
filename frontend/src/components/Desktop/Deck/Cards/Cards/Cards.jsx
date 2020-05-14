@@ -1,5 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Skeleton } from 'antd';
+import styled, { css } from 'styled-components';
 
 import { useWindowSize } from '../../../../Hooks';
 import { Flex } from '../../../../Elements/Shared';
@@ -7,6 +8,23 @@ import { CARD_WIDTH } from './CardList/Card';
 import getCardsByType from '../../../../../utils/getCardsByType';
 import CardLists from './CardLists';
 import { sortByCmc, sortByName } from '../../../../../utils/cardFilter';
+import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
+import { primary } from '../../../../../constants/colors';
+
+const StyledWrapper = styled.div`
+  margin: 8px;
+  width: calc(100% - 16px);
+  transition: all 0.3s;
+  display: flex;
+  justify-content: center;
+
+  ${({ isFocused }) =>
+    isFocused
+      ? css`
+          box-shadow: 0 0 10px ${primary};
+        `
+      : ''}
+`;
 
 const getCardColumns = (cards, numberOfCols) => {
   if (!cards || numberOfCols === null) return [];
@@ -41,20 +59,16 @@ const getCardColumns = (cards, numberOfCols) => {
   return cardColumns.filter(column => column.length);
 };
 
-export default ({ deck, loading }) => {
+export default ({ deck, loading, currentTab }) => {
+  const widthOffset = currentTab ? 400 : 0;
   useWindowSize();
-  const wrapperRef = useRef(null);
-  const [numberOfCols, setNumberOfCols] = useState(null);
+  const { focusedElement } = useContext(FocusContext);
+  const isFocused = focusedElement === 'deck.cards';
 
-  // eslint-disable-next-line
-  useEffect(() => {
-    if (!wrapperRef.current) return;
-    const innerWidth = wrapperRef.current.offsetWidth - 16; // - padding of wrapper
-    if (!innerWidth) return;
-    const cardWidth = CARD_WIDTH + 20; // padding and margin of card
-    const newNumberOfCols = Math.max(Math.floor(innerWidth / cardWidth), 1);
-    setNumberOfCols(newNumberOfCols);
-  });
+  // padding of wrapper, tabs, tabMargin
+  const innerWidth = window.innerWidth - widthOffset - 16 - 40 - 8;
+  const cardWidth = CARD_WIDTH + 20; // padding and margin of card
+  const numberOfCols = Math.max(Math.floor(innerWidth / cardWidth), 1);
 
   if (loading)
     return (
@@ -66,11 +80,7 @@ export default ({ deck, loading }) => {
   const cardColumns = getCardColumns(deck.cards, numberOfCols);
 
   return (
-    <Flex
-      justify="center"
-      style={{ width: '100%', paddingBottom: 300 }}
-      ref={wrapperRef}
-    >
+    <StyledWrapper isFocused={isFocused}>
       <Flex
         direction="row"
         wrap="wrap"
@@ -78,6 +88,6 @@ export default ({ deck, loading }) => {
       >
         <CardLists columns={cardColumns} deck={deck} />
       </Flex>
-    </Flex>
+    </StyledWrapper>
   );
 };

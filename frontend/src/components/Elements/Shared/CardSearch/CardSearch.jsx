@@ -1,7 +1,7 @@
 import React from 'react';
 import { AutoComplete, Typography } from 'antd';
 import styled from 'styled-components';
-import CardContext from '../../../CardProvider/CardProvider';
+import CardContext from '../../../Provider/CardProvider';
 import { filterAndSortByQuery } from '../../../../utils/cardFilter';
 import OwnedBadge from '../OwnedBadge';
 import { useBlurOnEsc } from '../../../Hooks';

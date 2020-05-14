@@ -3,7 +3,7 @@ import { Typography } from 'antd';
 
 import PreviewCardImage from '../../../Shared/PreviewCardImage';
 import ManaCost from '../../../Shared/ManaCost';
-import { CARD_TYPES } from '../../../../CardProvider/staticTypes';
+import { CARD_TYPES } from '../../../../Provider/CardProvider/staticTypes';
 import { getPriceLabel } from '../../../../../utils/cardStats';
 import formatDate from '../../../../../utils/formatDate';
 import { highlightText } from '../../../../../utils/highlightText';

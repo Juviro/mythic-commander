@@ -13,7 +13,7 @@ import {
   StyledLink,
 } from './StyledMultiInput';
 import { splitAmountAndName } from '../../../Shared/CardSearch/CardSearch';
-import CardContext from '../../../../CardProvider/CardProvider';
+import CardContext from '../../../../Provider/CardProvider';
 
 const NO_CARD = 'NO_CARD';
 

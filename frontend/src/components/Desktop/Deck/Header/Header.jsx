@@ -12,7 +12,6 @@ const StyledWrapper = styled(Flex)`
   height: 226px;
   width: 100%;
   padding: 16px;
-  box-shadow: 0px 0px 4px 4px #d8d8d8;
 `;
 
 export default ({ deck }) => {

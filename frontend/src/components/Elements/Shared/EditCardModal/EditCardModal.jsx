@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { Modal } from 'antd';
 import EditCardBody from './EditCardBody';
-import useBlockShortcuts from '../../../Hooks/useBlockShortcuts';
+import FocussedModal from '../FocussedModal';
 
 export default ({ onEdit, card, onCancel }) => {
-  useBlockShortcuts();
   const [newProps, setNewProps] = useState({});
 
   const onSubmit = () => {
@@ -22,7 +20,7 @@ export default ({ onEdit, card, onCancel }) => {
   const canSubmit = Boolean(Object.keys(newProps).length);
 
   return (
-    <Modal
+    <FocussedModal
       onCancel={onCancel}
       visible
       width={660}
@@ -31,6 +29,8 @@ export default ({ onEdit, card, onCancel }) => {
         disabled: !canSubmit,
         onClick: onSubmit,
       }}
+      focusId="modal.editCard"
+      focusStyle={{ display: 'flex', width: 400, height: 400 }}
     >
       <EditCardBody
         card={card}
@@ -38,6 +38,6 @@ export default ({ onEdit, card, onCancel }) => {
         canSubmit={canSubmit}
         onSubmit={onSubmit}
       />
-    </Modal>
+    </FocussedModal>
   );
 };

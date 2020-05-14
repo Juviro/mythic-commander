@@ -6,7 +6,7 @@ import { useQuery } from 'react-apollo';
 import styled from 'styled-components';
 import { getCollectionNames } from '../../../../queries';
 import OptionGroupHeader from './OptionGroupHeader';
-import CardContext from '../../../CardProvider/CardProvider';
+import CardContext from '../../../Provider/CardProvider';
 import renderOption from './renderOption';
 import { filterAndSortByQuery } from '../../../../utils/cardFilter';
 import unifyCardFormat from '../../../../utils/unifyCardFormat';
