@@ -1,8 +1,7 @@
 import React from 'react';
 import { List } from 'antd';
-import { Flex, ProxyCards } from '../../../../Elements/Shared';
+import { Flex, ProxyCards, ExportAsText } from '../../../../Elements/Shared';
 import DeleteList from './DeleteList';
-import ExportAsText from './ExportAsText';
 import DuplicateList from './DuplicateList';
 import UnlinkDeck from './UnlinkDeck';
 
@@ -11,11 +10,13 @@ export default ({ wantsList }) => {
   const baseActions = [
     {
       key: 'export',
-      component: <ExportAsText wantsList={wantsList} />,
+      component: (
+        <ExportAsText title={wantsList.name} cards={wantsList.cards} />
+      ),
     },
     {
       key: 'proxy',
-      component: <ProxyCards id={wantsList.id} />,
+      component: <ProxyCards id={wantsList.id} type="wants" />,
     },
     {
       key: 'duplicate',

@@ -2,9 +2,10 @@ import React from 'react';
 import { Skeleton } from 'antd';
 import styled from 'styled-components';
 
-import { Flex, DeckStats } from '../../../Elements/Shared';
-import DeckImage from './DeckImage';
 import Title from './Title';
+import DeckImage from './DeckImage';
+import DeckActions from './DeckActions';
+import { Flex, DeckStats } from '../../../Elements/Shared';
 import NotLegalWarning from '../../../Mobile/Deck/DeckHeader/DeckOverview/NotLegalWarning';
 
 const StyledWrapper = styled(Flex)`
@@ -28,9 +29,12 @@ export default ({ deck }) => {
         <Title deck={deck} />
         <NotLegalWarning deck={deck} size={26} />
       </Flex>
-      <Flex direction="row">
-        <DeckImage deck={deck} />
-        <DeckStats deck={deck} />
+      <Flex direction="row" justify="space-between">
+        <Flex direction="row">
+          <DeckImage deck={deck} />
+          <DeckStats deck={deck} />
+        </Flex>
+        <DeckActions deck={deck} />
       </Flex>
     </StyledWrapper>
   );

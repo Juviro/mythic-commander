@@ -96,14 +96,13 @@ export default ({
           numberOfSelectedCards={numberOfSelectedCards}
         />
       )}
-      {showMoveModal && (
-        <AddCardsTo
-          hideAddToCollection={hideAddToCollection}
-          cardsToAdd={selectedCards}
-          onCancel={onCancel}
-          numberOfSelectedCards={numberOfSelectedCards}
-        />
-      )}
+      <AddCardsTo
+        hideAddToCollection={hideAddToCollection}
+        cardsToAdd={selectedCards}
+        onCancel={onCancel}
+        visible={showMoveModal}
+        numberOfSelectedCards={numberOfSelectedCards}
+      />
       {showEditModal && (
         <EditCardModal
           onEdit={onEditCard}

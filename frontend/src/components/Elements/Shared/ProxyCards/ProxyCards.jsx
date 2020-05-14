@@ -1,29 +1,19 @@
 import React from 'react';
-import { Dropdown, Menu, Button } from 'antd';
+import { Button } from 'antd';
 
-export default ({ id }) => {
-  const url = `/proxy/wants/${id}`;
-  const menu = (
-    <Menu>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href={url}>
-          All cards
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href={`${url}?filter=unowned-only`}
-        >
-          Unowned cards only
-        </a>
-      </Menu.Item>
-    </Menu>
-  );
+import ProxyModal from './ProxyModal';
+import { useToggle } from '../../../Hooks';
+
+export default ({ id, type }) => {
+  const url = `/proxy/${type}/${id}`;
+  const [isVisible, toggleIsVisible] = useToggle();
+
   return (
-    <Dropdown overlay={menu} placement="bottomLeft" trigger="click">
-      <Button type="link">Proxy Cards...</Button>
-    </Dropdown>
+    <>
+      <Button type="link" onClick={toggleIsVisible}>
+        Proxy Cards...
+      </Button>
+      <ProxyModal url={url} onCancel={toggleIsVisible} isVisible={isVisible} />
+    </>
   );
 };
