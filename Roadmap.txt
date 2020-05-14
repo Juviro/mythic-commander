@@ -53,10 +53,13 @@ BACKLOG:
     - prevent user from adding amount / amount foil if card is not available in foil / non-foil
     - prefer owned versions when adding to deck or wants
     - suggest similar cards when having invalid cardname in multiinput
-    - show all current search options for advanced search (M/D)
     - dark mode
     - update document title based on content
     - allow text export/proxy of selected cards
+    - rework advanced search:
+        - format: label and input field next to each other
+        - add *unownedOnly*
+        - show all current search options for advanced search 
 
 BACKLOG BUGFIXES:
     - backend deployment not reloading

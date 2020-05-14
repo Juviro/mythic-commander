@@ -1,10 +1,10 @@
 import React from 'react';
-import { List } from 'antd';
+import { Button } from 'antd';
 import { useMutation } from 'react-apollo';
 import { useParams, withRouter } from 'react-router';
 
 import { duplicateDeck } from '../../../../queries';
-import { primary } from '../../../../constants/colors';
+import getDynamicUrl from '../../../../utils/getDynamicUrl';
 
 const DuplicateDeck = ({ history }) => {
   const { id: deckId } = useParams();
@@ -18,12 +18,12 @@ const DuplicateDeck = ({ history }) => {
         deckId,
       },
     });
-    history.push(`/m/decks/${id}`);
+    history.push(getDynamicUrl(`/decks/${id}`));
   };
   return (
-    <List.Item onClick={onDuplicateDeck} style={{ color: primary }}>
+    <Button type="link" onClick={onDuplicateDeck}>
       Duplicate Deck
-    </List.Item>
+    </Button>
   );
 };
 

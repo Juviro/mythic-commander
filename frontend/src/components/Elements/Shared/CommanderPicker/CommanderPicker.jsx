@@ -84,7 +84,7 @@ export default ({ deck }) => {
 
   if (!isEditing) {
     return (
-      <Flex direction="row" style={{ paddingLeft: 4 }}>
+      <Flex direction="row" style={{ paddingLeft: 8 }}>
         <Flex direction="column">
           {commanders.map(commander => (
             <Typography.Text strong key={commander.id}>
@@ -101,7 +101,7 @@ export default ({ deck }) => {
   }
 
   return (
-    <Flex direction="column" style={{ margin: '0 4px' }}>
+    <Flex direction="column" style={{ margin: '0 8px' }}>
       <Flex direction="row" align="center">
         <Select
           value={firstCommander && firstCommander.name}

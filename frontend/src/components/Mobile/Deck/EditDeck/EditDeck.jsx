@@ -28,8 +28,12 @@ export default ({ deck, loading }) => {
           </List.Item>
           <ChangeCommander deck={deck} />
           <ChangeImage deck={deck} />
-          <DuplicateDeck />
-          <DeleteDeck />
+          <List.Item>
+            <DuplicateDeck />
+          </List.Item>
+          <List.Item>
+            <DeleteDeck />
+          </List.Item>
         </List>
       </Skeleton>
     </StyledWrapper>

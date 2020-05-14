@@ -18,8 +18,8 @@ import {
 } from '../../../Desktop/WantsList/queries';
 import useBlockShortcuts from '../../../Hooks/useBlockShortcuts';
 
-export default ({ onCancel, cardsToAdd, numberOfSelectedCards }) => {
-  useBlockShortcuts();
+export default ({ onCancel, cardsToAdd, numberOfSelectedCards, visible }) => {
+  useBlockShortcuts(visible);
   const { data, loading } = useQuery(allLists, { fetchPolicy: 'network-only' });
   const [addToDeck] = useMutation(addCardsToDeckDesktop);
   const [addToWantsList] = useMutation(addCardsToWantsListDesktop);
@@ -30,14 +30,14 @@ export default ({ onCancel, cardsToAdd, numberOfSelectedCards }) => {
     amount: amount || totalAmount || 1,
   }));
 
+  const selectedCardsLabel = `<b>${numberOfSelectedCards}</b>`;
+
   const onAddToDeck = (deckId, deckName) => {
     addToDeck({
       variables: { cards: formattedCards, deckId },
     });
     onCancel();
-    message(
-      `Added <b>${numberOfSelectedCards}</b> cards to <b>${deckName}</b>!`
-    );
+    message(`Added ${selectedCardsLabel} cards to <b>${deckName}</b>!`);
   };
   const onAddToWantsList = (wantsListId, wantsListName) => {
     addToWantsList({
@@ -50,9 +50,7 @@ export default ({ onCancel, cardsToAdd, numberOfSelectedCards }) => {
       ],
     });
     onCancel();
-    message(
-      `Added <b>${numberOfSelectedCards}</b> cards to <b>${wantsListName}</b>!`
-    );
+    message(`Added ${selectedCardsLabel} cards to <b>${wantsListName}</b>!`);
   };
   const onAddToCollection = cards => {
     const formattedCollectionCards = cards.map(
@@ -92,12 +90,12 @@ export default ({ onCancel, cardsToAdd, numberOfSelectedCards }) => {
       refetchQueries: ['getCollectionNames'],
     });
     onCancel();
-    message(`Added <b>${numberOfSelectedCards}</b> cards to your collection!`);
+    message(`Added ${selectedCardsLabel} cards to your collection!`);
   };
 
   return (
     <Modal
-      visible
+      visible={visible}
       title="Add cards to..."
       footer={null}
       onCancel={onCancel}
@@ -107,7 +105,9 @@ export default ({ onCancel, cardsToAdd, numberOfSelectedCards }) => {
         <Collapse>
           <Collapse.Panel
             key="1"
-            header={`${numberOfSelectedCards} cards selected`}
+            header={
+              numberOfSelectedCards && `${numberOfSelectedCards} cards selected`
+            }
           >
             <SimpleCardsList cards={cardsToAdd} />
           </Collapse.Panel>
