@@ -65,7 +65,7 @@ const Wants = ({ history }) => {
   return (
     <StyledWrapper>
       <OverviewListHeader
-        onAddWantsList={onAddWantsList}
+        onAddList={onAddWantsList}
         search={search}
         setSearch={setSearch}
         loading={loading}

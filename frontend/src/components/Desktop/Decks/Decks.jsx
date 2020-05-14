@@ -28,7 +28,8 @@ const Wants = ({ history }) => {
     history.push(`/decks/${id}`);
   };
 
-  const onAddWantsDeck = async () => {
+  const onAddDeck = async () => {
+    console.log('add deck');
     const {
       data: {
         createDeck: { id },
@@ -56,7 +57,7 @@ const Wants = ({ history }) => {
   );
 
   const onOpenFirstDeck = () => {
-    const firstDeck = decks[0];
+    const firstDeck = filteredDecks[0];
     if (!firstDeck) return;
     onOpenDeck(firstDeck.id);
   };
@@ -64,7 +65,7 @@ const Wants = ({ history }) => {
   return (
     <StyledWrapper>
       <OverviewListHeader
-        onAddWantsDeck={onAddWantsDeck}
+        onAddList={onAddDeck}
         search={search}
         setSearch={setSearch}
         loading={loading}

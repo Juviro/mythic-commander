@@ -5,7 +5,7 @@ import { Flex } from '../../Shared';
 
 export default ({
   onEnter,
-  onAddWantsList,
+  onAddList,
   search,
   setSearch,
   loading,
@@ -36,7 +36,7 @@ export default ({
             onChange={e => setSearch(e.target.value)}
           />
         </Tooltip>
-        <Button onClick={onAddWantsList} type="primary" icon={<PlusOutlined />}>
+        <Button onClick={onAddList} type="primary" icon={<PlusOutlined />}>
           {buttonText}
         </Button>
       </Flex>
