@@ -52,7 +52,7 @@ const DeleteDeck = ({ history }) => {
         okButtonProps={{ type: 'danger' }}
         bodyStyle={{ padding: '8px 24px' }}
       >
-        This will also delete all linked wants lists and cannot be undone!
+        This will also delete all linked wants lists and cannot be undone.
       </Modal>
     </>
   );

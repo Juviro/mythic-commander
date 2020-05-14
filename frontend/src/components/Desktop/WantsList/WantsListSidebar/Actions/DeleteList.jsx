@@ -24,7 +24,7 @@ const DeleteList = ({ wantsList: { id: wantsListId, name }, history }) => {
   };
 
   const text = boldText(
-    `Are you sure you want to delete <b>${name}</b>? This cannot be undone!`
+    `Are you sure you want to delete <b>${name}</b>? This cannot be undone.`
   );
 
   return (
