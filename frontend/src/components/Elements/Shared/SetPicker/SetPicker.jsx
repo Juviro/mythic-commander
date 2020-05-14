@@ -3,7 +3,7 @@ import { Select } from 'antd';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 
-import CardContext from '../../../CardProvider/CardProvider';
+import CardContext from '../../../Provider/CardProvider';
 import { allCardSets as allCardSetsQuery } from './queries';
 import useSubmitOnEnter from '../../../Hooks/useSubmitOnEnter';
 import { useToggle } from '../../../Hooks';

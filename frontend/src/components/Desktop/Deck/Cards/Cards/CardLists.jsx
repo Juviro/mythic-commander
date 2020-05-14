@@ -52,9 +52,9 @@ export default ({ columns, deck }) => {
     setIsDeleting(true);
   };
 
-  useShortcut('ENTER', selectedCard ? toggleShowDetail : null);
-  useShortcut('DEL', onOpenDeleteModal);
-  useShortcut('SPACE', () => setSelectedCardOracleId(null));
+  useShortcut('DEL', onOpenDeleteModal, 'deck.cards');
+  useShortcut('SPACE', () => setSelectedCardOracleId(null), 'deck.cards');
+  useShortcut('ENTER', selectedCard ? toggleShowDetail : null, 'deck.cards');
 
   return (
     <>

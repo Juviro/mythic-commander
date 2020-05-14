@@ -1,11 +1,11 @@
 import React from 'react';
-import { Modal } from 'antd';
 import { useQuery } from 'react-apollo';
 import CardDetailsDesktop from '../CardDetailsDesktop';
 
 import { cardDetailsDesktop } from '../CardDetailsDesktop/queries';
 import { unifySingleCard } from '../../../../utils/unifyCardFormat';
 import { useShortcut } from '../../../Hooks';
+import { FocussedModal } from '../../Shared';
 
 const CardModalDesktop = ({
   card,
@@ -13,7 +13,7 @@ const CardModalDesktop = ({
   onClose,
   loading: parentLoading,
 }) => {
-  useShortcut('ENTER', onClose, visible);
+  useShortcut('ENTER', onClose, 'modal.cardDetails');
   const { data, loading: cardLoading } = useQuery(cardDetailsDesktop, {
     variables: { oracle_id: card.oracle_id },
     fetchPolicy: 'network-only',
@@ -25,7 +25,7 @@ const CardModalDesktop = ({
   const usedCard = { ...unifiedCard, ...card };
 
   return (
-    <Modal
+    <FocussedModal
       centered
       visible={visible}
       onCancel={onClose}
@@ -37,9 +37,10 @@ const CardModalDesktop = ({
         maxHeight: 'calc(100vh - 32px)',
       }}
       style={{ maxWidth: '100%' }}
+      focusId="modal.cardDetails"
     >
       {card && <CardDetailsDesktop card={usedCard} loading={loading} />}
-    </Modal>
+    </FocussedModal>
   );
 };
 

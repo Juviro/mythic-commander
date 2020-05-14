@@ -23,7 +23,7 @@ export default ({ card, loading, selectedCardId, onChangeSet, showTitle }) => {
   const [isEditing, toggleIsEditing] = useToggle(false);
   const [editedMap, setEditedMap] = useState({});
   const [addedMap, setAddedMap] = useState({});
-  useShortcut('e', () => toggleIsEditing(true), true);
+  useShortcut('e', () => toggleIsEditing(true), 'modal.cardDetails');
 
   const onDiscard = () => {
     setEditedMap({});
@@ -55,24 +55,28 @@ export default ({ card, loading, selectedCardId, onChangeSet, showTitle }) => {
         cardId: card.id,
       },
       update: (cache, { data: updateData }) => {
-        const { changeCollection: newCard } = updateData;
-        const existing = cache.readQuery({
-          query: getCollectionDesktop,
-        });
+        try {
+          const { changeCollection: newCard } = updateData;
+          const existing = cache.readQuery({
+            query: getCollectionDesktop,
+          });
 
-        const filteredCards = existing.collection.cards.filter(
-          ({ oracle_id }) => oracle_id !== card.oracle_id
-        );
+          const filteredCards = existing.collection.cards.filter(
+            ({ oracle_id }) => oracle_id !== card.oracle_id
+          );
 
-        cache.writeQuery({
-          query: getCollectionDesktop,
-          data: {
-            collection: {
-              ...existing.collection,
-              cards: filteredCards.concat(newCard || []),
+          cache.writeQuery({
+            query: getCollectionDesktop,
+            data: {
+              collection: {
+                ...existing.collection,
+                cards: filteredCards.concat(newCard || []),
+              },
             },
-          },
-        });
+          });
+        } catch {
+          // collection has not been queried yet
+        }
       },
       refetchQueries: [
         'getCollectionNames',

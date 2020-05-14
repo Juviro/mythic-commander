@@ -10,19 +10,22 @@ import './index.css';
 
 import App from './components';
 import client from './network/graphqlClient';
-import { CardContextProvider } from './components/CardProvider/CardProvider';
+import { CardContextProvider } from './components/Provider/CardProvider';
+import { FocusContextProvider } from './components/Provider/FocusProvider';
 
 export const history = createBrowserHistory();
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <CardContextProvider>
-      <Router history={history}>
-        <QueryParamProvider ReactRouterRoute={Route}>
-          <App />
-        </QueryParamProvider>
-      </Router>
-    </CardContextProvider>
+    <FocusContextProvider>
+      <CardContextProvider>
+        <Router history={history}>
+          <QueryParamProvider ReactRouterRoute={Route}>
+            <App />
+          </QueryParamProvider>
+        </Router>
+      </CardContextProvider>
+    </FocusContextProvider>
   </ApolloProvider>,
   document.getElementById('root')
 );

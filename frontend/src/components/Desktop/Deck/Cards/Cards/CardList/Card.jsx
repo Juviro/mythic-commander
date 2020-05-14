@@ -1,10 +1,11 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useContext } from 'react';
 import styled, { css } from 'styled-components';
 
 import { primary } from '../../../../../../constants/colors';
 import scrollIntoView from '../../../../../../utils/scrollIntoView';
 import CardMenu from './CardMenu';
 import { FlippableCard, AmountBadge } from '../../../../../Elements/Shared';
+import FocusContext from '../../../../../Provider/FocusProvider/FocusProvider';
 
 export const CARD_WIDTH = 220;
 const CARD_HEIGHT = CARD_WIDTH * 1.4;
@@ -67,26 +68,30 @@ const Card = ({
   setSelectedCardOracleId,
   onDelete,
 }) => {
+  const { focusedElement } = useContext(FocusContext);
+  const isFocused = focusedElement !== 'deck.sidebar';
+
+  const selected = isSelected && isFocused;
   const ref = useRef(null);
 
   const onClick = () => {
-    const newSelectedCardOracleId = isSelected ? null : card.oracle_id;
+    const newSelectedCardOracleId = selected ? null : card.oracle_id;
     setSelectedCardOracleId(newSelectedCardOracleId);
   };
 
   useEffect(() => {
-    if (!isSelected || !ref) return;
+    if (!selected || !ref) return;
     setTimeout(() => scrollIntoView(ref.current), ANIMATION_DURATION);
-  }, [isSelected]);
+  }, [selected]);
 
   return (
-    <StyledWrapper isSelected={isSelected}>
+    <StyledWrapper isSelected={selected}>
       <StyledScrollDummy ref={ref} />
-      <StyledCard onClick={onClick} isSelected={isSelected}>
-        <FlippableCard card={card} hideFlipIcon={!isSelected} />
+      <StyledCard onClick={onClick} isSelected={selected}>
+        <FlippableCard card={card} hideFlipIcon={!selected} />
         <AmountBadge amount={card.amount} />
       </StyledCard>
-      {isSelected && (
+      {selected && (
         <CardMenu
           card={card}
           onOpenDetails={onOpenDetails}

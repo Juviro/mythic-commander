@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { useQueryParam, BooleanParam } from 'use-query-params';
+import { useEffect, useContext } from 'react';
 import keyCodes from '../../constants/keyCodes';
+import FocusContext from '../Provider/FocusProvider/FocusProvider';
 
 export const isInputField = event => {
   const { nodeName, type } = event.target;
@@ -17,11 +17,12 @@ export const isModifierKey = event => {
   return altKey || ctrlKey || metaKey || shiftKey;
 };
 
-export default (triggerKey, action, ignoreBlock) => {
-  const [isBlocked] = useQueryParam('blockShortcuts', BooleanParam);
+export default (triggerKey, action, focusId) => {
+  const { focusedElement } = useContext(FocusContext);
+  const focusIds = typeof focusId === 'string' ? [focusId] : focusId;
 
   const onKeyDown = event => {
-    const shouldBlock = !ignoreBlock && isBlocked;
+    const shouldBlock = focusedElement && !focusIds.includes(focusedElement);
     if (!action || isInputField(event) || isModifierKey(event) || shouldBlock) {
       return;
     }

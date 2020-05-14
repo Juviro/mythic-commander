@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import CardContext from '../../../../CardProvider/CardProvider';
+import CardContext from '../../../../Provider/CardProvider';
 import SelectFilter from './SelectFilter';
 
 export default ({ onChange, value, onSearch }) => {

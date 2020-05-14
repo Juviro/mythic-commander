@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Row, Col } from 'antd';
 import styled from 'styled-components';
 
-import CardContext from '../../../CardProvider/CardProvider';
+import CardContext from '../../../Provider/CardProvider';
 import Amount from './Amount';
 import { getImageUrl } from '../../../../utils/cardImage';
 

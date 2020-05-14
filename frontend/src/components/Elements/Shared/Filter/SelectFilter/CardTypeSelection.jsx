@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import { Checkbox } from 'antd';
-import CardContext from '../../../../CardProvider/CardProvider';
+import CardContext from '../../../../Provider/CardProvider';
 import SelectFilter from './SelectFilter';
 
 export default ({ onChangeOption, value, isLegendary, onSearch }) => {

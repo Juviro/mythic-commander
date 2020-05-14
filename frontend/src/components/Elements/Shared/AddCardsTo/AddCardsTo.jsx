@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery, useMutation } from 'react-apollo';
-import { Modal, Spin, Collapse } from 'antd';
+import { Spin, Collapse } from 'antd';
 
 import Flex from '../Flex';
 import { allLists } from './queries';
@@ -16,10 +16,10 @@ import {
   addCardsToWantsListDesktop,
   wantsListDesktop,
 } from '../../../Desktop/WantsList/queries';
-import useBlockShortcuts from '../../../Hooks/useBlockShortcuts';
+import sumCardAmount from '../../../../utils/sumCardAmount';
+import FocussedModal from '../FocussedModal';
 
 export default ({ onCancel, cardsToAdd, numberOfSelectedCards, visible }) => {
-  useBlockShortcuts(visible);
   const { data, loading } = useQuery(allLists, { fetchPolicy: 'network-only' });
   const [addToDeck] = useMutation(addCardsToDeckDesktop);
   const [addToWantsList] = useMutation(addCardsToWantsListDesktop);
@@ -30,14 +30,14 @@ export default ({ onCancel, cardsToAdd, numberOfSelectedCards, visible }) => {
     amount: amount || totalAmount || 1,
   }));
 
-  const selectedCardsLabel = `<b>${numberOfSelectedCards}</b>`;
-
   const onAddToDeck = (deckId, deckName) => {
     addToDeck({
       variables: { cards: formattedCards, deckId },
     });
     onCancel();
-    message(`Added ${selectedCardsLabel} cards to <b>${deckName}</b>!`);
+    message(
+      `Added <b>${numberOfSelectedCards}</b> cards to <b>${deckName}</b>!`
+    );
   };
   const onAddToWantsList = (wantsListId, wantsListName) => {
     addToWantsList({
@@ -50,7 +50,9 @@ export default ({ onCancel, cardsToAdd, numberOfSelectedCards, visible }) => {
       ],
     });
     onCancel();
-    message(`Added ${selectedCardsLabel} cards to <b>${wantsListName}</b>!`);
+    message(
+      `Added <b>${numberOfSelectedCards}</b> cards to <b>${wantsListName}</b>!`
+    );
   };
   const onAddToCollection = cards => {
     const formattedCollectionCards = cards.map(
@@ -90,15 +92,16 @@ export default ({ onCancel, cardsToAdd, numberOfSelectedCards, visible }) => {
       refetchQueries: ['getCollectionNames'],
     });
     onCancel();
-    message(`Added ${selectedCardsLabel} cards to your collection!`);
+    message(`Added ${sumCardAmount(cards)} cards to your collection!`);
   };
 
   return (
-    <Modal
+    <FocussedModal
       visible={visible}
       title="Add cards to..."
       footer={null}
       onCancel={onCancel}
+      focusId="modal.addCardsTo"
       bodyStyle={{ maxHeight: '70vh', overflowY: 'auto' }}
     >
       <Flex direction="column">
@@ -126,6 +129,6 @@ export default ({ onCancel, cardsToAdd, numberOfSelectedCards, visible }) => {
           />
         )}
       </Flex>
-    </Modal>
+    </FocussedModal>
   );
 };

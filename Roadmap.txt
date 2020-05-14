@@ -5,16 +5,7 @@ BUGFIXES:
 CURRENT:
 
 NEXT:
-    - add to selected card:
-        - details [ENTER] - normal details modal
-        - edit [E] -> same as wants modal
-        - delete [BACKSAPCE] - deleeete
-
-    - create deck not working (desktop)
-    - amount display
-    - add value sum to each type
-    - add color identity to decks overview, add to deck resolver
-    - sort cards by name after cmc
+    - allow deck image search
 
 IMPROVEMENTS:
     - improve re-rendering of table columns and grid card

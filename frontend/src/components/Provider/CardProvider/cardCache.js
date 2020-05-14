@@ -1,6 +1,6 @@
 import { message } from 'antd';
-import { getAllSets, getAllCreatureTypes } from '../../network/mtgApi';
-import client from '../../network/graphqlClient';
+import { getAllSets, getAllCreatureTypes } from '../../../network/mtgApi';
+import client from '../../../network/graphqlClient';
 import { cachedCards, numberOfCachedCards } from './queries';
 
 const REFRESH_PERIOD = 24 * 60 * 60 * 1000;

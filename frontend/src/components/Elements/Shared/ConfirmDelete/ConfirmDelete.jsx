@@ -1,22 +1,23 @@
 import React from 'react';
-import { Modal, Typography } from 'antd';
-import useBlockShortcuts from '../../../Hooks/useBlockShortcuts';
+import { Typography } from 'antd';
+
 import { useShortcut } from '../../../Hooks';
+import FocussedModal from '../FocussedModal';
 
 export default ({ onCancel, text, onOk }) => {
-  useBlockShortcuts();
-  useShortcut('ENTER', onOk, true);
+  useShortcut('ENTER', onOk, 'modal.confirmDelete');
 
   return (
-    <Modal
+    <FocussedModal
       visible
       title="Are you sure?"
       okText="Delete"
       okButtonProps={{ type: 'danger', onClick: onOk }}
       onCancel={onCancel}
       bodyStyle={{ maxHeight: 400, overflowY: 'auto' }}
+      focusId="modal.confirmDelete"
     >
       <Typography.Text>{text}</Typography.Text>
-    </Modal>
+    </FocussedModal>
   );
 };

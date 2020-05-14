@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Select } from 'antd';
 import styled from 'styled-components';
 
-import CardContext from '../../../CardProvider/CardProvider';
+import CardContext from '../../../Provider/CardProvider';
 
 const StyledSetIcon = styled.img`
   height: 16px;
