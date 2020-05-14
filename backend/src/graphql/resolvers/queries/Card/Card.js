@@ -44,8 +44,11 @@ const resolver = {
     return card_faces[0].colors;
   },
 
-  possiblePartner({ oracle_text }) {
-    if (!oracle_text) return null;
+  possiblePartner({ oracle_text, type_line }) {
+    console.log('type_line :', type_line);
+    if (!oracle_text || !type_line || !type_line.startsWith('Legendary')) {
+      return null;
+    }
     const isGeneralPartner = oracle_text.includes('Partner (You can have');
     if (isGeneralPartner) {
       return 'ALL';

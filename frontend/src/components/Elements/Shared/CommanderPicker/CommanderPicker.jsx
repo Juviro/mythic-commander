@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Typography, Button, Select } from 'antd';
-import {
-  PlusOutlined,
-  EditOutlined,
-  SaveOutlined,
-  CloseOutlined,
-  CheckOutlined,
-} from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, CheckOutlined } from '@ant-design/icons';
 
 import { useMutation } from 'react-apollo';
 import Flex from '../Flex';
 import { useToggle } from '../../../Hooks';
 import { setCommanderDesktop } from './queries';
 import { primary } from '../../../../constants/colors';
+import { sortByName } from '../../../../utils/cardFilter';
 
 const getSecondCommanders = (cards, firstCommander) => {
   if (!firstCommander) return [];
@@ -28,10 +23,12 @@ const getSecondCommanders = (cards, firstCommander) => {
   return cards.filter(card => card.name === possiblePartner);
 };
 
+// TODO: the orders of the commanders can change, prevent that
 export default ({ deck }) => {
   const [isEditing, toggleIsEditing] = useToggle();
   const [mutate] = useMutation(setCommanderDesktop);
-  const commanders = deck.cards.filter(({ isCommander }) => isCommander);
+  const sortedCards = sortByName(deck.cards);
+  const commanders = sortedCards.filter(({ isCommander }) => isCommander);
   const [firstCommander, secondCommander] = commanders;
 
   const onSetCommanders = cardIds => {
@@ -60,6 +57,7 @@ export default ({ deck }) => {
   };
 
   const onSetSecondCommander = cardId => {
+    if (secondCommander && secondCommander.id === cardId) return;
     onSetCommanders([firstCommander.id, cardId]);
   };
 
@@ -106,7 +104,7 @@ export default ({ deck }) => {
     <Flex direction="column" style={{ margin: '0 4px' }}>
       <Flex direction="row" align="center">
         <Select
-          defaultValue={firstCommander && firstCommander.id}
+          value={firstCommander && firstCommander.name}
           style={{ width: '100%' }}
           onSelect={onSetFirstCommander}
           size="small"
