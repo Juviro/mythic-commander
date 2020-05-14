@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, List, message } from 'antd';
+import { Select, message } from 'antd';
 import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
 
@@ -41,7 +41,7 @@ export default ({ deck }) => {
   };
 
   return (
-    <List.Item style={{ display: 'flex', flexDirection: 'column' }}>
+    <>
       <StyledHeader>Deck Image:</StyledHeader>
       <Select
         defaultValue={getImgSrc(currentImage)}
@@ -54,6 +54,6 @@ export default ({ deck }) => {
           </Select.Option>
         ))}
       </Select>
-    </List.Item>
+    </>
   );
 };

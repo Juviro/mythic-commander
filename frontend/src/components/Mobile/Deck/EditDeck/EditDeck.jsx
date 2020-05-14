@@ -27,7 +27,9 @@ export default ({ deck, loading }) => {
             <DeckTitle deck={deck} />
           </List.Item>
           <ChangeCommander deck={deck} />
-          <ChangeImage deck={deck} />
+          <List.Item>
+            <ChangeImage deck={deck} />
+          </List.Item>
           <List.Item>
             <DuplicateDeck />
           </List.Item>

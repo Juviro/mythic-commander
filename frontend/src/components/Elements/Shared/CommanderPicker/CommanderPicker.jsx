@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Typography, Button, Select } from 'antd';
 import { PlusOutlined, EditOutlined, CheckOutlined } from '@ant-design/icons';
 
@@ -8,6 +9,24 @@ import { useToggle } from '../../../Hooks';
 import { setCommanderDesktop } from './queries';
 import { primary } from '../../../../constants/colors';
 import { sortByName } from '../../../../utils/cardFilter';
+
+const StyledEditIcon = styled(EditOutlined)`
+  color: ${primary};
+  margin: 4px 8px;
+  font-size: 16px;
+  display: none;
+`;
+
+const StyledNameWrapper = styled.div`
+  display: flex;
+  cursor: pointer;
+  flex-direction: row;
+  padding-left: 8px;
+
+  &:hover ${StyledEditIcon} {
+    display: inherit;
+  }
+`;
 
 const getSecondCommanders = (cards, firstCommander) => {
   if (!firstCommander) return [];
@@ -23,7 +42,6 @@ const getSecondCommanders = (cards, firstCommander) => {
   return cards.filter(card => card.name === possiblePartner);
 };
 
-// TODO: the orders of the commanders can change, prevent that
 export default ({ deck }) => {
   const [isEditing, toggleIsEditing] = useToggle();
   const [mutate] = useMutation(setCommanderDesktop);
@@ -84,19 +102,20 @@ export default ({ deck }) => {
 
   if (!isEditing) {
     return (
-      <Flex direction="row" style={{ paddingLeft: 8 }}>
+      <StyledNameWrapper onClick={toggleIsEditing}>
         <Flex direction="column">
           {commanders.map(commander => (
-            <Typography.Text strong key={commander.id}>
+            <Typography.Text
+              strong
+              key={commander.id}
+              style={{ fontSize: 16, height: 27 }}
+            >
               {commander.name}
             </Typography.Text>
           ))}
         </Flex>
-        <EditOutlined
-          onClick={toggleIsEditing}
-          style={{ color: primary, margin: '4px 8px', fontSize: 16 }}
-        />
-      </Flex>
+        <StyledEditIcon />
+      </StyledNameWrapper>
     );
   }
 
