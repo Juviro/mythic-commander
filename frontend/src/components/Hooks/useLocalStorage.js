@@ -9,12 +9,16 @@ export default (key, initialValue) => {
       if (value === null) return initialValue;
       return value;
     } catch {
-      return item || initialValue;
+      return item;
     }
   });
 
   const setValue = value => {
-    window.localStorage.setItem(fullKey, value);
+    if (!value) {
+      window.localStorage.setItem(fullKey, '');
+    } else {
+      window.localStorage.setItem(fullKey, value);
+    }
     setStoredValue(value);
   };
 

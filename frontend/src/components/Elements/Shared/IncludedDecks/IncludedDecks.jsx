@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 import CustomSkeleton from '../CustomSkeleton';
+import getDynamicUrl from '../../../../utils/getDynamicUrl';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -42,7 +43,7 @@ export default ({ card, large }) => {
           <List.Item style={{ padding: large ? 8 : 4 }}>
             <span>
               <StyledPreview src={imgSrc} />
-              <Link to={`/m/decks/${id}`}>{name}</Link>
+              <Link to={getDynamicUrl(`/decks/${id}`)}>{name}</Link>
             </span>
           </List.Item>
         )}

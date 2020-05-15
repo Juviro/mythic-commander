@@ -3,6 +3,7 @@ import { useQueryParam, NumberParam, BooleanParam } from 'use-query-params';
 import { isInputField, isModifierKey } from '../../../../Hooks/useShortcut';
 import keyCodes from '../../../../../constants/keyCodes';
 
+// TODO: numberOfRows can be calculated from cardsPerRow and numberOfCards
 export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
   const [isBlocked] = useQueryParam('blockShortcuts', BooleanParam);
   const [currentPage = 1, setPageParam] = useQueryParam('page', NumberParam);

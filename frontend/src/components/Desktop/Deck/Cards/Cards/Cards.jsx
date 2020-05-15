@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Skeleton } from 'antd';
+import { Skeleton, Empty } from 'antd';
 import styled, { css } from 'styled-components';
 
 import { useWindowSize } from '../../../../Hooks';
@@ -17,6 +17,7 @@ const StyledWrapper = styled.div`
   transition: all 0.3s;
   display: flex;
   justify-content: center;
+  min-height: 400px;
 
   ${({ isFocused }) =>
     isFocused
@@ -60,13 +61,13 @@ const getCardColumns = (cards, numberOfCols) => {
 };
 
 export default ({ deck, loading, currentTab }) => {
-  const widthOffset = currentTab ? 400 : 0;
+  const widthOffset = currentTab ? 500 : 0;
   useWindowSize();
   const { focusedElement } = useContext(FocusContext);
   const isFocused = focusedElement === 'deck.cards';
 
-  // padding of wrapper, tabs, tabMargin
-  const innerWidth = window.innerWidth - widthOffset - 16 - 40 - 8;
+  // padding of wrapper, tabs, tabMargin, wrapper margin, ???
+  const innerWidth = window.innerWidth - widthOffset - 16 - 40 - 8 - 8 - 23;
   const cardWidth = CARD_WIDTH + 20; // padding and margin of card
   const numberOfCols = Math.max(Math.floor(innerWidth / cardWidth), 1);
 
@@ -86,7 +87,11 @@ export default ({ deck, loading, currentTab }) => {
         wrap="wrap"
         style={{ padding: 8, width: 'fit-content' }}
       >
-        <CardLists columns={cardColumns} deck={deck} />
+        {cardColumns.length ? (
+          <CardLists columns={cardColumns} deck={deck} />
+        ) : (
+          <Empty description="No Cards" />
+        )}
       </Flex>
     </StyledWrapper>
   );
