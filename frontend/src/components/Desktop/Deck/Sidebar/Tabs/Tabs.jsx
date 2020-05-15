@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Tab from './Tab';
 import { useShortcut } from '../../../../Hooks';
+import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
 
 const StyledWrapper = styled.div`
   margin-right: 8px;
 `;
 
 export default ({ currentTab, setCurrentTab }) => {
+  const { addFocus } = useContext(FocusContext);
   const tabs = [
     {
       title: 'Add Cards [A]',
@@ -28,12 +30,20 @@ export default ({ currentTab, setCurrentTab }) => {
       setCurrentTab(null);
     } else {
       setCurrentTab(key);
+      addFocus('deck.sidebar');
     }
   };
 
-  useShortcut('a', () => onOpenTab('add'), ['deck.sidebar', 'deck.cards']);
-  useShortcut('w', () => onOpenTab('wants'), ['deck.sidebar', 'deck.cards']);
-  useShortcut('s', () => onOpenTab('stats'), ['deck.sidebar', 'deck.cards']);
+  const focusIds = [
+    'deck.sidebar.add',
+    'deck.sidebar.wants',
+    'deck.sidebar.stats',
+    'deck.cards',
+  ];
+
+  useShortcut('a', () => onOpenTab('add'), focusIds);
+  useShortcut('w', () => onOpenTab('wants'), focusIds);
+  useShortcut('s', () => onOpenTab('stats'), focusIds);
 
   return (
     <StyledWrapper>

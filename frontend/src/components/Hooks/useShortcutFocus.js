@@ -15,8 +15,7 @@ export default (focusId, isActive = true) => {
     // eslint-disable-next-line
   }, [isActive]);
 
-  const onClick = event => {
-    event.preventDefault();
+  const onClick = () => {
     addFocus(focusId);
   };
 

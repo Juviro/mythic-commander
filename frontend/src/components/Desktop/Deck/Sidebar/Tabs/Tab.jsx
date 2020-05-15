@@ -25,6 +25,9 @@ const StyledTab = styled.div`
     background-color: ${primaryActive};
     color: white;
   }
+  &:last-child {
+    border-bottom-right-radius: 10px;
+  }
 `;
 
 const StyledTitle = styled.div`

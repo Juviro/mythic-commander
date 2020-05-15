@@ -13,16 +13,19 @@ export default ({ onCancel, url, isVisible }) => {
       title="Proxy cards"
       focusId="modal.exportAsText"
     >
+      <a href={url} style={{ zIndex: 99999 }}>
+        test
+      </a>
       <Flex direction="row" justify="space-around">
         <a target="_blank" rel="noopener noreferrer" href={url}>
-          <Button
+          {/* <Button
             style={{ width: 150 }}
             type="primary"
             ghost
-            onClick={onCancel}
+            // onClick={onCancel}
           >
-            All Cards
-          </Button>
+        </Button> */}
+          All Cards
         </a>
         <a
           target="_blank"
