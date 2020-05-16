@@ -1,11 +1,11 @@
 import { useContext, useEffect } from 'react';
 import FocusContext from '../Provider/FocusProvider/FocusProvider';
 
-export default (focusId, isActive = true) => {
+export default (focusId, visible = true) => {
   const { addFocus, removeFocus } = useContext(FocusContext);
 
   useEffect(() => {
-    if (!isActive) {
+    if (!visible) {
       removeFocus(focusId);
     } else {
       addFocus(focusId);
@@ -13,7 +13,7 @@ export default (focusId, isActive = true) => {
 
     return () => removeFocus(focusId);
     // eslint-disable-next-line
-  }, [isActive]);
+  }, [visible]);
 
   const onClick = () => {
     addFocus(focusId);

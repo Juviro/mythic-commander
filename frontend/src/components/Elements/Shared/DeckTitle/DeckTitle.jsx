@@ -36,8 +36,8 @@ export default ({ deck, fontSize = 14 }) => {
         marginBottom: 0,
         fontSize,
         fontWeight: 600,
-        width: 'fit-content',
         display: 'flex',
+        marginRight: 20,
         justifyContent: 'space-between',
       }}
     >

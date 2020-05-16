@@ -14,11 +14,18 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
-export default ({ onAddCards, autoFocus, containedCardNames }) => {
+export default ({
+  onAddCards,
+  autoFocus,
+  containedCardNames,
+  focusId,
+  style,
+  placeholder,
+}) => {
   const searchInputRef = useRef(null);
   const { data } = useQuery(getCollectionNames);
   const focusInput = () => searchInputRef.current.focus();
-  useShortcut('a', focusInput);
+  useShortcut('a', focusInput, focusId);
 
   const ownedCardNames = data
     ? data.collection.cards.map(({ card: { name } }) => name)
@@ -26,7 +33,7 @@ export default ({ onAddCards, autoFocus, containedCardNames }) => {
 
   return (
     <Tooltip title="Add card [A]">
-      <StyledWrapper>
+      <StyledWrapper style={style}>
         <CardSearch
           ref={searchInputRef}
           ownedCardNames={ownedCardNames}
@@ -35,6 +42,7 @@ export default ({ onAddCards, autoFocus, containedCardNames }) => {
           defaultActiveFirstOption
           resetSearch
           autoFocus={autoFocus}
+          placeholder={placeholder}
           width="100%"
         />
         <MultiInput onAddCards={onAddCards} />

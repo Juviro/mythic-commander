@@ -18,6 +18,7 @@ const StyledWrapper = styled.div`
   display: flex;
   justify-content: center;
   min-height: 400px;
+  padding-bottom: 200px;
 
   ${({ isFocused }) =>
     isFocused
