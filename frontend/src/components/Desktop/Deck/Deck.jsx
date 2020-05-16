@@ -11,6 +11,7 @@ import unifyCardFormat from '../../../utils/unifyCardFormat';
 import { getDeckDesktop, addCardsToDeckDesktop } from './queries';
 import { Flex, ShortcutFocus } from '../../Elements/Shared';
 import useLocalStorage from '../../Hooks/useLocalStorage';
+import sumCardAmount from '../../../utils/sumCardAmount';
 
 const StyledDeck = styled.div`
   width: 100%;
@@ -38,7 +39,8 @@ export default () => {
   };
 
   const onAddCards = (newCards, name) => {
-    message(`Added <b>${name}</b> to your deck!`);
+    const addedLabel = name || `${sumCardAmount(newCards)} cards`;
+    message(`Added <b>${addedLabel}</b> to your deck!`);
     mutate({
       variables: { cards: newCards, deckId: id },
     });
