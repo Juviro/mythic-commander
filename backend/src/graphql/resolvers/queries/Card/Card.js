@@ -45,7 +45,6 @@ const resolver = {
   },
 
   possiblePartner({ oracle_text, type_line }) {
-    console.log('type_line :', type_line);
     if (!oracle_text || !type_line || !type_line.startsWith('Legendary')) {
       return null;
     }

@@ -10,10 +10,9 @@ import FocusContext from '../../../../../Provider/FocusProvider/FocusProvider';
 export const CARD_WIDTH = 220;
 const CARD_HEIGHT = CARD_WIDTH * 1.4;
 
-const ANIMATION_DURATION = 100;
+const ANIMATION_DURATION = 20;
 
 const StyledWrapper = styled.div`
-  left: 0;
   width: ${CARD_WIDTH}px;
 
   position: relative;
@@ -85,20 +84,23 @@ const Card = ({
   }, [selected]);
 
   return (
-    <StyledWrapper isSelected={selected}>
-      <StyledScrollDummy ref={ref} />
-      <StyledCard onClick={onClick} isSelected={selected}>
-        <FlippableCard card={card} hideFlipIcon={!selected} />
-        <AmountBadge amount={card.amount} />
-      </StyledCard>
-      {selected && (
-        <CardMenu
-          card={card}
-          onOpenDetails={onOpenDetails}
-          onDelete={onDelete}
-        />
-      )}
-    </StyledWrapper>
+    <>
+      <StyledWrapper isSelected={selected}>
+        <StyledScrollDummy ref={ref} />
+        <StyledCard onClick={onClick} isSelected={selected}>
+          <FlippableCard card={card} hideFlipIcon={!selected} />
+          <AmountBadge amount={card.amount} />
+        </StyledCard>
+        {selected && (
+          <CardMenu
+            card={card}
+            onOpenDetails={onOpenDetails}
+            onDelete={onDelete}
+          />
+        )}
+      </StyledWrapper>
+      {/* <StyledWrapperAbsolute isSelected={selected} ref={ref} /> */}
+    </>
   );
 };
 

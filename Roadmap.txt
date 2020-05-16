@@ -9,6 +9,7 @@ NEXT:
     - tabs
         - add icons?
         - add diagonal shape
+    - show owned/unowned in deck
     - allow deck image edit
     - move focusIds to constants
     - update + test all shortcuts (collection grid for example)
