@@ -1,15 +1,20 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+
 import Tab from './Tab';
 import { useShortcut } from '../../../../Hooks';
 import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
 
 const StyledWrapper = styled.div`
   margin-right: 8px;
+  user-select: none;
+  height: fit-content;
+  position: absolute;
+  right: -50px;
 `;
 
 export default ({ currentTab, setCurrentTab }) => {
-  const { addFocus } = useContext(FocusContext);
+  const { focusedElements, setFocus } = useContext(FocusContext);
   const tabs = [
     {
       title: 'Add Cards [A]',
@@ -25,25 +30,29 @@ export default ({ currentTab, setCurrentTab }) => {
     },
   ];
 
-  const onOpenTab = key => {
-    if (key === currentTab) {
-      setCurrentTab(null);
-    } else {
-      setCurrentTab(key);
-      addFocus('deck.sidebar');
-    }
-  };
-
   const focusIds = [
     'deck.sidebar.add',
     'deck.sidebar.wants',
     'deck.sidebar.stats',
-    'deck.cards',
   ];
 
-  useShortcut('a', () => onOpenTab('add'), focusIds);
-  useShortcut('w', () => onOpenTab('wants'), focusIds);
-  useShortcut('s', () => onOpenTab('stats'), focusIds);
+  const onOpenTab = key => {
+    const filteredFocus = focusedElements.filter(
+      focusId => !focusIds.includes(focusId)
+    );
+
+    if (key === currentTab) {
+      setCurrentTab(null);
+      setFocus(filteredFocus);
+    } else {
+      setCurrentTab(key);
+      setFocus(filteredFocus.concat(`deck.sidebar.${key}`));
+    }
+  };
+
+  useShortcut('a', () => onOpenTab('add'), focusIds.concat('deck.cards'));
+  useShortcut('w', () => onOpenTab('wants'), focusIds.concat('deck.cards'));
+  useShortcut('s', () => onOpenTab('stats'), focusIds.concat('deck.cards'));
 
   return (
     <StyledWrapper>

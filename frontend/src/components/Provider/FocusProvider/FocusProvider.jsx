@@ -23,8 +23,10 @@ export const FocusContextProvider = ({ children }) => {
     <FocusContext.Provider
       value={{
         focusedElement,
+        focusedElements,
         addFocus,
         removeFocus,
+        setFocus: setFocusedElements,
       }}
     >
       {children}

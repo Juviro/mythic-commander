@@ -13,6 +13,7 @@ NEXT:
     - move focusIds to constants
     - update + test all shortcuts (collection grid for example)
     - remove all references to blockShortcuts
+    - styling when editing deck title
 
 IMPROVEMENTS:
     - improve re-rendering of table columns and grid card
@@ -54,6 +55,8 @@ BACKLOG:
     - dark mode
     - update document title based on content
     - allow text export/proxy of selected cards
+    - downloadable text export
+    - save selected element when going to next page
     - rework advanced search:
         - format: label and input field next to each other
         - add *unownedOnly*

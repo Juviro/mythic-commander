@@ -107,6 +107,7 @@ export default ({ deck }) => {
           {commanders.map(commander => (
             <Typography.Text
               strong
+              ellipsis
               key={commander.id}
               style={{ fontSize: 16, height: 27 }}
             >

@@ -22,7 +22,8 @@ export default (triggerKey, action, focusId) => {
   const focusIds = typeof focusId === 'string' ? [focusId] : focusId;
 
   const onKeyDown = event => {
-    const shouldBlock = focusedElement && !focusIds.includes(focusedElement);
+    const shouldBlock =
+      focusedElement && (!focusIds || !focusIds.includes(focusedElement));
     if (!action || isInputField(event) || isModifierKey(event) || shouldBlock) {
       return;
     }

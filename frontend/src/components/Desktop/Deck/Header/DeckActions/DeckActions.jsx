@@ -31,7 +31,7 @@ export default ({ deck }) => {
         </Menu>
       }
     >
-      <Button type="primary" size="normal">
+      <Button type="primary" size="normal" style={{ width: 150 }}>
         Actions <DownOutlined />
       </Button>
     </Dropdown>

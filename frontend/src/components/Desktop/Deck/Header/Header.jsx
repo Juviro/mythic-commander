@@ -7,6 +7,7 @@ import DeckImage from './DeckImage';
 import DeckActions from './DeckActions';
 import { Flex, DeckStats } from '../../../Elements/Shared';
 import NotLegalWarning from '../../../Mobile/Deck/DeckHeader/DeckOverview/NotLegalWarning';
+import { AddCards } from '../../../Elements/Desktop';
 
 const StyledWrapper = styled(Flex)`
   height: 226px;
@@ -14,7 +15,7 @@ const StyledWrapper = styled(Flex)`
   padding: 16px;
 `;
 
-export default ({ deck }) => {
+export default ({ deck, onAddCards }) => {
   if (!deck) {
     return (
       <StyledWrapper>
@@ -33,7 +34,16 @@ export default ({ deck }) => {
           <DeckImage deck={deck} />
           <DeckStats deck={deck} />
         </Flex>
-        <DeckActions deck={deck} />
+        <Flex direction="column" justify="space-between" align="flex-end">
+          <DeckActions deck={deck} />
+          <AddCards
+            style={{ width: 250 }}
+            onAddCards={onAddCards}
+            autoFocus={false}
+            placeholder="Add a card..."
+            focusId="deck.cards"
+          />
+        </Flex>
       </Flex>
     </StyledWrapper>
   );

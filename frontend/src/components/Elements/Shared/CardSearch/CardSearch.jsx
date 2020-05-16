@@ -104,6 +104,7 @@ export default class CardSearch extends React.Component {
       ownedCardNames,
       containedCardNames,
       defaultActiveFirstOption,
+      placeholder = 'Search for a card',
     } = this.props;
 
     const { searchString } = this.state;
@@ -119,7 +120,7 @@ export default class CardSearch extends React.Component {
         ref={this.inputRef}
         value={searchString}
         onKeyDown={useBlurOnEsc}
-        placeholder="Search for a card"
+        placeholder={placeholder}
         defaultActiveFirstOption={defaultActiveFirstOption}
         onChange={val => this.setSearch(val)}
         onSelect={this.onSubmit}

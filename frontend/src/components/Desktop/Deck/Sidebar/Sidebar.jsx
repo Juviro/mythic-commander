@@ -7,6 +7,14 @@ import AddCards from './AddCards/AddCards';
 import DeckStats from './DeckStats';
 import DeckWants from './DeckWants';
 
+const StyledOuterWrapper = styled.div`
+  margin-right: 50px;
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+`;
+
 const StyledWrapper = styled.div`
   z-index: 10;
   transition: all 0.2s;
@@ -45,28 +53,26 @@ export default ({ currentTab, setCurrentTab }) => {
     },
   ];
   return (
-    <Flex
-      direction="row"
-      style={{ userSelect: 'none', position: 'relative', overflow: 'hidden' }}
-    >
-      <StyledWrapper
-        visible={Boolean(currentTab)}
-        currentTabIndex={tabs.findIndex(({ key }) => key === currentTab)}
-      >
-        {tabs.map(({ key, Component }) => (
-          <ShortcutFocus
-            visible={currentTab === key}
-            focusId={`deck.sidebar.${key}`}
-            style={{ height: '100%' }}
-            key={key}
-          >
-            <StyledView visible={currentTab === key}>
-              <Component visible={currentTab === key} />
-            </StyledView>
-          </ShortcutFocus>
-        ))}
-      </StyledWrapper>
+    <StyledOuterWrapper>
+      <Flex direction="row" style={{ height: '100%', overflow: 'hidden' }}>
+        <StyledWrapper
+          visible={Boolean(currentTab)}
+          currentTabIndex={tabs.findIndex(({ key }) => key === currentTab)}
+        >
+          {tabs.map(({ key, Component }) => (
+            <ShortcutFocus
+              key={key}
+              style={{ height: '100%' }}
+              focusId={`deck.sidebar.${key}`}
+            >
+              <StyledView visible={currentTab === key}>
+                <Component visible={currentTab === key} />
+              </StyledView>
+            </ShortcutFocus>
+          ))}
+        </StyledWrapper>
+      </Flex>
       <Tabs currentTab={currentTab} setCurrentTab={setCurrentTab} />
-    </Flex>
+    </StyledOuterWrapper>
   );
 };

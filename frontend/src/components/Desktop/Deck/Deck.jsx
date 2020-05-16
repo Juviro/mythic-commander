@@ -37,19 +37,19 @@ export default () => {
     cards,
   };
 
-  const onAddCard = (card, name) => {
+  const onAddCards = (newCards, name) => {
     message(`Added <b>${name}</b> to your deck!`);
     mutate({
-      variables: { cards: [card], deckId: id },
+      variables: { cards: newCards, deckId: id },
     });
   };
 
   return (
     <StyledDeck>
-      <Sidebar currentTab={currentTab} setCurrentTab={setCurrentTab} />
+      {/* <Sidebar currentTab={currentTab} setCurrentTab={setCurrentTab} /> */}
       <Flex style={{ overflow: 'auto', flex: 1 }} direction="column">
         <ShortcutFocus focusId="deck.cards">
-          <Header deck={unifiedDeck} />
+          <Header deck={unifiedDeck} onAddCards={onAddCards} />
           <Cards deck={unifiedDeck} loading={loading} currentTab={currentTab} />
         </ShortcutFocus>
       </Flex>
