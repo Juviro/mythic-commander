@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { withRouter } from 'react-router';
 import GridCard from './GridCard';
-import useNumberOfCards from './useNumberOfCards';
 import useGridShortcuts from './useGridShortcuts';
 import CardModalDesktop from '../../CardModalDesktop';
 import { useWindowSize, useToggle } from '../../../../Hooks';
@@ -21,22 +20,19 @@ const StyledWrapper = styled.div`
 const CardGrid = ({
   cards,
   loading,
-  widthOffset,
+  cardsPerRow,
+  cardWidth,
   numberOfCards,
-  zoom,
+  zoom = 100,
   search,
   actions,
   onEditCard,
   onDeleteCard,
   history,
+  blockShortcuts,
 }) => {
   useWindowSize();
   const [showDetails, toggleShowDetail] = useToggle(false);
-
-  const { cardsPerRow, numberOfRows, cardWidth } = useNumberOfCards(
-    widthOffset,
-    zoom
-  );
 
   const {
     pagination,
@@ -44,9 +40,9 @@ const CardGrid = ({
     setSelectedElementPosition,
   } = useGridShortcuts(
     cardsPerRow,
-    numberOfRows,
     toggleShowDetail,
-    numberOfCards
+    numberOfCards,
+    blockShortcuts
   );
 
   const selectedCard = cards[selectedElementPosition - 1];
@@ -67,7 +63,8 @@ const CardGrid = ({
     <Pagination
       {...pagination}
       showSizeChanger
-      showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} cards`}
+      size="small"
+      showTotal={(total, [from, to]) => `${from}-${to} of ${total} cards`}
       style={{ alignSelf: 'flex-end', margin: '16px 0' }}
     />
   );
@@ -104,7 +101,7 @@ const CardGrid = ({
         loading={loading}
         card={selectedCard}
         visible={showDetails}
-        onClose={toggleShowDetail}
+        onClose={() => toggleShowDetail(false)}
       />
     </>
   );

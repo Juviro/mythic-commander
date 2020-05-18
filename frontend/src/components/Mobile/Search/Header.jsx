@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ResetFilter } from '../../Elements/Shared';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -15,11 +14,10 @@ const StyledTitle = styled.div`
   margin-bottom: 8px;
 `;
 
-export default ({ onResetOptions, isFilterResettable }) => {
+export default () => {
   return (
     <StyledWrapper>
       <StyledTitle>Search for cards</StyledTitle>
-      {isFilterResettable && <ResetFilter onReset={onResetOptions} />}
     </StyledWrapper>
   );
 };

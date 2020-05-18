@@ -1,23 +1,21 @@
 BUGFIXES:
-
     - advanced search -> add card to collection: owned badge not displayed
-    - search name overflowing owned badge
+    - search -> name overflowing owned badge
 
 CURRENT:
+    - fix arrow movement with open details
 
 NEXT:
-    - tabs
-        - add icons?
-        - add diagonal shape
+    - add shortcut to toggle focus
     - show owned/unowned in deck
     - allow deck image edit
-    - move focusIds to constants
     - update + test all shortcuts (collection grid for example)
     - remove all references to blockShortcuts
     - styling when editing deck title
 
 IMPROVEMENTS:
     - improve re-rendering of table columns and grid card
+    - advanced search -> set picker -> make dropdown wide enought to display whole name
 
 FEATURES:
     - enable table actions for search

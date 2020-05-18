@@ -61,10 +61,10 @@ export default (numberOfCards, toggleShowDetail, toggleElementSelection) => {
     let preventDefault = true;
 
     switch (event.keyCode) {
-      case keyCodes.SPACE:
+      case keyCodes.ENTER:
         toggleElementSelection(selectedElementPosition);
         break;
-      case keyCodes.ENTER:
+      case keyCodes.SPACE:
         toggleShowDetail();
         break;
       case keyCodes.ARROW_LEFT:

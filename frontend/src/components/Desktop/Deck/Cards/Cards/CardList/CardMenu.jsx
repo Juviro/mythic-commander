@@ -57,7 +57,7 @@ export default ({ card, onOpenDetails, onDelete }) => {
           <Typography.Text strong>{value}</Typography.Text>
         </Flex>
         <StyledButton type="link" onClick={onOpenDetails}>
-          {`Details [${keySymbols.ENTER}]`}
+          {`Details [${keySymbols.SPACE}]`}
         </StyledButton>
         <StyledButton type="link" onClick={toggleIsEditing}>
           Edit [E]

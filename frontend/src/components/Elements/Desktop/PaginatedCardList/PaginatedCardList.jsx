@@ -11,6 +11,7 @@ import Header from './Header';
 import FullscreenSpinner from '../../Shared/Spinner';
 import useLocalStorage from '../../../Hooks/useLocalStorage';
 import keySymbols from '../../../../constants/keySymbols';
+import useNumberOfCards from './useNumberOfCards';
 
 const StyledEmpty = styled(Empty)`
   width: 100%;
@@ -43,6 +44,11 @@ export default ({
   const [zoom, setZoom] = useLocalStorage('zoom', 100);
   const [layout] = useQueryParam('layout', StringParam);
   const width = `calc(100% - ${widthOffset}px)`;
+
+  const { cardsPerRow, numberOfRows, cardWidth } = useNumberOfCards(
+    widthOffset,
+    zoom
+  );
 
   const heightOffset = title ? 40 : 0;
 
@@ -85,7 +91,7 @@ export default ({
   }
 
   let cardList;
-  if (layout === 'list') {
+  if (layout === 'list' && cards.length) {
     cardList = (
       <CardTable
         cards={cards}
@@ -104,7 +110,7 @@ export default ({
         onDeleteCard={onDelete}
       />
     );
-  } else if (layout === 'grid') {
+  } else if (layout === 'grid' && cards.length) {
     cardList = (
       <CardGrid
         zoom={zoom}
@@ -116,6 +122,9 @@ export default ({
         actions={singleCardActions}
         onEditCard={onEdit}
         onDeleteCard={onDelete}
+        cardsPerRow={cardsPerRow}
+        numberOfRows={numberOfRows}
+        cardWidth={cardWidth}
       />
     );
   } else {

@@ -99,7 +99,6 @@ const Card = ({
           />
         )}
       </StyledWrapper>
-      {/* <StyledWrapperAbsolute isSelected={selected} ref={ref} /> */}
     </>
   );
 };
