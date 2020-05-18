@@ -2,16 +2,16 @@ import { StringParam, BooleanParam } from 'use-query-params';
 
 export default {
   name: StringParam,
+  text: StringParam,
+  set: StringParam,
+  cardType: StringParam,
+  isLegendary: StringParam,
+  creatureType: StringParam,
+  colors: StringParam,
   rarity: StringParam,
   cmc: StringParam,
   power: StringParam,
   toughness: StringParam,
-  set: StringParam,
-  text: StringParam,
-  colors: StringParam,
-  creatureType: StringParam,
-  cardType: StringParam,
-  isLegendary: StringParam,
-  isOwned: BooleanParam,
   isCommanderLegal: BooleanParam,
+  isOwned: BooleanParam,
 };

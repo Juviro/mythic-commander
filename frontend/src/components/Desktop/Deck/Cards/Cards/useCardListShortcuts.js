@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from 'react';
-import { useQueryParam, BooleanParam } from 'use-query-params';
 import { sumBy } from 'lodash';
 
 import keyCodes from '../../../../../constants/keyCodes';
@@ -46,7 +45,6 @@ const getNextItem = (cardGrid, selectedCardOracleId, direction) => {
 };
 
 export default columns => {
-  const [isBlocked] = useQueryParam('blockShortcuts', BooleanParam);
   const [selectedCardOracleId, setSelectedCardOracleId] = useState(null);
   const { focusedElement } = useContext(FocusContext);
   const shortcutsActive = ['deck.cards', 'modal.cardDetails'].includes(
@@ -89,7 +87,6 @@ export default columns => {
     if (
       isInputField(event) ||
       isModifierKey(event) ||
-      isBlocked ||
       !numberOfCards ||
       !shortcutsActive
     )

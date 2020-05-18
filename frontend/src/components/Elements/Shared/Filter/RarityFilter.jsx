@@ -27,7 +27,7 @@ export default ({ onChange: onSubmit, value = '' }) => {
           onChange={onChange(rarity)}
           checked={value.includes(rarity[0].toLowerCase())}
           key={rarity}
-          style={{ margin: '0 8px 0 0', width: '45%' }}
+          style={{ margin: '0 8px 0 0', width: '45%', minWidth: 'fit-content' }}
         >
           {rarity}
         </Checkbox>

@@ -8,5 +8,5 @@ const StyledWrapper = styled.div`
 `;
 
 export default () => {
-  return <StyledWrapper>hello</StyledWrapper>;
+  return <StyledWrapper>Coming soon</StyledWrapper>;
 };

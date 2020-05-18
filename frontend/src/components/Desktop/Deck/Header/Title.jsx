@@ -9,9 +9,9 @@ import {
 export default ({ deck }) => {
   return (
     <Flex direction="row" align="center">
-      <div style={{ marginRight: 8 }}>
+      <Flex style={{ marginRight: 8 }}>
         <ColorIdentitySymbols cards={deck.cards} size={24} />
-      </div>
+      </Flex>
       <DeckTitle deck={deck} fontSize={28} />
     </Flex>
   );

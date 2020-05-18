@@ -55,7 +55,7 @@ const GridCard = ({
   onDeleteCard,
   onClick,
   isSelected,
-  actions,
+  actions = [],
   widthPercentage,
   width,
   loading,

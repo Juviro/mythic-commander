@@ -1,11 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useContext } from 'react';
+import styled, { css } from 'styled-components';
 
 import Tabs from './Tabs';
 import { Flex, ShortcutFocus } from '../../../Elements/Shared';
 import AddCards from './AddCards/AddCards';
 import DeckStats from './DeckStats';
 import DeckWants from './DeckWants';
+import FocusContext from '../../../Provider/FocusProvider/FocusProvider';
+import { primary } from '../../../../constants/colors';
 
 const StyledOuterWrapper = styled.div`
   margin-right: 50px;
@@ -17,7 +19,6 @@ const StyledOuterWrapper = styled.div`
 
 const StyledWrapper = styled.div`
   z-index: 10;
-  transition: all 0.2s;
   box-shadow: 5px 5px 5px -5px #333;
   display: flex;
   overflow: hidden;
@@ -33,11 +34,22 @@ const StyledWrapper = styled.div`
 const StyledView = styled.div`
   width: 100%;
   height: 100%;
-  transition: all 0.5s;
+  transition: all 0.3s;
   opacity: ${({ visible }) => (visible ? 1 : 0)};
 `;
 
+const StyledFocus = styled.div`
+  min-height: 100%;
+  ${({ focused }) =>
+    focused
+      ? css`
+          box-shadow: inset 0 0 10px ${primary};
+        `
+      : ''}
+`;
+
 export default ({ currentTab, setCurrentTab }) => {
+  const { focusedElement } = useContext(FocusContext);
   const tabs = [
     {
       Component: AddCards,
@@ -54,7 +66,14 @@ export default ({ currentTab, setCurrentTab }) => {
   ];
   return (
     <StyledOuterWrapper>
-      <Flex direction="row" style={{ height: '100%', overflow: 'hidden' }}>
+      <Flex
+        direction="row"
+        style={{
+          height: '100%',
+          overflowY: 'hidden',
+          boxShadow: '2px 0px 4px 0px #9c9c9c',
+        }}
+      >
         <StyledWrapper
           visible={Boolean(currentTab)}
           currentTabIndex={tabs.findIndex(({ key }) => key === currentTab)}
@@ -62,11 +81,13 @@ export default ({ currentTab, setCurrentTab }) => {
           {tabs.map(({ key, Component }) => (
             <ShortcutFocus
               key={key}
-              style={{ height: '100%' }}
+              style={{ height: '100%', overflow: 'auto' }}
               focusId={`deck.sidebar.${key}`}
             >
               <StyledView visible={currentTab === key}>
-                <Component visible={currentTab === key} />
+                <StyledFocus focused={`deck.sidebar.${key}` === focusedElement}>
+                  <Component visible={currentTab === key} />
+                </StyledFocus>
               </StyledView>
             </ShortcutFocus>
           ))}

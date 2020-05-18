@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 import { Sidebar } from '../../Elements/Desktop';
-import { SearchButton, Filter, Flex, ResetFilter } from '../../Elements/Shared';
+import { SearchButton, Filter } from '../../Elements/Shared';
 
 const StyledContent = styled.div`
   width: 100%;
@@ -51,26 +51,17 @@ export default ({
     >
       <StyledContent isFullscreen={isFullscreen}>
         <Filter
-          advancedSearch
           onSearch={onSearch}
           autoFocus
           options={options}
           onChangeOption={onChangeOption}
         />
-
-        <Flex
-          direction="row"
-          justify="space-between"
-          align="center"
-          style={{ marginTop: 24, width: '100%' }}
-        >
-          <span>
-            {isFilterResettable && (
-              <ResetFilter title="reset" onReset={onResetOptions} />
-            )}
-          </span>
-          <SearchButton onSearch={onSearch} loading={loading} />
-        </Flex>
+        <SearchButton
+          onSearch={onSearch}
+          loading={loading}
+          onResetOptions={onResetOptions}
+          isFilterResettable={isFilterResettable}
+        />
       </StyledContent>
     </Sidebar>
   );
