@@ -7,7 +7,8 @@ import { primary } from '../../../../constants/colors';
 import { SetDeckImage } from '../../../Elements/Shared';
 
 const StyledEditIcon = styled(EditOutlined)`
-  display: none;
+  opacity: 0;
+  transition: all 0.2s;
   position: absolute;
   background-color: rgba(0, 0, 0, 0.6);
   padding: 10px;
@@ -29,7 +30,7 @@ const StyledWrapper = styled.div`
   position: relative;
 
   &:hover ${StyledEditIcon} {
-    display: flex;
+    opacity: 1;
   }
 `;
 const StyledImage = styled.img`
@@ -38,7 +39,7 @@ const StyledImage = styled.img`
 `;
 
 export default ({ deck }) => {
-  const [isEditing, toggleIsEditing] = useToggle(true);
+  const [isEditing, toggleIsEditing] = useToggle();
   return (
     <>
       <StyledWrapper>
