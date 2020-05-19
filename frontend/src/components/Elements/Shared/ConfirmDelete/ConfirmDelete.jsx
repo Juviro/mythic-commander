@@ -2,13 +2,13 @@ import React from 'react';
 import { Typography } from 'antd';
 
 import { useShortcut } from '../../../Hooks';
-import FocussedModal from '../FocussedModal';
+import FocusedModal from '../FocusedModal';
 
 export default ({ onCancel, text, onOk }) => {
   useShortcut('ENTER', onOk, 'modal.confirmDelete');
 
   return (
-    <FocussedModal
+    <FocusedModal
       visible
       title="Are you sure?"
       okText="Delete"
@@ -18,6 +18,6 @@ export default ({ onCancel, text, onOk }) => {
       focusId="modal.confirmDelete"
     >
       <Typography.Text>{text}</Typography.Text>
-    </FocussedModal>
+    </FocusedModal>
   );
 };
