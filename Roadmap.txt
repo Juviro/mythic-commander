@@ -6,12 +6,16 @@ CURRENT:
     - fix arrow movement with open details
 
 NEXT:
+    - indicate cards already in deck
     - add shortcut to toggle focus
+    - prevent re-ordering card lists
     - show owned/unowned in deck
     - allow deck image edit
+
+    - check focus shortcut block for table
     - update + test all shortcuts (collection grid for example)
-    - remove all references to blockShortcuts
     - styling when editing deck title
+    - remove all references to blockShortcuts
 
 IMPROVEMENTS:
     - improve re-rendering of table columns and grid card
@@ -63,6 +67,7 @@ BACKLOG:
 
 BACKLOG BUGFIXES:
     - backend deployment not reloading
+    - changing orderBy resets search fields to param options
     - duplicate card in multi import will throw an error in backend (group those)
     - collection: when one price is null, 0 is displayed even if one owned card has a value
     - add to collection mobile: after adding prev unowned card (gitrok monster), wrong minPrice in wantsList

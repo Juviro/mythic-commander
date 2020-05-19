@@ -72,7 +72,7 @@ const Search = ({ history, children }) => {
     fetchCards(currentOptions);
   };
 
-  // start a new search if page or pageSize changes
+  // start a new search if page or pageSize or orderBy changes
   useEffect(() => {
     if (!isSearching && !hasSearchOptions) return;
     if (!isSearching) {

@@ -48,13 +48,17 @@ export default () => {
 
   return (
     <StyledDeck>
-      <Sidebar currentTab={currentTab} setCurrentTab={setCurrentTab} />
-      <Flex style={{ overflow: 'auto', flex: 1 }} direction="column">
-        <ShortcutFocus focusId="deck.cards">
+      <Sidebar
+        currentTab={currentTab}
+        setCurrentTab={setCurrentTab}
+        onAddCards={onAddCards}
+      />
+      <ShortcutFocus focusId="deck.cards" style={{ overflow: 'auto', flex: 1 }}>
+        <Flex style={{ marginLeft: 50 }} direction="column">
           <Header deck={unifiedDeck} onAddCards={onAddCards} />
           <Cards deck={unifiedDeck} loading={loading} currentTab={currentTab} />
-        </ShortcutFocus>
-      </Flex>
+        </Flex>
+      </ShortcutFocus>
     </StyledDeck>
   );
 };

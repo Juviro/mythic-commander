@@ -10,7 +10,6 @@ import FocusContext from '../../../Provider/FocusProvider/FocusProvider';
 import { primary } from '../../../../constants/colors';
 
 const StyledOuterWrapper = styled.div`
-  margin-right: 50px;
   position: relative;
   height: 100%;
   display: flex;
@@ -48,11 +47,12 @@ const StyledFocus = styled.div`
       : ''}
 `;
 
-export default ({ currentTab, setCurrentTab }) => {
+export default ({ currentTab, setCurrentTab, onAddCards }) => {
   const { focusedElement } = useContext(FocusContext);
   const tabs = [
     {
       Component: AddCards,
+      props: { onAddCards },
       key: 'add',
     },
     {
@@ -78,7 +78,7 @@ export default ({ currentTab, setCurrentTab }) => {
           visible={Boolean(currentTab)}
           currentTabIndex={tabs.findIndex(({ key }) => key === currentTab)}
         >
-          {tabs.map(({ key, Component }) => (
+          {tabs.map(({ key, Component, props }) => (
             <ShortcutFocus
               key={key}
               style={{ height: '100%', overflow: 'auto' }}
@@ -86,7 +86,7 @@ export default ({ currentTab, setCurrentTab }) => {
             >
               <StyledView visible={currentTab === key}>
                 <StyledFocus focused={`deck.sidebar.${key}` === focusedElement}>
-                  <Component visible={currentTab === key} />
+                  <Component visible={currentTab === key} {...props} />
                 </StyledFocus>
               </StyledView>
             </ShortcutFocus>

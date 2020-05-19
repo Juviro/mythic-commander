@@ -1,9 +1,9 @@
 import { useEffect, useState, useContext } from 'react';
 import { sumBy } from 'lodash';
 
-import keyCodes from '../../../../../constants/keyCodes';
-import { isInputField, isModifierKey } from '../../../../Hooks/useShortcut';
-import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
+import keyCodes from '../../../../constants/keyCodes';
+import { isInputField, isModifierKey } from '../../../Hooks/useShortcut';
+import FocusContext from '../../../Provider/FocusProvider/FocusProvider';
 
 const getPossibleNewPosition = (x, y, direction) => {
   switch (direction) {
@@ -46,10 +46,10 @@ const getNextItem = (cardGrid, selectedCardOracleId, direction) => {
 
 export default columns => {
   const [selectedCardOracleId, setSelectedCardOracleId] = useState(null);
-  const { focusedElement } = useContext(FocusContext);
-  const shortcutsActive = ['deck.cards', 'modal.cardDetails'].includes(
-    focusedElement
-  );
+  const { focusedElements } = useContext(FocusContext);
+  const shortcutsActive =
+    focusedElements.filter(focusId => focusId !== 'modal.cardDetails').pop() ===
+    'deck.cards';
 
   const numberOfCards = sumBy(columns.flat(), ({ cards }) => cards.length);
   const cardGrid = columns.map(column =>

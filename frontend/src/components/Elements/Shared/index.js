@@ -12,6 +12,7 @@ export { default as CollectionCharts } from './CollectionCharts';
 export { default as CollectionStats } from './CollectionStats';
 export { default as ColorIdentitySymbols } from './ColorIdentitySymbols';
 export { default as CommanderPicker } from './CommanderPicker';
+export { default as Confirm } from './Confirm';
 export { default as ConfirmDelete } from './ConfirmDelete';
 export { default as ConfirmDeleteCards } from './ConfirmDeleteCards';
 export { default as ContextMenu } from './ContextMenu';

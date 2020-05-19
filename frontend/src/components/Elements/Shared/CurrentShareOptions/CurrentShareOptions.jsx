@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Typography } from 'antd';
+import { Typography, Divider } from 'antd';
 import { useQueryParams } from 'use-query-params';
 
 import styled from 'styled-components';
@@ -96,23 +96,32 @@ const formatValue = (key, value, sets) => {
   }
 };
 
-export default ({ style }) => {
+export default ({ style, showDivider }) => {
   const { sets } = useContext(CardContext);
   const [params] = useQueryParams(searchParams);
 
   const activeParams = Object.keys(params)
     .map(key => ({ key, value: params[key] }))
     .filter(({ value }) => Boolean(value));
+
+  if (!activeParams.length) return null;
+
   return (
-    <Flex wrap="wrap" style={style}>
-      {activeParams.map(({ key, value }) => (
-        <StyledParam key={key}>
-          <Typography.Text strong style={{ marginRight: 4 }}>{`${formatKey(
-            key
-          )}:`}</Typography.Text>
-          <Typography.Text>{formatValue(key, value, sets)}</Typography.Text>
-        </StyledParam>
-      ))}
+    <Flex direction="column">
+      {showDivider && <Divider />}
+      <Typography.Text strong>
+        Displaying cards matching the following criteria:
+      </Typography.Text>
+      <Flex wrap="wrap" style={style}>
+        {activeParams.map(({ key, value }) => (
+          <StyledParam key={key}>
+            <Typography.Text strong style={{ marginRight: 4 }}>{`${formatKey(
+              key
+            )}:`}</Typography.Text>
+            <Typography.Text>{formatValue(key, value, sets)}</Typography.Text>
+          </StyledParam>
+        ))}
+      </Flex>
     </Flex>
   );
 };

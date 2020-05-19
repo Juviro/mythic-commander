@@ -1,13 +1,13 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
 
-import { Flex, ConfirmDelete } from '../../../../Elements/Shared';
+import { Flex, ConfirmDelete } from '../../../Elements/Shared';
 import CardList from './CardList';
 import useCardListShortcuts from './useCardListShortcuts';
-import { useToggle, useShortcut } from '../../../../Hooks';
-import CardModalDesktop from '../../../../Elements/Desktop/CardModalDesktop';
-import { deleteFromDeckDesktop } from '../../queries';
-import boldText from '../../../../../utils/boldText';
+import { useToggle, useShortcut } from '../../../Hooks';
+import CardModalDesktop from '../../../Elements/Desktop/CardModalDesktop';
+import { deleteFromDeckDesktop } from '../queries';
+import boldText from '../../../../utils/boldText';
 
 const getColumnKey = column => column.map(({ type }) => type).join('');
 
@@ -53,7 +53,6 @@ export default ({ columns, deck }) => {
   };
 
   useShortcut('DEL', onOpenDeleteModal, 'deck.cards');
-  useShortcut('ENTER', () => setSelectedCardOracleId(null), 'deck.cards');
   useShortcut('SPACE', selectedCard ? toggleShowDetail : null, 'deck.cards');
 
   return (
