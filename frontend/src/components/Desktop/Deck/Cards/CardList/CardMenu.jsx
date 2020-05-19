@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { Typography, Button } from 'antd';
 import { useMutation } from 'react-apollo';
 import { useParams } from 'react-router';
-import { Flex, EditCardModal } from '../../../../../Elements/Shared';
+import { Flex, EditCardModal } from '../../../../Elements/Shared';
 
-import { getPriceLabel } from '../../../../../../utils/cardStats';
-import keySymbols from '../../../../../../constants/keySymbols';
-import { useToggle, useShortcut } from '../../../../../Hooks';
-import { editDeckCardDesktop, getDeckDesktop } from '../../../queries';
+import { getPriceLabel } from '../../../../../utils/cardStats';
+import keySymbols from '../../../../../constants/keySymbols';
+import { useToggle, useShortcut } from '../../../../Hooks';
+import { editDeckCardDesktop, getDeckDesktop } from '../../queries';
 
 const StyledButton = styled(Button)`
   margin-top: 8px;

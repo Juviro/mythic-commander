@@ -50,6 +50,15 @@ const StyledAmountWrapper = styled.div`
   border-bottom-left-radius: 8px;
 `;
 
+const StyledScrollDummy = styled.div`
+  position: absolute;
+  width: 100%;
+  height: calc(100% + 150px);
+  top: -75px;
+  z-index: -1;
+  user-select: none;
+`;
+
 const GridCard = ({
   card,
   onDeleteCard,
@@ -79,11 +88,8 @@ const GridCard = ({
   const textSize = Math.max(10 + 4 * (zoom / 100));
 
   return (
-    <StyledCardWrapper
-      key={card.id}
-      widthPercentage={widthPercentage}
-      ref={ref}
-    >
+    <StyledCardWrapper key={card.id} widthPercentage={widthPercentage}>
+      <StyledScrollDummy ref={ref} />
       <StyledImageWrapper
         isSelected={isSelected}
         onClick={onClick}

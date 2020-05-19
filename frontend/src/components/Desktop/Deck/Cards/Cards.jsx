@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import { Skeleton, Empty } from 'antd';
 import styled, { css } from 'styled-components';
 
-import { useWindowSize } from '../../../../Hooks';
-import { Flex } from '../../../../Elements/Shared';
+import { useWindowSize } from '../../../Hooks';
+import { Flex } from '../../../Elements/Shared';
 import { CARD_WIDTH } from './CardList/Card';
-import getCardsByType from '../../../../../utils/getCardsByType';
+import getCardsByType from '../../../../utils/getCardsByType';
 import CardLists from './CardLists';
-import { sortByCmc, sortByName } from '../../../../../utils/cardFilter';
-import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
-import { primary } from '../../../../../constants/colors';
+import { sortByCmc, sortByName } from '../../../../utils/cardFilter';
+import FocusContext from '../../../Provider/FocusProvider/FocusProvider';
+import { primary } from '../../../../constants/colors';
 
 const StyledWrapper = styled.div`
   margin: 8px;

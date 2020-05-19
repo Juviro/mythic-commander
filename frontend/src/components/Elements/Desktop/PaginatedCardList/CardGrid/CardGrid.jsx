@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 import GridCard from './GridCard';
 import useGridShortcuts from './useGridShortcuts';
 import CardModalDesktop from '../../CardModalDesktop';
-import { useWindowSize, useToggle } from '../../../../Hooks';
+import { useWindowSize, useToggle, useShortcut } from '../../../../Hooks';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -30,6 +30,7 @@ const CardGrid = ({
   onDeleteCard,
   history,
   blockShortcuts,
+  onEnter,
 }) => {
   useWindowSize();
   const [showDetails, toggleShowDetail] = useToggle(false);
@@ -46,6 +47,11 @@ const CardGrid = ({
   );
 
   const selectedCard = cards[selectedElementPosition - 1];
+  useShortcut(
+    'ENTER',
+    onEnter && selectedCard ? () => onEnter(selectedCard) : null,
+    ['modal.cardDetails', 'deck.sidebar.add']
+  );
 
   const onClick = index => {
     toggleShowDetail(true);

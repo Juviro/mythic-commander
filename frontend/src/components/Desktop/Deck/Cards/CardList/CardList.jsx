@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Card from './Card';
-import sumCardAmount from '../../../../../../utils/sumCardAmount';
-import { getPriceLabel } from '../../../../../../utils/cardStats';
-import { Flex } from '../../../../../Elements/Shared';
+import sumCardAmount from '../../../../../utils/sumCardAmount';
+import { getPriceLabel } from '../../../../../utils/cardStats';
+import { Flex } from '../../../../Elements/Shared';
 
 const StyledWrapper = styled.div`
   padding: 6px;
@@ -31,7 +31,7 @@ export default ({
     (acc, { minPrice, amount }) => acc + amount * minPrice,
     0
   );
-  const valueLabel = getPriceLabel(value, { round: true });
+  const valueLabel = getPriceLabel(Math.ceil(value), { round: true });
 
   return (
     <>
