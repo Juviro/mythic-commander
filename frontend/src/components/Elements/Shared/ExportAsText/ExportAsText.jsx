@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Flex from '../Flex';
 import useLocalStorage from '../../../Hooks/useLocalStorage';
 import { useToggle } from '../../../Hooks';
-import FocussedModal from '../FocussedModal';
+import FocusedModal from '../FocusedModal';
 
 const StyledInputWrapper = styled.div`
   overflow: auto;
@@ -20,7 +20,7 @@ export default ({ title, cards }) => {
 
   return (
     <>
-      <FocussedModal
+      <FocusedModal
         title={title}
         footer={null}
         destroyOnClose
@@ -56,7 +56,7 @@ export default ({ title, cards }) => {
             autoSize={{ maxRows: 25 }}
           />
         </StyledInputWrapper>
-      </FocussedModal>
+      </FocusedModal>
       <Button type="link" onClick={toggleExportViewOpen}>
         Export as Text
       </Button>

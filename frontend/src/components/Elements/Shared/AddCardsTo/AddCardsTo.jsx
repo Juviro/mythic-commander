@@ -17,7 +17,7 @@ import {
   wantsListDesktop,
 } from '../../../Desktop/WantsList/queries';
 import sumCardAmount from '../../../../utils/sumCardAmount';
-import FocussedModal from '../FocussedModal';
+import FocusedModal from '../FocusedModal';
 
 export default ({ onCancel, cardsToAdd, numberOfSelectedCards, visible }) => {
   const { data, loading } = useQuery(allLists, { fetchPolicy: 'network-only' });
@@ -96,7 +96,7 @@ export default ({ onCancel, cardsToAdd, numberOfSelectedCards, visible }) => {
   };
 
   return (
-    <FocussedModal
+    <FocusedModal
       visible={visible}
       title="Add cards to..."
       footer={null}
@@ -129,6 +129,6 @@ export default ({ onCancel, cardsToAdd, numberOfSelectedCards, visible }) => {
           />
         )}
       </Flex>
-    </FocussedModal>
+    </FocusedModal>
   );
 };

@@ -5,7 +5,7 @@ import CardDetailsDesktop from '../CardDetailsDesktop';
 import { cardDetailsDesktop } from '../CardDetailsDesktop/queries';
 import { unifySingleCard } from '../../../../utils/unifyCardFormat';
 import { useShortcut } from '../../../Hooks';
-import { FocussedModal } from '../../Shared';
+import { FocusedModal } from '../../Shared';
 
 const CardModalDesktop = ({
   card,
@@ -25,7 +25,7 @@ const CardModalDesktop = ({
   const usedCard = { ...unifiedCard, ...card };
 
   return (
-    <FocussedModal
+    <FocusedModal
       centered
       visible={visible}
       onCancel={onClose}
@@ -40,7 +40,7 @@ const CardModalDesktop = ({
       focusId="modal.cardDetails"
     >
       {card && <CardDetailsDesktop card={usedCard} loading={loading} />}
-    </FocussedModal>
+    </FocusedModal>
   );
 };
 
