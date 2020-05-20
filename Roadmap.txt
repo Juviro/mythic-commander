@@ -28,28 +28,28 @@ REFACTORINGS:
  
 BACKLOG:
     - allow multiple selected elements in grid list with shift
-    - move decks and wants to random id
     - allow search for unowned cards only
     - refresh google access ?
     - better tooltips for multi input icon
     - swipe card preview on mobile
     - going back to list should preserve scroll position (desktop)
-    - show *add commander* in deck list when no commander selected
     - shortcuts should use modifier key ?
-    - when adding cards (to collection?), allow displaying only cards from specific set
+    - advanced adding:
+        - just display cards from specific set
+        - display all versions from a card + their setname, maybe with preview
     - when opening login, redirect to / if user is logged in
     - add to advanced search: number of owned copies
-    - allow sort by mana cost to collection
     - add possible combos section to detail card view (https://discordapp.com/channels/673601282946236417/673601283609067559, no api yet)
     - add info tooltip for search: explain amount prefix, fuzzy search
     - allow searching for multiple sets/types/subtypes?
-    - when adding cards, allow picking set/version, with preview
     - add error page
     - clickable creature type in card details?
-    - home page: quick stats for collection, quick access for last edited decks + wants ?
+    - home page: 
+        - quick stats for collection
+        - quick access for last edited decks + wants ?
     - show % owned of all cards (unique cards / distinct cards)
     - in search field: *foil* suffix should add as foil
-    - when adding to deck or linked wants: show if card is in linked wants / deck
+    - when adding to deck or linked wants: show if card is in linked wants / deck (desktop)
     - prevent user from adding amount / amount foil if card is not available in foil / non-foil
     - prefer owned versions when adding to deck or wants
     - suggest similar cards when having invalid cardname in multiinput
@@ -59,13 +59,11 @@ BACKLOG:
     - downloadable text export
     - save selected element when going to next page
     - rework advanced search:
-        - format: label and input field next to each other
         - add *unownedOnly*
         - show all current search options for advanced search 
 
 BACKLOG BUGFIXES:
     - backend deployment not reloading
-    - duplicate card in multi import will throw an error in backend (group those)
     - collection: when one price is null, 0 is displayed even if one owned card has a value
     - add to collection mobile: after adding prev unowned card (gitrok monster), wrong minPrice in wantsList
     - mobile: collection -> card details view -> remvoe from collection -> back to collection: card not deleted
