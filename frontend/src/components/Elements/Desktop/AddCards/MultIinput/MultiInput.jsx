@@ -105,7 +105,10 @@ export default class MultiInput extends React.Component {
       amount,
       id: cards.find(card => card.name === name).id,
     }));
-    onAddCards(cardIds);
+    const uniqueCardIds = cardIds.filter(
+      ({ id }, index) => cardIds.findIndex(cardId => cardId.id === id) === index
+    );
+    onAddCards(uniqueCardIds);
 
     this.setState({
       value: '',
