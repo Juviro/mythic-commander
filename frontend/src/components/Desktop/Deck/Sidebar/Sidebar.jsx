@@ -24,7 +24,8 @@ const StyledWrapper = styled.div`
   height: 300%;
   transition: all 0.3s;
   flex-direction: column;
-  width: ${({ visible }) => (visible ? 500 : 0)}px;
+  width: 500px;
+  margin-left: ${({ visible }) => (visible ? 0 : -500)}px;
   transform: translateY(
     -${({ currentTabIndex }) => (100 / 3) * currentTabIndex}%
   );
