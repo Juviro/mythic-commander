@@ -1,18 +1,19 @@
 import { canAccessDeck } from '../../../../auth/authenticateUser';
+import randomId from '../../../../utils/randomId';
 
 export default async (_, { deckId }, { user: { id: userId }, db }) => {
-  const insert = { userId };
+  const newWantsList = { userId, id: randomId() };
   if (deckId) {
     await canAccessDeck(userId, deckId);
     const { name } = await db('decks')
       .select('name')
       .where({ id: deckId })
       .first();
-    insert.deckId = deckId;
-    insert.name = `New list - ${name}`;
+    newWantsList.deckId = deckId;
+    newWantsList.name = `New list - ${name}`;
   }
   const [wantsList] = await db('wantsLists')
-    .insert(insert)
+    .insert(newWantsList)
     .returning('*');
 
   return wantsList;
