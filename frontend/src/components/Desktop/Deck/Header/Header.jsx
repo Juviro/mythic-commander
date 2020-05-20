@@ -42,6 +42,7 @@ export default ({ deck, onAddCards }) => {
             autoFocus={false}
             placeholder="Add a card..."
             focusId="deck.cards"
+            containedCardNames={deck.cards.map(({ name }) => name)}
           />
         </Flex>
       </Flex>

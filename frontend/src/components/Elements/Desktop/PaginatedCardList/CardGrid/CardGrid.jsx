@@ -31,6 +31,7 @@ const CardGrid = ({
   history,
   blockShortcuts,
   onEnter,
+  markAsDisabled,
 }) => {
   useWindowSize();
   const [showDetails, toggleShowDetail] = useToggle(false);
@@ -92,6 +93,7 @@ const CardGrid = ({
               width={cardWidth}
               index={index}
               search={search}
+              markAsDisabled={markAsDisabled && markAsDisabled(card)}
               shortcutsActive={isSelected && !showDetails}
               onEditCard={onEditCard ? () => onEditCard(card) : undefined}
               onDeleteCard={onDeleteCard ? () => onDeleteCard(card) : undefined}

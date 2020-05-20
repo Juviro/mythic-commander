@@ -37,6 +37,7 @@ const StyledImageWrapper = styled.div`
 
   ${({ isSelected }) =>
     isSelected ? `box-shadow: 0px 0px 6px 6px ${primary};` : ''}
+  ${({ markAsDisabled }) => (markAsDisabled ? `opacity: 0.4` : '')}
 `;
 
 const StyledAmountWrapper = styled.div`
@@ -72,6 +73,7 @@ const GridCard = ({
   search,
   onEditCard,
   shortcutsActive,
+  markAsDisabled,
 }) => {
   const displayedAmount = card.amount || card.totalAmount;
   const [showMenu, toggleShowMenu] = useToggle();
@@ -96,6 +98,7 @@ const GridCard = ({
         style={cardSize}
         onMouseMove={() => toggleShowMenu(true)}
         onMouseLeave={() => toggleShowMenu(false)}
+        markAsDisabled={markAsDisabled}
       >
         <FlippableCard card={card} loading={loading} />
         {displayedAmount > 1 && (
@@ -128,6 +131,7 @@ const areEqual = (prevProps, nextProps) => {
   if (prevProps.index !== nextProps.index) return false;
   if (prevProps.search !== nextProps.search) return false;
   if (prevProps.shortcutsActive !== nextProps.shortcutsActive) return false;
+  if (prevProps.markAsDisabled !== nextProps.markAsDisabled) return false;
 
   return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
     propKey => prevProps.card[propKey] === nextProps.card[propKey]

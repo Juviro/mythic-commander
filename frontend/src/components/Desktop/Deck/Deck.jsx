@@ -21,8 +21,8 @@ const StyledDeck = styled.div`
 
 export default () => {
   const { id } = useParams();
-  const [currentTab, setCurrentTab] = useState('add');
-  // const [currentTab, setCurrentTab] = useState(null); // TODO:
+  // const [currentTab, setCurrentTab] = useState('add');
+  const [currentTab, setCurrentTab] = useState(null); // TODO:
   const { data, loading } = useQuery(getDeckDesktop, {
     variables: { id },
     fetchPolicy: 'network-only',
@@ -52,6 +52,7 @@ export default () => {
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
         onAddCards={onAddCards}
+        deck={unifiedDeck}
       />
       <ShortcutFocus focusId="deck.cards" style={{ overflow: 'auto', flex: 1 }}>
         <Flex style={{ marginLeft: 50 }} direction="column">

@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import { Typography, Button } from 'antd';
 import { useMutation } from 'react-apollo';
 import { useParams } from 'react-router';
-import { Flex, EditCardModal } from '../../../../Elements/Shared';
+import { Flex, EditCardModal, UnownedBadge } from '../../../../Elements/Shared';
 
 import { getPriceLabel } from '../../../../../utils/cardStats';
 import keySymbols from '../../../../../constants/keySymbols';
 import { useToggle, useShortcut } from '../../../../Hooks';
 import { editDeckCardDesktop, getDeckDesktop } from '../../queries';
+import OwnedBadge from '../../../../Elements/Shared/OwnedBadge/index';
 
 const StyledButton = styled(Button)`
   margin-top: 8px;
@@ -16,7 +17,6 @@ const StyledButton = styled(Button)`
 
 export default ({ card, onOpenDetails, onDelete }) => {
   const { id: deckId } = useParams();
-  const amount = `${card.amount}x`;
   const value = getPriceLabel(card.minPrice);
   const [isEditing, toggleIsEditing] = useToggle();
   const [mutateEdit] = useMutation(editDeckCardDesktop);
@@ -53,7 +53,7 @@ export default ({ card, onOpenDetails, onDelete }) => {
     <>
       <Flex direction="column" style={{ marginTop: 4 }}>
         <Flex justify="space-between" style={{ padding: '0 8px' }}>
-          <Typography.Text strong>{amount}</Typography.Text>
+          {card.owned ? <OwnedBadge /> : <UnownedBadge />}
           <Typography.Text strong>{value}</Typography.Text>
         </Flex>
         <StyledButton type="link" onClick={onOpenDetails}>
