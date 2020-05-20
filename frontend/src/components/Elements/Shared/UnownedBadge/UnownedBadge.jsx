@@ -1,12 +1,12 @@
 import React from 'react';
 import { Typography } from 'antd';
 
-import { success } from '../../../../constants/colors';
+import { error } from '../../../../constants/colors';
 
 export default ({ marginLeft = 8 }) => {
   return (
-    <Typography.Text style={{ color: success, marginLeft }}>
-      owned
+    <Typography.Text style={{ color: error, marginLeft }}>
+      not owned
     </Typography.Text>
   );
 };

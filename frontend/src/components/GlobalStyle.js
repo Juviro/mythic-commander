@@ -72,4 +72,9 @@ export default createGlobalStyle`
   .no-padding-collapse .ant-collapse-content > .ant-collapse-content-box {
     padding: 0 !important;
   }
+
+  /* for some reason, this prevents the dropdown to match the size of its parent */
+  .ant-select-dropdown {
+    max-width: 0;
+  }
 `;

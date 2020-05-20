@@ -1,21 +1,18 @@
 BUGFIXES:
-    - advanced search -> add card to collection: owned badge not displayed
-    - search -> name overflowing owned badge
 
 CURRENT:
     - fix arrow movement with open details
 
 NEXT:
-    - indicate cards already in deck
     - add shortcut to toggle focus
     - prevent re-ordering card lists
-    - show owned/unowned in deck
-
+    - when deck cards details modal is open, enter shortcut adds to deck from sidebar
+    
     - changing orderBy resets search fields to param options
+
     - check focus shortcut block for table
-    - update + test all shortcuts (collection grid for example)
+    - update + test all shortcuts (collection table for example)
     - styling when editing deck title
-    - remove all references to blockShortcuts
 
 IMPROVEMENTS:
     - improve re-rendering of table columns and grid card
@@ -58,7 +55,6 @@ BACKLOG:
     - dark mode
     - update document title based on content
     - allow text export/proxy of selected cards
-    - downloadable text export
     - save selected element when going to next page
     - rework advanced search:
         - format: label and input field next to each other
@@ -67,6 +63,7 @@ BACKLOG:
 
 BACKLOG BUGFIXES:
     - backend deployment not reloading
+    - advanced search -> add card to collection: owned badge not displayed
     - duplicate card in multi import will throw an error in backend (group those)
     - collection: when one price is null, 0 is displayed even if one owned card has a value
     - add to collection mobile: after adding prev unowned card (gitrok monster), wrong minPrice in wantsList

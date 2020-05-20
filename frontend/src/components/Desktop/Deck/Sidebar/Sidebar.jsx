@@ -47,12 +47,12 @@ const StyledFocus = styled.div`
       : ''}
 `;
 
-export default ({ currentTab, setCurrentTab, onAddCards }) => {
+export default ({ currentTab, setCurrentTab, onAddCards, deck }) => {
   const { focusedElement } = useContext(FocusContext);
   const tabs = [
     {
       Component: AddCards,
-      props: { onAddCards },
+      props: { onAddCards, deck },
       key: 'add',
     },
     {
