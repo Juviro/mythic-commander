@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "NODE_ENV=dev concurrently \"cd ./backend && yarn start\" \"cd ./frontend && yarn start\"",
-    "startDb": "brew services start postgresql",
-    "stopDb": "brew services stop postgresql",
+    "start-db": "brew services start postgresql",
+    "stop-db": "brew services stop postgresql",
     "deploy-prod": "./scripts/deploy-prod.sh",
     "deploy-staging": "./scripts/deploy-staging.sh"
   },
