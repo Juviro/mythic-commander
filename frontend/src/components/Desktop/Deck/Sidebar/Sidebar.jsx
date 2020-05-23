@@ -43,7 +43,7 @@ const StyledFocus = styled.div`
   ${({ focused }) =>
     focused
       ? css`
-          box-shadow: inset 0 0 10px ${primary};
+          box-shadow: inset 0 0 10px 3px ${primary};
         `
       : ''}
 `;
