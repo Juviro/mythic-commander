@@ -58,12 +58,6 @@ const StyledCard = styled.div`
           box-shadow: 0px 0px 6px 6px ${primary};
         `
       : ''}
-  ${({ grayOut }) =>
-    grayOut
-      ? css`
-          filter: grayscale(100%);
-        `
-      : ''}
 `;
 
 const Card = ({
@@ -89,13 +83,11 @@ const Card = ({
     setTimeout(() => scrollIntoView(ref.current), ANIMATION_DURATION);
   }, [selected]);
 
-  const grayOut = !card.owned;
-
   return (
     <>
       <StyledWrapper isSelected={selected}>
         <StyledScrollDummy ref={ref} />
-        <StyledCard onClick={onClick} isSelected={selected} grayOut={grayOut}>
+        <StyledCard onClick={onClick} isSelected={selected}>
           <FlippableCard card={card} hideFlipIcon={!selected} />
           <AmountBadge amount={card.amount} />
         </StyledCard>
