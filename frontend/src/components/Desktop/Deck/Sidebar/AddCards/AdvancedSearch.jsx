@@ -31,7 +31,7 @@ export default ({ onAddCards, alreadyInDeck }) => {
     onAddCards([{ id: cardToAdd.id, amount: 1 }], cardToAdd.name);
     setCardToAdd(null);
   };
-  const onEnter = card => setCardToAdd(card);
+  const onEnter = blockShortcuts ? null : card => setCardToAdd(card);
 
   return (
     <>

@@ -1,16 +1,14 @@
 BUGFIXES:
+    - card grid wants page 2 -> increase pageSize -> not reset to last page with cards
 
 CURRENT:
 
 NEXT:
-    - changing orderBy resets search fields to param options
-
     - add shortcut to toggle focus
+    - add button to add card to deck
     - prevent re-ordering card lists
-    - when deck cards details modal is open, enter shortcut adds to deck from sidebar
     
 
-    - check focus shortcut block for table
     - update + test all shortcuts (collection table for example)
     - styling when editing deck title
 
