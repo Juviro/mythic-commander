@@ -72,8 +72,11 @@ export default ({ children, researchOnOrderChange }) => {
 
   // store initialPageSize
   useEffect(() => {
-    if (!pageSize) return;
-    setInitialPageSize(pageSize);
+    if (!pageSize) {
+      setParams({ pageSize: initialPageSize });
+    } else {
+      setInitialPageSize(pageSize);
+    }
     // eslint-disable-next-line
   }, [pageSize]);
 
