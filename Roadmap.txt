@@ -1,14 +1,14 @@
 BUGFIXES:
 
 CURRENT:
-    - fix arrow movement with open details
 
 NEXT:
+    - changing orderBy resets search fields to param options
+
     - add shortcut to toggle focus
     - prevent re-ordering card lists
     - when deck cards details modal is open, enter shortcut adds to deck from sidebar
     
-    - changing orderBy resets search fields to param options
 
     - check focus shortcut block for table
     - update + test all shortcuts (collection table for example)
@@ -24,6 +24,7 @@ FEATURES:
 
 REFACTORINGS:
     - evaluate removing all caching, using network only everywhere
+    - switch search to lazyQuery
  
 BACKLOG:
     - allow multiple selected elements in grid list with shift

@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useQueryParams, NumberParam, StringParam } from 'use-query-params';
 import { useApolloClient } from 'react-apollo';
-import { withRouter } from 'react-router';
-import { isEqual } from 'lodash';
 
 import { cardSearch } from './queries';
 import { useToggle, useStoredQueryParam } from '../../../Hooks';
@@ -11,7 +9,7 @@ import { unifySingleCard } from '../../../../utils/unifyCardFormat';
 import preloadImages from '../../../../utils/preloadImages';
 import useLocalStorage from '../../../Hooks/useLocalStorage';
 
-const Search = ({ history, children }) => {
+export default ({ children, researchOnOrderChange }) => {
   const [currentCards, setCurrentCards] = useState([]);
   const [loading, toggleLoading] = useToggle(false);
   const [queryResult, setQueryResult] = useState({});
@@ -72,43 +70,28 @@ const Search = ({ history, children }) => {
     fetchCards(currentOptions);
   };
 
-  // start a new search if page or pageSize or orderBy changes
+  // store initialPageSize
   useEffect(() => {
-    if (!isSearching && !hasSearchOptions) return;
-    if (!isSearching) {
-      setIsSearching(true);
-      setCurrentOptions(options);
-    }
+    if (!pageSize) return;
+    setInitialPageSize(pageSize);
+    // eslint-disable-next-line
+  }, [pageSize]);
 
-    if (pageSize) {
-      setInitialPageSize(pageSize);
-    } else {
-      setParams({ pageSize: initialPageSize }, 'replaceIn');
-    }
-
-    const didOptionsChange = !isEqual(lastSearchOptions, {
-      ...options,
-      orderBy,
-      pageSize,
-    });
-
-    // reset cards list (including element position) when re-searching
-    if (didOptionsChange) {
-      setCurrentCards([]);
-      setCurrentOptions(options);
-    }
-
-    let nextPage = page;
-    // reset page when search order changes
-    if (lastSearchOptions.orderBy && lastSearchOptions.orderBy !== orderBy) {
-      setParams({ page: 1 }, 'replaceIn');
-      nextPage = 1;
-    }
-
-    const offset = (nextPage - 1) * pageSize;
+  // start a new search when page or pageSize changes
+  useEffect(() => {
+    if (!pageSize) return;
+    const offset = (page - 1) * pageSize;
     fetchCards(options, offset);
     // eslint-disable-next-line
-  }, [history.location.search]);
+  }, [page, pageSize]);
+
+  // re-search when order changes
+  useEffect(() => {
+    if (!researchOnOrderChange || !isSearching) return;
+    setParams({ page: 1 }, 'replaceIn');
+    fetchCards(options, 0);
+    // eslint-disable-next-line
+  }, [orderBy]);
 
   // preload next page
   useEffect(() => {
@@ -164,5 +147,3 @@ const Search = ({ history, children }) => {
     numberOfCards,
   });
 };
-
-export default withRouter(Search);

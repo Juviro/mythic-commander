@@ -26,7 +26,7 @@ export default () => {
   const [isSidebarVisible, toggleIsSidebarVisible] = useToggle(true);
 
   return (
-    <SearchHoc>
+    <SearchHoc researchOnOrderChange>
       {({
         isSearching,
         loading,

@@ -63,6 +63,12 @@ export default ({ onAddCards, alreadyInDeck }) => {
               options={currentOptions}
               onChangeOption={onChangeOption}
             />
+            <Flex>
+              <Typography.Text strong style={{ width: 130 }}>
+                Order by:
+              </Typography.Text>
+              <OrderBy />
+            </Flex>
             <SearchButton
               onSearch={onSearch}
               loading={loading}
@@ -73,12 +79,6 @@ export default ({ onAddCards, alreadyInDeck }) => {
             <CurrentShareOptions style={{ marginTop: 8 }} showDivider />
             <Divider />
             <StyledCardWrapper>
-              <Flex>
-                <Typography.Text strong style={{ width: 130 }}>
-                  Order by:
-                </Typography.Text>
-                <OrderBy />
-              </Flex>
               {isSearching && (
                 <CardGrid
                   cards={currentCards}
