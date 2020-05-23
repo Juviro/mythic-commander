@@ -41,14 +41,6 @@ const COLLECTION_FILTER = [
   },
   ...DEFAULT_FILTER,
   {
-    label: 'Color (colorless first)',
-    value: 'color-asc',
-  },
-  {
-    label: 'Color (multicolor first)',
-    value: 'color-desc',
-  },
-  {
     label: 'Amount (lowest first)',
     value: 'amount-asc',
   },
@@ -58,10 +50,12 @@ const COLLECTION_FILTER = [
   },
 ];
 
-export default ({ showCollectionFilters, style, paramName = 'orderBy' }) => {
+export default ({ showCollectionFilters, style }) => {
   const orderOptions = showCollectionFilters
     ? COLLECTION_FILTER
     : DEFAULT_FILTER;
+
+  const paramName = showCollectionFilters ? 'orderByAdvanced' : 'orderBy';
 
   const [orderBy, setOrderBy] = useStoredQueryParam(paramName, StringParam);
 
