@@ -85,7 +85,7 @@ const DeckList = ({ deck, loading }) => {
 
   return (
     <StyledWrapper>
-      <LayoutAndSortPicker />
+      <LayoutAndSortPicker showCollectionFilters />
       <div style={{ marginTop: 16 }}>
         <Skeleton loading={loading} active>
           {cardsByType.map(cardGroup => (
