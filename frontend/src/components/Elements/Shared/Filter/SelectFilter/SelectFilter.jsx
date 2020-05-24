@@ -86,6 +86,7 @@ const SelectFilter = ({
       onSelect={onSelect}
       onKeyDown={searchOnEnter}
       onChange={onChangeInput}
+      dropdownStyle={{ minWidth: 250 }}
       onDropdownVisibleChange={toggleIsVisible}
     >
       {filteredOptions}

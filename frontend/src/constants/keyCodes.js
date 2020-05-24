@@ -1,5 +1,5 @@
 const ENTER = 13;
-const ESCAPE = 27;
+const ESC = 27;
 const DEL = 8;
 const SPACE = 32;
 const ARROW_LEFT = 37;
@@ -9,7 +9,7 @@ const ARROW_DOWN = 40;
 
 export default {
   ENTER,
-  ESCAPE,
+  ESC,
   DEL,
   SPACE,
   ARROW_LEFT,
