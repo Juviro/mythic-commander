@@ -4,9 +4,9 @@ BUGFIXES:
 CURRENT:
 
 NEXT:
-    - add shortcut to toggle focus
     - add button to add card to deck
-    - prevent re-ordering card lists
+    - prevent re-ordering card lists - maybe re-order when category added / removed
+    - add shortcut to toggle focus
     
 
     - update + test all shortcuts (collection table for example)
@@ -14,15 +14,14 @@ NEXT:
 
 IMPROVEMENTS:
     - improve re-rendering of table columns and grid card
-    - advanced search -> set picker -> make dropdown wide enought to display whole name
 
 FEATURES:
     - enable table actions for search
     - sharable collection / decks / wants
 
 REFACTORINGS:
-    - evaluate removing all caching, using network only everywhere
-    - switch search to lazyQuery
+    - evaluate removing some caching, using network only more
+    - switch search to lazyQuery 
  
 BACKLOG:
     - allow multiple selected elements in grid list with shift

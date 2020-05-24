@@ -54,6 +54,7 @@ export default ({ columns, deck }) => {
 
   useShortcut('DEL', onOpenDeleteModal, 'deck.cards');
   useShortcut('SPACE', selectedCard ? toggleShowDetail : null, 'deck.cards');
+  useShortcut('ESC', () => setSelectedCardOracleId(null), 'deck.cards');
 
   return (
     <>
