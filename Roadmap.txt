@@ -4,7 +4,8 @@ BUGFIXES:
 CURRENT:
 
 NEXT:
-    - add button to add card to deck
+    - don‘t start search when searchbar not visible
+    - add button to add card to deck in sidebar
     - prevent re-ordering card lists - maybe re-order when category added / removed
     - add shortcut to toggle focus
     

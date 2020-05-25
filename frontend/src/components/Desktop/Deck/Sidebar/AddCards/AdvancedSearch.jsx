@@ -81,6 +81,7 @@ export default ({ onAddCards, alreadyInDeck }) => {
             <StyledCardWrapper>
               {isSearching && (
                 <CardGrid
+                  draggable
                   cards={currentCards}
                   loading={loading}
                   cardsPerRow={2}

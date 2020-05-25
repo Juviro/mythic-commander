@@ -1,4 +1,6 @@
 export const primary = '#1890ff';
+export const primaryLight = '#1890ff1a';
+export const primaryDrop = '#1890ff4d';
 export const primaryHover = '#40a9ff';
 export const primaryActive = '#096dd9';
 

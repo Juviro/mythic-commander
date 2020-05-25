@@ -31,6 +31,7 @@ const CardGrid = ({
   history,
   blockShortcuts,
   onEnter,
+  draggable,
   markAsDisabled,
 }) => {
   useWindowSize();
@@ -87,6 +88,7 @@ const CardGrid = ({
             <GridCard
               card={card}
               zoom={zoom}
+              draggable={draggable}
               key={card.id}
               actions={actions}
               loading={loading}
