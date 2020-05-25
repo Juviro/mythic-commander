@@ -84,22 +84,20 @@ const Card = ({
   }, [selected]);
 
   return (
-    <>
-      <StyledWrapper isSelected={selected}>
-        <StyledScrollDummy ref={ref} />
-        <StyledCard onClick={onClick} isSelected={selected}>
-          <FlippableCard card={card} hideFlipIcon={!selected} />
-          <AmountBadge amount={card.amount} />
-        </StyledCard>
-        {selected && (
-          <CardMenu
-            card={card}
-            onOpenDetails={onOpenDetails}
-            onDelete={onDelete}
-          />
-        )}
-      </StyledWrapper>
-    </>
+    <StyledWrapper isSelected={selected}>
+      <StyledScrollDummy ref={ref} />
+      <StyledCard onClick={onClick} isSelected={selected}>
+        <FlippableCard card={card} hideFlipIcon={!selected} />
+        <AmountBadge amount={card.amount} />
+      </StyledCard>
+      {selected && (
+        <CardMenu
+          card={card}
+          onOpenDetails={onOpenDetails}
+          onDelete={onDelete}
+        />
+      )}
+    </StyledWrapper>
   );
 };
 

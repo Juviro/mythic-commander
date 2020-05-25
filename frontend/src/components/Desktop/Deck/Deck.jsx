@@ -57,7 +57,12 @@ export default () => {
       <ShortcutFocus focusId="deck.cards" style={{ overflow: 'auto', flex: 1 }}>
         <Flex style={{ marginLeft: 50 }} direction="column">
           <Header deck={unifiedDeck} onAddCards={onAddCards} />
-          <Cards deck={unifiedDeck} loading={loading} currentTab={currentTab} />
+          <Cards
+            deck={unifiedDeck}
+            loading={loading}
+            currentTab={currentTab}
+            onAddCards={onAddCards}
+          />
         </Flex>
       </ShortcutFocus>
     </StyledDeck>

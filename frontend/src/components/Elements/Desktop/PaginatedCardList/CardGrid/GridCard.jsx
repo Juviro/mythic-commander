@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { useDrag } from 'react-dnd';
 
 import FlippableCard from '../../../Shared/FlippableCard';
 import { primary } from '../../../../../constants/colors';
@@ -36,8 +37,18 @@ const StyledImageWrapper = styled.div`
   background-color: black;
 
   ${({ isSelected }) =>
-    isSelected ? `box-shadow: 0px 0px 6px 6px ${primary};` : ''}
-  ${({ markAsDisabled }) => (markAsDisabled ? `opacity: 0.4` : '')}
+    isSelected
+      ? css`
+          box-shadow: 0px 0px 6px 6px ${primary};
+        `
+      : ''}
+  ${({ markAsDisabled }) =>
+    markAsDisabled
+      ? css`
+          opacity: 0.4;
+        `
+      : ''}
+      : ''}
 `;
 
 const StyledAmountWrapper = styled.div`
@@ -74,12 +85,21 @@ const GridCard = ({
   onEditCard,
   shortcutsActive,
   markAsDisabled,
+  draggable,
 }) => {
   const displayedAmount = card.amount || card.totalAmount;
   const [showMenu, toggleShowMenu] = useToggle();
   useShortcut('DEL', shortcutsActive && onDeleteCard ? onDeleteCard : null);
   useShortcut('e', shortcutsActive && onEditCard ? onEditCard : null);
   const ref = useRef(null);
+
+  const [, dragRef] = useDrag({
+    item: { type: 'CARD', id: card.id, name: card.name },
+    canDrag: draggable,
+    collect: monitor => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  });
 
   useEffect(() => {
     if (!isSelected || !ref) return;
@@ -99,6 +119,7 @@ const GridCard = ({
         onMouseMove={() => toggleShowMenu(true)}
         onMouseLeave={() => toggleShowMenu(false)}
         markAsDisabled={markAsDisabled}
+        ref={dragRef}
       >
         <FlippableCard card={card} loading={loading} />
         {displayedAmount > 1 && (
