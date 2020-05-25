@@ -20,14 +20,14 @@ export default ({ currentTab, setCurrentTab }) => {
       title: 'Search [S]',
       key: 'add',
     },
-    {
-      title: 'Wants [W]',
-      key: 'wants',
-    },
-    {
-      title: 'Details [D]',
-      key: 'stats',
-    },
+    // {
+    //   title: 'Wants [W]',
+    //   key: 'wants',
+    // },
+    // {
+    //   title: 'Details [D]',
+    //   key: 'stats',
+    // },
   ];
 
   const focusIds = [
@@ -51,8 +51,8 @@ export default ({ currentTab, setCurrentTab }) => {
   };
 
   useShortcut('s', () => onOpenTab('add'), focusIds.concat('deck.cards'));
-  useShortcut('w', () => onOpenTab('wants'), focusIds.concat('deck.cards'));
-  useShortcut('d', () => onOpenTab('stats'), focusIds.concat('deck.cards'));
+  // useShortcut('w', () => onOpenTab('wants'), focusIds.concat('deck.cards'));
+  // useShortcut('d', () => onOpenTab('stats'), focusIds.concat('deck.cards'));
 
   return (
     <StyledWrapper>
