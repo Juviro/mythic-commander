@@ -1,11 +1,11 @@
 import React, { useRef, useEffect, useContext } from 'react';
 import styled, { css } from 'styled-components';
 
-import { primary } from '../../../../../../constants/colors';
-import scrollIntoView from '../../../../../../utils/scrollIntoView';
+import { primary } from '../../../../../constants/colors';
+import scrollIntoView from '../../../../../utils/scrollIntoView';
 import CardMenu from './CardMenu';
-import { FlippableCard, AmountBadge } from '../../../../../Elements/Shared';
-import FocusContext from '../../../../../Provider/FocusProvider/FocusProvider';
+import { FlippableCard, AmountBadge } from '../../../../Elements/Shared';
+import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
 
 export const CARD_WIDTH = 220;
 const CARD_HEIGHT = CARD_WIDTH * 1.4;
@@ -84,23 +84,20 @@ const Card = ({
   }, [selected]);
 
   return (
-    <>
-      <StyledWrapper isSelected={selected}>
-        <StyledScrollDummy ref={ref} />
-        <StyledCard onClick={onClick} isSelected={selected}>
-          <FlippableCard card={card} hideFlipIcon={!selected} />
-          <AmountBadge amount={card.amount} />
-        </StyledCard>
-        {selected && (
-          <CardMenu
-            card={card}
-            onOpenDetails={onOpenDetails}
-            onDelete={onDelete}
-          />
-        )}
-      </StyledWrapper>
-      {/* <StyledWrapperAbsolute isSelected={selected} ref={ref} /> */}
-    </>
+    <StyledWrapper isSelected={selected}>
+      <StyledScrollDummy ref={ref} />
+      <StyledCard onClick={onClick} isSelected={selected}>
+        <FlippableCard card={card} hideFlipIcon={!selected} />
+        <AmountBadge amount={card.amount} />
+      </StyledCard>
+      {selected && (
+        <CardMenu
+          card={card}
+          onOpenDetails={onOpenDetails}
+          onDelete={onDelete}
+        />
+      )}
+    </StyledWrapper>
   );
 };
 

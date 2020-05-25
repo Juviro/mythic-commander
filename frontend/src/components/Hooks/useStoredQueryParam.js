@@ -30,9 +30,8 @@ export default (key, paramType) => {
 
   useEffect(() => {
     if (value) return;
-    setValue(storedValue, 'replaceIn');
-    // eslint-disable-next-line
-  }, [value, storedValue]);
+    setValue(storedValue);
+  });
 
   return [value, setValue];
 };

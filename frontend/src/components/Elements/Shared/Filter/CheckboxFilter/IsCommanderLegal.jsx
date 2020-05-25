@@ -10,8 +10,12 @@ export default ({ onChange: onSubmit, isCommanderLegal }) => {
   };
 
   return (
-    <Checkbox onChange={onChange} checked={isCommanderLegal}>
-      Commander legal cards only
+    <Checkbox
+      onChange={onChange}
+      checked={isCommanderLegal}
+      style={{ width: 'fit-content' }}
+    >
+      Commander legal
     </Checkbox>
   );
 };

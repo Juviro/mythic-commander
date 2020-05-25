@@ -10,24 +10,24 @@ const StyledWrapper = styled.div`
   user-select: none;
   height: fit-content;
   position: absolute;
-  right: -50px;
+  right: -49px;
 `;
 
 export default ({ currentTab, setCurrentTab }) => {
   const { focusedElements, setFocus } = useContext(FocusContext);
   const tabs = [
     {
-      title: 'Add Cards [A]',
+      title: 'Search [S]',
       key: 'add',
     },
-    {
-      title: 'Wants [W]',
-      key: 'wants',
-    },
-    {
-      title: 'Stats [S]',
-      key: 'stats',
-    },
+    // {
+    //   title: 'Wants [W]',
+    //   key: 'wants',
+    // },
+    // {
+    //   title: 'Details [D]',
+    //   key: 'stats',
+    // },
   ];
 
   const focusIds = [
@@ -50,9 +50,9 @@ export default ({ currentTab, setCurrentTab }) => {
     }
   };
 
-  useShortcut('a', () => onOpenTab('add'), focusIds.concat('deck.cards'));
-  useShortcut('w', () => onOpenTab('wants'), focusIds.concat('deck.cards'));
-  useShortcut('s', () => onOpenTab('stats'), focusIds.concat('deck.cards'));
+  useShortcut('s', () => onOpenTab('add'), focusIds.concat('deck.cards'));
+  // useShortcut('w', () => onOpenTab('wants'), focusIds.concat('deck.cards'));
+  // useShortcut('d', () => onOpenTab('stats'), focusIds.concat('deck.cards'));
 
   return (
     <StyledWrapper>

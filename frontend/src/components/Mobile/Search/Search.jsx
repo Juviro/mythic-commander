@@ -7,13 +7,12 @@ import { useQueryParams, StringParam } from 'use-query-params';
 
 import {
   LayoutAndSortPicker,
-  CollapsableFilter,
   SearchButton,
+  Filter,
 } from '../../Elements/Shared';
 import { CardListMobile as CardList } from '../../Elements/Mobile';
 import Header from './Header';
 import { cardSearch } from './queries';
-import NameFilter from '../../Elements/Shared/Filter/TextFilter/NameFilter';
 import { CARDS_PER_PAGE } from '../../Elements/Mobile/CardListMobile/FilteredCardList';
 import { useToggle, useStoredQueryParam } from '../../Hooks';
 import { unifySingleCard } from '../../../utils/unifyCardFormat';
@@ -21,7 +20,7 @@ import searchParams from '../../../constants/searchParams';
 
 const StyledWrapper = styled.div`
   width: 100%;
-  padding: 8px;
+  padding: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -98,20 +97,8 @@ const Search = ({ history }) => {
   return (
     <>
       <StyledWrapper>
-        <Header
-          onResetOptions={onResetOptions}
-          isFilterResettable={isFilterResettable}
-        />
-        <NameFilter
-          onSearch={onSearch}
-          size="large"
-          value={currentOptions.name}
-          onChange={onChangeOption('name')}
-        />
-        <CollapsableFilter
-          hideReset
-          advancedSearch
-          hideNameFilter
+        <Header />
+        <Filter
           headerText="Advanced"
           onSearch={onSearch}
           onChangeOption={onChangeOption}
@@ -122,7 +109,9 @@ const Search = ({ history }) => {
           buttonRef={buttonRef}
           onSearch={onSearch}
           loading={loading}
-          style={{ marginTop: 24 }}
+          onResetOptions={onResetOptions}
+          isFilterResettable={isFilterResettable}
+          style={{ marginTop: 24, width: '80%' }}
         />
         <Divider />
         {allCards && (

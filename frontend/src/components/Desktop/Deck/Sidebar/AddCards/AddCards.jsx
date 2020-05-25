@@ -1,12 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
+import AdvancedSearch from './AdvancedSearch';
 
-const StyledWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 0, 0, 0.3);
-`;
-
-export default () => {
-  return <StyledWrapper>hello</StyledWrapper>;
+export default ({ onAddCards, deck }) => {
+  const cardNames = deck && deck.cards.map(({ name }) => name);
+  const alreadyInDeck = ({ name }) => cardNames && cardNames.includes(name);
+  return (
+    <>
+      <AdvancedSearch onAddCards={onAddCards} alreadyInDeck={alreadyInDeck} />
+    </>
+  );
 };

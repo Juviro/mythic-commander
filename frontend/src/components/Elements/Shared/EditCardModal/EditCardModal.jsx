@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import EditCardBody from './EditCardBody';
-import FocussedModal from '../FocussedModal';
+import FocusedModal from '../FocusedModal';
 
 export default ({ onEdit, card, onCancel }) => {
   const [newProps, setNewProps] = useState({});
@@ -20,7 +20,7 @@ export default ({ onEdit, card, onCancel }) => {
   const canSubmit = Boolean(Object.keys(newProps).length);
 
   return (
-    <FocussedModal
+    <FocusedModal
       onCancel={onCancel}
       visible
       width={660}
@@ -38,6 +38,6 @@ export default ({ onEdit, card, onCancel }) => {
         canSubmit={canSubmit}
         onSubmit={onSubmit}
       />
-    </FocussedModal>
+    </FocusedModal>
   );
 };

@@ -1,7 +1,9 @@
 import React from 'react';
+import styled from 'styled-components';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
-import styled from 'styled-components';
 import Menu from './Menu';
 import Search from './Search';
 import Collection from './Collection';
@@ -22,22 +24,24 @@ const StyledBody = styled.div`
 
 const App = () => {
   return (
-    <MobileRedirect>
-      <Menu />
-      <StyledBody>
-        <Switch>
-          <Route path="/search" exact component={Search} />
-          <Route path="/collection" exact component={Collection} />
-          <Route path="/decks" exact component={Decks} />
-          <Route path="/decks/:id" exact component={Deck} />
-          <Route path="/wants" exact component={WantsLists} />
-          <Route path="/wants/:id" exact component={WantsList} />
-          <Route path="/cards/:oracle_id" exact component={Card} />
-          <Redirect from="*" to="/collection" />
-        </Switch>
-      </StyledBody>
-      <GlobalStyle />
-    </MobileRedirect>
+    <DndProvider backend={HTML5Backend}>
+      <MobileRedirect>
+        <Menu />
+        <StyledBody>
+          <Switch>
+            <Route path="/search" exact component={Search} />
+            <Route path="/collection" exact component={Collection} />
+            <Route path="/decks" exact component={Decks} />
+            <Route path="/decks/:id" exact component={Deck} />
+            <Route path="/wants" exact component={WantsLists} />
+            <Route path="/wants/:id" exact component={WantsList} />
+            <Route path="/cards/:oracle_id" exact component={Card} />
+            <Redirect from="*" to="/collection" />
+          </Switch>
+        </StyledBody>
+        <GlobalStyle />
+      </MobileRedirect>
+    </DndProvider>
   );
 };
 

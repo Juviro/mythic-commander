@@ -1,19 +1,16 @@
 BUGFIXES:
-
-    - advanced search -> add card to collection: owned badge not displayed
-    - search name overflowing owned badge
+    - card grid wants page 2 -> increase pageSize -> not reset to last page with cards
 
 CURRENT:
 
 NEXT:
-    - tabs
-        - add icons?
-        - add diagonal shape
-    - show owned/unowned in deck
-    - allow deck image edit
-    - move focusIds to constants
-    - update + test all shortcuts (collection grid for example)
-    - remove all references to blockShortcuts
+    - don‘t start search when searchbar not visible
+    - add button to add card to deck in sidebar
+    - prevent re-ordering card lists - maybe re-order when category added / removed
+    - add shortcut to toggle focus
+    
+
+    - update + test all shortcuts (collection table for example)
     - styling when editing deck title
 
 IMPROVEMENTS:
@@ -24,7 +21,8 @@ FEATURES:
     - sharable collection / decks / wants
 
 REFACTORINGS:
-    - evaluate removing all caching, using network only everywhere
+    - evaluate removing some caching, using network only more
+    - switch search to lazyQuery 
  
 BACKLOG:
     - allow multiple selected elements in grid list with shift
@@ -56,7 +54,6 @@ BACKLOG:
     - dark mode
     - update document title based on content
     - allow text export/proxy of selected cards
-    - downloadable text export
     - save selected element when going to next page
     - rework advanced search:
         - add *unownedOnly*
@@ -64,6 +61,7 @@ BACKLOG:
 
 BACKLOG BUGFIXES:
     - backend deployment not reloading
+    - advanced search -> add card to collection: owned badge not displayed
     - collection: when one price is null, 0 is displayed even if one owned card has a value
     - add to collection mobile: after adding prev unowned card (gitrok monster), wrong minPrice in wantsList
     - mobile: collection -> card details view -> remove from collection -> back to collection: card not deleted

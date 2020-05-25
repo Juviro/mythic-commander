@@ -9,7 +9,7 @@ import formatDate from '../../../../utils/formatDate';
 import { primary } from '../../../../constants/colors';
 import AmountChart, { COLLECTED_CARDS, UNIQUE_CARDS } from './AmountChart';
 import ValueChart, { COLLECTION_VALUE } from './ValueChart';
-import FocussedModal from '../FocussedModal';
+import FocusedModal from '../FocusedModal';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -41,7 +41,7 @@ export default ({ currentSnapshot }) => {
       >
         show trend
       </Typography.Text>
-      <FocussedModal
+      <FocusedModal
         destroyOnClose
         visible={visible}
         onCancel={toggleVisible}
@@ -55,7 +55,7 @@ export default ({ currentSnapshot }) => {
         <AmountChart formattedData={formattedData} />
         <Divider>Collection Value</Divider>
         <ValueChart formattedData={formattedData} />
-      </FocussedModal>
+      </FocusedModal>
     </StyledWrapper>
   );
 };

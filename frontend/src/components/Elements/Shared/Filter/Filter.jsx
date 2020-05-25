@@ -13,6 +13,7 @@ import IsCommanderLegal from './CheckboxFilter/IsCommanderLegal';
 import IsOwned from './CheckboxFilter/IsOwned';
 import RangeFilter from './RangeFilter';
 import RarityFilter from './RarityFilter';
+import Flex from '../Flex';
 
 const FilterWrapper = styled.div`
   width: 100%;
@@ -20,21 +21,20 @@ const FilterWrapper = styled.div`
   flex-direction: column;
 `;
 
-const Label = ({ title, style }) => (
-  <Typography.Text
-    strong
-    style={{ marginTop: 8, marginBottom: 4, ...style }}
-  >{`${title}:`}</Typography.Text>
+const StyledLabel = styled(Typography.Text)`
+  width: 130px;
+`;
+
+const FilterElement = ({ title, children }) => (
+  <Flex direction="row" align="end" style={{ marginBottom: 24 }}>
+    <StyledLabel strong> {title}</StyledLabel>
+    <Flex direction="column" style={{ flex: 1 }}>
+      {children}
+    </Flex>
+  </Flex>
 );
 
-const Filter = ({
-  advancedSearch,
-  onSearch,
-  hideNameFilter,
-  autoFocus,
-  options,
-  onChangeOption,
-}) => {
+const Filter = ({ onSearch, autoFocus, options, onChangeOption }) => {
   const {
     name,
     rarity,
@@ -51,80 +51,125 @@ const Filter = ({
     isCommanderLegal,
   } = options;
 
+  const filterElements = [
+    {
+      title: 'Card name',
+      component: (
+        <NameFilter
+          value={name}
+          onSearch={onSearch}
+          autoFocus={autoFocus}
+          onChange={onChangeOption('name')}
+        />
+      ),
+    },
+    {
+      title: 'Card Text',
+      component: (
+        <OracleTextFilter
+          value={text}
+          onSearch={onSearch}
+          onChange={onChangeOption('text')}
+        />
+      ),
+    },
+    {
+      title: 'Set',
+      component: (
+        <SetSelection
+          onChange={onChangeOption('set')}
+          value={set}
+          onSearch={onSearch}
+        />
+      ),
+    },
+    {
+      title: 'Card Type',
+      component: (
+        <CardTypeSelection
+          onChangeOption={onChangeOption}
+          value={cardType}
+          onSearch={onSearch}
+          isLegendary={isLegendary}
+        />
+      ),
+    },
+    {
+      title: 'Creature Type',
+      component: (
+        <CreatureTypeSelection
+          onChange={onChangeOption('creatureType')}
+          onSearch={onSearch}
+          value={creatureType}
+        />
+      ),
+    },
+    {
+      title: 'Color Identity',
+      component: (
+        <ColorSelection onChange={onChangeOption('colors')} value={colors} />
+      ),
+    },
+    {
+      title: 'Rarity',
+      component: (
+        <RarityFilter onChange={onChangeOption('rarity')} value={rarity} />
+      ),
+    },
+    {
+      title: 'Cmc',
+      component: (
+        <RangeFilter
+          value={cmc}
+          onSearch={onSearch}
+          onChange={onChangeOption('cmc')}
+        />
+      ),
+    },
+    {
+      title: 'Power',
+      component: (
+        <RangeFilter
+          value={power}
+          onSearch={onSearch}
+          onChange={onChangeOption('power')}
+        />
+      ),
+    },
+    {
+      title: 'Toughness',
+      component: (
+        <RangeFilter
+          value={toughness}
+          onSearch={onSearch}
+          onChange={onChangeOption('toughness')}
+        />
+      ),
+    },
+    {
+      title: 'Legality',
+      component: (
+        <IsCommanderLegal
+          onChange={onChangeOption('isCommanderLegal')}
+          isCommanderLegal={isCommanderLegal}
+        />
+      ),
+    },
+    {
+      title: 'Owned',
+      component: (
+        <IsOwned onChange={onChangeOption('isOwned')} isOwned={isOwned} />
+      ),
+    },
+  ];
+
   return (
     <FilterWrapper>
-      {!hideNameFilter && (
-        <>
-          <Label title="Card name" style={{ marginTop: 0 }} />
-          <NameFilter
-            value={name}
-            onSearch={onSearch}
-            autoFocus={autoFocus}
-            onChange={onChangeOption('name')}
-          />
-        </>
-      )}
-      {advancedSearch && (
-        <>
-          <Label title="Card text" />
-          <OracleTextFilter
-            value={text}
-            onSearch={onSearch}
-            onChange={onChangeOption('text')}
-          />
-          <Label title="Set" />
-          <SetSelection
-            onChange={onChangeOption('set')}
-            value={set}
-            onSearch={onSearch}
-          />
-        </>
-      )}
-      <Label title="Card type" />
-      <CardTypeSelection
-        onChangeOption={onChangeOption}
-        value={cardType}
-        onSearch={onSearch}
-        isLegendary={isLegendary}
-      />
-      <Label title="Creature type" />
-      <CreatureTypeSelection
-        onChange={onChangeOption('creatureType')}
-        onSearch={onSearch}
-        value={creatureType}
-      />
-      <Label title="Color identity" />
-      <ColorSelection onChange={onChangeOption('colors')} value={colors} />
-      {advancedSearch && (
-        <>
-          <Label title="Rarity" />
-          <RarityFilter onChange={onChangeOption('rarity')} value={rarity} />
-          <Label title="Converted mana cost" />
-          <RangeFilter
-            value={cmc}
-            onSearch={onSearch}
-            onChange={onChangeOption('cmc')}
-          />
-          <Label title="Power" />
-          <RangeFilter
-            value={power}
-            onSearch={onSearch}
-            onChange={onChangeOption('power')}
-          />
-          <Label title="Toughness" />
-          <RangeFilter
-            value={toughness}
-            onSearch={onSearch}
-            onChange={onChangeOption('toughness')}
-          />
-          <Label title="Other" />
-          <IsCommanderLegal
-            onChange={onChangeOption('isCommanderLegal')}
-            isCommanderLegal={isCommanderLegal}
-          />
-          <IsOwned onChange={onChangeOption('isOwned')} isOwned={isOwned} />
-        </>
-      )}
+      {filterElements.map(({ title, component }) => (
+        <FilterElement key={title} title={title}>
+          {component}
+        </FilterElement>
+      ))}
     </FilterWrapper>
   );
 };

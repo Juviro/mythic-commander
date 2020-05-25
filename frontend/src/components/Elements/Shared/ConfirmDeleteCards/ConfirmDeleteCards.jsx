@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useShortcut } from '../../../Hooks';
 import SimpleCardsList from '../SimpleCardsList';
-import FocussedModal from '../FocussedModal';
+import FocusedModal from '../FocusedModal';
 
 export default ({
   onCancel,
@@ -18,7 +18,7 @@ export default ({
   }?`;
 
   return (
-    <FocussedModal
+    <FocusedModal
       visible
       title={title}
       okText="Delete"
@@ -28,6 +28,6 @@ export default ({
       focusId="modal.confirmDeleteCards"
     >
       <SimpleCardsList cards={cardsToDelete} />
-    </FocussedModal>
+    </FocusedModal>
   );
 };

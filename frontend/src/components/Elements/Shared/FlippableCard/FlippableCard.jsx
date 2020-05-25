@@ -81,29 +81,24 @@ export default ({
           {!hideFlipIcon && (
             <CardButton Icon={SyncOutlined} index={1} onClick={onFlipCard} />
           )}
-          <a.div
+          <a.img
             className="flippable-card "
             style={{
               opacity,
               transform: transform.interpolate(t => `${t} rotateY(-180deg)`),
-              backgroundImage: `url(${getImageUrl(
-                id,
-                imgKey,
-                'normal',
-                'back'
-              )})`,
             }}
+            src={getImageUrl(id, imgKey, 'normal', 'back')}
           />
         </>
       )}
       {!loading && (
-        <a.div
+        <a.img
           className="flippable-card"
           style={{
             opacity: opacity.interpolate(o => 1 - o),
             transform,
-            backgroundImage: `url(${frontImgSrc})`,
           }}
+          src={frontImgSrc}
         />
       )}
     </StyledImageWrapper>
