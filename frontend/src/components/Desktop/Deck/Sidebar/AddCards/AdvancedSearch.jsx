@@ -10,6 +10,7 @@ import {
   SearchButton,
   OrderBy,
   Confirm,
+  OneTimeInfoBox,
 } from '../../../../Elements/Shared';
 import CardGrid from '../../../../Elements/Desktop/PaginatedCardList/CardGrid/CardGrid';
 import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
@@ -80,18 +81,25 @@ export default ({ onAddCards, alreadyInDeck }) => {
             <Divider />
             <StyledCardWrapper>
               {isSearching && (
-                <CardGrid
-                  draggable
-                  cards={currentCards}
-                  loading={loading}
-                  cardsPerRow={2}
-                  cardWidth={200}
-                  onEnter={onEnter}
-                  markAsDisabled={alreadyInDeck}
-                  blockShortcuts={blockShortcuts}
-                  search={lastSearchOptions.name}
-                  numberOfCards={numberOfCards}
-                />
+                <>
+                  <OneTimeInfoBox
+                    showIcon
+                    id="deck.add.drag"
+                    description="Drag and drop cards to add them to your deck"
+                  />
+                  <CardGrid
+                    draggable
+                    cards={currentCards}
+                    loading={loading}
+                    cardsPerRow={2}
+                    cardWidth={200}
+                    onEnter={onEnter}
+                    markAsDisabled={alreadyInDeck}
+                    blockShortcuts={blockShortcuts}
+                    search={lastSearchOptions.name}
+                    numberOfCards={numberOfCards}
+                  />
+                </>
               )}
             </StyledCardWrapper>
           </Flex>

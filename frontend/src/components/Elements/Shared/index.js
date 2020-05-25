@@ -42,6 +42,7 @@ export { default as ManaCost, TextWithIcons } from './ManaCost';
 export { default as MoveTo } from './MoveTo';
 export { default as MoveToModal } from './MoveTo/MoveToModal';
 export { default as MythicCommanderBanner } from './MythicCommanderBanner';
+export { default as OneTimeInfoBox } from './OneTimeInfoBox';
 export { default as OrderBy } from './OrderBy';
 export { default as OwnedBadge } from './OwnedBadge';
 export { default as PreviewCardImage } from './PreviewCardImage';
