@@ -10,7 +10,6 @@ import message from '../../../utils/message';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
 import { getDeckDesktop, addCardsToDeckDesktop } from './queries';
 import { Flex, ShortcutFocus } from '../../Elements/Shared';
-import useLocalStorage from '../../Hooks/useLocalStorage';
 import sumCardAmount from '../../../utils/sumCardAmount';
 
 const StyledDeck = styled.div`
@@ -22,7 +21,8 @@ const StyledDeck = styled.div`
 
 export default () => {
   const { id } = useParams();
-  const [currentTab, setCurrentTab] = useState(null);
+  // const [currentTab, setCurrentTab] = useState('add');
+  const [currentTab, setCurrentTab] = useState(null); // TODO:
   const { data, loading } = useQuery(getDeckDesktop, {
     variables: { id },
     fetchPolicy: 'network-only',
@@ -48,13 +48,23 @@ export default () => {
 
   return (
     <StyledDeck>
-      {/* <Sidebar currentTab={currentTab} setCurrentTab={setCurrentTab} /> */}
-      <Flex style={{ overflow: 'auto', flex: 1 }} direction="column">
-        <ShortcutFocus focusId="deck.cards">
+      <Sidebar
+        currentTab={currentTab}
+        setCurrentTab={setCurrentTab}
+        onAddCards={onAddCards}
+        deck={unifiedDeck}
+      />
+      <ShortcutFocus focusId="deck.cards" style={{ overflow: 'auto', flex: 1 }}>
+        <Flex style={{ marginLeft: 50 }} direction="column">
           <Header deck={unifiedDeck} onAddCards={onAddCards} />
-          <Cards deck={unifiedDeck} loading={loading} currentTab={currentTab} />
-        </ShortcutFocus>
-      </Flex>
+          <Cards
+            deck={unifiedDeck}
+            loading={loading}
+            currentTab={currentTab}
+            onAddCards={onAddCards}
+          />
+        </Flex>
+      </ShortcutFocus>
     </StyledDeck>
   );
 };

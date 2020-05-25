@@ -5,7 +5,7 @@ import CardDetailsDesktop from '../CardDetailsDesktop';
 import { cardDetailsDesktop } from '../CardDetailsDesktop/queries';
 import { unifySingleCard } from '../../../../utils/unifyCardFormat';
 import { useShortcut } from '../../../Hooks';
-import { FocussedModal } from '../../Shared';
+import { FocusedModal } from '../../Shared';
 
 const CardModalDesktop = ({
   card,
@@ -13,7 +13,7 @@ const CardModalDesktop = ({
   onClose,
   loading: parentLoading,
 }) => {
-  useShortcut('ENTER', onClose, 'modal.cardDetails');
+  useShortcut('SPACE', visible ? onClose : null, 'modal.cardDetails');
   const { data, loading: cardLoading } = useQuery(cardDetailsDesktop, {
     variables: { oracle_id: card.oracle_id },
     fetchPolicy: 'network-only',
@@ -25,7 +25,7 @@ const CardModalDesktop = ({
   const usedCard = { ...unifiedCard, ...card };
 
   return (
-    <FocussedModal
+    <FocusedModal
       centered
       visible={visible}
       onCancel={onClose}
@@ -40,7 +40,7 @@ const CardModalDesktop = ({
       focusId="modal.cardDetails"
     >
       {card && <CardDetailsDesktop card={usedCard} loading={loading} />}
-    </FocussedModal>
+    </FocusedModal>
   );
 };
 

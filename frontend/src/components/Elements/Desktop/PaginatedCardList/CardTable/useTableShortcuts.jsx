@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useQueryParam, NumberParam, BooleanParam } from 'use-query-params';
+import { useQueryParam, NumberParam } from 'use-query-params';
 import { isInputField, isModifierKey } from '../../../../Hooks/useShortcut';
 import { useWindowSize } from '../../../../Hooks';
 import keyCodes from '../../../../../constants/keyCodes';
 
 export default (numberOfCards, toggleShowDetail, toggleElementSelection) => {
   useWindowSize();
-  const [isBlocked] = useQueryParam('blockShortcuts', BooleanParam);
   const [currentPage = 1, setPageParam] = useQueryParam('page', NumberParam);
   const [pageSize, setPageSizeParam] = useQueryParam('pageSize', NumberParam);
   const [selectedElementPosition, setSelectedElementPosition] = useState(0);
@@ -51,20 +50,14 @@ export default (numberOfCards, toggleShowDetail, toggleElementSelection) => {
   };
 
   const onKeyDown = event => {
-    if (
-      !numberOfCards ||
-      isInputField(event) ||
-      isModifierKey(event) ||
-      isBlocked
-    )
-      return;
+    if (!numberOfCards || isInputField(event) || isModifierKey(event)) return;
     let preventDefault = true;
 
     switch (event.keyCode) {
-      case keyCodes.SPACE:
+      case keyCodes.ENTER:
         toggleElementSelection(selectedElementPosition);
         break;
-      case keyCodes.ENTER:
+      case keyCodes.SPACE:
         toggleShowDetail();
         break;
       case keyCodes.ARROW_LEFT:

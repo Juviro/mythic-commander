@@ -2,11 +2,11 @@ import React from 'react';
 import { Button } from 'antd';
 
 import Flex from '../Flex';
-import FocussedModal from '../FocussedModal';
+import FocusedModal from '../FocusedModal';
 
 export default ({ onCancel, url, isVisible }) => {
   return (
-    <FocussedModal
+    <FocusedModal
       footer={null}
       onCancel={onCancel}
       visible={isVisible}
@@ -34,6 +34,6 @@ export default ({ onCancel, url, isVisible }) => {
           </Button>
         </a>
       </Flex>
-    </FocussedModal>
+    </FocusedModal>
   );
 };

@@ -4,10 +4,9 @@ import styled from 'styled-components';
 
 import { withRouter } from 'react-router';
 import GridCard from './GridCard';
-import useNumberOfCards from './useNumberOfCards';
 import useGridShortcuts from './useGridShortcuts';
 import CardModalDesktop from '../../CardModalDesktop';
-import { useWindowSize, useToggle } from '../../../../Hooks';
+import { useWindowSize, useToggle, useShortcut } from '../../../../Hooks';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -21,22 +20,22 @@ const StyledWrapper = styled.div`
 const CardGrid = ({
   cards,
   loading,
-  widthOffset,
+  cardsPerRow,
+  cardWidth,
   numberOfCards,
-  zoom,
+  zoom = 100,
   search,
   actions,
   onEditCard,
   onDeleteCard,
   history,
+  blockShortcuts,
+  onEnter,
+  draggable,
+  markAsDisabled,
 }) => {
   useWindowSize();
   const [showDetails, toggleShowDetail] = useToggle(false);
-
-  const { cardsPerRow, numberOfRows, cardWidth } = useNumberOfCards(
-    widthOffset,
-    zoom
-  );
 
   const {
     pagination,
@@ -44,12 +43,17 @@ const CardGrid = ({
     setSelectedElementPosition,
   } = useGridShortcuts(
     cardsPerRow,
-    numberOfRows,
     toggleShowDetail,
-    numberOfCards
+    numberOfCards,
+    blockShortcuts
   );
 
   const selectedCard = cards[selectedElementPosition - 1];
+  useShortcut(
+    'ENTER',
+    onEnter && selectedCard ? () => onEnter(selectedCard) : null,
+    ['modal.cardDetails', 'deck.sidebar.add']
+  );
 
   const onClick = index => {
     toggleShowDetail(true);
@@ -67,7 +71,8 @@ const CardGrid = ({
     <Pagination
       {...pagination}
       showSizeChanger
-      showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} cards`}
+      size="small"
+      showTotal={(total, [from, to]) => `${from}-${to} of ${total} cards`}
       style={{ alignSelf: 'flex-end', margin: '16px 0' }}
     />
   );
@@ -83,12 +88,14 @@ const CardGrid = ({
             <GridCard
               card={card}
               zoom={zoom}
+              draggable={draggable}
               key={card.id}
               actions={actions}
               loading={loading}
               width={cardWidth}
               index={index}
               search={search}
+              markAsDisabled={markAsDisabled && markAsDisabled(card)}
               shortcutsActive={isSelected && !showDetails}
               onEditCard={onEditCard ? () => onEditCard(card) : undefined}
               onDeleteCard={onDeleteCard ? () => onDeleteCard(card) : undefined}
@@ -104,7 +111,7 @@ const CardGrid = ({
         loading={loading}
         card={selectedCard}
         visible={showDetails}
-        onClose={toggleShowDetail}
+        onClose={() => toggleShowDetail(false)}
       />
     </>
   );

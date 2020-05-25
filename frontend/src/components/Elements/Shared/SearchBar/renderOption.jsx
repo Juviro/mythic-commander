@@ -21,7 +21,7 @@ const CardImageWrapper = styled.div`
 
 const StyledName = styled.span`
   margin-left: 11px;
-  max-width: calc(100vw - ${({ isShort }) => (isShort ? 170 : 130)}px);
+  max-width: calc(100% - ${({ isShort }) => (isShort ? 90 : 30)}px);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

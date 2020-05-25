@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Checkbox } from 'antd';
 import { colors as colorIcons } from '../../../../assets/mtgIcons';
+import Flex from '../Flex';
 
 const colors = ['w', 'u', 'b', 'r', 'g'];
 
@@ -16,14 +17,6 @@ const addColor = (currentColors, newColor) => {
     .sort((a, b) => findColorIndex(a) - findColorIndex(b))
     .join('');
 };
-
-const ColorSelectionWrapper = styled.div`
-  max-width: 400px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-`;
 
 const getColorTagProps = invert => ({ isSelected }) => {
   const showSelectedStyle = invert ? !isSelected : isSelected;
@@ -72,45 +65,34 @@ export default ({ onChange, value = '' }) => {
   };
 
   return (
-    <ColorSelectionWrapper>
-      {colors.map(letter => (
-        <StyledColorTag
-          key={letter}
-          src={colorIcons[letter.toUpperCase()]}
-          isSelected={isColorSelected(letter)}
-          onClick={() => onSelectColor(letter)}
-        />
-      ))}
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <Flex direction="column">
+      <Flex direction="row" justify="space-between" style={{ maxWidth: 250 }}>
+        {colors.map(letter => (
+          <StyledColorTag
+            key={letter}
+            src={colorIcons[letter.toUpperCase()]}
+            isSelected={isColorSelected(letter)}
+            onClick={() => onSelectColor(letter)}
+          />
+        ))}
+      </Flex>
+      <div style={{ marginTop: 16 }}>
         <Checkbox
-          style={{
-            fontSize: '10px',
-            width: '120px',
-            display: 'flex',
-            alignItems: 'center',
-            marginLeft: 8,
-            marginBottom: 5,
-          }}
           disabled={value.includes('x')}
           checked={value.includes('-')}
           onChange={onSetExcluded('-')}
+          style={{ marginRight: 16 }}
         >
           Exclude others
         </Checkbox>
         <Checkbox
-          style={{
-            fontSize: '10px',
-            width: '120px',
-            display: 'flex',
-            alignItems: 'center',
-            marginRight: '0',
-          }}
           checked={value.includes('x')}
           onChange={onSetExcluded('x')}
+          style={{ marginLeft: 0 }}
         >
           Exact match
         </Checkbox>
       </div>
-    </ColorSelectionWrapper>
+    </Flex>
   );
 };

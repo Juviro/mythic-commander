@@ -2,14 +2,15 @@ import React, { useContext } from 'react';
 import { Skeleton, Empty } from 'antd';
 import styled, { css } from 'styled-components';
 
-import { useWindowSize } from '../../../../Hooks';
-import { Flex } from '../../../../Elements/Shared';
+import { useWindowSize } from '../../../Hooks';
+import { Flex } from '../../../Elements/Shared';
 import { CARD_WIDTH } from './CardList/Card';
-import getCardsByType from '../../../../../utils/getCardsByType';
+import getCardsByType from '../../../../utils/getCardsByType';
 import CardLists from './CardLists';
-import { sortByCmc, sortByName } from '../../../../../utils/cardFilter';
-import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
-import { primary } from '../../../../../constants/colors';
+import { sortByCmc, sortByName } from '../../../../utils/cardFilter';
+import FocusContext from '../../../Provider/FocusProvider/FocusProvider';
+import { primary } from '../../../../constants/colors';
+import DropZone from './DropZone';
 
 const StyledWrapper = styled.div`
   margin: 8px;
@@ -61,7 +62,7 @@ const getCardColumns = (cards, numberOfCols) => {
   return cardColumns.filter(column => column.length);
 };
 
-export default ({ deck, loading, currentTab }) => {
+export default ({ deck, loading, currentTab, onAddCards }) => {
   const widthOffset = currentTab ? 500 : 0;
   useWindowSize();
   const { focusedElement } = useContext(FocusContext);
@@ -83,17 +84,19 @@ export default ({ deck, loading, currentTab }) => {
 
   return (
     <StyledWrapper isFocused={isFocused}>
-      <Flex
-        direction="row"
-        wrap="wrap"
-        style={{ padding: 8, width: 'fit-content' }}
-      >
-        {cardColumns.length ? (
-          <CardLists columns={cardColumns} deck={deck} />
-        ) : (
-          <Empty description="No Cards" />
-        )}
-      </Flex>
+      <DropZone onAddCards={onAddCards}>
+        <Flex
+          direction="row"
+          wrap="wrap"
+          style={{ padding: 8, width: 'fit-content' }}
+        >
+          {cardColumns.length ? (
+            <CardLists columns={cardColumns} deck={deck} />
+          ) : (
+            <Empty description="No Cards" />
+          )}
+        </Flex>
+      </DropZone>
     </StyledWrapper>
   );
 };

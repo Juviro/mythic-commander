@@ -1,13 +1,23 @@
-import { useEffect, useState } from 'react';
-import { useQueryParam, NumberParam, BooleanParam } from 'use-query-params';
+import { useEffect, useState, useContext } from 'react';
+import { useQueryParam, NumberParam } from 'use-query-params';
 import { isInputField, isModifierKey } from '../../../../Hooks/useShortcut';
 import keyCodes from '../../../../../constants/keyCodes';
+import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
 
-// TODO: numberOfRows can be calculated from cardsPerRow and numberOfCards
-export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
-  const [isBlocked] = useQueryParam('blockShortcuts', BooleanParam);
+export default (
+  cardsPerRow,
+  toggleShowDetail,
+  numberOfCards,
+  blockShortcuts
+) => {
   const [currentPage = 1, setPageParam] = useQueryParam('page', NumberParam);
   const [pageSize, setPageSizeParam] = useQueryParam('pageSize', NumberParam);
+  const { focusedElement } = useContext(FocusContext);
+  const shortcutsActive =
+    !focusedElement ||
+    ['modal.cardDetails', 'deck.sidebar.add'].includes(focusedElement);
+
+  const numberOfRows = Math.ceil(pageSize / cardsPerRow);
 
   const setCurrentPage = (newPage, shouldReplace) =>
     setPageParam(newPage, shouldReplace ? 'replaceIn' : 'pushIn');
@@ -96,16 +106,17 @@ export default (cardsPerRow, numberOfRows, toggleShowDetail, numberOfCards) => {
   const onKeyDown = event => {
     if (
       !numberOfCards ||
+      !shortcutsActive ||
       isInputField(event) ||
       isModifierKey(event) ||
-      isBlocked
+      blockShortcuts
     )
       return;
     let preventDefault = true;
 
     switch (event.keyCode) {
-      case keyCodes.ENTER:
-        toggleShowDetail();
+      case keyCodes.SPACE:
+        if (focusedElement !== 'modal.cardDetails') toggleShowDetail();
         break;
       case keyCodes.ARROW_LEFT:
         onLeft();
