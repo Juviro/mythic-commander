@@ -1,7 +1,11 @@
 import fs from 'fs';
 import fetch from 'node-fetch';
 
-// @Param type: oneOf(oracle_cards)
+// TODO: stream instead of download
+
+// @Param type:
+//   * default_cards: all cards in english or original language
+//   * oracle_cards: distinct cards, most recent version of each one
 export default async type => {
   console.info();
   const { data } = await fetch('https://api.scryfall.com/bulk-data').then(res =>
