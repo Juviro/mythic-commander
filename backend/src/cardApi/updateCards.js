@@ -63,7 +63,8 @@ export default async () => {
     new Date().toLocaleString('de', { timeStyle: 'short', dateStyle: 'short' })
   );
 
-  await updateCards('default_cards', 'cards');
+  await updateCards('oracle_cards', 'cards');
+  // await updateCards('default_cards', 'cards');
 
   await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCards"`);
   await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCardsPerSet"`);
