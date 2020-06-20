@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Spin, message, Empty } from 'antd';
+import { Spin, Empty } from 'antd';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 import { useParams } from 'react-router';
@@ -55,11 +55,6 @@ export default () => {
 
   useEffect(() => {
     if (!data || displayedCards) return;
-    // TODO: remove after testing
-    message.warn(
-      'Card size not tested yet - print one card for testing first',
-      4
-    );
     const spreadCards = [];
     data.proxies.forEach(card => {
       for (let i = 0; i < card.amount; i++) {
