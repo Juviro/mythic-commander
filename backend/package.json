@@ -12,7 +12,7 @@
     "migrate": "babel-node node_modules/.bin/knex migrate:latest",
     "rollback": "babel-node node_modules/.bin/knex migrate:rollback",
     "update-cards": "babel-node src/cardApi/updateCardsManually.js",
-    "update-cards-prod": "NODE_ENV=production babel-node src/cron/updateCardsManually.js",
+    "update-cards-prod": "NODE_ENV=production babel-node src/cardApi/updateCardsManually.js",
     "lint": "eslint --fix src"
   },
   "dependencies": {
