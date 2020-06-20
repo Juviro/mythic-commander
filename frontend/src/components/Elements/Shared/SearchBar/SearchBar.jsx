@@ -96,6 +96,8 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
     },
   ];
 
+  const dropdownStyle = isMobile() ? undefined : { minWidth: 350 };
+
   return (
     <>
       <AutoComplete
@@ -110,7 +112,7 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
         onBlur={() => toggleIsOpen(false)}
         dropdownMatchSelectWidth={false}
         listHeight={360}
-        dropdownStyle={{ minWidth: 350 }}
+        dropdownStyle={dropdownStyle}
         placeholder="Search for a card..."
         style={{ width: 'calc(100% - 16px)', ...style }}
         className={transparent ? 'transparent' : 'dark-placeholder'}

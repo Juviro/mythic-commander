@@ -11,7 +11,8 @@
     "build": "babel src --out-dir dist",
     "migrate": "babel-node node_modules/.bin/knex migrate:latest",
     "rollback": "babel-node node_modules/.bin/knex migrate:rollback",
-    "update-cards": "babel-node src/cron/updateCardsManually.js",
+    "update-cards": "babel-node src/cardApi/updateCardsManually.js",
+    "update-cards-production": "NODE_ENV=production babel-node src/cron/updateCardsManually.js",
     "lint": "eslint --fix src"
   },
   "dependencies": {
@@ -25,9 +26,11 @@
     "http-status-codes": "^1.4.0",
     "knex": "^0.20.4",
     "koa": "^2.11.0",
+    "line-by-line": "^0.1.6",
     "lodash": "^4.17.15",
     "merge-graphql-schemas": "^1.5.8",
     "mysql": "^2.17.1",
+    "node-fetch": "^2.6.0",
     "pg": "^7.15.0",
     "scryfall-sdk": "^1.5.1"
   },

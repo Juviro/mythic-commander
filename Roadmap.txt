@@ -1,30 +1,50 @@
 BUGFIXES:
     - card grid wants page 2 -> increase pageSize -> not reset to last page with cards
+    - collection -> add 4x some card -> change set of one of those cards: cards duplicated in collection
+    - rarity order bugged in advanced search sidebar (just change flex direction?)
 
 CURRENT:
 
 NEXT:
-    - don‘t start search when searchbar not visible
+    - fix delete wants
+    - fix add deck
+    - wants list desktop -> click linked deck: mobile version displayed
+
+    - don‘t start search when searchbar not visible in deck sidebar
     - add button to add card to deck in sidebar
     - prevent re-ordering card lists - maybe re-order when category added / removed
     - add shortcut to toggle focus
-    
 
     - update + test all shortcuts (collection table for example)
     - styling when editing deck title
+    - add option to show unowned cards in deck
+    - add option to export unowned cards from deck to wants
 
 IMPROVEMENTS:
     - improve re-rendering of table columns and grid card
+    - show last search when no input in searchbar
+    - add to wants list dropdown: sort lists by name (same for decks I guess)
+    - added to collection notification -> show amount as well
+    - remove space between proxies, slightly increase size
 
 FEATURES:
-    - enable table actions for search
     - sharable collection / decks / wants
+    - allow adding to deck from details modal
 
 REFACTORINGS:
     - evaluate removing some caching, using network only more
     - switch search to lazyQuery 
+    - drop table events, use bulk data from scryfall from distinctCards
  
 BACKLOG:
+    - allow sort by type (ramp, card draw, ...)
+    - remove sidebar from collection and wants list, add to header, similar to mobile
+    - add proxy to menu, allow to add single cards
+    - when adding basics to deck, default to full art
+    - remove all cards < 0.2$ from collection value , rename value to estimation
+    - add enchantment types (e.g. shrine) to creature types in advanced search, rename to subtype or similar
+
+    - enable table actions for search
     - allow multiple selected elements in grid list with shift
     - allow search for unowned cards only
     - refresh google access ?
@@ -40,7 +60,7 @@ BACKLOG:
     - add possible combos section to detail card view (https://discordapp.com/channels/673601282946236417/673601283609067559, no api yet)
     - add info tooltip for search: explain amount prefix, fuzzy search
     - allow searching for multiple sets/types/subtypes?
-    - add error page
+    - add error page (should be already started, search for branch)
     - clickable creature type in card details?
     - home page: 
         - quick stats for collection
@@ -60,6 +80,9 @@ BACKLOG:
         - show all current search options for advanced search 
 
 BACKLOG BUGFIXES:
+    - sometimes rules of previously viewed cards displayed instead of current card
+    - some names not correctlxy highlighted, like "nine tail"
+
     - backend deployment not reloading
     - advanced search -> add card to collection: owned badge not displayed
     - collection: when one price is null, 0 is displayed even if one owned card has a value

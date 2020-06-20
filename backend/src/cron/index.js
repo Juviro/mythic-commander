@@ -1,6 +1,6 @@
 import { CronJob } from 'cron';
 
-import updateCards from './updateCards';
+import updateCards from '../cardApi/updateCards';
 import deleteSessions from './deleteSessions';
 import collectionSnapshot from './collectionSnapshot';
 
