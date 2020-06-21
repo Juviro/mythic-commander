@@ -15,10 +15,10 @@ export const up = async knex => {
   );
   await knex.schema.raw('ALTER TABLE decks ALTER COLUMN id TYPE varchar;');
   await knex.schema.raw(
-    'ALTER TABLE "wantsLists" ADD CONSTRAINT wantslists_deckid_foreign FOREIGN KEY ("deckId") REFERENCES decks(id);'
+    'ALTER TABLE "wantsLists" ADD CONSTRAINT wantslists_deckid_foreign FOREIGN KEY ("deckId") REFERENCES decks(id) ON DELETE CASCADE;'
   );
   await knex.schema.raw(
-    'ALTER TABLE "cardToDeck" ADD CONSTRAINT cardtodeck_deckid_foreign FOREIGN KEY ("deckId") REFERENCES decks(id);'
+    'ALTER TABLE "cardToDeck" ADD CONSTRAINT cardtodeck_deckid_foreign FOREIGN KEY ("deckId") REFERENCES decks(id) ON DELETE CASCADE;'
   );
 
   await knex.schema.raw(`

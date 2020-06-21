@@ -11,7 +11,7 @@ export const up = async knex => {
     'ALTER TABLE "wantsLists" ALTER COLUMN id TYPE varchar;'
   );
   await knex.schema.raw(
-    'ALTER TABLE "cardToWantsList" ADD CONSTRAINT cardtowantslist_wantslistid_foreign FOREIGN KEY ("wantsListId") REFERENCES "wantsLists"(id);'
+    'ALTER TABLE "cardToWantsList" ADD CONSTRAINT cardtowantslist_wantslistid_foreign FOREIGN KEY ("wantsListId") REFERENCES "wantsLists"(id) ON DELETE CASCADE;'
   );
 
   await knex.schema.raw(`
