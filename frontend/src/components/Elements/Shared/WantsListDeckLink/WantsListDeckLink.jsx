@@ -4,6 +4,8 @@ import { Typography } from 'antd';
 import { withRouter } from 'react-router';
 import { LinkOutlined } from '@ant-design/icons';
 
+import getDynamicUrl from '../../../../utils/getDynamicUrl';
+
 import LinkDeck from './LinkDeck';
 
 const StyledDeckWrapper = styled.div`
@@ -25,7 +27,7 @@ const Header = ({ wantsList, history }) => {
 
   const onClickDeck = () => {
     if (!deck) return;
-    history.push(`/m/decks/${deck.id}`);
+    history.push(getDynamicUrl(`/decks/${deck.id}`));
   };
 
   return deck ? (
