@@ -41,7 +41,7 @@ const updateCards = async (type, tableName) => {
           .replace(/\?/g, '\\?') + ON_DUPLICATE
       );
     } catch {
-      // [ and ] are catched here
+      // [ and ] are caught here
     }
   }
   console.info('updated cards, deleting file');
