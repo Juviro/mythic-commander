@@ -1,13 +1,12 @@
 import React from 'react';
-
 import { Checkbox } from 'antd';
-import styled from 'styled-components';
 
-const RARITIES = ['Mythic', 'Uncommon', 'Rare', 'Common'];
+import Flex from '../Flex';
 
-const StyledWrapper = styled.div`
-  display: block;
-`;
+const RARITIES = [
+  ['Mythic', 'Rare'],
+  ['Uncommon', 'Common'],
+];
 
 export default ({ onChange: onSubmit, value = '' }) => {
   const onChange = rarity => e => {
@@ -21,17 +20,31 @@ export default ({ onChange: onSubmit, value = '' }) => {
   };
 
   return (
-    <StyledWrapper>
-      {RARITIES.map(rarity => (
-        <Checkbox
-          onChange={onChange(rarity)}
-          checked={value.includes(rarity[0].toLowerCase())}
-          key={rarity}
-          style={{ margin: '0 8px 0 0', width: '45%', minWidth: 'fit-content' }}
-        >
-          {rarity}
-        </Checkbox>
+    <Flex
+      direction="row"
+      wrap="wrap"
+      justify="space-between"
+      style={{ maxWidth: 300 }}
+    >
+      {RARITIES.map(rarityGroup => (
+        <Flex direction="column" key={Math.random()}>
+          {rarityGroup.map(rarity => (
+            <Checkbox
+              onChange={onChange(rarity)}
+              checked={value.includes(rarity[0].toLowerCase())}
+              key={rarity}
+              style={{
+                margin: '0 8px 0 0',
+                width: '40%',
+                minWidth: 'fit-content',
+                height: '50%',
+              }}
+            >
+              {rarity}
+            </Checkbox>
+          ))}
+        </Flex>
       ))}
-    </StyledWrapper>
+    </Flex>
   );
 };
