@@ -35,7 +35,7 @@ export default ({ onSearch, onChange: onSubmit, value = '' }) => {
     <StyledWrapper>
       <Input
         size="small"
-        style={{ width: 60 }}
+        style={{ width: 65 }}
         type="number"
         value={from}
         placeholder="from"
@@ -46,7 +46,7 @@ export default ({ onSearch, onChange: onSubmit, value = '' }) => {
       <Typography.Text>-</Typography.Text>
       <Input
         size="small"
-        style={{ width: 60 }}
+        style={{ width: 65 }}
         type="number"
         value={to}
         placeholder="to"
