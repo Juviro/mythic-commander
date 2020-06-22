@@ -6,7 +6,7 @@ import { message, Typography } from 'antd';
 import { changeCollection, cardDetailsDesktop } from '../queries';
 import { CardSetOverview, EditIcon } from '../../../Shared';
 import { useToggle, useShortcut } from '../../../../Hooks';
-import { getCollectionDesktop } from '../../../../Desktop/Collection/queries';
+import { getCollectionDesktop } from '../../../../Desktop/Collection/Private/queries';
 
 const StyledWrapper = styled.div`
   display: flex;

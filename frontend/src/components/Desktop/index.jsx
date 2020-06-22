@@ -6,7 +6,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Menu from './Menu';
 import Search from './Search';
-import Collection from './Collection';
+import Collection from './Collection/Collection';
 import WantsLists from './WantsLists';
 import WantsList from './WantsList';
 import Decks from './Decks';
@@ -32,7 +32,7 @@ const App = () => {
         <StyledBody>
           <Switch>
             <Route path="/search" exact component={Search} />
-            <Route path="/collection" exact component={Collection} />
+            <Route path="/collection" component={Collection} />
             <Route path="/decks" exact component={Decks} />
             <Route path="/decks/:id" exact component={Deck} />
             <Route path="/wants" exact component={WantsLists} />

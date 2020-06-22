@@ -1,8 +1,8 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
 
-import message from '../../../utils/message';
-import { CardListWithActions } from '../../Elements/Desktop';
+import message from '../../../../utils/message';
+import { CardListWithActions } from '../../../Elements/Desktop';
 import { deleteAllFromCollection, getCollectionDesktop } from './queries';
 
 export default ({ cards, loading, isSidebarVisible }) => {

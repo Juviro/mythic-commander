@@ -11,7 +11,7 @@ import message from '../../../../utils/message';
 import {
   getCollectionDesktop,
   addToCollectionDesktop,
-} from '../../../Desktop/Collection/queries';
+} from '../../../Desktop/Collection/Private/queries';
 import {
   addCardsToWantsListDesktop,
   wantsListDesktop,
