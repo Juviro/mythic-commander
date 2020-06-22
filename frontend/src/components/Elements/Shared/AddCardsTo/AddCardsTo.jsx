@@ -19,7 +19,13 @@ import {
 import sumCardAmount from '../../../../utils/sumCardAmount';
 import FocusedModal from '../FocusedModal';
 
-export default ({ onCancel, cardsToAdd, numberOfSelectedCards, visible }) => {
+export default ({
+  onCancel,
+  onSubmit,
+  cardsToAdd,
+  numberOfSelectedCards,
+  visible,
+}) => {
   const { data, loading } = useQuery(allLists, { fetchPolicy: 'network-only' });
   const [addToDeck] = useMutation(addCardsToDeckDesktop);
   const [addToWantsList] = useMutation(addCardsToWantsListDesktop);
@@ -34,7 +40,7 @@ export default ({ onCancel, cardsToAdd, numberOfSelectedCards, visible }) => {
     addToDeck({
       variables: { cards: formattedCards, deckId },
     });
-    onCancel();
+    onSubmit();
     message(
       `Added <b>${numberOfSelectedCards}</b> cards to <b>${deckName}</b>!`
     );
@@ -49,7 +55,7 @@ export default ({ onCancel, cardsToAdd, numberOfSelectedCards, visible }) => {
         },
       ],
     });
-    onCancel();
+    onSubmit();
     message(
       `Added <b>${numberOfSelectedCards}</b> cards to <b>${wantsListName}</b>!`
     );
@@ -91,7 +97,7 @@ export default ({ onCancel, cardsToAdd, numberOfSelectedCards, visible }) => {
       },
       refetchQueries: ['getCollectionNames'],
     });
-    onCancel();
+    onSubmit();
     message(`Added ${sumCardAmount(cards)} cards to your collection!`);
   };
 

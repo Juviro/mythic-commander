@@ -45,7 +45,7 @@ export default ({ onAddCards, alreadyInDeck }) => {
           text={boldText(`Add <b>${cardToAdd.name}</b> to your deck?`)}
         />
       )}
-      <SearchHoc>
+      <SearchHoc blockInitialSearch>
         {({
           isSearching,
           loading,
@@ -77,7 +77,9 @@ export default ({ onAddCards, alreadyInDeck }) => {
               isFilterResettable={Object.values(currentOptions).some(Boolean)}
               style={{ marginBottom: 8 }}
             />
-            <CurrentShareOptions style={{ marginTop: 8 }} showDivider />
+            {isSearching && (
+              <CurrentShareOptions style={{ marginTop: 8 }} showDivider />
+            )}
             <Divider />
             <StyledCardWrapper>
               {isSearching && (

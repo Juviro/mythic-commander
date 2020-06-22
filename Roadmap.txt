@@ -6,12 +6,10 @@ BUGFIXES:
 CURRENT:
 
 NEXT:
-    - don‘t start search when searchbar not visible in deck sidebar
-    - add button to add card to deck in sidebar
     - prevent re-ordering card lists - maybe re-order when category added / removed
     - add shortcut to toggle focus
 
-    - update + test all shortcuts (collection table for example)
+    - add button to add card to deck in sidebar ?
     - styling when editing deck title
     - add option to show unowned cards in deck
     - add option to export unowned cards from deck to wants
