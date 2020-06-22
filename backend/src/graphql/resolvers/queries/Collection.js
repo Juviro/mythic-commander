@@ -39,7 +39,8 @@ export default {
         FROM grouped 
         LEFT JOIN cards 
           ON cards.id = grouped.id
-        ORDER BY "createdAt" DESC; 
+        ORDER BY "createdAt" DESC
+        LIMIT 50; 
     `,
       [userId]
     );

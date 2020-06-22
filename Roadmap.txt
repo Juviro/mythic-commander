@@ -27,8 +27,7 @@ FEATURES:
 
 REFACTORINGS:
     - evaluate removing some caching, using network only more
-    - switch search to lazyQuery 
-    - drop table events, use bulk data from scryfall from distinctCards
+    - drop table events
  
 BACKLOG:
     - allow sort by type (ramp, card draw, ...)
