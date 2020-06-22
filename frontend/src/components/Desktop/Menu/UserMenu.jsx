@@ -29,7 +29,11 @@ export default () => {
       style={{ width: 30 }}
     >
       <StyledAvatarWrapper>
-        <UserAvatar onClick={toggleIsOpen} />
+        <UserAvatar
+          onClick={toggleIsOpen}
+          textPosition="left"
+          textColor="rgba(255, 255, 255, 0.9)"
+        />
       </StyledAvatarWrapper>
     </Dropdown>
   );

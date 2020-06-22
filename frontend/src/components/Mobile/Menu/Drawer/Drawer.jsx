@@ -28,7 +28,7 @@ export default ({ isVisible, onCloseDrawer }) => {
       }}
     >
       <span>
-        <UserAvatar showName />
+        <UserAvatar textPosition="right" />
         <Divider style={{ width: '120%', margin: '16px -24px 8px' }} />
         <Navigation onCloseDrawer={onCloseDrawer} />
       </span>
