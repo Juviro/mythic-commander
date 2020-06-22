@@ -9,7 +9,7 @@ import { unifySingleCard } from '../../../../utils/unifyCardFormat';
 import preloadImages from '../../../../utils/preloadImages';
 import useLocalStorage from '../../../Hooks/useLocalStorage';
 
-export default ({ children, researchOnOrderChange }) => {
+export default ({ children, researchOnOrderChange, blockInitialSearch }) => {
   const [currentCards, setCurrentCards] = useState([]);
   const [loading, toggleLoading] = useToggle(false);
   const [queryResult, setQueryResult] = useState({});
@@ -26,7 +26,9 @@ export default ({ children, researchOnOrderChange }) => {
   });
   const { page, pageSize, ...options } = params;
   const hasSearchOptions = Object.values(options).some(Boolean);
-  const [isSearching, setIsSearching] = useToggle(hasSearchOptions);
+  const [isSearching, setIsSearching] = useToggle(
+    hasSearchOptions && !blockInitialSearch
+  );
   const [currentOptions, setCurrentOptions] = useState(options);
 
   const client = useApolloClient();
@@ -82,7 +84,7 @@ export default ({ children, researchOnOrderChange }) => {
 
   // start a new search when page or pageSize changes
   useEffect(() => {
-    if (!pageSize) return;
+    if (!pageSize || !isSearching) return;
     const offset = (page - 1) * pageSize;
     fetchCards(options, offset);
     // eslint-disable-next-line

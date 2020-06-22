@@ -17,6 +17,7 @@ export default ({ cards }) => {
       <AddCardsTo
         cardsToAdd={cards}
         onCancel={toggleVisible}
+        onSubmit={toggleVisible}
         visible={visible}
         numberOfSelectedCards={numberOfSelectedCards}
       />

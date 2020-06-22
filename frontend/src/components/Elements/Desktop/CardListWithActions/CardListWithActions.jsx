@@ -63,10 +63,7 @@ export default ({
     toggleShowDeleteModal(false);
     toggleShowMoveModal(false);
     toggleShowEditModal(false);
-    setSelectedCards([]);
   };
-
-  const isAnyModalVisible = showEditModal || showDeleteModal || showMoveModal;
 
   return (
     <>
@@ -82,7 +79,7 @@ export default ({
         widthOffset={widthOffset}
         numberOfCards={filteredCards.length}
         setSelectedCards={setSelectedCards}
-        selectedCards={isAnyModalVisible ? [] : selectedCards}
+        selectedCards={selectedCards}
         hiddenColumns={hiddenColumns}
         title={title}
         onDeleteCards={toggleShowDeleteModal}
@@ -100,6 +97,10 @@ export default ({
         hideAddToCollection={hideAddToCollection}
         cardsToAdd={selectedCards}
         onCancel={onCancel}
+        onSubmit={() => {
+          onCancel();
+          setSelectedCards([]);
+        }}
         visible={showMoveModal}
         numberOfSelectedCards={numberOfSelectedCards}
       />
