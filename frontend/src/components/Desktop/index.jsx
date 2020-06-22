@@ -28,7 +28,7 @@ const App = () => {
     <DndProvider backend={HTML5Backend}>
       <MobileRedirect>
         <Menu />
-        <UsernameModal />
+        {/* <UsernameModal /> */}
         <StyledBody>
           <Switch>
             <Route path="/search" exact component={Search} />
