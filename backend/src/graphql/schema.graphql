@@ -205,6 +205,8 @@ type Query {
 
   collection: Collection!
 
+  publicCollection(username: String!): [CollectionCard!]
+
   card(id: String!): Card!
   cardSearch(
     offset: Int

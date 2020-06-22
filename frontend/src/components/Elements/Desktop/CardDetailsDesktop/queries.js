@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { COLLECTION_CARD_FIELDS } from '../../../Desktop/Collection/queries';
+import { COLLECTION_CARD_FIELDS } from '../../../Desktop/Collection/Private/queries';
 
 const CARD_FIELDS = `
   id
