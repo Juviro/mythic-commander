@@ -149,6 +149,7 @@ type User {
   name: String!
   avatar: String!
   email: String!
+  username: String
 }
 
 ################################# Wants #################################
@@ -244,6 +245,8 @@ input CardsOptionsInput {
 ################################# Mutations #################################
 
 type Mutation {
+  ########## User ##########
+  setUsername(username: String!): User!
   ########## Deck ##########
   createDeck: Deck!
   addCardsToDeck(deckId: String!, cards: [CardInputType!]!): Deck!

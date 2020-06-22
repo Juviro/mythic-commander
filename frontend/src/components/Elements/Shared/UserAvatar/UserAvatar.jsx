@@ -19,13 +19,10 @@ const StyledAvatar = styled.img`
   font-size: 8px;
 `;
 
-const StyledUsername = styled(Typography.Text)`
-  font-size: 16px;
-  line-height: 1;
-`;
-
-export default ({ showName, onClick }) => {
+export default ({ textPosition, onClick, textColor }) => {
   const { data, loading } = useQuery(getUser);
+
+  const username = data && (data.user.username || data.user.name);
 
   return (
     <StyledWrapper onClick={onClick}>
@@ -33,13 +30,37 @@ export default ({ showName, onClick }) => {
         <Spin />
       ) : (
         <>
+          {textPosition === 'left' && (
+            <Typography.Text
+              ellipsis
+              style={{
+                color: textColor,
+                fontSize: 16,
+                marginRight: 8,
+                maxWidth: 100,
+              }}
+            >
+              {username}
+            </Typography.Text>
+          )}
           <StyledAvatar src={data.user.avatar} alt="avatar" />
-          {showName && (
-            <Flex direction="column" style={{ marginLeft: 16, maxWidth: 190 }}>
-              <Typography.Text type="secondary" style={{ fontSize: 10 }}>
+          {textPosition === 'right' && (
+            <Flex
+              direction="column"
+              style={{ marginLeft: 16, maxWidth: 190, minWidth: 100 }}
+            >
+              <Typography.Text
+                type="secondary"
+                style={{ fontSize: 12, color: textColor }}
+              >
                 Logged in as
               </Typography.Text>
-              <StyledUsername ellipsis>{data.user.name}</StyledUsername>
+              <Typography.Text
+                ellipsis
+                style={{ color: textColor, lineHeight: 1, fontSize: 16 }}
+              >
+                {username}
+              </Typography.Text>
             </Flex>
           )}
         </>
