@@ -39,6 +39,13 @@ const resolver = {
   collection(_, __, { user: { id } }) {
     return { id };
   },
+  async ownedCardNames(_, __, { db, user: { id: userId } }) {
+    const cardNames = await db('collection')
+      .leftJoin('cards', { 'cards.id': 'collection.id' })
+      .distinct('name')
+      .where({ userId });
+    return cardNames.map(({ name }) => name);
+  },
 
   cachedCards: (_, __, { db }) => getCachedCards(db),
   numberOfCachedCards: async (_, __, { db }) => {

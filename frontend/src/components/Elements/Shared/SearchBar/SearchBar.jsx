@@ -4,12 +4,11 @@ import { withRouter } from 'react-router';
 import { useQuery } from 'react-apollo';
 
 import styled from 'styled-components';
-import { getCollectionNames } from '../../../../queries';
+import { getOwnedCardNames } from '../../../../queries';
 import OptionGroupHeader from './OptionGroupHeader';
 import CardContext from '../../../Provider/CardProvider';
 import renderOption from './renderOption';
 import { filterAndSortByQuery } from '../../../../utils/cardFilter';
-import unifyCardFormat from '../../../../utils/unifyCardFormat';
 import { useToggle, useBlurOnEsc } from '../../../Hooks';
 import getDynamicUrl from '../../../../utils/getDynamicUrl';
 import isMobile from '../../../../utils/isMobile';
@@ -47,9 +46,10 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
   const inputEl = useRef(null);
   const [isOpen, toggleIsOpen] = useToggle(false);
   const { cards } = useContext(CardContext);
-  const { data: collectionData } = useQuery(getCollectionNames);
-  const collection =
-    (collectionData && unifyCardFormat(collectionData.collection.cards)) || [];
+  const { data: ownedCardNamesData } = useQuery(getOwnedCardNames);
+  const ownedCardNames = ownedCardNamesData
+    ? ownedCardNamesData.ownedCardNames
+    : [];
 
   const [query, setQuery] = useState('');
 
@@ -75,7 +75,7 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
 
   const slicedCards = filteredCards.slice(0, MAX_RESULTS).map(card => ({
     ...card,
-    owned: collection.some(({ name }) => name === card.name),
+    owned: ownedCardNames.some(name => name === card.name),
   }));
 
   const onShowAll = () => {
