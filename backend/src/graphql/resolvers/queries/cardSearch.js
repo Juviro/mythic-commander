@@ -131,14 +131,13 @@ export default async (
 
   const cards = await cardQuery;
   const { count } = await countQuery;
-  console.log('count :', count);
 
   const hasMore = count > limit + offset;
 
   return {
+    cards,
     hasMore,
     totalResults: count,
     nextOffset: hasMore ? offset + limit : null,
-    cards,
   };
 };

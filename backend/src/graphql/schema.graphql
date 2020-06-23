@@ -134,6 +134,14 @@ type Collection {
   id: String!
   snapshot: CollectionSnapshot
   cards: [CollectionCard!]!
+  paginatedCards: PaginatedCollectionCard!
+}
+
+type PaginatedCollectionCard {
+  hasMore: Boolean!
+  nextOffset: Int
+  totalResults: Int!
+  cards: [CollectionCard!]!
 }
 
 type CollectionCard {
@@ -204,6 +212,8 @@ type Query {
   decks: [Deck!]!
 
   collection: Collection!
+  ownedCardNames: [String!]!
+  collectionSnapshots: [CollectionSnapshot]
 
   publicCollection(username: String!): [CollectionCard!]
 
@@ -220,8 +230,6 @@ type Query {
 
   wantsList(id: String!): WantsList!
   wantsLists(deckId: String): [WantsList!]!
-
-  collectionSnapshots: [CollectionSnapshot]
 
   proxies(type: String!, id: String!, filter: String): [ProxyCard!]!
   allLists: AllLists!
