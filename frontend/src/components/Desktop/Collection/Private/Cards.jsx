@@ -2,10 +2,13 @@ import React from 'react';
 import { useMutation } from 'react-apollo';
 
 import message from '../../../../utils/message';
-import { CardListWithActions } from '../../../Elements/Desktop';
-import { deleteAllFromCollection, getCollectionDesktop } from './queries';
+import { deleteAllFromCollection } from './queries';
+import PaginatedCardList, {
+  WithActions,
+} from '../../../Elements/Desktop/PaginatedCardList/index';
+import { CollectionHoc } from '../../../Elements/Shared';
 
-export default ({ cards, loading, isSidebarVisible }) => {
+export default ({ isSidebarVisible }) => {
   const [mutate] = useMutation(deleteAllFromCollection);
   const widthOffset = isSidebarVisible ? 300 : 0;
 
@@ -17,37 +20,35 @@ export default ({ cards, loading, isSidebarVisible }) => {
     message(`Deleted ${numberOfCardsLabel} from your collection!`);
     mutate({
       variables: { oracleIds },
-      update: cache => {
-        const existing = cache.readQuery({
-          query: getCollectionDesktop,
-        });
-
-        const updatedCards = existing.collection.cards.filter(
-          ({ card }) =>
-            !oracleIds.some(oracle_id => card.oracle_id === oracle_id)
-        );
-
-        cache.writeQuery({
-          query: getCollectionDesktop,
-          data: {
-            collection: {
-              ...existing.collection,
-              cards: updatedCards,
-            },
-          },
-        });
-      },
+      refetchQueries: [
+        'currentSnapshots',
+        'paginatedCollection',
+        'ownedCardNames',
+      ],
     });
   };
 
   return (
-    <CardListWithActions
-      deleteByOracle={deleteByOracle}
-      loading={loading}
-      cards={cards}
-      hideAddToCollection
-      hiddenColumns={['owned']}
-      widthOffset={widthOffset}
-    />
+    <CollectionHoc>
+      {({ loading, cards, numberOfCards, search, setSearch }) => (
+        <WithActions
+          deleteByOracle={deleteByOracle}
+          setSearch={setSearch}
+          search={search}
+        >
+          {actionProps => (
+            <PaginatedCardList
+              {...actionProps}
+              showCollectionFilters
+              loading={loading}
+              hiddenColumns={['owned']}
+              cards={cards}
+              widthOffset={widthOffset}
+              numberOfCards={numberOfCards}
+            />
+          )}
+        </WithActions>
+      )}
+    </CollectionHoc>
   );
 };

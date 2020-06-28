@@ -72,9 +72,12 @@ const CardTable = ({
 
   const onPressDelete = () => {
     if (!onDeleteCard) return;
-    onDeleteCard(selectedCard);
+    if (!selectedCards.length) {
+      onDeleteCard(selectedCard);
+    }
+    onDeleteCards(selectedCards);
   };
-  useShortcut('DEL', !showDetails ? onPressDelete : null);
+  useShortcut('BACKSPACE', !showDetails ? onPressDelete : null);
   useShortcut(
     'e',
     !showDetails && onEditCard ? () => onEditCard(selectedCard) : null
@@ -97,8 +100,8 @@ const CardTable = ({
   const innerTableWidth =
     window.innerHeight - DEFAULT_HEIGHT_OFFSET - heightOffset;
 
-  // TODO: enable for all (search)
-  const rowSelection = onDeleteCards && {
+  const showRowSelection = onMoveCards || onDeleteCards;
+  const rowSelection = showRowSelection && {
     onChange: selectedRows =>
       setSelectedCards(cards.filter(({ id }) => selectedRows.includes(id))),
     selectedRowKeys: selectedCards.map(({ id }) => id),
@@ -111,12 +114,16 @@ const CardTable = ({
         isVisible={Boolean(selectedCards && selectedCards.length)}
       >
         <Space>
-          <Button type="primary" ghost onClick={onMoveCards}>
-            Add to...
-          </Button>
-          <Button type="danger" onClick={onDeleteCards}>
-            Delete
-          </Button>
+          {onMoveCards && (
+            <Button type="primary" ghost onClick={onMoveCards}>
+              Add to...
+            </Button>
+          )}
+          {onDeleteCards && (
+            <Button type="danger" onClick={onDeleteCards}>
+              Delete
+            </Button>
+          )}
         </Space>
       </StyledButtonWrapper>
       <Table

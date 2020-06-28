@@ -1,6 +1,9 @@
 import getCachedCards from './getCachedCards';
-import cardSearch from './cardSearch';
+import cardSearch, { addNameClause } from './cardSearch';
 import proxies from './proxies';
+import unifyCardFormat from '../unifyCardFormat';
+import paginatedCollection from './paginatedCollection';
+import { getCurrentSnapshot } from './Collection';
 
 const resolver = {
   user(_, __, { db, user: { id } }) {
@@ -46,6 +49,29 @@ const resolver = {
       .where({ userId });
     return cardNames.map(({ name }) => name);
   },
+  async paginatedCollection(
+    _,
+    { limit, offset, orderBy, search },
+    { db, user: { id: userId } }
+  ) {
+    const cards = await paginatedCollection(
+      db,
+      userId,
+      limit,
+      offset,
+      orderBy,
+      search
+    );
+    const amountUnique = cards.length ? cards[0].amountUnique : 0;
+    const hasMore = amountUnique > limit + offset;
+
+    return {
+      hasMore,
+      totalResults: amountUnique,
+      cards: cards.map(unifyCardFormat(userId)),
+      nextOffset: hasMore ? offset + limit : null,
+    };
+  },
 
   cachedCards: (_, __, { db }) => getCachedCards(db),
   numberOfCachedCards: async (_, __, { db }) => {
@@ -71,7 +97,7 @@ const resolver = {
       .where(where)
       .orderBy('createdAt', 'asc');
   },
-  collectionSnapshots(_, __, { user: { id: userId }, db }) {
+  async collectionSnapshots(_, __, { user: { id: userId }, db }) {
     return db('collectionSnapshot')
       .where({ userId })
       .orderBy('date');

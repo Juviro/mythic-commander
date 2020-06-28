@@ -20,7 +20,8 @@ const Lists = ({
     ...rest,
   }));
 
-  const match = history.location.pathname.match(/^\/(wants|decks)+\/(\d+)/);
+  // check where we are to decide which options to show
+  const match = history.location.pathname.match(/^\/(wants|decks|search)+/);
   const [, type, currentId] = match || [];
 
   const shouldFilterWants = type === 'wants';

@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 import GridCard from './GridCard';
 import useGridShortcuts from './useGridShortcuts';
 import CardModalDesktop from '../../CardModalDesktop';
-import { useWindowSize, useToggle, useShortcut } from '../../../../Hooks';
+import { useToggle, useShortcut } from '../../../../Hooks';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -34,7 +34,6 @@ const CardGrid = ({
   draggable,
   markAsDisabled,
 }) => {
-  useWindowSize();
   const [showDetails, toggleShowDetail] = useToggle(false);
 
   const {
@@ -91,7 +90,6 @@ const CardGrid = ({
               draggable={draggable}
               key={card.id}
               actions={actions}
-              loading={loading}
               width={cardWidth}
               index={index}
               search={search}

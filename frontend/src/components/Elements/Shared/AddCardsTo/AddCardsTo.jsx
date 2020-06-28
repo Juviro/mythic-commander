@@ -8,10 +8,7 @@ import Lists from './Lists';
 import SimpleCardsList from '../SimpleCardsList';
 import { addCardsToDeckDesktop } from '../../../Desktop/Deck/queries';
 import message from '../../../../utils/message';
-import {
-  getCollectionDesktop,
-  addToCollectionDesktop,
-} from '../../../Desktop/Collection/Private/queries';
+import { addToCollectionDesktop } from '../../../Desktop/Collection/Private/queries';
 import {
   addCardsToWantsListDesktop,
   wantsListDesktop,
@@ -69,33 +66,7 @@ export default ({
     );
     addToCollection({
       variables: { cards: formattedCollectionCards },
-      update: (cache, { data: updateData }) => {
-        if (!updateData) return;
-        const { addToCollection: newCards } = updateData;
-        try {
-          const existing = cache.readQuery({
-            query: getCollectionDesktop,
-          });
-
-          const existingCards = existing.collection.cards.filter(
-            ({ card: { oracle_id } }) =>
-              !newCards.some(({ card }) => card.oracle_id === oracle_id)
-          );
-
-          cache.writeQuery({
-            query: getCollectionDesktop,
-            data: {
-              collection: {
-                ...existing.collection,
-                cards: [...newCards, ...existingCards],
-              },
-            },
-          });
-        } catch {
-          // collection has not been queried yet
-        }
-      },
-      refetchQueries: ['getCollectionNames'],
+      refetchQueries: ['paginatedCollection', 'ownedCardNames'],
     });
     onSubmit();
     message(`Added ${sumCardAmount(cards)} cards to your collection!`);

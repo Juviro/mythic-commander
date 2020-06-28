@@ -13,10 +13,7 @@ export default ({ children, researchOnOrderChange, blockInitialSearch }) => {
   const [currentCards, setCurrentCards] = useState([]);
   const [loading, toggleLoading] = useToggle(false);
   const [queryResult, setQueryResult] = useState({});
-  const [initialPageSize, setInitialPageSize] = useLocalStorage(
-    'pageSize',
-    100
-  );
+  const [initialPageSize, setInitialPageSize] = useLocalStorage('pageSize', 25);
   const [lastSearchOptions, setLastSearchOptions] = useState({});
   const [orderBy] = useStoredQueryParam('orderBy', StringParam);
   const [params, setParams] = useQueryParams({

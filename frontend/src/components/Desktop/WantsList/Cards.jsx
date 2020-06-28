@@ -1,7 +1,11 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
 
-import { CardListWithActions } from '../../Elements/Desktop';
+import {
+  WithFullList,
+  PaginatedCardList,
+  WithActions,
+} from '../../Elements/Desktop';
 import message from '../../../utils/message';
 import {
   deleteFromWantsListDesktop,
@@ -55,13 +59,23 @@ export default ({ cards, loading, widthOffset, wantsList }) => {
   const title = wantsList && wantsList.name;
 
   return (
-    <CardListWithActions
-      deleteByOracle={deleteByOracle}
-      loading={loading}
-      cards={cards}
-      title={title}
-      onEditCard={onEditCard}
-      widthOffset={widthOffset}
-    />
+    <WithActions deleteByOracle={deleteByOracle}>
+      {actionProps => (
+        <WithFullList cards={cards} {...actionProps}>
+          {fullListProps => (
+            <PaginatedCardList
+              {...fullListProps}
+              loading={loading}
+              title={title}
+              onEditCard={onEditCard}
+              widthOffset={widthOffset}
+              showAddedBeforeFilter
+              showCollectionFilters
+              orderByParamName="orderByAdvanced"
+            />
+          )}
+        </WithFullList>
+      )}
+    </WithActions>
   );
 };

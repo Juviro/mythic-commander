@@ -9,6 +9,7 @@ export { default as CardRules } from './CardRules';
 export { default as CardSearch } from './CardSearch';
 export { default as CardSetOverview } from './CardSetOverview';
 export { default as CollectionCharts } from './CollectionCharts';
+export { default as CollectionHoc } from './CollectionHoc';
 export { default as CollectionStats } from './CollectionStats';
 export { default as ColorIdentitySymbols } from './ColorIdentitySymbols';
 export { default as CommanderPicker } from './CommanderPicker';

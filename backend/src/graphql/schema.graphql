@@ -132,12 +132,12 @@ type DeckCard {
 
 type Collection {
   id: String!
-  snapshot: CollectionSnapshot
+  referenceSnapshot: CollectionSnapshot
+  currentSnapshot: CollectionSnapshot!
   cards: [CollectionCard!]!
-  paginatedCards: PaginatedCollectionCard!
 }
 
-type PaginatedCollectionCard {
+type PaginatedCollection {
   hasMore: Boolean!
   nextOffset: Int
   totalResults: Int!
@@ -212,8 +212,15 @@ type Query {
   decks: [Deck!]!
 
   collection: Collection!
+  paginatedCollection(
+    limit: Int!
+    offset: Int!
+    orderBy: String!
+    search: String
+  ): PaginatedCollection!
   ownedCardNames: [String!]!
-  collectionSnapshots: [CollectionSnapshot]
+  collectionSnapshots: [CollectionSnapshot!]!
+  currentCollectionSnapshots: CollectionSnapshot!
 
   publicCollection(username: String!): [CollectionCard!]
 

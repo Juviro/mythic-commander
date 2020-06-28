@@ -1,14 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useQueryParam, NumberParam } from 'use-query-params';
 import { isInputField, isModifierKey } from '../../../../Hooks/useShortcut';
 import { useWindowSize } from '../../../../Hooks';
 import keyCodes from '../../../../../constants/keyCodes';
+import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
 
 export default (numberOfCards, toggleShowDetail, toggleElementSelection) => {
   useWindowSize();
   const [currentPage = 1, setPageParam] = useQueryParam('page', NumberParam);
   const [pageSize, setPageSizeParam] = useQueryParam('pageSize', NumberParam);
   const [selectedElementPosition, setSelectedElementPosition] = useState(0);
+  const { focusedElement } = useContext(FocusContext);
+  const shortcutsActive =
+    !focusedElement || ['modal.cardDetails'].includes(focusedElement);
 
   const setCurrentPage = (newPage, shouldReplace) =>
     setPageParam(newPage, shouldReplace ? 'replaceIn' : 'pushIn');
@@ -50,7 +54,13 @@ export default (numberOfCards, toggleShowDetail, toggleElementSelection) => {
   };
 
   const onKeyDown = event => {
-    if (!numberOfCards || isInputField(event) || isModifierKey(event)) return;
+    if (
+      !shortcutsActive ||
+      !numberOfCards ||
+      isInputField(event) ||
+      isModifierKey(event)
+    )
+      return;
     let preventDefault = true;
 
     switch (event.keyCode) {
@@ -95,7 +105,7 @@ export default (numberOfCards, toggleShowDetail, toggleElementSelection) => {
   }, [currentPage]);
 
   const pagination = {
-    pageSize,
+    pageSize: pageSize || 0,
     current: currentPage,
     total: numberOfCards,
     onShowSizeChange: (_, newPageSize) => setPageSize(newPageSize),
