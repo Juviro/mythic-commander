@@ -33,10 +33,15 @@ const addOwnedClause = (q, userId) => {
   );
 };
 
-const getOrderColumn = orderBy => {
+export const getOrderColumn = orderBy => {
   switch (orderBy) {
+    case '':
     case 'price':
       return "coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0)";
+    case 'added':
+      return '"createdAt"';
+    case 'amount':
+      return '"totalAmount"';
     default:
       return `"${orderBy}"`;
   }
@@ -63,11 +68,12 @@ const addRarityClause = (q, rarity) => {
   q.whereIn('rarity', rarities);
 };
 
-const addNameClause = (q, name) => {
+export const addNameClause = (q, name) => {
   const searchPattern = name
     .replace(/[^a-zA-Z0-9\s]+/g, '')
     .split(' ')
     .join('%');
+
   q.whereRaw(
     `REGEXP_REPLACE(name, '[^a-zA-Z0-9\\s]+', '', 'g') ILIKE '%${searchPattern}%'`
   );

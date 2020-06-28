@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 import Sidebar from './Sidebar';
 import { useToggle } from '../../Hooks';
-import { PaginatedCardList } from '../../Elements/Desktop';
+import { PaginatedCardList, WithActions } from '../../Elements/Desktop';
 import { lightBackground } from '../../../constants/colors';
 import { SearchHoc } from '../../Elements/Shared';
 
@@ -50,14 +50,19 @@ export default () => {
             toggleIsVisible={toggleIsSidebarVisible}
           />
           {isSearching && (
-            <PaginatedCardList
-              loading={loading}
-              search={lastSearchOptions.name}
-              hiddenColumns={['added', 'amount']}
-              cards={currentCards}
-              widthOffset={isSidebarVisible ? 329 : 0}
-              numberOfCards={numberOfCards}
-            />
+            <WithActions>
+              {actionProps => (
+                <PaginatedCardList
+                  {...actionProps}
+                  loading={loading}
+                  search={lastSearchOptions.name}
+                  hiddenColumns={['added', 'amount']}
+                  cards={currentCards}
+                  widthOffset={isSidebarVisible ? 329 : 0}
+                  numberOfCards={numberOfCards}
+                />
+              )}
+            </WithActions>
           )}
         </StyledWrapper>
       )}

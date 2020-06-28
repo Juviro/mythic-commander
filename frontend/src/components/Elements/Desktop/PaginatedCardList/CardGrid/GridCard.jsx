@@ -79,7 +79,6 @@ const GridCard = ({
   actions = [],
   widthPercentage,
   width,
-  loading,
   zoom,
   search,
   onEditCard,
@@ -89,7 +88,10 @@ const GridCard = ({
 }) => {
   const displayedAmount = card.amount || card.totalAmount;
   const [showMenu, toggleShowMenu] = useToggle();
-  useShortcut('DEL', shortcutsActive && onDeleteCard ? onDeleteCard : null);
+  useShortcut(
+    'BACKSPACE',
+    shortcutsActive && onDeleteCard ? onDeleteCard : null
+  );
   useShortcut('e', shortcutsActive && onEditCard ? onEditCard : null);
   const ref = useRef(null);
 
@@ -121,7 +123,7 @@ const GridCard = ({
         markAsDisabled={markAsDisabled}
         ref={dragRef}
       >
-        <FlippableCard card={card} loading={loading} />
+        <FlippableCard card={card} />
         {displayedAmount > 1 && (
           <StyledAmountWrapper
             style={{ fontSize: textSize }}
@@ -133,13 +135,7 @@ const GridCard = ({
           </StyledContextMenu>
         )}
       </StyledImageWrapper>
-      <CardInfo
-        loading={loading}
-        card={card}
-        search={search}
-        textSize={textSize}
-        width={width}
-      />
+      <CardInfo card={card} search={search} textSize={textSize} width={width} />
     </StyledCardWrapper>
   );
 };

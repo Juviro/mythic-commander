@@ -1,4 +1,5 @@
 import { NumberParam, useQueryParam } from 'use-query-params';
+import { useWindowSize } from '../../../Hooks';
 
 // image
 const CARD_WIDTH = 210;
@@ -6,6 +7,7 @@ const CARD_WIDTH = 210;
 const WIDTH_OFFSET = 48;
 
 export default (widthOffset = 0, zoom) => {
+  useWindowSize();
   const [pageSize] = useQueryParam('pageSize', NumberParam);
   const availableWidth = window.innerWidth - widthOffset - WIDTH_OFFSET;
 
