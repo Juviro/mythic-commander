@@ -99,7 +99,7 @@ const CardList = ({
         style={{ width: '100%' }}
         threshold={1500}
       >
-        {cardList}
+        {Boolean(cards.length) && cardList}
       </InfiniteScroll>
       {!hideFooter && (
         <Footer

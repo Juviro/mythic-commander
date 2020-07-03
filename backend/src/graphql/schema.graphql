@@ -132,7 +132,14 @@ type DeckCard {
 
 type Collection {
   id: String!
-  snapshot: CollectionSnapshot
+  referenceSnapshot: CollectionSnapshot
+  currentSnapshot: CollectionSnapshot!
+}
+
+type PaginatedCollection {
+  hasMore: Boolean!
+  nextOffset: Int
+  totalResults: Int!
   cards: [CollectionCard!]!
 }
 
@@ -149,6 +156,7 @@ type User {
   name: String!
   avatar: String!
   email: String!
+  username: String
 }
 
 ################################# Wants #################################
@@ -203,6 +211,16 @@ type Query {
   decks: [Deck!]!
 
   collection: Collection!
+  paginatedCollection(
+    limit: Int!
+    offset: Int!
+    orderBy: String!
+    search: String
+  ): PaginatedCollection!
+  ownedCardNames: [String!]!
+  collectionSnapshots: [CollectionSnapshot!]!
+
+  publicCollection(username: String!): [CollectionCard!]
 
   card(id: String!): Card!
   cardSearch(
@@ -217,8 +235,6 @@ type Query {
 
   wantsList(id: String!): WantsList!
   wantsLists(deckId: String): [WantsList!]!
-
-  collectionSnapshots: [CollectionSnapshot]
 
   proxies(type: String!, id: String!, filter: String): [ProxyCard!]!
   allLists: AllLists!
@@ -244,6 +260,8 @@ input CardsOptionsInput {
 ################################# Mutations #################################
 
 type Mutation {
+  ########## User ##########
+  setUsername(username: String!): User!
   ########## Deck ##########
   createDeck: Deck!
   addCardsToDeck(deckId: String!, cards: [CardInputType!]!): Deck!

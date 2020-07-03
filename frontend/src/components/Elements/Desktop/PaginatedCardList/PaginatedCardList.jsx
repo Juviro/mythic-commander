@@ -1,5 +1,5 @@
-import React from 'react';
-import { StringParam, useQueryParam } from 'use-query-params';
+import React, { useEffect } from 'react';
+import { StringParam, useQueryParams, NumberParam } from 'use-query-params';
 
 import styled from 'styled-components';
 import { Empty, Typography } from 'antd';
@@ -41,14 +41,27 @@ export default ({
   onEditCard,
   onMoveCards,
 }) => {
+  const [initialPageSize, setInitialPageSize] = useLocalStorage('pageSize', 25);
   const [zoom, setZoom] = useLocalStorage('zoom', 100);
-  const [layout] = useQueryParam('layout', StringParam);
+  const [{ layout, pageSize }, setParams] = useQueryParams({
+    layout: StringParam,
+    pageSize: NumberParam,
+  });
   const width = `calc(100% - ${widthOffset}px)`;
 
   const { cardsPerRow, numberOfRows, cardWidth } = useNumberOfCards(
     widthOffset,
     zoom
   );
+
+  useEffect(() => {
+    if (!pageSize) {
+      setParams({ pageSize: initialPageSize });
+    } else {
+      setInitialPageSize(pageSize);
+    }
+    // eslint-disable-next-line
+  }, [pageSize]);
 
   const heightOffset = title ? 40 : 0;
 
@@ -89,7 +102,6 @@ export default ({
       onClick: onDelete,
     });
   }
-
   let cardList;
   if (layout === 'list' && cards.length) {
     cardList = (

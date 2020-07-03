@@ -6,7 +6,6 @@ import { message, Typography } from 'antd';
 import { changeCollection, cardDetailsDesktop } from '../queries';
 import { CardSetOverview, EditIcon } from '../../../Shared';
 import { useToggle, useShortcut } from '../../../../Hooks';
-import { getCollectionDesktop } from '../../../../Desktop/Collection/queries';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -54,32 +53,10 @@ export default ({ card, loading, selectedCardId, onChangeSet, showTitle }) => {
         added,
         cardId: card.id,
       },
-      update: (cache, { data: updateData }) => {
-        try {
-          const { changeCollection: newCard } = updateData;
-          const existing = cache.readQuery({
-            query: getCollectionDesktop,
-          });
-
-          const filteredCards = existing.collection.cards.filter(
-            ({ oracle_id }) => oracle_id !== card.oracle_id
-          );
-
-          cache.writeQuery({
-            query: getCollectionDesktop,
-            data: {
-              collection: {
-                ...existing.collection,
-                cards: filteredCards.concat(newCard || []),
-              },
-            },
-          });
-        } catch {
-          // collection has not been queried yet
-        }
-      },
       refetchQueries: [
-        'getCollectionNames',
+        'currentSnapshots',
+        'paginatedCollection',
+        'ownedCardNames',
         {
           query: cardDetailsDesktop,
           variables: { oracle_id: card.oracle_id },

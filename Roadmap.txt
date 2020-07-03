@@ -1,13 +1,12 @@
 BUGFIXES:
-    - card grid wants page 2 -> increase pageSize -> not reset to last page with cards
-    - collection -> add 4x some card -> change set of one of those cards: cards duplicated in collection
-    - rarity order bugged in advanced search sidebar (just change flex direction?)
+    - page size select shows ellipsis
+    - crash when deleting last card from deck (create deck, add card, delete card -> crash)
 
 CURRENT:
 
 NEXT:
-    - prevent re-ordering card lists - maybe re-order when category added / removed
-    - add shortcut to toggle focus
+    - prevent re-ordering card lists in decks view - maybe re-order when category added / removed
+    - add shortcut to toggle focus ?
 
     - add button to add card to deck in sidebar ?
     - styling when editing deck title
@@ -15,20 +14,28 @@ NEXT:
     - add option to export unowned cards from deck to wants
 
 IMPROVEMENTS:
-    - improve re-rendering of table columns and grid card
-    - show last search when no input in searchbar
+    - update babel to use optional chaining
+
+    - improve re-rendering of table columns and grid card. especially table.
     - add to wants list dropdown: sort lists by name (same for decks I guess)
     - added to collection notification -> show amount as well
+    - add optimistic response to card delete in deck (esp. mobile)
+    - add confirm delete for delete from deck/wants on mobile
     - remove space between proxies, slightly increase size
+    - show which cards are not legal in deck
+    - re-design moveTo modal
+    - wrap card table in affix ?
+    - autofocus for deck sidebar input field
+    - transition for inset shadow when focussing deck sidebar
 
 FEATURES:
     - sharable collection / decks / wants
-    - allow adding to deck from details modal
+    - show last search when no input in searchbar
+    - allow adding to deck from details modal (desktop, mobile)
 
 REFACTORINGS:
     - evaluate removing some caching, using network only more
-    - switch search to lazyQuery 
-    - drop table events, use bulk data from scryfall from distinctCards
+    - drop table events
  
 BACKLOG:
     - allow sort by type (ramp, card draw, ...)

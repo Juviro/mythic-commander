@@ -26,14 +26,11 @@ export const COLLECTION_CARD_FIELDS = `
 `;
 
 export const getCollectionDesktop = gql`
-  query getCollectionDesktop {
-    collection {
-      id
-      snapshot {
-        value
-        amount
-        amountUnique
-      }
+  query paginatedCollection {
+    paginatedCollection {
+      hasMore
+      nextOffset
+      totalResults
       cards {
         ${COLLECTION_CARD_FIELDS}
       }
@@ -41,10 +38,21 @@ export const getCollectionDesktop = gql`
   }
 `;
 
+export const getSnapshotDesktop = gql`
+  query getSnapshotDesktop {
+    collectionSnapshots {
+      date
+      value
+      amount
+      amountUnique
+    }
+  }
+`;
+
 export const addToCollectionDesktop = gql`
   mutation addToCollectionDesktop($cards: [CardInputType]!) {
     addToCollection(cards: $cards) {
-      ${COLLECTION_CARD_FIELDS}
+      id
     }
   }
 `;
