@@ -15,6 +15,7 @@ import Card from './Card';
 
 import GlobalStyle from './GlobalStyle';
 import MobileRedirect from './MobileRedirect';
+// import { UsernameModal } from '../Elements/Shared';
 
 const StyledBody = styled.div`
   height: 100%;

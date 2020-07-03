@@ -1,16 +1,11 @@
 import React from 'react';
 import { Skeleton } from 'antd';
-import styled from 'styled-components';
 import { useQuery } from '@apollo/react-hooks';
 
 import Statistic from './Statistic';
 import CollectionCharts from '../CollectionCharts';
 import { currentSnapshots as getCurrentSnapshot } from './queries';
-
-const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+import Flex from '../Flex';
 
 export default ({ small, showCharts }) => {
   const { data, loading } = useQuery(getCurrentSnapshot);
@@ -20,7 +15,7 @@ export default ({ small, showCharts }) => {
   const referenceSnapshot = data ? data.collection.referenceSnapshot : {};
 
   return (
-    <StyledWrapper>
+    <Flex direction="column" justify="space-between" width="100%">
       {loading ? (
         <Skeleton />
       ) : (
@@ -47,6 +42,6 @@ export default ({ small, showCharts }) => {
           {showCharts && <CollectionCharts currentSnapshot={currentSnapshot} />}
         </>
       )}
-    </StyledWrapper>
+    </Flex>
   );
 };

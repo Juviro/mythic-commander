@@ -134,7 +134,6 @@ type Collection {
   id: String!
   referenceSnapshot: CollectionSnapshot
   currentSnapshot: CollectionSnapshot!
-  cards: [CollectionCard!]!
 }
 
 type PaginatedCollection {
@@ -220,7 +219,6 @@ type Query {
   ): PaginatedCollection!
   ownedCardNames: [String!]!
   collectionSnapshots: [CollectionSnapshot!]!
-  currentCollectionSnapshots: CollectionSnapshot!
 
   publicCollection(username: String!): [CollectionCard!]
 

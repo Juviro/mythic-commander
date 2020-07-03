@@ -5,14 +5,18 @@ export default async (_, { username }, { user: { id }, db }) => {
     throw new ValidationError('Forbidden characters used');
   }
 
-  try {
-    const [user] = await db('users')
-      .where({ id })
-      .update({ username })
-      .returning('*');
+  const alreadyUsed = await db('users')
+    .where('username', 'ILIKE', username)
+    .first();
 
-    return user;
-  } catch {
+  if (alreadyUsed) {
     throw new Error('This username is already taken');
   }
+
+  const [user] = await db('users')
+    .where({ id })
+    .update({ username })
+    .returning('*');
+
+  return user;
 };

@@ -24,16 +24,12 @@ const COLLECTION_CARD_FIELDS = `
     }
 `;
 
-export const getMobileCollection = gql`
-  query getMobileCollection {
-    collection {
-      id
-      snapshot {
-        date
-        value
-        amount
-        amountUnique
-      }
+export const paginatedCollection = gql`
+  query paginatedCollection($limit: Int!, $offset: Int!, $orderBy: String!, $search: String) {
+    paginatedCollection(limit: $limit, offset: $offset, orderBy: $orderBy, search: $search) {
+      hasMore
+      nextOffset
+      totalResults
       cards {
         ${COLLECTION_CARD_FIELDS}
       }
