@@ -18,7 +18,6 @@ export default ({ children }) => {
   const offset = (page - 1) * pageSize;
   const { data, loading } = useQuery(paginatedCollection, {
     variables: { limit: pageSize, offset, orderBy: orderByAdvanced, search },
-    fetchPolicy: 'cache-and-network',
   });
 
   const onSearch = query => {

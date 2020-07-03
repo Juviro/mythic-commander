@@ -1,14 +1,12 @@
 BUGFIXES:
-    - card grid wants page 2 -> increase pageSize -> not reset to last page with cards
-    - collection -> add 4x some card -> change set of one of those cards: cards duplicated in collection
-    - rarity order bugged in advanced search sidebar (just change flex direction?)
     - page size select shows ellipsis
+    - crash when deleting last card from deck (create deck, add card, delete card -> crash)
 
 CURRENT:
 
 NEXT:
-    - prevent re-ordering card lists - maybe re-order when category added / removed
-    - add shortcut to toggle focus
+    - prevent re-ordering card lists in decks view - maybe re-order when category added / removed
+    - add shortcut to toggle focus ?
 
     - add button to add card to deck in sidebar ?
     - styling when editing deck title
@@ -16,6 +14,8 @@ NEXT:
     - add option to export unowned cards from deck to wants
 
 IMPROVEMENTS:
+    - update babel to use optional chaining
+
     - improve re-rendering of table columns and grid card. especially table.
     - add to wants list dropdown: sort lists by name (same for decks I guess)
     - added to collection notification -> show amount as well
@@ -24,6 +24,7 @@ IMPROVEMENTS:
     - remove space between proxies, slightly increase size
     - show which cards are not legal in deck
     - re-design moveTo modal
+    - wrap card table in affix ?
     - autofocus for deck sidebar input field
     - transition for inset shadow when focussing deck sidebar
 

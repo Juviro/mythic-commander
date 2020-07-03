@@ -75,7 +75,7 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
 
   const slicedCards = filteredCards.slice(0, MAX_RESULTS).map(card => ({
     ...card,
-    owned: ownedCardNames.some(name => name === card.name),
+    owned: ownedCardNames.includes(card.name),
   }));
 
   const onShowAll = () => {

@@ -31,43 +31,4 @@ export default {
   async currentSnapshot(_, __, { user: { id: userId }, db }) {
     return getCurrentSnapshot(db, userId);
   },
-  async cards(_, __, { db, user: { id: userId } }) {
-    const query = db
-      .with(
-        'grouped',
-        db.raw(
-          `
-          SELECT
-            true as owned, 
-            SUM(amount) as "amountOwned", 
-            SUM("amountFoil") as "amountOwnedFoil", 
-            SUM("amountFoil" + amount) as "totalAmount", 
-            MAX("createdAt") as "createdAt",
-            SUM(
-              coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * amount + 
-              coalesce(GREATEST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * "amountFoil"
-            ) as "sumPrice",
-            MIN(coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0)) as "minPrice",
-            MAX(cards.id) as id
-          FROM collection 
-          LEFT JOIN cards 
-            ON cards.id = collection.id 
-          WHERE "userId" = ?
-          AND (
-            amount > 0 OR "amountFoil" > 0
-          )
-          GROUP BY cards.oracle_id
-        `,
-          userId
-        )
-      )
-      .select('*')
-      .from('grouped')
-      .leftJoin('cards', { 'cards.id': 'grouped.id' })
-      .orderBy('createdAt', 'DESC');
-
-    const cards = await query;
-
-    return cards.map(unifyCardFormat(userId));
-  },
 };
