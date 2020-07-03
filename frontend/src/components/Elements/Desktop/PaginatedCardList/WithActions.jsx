@@ -1,42 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQueryParams, NumberParam, StringParam } from 'use-query-params';
-import { useStoredQueryParam, useToggle } from '../../../Hooks';
-import { filterCards, sortCards } from '../../../../utils/cardFilter';
-import PaginatedCardList from '../PaginatedCardList';
-import { ConfirmDeleteCards, AddCardsTo, EditCardModal } from '../../Shared';
-import sumCardAmount from '../../../../utils/sumCardAmount';
 
-export default ({
-  cards,
-  loading,
-  widthOffset,
-  hideAddToCollection,
-  deleteByOracle,
-  title,
-  hiddenColumns,
-  onEditCard,
-}) => {
-  const [pageSize] = useStoredQueryParam('pageSize', NumberParam);
+import { useToggle } from '../../../Hooks';
+import sumCardAmount from '../../../../utils/sumCardAmount';
+import { ConfirmDeleteCards, AddCardsTo, EditCardModal } from '../../Shared';
+
+export default ({ onEditCard, deleteByOracle, children, ...props }) => {
+  const [{ page, layout }] = useQueryParams({
+    page: NumberParam,
+    layout: StringParam,
+  });
   const [selectedCards, setSelectedCards] = useState([]);
   const [showDeleteModal, toggleShowDeleteModal] = useToggle();
   const [showMoveModal, toggleShowMoveModal] = useToggle();
   const [showEditModal, toggleShowEditModal] = useToggle();
-  const [{ page = 1, layout, orderByAdvanced, addedWithin }] = useQueryParams({
-    page: NumberParam,
-    addedWithin: NumberParam,
-    orderByAdvanced: StringParam,
-    layout: StringParam,
-  });
 
   const [search, setSearch] = useState('');
-
-  const offset = pageSize * (page - 1);
-  const filteredCards = filterCards(cards, {
-    name: search,
-    addedWithin,
-  });
-  const sortedCards = sortCards(filteredCards, orderByAdvanced);
-  const slicedCards = sortedCards.slice(offset, offset + pageSize);
 
   const numberOfSelectedCards = sumCardAmount(selectedCards);
 
@@ -67,24 +46,15 @@ export default ({
 
   return (
     <>
-      <PaginatedCardList
-        showAddedBeforeFilter
-        showCollectionFilters
-        orderByParamName="orderByAdvanced"
-        loading={loading}
-        setSearch={setSearch}
-        search={search}
-        cards={slicedCards}
-        onEditCard={onEditCard && toggleShowEditModal}
-        widthOffset={widthOffset}
-        numberOfCards={filteredCards.length}
-        setSelectedCards={setSelectedCards}
-        selectedCards={selectedCards}
-        hiddenColumns={hiddenColumns}
-        title={title}
-        onDeleteCards={toggleShowDeleteModal}
-        onMoveCards={toggleShowMoveModal}
-      />
+      {children({
+        search,
+        setSearch,
+        selectedCards,
+        setSelectedCards,
+        onMoveCards: toggleShowMoveModal,
+        onDeleteCards: deleteByOracle ? toggleShowDeleteModal : undefined,
+        ...props,
+      })}
       {showDeleteModal && (
         <ConfirmDeleteCards
           onDelete={onDelete}
@@ -94,7 +64,6 @@ export default ({
         />
       )}
       <AddCardsTo
-        hideAddToCollection={hideAddToCollection}
         cardsToAdd={selectedCards}
         onCancel={onCancel}
         onSubmit={() => {

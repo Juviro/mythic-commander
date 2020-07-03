@@ -12,12 +12,18 @@ const StyledButtonWrapper = styled.div`
   margin-bottom: 24px;
 `;
 
-export default ({ loading, displayedCards, totalResults }) => (
-  <StyledButtonWrapper>
-    {loading && <LoadingOutlined />}
-    <Typography.Text
-      style={{ marginTop: 8 }}
-      type="secondary"
-    >{`Displaying ${displayedCards} of ${totalResults} cards`}</Typography.Text>
-  </StyledButtonWrapper>
-);
+export default ({ loading, displayedCards, totalResults }) => {
+  const showTotalResultsLabel = !loading || totalResults;
+  const totalResultsLabel = `Displaying ${displayedCards} of ${totalResults} cards`;
+
+  return (
+    <StyledButtonWrapper>
+      {loading && <LoadingOutlined />}
+      {Boolean(showTotalResultsLabel) && (
+        <Typography.Text style={{ marginTop: 8 }} type="secondary">
+          {totalResultsLabel}
+        </Typography.Text>
+      )}
+    </StyledButtonWrapper>
+  );
+};

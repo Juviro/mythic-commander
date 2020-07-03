@@ -1,35 +1,21 @@
 import React from 'react';
 import { Skeleton } from 'antd';
-import styled from 'styled-components';
+import { useQuery } from '@apollo/react-hooks';
 
 import Statistic from './Statistic';
 import CollectionCharts from '../CollectionCharts';
+import { currentSnapshots as getCurrentSnapshot } from './queries';
+import Flex from '../Flex';
 
-const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+export default ({ small, showCharts }) => {
+  const { data, loading } = useQuery(getCurrentSnapshot);
 
-export default ({ snapshot = {}, cards, small, loading, showCharts }) => {
-  const numberOfUniqueCards = cards ? cards.length : 0;
-  const numberOfCards = (cards || []).reduce(
-    (sum, { totalAmount }) => sum + totalAmount,
-    0
-  );
-  const collectionValue = (cards || []).reduce(
-    (sum, { sumPrice }) => sum + sumPrice,
-    0
-  );
-
-  const currentSnapshot = {
-    dateLabel: 'Now',
-    value: Math.round(collectionValue),
-    amount: numberOfCards,
-    amountUnique: numberOfUniqueCards,
-  };
+  const currentSnapshot = data ? data.collection.currentSnapshot : {};
+  currentSnapshot.dateLabel = 'Now';
+  const referenceSnapshot = data ? data.collection.referenceSnapshot : {};
 
   return (
-    <StyledWrapper>
+    <Flex direction="column" justify="space-between" width="100%">
       {loading ? (
         <Skeleton />
       ) : (
@@ -37,25 +23,25 @@ export default ({ snapshot = {}, cards, small, loading, showCharts }) => {
           <Statistic
             small={small}
             title="Total Cards"
-            value={numberOfCards}
-            referenceValue={snapshot && snapshot.amount}
+            value={currentSnapshot.amount}
+            referenceValue={referenceSnapshot.amount}
           />
           <Statistic
             small={small}
             title="Unique Cards"
-            value={numberOfUniqueCards}
-            referenceValue={snapshot && snapshot.amountUnique}
+            value={currentSnapshot.amountUnique}
+            referenceValue={referenceSnapshot.amountUnique}
           />
           <Statistic
             small={small}
             title="Total value"
-            value={collectionValue}
+            value={currentSnapshot.value}
             suffix="$"
-            referenceValue={snapshot && snapshot.value}
+            referenceValue={referenceSnapshot.value}
           />
           {showCharts && <CollectionCharts currentSnapshot={currentSnapshot} />}
         </>
       )}
-    </StyledWrapper>
+    </Flex>
   );
 };

@@ -6,7 +6,7 @@ import { useQuery } from 'react-apollo';
 import CardSearch from '../../Shared/CardSearch';
 import MultiInput from './MultIinput';
 import { useShortcut } from '../../../Hooks';
-import { getCollectionNames } from '../../../../queries';
+import { getOwnedCardNames } from '../../../../queries';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -23,13 +23,11 @@ export default ({
   placeholder,
 }) => {
   const searchInputRef = useRef(null);
-  const { data } = useQuery(getCollectionNames);
+  const { data } = useQuery(getOwnedCardNames);
   const focusInput = () => searchInputRef.current.focus();
   useShortcut('a', focusInput, focusId);
 
-  const ownedCardNames = data
-    ? data.collection.cards.map(({ card: { name } }) => name)
-    : [];
+  const ownedCardNames = data ? data.ownedCardNames : [];
 
   return (
     <Tooltip title="Add card [A]">

@@ -3,20 +3,18 @@ import { Drawer } from 'antd';
 
 import { useQuery } from 'react-apollo';
 import CardSearch from '../../Shared/CardSearch';
-import { getCollectionNames } from '../../../../queries';
+import { getOwnedCardNames } from '../../../../queries';
 
 export default ({ containedCardNames, isVisible, onClose, onAddCard }) => {
   const searchInputRef = React.createRef();
-  const { data } = useQuery(getCollectionNames);
+  const { data } = useQuery(getOwnedCardNames);
 
   const afterVisibleChange = visible => {
     if (!visible) return;
     searchInputRef.current.focus();
   };
 
-  const ownedCardNames = data
-    ? data.collection.cards.map(({ card: { name } }) => name)
-    : [];
+  const ownedCardNames = data ? data.ownedCardNames : [];
 
   return (
     <Drawer

@@ -6,6 +6,7 @@ export const getUser = gql`
       id
       name
       avatar
+      username
     }
   }
 `;

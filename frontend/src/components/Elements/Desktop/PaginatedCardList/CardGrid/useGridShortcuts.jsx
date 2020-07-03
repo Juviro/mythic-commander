@@ -161,7 +161,7 @@ export default (
     current: currentPage,
     total: numberOfCards,
     onShowSizeChange: (_, newPageSize) => setPageSize(newPageSize),
-    pageSizeOptions: [10, 25, 50, 100],
+    pageSizeOptions: [10, 25, 50],
     onChange: val => setCurrentPage(val),
   };
 

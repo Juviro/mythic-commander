@@ -33,10 +33,15 @@ const addOwnedClause = (q, userId) => {
   );
 };
 
-const getOrderColumn = orderBy => {
+export const getOrderColumn = orderBy => {
   switch (orderBy) {
+    case '':
     case 'price':
       return "coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0)";
+    case 'added':
+      return '"createdAt"';
+    case 'amount':
+      return '"totalAmount"';
     default:
       return `"${orderBy}"`;
   }
@@ -63,11 +68,12 @@ const addRarityClause = (q, rarity) => {
   q.whereIn('rarity', rarities);
 };
 
-const addNameClause = (q, name) => {
+export const addNameClause = (q, name) => {
   const searchPattern = name
     .replace(/[^a-zA-Z0-9\s]+/g, '')
     .split(' ')
     .join('%');
+
   q.whereRaw(
     `REGEXP_REPLACE(name, '[^a-zA-Z0-9\\s]+', '', 'g') ILIKE '%${searchPattern}%'`
   );
@@ -99,35 +105,45 @@ export default async (
 
   const tableName = set ? 'distinctCardsPerSet' : 'distinctCards';
 
-  const query = db(tableName)
-    .where(q => {
-      if (name) addNameClause(q, name);
-      if (text) q.where('oracle_text', 'ILIKE', `%${text}%`);
-      if (creatureType) q.where('type_line', 'LIKE', `%${creatureType}%`);
-      if (cardType) q.where('type_line', 'ILIKE', `%${cardType}%`);
-      if (set) q.where('set', set);
-      if (isCommanderLegal)
-        q.whereRaw("(legalities->>'commander')::text = 'legal'");
-      if (isLegendary === 'true') q.where('type_line', 'ILIKE', `%Legendary%`);
-      if (isLegendary === 'false')
-        q.whereNot('type_line', 'ILIKE', `%Legendary%`);
-      if (colors.length) addColorClause(q, colors);
-      if (isOwned && user) addOwnedClause(q, user.id);
-      if (cmc) addRangeClause(q, cmc, 'cmc');
-      if (power) addRangeClause(q, power, 'power');
-      if (toughness) addRangeClause(q, toughness, 'toughness');
-      if (rarity) addRarityClause(q, rarity);
-    })
+  const where = q => {
+    if (name) addNameClause(q, name);
+    if (text) q.where('oracle_text', 'ILIKE', `%${text}%`);
+    if (creatureType) q.where('type_line', 'LIKE', `%${creatureType}%`);
+    if (cardType) q.where('type_line', 'ILIKE', `%${cardType}%`);
+    if (set) q.where('set', set);
+    if (isCommanderLegal)
+      q.whereRaw("(legalities->>'commander')::text = 'legal'");
+    if (isLegendary === 'true') q.where('type_line', 'ILIKE', `%Legendary%`);
+    if (isLegendary === 'false')
+      q.whereNot('type_line', 'ILIKE', `%Legendary%`);
+    if (colors.length) addColorClause(q, colors);
+    if (isOwned && user) addOwnedClause(q, user.id);
+    if (cmc) addRangeClause(q, cmc, 'cmc');
+    if (power) addRangeClause(q, power, 'power');
+    if (toughness) addRangeClause(q, toughness, 'toughness');
+    if (rarity) addRarityClause(q, rarity);
+  };
+
+  const cardQuery = db(tableName)
+    .where(where)
+    .limit(limit)
+    .offset(offset)
     .orderByRaw(`${getOrderColumn(order)} ${direction.toUpperCase()}`);
 
-  const cards = await query;
+  const countQuery = db(tableName)
+    .where(where)
+    .count('*')
+    .first();
 
-  const hasMore = cards.length > limit + offset;
+  const cards = await cardQuery;
+  const { count } = await countQuery;
+
+  const hasMore = count > limit + offset;
 
   return {
+    cards,
     hasMore,
-    totalResults: cards.length,
+    totalResults: count,
     nextOffset: hasMore ? offset + limit : null,
-    cards: cards.slice(offset, offset + limit),
   };
 };

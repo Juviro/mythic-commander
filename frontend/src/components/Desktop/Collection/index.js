@@ -1,3 +1,1 @@
-import Collection from './Collection';
-
-export default Collection;
+export { default } from './Collection';

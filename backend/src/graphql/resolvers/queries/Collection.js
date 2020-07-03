@@ -2,8 +2,25 @@ import unifyCardFormat from '../unifyCardFormat';
 
 const REFERENCE_SNAPSHOT_DAYS = 7;
 
+export const getCurrentSnapshot = (db, userId) =>
+  db('collectionWithOracle')
+    .select(
+      db.raw(`
+        NOW() as date,
+        CEIL(SUM(
+          coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * amount + 
+          coalesce(GREATEST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * "amountFoil"
+        )) as "value",
+        SUM(amount + "amountFoil") as amount,
+        COUNT(DISTINCT cards.oracle_id) as "amountUnique"
+      `)
+    )
+    .leftJoin('cards', { 'cards.id': 'collectionWithOracle.id' })
+    .where({ userId })
+    .first();
+
 export default {
-  async snapshot(_, __, { db, user: { id: userId } }) {
+  async referenceSnapshot(_, __, { db, user: { id: userId } }) {
     const snapshots = await db('collectionSnapshot')
       .where({ userId })
       .orderBy('date', 'desc')
@@ -11,39 +28,7 @@ export default {
 
     return snapshots[snapshots.length - 1];
   },
-  async cards(_, __, { db, user: { id: userId } }) {
-    const { rows: cards } = await db.raw(
-      `
-        WITH grouped AS (
-          SELECT 
-            SUM(amount) as "amountOwned", 
-            SUM("amountFoil") as "amountOwnedFoil", 
-            SUM("amountFoil" + amount) as "totalAmount", 
-            MAX("createdAt") as "createdAt",
-            SUM(
-              coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * amount + 
-              coalesce(GREATEST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * "amountFoil"
-            ) as "sumPrice",
-            MIN(coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0)) as "minPrice",
-            MAX(cards.id) as id 
-          FROM collection 
-          LEFT JOIN cards 
-            ON cards.id = collection.id 
-          WHERE "userId" = ?
-          AND (
-            amount > 0 OR "amountFoil" > 0
-          )
-          GROUP BY cards.oracle_id
-        )
-        SELECT *, true as owned 
-        FROM grouped 
-        LEFT JOIN cards 
-          ON cards.id = grouped.id
-        ORDER BY "createdAt" DESC; 
-    `,
-      [userId]
-    );
-
-    return cards.map(unifyCardFormat(userId));
+  async currentSnapshot(_, __, { user: { id: userId }, db }) {
+    return getCurrentSnapshot(db, userId);
   },
 };
