@@ -55,7 +55,7 @@ export default ({ cardOracleId, cards, onChangeSet, selectedCardId }) => {
           variables: { oracle_id: cardOracleId },
         },
 
-        'getCollectionNames',
+        'ownedCardNames',
       ],
     });
     message.success('Updated your collection!');
