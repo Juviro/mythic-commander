@@ -8,7 +8,7 @@ import Lists from './Lists';
 import SimpleCardsList from '../SimpleCardsList';
 import { addCardsToDeckDesktop } from '../../../Desktop/Deck/queries';
 import message from '../../../../utils/message';
-import { addToCollectionDesktop } from '../../../Desktop/Collection/Private/queries';
+import { addToCollectionDesktop } from '../../../Desktop/Collection/queries';
 import {
   addCardsToWantsListDesktop,
   wantsListDesktop,

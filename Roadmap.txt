@@ -1,6 +1,8 @@
 BUGFIXES:
     - page size select shows ellipsis
     - crash when deleting last card from deck (create deck, add card, delete card -> crash)
+    - when editing in card details, versions of same set are changing
+    - don't ignore umlaute in search (backend and frontend) e.g. Jötun Grunt
 
 CURRENT:
 

@@ -1,5 +1,3 @@
-import unifyCardFormat from '../unifyCardFormat';
-
 const REFERENCE_SNAPSHOT_DAYS = 7;
 
 export const getCurrentSnapshot = (db, userId) =>

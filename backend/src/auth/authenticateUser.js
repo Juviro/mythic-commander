@@ -13,3 +13,7 @@ export const canAccessWantsList = async (userId, wantsListId) => {
   ).length;
   if (!isAuthenticated) throw new ValidationError('Not authenticated');
 };
+
+export const canAccessCollection = async userId => {
+  console.log('TODO: implement auth for collection');
+};
