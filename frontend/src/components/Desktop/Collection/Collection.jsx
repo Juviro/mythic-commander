@@ -14,7 +14,6 @@ const StyledWrapper = styled.div`
 
 export default () => {
   const { username } = useParams();
-  console.log('username :', username);
   const [isSidebarVisible, setIsSidebarVisible] = useLocalStorage(
     'isSidebarVisible',
     true

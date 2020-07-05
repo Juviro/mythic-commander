@@ -8,26 +8,24 @@ import { useShortcut } from '../../../Hooks';
 import { FocusedModal } from '../../Shared';
 
 const CardModalDesktop = ({
-  card,
-  visible,
+  selectedCard,
   onClose,
   loading: parentLoading,
 }) => {
-  useShortcut('SPACE', visible ? onClose : null, 'modal.cardDetails');
+  const { oracle_id, id: initialCardId } = selectedCard;
+  useShortcut('SPACE', onClose, 'modal.cardDetails');
   const { data, loading: cardLoading } = useQuery(cardDetailsDesktop, {
-    variables: { oracle_id: card.oracle_id },
+    variables: { oracle_id },
     fetchPolicy: 'network-only',
   });
   const loading = cardLoading || parentLoading;
 
   const unifiedCard = data && unifySingleCard(data.cardByOracleId);
 
-  const usedCard = { ...unifiedCard, ...card };
-
   return (
     <FocusedModal
       centered
-      visible={visible}
+      visible
       onCancel={onClose}
       footer={null}
       destroyOnClose
@@ -39,13 +37,17 @@ const CardModalDesktop = ({
       style={{ maxWidth: '100%' }}
       focusId="modal.cardDetails"
     >
-      {card && <CardDetailsDesktop card={usedCard} loading={loading} />}
+      <CardDetailsDesktop
+        card={unifiedCard}
+        loading={loading}
+        initialCardId={initialCardId}
+      />
     </FocusedModal>
   );
 };
 
-export default ({ card, ...props }) => {
-  if (!card) return null;
+export default ({ visible, selectedCard, ...props }) => {
+  if (!visible || !selectedCard) return null;
 
-  return <CardModalDesktop card={card} {...props} />;
+  return <CardModalDesktop {...props} selectedCard={selectedCard} />;
 };

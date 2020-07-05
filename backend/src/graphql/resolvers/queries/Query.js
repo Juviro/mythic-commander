@@ -73,7 +73,8 @@ const resolver = {
       limit,
       offset,
       orderBy,
-      search
+      search,
+      !username
     );
     const amountUnique = cards.length ? cards[0].amountUnique : 0;
     const hasMore = amountUnique > limit + offset;
@@ -81,7 +82,7 @@ const resolver = {
     return {
       hasMore,
       totalResults: amountUnique,
-      cards: cards.map(unifyCardFormat(userId)),
+      cards: cards.map(unifyCardFormat(collectionUserId)),
       nextOffset: hasMore ? offset + limit : null,
     };
   },
