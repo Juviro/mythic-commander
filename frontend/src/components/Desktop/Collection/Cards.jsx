@@ -1,14 +1,14 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
 
-import message from '../../../../utils/message';
+import message from '../../../utils/message';
 import { deleteAllFromCollection } from './queries';
 import PaginatedCardList, {
   WithActions,
-} from '../../../Elements/Desktop/PaginatedCardList/index';
-import { CollectionHoc } from '../../../Elements/Shared';
+} from '../../Elements/Desktop/PaginatedCardList/index';
+import { CollectionHoc } from '../../Elements/Shared';
 
-export default ({ isSidebarVisible }) => {
+export default ({ isSidebarVisible, username }) => {
   const [mutate] = useMutation(deleteAllFromCollection);
   const widthOffset = isSidebarVisible ? 300 : 0;
 
@@ -28,17 +28,20 @@ export default ({ isSidebarVisible }) => {
     });
   };
 
+  const title = username && `${username}'s collection`;
+
   return (
-    <CollectionHoc>
+    <CollectionHoc username={username}>
       {({ loading, cards, numberOfCards, search, setSearch }) => (
         <WithActions
-          deleteByOracle={deleteByOracle}
+          deleteByOracle={!username && deleteByOracle}
           setSearch={setSearch}
           search={search}
         >
           {actionProps => (
             <PaginatedCardList
               {...actionProps}
+              title={title}
               showCollectionFilters
               loading={loading}
               hiddenColumns={['owned']}

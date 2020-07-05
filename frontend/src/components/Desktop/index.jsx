@@ -32,6 +32,7 @@ const App = () => {
         <StyledBody>
           <Switch>
             <Route path="/search" exact component={Search} />
+            <Route path="/collection/:username" component={Collection} />
             <Route path="/collection" component={Collection} />
             <Route path="/decks" exact component={Decks} />
             <Route path="/decks/:id" exact component={Deck} />

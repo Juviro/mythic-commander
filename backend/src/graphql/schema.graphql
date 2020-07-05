@@ -216,6 +216,7 @@ type Query {
     offset: Int!
     orderBy: String!
     search: String
+    username: String
   ): PaginatedCollection!
   ownedCardNames: [String!]!
   collectionSnapshots: [CollectionSnapshot!]!

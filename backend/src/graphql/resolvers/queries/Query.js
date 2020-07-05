@@ -4,6 +4,7 @@ import proxies from './proxies';
 import unifyCardFormat from '../unifyCardFormat';
 import paginatedCollection from './paginatedCollection';
 import { getCurrentSnapshot } from './Collection';
+import { canAccessCollection } from '../../../auth/authenticateUser';
 
 const resolver = {
   user(_, __, { db, user: { id } }) {
@@ -52,12 +53,23 @@ const resolver = {
   },
   async paginatedCollection(
     _,
-    { limit, offset, orderBy, search },
+    { limit, offset, orderBy, search, username },
     { db, user: { id: userId } }
   ) {
+    let collectionUserId = userId;
+
+    if (username) {
+      const { id } = await db('users')
+        .where('username', 'ILIKE', username)
+        .select('id')
+        .first();
+      collectionUserId = id;
+      await canAccessCollection(collectionUserId);
+    }
+
     const cards = await paginatedCollection(
       db,
-      userId,
+      collectionUserId,
       limit,
       offset,
       orderBy,

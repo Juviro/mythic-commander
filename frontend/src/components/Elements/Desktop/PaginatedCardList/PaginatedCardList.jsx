@@ -63,8 +63,6 @@ export default ({
     // eslint-disable-next-line
   }, [pageSize]);
 
-  const heightOffset = title ? 40 : 0;
-
   const singleCardActions = [];
   const onEdit = onEditCard
     ? card => {
@@ -111,7 +109,6 @@ export default ({
         loading={loading}
         onMoveCards={onMoveCards}
         showSorter={showSorter}
-        heightOffset={heightOffset}
         hiddenColumns={hiddenColumns}
         numberOfCards={numberOfCards}
         setSelectedCards={setSelectedCards}

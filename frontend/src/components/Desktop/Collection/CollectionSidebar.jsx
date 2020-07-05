@@ -2,8 +2,8 @@ import React from 'react';
 import { Divider } from 'antd';
 
 import AddToCollection from './AddToCollection';
-import { CollectionStats } from '../../../Elements/Shared';
-import { Sidebar } from '../../../Elements/Desktop';
+import { CollectionStats } from '../../Elements/Shared';
+import { Sidebar } from '../../Elements/Desktop';
 
 export default ({ isVisible, toggleIsVisible }) => {
   return (
