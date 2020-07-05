@@ -157,7 +157,7 @@ const CardTable = ({
         rowSelection={rowSelection}
       />
       <CardModalDesktop
-        card={selectedCard}
+        selectedCard={selectedCard}
         loading={loading}
         visible={showDetails}
         onClose={toggleShowDetail}

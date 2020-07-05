@@ -1,8 +1,9 @@
 import { getAllSets, getTypes } from './helper';
 
 const resolver = {
-  _id({ oracle_id }) {
-    return oracle_id;
+  _id({ oracle_id, resourceId }) {
+    if (!resourceId) return oracle_id;
+    return `${oracle_id}+${resourceId}`;
   },
   async owned(
     { oracle_id, type_line, owned },

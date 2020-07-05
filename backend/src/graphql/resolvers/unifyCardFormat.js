@@ -3,5 +3,5 @@ export default resourceId => ({ createdAt, amount, isCommander, ...card }) => ({
   createdAt,
   amount,
   isCommander,
-  card,
+  card: { ...card, resourceId },
 });
