@@ -132,6 +132,7 @@ type DeckCard {
 
 type Collection {
   id: String!
+  visibility: String!
   referenceSnapshot: CollectionSnapshot
   currentSnapshot: CollectionSnapshot!
 }
@@ -294,6 +295,8 @@ type Mutation {
   ): CollectionCard
   deleteFromCollection(cardIds: [String]!): Boolean
   deleteAllFromCollection(oracleIds: [String!]!): Boolean
+
+  changeCollectionVisibility(visibility: String!): Collection!
 
   ########## Session ##########
   login(token: String!): LoginResponse!
