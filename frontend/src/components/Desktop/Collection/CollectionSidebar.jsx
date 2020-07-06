@@ -2,7 +2,7 @@ import React from 'react';
 import { Divider } from 'antd';
 
 import AddToCollection from './AddToCollection';
-import { CollectionStats } from '../../Elements/Shared';
+import { CollectionStats, CollectionVisibility } from '../../Elements/Shared';
 import { Sidebar } from '../../Elements/Desktop';
 
 export default ({ isVisible, toggleIsVisible }) => {
@@ -12,6 +12,8 @@ export default ({ isVisible, toggleIsVisible }) => {
       <CollectionStats showCharts />
       <Divider>Add cards</Divider>
       <AddToCollection />
+      <Divider>Share</Divider>
+      <CollectionVisibility />
     </Sidebar>
   );
 };
