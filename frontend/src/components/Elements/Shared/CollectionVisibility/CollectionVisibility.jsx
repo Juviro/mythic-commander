@@ -24,7 +24,7 @@ const VISIBILITY_OPTIONS = [
   },
 ];
 
-export default () => {
+export default ({ style }) => {
   const [mutate] = useMutation(changeCollectionVisibility);
   const { data: dataVisibility, loading: loadingVisibility } = useQuery(
     collectionVisibility
@@ -46,14 +46,16 @@ export default () => {
 
   if (!username)
     return (
-      <Typography.Text type="warning">
-        You need to set a username to share your collection. Please reload the
-        page to pick one.
-      </Typography.Text>
+      <div style={style}>
+        <Typography.Text type="warning">
+          You need a username to share your collection. Please reload the page
+          to pick one.
+        </Typography.Text>
+      </div>
     );
 
   return (
-    <Flex direction="column">
+    <Flex direction="column" style={style}>
       <Typography.Text style={{ fontSize: 12 }} strong>
         Your collection is visible to:
       </Typography.Text>

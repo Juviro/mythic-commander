@@ -1,12 +1,15 @@
 import React from 'react';
 import { useQuery } from 'react-apollo';
 import { useQueryParams, StringParam } from 'use-query-params';
+import { useParams } from 'react-router';
+
 import CardListMobile from '../../Elements/Mobile/CardListMobile/index';
 import { paginatedCollection } from './queries';
 import { CARDS_PER_PAGE } from '../../Elements/Mobile/CardListMobile/FilteredCardList';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
 
 export default () => {
+  const { username } = useParams();
   const [{ orderByAdvanced = '' }] = useQueryParams({
     orderByAdvanced: StringParam,
   });
@@ -16,6 +19,7 @@ export default () => {
       offset: 0,
       orderBy: orderByAdvanced,
       search: '',
+      username,
     },
     fetchPolicy: 'cache-and-network',
   });
