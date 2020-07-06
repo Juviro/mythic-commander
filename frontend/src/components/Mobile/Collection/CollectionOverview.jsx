@@ -10,7 +10,7 @@ export default () => {
   if (username) {
     return (
       <Typography.Title level={2} ellipsis style={{ width: '100%' }}>
-        {`${username}'s collection`}
+        {`${username}'s Collection`}
       </Typography.Title>
     );
   }
@@ -20,11 +20,13 @@ export default () => {
       style={{ width: '100%', backgroundColor: 'white' }}
       expandIcon={() => <div />}
       expandIconPosition="right"
-      defaultActiveKey="1"
+      defaultActiveKey={['overview']}
     >
-      <Collapse.Panel key="1" size="small" header="Your Collection">
+      <Collapse.Panel key="overview" size="small" header="Overview">
         <CollectionStats small />
-        <CollectionVisibility style={{ marginTop: 32 }} />
+      </Collapse.Panel>
+      <Collapse.Panel key="share" size="small" header="Share...">
+        <CollectionVisibility />
       </Collapse.Panel>
     </Collapse>
   );
