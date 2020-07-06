@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Divider } from 'antd';
 
 import { LayoutAndSortPicker } from '../../Elements/Shared';
 import AddToCollection from './AddToCollection';
@@ -21,7 +20,6 @@ export default () => {
     <StyledWrapper>
       <CollectionOverview />
       <LayoutAndSortPicker showCollectionFilters />
-      <Divider />
       <Cards />
       <AddToCollection />
     </StyledWrapper>

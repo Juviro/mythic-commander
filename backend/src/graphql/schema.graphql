@@ -140,6 +140,7 @@ type Collection {
 type PaginatedCollection {
   hasMore: Boolean!
   nextOffset: Int
+  search: String
   totalResults: Int!
   cards: [CollectionCard!]!
 }

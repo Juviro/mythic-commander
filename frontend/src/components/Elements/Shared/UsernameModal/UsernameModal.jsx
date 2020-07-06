@@ -36,7 +36,7 @@ export default () => {
     >
       <Typography.Text style={{ fontSize: 16 }}>
         Please pick a username. It will be visible to people you share your
-        collection, decks and wants with.
+        collection with.
         <br />
         <br />
         Allowed characters: a-z, A-Z, 0-9, -, _

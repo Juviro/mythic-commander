@@ -81,6 +81,7 @@ const resolver = {
 
     return {
       hasMore,
+      search,
       totalResults: amountUnique,
       cards: cards.map(unifyCardFormat(collectionUserId)),
       nextOffset: hasMore ? offset + limit : null,

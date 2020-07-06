@@ -30,6 +30,7 @@ export { default as EditCardModal } from './EditCardModal';
 export { default as EditGridCard } from './EditGridCard';
 export { default as ExportAsText } from './ExportAsText';
 export { default as Filter } from './Filter';
+export { default as FoundCardsLabel } from './FoundCardsLabel';
 export { default as ResetFilter } from './Filter/ResetFilter';
 export { default as Flex } from './Flex';
 export { default as FlippableCard } from './FlippableCard';
