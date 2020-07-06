@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router';
 
 import Cards from './Cards';
 import CollectionSidebar from './CollectionSidebar';
@@ -13,7 +12,6 @@ const StyledWrapper = styled.div`
 `;
 
 export default () => {
-  const { username } = useParams();
   const [isSidebarVisible, setIsSidebarVisible] = useLocalStorage(
     'isSidebarVisible',
     true
@@ -22,16 +20,11 @@ export default () => {
 
   return (
     <StyledWrapper>
-      {!username && (
-        <CollectionSidebar
-          isVisible={isSidebarVisible}
-          toggleIsVisible={toggleIsSidebarVisible}
-        />
-      )}
-      <Cards
-        isSidebarVisible={isSidebarVisible && !username}
-        username={username}
+      <CollectionSidebar
+        isVisible={isSidebarVisible}
+        toggleIsVisible={toggleIsSidebarVisible}
       />
+      <Cards isSidebarVisible={isSidebarVisible} />
     </StyledWrapper>
   );
 };
