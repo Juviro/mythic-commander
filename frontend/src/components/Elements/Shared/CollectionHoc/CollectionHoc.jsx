@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { paginatedCollection } from './queries';
 import unifyCardFormat from '../../../../utils/unifyCardFormat';
 
-export default ({ children }) => {
+export default ({ children, username }) => {
   const [
     { page = 1, pageSize = 0, orderByAdvanced = '' },
     setParams,
@@ -17,7 +17,13 @@ export default ({ children }) => {
   const [search, setSearch] = useState('');
   const offset = (page - 1) * pageSize;
   const { data, loading } = useQuery(paginatedCollection, {
-    variables: { limit: pageSize, offset, orderBy: orderByAdvanced, search },
+    variables: {
+      limit: pageSize,
+      offset,
+      orderBy: orderByAdvanced,
+      search,
+      username,
+    },
   });
 
   const onSearch = query => {

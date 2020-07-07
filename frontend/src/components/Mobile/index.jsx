@@ -12,6 +12,7 @@ import WantsList from './WantsList';
 import WantsLists from './WantsLists';
 
 import GlobalStyle from './GlobalStyle';
+import { UsernameModal } from '../Elements/Shared';
 
 const App = () => {
   message.config({
@@ -23,11 +24,13 @@ const App = () => {
   return (
     <>
       <Menu />
+      <UsernameModal />
       <Switch>
         <Route path="/m/search" exact component={Search} />
         <Route path="/m/decks" exact component={Decks} />
         <Route path="/m/decks/:id" exact component={Deck} />
         <Route path="/m/cards/:oracle_id" component={Card} />
+        <Route path="/m/collection/:username" exact component={Collection} />
         <Route path="/m/collection" exact component={Collection} />
         <Route path="/m/wants" exact component={WantsLists} />
         <Route path="/m/wants/:id" exact component={WantsList} />

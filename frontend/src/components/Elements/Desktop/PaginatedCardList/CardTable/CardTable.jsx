@@ -9,14 +9,13 @@ import { useToggle, useShortcut } from '../../../../Hooks';
 import CardModalDesktop from '../../CardModalDesktop';
 import scrollIntoView from '../../../../../utils/scrollIntoView';
 
-// navbar, layout picker row, table header, inner margin, footer, ?
-const DEFAULT_HEIGHT_OFFSET = 49 + 48 + 39 + 32 + 56 + 16;
+// NavBar, pagination
+const DEFAULT_HEIGHT_OFFSET = 160;
 
 const StyledButtonWrapper = styled.div`
   width: 150px;
   margin: 16px;
   position: absolute;
-  top: ${({ heightOffset = 0 }) => 64 + heightOffset}px;
   z-index: 1;
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   transition: opacity 0.3s;
@@ -32,7 +31,6 @@ const CardTable = ({
   cards,
   loading,
   search,
-  heightOffset,
   numberOfCards,
   showSorter,
   hiddenColumns,
@@ -97,8 +95,7 @@ const CardTable = ({
     scrollIntoView(element);
   }, [selectedElementPosition]);
 
-  const innerTableWidth =
-    window.innerHeight - DEFAULT_HEIGHT_OFFSET - heightOffset;
+  const innerTableWidth = window.innerHeight - DEFAULT_HEIGHT_OFFSET;
 
   const showRowSelection = onMoveCards || onDeleteCards;
   const rowSelection = showRowSelection && {
@@ -108,9 +105,8 @@ const CardTable = ({
   };
 
   return (
-    <>
+    <div style={{ position: 'relative' }}>
       <StyledButtonWrapper
-        heightOffset={heightOffset}
         isVisible={Boolean(selectedCards && selectedCards.length)}
       >
         <Space>
@@ -161,12 +157,12 @@ const CardTable = ({
         rowSelection={rowSelection}
       />
       <CardModalDesktop
-        card={selectedCard}
+        selectedCard={selectedCard}
         loading={loading}
         visible={showDetails}
         onClose={toggleShowDetail}
       />
-    </>
+    </div>
   );
 };
 

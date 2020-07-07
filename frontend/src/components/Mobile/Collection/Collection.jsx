@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Divider, Collapse } from 'antd';
 
-import { LayoutAndSortPicker, CollectionStats } from '../../Elements/Shared';
+import { LayoutAndSortPicker } from '../../Elements/Shared';
 import AddToCollection from './AddToCollection';
 import Cards from './Cards';
+import CollectionOverview from './CollectionOverview';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -18,18 +18,8 @@ const StyledWrapper = styled.div`
 export default () => {
   return (
     <StyledWrapper>
-      <Collapse
-        style={{ width: '100%', backgroundColor: 'white' }}
-        expandIcon={() => <div />}
-        expandIconPosition="right"
-        defaultActiveKey="1"
-      >
-        <Collapse.Panel key="1" size="small" header="Your Collection">
-          <CollectionStats small />
-        </Collapse.Panel>
-      </Collapse>
+      <CollectionOverview />
       <LayoutAndSortPicker showCollectionFilters />
-      <Divider />
       <Cards />
       <AddToCollection />
     </StyledWrapper>

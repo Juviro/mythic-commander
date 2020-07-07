@@ -132,6 +132,7 @@ type DeckCard {
 
 type Collection {
   id: String!
+  visibility: String!
   referenceSnapshot: CollectionSnapshot
   currentSnapshot: CollectionSnapshot!
 }
@@ -139,6 +140,7 @@ type Collection {
 type PaginatedCollection {
   hasMore: Boolean!
   nextOffset: Int
+  search: String
   totalResults: Int!
   cards: [CollectionCard!]!
 }
@@ -202,6 +204,27 @@ type AllLists {
   wantsLists: [WantsList!]!
 }
 
+################################# WantedCards #################################
+
+type WantedCards {
+  decks: [WantedCardsList]!
+  wantsLists: [WantedCardsList]!
+}
+
+type WantedCardsList {
+  id: String!
+  name: String!
+  imgSrc: String
+  cards: [WantedCard!]!
+}
+
+type WantedCard {
+  id: String!
+  name: String!
+  imgKey: String!
+  oracle_id: String!
+}
+
 ################################# Queries #################################
 
 type Query {
@@ -216,11 +239,13 @@ type Query {
     offset: Int!
     orderBy: String!
     search: String
+    username: String
   ): PaginatedCollection!
   ownedCardNames: [String!]!
   collectionSnapshots: [CollectionSnapshot!]!
 
   publicCollection(username: String!): [CollectionCard!]
+  wantedCards(username: String!): WantedCards
 
   card(id: String!): Card!
   cardSearch(
@@ -294,6 +319,8 @@ type Mutation {
   deleteFromCollection(cardIds: [String]!): Boolean
   deleteAllFromCollection(oracleIds: [String!]!): Boolean
 
+  changeCollectionVisibility(visibility: String!): Collection!
+
   ########## Session ##########
   login(token: String!): LoginResponse!
   logout(sessionId: String!): Boolean
@@ -314,6 +341,7 @@ type Mutation {
   duplicateWantsList(wantsListId: String!): WantsList!
   addCardsToWantsList(
     wantsListId: String!
+    wantsListName: String
     cards: [CardInputType!]!
   ): [WantsListCard!]!
   linkWantsList(wantsListId: String!, deckId: String!): WantsList!

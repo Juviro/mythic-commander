@@ -1,14 +1,30 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import styled from 'styled-components';
 
-import Private from './Private';
-import Public from './Public';
+import Cards from './Cards';
+import CollectionSidebar from './CollectionSidebar';
+import useLocalStorage from '../../Hooks/useLocalStorage';
+
+const StyledWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+`;
 
 export default () => {
+  const [isSidebarVisible, setIsSidebarVisible] = useLocalStorage(
+    'isSidebarVisible',
+    true
+  );
+  const toggleIsSidebarVisible = () => setIsSidebarVisible(!isSidebarVisible);
+
   return (
-    <Switch>
-      <Route path="/collection/user/:username" exact component={Public} />
-      <Route component={Private} />
-    </Switch>
+    <StyledWrapper>
+      <CollectionSidebar
+        isVisible={isSidebarVisible}
+        toggleIsVisible={toggleIsSidebarVisible}
+      />
+      <Cards isSidebarVisible={isSidebarVisible} />
+    </StyledWrapper>
   );
 };

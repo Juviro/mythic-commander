@@ -4,6 +4,8 @@ import proxies from './proxies';
 import unifyCardFormat from '../unifyCardFormat';
 import paginatedCollection from './paginatedCollection';
 import { getCurrentSnapshot } from './Collection';
+import { isCollectionPublic } from '../../../auth/authenticateUser';
+import wantedCards from './wantedCards';
 
 const resolver = {
   user(_, __, { db, user: { id } }) {
@@ -50,26 +52,42 @@ const resolver = {
       .where({ userId });
     return cardNames.map(({ name }) => name);
   },
+  wantedCards(_, { username }, { db, user: { id: userId } }) {
+    return wantedCards(db, username, userId);
+  },
   async paginatedCollection(
     _,
-    { limit, offset, orderBy, search },
+    { limit, offset, orderBy, search, username },
     { db, user: { id: userId } }
   ) {
+    let collectionUserId = userId;
+
+    if (username) {
+      const { id } = await db('users')
+        .where('username', 'ILIKE', username)
+        .select('id')
+        .first();
+      collectionUserId = id;
+      await isCollectionPublic(collectionUserId);
+    }
+
     const cards = await paginatedCollection(
       db,
-      userId,
+      collectionUserId,
       limit,
       offset,
       orderBy,
-      search
+      search,
+      !username
     );
     const amountUnique = cards.length ? cards[0].amountUnique : 0;
     const hasMore = amountUnique > limit + offset;
 
     return {
       hasMore,
+      search,
       totalResults: amountUnique,
-      cards: cards.map(unifyCardFormat(userId)),
+      cards: cards.map(unifyCardFormat(collectionUserId)),
       nextOffset: hasMore ? offset + limit : null,
     };
   },

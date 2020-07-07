@@ -1,16 +1,18 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
 
-import message from '../../../../utils/message';
+import { useParams } from 'react-router';
+import message from '../../../utils/message';
 import { deleteAllFromCollection } from './queries';
 import PaginatedCardList, {
   WithActions,
-} from '../../../Elements/Desktop/PaginatedCardList/index';
-import { CollectionHoc } from '../../../Elements/Shared';
+} from '../../Elements/Desktop/PaginatedCardList/index';
+import { CollectionHoc, FindWantedCards } from '../../Elements/Shared';
 
 export default ({ isSidebarVisible }) => {
+  const { username } = useParams();
   const [mutate] = useMutation(deleteAllFromCollection);
-  const widthOffset = isSidebarVisible ? 300 : 0;
+  const widthOffset = isSidebarVisible && !username ? 300 : 0;
 
   const deleteByOracle = (selectedCardIds, numberOfCards) => {
     const oracleIds = selectedCardIds;
@@ -28,20 +30,25 @@ export default ({ isSidebarVisible }) => {
     });
   };
 
+  const title = username && `${username}'s Collection`;
+  const titleButton = username && <FindWantedCards />;
+
   return (
-    <CollectionHoc>
+    <CollectionHoc username={username}>
       {({ loading, cards, numberOfCards, search, setSearch }) => (
         <WithActions
-          deleteByOracle={deleteByOracle}
+          deleteByOracle={!username && deleteByOracle}
           setSearch={setSearch}
           search={search}
         >
           {actionProps => (
             <PaginatedCardList
               {...actionProps}
+              title={title}
+              titleButton={titleButton}
               showCollectionFilters
               loading={loading}
-              hiddenColumns={['owned']}
+              hiddenColumns={username ? null : ['owned']}
               cards={cards}
               widthOffset={widthOffset}
               numberOfCards={numberOfCards}
