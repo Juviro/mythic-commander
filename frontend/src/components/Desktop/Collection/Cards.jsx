@@ -7,7 +7,7 @@ import { deleteAllFromCollection } from './queries';
 import PaginatedCardList, {
   WithActions,
 } from '../../Elements/Desktop/PaginatedCardList/index';
-import { CollectionHoc } from '../../Elements/Shared';
+import { CollectionHoc, FindWantedCards } from '../../Elements/Shared';
 
 export default ({ isSidebarVisible }) => {
   const { username } = useParams();
@@ -30,7 +30,8 @@ export default ({ isSidebarVisible }) => {
     });
   };
 
-  const title = username && `${username}'s collection`;
+  const title = username && `${username}'s Collection`;
+  const titleButton = username && <FindWantedCards />;
 
   return (
     <CollectionHoc username={username}>
@@ -44,6 +45,7 @@ export default ({ isSidebarVisible }) => {
             <PaginatedCardList
               {...actionProps}
               title={title}
+              titleButton={titleButton}
               showCollectionFilters
               loading={loading}
               hiddenColumns={username ? null : ['owned']}

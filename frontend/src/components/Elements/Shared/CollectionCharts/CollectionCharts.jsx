@@ -45,7 +45,7 @@ export default ({ currentSnapshot }) => {
         destroyOnClose
         visible={visible}
         onCancel={toggleVisible}
-        style={{ height: 500 }}
+        style={{ height: 500, top: 20 }}
         width={800}
         footer={null}
         title="Collection Trend"

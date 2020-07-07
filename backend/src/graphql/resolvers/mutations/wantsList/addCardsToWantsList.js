@@ -11,12 +11,12 @@ const ON_CONFLICT = `
 
 export default async (
   _,
-  { cards, wantsListId },
+  { cards, wantsListId, wantsListName },
   { user: { id: userId }, db }
 ) => {
-  if (wantsListId === 'new-wants-list') {
+  if (wantsListName) {
     const [id] = await db('wantsLists')
-      .insert({ userId })
+      .insert({ userId, name: wantsListName })
       .returning('id');
     wantsListId = id;
   }
