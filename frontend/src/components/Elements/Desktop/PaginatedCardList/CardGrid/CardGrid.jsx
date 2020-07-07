@@ -107,7 +107,7 @@ const CardGrid = ({
       {Boolean(cards.length) && paginationComponent}
       <CardModalDesktop
         loading={loading}
-        card={selectedCard}
+        selectedCard={selectedCard}
         visible={showDetails}
         onClose={() => toggleShowDetail(false)}
       />

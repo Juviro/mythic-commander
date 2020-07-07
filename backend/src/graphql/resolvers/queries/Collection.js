@@ -1,6 +1,5 @@
-import unifyCardFormat from '../unifyCardFormat';
-
 const REFERENCE_SNAPSHOT_DAYS = 7;
+const DEFAULT_COLLECTION_VISIBILITY = 'private';
 
 export const getCurrentSnapshot = (db, userId) =>
   db('collectionWithOracle')
@@ -28,7 +27,16 @@ export default {
 
     return snapshots[snapshots.length - 1];
   },
-  async currentSnapshot(_, __, { user: { id: userId }, db }) {
+  currentSnapshot(_, __, { user: { id: userId }, db }) {
     return getCurrentSnapshot(db, userId);
+  },
+  async visibility(_, __, { user: { id: userId }, db }) {
+    const collectionVisibility = await db('collectionVisibility')
+      .where({ userId })
+      .first();
+
+    return collectionVisibility
+      ? collectionVisibility.visibility
+      : DEFAULT_COLLECTION_VISIBILITY;
   },
 };

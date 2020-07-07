@@ -15,7 +15,7 @@ import Card from './Card';
 
 import GlobalStyle from './GlobalStyle';
 import MobileRedirect from './MobileRedirect';
-// import { UsernameModal } from '../Elements/Shared';
+import { UsernameModal } from '../Elements/Shared';
 
 const StyledBody = styled.div`
   height: 100%;
@@ -28,10 +28,11 @@ const App = () => {
     <DndProvider backend={HTML5Backend}>
       <MobileRedirect>
         <Menu />
-        {/* <UsernameModal /> */}
+        <UsernameModal />
         <StyledBody>
           <Switch>
             <Route path="/search" exact component={Search} />
+            <Route path="/collection/:username" component={Collection} />
             <Route path="/collection" component={Collection} />
             <Route path="/decks" exact component={Decks} />
             <Route path="/decks/:id" exact component={Deck} />

@@ -74,8 +74,8 @@ export default ({ columns, deck }) => {
         </Flex>
       ))}
       <CardModalDesktop
-        card={selectedCard}
-        visible={showDetails}
+        selectedCard={selectedCard}
+        visible={selectedCard && showDetails}
         onClose={toggleShowDetail}
       />
       {isDeleting && (

@@ -1,6 +1,6 @@
 import { getOrderColumn, addNameClause } from './cardSearch';
 
-export default async (db, userId, limit, offset, orderBy, search) => {
+export default async (db, userId, limit, offset, orderBy, search, allOwned) => {
   const [order, direction = 'asc'] = orderBy.split('-');
   return db
     .with(
@@ -8,7 +8,7 @@ export default async (db, userId, limit, offset, orderBy, search) => {
       db.raw(
         `
           SELECT
-            true as owned, 
+            ${allOwned ? 'true as owned,' : ''}
             SUM(amount) as "amountOwned", 
             SUM("amountFoil") as "amountOwnedFoil", 
             SUM("amountFoil" + amount) as "totalAmount", 
@@ -23,9 +23,6 @@ export default async (db, userId, limit, offset, orderBy, search) => {
           LEFT JOIN cards 
             ON cards.id = collection.id 
           WHERE "userId" = ?
-          AND (
-            amount > 0 OR "amountFoil" > 0
-          )
           GROUP BY cards.oracle_id
         `,
         userId

@@ -38,6 +38,7 @@ export default ({
   onDeleteCards,
   selectedCards,
   title,
+  titleButton,
   onEditCard,
   onMoveCards,
 }) => {
@@ -62,8 +63,6 @@ export default ({
     }
     // eslint-disable-next-line
   }, [pageSize]);
-
-  const heightOffset = title ? 40 : 0;
 
   const singleCardActions = [];
   const onEdit = onEditCard
@@ -111,7 +110,6 @@ export default ({
         loading={loading}
         onMoveCards={onMoveCards}
         showSorter={showSorter}
-        heightOffset={heightOffset}
         hiddenColumns={hiddenColumns}
         numberOfCards={numberOfCards}
         setSelectedCards={setSelectedCards}
@@ -155,9 +153,17 @@ export default ({
       }}
     >
       {title && (
-        <Typography.Title level={2} style={{ marginTop: -16 }}>
-          {title}
-        </Typography.Title>
+        <Flex
+          direction="row"
+          justify="space-between"
+          align="center"
+          style={{ width: '100%', marginTop: -16, marginBottom: 16 }}
+        >
+          <Typography.Title level={2} style={{ margin: 0 }}>
+            {title}
+          </Typography.Title>
+          {titleButton}
+        </Flex>
       )}
       <Header
         setSearch={setSearch}

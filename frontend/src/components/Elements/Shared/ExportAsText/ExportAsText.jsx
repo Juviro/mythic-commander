@@ -1,10 +1,12 @@
 import React from 'react';
 import { Input, Switch, Typography, Space, Button } from 'antd';
 import styled from 'styled-components';
+import { DownloadOutlined } from '@ant-design/icons';
 import Flex from '../Flex';
 import useLocalStorage from '../../../Hooks/useLocalStorage';
 import { useToggle } from '../../../Hooks';
 import FocusedModal from '../FocusedModal';
+import isMobile from '../../../../utils/isMobile';
 
 const StyledInputWrapper = styled.div`
   overflow: auto;
@@ -20,17 +22,23 @@ const downloadAsTxt = (cardNameList, deckName) => {
   element.click();
 };
 
-export default ({ title, cards }) => {
-  const [exportViewOpen, toggleExportViewOpen] = useToggle();
+export default ({ title, cards, visible, hideAmount }) => {
+  const [exportViewOpen, toggleExportViewOpen] = useToggle(visible);
   const [showAmount, setShowAmount] = useLocalStorage('showAmount', true);
   const cardNameList = cards
-    .map(({ amount, name }) => `${showAmount ? `${amount} ` : ''}${name}`)
+    .map(
+      ({ amount, name }) =>
+        `${showAmount && !hideAmount ? `${amount} ` : ''}${name}`
+    )
     .join('\n');
 
   const onDownloadAsText = () => downloadAsTxt(cardNameList, title);
 
   return (
     <>
+      <Button type="link" onClick={toggleExportViewOpen}>
+        Export as Text
+      </Button>
       <FocusedModal
         title={title}
         footer={null}
@@ -38,11 +46,11 @@ export default ({ title, cards }) => {
         visible={exportViewOpen}
         onCancel={toggleExportViewOpen}
         bodyStyle={{ maxHeight: '80vh', overflow: 'auto' }}
+        style={{ top: 20 }}
         focusId="modal.exportAsText"
       >
         <Flex
           justify="space-between"
-          align="center"
           style={{ marginBottom: 16, fontSize: 16 }}
         >
           <Typography.Paragraph
@@ -51,33 +59,37 @@ export default ({ title, cards }) => {
           >
             Copy List
           </Typography.Paragraph>
-          <Space>
-            <Switch
-              checked={showAmount}
-              onChange={() => setShowAmount(!showAmount)}
-            />
-            <Typography.Text>Show amount</Typography.Text>
-          </Space>
+          <Flex direction="column">
+            {!hideAmount && (
+              <Space style={{ marginBottom: 16 }}>
+                <Switch
+                  checked={showAmount}
+                  onChange={() => setShowAmount(!showAmount)}
+                />
+                <Typography.Text>Show amount</Typography.Text>
+              </Space>
+            )}
+            {!isMobile() && (
+              <Button
+                type="link"
+                icon={<DownloadOutlined />}
+                onClick={onDownloadAsText}
+                style={{ marginBottom: 16, paddingLeft: 0, fontSize: 16 }}
+              >
+                Download as txt
+              </Button>
+            )}
+          </Flex>
         </Flex>
         <StyledInputWrapper>
           <Input.TextArea
             readOnly
             onFocus={e => e.target.select()}
             value={cardNameList}
-            autoSize={{ maxRows: 25 }}
+            autoSize={{ maxRows: 20 }}
           />
         </StyledInputWrapper>
-        <Button
-          type="link"
-          onClick={onDownloadAsText}
-          style={{ marginTop: 16, paddingLeft: 0 }}
-        >
-          Download as txt
-        </Button>
       </FocusedModal>
-      <Button type="link" onClick={toggleExportViewOpen}>
-        Export as Text
-      </Button>
     </>
   );
 };

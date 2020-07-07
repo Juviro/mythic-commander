@@ -18,6 +18,7 @@ export default ({ isVisible, onCloseDrawer }) => {
       headerStyle={{
         backgroundColor: darkBackground,
         padding: 0,
+        borderRadius: 0,
       }}
       bodyStyle={{
         padding: 16,
