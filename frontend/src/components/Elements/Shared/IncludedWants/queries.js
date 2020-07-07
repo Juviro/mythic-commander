@@ -4,8 +4,13 @@ export const addCardsToWantsList = gql`
   mutation addCardsToWantsList(
     $cards: [CardInputType!]!
     $wantsListId: String!
+    $wantsListName: String
   ) {
-    addCardsToWantsList(cards: $cards, wantsListId: $wantsListId) {
+    addCardsToWantsList(
+      cards: $cards
+      wantsListId: $wantsListId
+      wantsListName: $wantsListName
+    ) {
       id
       card {
         id

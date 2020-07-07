@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useQuery } from 'react-apollo';
 import { useQueryParams, StringParam } from 'use-query-params';
 import { useParams } from 'react-router';
-
 import { Input, Divider } from 'antd';
+
 import CardListMobile from '../../Elements/Mobile/CardListMobile/index';
 import { paginatedCollection } from './queries';
 import { CARDS_PER_PAGE } from '../../Elements/Mobile/CardListMobile/FilteredCardList';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
-import { Flex, FoundCardsLabel } from '../../Elements/Shared';
+import { Flex, FoundCardsLabel, FindWantedCards } from '../../Elements/Shared';
 
 export default () => {
   const { username } = useParams();
@@ -65,6 +65,7 @@ export default () => {
         style={{ marginTop: 16 }}
         placeholder="Search for a card"
       />
+      {username && <FindWantedCards style={{ marginTop: 16 }} />}
       <Divider />
       <FoundCardsLabel
         totalResults={totalResults}

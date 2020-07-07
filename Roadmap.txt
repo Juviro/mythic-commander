@@ -5,10 +5,14 @@ BUGFIXES:
     - don't ignore umlaute in search (backend and frontend) e.g. Jötun Grunt
     - "Added within" missing in collection
     - backspace in searchbar crashes client ? not reproducible
+    - when sorting by price high to low, cards are displayed with min price instead of max price
 
 CURRENT:
 
 NEXT:
+    - allow add to deck from cardDetails (mobile & desktop)
+    - update distinctCards
+
     - prevent re-ordering card lists in decks view - maybe re-order when category added / removed
     - add shortcut to toggle focus ?
 

@@ -15,7 +15,7 @@ export const canAccessWantsList = async (userId, wantsListId) => {
   if (!isAuthenticated) throw new ValidationError('Not authenticated');
 };
 
-export const canAccessCollection = async userId => {
+export const isCollectionPublic = async userId => {
   const collectionVisibility = await db('collectionVisibility')
     .where({ userId })
     .first();

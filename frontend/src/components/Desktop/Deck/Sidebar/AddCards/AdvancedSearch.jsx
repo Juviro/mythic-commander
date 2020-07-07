@@ -6,7 +6,7 @@ import {
   Filter,
   Flex,
   SearchHoc,
-  CurrentShareOptions,
+  CurrentSearchOptions,
   SearchButton,
   OrderBy,
   Confirm,
@@ -78,7 +78,7 @@ export default ({ onAddCards, alreadyInDeck }) => {
               style={{ marginBottom: 8 }}
             />
             {isSearching && (
-              <CurrentShareOptions style={{ marginTop: 8 }} showDivider />
+              <CurrentSearchOptions style={{ marginTop: 8 }} showDivider />
             )}
             <Divider />
             <StyledCardWrapper>
