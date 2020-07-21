@@ -17,3 +17,8 @@
 ###PM2
 
 - To manually restart the backend, run `sudo ./backend/node_modules/.bin/pm2 reload backend`
+
+###Dump db
+
+- dump
+- restore: `pg_restore --clean -d mtg --no-owner --role=juviro --no-privileges --no-owner < prod.latest``
