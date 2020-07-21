@@ -67,11 +67,7 @@ export default ({ card, onOpenDetails, onDelete }) => {
         </StyledButton>
       </Flex>
       {isEditing && (
-        <EditCardModal
-          card={card}
-          onCancel={toggleIsEditing}
-          onEdit={onEditCard}
-        />
+        <EditCardModal card={card} onCancel={toggleIsEditing} onEdit={onEditCard} />
       )}
     </>
   );

@@ -10,10 +10,11 @@ import { Flex } from '../Elements/Shared';
 import { getImageUrl } from '../../utils/cardImage';
 
 const StyledCardWrapper = styled.div`
-  height: 326px;
-  width: 234px;
+  margin: -1px;
+  height: 332px;
+  width: 238px;
   padding: 1px;
-  border: 1px dotted #ccc;
+  border: 1px dashed #000;
   float: left;
   position: relative;
 `;
@@ -27,7 +28,6 @@ const StyledOverlay = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
-  background-color: black;
   background-color: rgba(0, 0, 0, 0.7);
   color: #6f0000;
   display: flex;

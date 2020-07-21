@@ -139,6 +139,7 @@ const CardTable = ({
         pagination={{
           ...pagination,
           showSizeChanger: true,
+          responsive: true,
           position: ['topRight'],
           showTotal: (total, range) =>
             `${range[0]}-${range[1]} of ${total} cards`,

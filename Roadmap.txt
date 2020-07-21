@@ -1,10 +1,10 @@
 BUGFIXES:
-    - page size select shows ellipsis
-    - crash when deleting last card from deck (create deck, add card, delete card -> crash)
-    - when editing in card details, versions of same set are changing
-    - don't ignore umlaute in search (backend and frontend) e.g. Jötun Grunt
+    - set change in deck not updated
+    - can't change set in wants
     - "Added within" missing in collection
+    - cardname in find cards not selectable
     - backspace in searchbar crashes client ? not reproducible
+    - some names not correctlxy highlighted, like "nine tail"
     - when sorting by price high to low, cards are displayed with min price instead of max price
 
 CURRENT:
@@ -22,8 +22,6 @@ NEXT:
     - add option to export unowned cards from deck to wants
 
 IMPROVEMENTS:
-    - update babel to use optional chaining
-
     - improve re-rendering of table columns and grid card. especially table.
     - add to wants list dropdown: sort lists by name (same for decks I guess)
     - added to collection notification -> show amount as well
@@ -91,9 +89,10 @@ BACKLOG:
 
 BACKLOG BUGFIXES:
     - sometimes rules of previously viewed cards displayed instead of current card
-    - some names not correctlxy highlighted, like "nine tail"
+    - don't ignore umlaute in search (backend and frontend) e.g. Jötun Grunt
 
     - backend deployment not reloading
+    - when editing in card details, versions of same set are changing
     - advanced search -> add card to collection: owned badge not displayed
     - collection: when one price is null, 0 is displayed even if one owned card has a value
     - add to collection mobile: after adding prev unowned card (gitrok monster), wrong minPrice in wantsList
