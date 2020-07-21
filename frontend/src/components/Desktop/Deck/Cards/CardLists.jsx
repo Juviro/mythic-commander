@@ -29,8 +29,8 @@ export default ({ columns, deck }) => {
 
   const onDeleteCard = () => {
     if (!selectedCard) return;
-    selectNextCard();
     setIsDeleting(false);
+    selectNextCard(null);
     const newCards = deck.originalCards.filter(
       card => card.id !== selectedCard.id
     );
