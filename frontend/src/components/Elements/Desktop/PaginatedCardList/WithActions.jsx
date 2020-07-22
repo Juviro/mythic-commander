@@ -11,6 +11,7 @@ export default ({ onEditCard, deleteByOracle, children, ...props }) => {
     layout: StringParam,
   });
   const [selectedCards, setSelectedCards] = useState([]);
+  const [selectedSingleCard, setSelectedSingleCard] = useState(null);
   const [showDeleteModal, toggleShowDeleteModal] = useToggle();
   const [showMoveModal, toggleShowMoveModal] = useToggle();
   const [showEditModal, toggleShowEditModal] = useToggle();
@@ -44,6 +45,11 @@ export default ({ onEditCard, deleteByOracle, children, ...props }) => {
     toggleShowEditModal(false);
   };
 
+  const onOpenEditCard = card => {
+    setSelectedSingleCard(card);
+    toggleShowEditModal(true);
+  };
+
   return (
     <>
       {children({
@@ -52,6 +58,7 @@ export default ({ onEditCard, deleteByOracle, children, ...props }) => {
         selectedCards,
         setSelectedCards,
         onMoveCards: toggleShowMoveModal,
+        onEditCard: onEditCard ? onOpenEditCard : undefined,
         onDeleteCards: deleteByOracle ? toggleShowDeleteModal : undefined,
         ...props,
       })}
@@ -74,7 +81,11 @@ export default ({ onEditCard, deleteByOracle, children, ...props }) => {
         numberOfSelectedCards={numberOfSelectedCards}
       />
       {showEditModal && (
-        <EditCardModal onEdit={onEditCard} card={selectedCards[0]} onCancel={onCancel} />
+        <EditCardModal
+          onEdit={onEditCard}
+          card={selectedSingleCard}
+          onCancel={onCancel}
+        />
       )}
     </>
   );

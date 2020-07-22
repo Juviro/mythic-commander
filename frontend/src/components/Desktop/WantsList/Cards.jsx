@@ -53,7 +53,7 @@ export default ({ cards, loading, widthOffset, wantsList }) => {
   const title = wantsList && wantsList.name;
 
   return (
-    <WithActions deleteByOracle={deleteByOracle}>
+    <WithActions deleteByOracle={deleteByOracle} onEditCard={onEditCard}>
       {actionProps => (
         <WithFullList cards={cards} {...actionProps}>
           {fullListProps => (
@@ -61,7 +61,6 @@ export default ({ cards, loading, widthOffset, wantsList }) => {
               {...fullListProps}
               loading={loading}
               title={title}
-              onEditCard={onEditCard}
               widthOffset={widthOffset}
               showAddedBeforeFilter
               showCollectionFilters
