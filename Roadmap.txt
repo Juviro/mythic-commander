@@ -1,10 +1,8 @@
 BUGFIXES:
-    - set change in deck not updated
-    - can't change set in wants
     - "Added within" missing in collection
     - cardname in find cards not selectable
     - backspace in searchbar crashes client ? not reproducible
-    - some names not correctlxy highlighted, like "nine tail"
+    - some names not correctly highlighted -> needs example
     - when sorting by price high to low, cards are displayed with min price instead of max price
 
 CURRENT:
@@ -17,7 +15,6 @@ NEXT:
     - add shortcut to toggle focus ?
 
     - add button to add card to deck in sidebar ?
-    - styling when editing deck title
     - add option to show unowned cards in deck
     - add option to export unowned cards from deck to wants
 

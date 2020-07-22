@@ -1,9 +1,20 @@
 import React from 'react';
 import { Typography, message } from 'antd';
 import { useMutation } from 'react-apollo';
+import styled from 'styled-components';
 import { editDeck } from './queries';
 
-export default ({ deck, fontSize = 14 }) => {
+const StyledTitleWrapper = styled.div`
+  margin-bottom: 0 !important;
+  font-weight: 600;
+  display: flex;
+  margin-right: 20px;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+`;
+
+export default ({ deck }) => {
   const [editDeckMutation] = useMutation(editDeck);
 
   const onChangeName = async name => {
@@ -29,19 +40,14 @@ export default ({ deck, fontSize = 14 }) => {
   };
 
   return (
-    <Typography.Paragraph
-      ellipsis
-      editable={{ onChange: val => onChangeName(val || 'My Deck') }}
-      style={{
-        marginBottom: 0,
-        fontSize,
-        fontWeight: 600,
-        display: 'flex',
-        marginRight: 20,
-        justifyContent: 'space-between',
-      }}
-    >
-      {deck.name}
-    </Typography.Paragraph>
+    <StyledTitleWrapper>
+      <Typography.Title
+        ellipsis
+        level={3}
+        editable={{ onChange: val => onChangeName(val || 'My Deck') }}
+      >
+        {deck.name}
+      </Typography.Title>
+    </StyledTitleWrapper>
   );
 };
