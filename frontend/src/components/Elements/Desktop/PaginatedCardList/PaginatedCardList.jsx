@@ -64,8 +64,7 @@ export default ({
   const singleCardActions = [];
   const onEdit = onEditCard
     ? card => {
-        setSelectedCards([card]);
-        onEditCard();
+        onEditCard(card);
       }
     : undefined;
   const onDelete = onDeleteCards
