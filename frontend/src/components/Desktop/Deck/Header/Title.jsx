@@ -8,7 +8,7 @@ export default ({ deck }) => {
       <Flex style={{ marginRight: 8 }}>
         <ColorIdentitySymbols cards={deck.cards} size={24} />
       </Flex>
-      <DeckTitle deck={deck} fontSize={28} />
+      <DeckTitle deck={deck} />
     </Flex>
   );
 };

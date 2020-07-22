@@ -70,7 +70,6 @@ const SelectFilter = ({ onChange, options, placeholder, value = '', onSearch }) 
 
   return (
     <AutoComplete
-      allowClear
       size="small"
       value={currentValue}
       ref={inputRef}
