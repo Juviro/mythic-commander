@@ -19,8 +19,7 @@ export default ({ deck, visible, onClose }) => {
   const [mutate] = useMutation(editDeckImage);
 
   const getImgSrc = ({ id, imgKey }) => getImageUrl(id, imgKey, 'art_crop');
-  const currentImage =
-    deck.cards.find(card => getImgSrc(card) === deck.imgSrc) || {};
+  const currentImage = deck.cards.find(card => getImgSrc(card) === deck.imgSrc) || {};
 
   const [selectedCard, setSelectedCard] = useState(currentImage);
 

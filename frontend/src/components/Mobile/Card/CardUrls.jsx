@@ -39,12 +39,7 @@ export default ({ name }) => {
   return (
     <StyledPurchaseIcons>
       {options.map(({ icon, uri, name: serviceName }) => (
-        <a
-          href={uri}
-          target="_blank"
-          rel="noopener noreferrer"
-          key={serviceName}
-        >
+        <a href={uri} target="_blank" rel="noopener noreferrer" key={serviceName}>
           <StyledPurchaseIcon src={icon} />
           <span>{serviceName}</span>
         </a>

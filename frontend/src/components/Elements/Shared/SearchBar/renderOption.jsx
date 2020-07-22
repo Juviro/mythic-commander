@@ -49,9 +49,7 @@ export default searchString => element => {
         <CardImageWrapper>
           <StyledCardImage src={getImageUrl(id, imgKey)} />
         </CardImageWrapper>
-        <StyledName isShort={owned}>
-          {highlightText(searchString, name)}
-        </StyledName>
+        <StyledName isShort={owned}>{highlightText(searchString, name)}</StyledName>
         <StyledOwnedTag>{owned && 'owned'}</StyledOwnedTag>
       </StyledOption>
     ),

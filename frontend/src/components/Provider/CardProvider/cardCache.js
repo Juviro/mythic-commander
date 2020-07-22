@@ -58,9 +58,7 @@ export const getCollectionFromCache = async type => {
   const shouldForceUpdate = Number(lastUpdate) < FORCE_UPDATE_IF_BEFORE;
 
   const shouldUpdate =
-    !lastUpdate ||
-    Date.now() - Number(lastUpdate) > REFRESH_PERIOD ||
-    shouldForceUpdate;
+    !lastUpdate || Date.now() - Number(lastUpdate) > REFRESH_PERIOD || shouldForceUpdate;
 
   const cachedCollection = localStorage.getItem(collectionKey);
 

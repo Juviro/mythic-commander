@@ -15,20 +15,11 @@ export default ({ onCancel, url, isVisible }) => {
     >
       <Flex direction="row" justify="space-around">
         <a target="_blank" rel="noopener noreferrer" href={url}>
-          <Button
-            style={{ width: 150 }}
-            type="primary"
-            ghost
-            onClick={onCancel}
-          >
+          <Button style={{ width: 150 }} type="primary" ghost onClick={onCancel}>
             All Cards
           </Button>
         </a>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href={`${url}?filter=unowned-only`}
-        >
+        <a target="_blank" rel="noopener noreferrer" href={`${url}?filter=unowned-only`}>
           <Button style={{ width: 150 }} type="primary" onClick={onCancel}>
             Unowned Cards
           </Button>

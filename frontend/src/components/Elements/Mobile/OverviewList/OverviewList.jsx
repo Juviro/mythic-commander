@@ -54,8 +54,7 @@ const ListItem = ({
   numberOfCards,
   additionalDescription,
 }) => {
-  let description =
-    typeof numberOfCards === 'number' ? `${numberOfCards} Cards` : '';
+  let description = typeof numberOfCards === 'number' ? `${numberOfCards} Cards` : '';
   if (additionalDescription) description += additionalDescription;
 
   return (
@@ -67,11 +66,7 @@ const ListItem = ({
         title={
           <>
             <Left>
-              <Typography.Text
-                ellipsis
-                strong
-                style={{ fontSize: 16, maxWidth: '100%' }}
-              >
+              <Typography.Text ellipsis strong style={{ fontSize: 16, maxWidth: '100%' }}>
                 {name}
               </Typography.Text>
             </Left>
@@ -84,13 +79,7 @@ const ListItem = ({
   );
 };
 
-const OverviewList = ({
-  addElementText,
-  onAddElement,
-  elements,
-  onClick,
-  header,
-}) => {
+const OverviewList = ({ addElementText, onAddElement, elements, onClick, header }) => {
   const deckComponents = elements.map(
     ({ name, imgSrc, id, numberOfCards, additionalDescription }) => (
       <ListItem
@@ -105,11 +94,7 @@ const OverviewList = ({
   );
 
   const addElementComponent = onAddElement ? (
-    <ListItem
-      name={addElementText}
-      onClick={onAddElement}
-      image={<StyledAddIcon />}
-    />
+    <ListItem name={addElementText} onClick={onAddElement} image={<StyledAddIcon />} />
   ) : (
     undefined
   );

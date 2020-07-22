@@ -29,9 +29,7 @@ const DeckList = ({ decks, history }) => {
     onOpenDeck(createDeck.createDeck.id);
   };
 
-  const sortedDecks = decks.sort(
-    (a, b) => Number(b.lastEdit) - Number(a.lastEdit)
-  );
+  const sortedDecks = decks.sort((a, b) => Number(b.lastEdit) - Number(a.lastEdit));
 
   return (
     <OverviewList

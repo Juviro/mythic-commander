@@ -47,8 +47,7 @@ export default ({ overwriteOracleId, defaultCardId }) => {
 
   const card = data && unifySingleCard(data.cardByOracleId);
 
-  const currentCard =
-    card && card.allSets.find(({ id }) => id === selectedCardId);
+  const currentCard = card && card.allSets.find(({ id }) => id === selectedCardId);
 
   useEffect(() => {
     if (currentCard) return;

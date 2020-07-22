@@ -1,10 +1,6 @@
 import React from 'react';
 
-import {
-  Flex,
-  DeckTitle,
-  ColorIdentitySymbols,
-} from '../../../Elements/Shared';
+import { Flex, DeckTitle, ColorIdentitySymbols } from '../../../Elements/Shared';
 
 export default ({ deck }) => {
   return (

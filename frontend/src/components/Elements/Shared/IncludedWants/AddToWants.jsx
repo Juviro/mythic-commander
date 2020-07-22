@@ -68,9 +68,7 @@ export default ({
     <Select style={{ width: '100%' }} onChange={onAddToList} value={title}>
       {selectOptions.map(({ id, name }) => (
         <Select.Option value={id} key={id}>
-          <Typography.Text
-            type={id === NEW_LIST_DUMMY_ID ? 'secondary' : 'primary'}
-          >
+          <Typography.Text type={id === NEW_LIST_DUMMY_ID ? 'secondary' : 'primary'}>
             {name}
           </Typography.Text>
         </Select.Option>

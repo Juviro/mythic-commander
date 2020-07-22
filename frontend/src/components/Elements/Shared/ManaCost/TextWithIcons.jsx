@@ -14,9 +14,7 @@ const TextWithIcons = ({ text }) => {
     <ReplaceText
       text={unreplacedText}
       replacementPattern={new RegExp(/({[\w/]+}|^[+−]?[\dX]{1,2}:)/)}
-      replacementFunction={manaIcon => (
-        <ManaSymbol symbol={manaIcon} size={14} />
-      )}
+      replacementFunction={manaIcon => <ManaSymbol symbol={manaIcon} size={14} />}
     />
   );
 

@@ -5,10 +5,7 @@ import OwnedOverview from './OwnedOverview';
 
 const getOwnedAmount = card => {
   return card.allSets.reduce(
-    (
-      { ownedNonfoil: onf, ownedFoil: of },
-      { amountOwned, amountOwnedFoil }
-    ) => ({
+    ({ ownedNonfoil: onf, ownedFoil: of }, { amountOwned, amountOwnedFoil }) => ({
       ownedNonfoil: onf + amountOwned,
       ownedFoil: of + amountOwnedFoil,
     }),

@@ -22,10 +22,7 @@ const options = [
 ];
 
 export default () => {
-  const [addedWithin, setAddedWithing] = useQueryParam(
-    'addedWithin',
-    NumberParam
-  );
+  const [addedWithin, setAddedWithing] = useQueryParam('addedWithin', NumberParam);
 
   const currentOption = options.find(({ value }) => value === addedWithin);
 

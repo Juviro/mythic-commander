@@ -1,10 +1,6 @@
 import React from 'react';
 import { Radio } from 'antd';
-import {
-  BarsOutlined,
-  AppstoreOutlined,
-  BorderOutlined,
-} from '@ant-design/icons';
+import { BarsOutlined, AppstoreOutlined, BorderOutlined } from '@ant-design/icons';
 import { StringParam } from 'use-query-params';
 import { useShortcut, useStoredQueryParam } from '../../../Hooks';
 import DesktopTooltip from '../../Desktop/DesktopTooltip';
@@ -22,10 +18,7 @@ const getNextLayout = (layout, hideCard) => {
 };
 
 export default ({ hideCard }) => {
-  const [layout = 'list', setLayoutParam] = useStoredQueryParam(
-    'layout',
-    StringParam
-  );
+  const [layout = 'list', setLayoutParam] = useStoredQueryParam('layout', StringParam);
   const setLayout = newLayout => setLayoutParam(newLayout, 'replaceIn');
   useShortcut('l', () => setLayout(getNextLayout(layout, hideCard)));
 

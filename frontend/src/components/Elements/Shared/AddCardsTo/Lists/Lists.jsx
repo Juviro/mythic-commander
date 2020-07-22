@@ -37,18 +37,11 @@ const Lists = ({
   return (
     <Flex direction="column">
       {type && (
-        <AddToCollection
-          onAddToCollection={onAddToCollection}
-          cardsToAdd={cardsToAdd}
-        />
+        <AddToCollection onAddToCollection={onAddToCollection} cardsToAdd={cardsToAdd} />
       )}
       <Divider>Add to a list</Divider>
       <List title="Deck" elements={filteredDecks} onClick={onAddToDeck} />
-      <List
-        title="Wants List"
-        elements={filteredWants}
-        onClick={onAddToWantsList}
-      />
+      <List title="Wants List" elements={filteredWants} onClick={onAddToWantsList} />
     </Flex>
   );
 };

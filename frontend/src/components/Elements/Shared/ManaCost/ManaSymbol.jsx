@@ -29,11 +29,6 @@ export default ({ symbol, size = 18, margin = 0 }) => {
   if (!src) return `{${plainSymbol}}`;
 
   return (
-    <StyledColorTag
-      src={src}
-      size={size}
-      alt={`{${plainSymbol}}`}
-      style={{ margin }}
-    />
+    <StyledColorTag src={src} size={size} alt={`{${plainSymbol}}`} style={{ margin }} />
   );
 };

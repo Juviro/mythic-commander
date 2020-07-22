@@ -18,8 +18,7 @@ export default ({ deck }) => {
   const [mutate] = useMutation(editDeck);
   const getImgSrc = ({ id, imgKey }) => getImageUrl(id, imgKey, 'art_crop');
 
-  const currentImage =
-    deck.cards.find(card => getImgSrc(card) === deck.imgSrc) || {};
+  const currentImage = deck.cards.find(card => getImgSrc(card) === deck.imgSrc) || {};
 
   const onChangeImage = imgSrc => {
     message.success('Title image changed!');

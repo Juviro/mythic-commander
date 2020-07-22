@@ -18,10 +18,7 @@ export default ({ lists, onClick, loading }) => {
           <OverviewListItem list={list} onClick={onClick} key={list.id} />
         ))}
         {!lists.length && (
-          <Empty
-            style={{ width: '100%' }}
-            image={Empty.PRESENTED_IMAGE_SIMPLE}
-          />
+          <Empty style={{ width: '100%' }} image={Empty.PRESENTED_IMAGE_SIMPLE} />
         )}
       </Flex>
     </StyledListWrapper>

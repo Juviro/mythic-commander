@@ -30,9 +30,7 @@ export default ({ deck }) => {
   const valueLabel = `Total value: ${getPriceLabel(totalValue, {
     round: true,
   })}${
-    unownedValue
-      ? ` (${getPriceLabel(unownedValue, { round: true })} not owned)`
-      : ''
+    unownedValue ? ` (${getPriceLabel(unownedValue, { round: true })} not owned)` : ''
   }`;
 
   return (

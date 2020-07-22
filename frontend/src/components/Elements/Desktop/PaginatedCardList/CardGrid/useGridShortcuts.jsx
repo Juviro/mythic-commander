@@ -4,18 +4,12 @@ import { isInputField, isModifierKey } from '../../../../Hooks/useShortcut';
 import keyCodes from '../../../../../constants/keyCodes';
 import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
 
-export default (
-  cardsPerRow,
-  toggleShowDetail,
-  numberOfCards,
-  blockShortcuts
-) => {
+export default (cardsPerRow, toggleShowDetail, numberOfCards, blockShortcuts) => {
   const [currentPage = 1, setPageParam] = useQueryParam('page', NumberParam);
   const [pageSize, setPageSizeParam] = useQueryParam('pageSize', NumberParam);
   const { focusedElement } = useContext(FocusContext);
   const shortcutsActive =
-    !focusedElement ||
-    ['modal.cardDetails', 'deck.sidebar.add'].includes(focusedElement);
+    !focusedElement || ['modal.cardDetails', 'deck.sidebar.add'].includes(focusedElement);
 
   const numberOfRows = Math.ceil(pageSize / cardsPerRow);
 
@@ -53,8 +47,7 @@ export default (
       setSelectedElementPosition(1);
     } else {
       const isLastElementOnLastPage =
-        currentPage === numberOfPages &&
-        cardsOnLastPage === selectedElementPosition;
+        currentPage === numberOfPages && cardsOnLastPage === selectedElementPosition;
       if (isLastElementOnLastPage) return;
       setSelectedElementPosition(selectedElementPosition + 1);
     }
@@ -78,22 +71,13 @@ export default (
       if (currentPage === numberOfPages) return;
       const willBeOnLastPage = currentPage + 1 === numberOfPages;
       setCurrentPage(Math.min(currentPage + 1, numberOfPages));
-      const lastCardOnNextPage = willBeOnLastPage
-        ? cardsOnLastPage
-        : cardsPerRow;
+      const lastCardOnNextPage = willBeOnLastPage ? cardsOnLastPage : cardsPerRow;
       setSelectedElementPosition(
-        Math.min(
-          selectedElementPosition % cardsPerRow || cardsPerRow,
-          lastCardOnNextPage
-        )
+        Math.min(selectedElementPosition % cardsPerRow || cardsPerRow, lastCardOnNextPage)
       );
     } else {
-      const nextPosition = Math.min(
-        selectedElementPosition + cardsPerRow,
-        pageSize
-      );
-      const hasNoNext =
-        currentPage === numberOfPages && nextPosition > cardsOnLastPage;
+      const nextPosition = Math.min(selectedElementPosition + cardsPerRow, pageSize);
+      const hasNoNext = currentPage === numberOfPages && nextPosition > cardsOnLastPage;
       if (hasNoNext) {
         const isLastPage = currentPage === numberOfPages;
         setSelectedElementPosition(isLastPage ? cardsOnLastPage : cardsPerRow);
@@ -144,8 +128,7 @@ export default (
 
   useEffect(() => {
     if (!numberOfCards || !numberOfPages) return;
-    const lastPosition =
-      currentPage >= numberOfPages ? cardsOnLastPage : pageSize;
+    const lastPosition = currentPage >= numberOfPages ? cardsOnLastPage : pageSize;
     setSelectedElementPosition(Math.min(selectedElementPosition, lastPosition));
 
     setCurrentPage(Math.max(Math.min(currentPage, numberOfPages), 1), true);

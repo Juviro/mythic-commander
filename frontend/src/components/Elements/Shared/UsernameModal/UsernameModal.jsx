@@ -35,8 +35,8 @@ export default () => {
       onCancel={toggleIsVisible}
     >
       <Typography.Text style={{ fontSize: 16 }}>
-        Please pick a username. It will be visible to people you share your
-        collection with.
+        Please pick a username. It will be visible to people you share your collection
+        with.
         <br />
         <br />
         Allowed characters: a-z, A-Z, 0-9, -, _

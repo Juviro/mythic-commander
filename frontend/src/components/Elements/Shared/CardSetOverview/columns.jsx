@@ -89,12 +89,7 @@ const ownedColumns = (card, isEditing, onChangeAmount, onSaveChanges) => [
     key: '4',
     title: `Owned (${getOwnedAmount(card, 'amountOwned')})`,
     sorter: sortByAmount('amountOwned'),
-    render: renderOwned(
-      isEditing,
-      onChangeAmount,
-      onSaveChanges,
-      'amountOwned'
-    ),
+    render: renderOwned(isEditing, onChangeAmount, onSaveChanges, 'amountOwned'),
     width: 140,
     align: 'center',
   },
@@ -102,12 +97,7 @@ const ownedColumns = (card, isEditing, onChangeAmount, onSaveChanges) => [
     key: '5',
     title: `Foil (${getOwnedAmount(card, 'amountOwnedFoil')})`,
     sorter: sortByAmount('amountOwnedFoil'),
-    render: renderOwned(
-      isEditing,
-      onChangeAmount,
-      onSaveChanges,
-      'amountOwnedFoil'
-    ),
+    render: renderOwned(isEditing, onChangeAmount, onSaveChanges, 'amountOwnedFoil'),
     width: 110,
     align: 'center',
   },
@@ -117,7 +107,5 @@ export default (card, isEditing, onChangeAmount, onSaveChanges) => {
   const isMobile = getIsMobile();
   if (isMobile) return baseColumns;
 
-  return baseColumns.concat(
-    ownedColumns(card, isEditing, onChangeAmount, onSaveChanges)
-  );
+  return baseColumns.concat(ownedColumns(card, isEditing, onChangeAmount, onSaveChanges));
 };

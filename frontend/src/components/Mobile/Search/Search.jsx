@@ -5,11 +5,7 @@ import { withRouter } from 'react-router';
 import { useApolloClient } from 'react-apollo';
 import { useQueryParams, StringParam } from 'use-query-params';
 
-import {
-  LayoutAndSortPicker,
-  SearchButton,
-  Filter,
-} from '../../Elements/Shared';
+import { LayoutAndSortPicker, SearchButton, Filter } from '../../Elements/Shared';
 import { CardListMobile as CardList } from '../../Elements/Mobile';
 import Header from './Header';
 import { cardSearch } from './queries';

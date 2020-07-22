@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  ArrowUpOutlined,
-  ArrowDownOutlined,
-  MinusOutlined,
-} from '@ant-design/icons';
+import { ArrowUpOutlined, ArrowDownOutlined, MinusOutlined } from '@ant-design/icons';
 import { Statistic } from 'antd';
 import styled from 'styled-components';
 import DesktopTooltip from '../../Desktop/DesktopTooltip';
@@ -41,19 +37,13 @@ const getSpecificProps = development => {
 export default ({ small, title, value, referenceValue, suffix }) => {
   const absoluteDevelopment = value - referenceValue;
   const development = (absoluteDevelopment / referenceValue) * 100;
-  const absoluteDevelopmentValue = `${
-    absoluteDevelopment > 0 ? '+' : ''
-  }${Math.round(absoluteDevelopment)}${suffix || ' cards'}`;
+  const absoluteDevelopmentValue = `${absoluteDevelopment > 0 ? '+' : ''}${Math.round(
+    absoluteDevelopment
+  )}${suffix || ' cards'}`;
 
   return (
     <StyledWrapper small={small}>
-      <Statistic
-        loading
-        title={title}
-        value={value}
-        suffix={suffix}
-        precision={0}
-      />
+      <Statistic loading title={title} value={value} suffix={suffix} precision={0} />
       {typeof referenceValue === 'number' && (
         <DesktopTooltip title={absoluteDevelopmentValue} placement="bottom">
           <span>

@@ -7,8 +7,7 @@ export default ({ card, loading, isFlipped }) => {
   if (!card.oracle_text) return null;
 
   const cardFaces = card.oracle_text.split(/<\w+>/);
-  const cardFace =
-    isFlipped && cardFaces.length > 1 ? cardFaces[1] : cardFaces[0];
+  const cardFace = isFlipped && cardFaces.length > 1 ? cardFaces[1] : cardFaces[0];
 
   const cardLines = cardFace.split('\n').filter(Boolean);
 

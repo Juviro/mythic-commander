@@ -25,10 +25,7 @@ export default ({ card, loading }) => {
   return (
     <StyledWrapper isLegal={isLegal}>
       {isLegal ? <CheckOutlined /> : <CloseOutlined />}
-      <Typography.Text
-        style={{ marginLeft: 8 }}
-        type={isLegal ? undefined : 'danger'}
-      >
+      <Typography.Text style={{ marginLeft: 8 }} type={isLegal ? undefined : 'danger'}>
         {isLegal ? 'Legal in commander' : 'Not legal in commander'}
       </Typography.Text>
     </StyledWrapper>

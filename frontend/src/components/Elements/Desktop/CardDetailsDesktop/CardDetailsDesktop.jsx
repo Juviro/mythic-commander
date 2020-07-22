@@ -11,9 +11,7 @@ export default ({ card, initialCardId, loading, largeHeader }) => {
   }, [cardId]);
 
   const selectedCard =
-    card &&
-    card.allSets &&
-    card.allSets.find(({ id }) => id === selectedCardId);
+    card && card.allSets && card.allSets.find(({ id }) => id === selectedCardId);
   const fullCard = { ...card, ...selectedCard };
 
   return (

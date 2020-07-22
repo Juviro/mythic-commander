@@ -4,11 +4,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { LockOutlined, GlobalOutlined } from '@ant-design/icons';
 
 import Flex from '../Flex';
-import {
-  collectionVisibility,
-  changeCollectionVisibility,
-  getUser,
-} from './queries';
+import { collectionVisibility, changeCollectionVisibility, getUser } from './queries';
 import CopyableText from '../CopyableText';
 
 const VISIBILITY_OPTIONS = [
@@ -48,8 +44,8 @@ export default ({ style }) => {
     return (
       <div style={style}>
         <Typography.Text type="warning">
-          You need a username to share your collection. Please reload the page
-          to pick one.
+          You need a username to share your collection. Please reload the page to pick
+          one.
         </Typography.Text>
       </div>
     );

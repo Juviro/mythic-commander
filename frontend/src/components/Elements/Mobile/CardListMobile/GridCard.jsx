@@ -28,14 +28,7 @@ const StyledCardWrapper = styled.div`
   position: inherit;
 `;
 
-const GridCard = ({
-  moveToList,
-  isLarge,
-  card,
-  onClick,
-  onEditCard,
-  onDeleteCard,
-}) => {
+const GridCard = ({ moveToList, isLarge, card, onClick, onEditCard, onDeleteCard }) => {
   const imgSrc = getImageUrl(card.id, card.imgKey, 'normal');
   const [query] = useQueryParam('name', StringParam);
 

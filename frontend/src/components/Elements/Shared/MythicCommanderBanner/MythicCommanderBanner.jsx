@@ -44,9 +44,7 @@ const MythicCommanderBanner = ({
     >
       <StyledIcon src={icon} />
       <StyledTextWrapper hideWhenSmall={hideWhenSmall}>
-        <Typography.Text
-          style={{ fontSize, color: 'rgba(255, 255, 255, 0.8)' }}
-        >
+        <Typography.Text style={{ fontSize, color: 'rgba(255, 255, 255, 0.8)' }}>
           Mythic Commander
         </Typography.Text>
       </StyledTextWrapper>

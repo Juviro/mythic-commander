@@ -7,13 +7,7 @@ import keyCodes from '../../../../../constants/keyCodes';
 import { useToggle } from '../../../../Hooks';
 import { filterAndSortByQuery } from '../../../../../utils/cardFilter';
 
-const SelectFilter = ({
-  onChange,
-  options,
-  placeholder,
-  value = '',
-  onSearch,
-}) => {
+const SelectFilter = ({ onChange, options, placeholder, value = '', onSearch }) => {
   const inputRef = React.useRef(null);
   const unifiedOptions = options.map(option => {
     if (option.value) return option;
@@ -34,14 +28,13 @@ const SelectFilter = ({
     // eslint-disable-next-line
   }, [value]);
 
-  const filteredOptions = filterAndSortByQuery(
-    unifiedOptions,
-    currentValue
-  ).map(({ name, value: optionValue }) => (
-    <AutoComplete.Option value={optionValue} key={optionValue}>
-      {name}
-    </AutoComplete.Option>
-  ));
+  const filteredOptions = filterAndSortByQuery(unifiedOptions, currentValue).map(
+    ({ name, value: optionValue }) => (
+      <AutoComplete.Option value={optionValue} key={optionValue}>
+        {name}
+      </AutoComplete.Option>
+    )
+  );
 
   const onChangeInput = (inputValue = '') => {
     if (!inputValue) onChange('');

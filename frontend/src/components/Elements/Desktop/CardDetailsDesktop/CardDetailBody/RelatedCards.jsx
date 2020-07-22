@@ -6,9 +6,7 @@ import { PreviewCardImage, Flex } from '../../../Shared';
 export default ({ card, loading }) => {
   if (loading) return <Skeleton />;
   if (!card.relatedCards)
-    return (
-      <Typography.Text type="secondary">No related cards found</Typography.Text>
-    );
+    return <Typography.Text type="secondary">No related cards found</Typography.Text>;
 
   const relatedCards = card.relatedCards.filter(
     ({ oracle_id }) => oracle_id !== card.oracle_id

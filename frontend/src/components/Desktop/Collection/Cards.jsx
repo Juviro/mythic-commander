@@ -16,17 +16,12 @@ export default ({ isSidebarVisible }) => {
 
   const deleteByOracle = (selectedCardIds, numberOfCards) => {
     const oracleIds = selectedCardIds;
-    const numberOfCardsLabel =
-      numberOfCards > 1 ? `<b>${numberOfCards}</b> cards` : '';
+    const numberOfCardsLabel = numberOfCards > 1 ? `<b>${numberOfCards}</b> cards` : '';
 
     message(`Deleted ${numberOfCardsLabel} from your collection!`);
     mutate({
       variables: { oracleIds },
-      refetchQueries: [
-        'currentSnapshots',
-        'paginatedCollection',
-        'ownedCardNames',
-      ],
+      refetchQueries: ['currentSnapshots', 'paginatedCollection', 'ownedCardNames'],
     });
   };
 

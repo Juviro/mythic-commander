@@ -47,9 +47,7 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
   const [isOpen, toggleIsOpen] = useToggle(false);
   const { cards } = useContext(CardContext);
   const { data: ownedCardNamesData } = useQuery(getOwnedCardNames);
-  const ownedCardNames = ownedCardNamesData
-    ? ownedCardNamesData.ownedCardNames
-    : [];
+  const ownedCardNames = ownedCardNamesData ? ownedCardNamesData.ownedCardNames : [];
 
   const [query, setQuery] = useState('');
 
@@ -64,11 +62,8 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
     inputEl.current.blur();
     if (!oracleId) return;
 
-    const shouldReplace =
-      history.location.pathname.match(/\/cards\/.+/) && isMobile();
-    history[shouldReplace ? 'replace' : 'push'](
-      getDynamicUrl(`/cards/${oracleId}`)
-    );
+    const shouldReplace = history.location.pathname.match(/\/cards\/.+/) && isMobile();
+    history[shouldReplace ? 'replace' : 'push'](getDynamicUrl(`/cards/${oracleId}`));
   };
 
   const filteredCards = filterAndSortByQuery(cards, query);
@@ -87,10 +82,7 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
   const dataSource = [
     {
       label: (
-        <OptionGroupHeader
-          numberOfCards={filteredCards.length}
-          onShowAll={onShowAll}
-        />
+        <OptionGroupHeader numberOfCards={filteredCards.length} onShowAll={onShowAll} />
       ),
       options: slicedCards.map(renderOption(query)),
     },

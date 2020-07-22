@@ -76,11 +76,7 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption }) => {
     {
       title: 'Set',
       component: (
-        <SetSelection
-          onChange={onChangeOption('set')}
-          value={set}
-          onSearch={onSearch}
-        />
+        <SetSelection onChange={onChangeOption('set')} value={set} onSearch={onSearch} />
       ),
     },
     {
@@ -106,24 +102,16 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption }) => {
     },
     {
       title: 'Color Identity',
-      component: (
-        <ColorSelection onChange={onChangeOption('colors')} value={colors} />
-      ),
+      component: <ColorSelection onChange={onChangeOption('colors')} value={colors} />,
     },
     {
       title: 'Rarity',
-      component: (
-        <RarityFilter onChange={onChangeOption('rarity')} value={rarity} />
-      ),
+      component: <RarityFilter onChange={onChangeOption('rarity')} value={rarity} />,
     },
     {
       title: 'Cmc',
       component: (
-        <RangeFilter
-          value={cmc}
-          onSearch={onSearch}
-          onChange={onChangeOption('cmc')}
-        />
+        <RangeFilter value={cmc} onSearch={onSearch} onChange={onChangeOption('cmc')} />
       ),
     },
     {
@@ -157,9 +145,7 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption }) => {
     },
     {
       title: 'Owned',
-      component: (
-        <IsOwned onChange={onChangeOption('isOwned')} isOwned={isOwned} />
-      ),
+      component: <IsOwned onChange={onChangeOption('isOwned')} isOwned={isOwned} />,
     },
   ];
 

@@ -25,9 +25,7 @@ const getNextItem = (cardGrid, selectedCardOracleId, direction) => {
   const x = cardGrid.findIndex(columns =>
     columns.find(({ oracle_id }) => oracle_id === selectedCardOracleId)
   );
-  const y = cardGrid[x].findIndex(
-    ({ oracle_id }) => oracle_id === selectedCardOracleId
-  );
+  const y = cardGrid[x].findIndex(({ oracle_id }) => oracle_id === selectedCardOracleId);
   const lastColumnIndex = cardGrid.length - 1;
   const lastRowIndex = cardGrid[x].length - 1;
   const possibleNewPosition = getPossibleNewPosition(x, y, direction);
@@ -52,9 +50,7 @@ export default columns => {
     'deck.cards';
 
   const numberOfCards = sumBy(columns.flat(), ({ cards }) => cards.length);
-  const cardGrid = columns.map(column =>
-    column.map(({ cards }) => cards).flat()
-  );
+  const cardGrid = columns.map(column => column.map(({ cards }) => cards).flat());
 
   const moveSelected = direction => {
     const nextElement = getNextItem(cardGrid, selectedCardOracleId, direction);
@@ -70,11 +66,7 @@ export default columns => {
     ];
     // eslint-disable-next-line
     for (const direction of directions) {
-      const possibleNextElement = getNextItem(
-        cardGrid,
-        selectedCardOracleId,
-        direction
-      );
+      const possibleNextElement = getNextItem(cardGrid, selectedCardOracleId, direction);
       if (possibleNextElement.oracle_id !== selectedCardOracleId) {
         setSelectedCardOracleId(possibleNextElement.oracle_id);
         return;
@@ -84,12 +76,7 @@ export default columns => {
   };
 
   const onKeyDown = event => {
-    if (
-      isInputField(event) ||
-      isModifierKey(event) ||
-      !numberOfCards ||
-      !shortcutsActive
-    )
+    if (isInputField(event) || isModifierKey(event) || !numberOfCards || !shortcutsActive)
       return;
     let preventDefault = true;
 

@@ -20,12 +20,7 @@ export default ({ onChange: onSubmit, value = '' }) => {
   };
 
   return (
-    <Flex
-      direction="row"
-      wrap="wrap"
-      justify="space-between"
-      style={{ maxWidth: 300 }}
-    >
+    <Flex direction="row" wrap="wrap" justify="space-between" style={{ maxWidth: 300 }}>
       {RARITIES.map(rarityGroup => (
         <Flex direction="column" key={Math.random()}>
           {rarityGroup.map(rarity => (

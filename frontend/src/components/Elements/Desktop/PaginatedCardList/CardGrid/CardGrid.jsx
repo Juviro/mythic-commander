@@ -40,19 +40,13 @@ const CardGrid = ({
     pagination,
     selectedElementPosition,
     setSelectedElementPosition,
-  } = useGridShortcuts(
-    cardsPerRow,
-    toggleShowDetail,
-    numberOfCards,
-    blockShortcuts
-  );
+  } = useGridShortcuts(cardsPerRow, toggleShowDetail, numberOfCards, blockShortcuts);
 
   const selectedCard = cards[selectedElementPosition - 1];
-  useShortcut(
-    'ENTER',
-    onEnter && selectedCard ? () => onEnter(selectedCard) : null,
-    ['modal.cardDetails', 'deck.sidebar.add']
-  );
+  useShortcut('ENTER', onEnter && selectedCard ? () => onEnter(selectedCard) : null, [
+    'modal.cardDetails',
+    'deck.sidebar.add',
+  ]);
 
   const onClick = index => {
     toggleShowDetail(true);

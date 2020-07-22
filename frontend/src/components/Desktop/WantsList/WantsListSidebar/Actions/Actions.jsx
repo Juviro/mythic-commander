@@ -10,9 +10,7 @@ export default ({ wantsList }) => {
   const baseActions = [
     {
       key: 'export',
-      component: (
-        <ExportAsText title={wantsList.name} cards={wantsList.cards} />
-      ),
+      component: <ExportAsText title={wantsList.name} cards={wantsList.cards} />,
     },
     {
       key: 'proxy',

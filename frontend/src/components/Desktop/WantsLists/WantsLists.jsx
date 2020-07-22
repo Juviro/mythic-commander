@@ -3,10 +3,7 @@ import styled from 'styled-components';
 import { withRouter } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
-import {
-  wantsListsDesktop as getWantsLists,
-  createWantsListDesktop,
-} from './queries';
+import { wantsListsDesktop as getWantsLists, createWantsListDesktop } from './queries';
 import { splitWantsLists } from '../../Mobile/WantsLists/WantsLists';
 import { OverviewList, OverviewListHeader } from '../../Elements/Desktop';
 import { lightBackground } from '../../../constants/colors';
@@ -72,17 +69,9 @@ const Wants = ({ history }) => {
         buttonText="New Wants List"
         onEnter={onOpenFirstDeck}
       />
-      <OverviewList
-        loading={loading}
-        lists={unlinkedLists}
-        onClick={onOpenWantsList}
-      />
+      <OverviewList loading={loading} lists={unlinkedLists} onClick={onOpenWantsList} />
       {Boolean(linkedLists.length) && (
-        <OverviewList
-          loading={loading}
-          lists={linkedLists}
-          onClick={onOpenWantsList}
-        />
+        <OverviewList loading={loading} lists={linkedLists} onClick={onOpenWantsList} />
       )}
     </StyledWrapper>
   );

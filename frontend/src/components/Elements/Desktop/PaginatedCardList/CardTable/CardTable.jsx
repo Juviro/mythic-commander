@@ -61,11 +61,7 @@ const CardTable = ({
     pagination,
     selectedElementPosition,
     setSelectedElementPosition,
-  } = useTableShortcuts(
-    numberOfCards,
-    toggleShowDetail,
-    toggleElementSelection
-  );
+  } = useTableShortcuts(numberOfCards, toggleShowDetail, toggleElementSelection);
   const selectedCard = cards && cards[selectedElementPosition - 1];
 
   const onPressDelete = () => {
@@ -76,10 +72,7 @@ const CardTable = ({
     onDeleteCards(selectedCards);
   };
   useShortcut('BACKSPACE', !showDetails ? onPressDelete : null);
-  useShortcut(
-    'e',
-    !showDetails && onEditCard ? () => onEditCard(selectedCard) : null
-  );
+  useShortcut('e', !showDetails && onEditCard ? () => onEditCard(selectedCard) : null);
 
   // close modal when list changes
   useEffect(() => {
@@ -106,9 +99,7 @@ const CardTable = ({
 
   return (
     <div style={{ position: 'relative' }}>
-      <StyledButtonWrapper
-        isVisible={Boolean(selectedCards && selectedCards.length)}
-      >
+      <StyledButtonWrapper isVisible={Boolean(selectedCards && selectedCards.length)}>
         <Space>
           {onMoveCards && (
             <Button type="primary" ghost onClick={onMoveCards}>
@@ -141,8 +132,7 @@ const CardTable = ({
           showSizeChanger: true,
           responsive: true,
           position: ['topRight'],
-          showTotal: (total, range) =>
-            `${range[0]}-${range[1]} of ${total} cards`,
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} cards`,
         }}
         rowClassName={(_, index) => {
           if (index + 1 !== selectedElementPosition) return null;

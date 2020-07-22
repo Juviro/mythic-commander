@@ -88,10 +88,7 @@ const GridCard = ({
 }) => {
   const displayedAmount = card.amount || card.totalAmount;
   const [showMenu, toggleShowMenu] = useToggle();
-  useShortcut(
-    'BACKSPACE',
-    shortcutsActive && onDeleteCard ? onDeleteCard : null
-  );
+  useShortcut('BACKSPACE', shortcutsActive && onDeleteCard ? onDeleteCard : null);
   useShortcut('e', shortcutsActive && onEditCard ? onEditCard : null);
   const ref = useRef(null);
 

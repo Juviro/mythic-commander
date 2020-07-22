@@ -20,8 +20,7 @@ const filterByColor = (colorString = '') => ({ color_identity }) => {
   const isExclude = colorString.includes('-');
   const isExact = colorString.includes('x');
 
-  const checkForColor = color =>
-    color && filteredColors.includes(color.toLowerCase());
+  const checkForColor = color => color && filteredColors.includes(color.toLowerCase());
   const someMatches = !filteredColors || color_identity.some(checkForColor);
   const onlySelected = !filteredColors.length
     ? !color_identity.length
@@ -39,17 +38,13 @@ const filterByColor = (colorString = '') => ({ color_identity }) => {
 const filterByCreatureType = creatureType => ({ subTypes }) => {
   if (!creatureType) return true;
   if (!subTypes) return false;
-  return subTypes.some(
-    type => type.toLowerCase() === creatureType.toLowerCase()
-  );
+  return subTypes.some(type => type.toLowerCase() === creatureType.toLowerCase());
 };
 
 const filterByCardType = cardType => ({ primaryTypes }) => {
   if (!cardType) return true;
   if (!primaryTypes) return false;
-  return primaryTypes.some(
-    type => type.toLowerCase() === cardType.toLowerCase()
-  );
+  return primaryTypes.some(type => type.toLowerCase() === cardType.toLowerCase());
 };
 const filterByLegendary = isLegendary => ({ primaryTypes }) => {
   if (!isLegendary) return true;
@@ -106,9 +101,7 @@ export const sortCardsBySearch = (searchString = '') => (
 };
 
 export const filterAndSortByQuery = (cards, searchString) => {
-  return filterByName(cards, searchString).sort(
-    sortCardsBySearch(searchString)
-  );
+  return filterByName(cards, searchString).sort(sortCardsBySearch(searchString));
 };
 
 const sortByAdded = (cards, direction = 'asc') => {

@@ -10,11 +10,7 @@ const StyledPreview = styled.img`
 
 export default ({ elements, onClick, title }) => (
   <Collapse style={{ marginTop: 16 }}>
-    <Collapse.Panel
-      key="1"
-      header={`Add to ${title}...`}
-      className="no-padding-collapse"
-    >
+    <Collapse.Panel key="1" header={`Add to ${title}...`} className="no-padding-collapse">
       <List bordered className="hoverable">
         {elements.map(({ id, name, imgSrc }) => (
           <List.Item key={id} onClick={() => onClick(id, name)}>

@@ -10,11 +10,7 @@ export default ({ onChange: onSubmit, isOwned }) => {
   };
 
   return (
-    <Checkbox
-      onChange={onChange}
-      checked={isOwned}
-      style={{ width: 'fit-content' }}
-    >
+    <Checkbox onChange={onChange} checked={isOwned} style={{ width: 'fit-content' }}>
       Owned cards only
     </Checkbox>
   );

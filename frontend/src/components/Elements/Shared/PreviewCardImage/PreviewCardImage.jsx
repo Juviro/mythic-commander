@@ -20,12 +20,7 @@ const StyledPreviewWrapper = styled.div`
   height: ${({ height }) => height}px;
 `;
 
-const PreviewCardImage = ({
-  width = 36,
-  height = 48,
-  card,
-  highlightOnHover,
-}) => {
+const PreviewCardImage = ({ width = 36, height = 48, card, highlightOnHover }) => {
   const [cardPreviewOpen, toggleCardPreviewOpen] = useToggle(false);
   const [loading, toggleLoading] = useToggle(true);
   const { id, imgKey } = card;
@@ -36,15 +31,8 @@ const PreviewCardImage = ({
   };
 
   const previewImage = (
-    <StyledPreviewWrapper
-      width={width}
-      height={height}
-      onClick={onChangeIsOpen}
-    >
-      <StyledCard
-        src={getImageUrl(id, imgKey)}
-        onLoad={() => toggleLoading(false)}
-      />
+    <StyledPreviewWrapper width={width} height={height} onClick={onChangeIsOpen}>
+      <StyledCard src={getImageUrl(id, imgKey)} onLoad={() => toggleLoading(false)} />
       {loading && <CustomSkeleton.CardImage />}
     </StyledPreviewWrapper>
   );

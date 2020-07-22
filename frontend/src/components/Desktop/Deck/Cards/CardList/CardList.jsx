@@ -23,14 +23,9 @@ export default ({
   onDelete,
 }) => {
   const nameSuffix =
-    type !== 'Commander' || cards.length !== 1
-      ? `(${sumCardAmount(cards)})`
-      : '';
+    type !== 'Commander' || cards.length !== 1 ? `(${sumCardAmount(cards)})` : '';
   const title = `${type} ${nameSuffix}`;
-  const value = cards.reduce(
-    (acc, { minPrice, amount }) => acc + amount * minPrice,
-    0
-  );
+  const value = cards.reduce((acc, { minPrice, amount }) => acc + amount * minPrice, 0);
   const valueLabel = getPriceLabel(Math.ceil(value), { round: true });
 
   return (

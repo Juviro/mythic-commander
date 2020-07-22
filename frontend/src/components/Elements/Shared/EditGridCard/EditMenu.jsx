@@ -90,11 +90,7 @@ export default ({
             </StyledOption>
             <StyledOption>
               {isEditing && (
-                <SetPicker
-                  size={size}
-                  card={card}
-                  onSelect={onChangeProp('id')}
-                />
+                <SetPicker size={size} card={card} onSelect={onChangeProp('id')} />
               )}
             </StyledOption>
             <StyledOption>

@@ -23,13 +23,7 @@ const StyledSetName = styled.span`
   text-overflow: ellipsis;
 `;
 
-export default ({
-  card,
-  selectedCardId,
-  isEditing,
-  onChangeSet,
-  onChangeAmount,
-}) => {
+export default ({ card, selectedCardId, isEditing, onChangeSet, onChangeAmount }) => {
   const { sets } = useContext(CardContext);
   const { id, set, set_name, imgKey, amountOwned, amountOwnedFoil } = card;
   return (
@@ -44,10 +38,7 @@ export default ({
         backgroundColor: selectedCardId === id ? '#e4f0ff' : '',
       }}
     >
-      <Col
-        span={isEditing ? 11 : 16}
-        style={{ display: 'flex', alignItems: 'center' }}
-      >
+      <Col span={isEditing ? 11 : 16} style={{ display: 'flex', alignItems: 'center' }}>
         <StyledCardPreview src={getImageUrl(id, imgKey)} />
         <StyledSetIcon src={sets[set].icon_svg_uri} />
         <StyledSetName>{set_name}</StyledSetName>

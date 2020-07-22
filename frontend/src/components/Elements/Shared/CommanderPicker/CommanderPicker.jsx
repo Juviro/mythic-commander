@@ -82,10 +82,7 @@ export default ({ deck }) => {
   const possibleFirstCommanders = deck.cards.filter(card =>
     ['Legendary', 'Creature'].every(type => card.primaryTypes.includes(type))
   );
-  const possibleSecondCommanders = getSecondCommanders(
-    deck.cards,
-    firstCommander
-  );
+  const possibleSecondCommanders = getSecondCommanders(deck.cards, firstCommander);
 
   if (!commanders.length && !isEditing) {
     return (

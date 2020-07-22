@@ -14,10 +14,7 @@ const Menu = () => {
   return (
     <>
       <NavBar onToggleDrawer={onToggleDrawer} />
-      <Drawer
-        isVisible={isDrawerOpen}
-        onCloseDrawer={() => toggleIsDrawerOpen(false)}
-      />
+      <Drawer isVisible={isDrawerOpen} onCloseDrawer={() => toggleIsDrawerOpen(false)} />
     </>
   );
 };
