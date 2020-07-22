@@ -8,12 +8,9 @@ const CARD_FIELDS = `
     card {
       id
       name
-      set
       imgKey
       oracle_id
-      cmc
       set_name
-      mana_cost
       color_identity
       possiblePartner
       
@@ -37,7 +34,7 @@ const DECK_FIELDS = `
     imgSrc
     numberOfCards
     cards {
-    ${CARD_FIELDS}
+      ${CARD_FIELDS}
     }
 `;
 
