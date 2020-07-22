@@ -14,11 +14,7 @@ export default ({ card, loading, isFlipped }) => {
   return (
     <Row style={{ width: '100%' }}>
       <StyledColumn span={9}>
-        <Flex
-          direction="column"
-          justify="space-between"
-          style={{ height: '100%' }}
-        >
+        <Flex direction="column" justify="space-between" style={{ height: '100%' }}>
           <span>
             <Divider>Oracle Text & Rules</Divider>
             <OracleText card={card} loading={loading} isFlipped={isFlipped} />

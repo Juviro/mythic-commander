@@ -29,9 +29,7 @@ export default ({
         onFocus={event => event.target.select()}
         type="number"
         style={{ width: 50 }}
-        onChange={e =>
-          onChangeAmount(Number(e.target.value) || 0, card.id, amountKey)
-        }
+        onChange={e => onChangeAmount(Number(e.target.value) || 0, card.id, amountKey)}
         onPressEnter={onPressEnter}
         defaultValue={displayedAmount}
         onClick={e => e.stopPropagation()}
@@ -39,9 +37,5 @@ export default ({
     );
   }
 
-  return (
-    <span>
-      {amountLabel && <Typography.Text>{amountLabel}</Typography.Text>}
-    </span>
-  );
+  return <span>{amountLabel && <Typography.Text>{amountLabel}</Typography.Text>}</span>;
 };

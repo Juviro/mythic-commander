@@ -26,10 +26,7 @@ export default ({ title, cards, visible, hideAmount }) => {
   const [exportViewOpen, toggleExportViewOpen] = useToggle(visible);
   const [showAmount, setShowAmount] = useLocalStorage('showAmount', true);
   const cardNameList = cards
-    .map(
-      ({ amount, name }) =>
-        `${showAmount && !hideAmount ? `${amount} ` : ''}${name}`
-    )
+    .map(({ amount, name }) => `${showAmount && !hideAmount ? `${amount} ` : ''}${name}`)
     .join('\n');
 
   const onDownloadAsText = () => downloadAsTxt(cardNameList, title);
@@ -49,10 +46,7 @@ export default ({ title, cards, visible, hideAmount }) => {
         style={{ top: 20 }}
         focusId="modal.exportAsText"
       >
-        <Flex
-          justify="space-between"
-          style={{ marginBottom: 16, fontSize: 16 }}
-        >
+        <Flex justify="space-between" style={{ marginBottom: 16, fontSize: 16 }}>
           <Typography.Paragraph
             copyable={{ text: cardNameList }}
             style={{ marginBottom: 0 }}

@@ -36,10 +36,7 @@ export default ({ deck, loading }) => {
   const numberOfCards = `${getNumberOfCards(deck.cards)} cards ${
     numberOfUnowned ? `(${numberOfUnowned} not owned)` : ''
   }`;
-  const totalValue = (deck.cards || []).reduce(
-    (acc, val) => acc + val.minPrice,
-    0
-  );
+  const totalValue = (deck.cards || []).reduce((acc, val) => acc + val.minPrice, 0);
   const unownedValue = (deck.cards || []).reduce(
     (acc, val) => (val.owned ? acc : acc + val.minPrice),
     0

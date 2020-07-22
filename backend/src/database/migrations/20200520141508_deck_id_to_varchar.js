@@ -1,5 +1,5 @@
 export const up = async knex => {
-  await knex.schema.raw('DROP VIEW "cardToDeckWithOracle"');
+  await knex.schema.raw('DROP VIEW IF EXISTS "cardToDeckWithOracle"');
 
   await knex.schema.raw(
     'ALTER TABLE "wantsLists" DROP CONSTRAINT wantslists_deckid_foreign;'

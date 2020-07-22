@@ -1,11 +1,7 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
 
-import {
-  WithFullList,
-  PaginatedCardList,
-  WithActions,
-} from '../../Elements/Desktop';
+import { WithFullList, PaginatedCardList, WithActions } from '../../Elements/Desktop';
 import message from '../../../utils/message';
 import {
   deleteFromWantsListDesktop,
@@ -19,9 +15,7 @@ export default ({ cards, loading, widthOffset, wantsList }) => {
 
   const deleteByOracle = (oracleIds, numberOfCards) => {
     const cardsLabel = numberOfCards > 1 ? 'cards' : 'card';
-    message(
-      `Deleted <b>${numberOfCards}</b> ${cardsLabel} from ${wantsList.name}!`
-    );
+    message(`Deleted <b>${numberOfCards}</b> ${cardsLabel} from ${wantsList.name}!`);
     mutateDelete({
       variables: { oracleIds, wantsListId: wantsList.id },
     });

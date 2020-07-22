@@ -49,10 +49,7 @@ export const getCardByOracleId = gql`
 `;
 
 export const addCardsToWantsList = gql`
-  mutation addCardsToWantsList(
-    $cards: [CardInputType!]!
-    $wantsListId: String!
-  ) {
+  mutation addCardsToWantsList($cards: [CardInputType!]!, $wantsListId: String!) {
     addCardsToWantsList(cards: $cards, wantsListId: $wantsListId) {
       id
       card {

@@ -86,19 +86,11 @@ export default ({ deck, loading, currentTab, onAddCards }) => {
     <StyledWrapper isFocused={isFocused}>
       <DropZone onAddCards={onAddCards}>
         {cardColumns.length ? (
-          <Flex
-            direction="row"
-            wrap="wrap"
-            style={{ padding: 8, width: 'fit-content' }}
-          >
+          <Flex direction="row" wrap="wrap" style={{ padding: 8, width: 'fit-content' }}>
             <CardLists columns={cardColumns} deck={deck} />
           </Flex>
         ) : (
-          <Flex
-            justify="center"
-            align="center"
-            style={{ width: '100%', marginTop: 120 }}
-          >
+          <Flex justify="center" align="center" style={{ width: '100%', marginTop: 120 }}>
             <Empty description="No Cards" />
           </Flex>
         )}

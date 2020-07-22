@@ -60,13 +60,7 @@ const StyledCard = styled.div`
       : ''}
 `;
 
-const Card = ({
-  card,
-  isSelected,
-  onOpenDetails,
-  setSelectedCardOracleId,
-  onDelete,
-}) => {
+const Card = ({ card, isSelected, onOpenDetails, setSelectedCardOracleId, onDelete }) => {
   const { focusedElement } = useContext(FocusContext);
   const isFocused = focusedElement !== 'deck.sidebar';
 
@@ -91,11 +85,7 @@ const Card = ({
         <AmountBadge amount={card.amount} />
       </StyledCard>
       {selected && (
-        <CardMenu
-          card={card}
-          onOpenDetails={onOpenDetails}
-          onDelete={onDelete}
-        />
+        <CardMenu card={card} onOpenDetails={onOpenDetails} onDelete={onDelete} />
       )}
     </StyledWrapper>
   );

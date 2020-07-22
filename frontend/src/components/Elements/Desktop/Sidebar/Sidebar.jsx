@@ -12,10 +12,8 @@ const StyledWrapper = styled.div`
   position: relative;
   transition: all 0.2s;
   will-change: margin-left;
-  box-shadow: ${({ isVisible }) =>
-    isVisible ? '5px 0 5px -5px #333' : 'none'};
-  margin-left: ${({ isVisible, marginLeft }) =>
-    isVisible ? 0 : -marginLeft}px;
+  box-shadow: ${({ isVisible }) => (isVisible ? '5px 0 5px -5px #333' : 'none')};
+  margin-left: ${({ isVisible, marginLeft }) => (isVisible ? 0 : -marginLeft)}px;
 `;
 
 const StyledToggleWrapper = styled.div`

@@ -74,11 +74,7 @@ export default ({ onEditCard, deleteByOracle, children, ...props }) => {
         numberOfSelectedCards={numberOfSelectedCards}
       />
       {showEditModal && (
-        <EditCardModal
-          onEdit={onEditCard}
-          card={selectedCards[0]}
-          onCancel={onCancel}
-        />
+        <EditCardModal onEdit={onEditCard} card={selectedCards[0]} onCancel={onCancel} />
       )}
     </>
   );

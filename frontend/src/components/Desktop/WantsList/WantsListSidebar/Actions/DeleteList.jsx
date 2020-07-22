@@ -33,11 +33,7 @@ const DeleteList = ({ wantsList: { id: wantsListId, name }, history }) => {
         Delete
       </Button>
       {isDeleting && (
-        <ConfirmDelete
-          onCancel={toggleisDeleting}
-          onOk={onDeleteList}
-          text={text}
-        />
+        <ConfirmDelete onCancel={toggleisDeleting} onOk={onDeleteList} text={text} />
       )}
     </>
   );

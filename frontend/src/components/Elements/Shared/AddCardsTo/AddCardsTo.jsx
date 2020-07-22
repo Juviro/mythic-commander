@@ -16,13 +16,7 @@ import {
 import sumCardAmount from '../../../../utils/sumCardAmount';
 import FocusedModal from '../FocusedModal';
 
-export default ({
-  onCancel,
-  onSubmit,
-  cardsToAdd,
-  numberOfSelectedCards,
-  visible,
-}) => {
+export default ({ onCancel, onSubmit, cardsToAdd, numberOfSelectedCards, visible }) => {
   const { data, loading } = useQuery(allLists, { fetchPolicy: 'network-only' });
   const [addToDeck] = useMutation(addCardsToDeckDesktop);
   const [addToWantsList] = useMutation(addCardsToWantsListDesktop);
@@ -38,9 +32,7 @@ export default ({
       variables: { cards: formattedCards, deckId },
     });
     onSubmit();
-    message(
-      `Added <b>${numberOfSelectedCards}</b> cards to <b>${deckName}</b>!`
-    );
+    message(`Added <b>${numberOfSelectedCards}</b> cards to <b>${deckName}</b>!`);
   };
   const onAddToWantsList = (wantsListId, wantsListName) => {
     addToWantsList({
@@ -53,17 +45,13 @@ export default ({
       ],
     });
     onSubmit();
-    message(
-      `Added <b>${numberOfSelectedCards}</b> cards to <b>${wantsListName}</b>!`
-    );
+    message(`Added <b>${numberOfSelectedCards}</b> cards to <b>${wantsListName}</b>!`);
   };
   const onAddToCollection = cards => {
-    const formattedCollectionCards = cards.map(
-      ({ id, amount, totalAmount }) => ({
-        id,
-        amount: amount || totalAmount || 1,
-      })
-    );
+    const formattedCollectionCards = cards.map(({ id, amount, totalAmount }) => ({
+      id,
+      amount: amount || totalAmount || 1,
+    }));
     addToCollection({
       variables: { cards: formattedCollectionCards },
       refetchQueries: ['paginatedCollection', 'ownedCardNames'],
@@ -85,9 +73,7 @@ export default ({
         <Collapse>
           <Collapse.Panel
             key="1"
-            header={
-              numberOfSelectedCards && `${numberOfSelectedCards} cards selected`
-            }
+            header={numberOfSelectedCards && `${numberOfSelectedCards} cards selected`}
           >
             <SimpleCardsList cards={cardsToAdd} />
           </Collapse.Panel>

@@ -105,11 +105,7 @@ export default ({ card, loading, selectedCardId, onChangeSet, showTitle }) => {
           </Typography.Title>
         )}
       </StyledTitleWrapper>
-      <EditIcon
-        onClick={onToggleEdit}
-        isEditing={isEditing}
-        onDiscard={onDiscard}
-      />
+      <EditIcon onClick={onToggleEdit} isEditing={isEditing} onDiscard={onDiscard} />
       <CardSetOverview
         card={card}
         loading={loading}

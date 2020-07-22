@@ -50,9 +50,7 @@ export default ({ onChange, value = '' }) => {
 
   const onSelectColor = letter => {
     const isSelected = isColorSelected(letter);
-    const newColors = isSelected
-      ? value.replace(letter, '')
-      : addColor(value, letter);
+    const newColors = isSelected ? value.replace(letter, '') : addColor(value, letter);
     onChange(newColors);
   };
 

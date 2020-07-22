@@ -9,14 +9,7 @@ import {
 import FilteredCardList from '../CardListMobile/FilteredCardList';
 import { wantsListsForDeckMobile } from '../../../Mobile/Deck/LinkedWants/queries';
 
-export default ({
-  cards,
-  loading,
-  rawWantsList,
-  hideFooter,
-  moveToList,
-  deckId,
-}) => {
+export default ({ cards, loading, rawWantsList, hideFooter, moveToList, deckId }) => {
   const wantsListId = rawWantsList && rawWantsList.id;
   const [mutateDelete] = useMutation(deleteFromWantsList);
   const [mutateEdit] = useMutation(editWantsListCard);

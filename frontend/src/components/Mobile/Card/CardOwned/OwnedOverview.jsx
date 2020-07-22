@@ -87,9 +87,7 @@ export default ({ cardOracleId, cards, onChangeSet, selectedCardId }) => {
     Object.keys(editedMap).length + Object.keys(addedMap).length
   );
 
-  const displayedCardIds = ownedCards
-    .map(({ id }) => id)
-    .concat(Object.keys(addedMap));
+  const displayedCardIds = ownedCards.map(({ id }) => id).concat(Object.keys(addedMap));
   const unlistedSets = cards.filter(({ id }) => !displayedCardIds.includes(id));
 
   return (

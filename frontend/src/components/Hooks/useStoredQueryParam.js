@@ -16,10 +16,7 @@ export default (key, paramType) => {
     throw new Error('param or initial value missing');
   }
 
-  const [storedValue, setStoredValue] = useLocalStorage(
-    key,
-    initialValues[key]
-  );
+  const [storedValue, setStoredValue] = useLocalStorage(key, initialValues[key]);
   const [value, setValue] = useQueryParam(key, paramType);
 
   useEffect(() => {

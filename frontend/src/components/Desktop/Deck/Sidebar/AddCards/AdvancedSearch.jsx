@@ -77,9 +77,7 @@ export default ({ onAddCards, alreadyInDeck }) => {
               isFilterResettable={Object.values(currentOptions).some(Boolean)}
               style={{ marginBottom: 8 }}
             />
-            {isSearching && (
-              <CurrentSearchOptions style={{ marginTop: 8 }} showDivider />
-            )}
+            {isSearching && <CurrentSearchOptions style={{ marginTop: 8 }} showDivider />}
             <Divider />
             <StyledCardWrapper>
               {isSearching && (

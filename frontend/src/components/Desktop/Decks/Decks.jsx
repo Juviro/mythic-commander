@@ -71,11 +71,7 @@ const Wants = ({ history }) => {
         buttonText="New Deck"
         onEnter={onOpenFirstDeck}
       />
-      <OverviewList
-        loading={loading}
-        lists={filteredDecks}
-        onClick={onOpenDeck}
-      />
+      <OverviewList loading={loading} lists={filteredDecks} onClick={onOpenDeck} />
     </StyledWrapper>
   );
 };

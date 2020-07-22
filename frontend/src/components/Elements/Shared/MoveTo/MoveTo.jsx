@@ -8,11 +8,7 @@ import { useToggle } from '../../../Hooks';
 import Spinner from '../Spinner';
 import Sublist from './Sublist';
 
-export default ({
-  moveToList,
-  onClose,
-  card: { id: cardId, name: cardName },
-}) => {
+export default ({ moveToList, onClose, card: { id: cardId, name: cardName } }) => {
   const { list, originType, originId } = moveToList;
   const [mutate] = useMutation(moveCard);
   const [isMoving, toggleIsMoving] = useToggle();
@@ -33,8 +29,7 @@ export default ({
       },
       errorPolicy: 'ignore',
     });
-    const targetListName =
-      targetType === 'DECK' ? 'the deck' : `<b>${targetName}</b>`;
+    const targetListName = targetType === 'DECK' ? 'the deck' : `<b>${targetName}</b>`;
 
     if (data) {
       message(`Moved <b>${cardName}</b> to ${targetListName}!`);
@@ -49,11 +44,7 @@ export default ({
         <Spinner />
       ) : (
         <>
-          <Sublist
-            title="Decks"
-            elements={list.decks}
-            onClick={onMove('DECK')}
-          />
+          <Sublist title="Decks" elements={list.decks} onClick={onMove('DECK')} />
           <Sublist
             title="Wants"
             elements={list.wantsLists}

@@ -1,10 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  primary,
-  primaryHover,
-  primaryActive,
-} from '../../../../../constants/colors';
+import { primary, primaryHover, primaryActive } from '../../../../../constants/colors';
 
 const StyledTab = styled.div`
   width: 40px;

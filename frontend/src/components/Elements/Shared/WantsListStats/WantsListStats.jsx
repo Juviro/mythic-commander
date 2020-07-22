@@ -15,9 +15,7 @@ export default ({ wantsList }) => {
   return (
     <Descriptions style={{ marginLeft: 8 }} column={1}>
       <Descriptions.Item label="Total Cards">{numberOfCards}</Descriptions.Item>
-      <Descriptions.Item label="Unique Cards">
-        {numberOfUniqueCards}
-      </Descriptions.Item>
+      <Descriptions.Item label="Unique Cards">{numberOfUniqueCards}</Descriptions.Item>
       <Descriptions.Item label="Total costs">
         {getPriceLabel(wantsListValue)}
       </Descriptions.Item>

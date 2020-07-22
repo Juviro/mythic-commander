@@ -3,14 +3,7 @@ import { Card, Input, Button, Tooltip } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Flex } from '../../Shared';
 
-export default ({
-  onEnter,
-  onAddList,
-  search,
-  setSearch,
-  loading,
-  buttonText,
-}) => {
+export default ({ onEnter, onAddList, search, setSearch, loading, buttonText }) => {
   return (
     <Card
       loading={loading}

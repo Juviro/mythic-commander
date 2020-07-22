@@ -31,9 +31,7 @@ export default ({ columns, deck }) => {
     if (!selectedCard) return;
     setIsDeleting(false);
     selectNextCard(null);
-    const newCards = deck.originalCards.filter(
-      card => card.id !== selectedCard.id
-    );
+    const newCards = deck.originalCards.filter(card => card.id !== selectedCard.id);
     const newNumberOfCards = deck.numberOfCards;
     mutateDelete({
       variables: { cardId: selectedCard.id, deckId: deck.id },

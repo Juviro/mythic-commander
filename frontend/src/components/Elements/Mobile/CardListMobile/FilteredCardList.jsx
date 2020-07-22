@@ -17,9 +17,7 @@ export default ({
   moveToList,
   name: nameQuery,
 }) => {
-  const [
-    { name, colors, layout, creatureType, cardType, isLegendary },
-  ] = useQueryParams({
+  const [{ name, colors, layout, creatureType, cardType, isLegendary }] = useQueryParams({
     name: StringParam,
     colors: StringParam,
     creatureType: StringParam,
@@ -27,10 +25,7 @@ export default ({
     isLegendary: StringParam,
     layout: StringParam,
   });
-  const [orderBy = 'added-desc'] = useStoredQueryParam(
-    'orderByAdvanced',
-    StringParam
-  );
+  const [orderBy = 'added-desc'] = useStoredQueryParam('orderByAdvanced', StringParam);
 
   const [displayedResults, setDisplayedResults] = useState(CARDS_PER_PAGE);
 

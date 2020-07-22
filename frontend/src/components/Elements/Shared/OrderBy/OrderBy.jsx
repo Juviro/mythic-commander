@@ -51,18 +51,15 @@ const COLLECTION_FILTER = [
 ];
 
 export default ({ showCollectionFilters, style }) => {
-  const orderOptions = showCollectionFilters
-    ? COLLECTION_FILTER
-    : DEFAULT_FILTER;
+  const orderOptions = showCollectionFilters ? COLLECTION_FILTER : DEFAULT_FILTER;
 
   const paramName = showCollectionFilters ? 'orderByAdvanced' : 'orderBy';
 
   const [orderBy, setOrderBy] = useStoredQueryParam(paramName, StringParam);
 
   const currentOptions =
-    orderOptions.find(
-      ({ value }) => value === (orderBy || orderOptions[0].value)
-    ) || orderOptions[0];
+    orderOptions.find(({ value }) => value === (orderBy || orderOptions[0].value)) ||
+    orderOptions[0];
 
   const currentValue = currentOptions.label;
 

@@ -44,9 +44,7 @@ export default (numberOfCards, toggleShowDetail, toggleElementSelection) => {
       onRight();
     } else {
       const elementsOnCurrentPage =
-        currentPage === numberOfPages
-          ? numberOfCards % pageSize || pageSize
-          : pageSize;
+        currentPage === numberOfPages ? numberOfCards % pageSize || pageSize : pageSize;
       setSelectedElementPosition(
         Math.min(selectedElementPosition + 1, elementsOnCurrentPage)
       );
@@ -54,12 +52,7 @@ export default (numberOfCards, toggleShowDetail, toggleElementSelection) => {
   };
 
   const onKeyDown = event => {
-    if (
-      !shortcutsActive ||
-      !numberOfCards ||
-      isInputField(event) ||
-      isModifierKey(event)
-    )
+    if (!shortcutsActive || !numberOfCards || isInputField(event) || isModifierKey(event))
       return;
     let preventDefault = true;
 

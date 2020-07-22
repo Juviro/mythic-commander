@@ -19,12 +19,7 @@ const StyledImageWrapper = styled.div`
   border-radius: 4%;
 `;
 
-export default ({
-  loading,
-  card,
-  hideFlipIcon,
-  onFlipCard: onFlipCardCallback,
-}) => {
+export default ({ loading, card, hideFlipIcon, onFlipCard: onFlipCardCallback }) => {
   const { id, imgKey, isTwoFaced } = card || {};
   const [isFlipped, toggleIsFlipped] = useToggle(false);
   const [showHighResImage, toggleShowHighResImage] = useToggle(false);
@@ -67,11 +62,7 @@ export default ({
     toggleIsFlipped();
   };
 
-  const frontImgSrc = getImageUrl(
-    id,
-    imgKey,
-    showHighResImage ? 'normal' : 'small'
-  );
+  const frontImgSrc = getImageUrl(id, imgKey, showHighResImage ? 'normal' : 'small');
 
   return (
     <StyledImageWrapper>

@@ -20,5 +20,6 @@
 
 ###Dump db
 
-- dump
-- restore: `pg_restore --clean -d mtg --no-owner --role=juviro --no-privileges --no-owner < prod.latest``
+- dump prod db: `pg_dump -h mtg.cr9n9thq5jyt.eu-central-1.rds.amazonaws.com -U hauke -f dump.sql mtg`
+- create db locally: `createdb mtg`
+- import locally: `psql -d mtg -f dump.sql`

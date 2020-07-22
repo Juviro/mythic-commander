@@ -40,9 +40,7 @@ export default ({ card, large, cardId }) => {
 
   const { containingWantsLists } = card;
 
-  const dataSource = containingWantsLists.sort((a, b) =>
-    a.name > b.name ? 1 : -1
-  );
+  const dataSource = containingWantsLists.sort((a, b) => (a.name > b.name ? 1 : -1));
 
   return (
     <StyledWrapper>

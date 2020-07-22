@@ -50,10 +50,7 @@ export default ({
   });
   const width = `calc(100% - ${widthOffset}px)`;
 
-  const { cardsPerRow, numberOfRows, cardWidth } = useNumberOfCards(
-    widthOffset,
-    zoom
-  );
+  const { cardsPerRow, numberOfRows, cardWidth } = useNumberOfCards(widthOffset, zoom);
 
   useEffect(() => {
     if (!pageSize) {

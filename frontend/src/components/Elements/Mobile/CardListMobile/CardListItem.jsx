@@ -146,11 +146,7 @@ const CardListItem = ({
               style={{ display: 'flex', justifyContent: 'flex-end' }}
             >
               {isEditing ? (
-                <SetPicker
-                  width={150}
-                  card={card}
-                  onSelect={onChangeProp('id')}
-                />
+                <SetPicker width={150} card={card} onSelect={onChangeProp('id')} />
               ) : (
                 owned && <OwnedBadge marginLeft={0} />
               )}

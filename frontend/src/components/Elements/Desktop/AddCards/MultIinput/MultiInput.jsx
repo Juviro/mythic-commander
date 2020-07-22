@@ -1,9 +1,6 @@
 import React from 'react';
 import { Input, Tooltip, Button, Modal, message } from 'antd';
-import {
-  CheckCircleOutlined,
-  ExclamationCircleOutlined,
-} from '@ant-design/icons';
+import { CheckCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
 import {
   StyledWrapper,
@@ -44,21 +41,14 @@ export default class MultiInput extends React.Component {
     const oldValues = prevState.value.split('\n');
     let shouldUpdate = false;
     // prevents bug with pressing enter in an empty field
-    if (
-      !prevState.value.replace(/[\s]+/g, '') &&
-      !value.replace(/[\s]+/g, '')
-    ) {
+    if (!prevState.value.replace(/[\s]+/g, '') && !value.replace(/[\s]+/g, '')) {
       return;
     }
 
     const newCardResult = value.split('\n').map((row, index) => {
       if (row === oldValues[index]) return cardResults[index] || '';
       shouldUpdate = true;
-      if (
-        !row.replace(/[\s]+/g, '') ||
-        row.startsWith('//') ||
-        row.startsWith('SB')
-      ) {
+      if (!row.replace(/[\s]+/g, '') || row.startsWith('//') || row.startsWith('SB')) {
         return { name: NO_CARD };
       }
       // Removes sideboard indicators (currently filtered by the function above)
@@ -67,16 +57,11 @@ export default class MultiInput extends React.Component {
       const normalize = str =>
         str.toLowerCase().replace(/(^[sb:\s]*[\d]+x*|\/\/.+$|[.,'\s]+)/g, '');
       const normalizedRow = normalize(name);
-      const foundName = cardNames.find(
-        cardName => normalize(cardName) === normalizedRow
-      );
+      const foundName = cardNames.find(cardName => normalize(cardName) === normalizedRow);
       return { name: foundName, amount };
     });
 
-    if (
-      !shouldUpdate &&
-      newCardResult.length === prevState.value.split('\n').length
-    ) {
+    if (!shouldUpdate && newCardResult.length === prevState.value.split('\n').length) {
       return;
     }
 
@@ -98,9 +83,7 @@ export default class MultiInput extends React.Component {
       return;
     }
 
-    const cardNames = cardResults.filter(
-      ({ name }) => name && name !== NO_CARD
-    );
+    const cardNames = cardResults.filter(({ name }) => name && name !== NO_CARD);
     const cardIds = cardNames.map(({ name, amount }) => ({
       amount,
       id: cards.find(card => card.name === name).id,
@@ -156,10 +139,7 @@ export default class MultiInput extends React.Component {
                 {cardResults.map(({ name }) => (
                   <IconWrapper key={Math.random()}>
                     {name !== NO_CARD && (
-                      <Tooltip
-                        placement="right"
-                        title={name || 'Could not find card'}
-                      >
+                      <Tooltip placement="right" title={name || 'Could not find card'}>
                         {name ? (
                           <CheckCircleOutlined
                             style={{ color: 'green', marginLeft: 16 }}

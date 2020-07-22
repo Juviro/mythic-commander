@@ -15,11 +15,7 @@ export default ({ totalResults, loading, search }) => {
   }:`;
 
   return (
-    <Flex
-      direction="row"
-      justify="space-between"
-      style={{ margin: '0 16px 16px 6px' }}
-    >
+    <Flex direction="row" justify="space-between" style={{ margin: '0 16px 16px 6px' }}>
       <span>
         <Typography.Text style={{ fontSize: 16 }}>
           {boldText(displayedText)}

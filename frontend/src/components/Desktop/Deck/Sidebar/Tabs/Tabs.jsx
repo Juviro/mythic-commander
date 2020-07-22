@@ -30,16 +30,10 @@ export default ({ currentTab, setCurrentTab }) => {
     // },
   ];
 
-  const focusIds = [
-    'deck.sidebar.add',
-    'deck.sidebar.wants',
-    'deck.sidebar.stats',
-  ];
+  const focusIds = ['deck.sidebar.add', 'deck.sidebar.wants', 'deck.sidebar.stats'];
 
   const onOpenTab = key => {
-    const filteredFocus = focusedElements.filter(
-      focusId => !focusIds.includes(focusId)
-    );
+    const filteredFocus = focusedElements.filter(focusId => !focusIds.includes(focusId));
 
     if (key === currentTab) {
       setCurrentTab(null);

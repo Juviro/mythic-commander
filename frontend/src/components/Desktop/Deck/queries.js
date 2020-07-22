@@ -66,10 +66,7 @@ export const editDeckCardDesktop = gql`
 `;
 
 export const editDeckDesktop = gql`
-  mutation editDeckDesktop(
-    $deckId: String!
-    $newProperties: EditDeckFieldsInput!
-  ) {
+  mutation editDeckDesktop($deckId: String!, $newProperties: EditDeckFieldsInput!) {
     editDeck(deckId: $deckId, newProperties: $newProperties) {
       id
       name

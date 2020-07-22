@@ -42,9 +42,7 @@ const CardList = ({
 
   const onOpenDetailView = card => {
     setDetailCard(card);
-    history.push(
-      `${history.location.pathname}${history.location.search}#details`
-    );
+    history.push(`${history.location.pathname}${history.location.search}#details`);
   };
   const onCloseModal = () => setDetailCard(null);
 

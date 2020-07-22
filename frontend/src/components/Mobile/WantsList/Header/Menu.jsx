@@ -8,11 +8,7 @@ import {
 import { Dropdown, Menu, Popconfirm } from 'antd';
 import { withRouter } from 'react-router';
 import { useMutation } from 'react-apollo';
-import {
-  deleteWantsList,
-  duplicateWantsList,
-  unlinkWantsList,
-} from '../queries';
+import { deleteWantsList, duplicateWantsList, unlinkWantsList } from '../queries';
 import { wantsListsMobile as wantsLists } from '../../WantsLists/queries';
 import message from '../../../../utils/message';
 import { wantsListsForDeckMobile } from '../../Deck/LinkedWants/queries';
@@ -48,9 +44,7 @@ const WantsListMenu = ({ history, wantsList }) => {
         });
         if (!existing) return;
 
-        const newWantsLists = existing.wantsLists.filter(
-          ({ id }) => id !== wantsListId
-        );
+        const newWantsLists = existing.wantsLists.filter(({ id }) => id !== wantsListId);
 
         cache.writeQuery({
           query: wantsLists,

@@ -26,9 +26,7 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   width: 500px;
   margin-left: ${({ visible }) => (visible ? 0 : -500)}px;
-  transform: translateY(
-    -${({ currentTabIndex }) => (100 / 3) * currentTabIndex}%
-  );
+  transform: translateY(-${({ currentTabIndex }) => (100 / 3) * currentTabIndex}%);
 `;
 
 const StyledView = styled.div`
