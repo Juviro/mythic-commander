@@ -5,7 +5,7 @@ import { cachedCards, numberOfCachedCards } from './queries';
 
 const REFRESH_PERIOD = 24 * 60 * 60 * 1000;
 
-const FORCE_UPDATE_IF_BEFORE = 1595517037735;
+const FORCE_UPDATE_IF_BEFORE = 1595519240723;
 
 const getCards = async (currentCards = [], shouldForceUpdate) => {
   const {
@@ -24,11 +24,6 @@ const getCards = async (currentCards = [], shouldForceUpdate) => {
   return data.cachedCards || [];
 };
 
-const getSets = async () => {
-  const sets = await getAllSets();
-  return sets;
-};
-
 const updateCollection = async (
   type,
   collectionKey,
@@ -37,7 +32,7 @@ const updateCollection = async (
   shouldForceUpdate
 ) => {
   const getter = {
-    sets: getSets,
+    sets: getAllSets,
     cards: getCards,
     creatureTypes: getAllCreatureTypes,
   };

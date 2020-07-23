@@ -57,10 +57,9 @@ const updateCards = async (type, tableName) => {
   );
 };
 
-const dropNonPaperCards = tableName =>
+const dropSpecialCards = tableName =>
   knex(tableName)
-    .whereRaw(`NOT 'paper' = ANY(games)`)
-    .orWhereRaw(
+    .whereRaw(
       `
       NOT
       layout <> ALL ( ARRAY[
@@ -84,7 +83,7 @@ export default async () => {
 
   await updateCards('default_cards', 'cards');
   await updateCards('oracle_cards', 'distinctCards');
-  await dropNonPaperCards('distinctCards');
+  await dropSpecialCards('distinctCards');
 
   await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCardsPerSet"`);
 
