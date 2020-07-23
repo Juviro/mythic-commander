@@ -289,7 +289,12 @@ type Mutation {
   setUsername(username: String!): User!
   ########## Deck ##########
   createDeck: Deck!
-  addCardsToDeck(deckId: String!, cards: [CardInputType!]!): Deck!
+  addCardsToDeck(
+    deckId: String!
+    deckName: String
+    cards: [CardInputType!]!
+  ): Deck!
+
   editDeck(deckId: String!, newProperties: EditDeckFieldsInput!): Deck!
   editDeckCard(
     cardId: String!
