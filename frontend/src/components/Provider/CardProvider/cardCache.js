@@ -5,6 +5,8 @@ import { cachedCards, numberOfCachedCards } from './queries';
 
 const REFRESH_PERIOD = 24 * 60 * 60 * 1000;
 
+const FORCE_UPDATE_IF_BEFORE = 1595517037735;
+
 const getCards = async (currentCards = [], shouldForceUpdate) => {
   const {
     data: { numberOfCachedCards: updatedCardCount },
@@ -47,8 +49,6 @@ const updateCollection = async (
 
   return stored;
 };
-
-const FORCE_UPDATE_IF_BEFORE = 1592738198644;
 
 export const getCollectionFromCache = async type => {
   const lastUpdateKey = `lastUpdate-${type}`;
