@@ -10,34 +10,29 @@ export const CardContextProvider = ({ children }) => {
   const [creatureTypes, setCreatureTypes] = useState([]);
   const [sets, setSets] = useState({});
 
+  const getSets = async () => {
+    const allSets = await getCollectionFromCache('sets');
+    setSets(allSets);
+  };
+  const getCreatureTypes = async () => {
+    const allcreatureTypes = await getCollectionFromCache('creatureTypes');
+    setCreatureTypes(allcreatureTypes);
+  };
+  const getCards = async () => {
+    const allCards = await getCollectionFromCache('cards');
+    const fullCards = allCards.map(({ i, n, k, o }) => ({
+      id: i,
+      oracle_id: o,
+      name: n,
+      imgKey: k,
+    }));
+    setCards(fullCards);
+    setCardNames(fullCards.map(({ name }) => name));
+  };
+
   useEffect(() => {
-    const getSets = async () => {
-      const allSets = await getCollectionFromCache('sets');
-      setSets(allSets);
-    };
     getSets();
-  }, []);
-
-  useEffect(() => {
-    const getCreatureTypes = async () => {
-      const allcreatureTypes = await getCollectionFromCache('creatureTypes');
-      setCreatureTypes(allcreatureTypes);
-    };
     getCreatureTypes();
-  }, []);
-
-  useEffect(() => {
-    const getCards = async () => {
-      const allCards = await getCollectionFromCache('cards');
-      const fullCards = allCards.map(({ i, n, k, o }) => ({
-        id: i,
-        oracle_id: o,
-        name: n,
-        imgKey: k,
-      }));
-      setCards(fullCards);
-      setCardNames(fullCards.map(({ name }) => name));
-    };
     getCards();
   }, []);
 

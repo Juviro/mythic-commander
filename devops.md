@@ -2,12 +2,12 @@
 
 `sudo service nginx stop`
 `sudo certbot`
-`service nginx start`
+`sudo service nginx start`
 
 ###Nginx
 
 - located at `/etc/nginx/`
-- commands: `sudo service nginx start|stop|restart|status`
+- commands: `sudo service nginx start|stop|reload|restart|status`
 
 ###Yarn
 

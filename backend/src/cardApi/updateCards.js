@@ -57,23 +57,6 @@ const updateCards = async (type, tableName) => {
   );
 };
 
-const dropSpecialCards = tableName =>
-  knex(tableName)
-    .whereRaw(
-      `
-      NOT
-      layout <> ALL ( ARRAY[
-        'token', 
-        'double_faced_token', 
-        'emblem',
-        'planar',
-        'vanguard',
-        'scheme'
-      ])
-    `
-    )
-    .del();
-
 export default async () => {
   const start = Date.now();
   console.info(
@@ -82,9 +65,8 @@ export default async () => {
   );
 
   await updateCards('default_cards', 'cards');
-  await updateCards('oracle_cards', 'distinctCards');
-  await dropSpecialCards('distinctCards');
 
+  await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCards"`);
   await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCardsPerSet"`);
 
   console.info(

@@ -45,12 +45,12 @@ const updateCollection = async (
   return stored;
 };
 
-export const getCollectionFromCache = async type => {
+export const getCollectionFromCache = async (type, forceUpdate) => {
   const lastUpdateKey = `lastUpdate-${type}`;
   const collectionKey = `stored-${type}`;
 
   const lastUpdate = localStorage.getItem(lastUpdateKey);
-  const shouldForceUpdate = Number(lastUpdate) < FORCE_UPDATE_IF_BEFORE;
+  const shouldForceUpdate = forceUpdate || Number(lastUpdate) < FORCE_UPDATE_IF_BEFORE;
 
   const shouldUpdate =
     !lastUpdate || Date.now() - Number(lastUpdate) > REFRESH_PERIOD || shouldForceUpdate;
@@ -76,3 +76,13 @@ export const getCollectionFromCache = async type => {
 
   return updateCollection(type, collectionKey, lastUpdateKey);
 };
+
+const updateCache = async () => {
+  console.info('updating chache...');
+  await getCollectionFromCache('sets', true);
+  await getCollectionFromCache('creatureTypes', true);
+  await getCollectionFromCache('cards', true);
+  console.info('cache updated!');
+};
+
+window.updateCache = updateCache;
