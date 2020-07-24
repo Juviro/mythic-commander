@@ -1,7 +1,6 @@
 BUGFIXES:
     - "Added within" missing in collection
     - some names not correctly highlighted -> needs example
-    - when sorting by price high to low, cards are displayed with min price instead of max price
 
 CURRENT:
 
@@ -92,4 +91,4 @@ BACKLOG BUGFIXES:
     - collection: when one price is null, 0 is displayed even if one owned card has a value
     - add to collection mobile: after adding prev unowned card (gitrok monster), wrong minPrice in wantsList
     - mobile: collection -> card details view -> remove from collection -> back to collection: card not deleted
-    - open desktop wants -> go to collection -> add card -> go back to wants -> card not shown as owned in wants list
+    - when sorting by price high to low, cards are displayed with min price instead of max price

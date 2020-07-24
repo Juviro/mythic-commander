@@ -23,6 +23,7 @@ export default ({
   orderByParamName,
   showAddedBeforeFilter,
 }) => {
+  console.log('showAddedBeforeFilter :', showAddedBeforeFilter);
   const searchInputRef = useRef(null);
   const [currentSearch, setCurrentSearch] = useState('');
   const focusInput = () => searchInputRef.current.focus();

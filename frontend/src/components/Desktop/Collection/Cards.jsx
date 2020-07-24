@@ -45,6 +45,7 @@ export default ({ isSidebarVisible }) => {
               loading={loading}
               hiddenColumns={username ? null : ['owned']}
               cards={cards}
+              showAddedBeforeFilter
               widthOffset={widthOffset}
               numberOfCards={numberOfCards}
             />

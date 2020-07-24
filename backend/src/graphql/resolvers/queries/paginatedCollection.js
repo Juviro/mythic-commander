@@ -1,7 +1,17 @@
 import { getOrderColumn, addNameClause } from './cardSearch';
 
-export default async (db, userId, limit, offset, orderBy, search, allOwned) => {
+export default async (
+  db,
+  userId,
+  limit,
+  offset,
+  orderBy,
+  search,
+  addedWithin,
+  allOwned
+) => {
   const [order, direction = 'asc'] = orderBy.split('-');
+
   return db
     .with(
       'grouped',
@@ -32,6 +42,12 @@ export default async (db, userId, limit, offset, orderBy, search, allOwned) => {
     .from('grouped')
     .where(q => {
       if (search) addNameClause(q, search);
+    })
+    .where(q => {
+      if (addedWithin)
+        q.whereRaw(
+          `"createdAt" > current_date - interval '${addedWithin}' hour`
+        );
     })
     .limit(limit)
     .offset(offset)
