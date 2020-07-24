@@ -43,6 +43,7 @@ export default ({ loading, card, hideFlipIcon, onFlipCard: onFlipCardCallback })
     toggleShowHighResImage(false);
     if (frontLargeSrc) {
       const img = new Image();
+      img.crossorigin = true;
       img.src = frontLargeSrc;
       img.onload = () => {
         if (!isMounted) return;
