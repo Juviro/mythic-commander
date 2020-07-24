@@ -1,9 +1,12 @@
 BUGFIXES:
 
 CURRENT:
-    - lazy load images to improve rendering time of deck mobile
+    - improve loading time of deck
+    - redesign add cards modal:
+        - 
 
 NEXT:
+    - lazy load images to improve rendering time of deck mobile
     - prevent re-ordering card lists in decks view - maybe re-order when category added / removed
     - add shortcut to toggle focus ?
 
