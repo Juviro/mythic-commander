@@ -1,5 +1,4 @@
 BUGFIXES:
-    - some names not correctly highlighted -> atr scou -> special characters
 
 CURRENT:
 
