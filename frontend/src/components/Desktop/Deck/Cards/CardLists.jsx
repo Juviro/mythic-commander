@@ -11,7 +11,7 @@ import boldText from '../../../../utils/boldText';
 
 const getColumnKey = column => column.map(({ type }) => type).join('');
 
-export default ({ columns, deck }) => {
+export default ({ columns, deck, displayOwnedOnly }) => {
   const [showDetails, toggleShowDetail] = useToggle(false);
   const {
     selectedCardOracleId,
@@ -63,6 +63,7 @@ export default ({ columns, deck }) => {
               type={type}
               key={type}
               cards={cardGroup}
+              displayOwnedOnly={displayOwnedOnly}
               onDelete={onOpenDeleteModal}
               setSelectedCardOracleId={setSelectedCardOracleId}
               onOpenDetails={toggleShowDetail}

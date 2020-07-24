@@ -11,6 +11,7 @@ import unifyCardFormat from '../../../utils/unifyCardFormat';
 import { getDeckDesktop, addCardsToDeckDesktop } from './queries';
 import { Flex, ShortcutFocus } from '../../Elements/Shared';
 import sumCardAmount from '../../../utils/sumCardAmount';
+import { useToggle } from '../../Hooks';
 
 const StyledDeck = styled.div`
   width: 100%;
@@ -22,6 +23,7 @@ const StyledDeck = styled.div`
 export default () => {
   const { id } = useParams();
   const [currentTab, setCurrentTab] = useState(null);
+  const [displayOwnedOnly, toggleDisplayOwnedOnly] = useToggle();
   const { data, loading } = useQuery(getDeckDesktop, {
     variables: { id },
     fetchPolicy: 'network-only',
@@ -55,12 +57,18 @@ export default () => {
       />
       <ShortcutFocus focusId="deck.cards" style={{ overflow: 'auto', flex: 1 }}>
         <Flex style={{ marginLeft: 50 }} direction="column">
-          <Header deck={unifiedDeck} onAddCards={onAddCards} />
+          <Header
+            deck={unifiedDeck}
+            onAddCards={onAddCards}
+            displayOwnedOnly={displayOwnedOnly}
+            toggleDisplayOwnedOnly={toggleDisplayOwnedOnly}
+          />
           <Cards
             deck={unifiedDeck}
             loading={loading}
             currentTab={currentTab}
             onAddCards={onAddCards}
+            displayOwnedOnly={displayOwnedOnly}
           />
         </Flex>
       </ShortcutFocus>

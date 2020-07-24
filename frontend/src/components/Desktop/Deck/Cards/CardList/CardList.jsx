@@ -21,6 +21,7 @@ export default ({
   onOpenDetails,
   setSelectedCardOracleId,
   onDelete,
+  displayOwnedOnly,
 }) => {
   const nameSuffix =
     type !== 'Commander' || cards.length !== 1 ? `(${sumCardAmount(cards)})` : '';
@@ -42,6 +43,7 @@ export default ({
           {cards.map(card => (
             <Card
               card={card}
+              isTransparent={displayOwnedOnly && card.owned}
               onDelete={onDelete}
               key={card.id}
               setSelectedCardOracleId={setSelectedCardOracleId}

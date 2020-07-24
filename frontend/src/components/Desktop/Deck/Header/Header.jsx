@@ -15,7 +15,7 @@ const StyledWrapper = styled(Flex)`
   padding: 16px;
 `;
 
-export default ({ deck, onAddCards }) => {
+export default ({ deck, onAddCards, displayOwnedOnly, toggleDisplayOwnedOnly }) => {
   if (!deck) {
     return (
       <StyledWrapper>
@@ -32,7 +32,11 @@ export default ({ deck, onAddCards }) => {
       <Flex direction="row" justify="space-between">
         <Flex direction="row">
           <DeckImage deck={deck} />
-          <DeckStats deck={deck} />
+          <DeckStats
+            deck={deck}
+            displayOwnedOnly={displayOwnedOnly}
+            toggleDisplayOwnedOnly={toggleDisplayOwnedOnly}
+          />
         </Flex>
         <Flex direction="column" justify="space-between" align="flex-end">
           <DeckActions deck={deck} />

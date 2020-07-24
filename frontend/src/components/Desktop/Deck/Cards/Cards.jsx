@@ -62,7 +62,7 @@ const getCardColumns = (cards, numberOfCols) => {
   return cardColumns.filter(column => column.length);
 };
 
-export default ({ deck, loading, currentTab, onAddCards }) => {
+export default ({ deck, loading, currentTab, onAddCards, displayOwnedOnly }) => {
   const widthOffset = currentTab ? 500 : 0;
   useWindowSize();
   const { focusedElement } = useContext(FocusContext);
@@ -87,7 +87,11 @@ export default ({ deck, loading, currentTab, onAddCards }) => {
       <DropZone onAddCards={onAddCards}>
         {cardColumns.length ? (
           <Flex direction="row" wrap="wrap" style={{ padding: 8, width: 'fit-content' }}>
-            <CardLists columns={cardColumns} deck={deck} />
+            <CardLists
+              columns={cardColumns}
+              deck={deck}
+              displayOwnedOnly={displayOwnedOnly}
+            />
           </Flex>
         ) : (
           <Flex justify="center" align="center" style={{ width: '100%', marginTop: 120 }}>
