@@ -58,6 +58,7 @@ const StyledCard = styled.div`
     isSelected
       ? css`
           box-shadow: 0px 0px 6px 6px ${primary};
+          opacity: ${({ isTransparent }) => (isTransparent ? 0.6 : 1)};
         `
       : ''}
 `;
@@ -89,11 +90,7 @@ const Card = ({
   return (
     <StyledWrapper isSelected={selected}>
       <StyledScrollDummy ref={ref} />
-      <StyledCard
-        onClick={onClick}
-        isSelected={selected}
-        isTransparent={isTransparent && !isSelected}
-      >
+      <StyledCard onClick={onClick} isSelected={selected} isTransparent={isTransparent}>
         <FlippableCard card={card} hideFlipIcon={!selected} />
         <AmountBadge amount={card.amount} />
       </StyledCard>
