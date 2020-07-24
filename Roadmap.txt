@@ -1,7 +1,7 @@
 BUGFIXES:
 
 CURRENT:
-    - add option to show unowned cards in deck
+    - lazy load images to improve rendering time of deck mobile
 
 NEXT:
     - prevent re-ordering card lists in decks view - maybe re-order when category added / removed
