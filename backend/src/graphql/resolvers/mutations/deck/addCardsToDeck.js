@@ -14,7 +14,7 @@ export default async (
   { user: { id: userId }, db }
 ) => {
   if (deckName) {
-    const [id] = await db('wantsLists')
+    const [id] = await db('decks')
       .insert({ userId, name: deckName })
       .returning('id');
     deckId = id;

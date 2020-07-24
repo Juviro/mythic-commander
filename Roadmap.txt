@@ -1,12 +1,11 @@
 BUGFIXES:
-    - "Added within" missing in collection
     - some names not correctly highlighted -> needs example
 
 CURRENT:
 
 NEXT:
     - allow add to deck from cardDetails (mobile & desktop)
-    - update distinctCards
+
 
     - prevent re-ordering card lists in decks view - maybe re-order when category added / removed
     - add shortcut to toggle focus ?
@@ -24,18 +23,19 @@ IMPROVEMENTS:
     - remove space between proxies, slightly increase size
     - show which cards are not legal in deck
     - re-design moveTo modal
-    - wrap card table in affix ?
+     - wrap card table in affix ?
     - autofocus for deck sidebar input field
     - transition for inset shadow when focussing deck sidebar
 
 FEATURES:
-    - sharable collection / decks / wants
+    - sharable decks / wants
+    - add support for planeswalker commanders
     - show last search when no input in searchbar
-    - allow adding to deck from details modal (desktop, mobile)
+    - show if deck is legal in deck overview, order by legality (similar to magic arena)
 
 REFACTORINGS:
     - use AuthenticationError in authenticateUser, don't redirect in frontend
-    - evaluate removing some caching, using network only more
+    - evaluate removing some caching, using network-only more
     - drop table events
  
 BACKLOG:
@@ -80,6 +80,8 @@ BACKLOG:
     - rework advanced search:
         - add *unownedOnly*
         - show all current search options for advanced search 
+    - update distinctCards
+
 
 BACKLOG BUGFIXES:
     - sometimes rules of previously viewed cards displayed instead of current card

@@ -21,8 +21,7 @@ const StyledDeck = styled.div`
 
 export default () => {
   const { id } = useParams();
-  // const [currentTab, setCurrentTab] = useState('add');
-  const [currentTab, setCurrentTab] = useState(null); // TODO:
+  const [currentTab, setCurrentTab] = useState(null);
   const { data, loading } = useQuery(getDeckDesktop, {
     variables: { id },
     fetchPolicy: 'network-only',
