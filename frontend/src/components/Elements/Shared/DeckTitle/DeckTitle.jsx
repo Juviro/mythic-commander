@@ -7,7 +7,7 @@ import { editDeck } from './queries';
 const StyledTitleWrapper = styled.div`
   font-weight: 600;
   display: flex;
-  margin-right: 20px;
+  margin-left: 16px;
   justify-content: space-between;
   align-items: center;
   height: 50px;
@@ -43,7 +43,7 @@ export default ({ deck }) => {
       <Typography.Title
         ellipsis
         level={3}
-        style={{ marginBottom: 0 }}
+        style={{ marginBottom: 0, display: 'flex' }}
         editable={{ onChange: val => onChangeName(val || 'My Deck') }}
       >
         {deck.name}

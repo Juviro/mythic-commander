@@ -82,4 +82,8 @@ export default createGlobalStyle`
   .ant-divider-horizontal {
     margin: 16px 0px 32px !important;
   }
+  /* Prevent edit input field from jumping */
+  div.ant-typography-edit-content {
+    left: 0 !important;
+  }
 `;
