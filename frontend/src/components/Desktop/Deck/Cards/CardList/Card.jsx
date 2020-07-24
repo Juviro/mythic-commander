@@ -10,7 +10,7 @@ import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
 export const CARD_WIDTH = 220;
 const CARD_HEIGHT = CARD_WIDTH * 1.4;
 
-const ANIMATION_DURATION = 20;
+const ANIMATION_DURATION = 0;
 
 const StyledWrapper = styled.div`
   width: ${CARD_WIDTH}px;
