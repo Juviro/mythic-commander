@@ -1,7 +1,5 @@
 BUGFIXES:
     - "Added within" missing in collection
-    - cardname in find cards not selectable
-    - backspace in searchbar crashes client ? not reproducible
     - some names not correctly highlighted -> needs example
     - when sorting by price high to low, cards are displayed with min price instead of max price
 

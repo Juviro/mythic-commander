@@ -21,11 +21,11 @@ export default ({ wantedCards, distinctCards }) => {
 
   return (
     <Flex direction="column">
-      <Divider style={{ marginTop: 0 }}>Export</Divider>
+      <Divider style={{ marginTop: 0, marginBottom: 40 }}>Export</Divider>
       <ExportCards cards={distinctCards} />
       {Boolean(decks.length) && (
         <>
-          <Divider>Decks</Divider>
+          <Divider style={{ marginBottom: 40 }}>Decks</Divider>
           {decks.map(deck => (
             <CardsList key={deck.id} list={deck} />
           ))}
@@ -33,7 +33,7 @@ export default ({ wantedCards, distinctCards }) => {
       )}
       {Boolean(wantsLists.length) && (
         <>
-          <Divider>Wants</Divider>
+          <Divider style={{ marginBottom: 40 }}>Wants</Divider>
           {wantsLists.map(wantsList => (
             <CardsList key={wantsList.id} list={wantsList} />
           ))}
