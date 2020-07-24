@@ -8,7 +8,7 @@ export default ({ list: { name, cards } }) => {
   return (
     <List header={name} bordered style={{ marginBottom: 16 }} size="small">
       {cards.map(card => (
-        <List.Item key={card.id}>
+        <List.Item key={card.id} style={{ userSelect: 'text' }}>
           <Space>
             <PreviewCardImage card={card} highlightOnHover={!isMobile()} />
             <Typography.Text>{card.name}</Typography.Text>
