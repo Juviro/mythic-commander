@@ -26,6 +26,7 @@
     "http-status-codes": "^1.4.0",
     "knex": "^0.20.4",
     "koa": "^2.11.0",
+    "koa-session": "^6.0.0",
     "line-by-line": "^0.1.6",
     "lodash": "^4.17.15",
     "merge-graphql-schemas": "^1.5.8",

@@ -51,5 +51,5 @@ export default ({ list }) => {
     );
   }
 
-  return <StyledCover src={imgSrc} />;
+  return <StyledCover src={imgSrc} crossOrigin="" />;
 };
