@@ -1,6 +1,4 @@
 BUGFIXES:
-    - deck title not centered next to mana icons
-
     - "Added within" missing in collection
     - cardname in find cards not selectable
     - backspace in searchbar crashes client ? not reproducible
