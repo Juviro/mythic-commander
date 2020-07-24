@@ -70,12 +70,13 @@ const addRarityClause = (q, rarity) => {
 
 export const addNameClause = (q, name) => {
   const searchPattern = name
-    .replace(/[^a-zA-Z0-9\s]+/g, '')
+    // .replace(/[^a-zA-Z0-9\s]+/g, '')
     .split(' ')
     .join('%');
 
   q.whereRaw(
-    `REGEXP_REPLACE(name, '[^a-zA-Z0-9\\s]+', '', 'g') ILIKE '%${searchPattern}%'`
+    `name ILIKE '%${searchPattern}%'`
+    // `REGEXP_REPLACE(name, '[^a-zA-Z0-9\\s]+', '', 'g') ILIKE '%${searchPattern}%'`
   );
 };
 
