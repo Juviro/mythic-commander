@@ -12,6 +12,5 @@ export default async (_, { token }, { db }) => {
   const session = getSession(user.id);
   await db('sessions').insert(session);
 
-  // TODO: this should also return the user I guess
-  return { session: session.sessionId, user };
+  return { session: session.sessionId };
 };

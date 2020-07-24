@@ -77,4 +77,9 @@ export default createGlobalStyle`
   .ant-select-dropdown {
     max-width: 0;
   }
+
+  /* Fix bottom margin for divider, seems like their code for this changed */
+  .ant-divider-horizontal {
+    margin: 16px 0px 32px !important;
+  }
 `;
