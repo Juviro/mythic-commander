@@ -23,7 +23,6 @@ export default ({ card = {}, loading }) => {
         const rulingsUri = `https://api.scryfall.com/cards/${id}/rulings`;
         const response = await fetch(rulingsUri, {
           signal: abortController.signal,
-          crossorigin: true,
         });
         const { data } = await response.json();
         setRules(data);

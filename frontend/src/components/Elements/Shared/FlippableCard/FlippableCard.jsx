@@ -43,7 +43,6 @@ export default ({ loading, card, hideFlipIcon, onFlipCard: onFlipCardCallback })
     toggleShowHighResImage(false);
     if (frontLargeSrc) {
       const img = new Image();
-      img.crossOrigin = '';
       img.src = frontLargeSrc;
       img.onload = () => {
         if (!isMounted) return;
@@ -86,7 +85,6 @@ export default ({ loading, card, hideFlipIcon, onFlipCard: onFlipCardCallback })
       {!loading && (
         <img
           alt={card.name}
-          crossOrigin=""
           className="flippable-card"
           style={{
             opacity: opacity.interpolate(o => 1 - o),
