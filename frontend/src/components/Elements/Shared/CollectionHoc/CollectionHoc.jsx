@@ -6,8 +6,12 @@ import { paginatedCollection } from './queries';
 import unifyCardFormat from '../../../../utils/unifyCardFormat';
 
 export default ({ children, username }) => {
-  const [{ page = 1, pageSize = 0, orderByAdvanced = '' }, setParams] = useQueryParams({
+  const [
+    { page = 1, pageSize = 0, addedWithin, orderByAdvanced = '' },
+    setParams,
+  ] = useQueryParams({
     page: NumberParam,
+    addedWithin: NumberParam,
     pageSize: NumberParam,
     orderByAdvanced: StringParam,
   });
@@ -18,6 +22,7 @@ export default ({ children, username }) => {
       limit: pageSize,
       offset,
       orderBy: orderByAdvanced,
+      addedWithin,
       search,
       username,
     },

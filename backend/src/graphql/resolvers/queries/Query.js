@@ -57,7 +57,7 @@ const resolver = {
   },
   async paginatedCollection(
     _,
-    { limit, offset, orderBy, search, username },
+    { limit, offset, orderBy, search, username, addedWithin },
     { db, user: { id: userId } }
   ) {
     let collectionUserId = userId;
@@ -78,6 +78,7 @@ const resolver = {
       offset,
       orderBy,
       search,
+      addedWithin,
       !username
     );
     const amountUnique = cards.length ? cards[0].amountUnique : 0;
