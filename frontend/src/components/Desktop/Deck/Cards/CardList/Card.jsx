@@ -52,6 +52,8 @@ const StyledCard = styled.div`
   border: 1px solid black;
   overflow: hidden;
   position: relative;
+  opacity: ${({ isTransparent }) => (isTransparent ? 0.1 : 1)};
+  transition: opacity 0.5s;
   ${({ isSelected }) =>
     isSelected
       ? css`
@@ -60,7 +62,14 @@ const StyledCard = styled.div`
       : ''}
 `;
 
-const Card = ({ card, isSelected, onOpenDetails, setSelectedCardOracleId, onDelete }) => {
+const Card = ({
+  card,
+  isSelected,
+  onOpenDetails,
+  setSelectedCardOracleId,
+  onDelete,
+  isTransparent,
+}) => {
   const { focusedElement } = useContext(FocusContext);
   const isFocused = focusedElement !== 'deck.sidebar';
 
@@ -80,7 +89,11 @@ const Card = ({ card, isSelected, onOpenDetails, setSelectedCardOracleId, onDele
   return (
     <StyledWrapper isSelected={selected}>
       <StyledScrollDummy ref={ref} />
-      <StyledCard onClick={onClick} isSelected={selected}>
+      <StyledCard
+        onClick={onClick}
+        isSelected={selected}
+        isTransparent={isTransparent && !isSelected}
+      >
         <FlippableCard card={card} hideFlipIcon={!selected} />
         <AmountBadge amount={card.amount} />
       </StyledCard>
@@ -93,6 +106,7 @@ const Card = ({ card, isSelected, onOpenDetails, setSelectedCardOracleId, onDele
 
 const areEqual = (prevProps, nextProps) => {
   if (prevProps.isSelected !== nextProps.isSelected) return false;
+  if (prevProps.isTransparent !== nextProps.isTransparent) return false;
 
   return ['id', 'amount', 'owned', 'sumPrice', 'minPrice'].every(
     propKey => prevProps.card[propKey] === nextProps.card[propKey]

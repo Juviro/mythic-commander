@@ -2,22 +2,17 @@ import React from 'react';
 import { Typography } from 'antd';
 import styled from 'styled-components';
 
-import { getNumberOfCards } from '../../../../utils/deck';
 import { getPriceLabel } from '../../../../utils/cardStats';
 import Flex from '../Flex';
 import CommanderPicker from '../CommanderPicker';
+import NumberOfCards from './NumberOfCards';
 
 const StyledLabel = styled(Typography.Text).attrs({ type: 'secondary' })`
   margin: 8px;
   font-size: 16px;
 `;
 
-export default ({ deck }) => {
-  const numberOfUnowned = deck.cards.filter(({ owned }) => !owned).length;
-  const numberOfCardsLabel = `${getNumberOfCards(deck.cards)} cards ${
-    numberOfUnowned ? `(${numberOfUnowned} not owned)` : ''
-  }`;
-
+export default ({ deck, displayOwnedOnly, toggleDisplayOwnedOnly }) => {
   const totalValue = deck.cards.reduce(
     (acc, { minPrice, amount }) => acc + minPrice * amount,
     0
@@ -36,7 +31,11 @@ export default ({ deck }) => {
   return (
     <Flex direction="column" justify="space-around">
       <CommanderPicker deck={deck} />
-      <StyledLabel>{numberOfCardsLabel}</StyledLabel>
+      <NumberOfCards
+        deck={deck}
+        displayOwnedOnly={displayOwnedOnly}
+        toggleDisplayOwnedOnly={toggleDisplayOwnedOnly}
+      />
       <StyledLabel>{valueLabel}</StyledLabel>
     </Flex>
   );
