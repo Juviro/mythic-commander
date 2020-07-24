@@ -1,5 +1,5 @@
 export const trimName = str => {
-  return str.replace(/[^a-zA-Z0-9\s]+/g, '').toLowerCase();
+  return str.toLowerCase();
 };
 
 // @Params card: string[] | { name: string }[]
