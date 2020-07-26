@@ -83,7 +83,7 @@ export default ({ loading, card, hideFlipIcon, onFlipCard: onFlipCardCallback })
         </>
       )}
       {!loading && (
-        <img
+        <a.img
           alt={card.name}
           className="flippable-card"
           style={{
