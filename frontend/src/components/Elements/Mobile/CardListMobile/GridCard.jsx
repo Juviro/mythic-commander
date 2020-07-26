@@ -45,7 +45,7 @@ const GridCard = ({ moveToList, isLarge, card, onClick, onEditCard, onDeleteCard
   return (
     <StyledWrapper style={style} onClick={onClick}>
       <StyledCardWrapper isLarge={isLarge}>
-        <LazyLoad offset={100} height={isLarge ? 500 : 250}>
+        <LazyLoad offset={100} height={isLarge ? 500 : 250} animationDuration={0.5}>
           <div style={{ width: '100%', height: '100%' }}>
             <FlippableCard card={card} />
           </div>

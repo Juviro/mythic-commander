@@ -61,7 +61,7 @@ const CardList = ({
         dataSource={cards}
         style={{ width: '100%' }}
         renderItem={card => (
-          <LazyLoad offset={0} height={56} animationDuration={0.3}>
+          <LazyLoad offset={0} height={56}>
             <CardListItem
               card={card}
               moveToList={moveToList}
