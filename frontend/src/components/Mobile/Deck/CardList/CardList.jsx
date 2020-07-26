@@ -3,7 +3,6 @@ import { withRouter, useParams } from 'react-router';
 import styled from 'styled-components';
 import { useMutation, useQuery } from 'react-apollo';
 import { Skeleton } from 'antd';
-import LazyLoad from 'react-lazyload';
 
 import CardSubList from './CardSubList';
 import { LayoutAndSortPicker } from '../../../Elements/Shared';
@@ -90,15 +89,14 @@ const DeckList = ({ deck, loading }) => {
       <div style={{ marginTop: 16 }}>
         <Skeleton loading={loading} active>
           {cardsByType.map(cardGroup => (
-            <LazyLoad offset={100} key={cardGroup.type} height={500}>
-              <CardSubList
-                {...cardGroup}
-                moveToList={moveToList}
-                commander={commander}
-                onEditCard={onEditCard}
-                onDeleteCard={onDeleteCard}
-              />
-            </LazyLoad>
+            <CardSubList
+              {...cardGroup}
+              key={cardGroup.type}
+              moveToList={moveToList}
+              commander={commander}
+              onEditCard={onEditCard}
+              onDeleteCard={onDeleteCard}
+            />
           ))}
         </Skeleton>
       </div>

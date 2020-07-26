@@ -10,9 +10,9 @@ import FlippableCard from '../../Shared/FlippableCard';
 import OwnedBadge from '../../Shared/OwnedBadge';
 import { highlightText } from '../../../../utils/highlightText';
 import EditGridCard from '../../Shared/EditGridCard';
+import { LazyLoad } from '../../Shared';
 
 const StyledWrapper = styled.div`
-  width: 100%;
   padding: 4px;
   display: flex;
   position: relative;
@@ -32,9 +32,8 @@ const GridCard = ({ moveToList, isLarge, card, onClick, onEditCard, onDeleteCard
   const imgSrc = getImageUrl(card.id, card.imgKey, 'normal');
   const [query] = useQueryParam('name', StringParam);
 
-  const style = isLarge
-    ? { fontSize: 16, marginBottom: 8, padding: 20 }
-    : { maxWidth: '50%' };
+  const style = isLarge ? { fontSize: 16, marginBottom: 8, padding: 20 } : {};
+  // : { maxWidth: '50%' };
 
   const { minPrice, name, totalAmount, amount, sumPrice, owned } = card;
   const displayedAmount = amount || totalAmount;
@@ -43,17 +42,19 @@ const GridCard = ({ moveToList, isLarge, card, onClick, onEditCard, onDeleteCard
 
   return (
     <StyledWrapper style={style} onClick={onClick}>
-      <StyledCardWrapper isLarge={isLarge}>
-        <FlippableCard card={card} />
-        {!isLarge && <EnlargeImage src={imgSrc} card={card} />}
-        <EditGridCard
-          card={card}
-          isLarge={isLarge}
-          moveToList={moveToList}
-          onEditCard={onEditCard}
-          onDeleteCard={onDeleteCard}
-        />
-      </StyledCardWrapper>
+      <LazyLoad offset={0} height={isLarge ? 500 : 250}>
+        <StyledCardWrapper isLarge={isLarge}>
+          <FlippableCard card={card} />
+          {!isLarge && <EnlargeImage src={imgSrc} card={card} />}
+          <EditGridCard
+            card={card}
+            isLarge={isLarge}
+            moveToList={moveToList}
+            onEditCard={onEditCard}
+            onDeleteCard={onDeleteCard}
+          />
+        </StyledCardWrapper>
+      </LazyLoad>
       <Row style={{ width }}>
         <Col span={7}>
           {displayedAmount && (
