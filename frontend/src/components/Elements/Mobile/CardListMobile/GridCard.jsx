@@ -42,6 +42,8 @@ const GridCard = ({ moveToList, isLarge, card, onClick, onEditCard, onDeleteCard
 
   const width = isLarge ? '100%' : '43vw';
 
+  return null;
+
   return (
     <StyledWrapper style={style} onClick={onClick}>
       <StyledCardWrapper isLarge={isLarge}>
