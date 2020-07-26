@@ -3,7 +3,8 @@ BUGFIXES:
 CURRENT:
     - improve loading time of deck
     - redesign add cards modal:
-        - 
+        - selectable 
+        - mobile ready
 
 NEXT:
     - lazy load images to improve rendering time of deck mobile
