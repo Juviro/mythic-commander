@@ -9,7 +9,7 @@ const StyledFadeInWrapper = styled.div`
   animation: ${fadeIn} ${({ animationDuration }) => animationDuration}s ease-out;
 `;
 
-export default ({ children, animationDuration = 0.7, ...props }) => {
+export default ({ children, animationDuration, ...props }) => {
   return (
     <LazyLoad {...props}>
       <StyledFadeInWrapper animationDuration={animationDuration}>
