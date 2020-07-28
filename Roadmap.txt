@@ -1,7 +1,8 @@
 BUGFIXES:
+    - switch page on desktop collection with slow connection => old cards are displayed without loading indicator
+        - this is due to a 'fix' for deleting(?) a card from that list, so check that as well
 
 CURRENT:
-    - improve loading time of deck
     - redesign add cards modal:
         - selectable 
         - mobile ready

@@ -10,7 +10,6 @@ import FlippableCard from '../../Shared/FlippableCard';
 import OwnedBadge from '../../Shared/OwnedBadge';
 import { highlightText } from '../../../../utils/highlightText';
 import EditGridCard from '../../Shared/EditGridCard';
-import { LazyLoad } from '../../Shared';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -45,11 +44,14 @@ const GridCard = ({ moveToList, isLarge, card, onClick, onEditCard, onDeleteCard
   return (
     <StyledWrapper style={style} onClick={onClick}>
       <StyledCardWrapper isLarge={isLarge}>
-        <LazyLoad offset={100} height={isLarge ? 500 : 250} animationDuration={0.5}>
-          <div style={{ width: '100%', height: '100%' }}>
-            <FlippableCard card={card} />
-          </div>
-        </LazyLoad>
+        <FlippableCard
+          card={card}
+          lazyLoadProps={{
+            offset: 100,
+            height: isLarge ? 500 : 250,
+            animationDuration: 0.5,
+          }}
+        />
         {!isLarge && <EnlargeImage src={imgSrc} card={card} />}
         <EditGridCard
           card={card}

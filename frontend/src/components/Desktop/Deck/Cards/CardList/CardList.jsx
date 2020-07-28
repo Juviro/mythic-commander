@@ -43,12 +43,12 @@ export default ({
           {cards.map(card => (
             <Card
               card={card}
+              key={card.id}
+              isSelected={selectedCardId === card.id}
               isTransparent={displayOwnedOnly && card.owned}
               onDelete={onDelete}
-              key={card.id}
-              setSelectedCardOracleId={setSelectedCardOracleId}
               onOpenDetails={onOpenDetails}
-              isSelected={selectedCardId === card.id}
+              setSelectedCardOracleId={setSelectedCardOracleId}
             />
           ))}
         </div>
