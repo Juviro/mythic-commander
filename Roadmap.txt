@@ -1,6 +1,4 @@
 BUGFIXES:
-    - switch page on desktop collection with slow connection => old cards are displayed without loading indicator
-        - this is due to a 'fix' for deleting(?) a card from that list, so check that as well
 
 CURRENT:
     - redesign add cards modal:
