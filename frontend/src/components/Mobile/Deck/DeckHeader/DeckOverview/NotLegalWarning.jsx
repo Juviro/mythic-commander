@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Popover } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { isDeckLegal, isDeckOwned } from '../../../../../utils/cardStats';
-import { getNumberOfCards } from '../../../../../utils/deck';
+import sumCardAmount from '../../../../../utils/sumCardAmount';
 
 const StyledIssuesBox = styled.div`
   padding: 8px;
@@ -20,7 +20,7 @@ const messages = {
 export default ({ deck, size = 16 }) => {
   const isLegal = isDeckLegal(deck);
   const isOwned = isDeckOwned(deck);
-  const has100Cards = getNumberOfCards(deck.cards) === 100;
+  const has100Cards = sumCardAmount(deck.cards) === 100;
   const showWarning = !isLegal || !isOwned || !has100Cards;
 
   if (!showWarning) return null;

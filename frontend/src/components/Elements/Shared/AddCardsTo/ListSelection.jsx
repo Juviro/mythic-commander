@@ -19,7 +19,6 @@ import sumCardAmount from '../../../../utils/sumCardAmount';
 import FocusedModal from '../FocusedModal';
 import CheckableCardlist from '../CheckableCardlist/CheckableCardlist';
 import ButtonGroup from '../ButtonGroup/ButtonGroup';
-import ListSelection from './ListSelection';
 
 export const StyledCollapse = styled(Collapse)`
   && {
@@ -40,8 +39,10 @@ const formatCards = cards =>
     amount: amount || totalAmount || 1,
   }));
 
-export default ({ onSubmit, cardsToAdd }) => {
-  const { data, loading } = useQuery(allLists, { fetchPolicy: 'network-only' });
+export default ({ onSubmit, cardsToAdd, loading }) => {
+  const [addToDeck] = useMutation(addCardsToDeckDesktop);
+  const [addToWantsList] = useMutation(addCardsToWantsListDesktop);
+  const [addToCollection] = useMutation(addToCollectionDesktop);
 
   const [selectedCardIds, setSelectedCardIds] = useState([]);
 
@@ -50,38 +51,43 @@ export default ({ onSubmit, cardsToAdd }) => {
     setSelectedCardIds(cardsToAdd.map(({ id }) => id));
   }, [cardsToAdd]);
 
+  const onAddToDeck = (deckId, deckName) => {
+    addToDeck({
+      variables: { cards: formatCards(cardsToAdd), deckId },
+    });
+    onSubmit();
+    const numberOfCards = sumCardAmount;
+    message(`Added <b>${numberOfSelectedCards}</b> cards to <b>${deckName}</b>!`);
+  };
+  const onAddToWantsList = (wantsListId, wantsListName) => {
+    addToWantsList({
+      variables: { cards: formatCards(cardsToAdd), wantsListId },
+      refetchQueries: [
+        {
+          query: wantsListDesktop,
+          variables: { id: wantsListId },
+        },
+      ],
+    });
+    onSubmit();
+    message(`Added <b>${numberOfSelectedCards}</b> cards to <b>${wantsListName}</b>!`);
+  };
+  const onAddToCollection = cards => {
+    const formattedCollectionCards = cards.map(({ id, amount, totalAmount }) => ({
+      id,
+      amount: amount || totalAmount || 1,
+    }));
+    addToCollection({
+      variables: { cards: formattedCollectionCards },
+      refetchQueries: ['paginatedCollection', 'ownedCardNames'],
+    });
+    onSubmit();
+    message(`Added ${sumCardAmount(cards)} cards to your collection!`);
+  };
+
   return (
     <Flex direction="row">
-      <CheckableCardlist
-        cards={cardsToAdd}
-        setSelectedCardIds={setSelectedCardIds}
-        selectedCardIds={selectedCardIds}
-      />
-      <Flex align="center">
-        <RightOutlined style={{ fontSize: 32 }} />
-      </Flex>
-      <ListSelection onSubmit={onSubmit} allLists={data?.allLists} loading={loading} />
-      {/* <StyledCollapse>
-          <Collapse.Panel
-            key="1"
-            header={numberOfSelectedCards && `${numberOfSelectedCards} cards selected`}
-          >
-            <SimpleCardsList cards={cardsToAdd} />
-          </Collapse.Panel>
-        </StyledCollapse> */}
-      {/* {loading ? (
-          <Flex align="center" justify="center" style={{ height: 200 }}>
-            <Spin />
-          </Flex>
-        ) : (
-          <Lists
-            data={data}
-            cardsToAdd={cardsToAdd}
-            onAddToDeck={onAddToDeck}
-            onAddToWantsList={onAddToWantsList}
-            onAddToCollection={onAddToCollection}
-          />
-        )} */}
+      <ButtonGroup buttons={[]} />
     </Flex>
   );
 };
