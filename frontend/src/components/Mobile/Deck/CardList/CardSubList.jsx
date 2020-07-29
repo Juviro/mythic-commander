@@ -1,12 +1,12 @@
 import React from 'react';
 import { Divider, Typography } from 'antd';
 import { FilteredCardList } from '../../../Elements/Mobile';
-import { getNumberOfCards } from '../../../../utils/deck';
+import sumCardAmount from '../../../../utils/sumCardAmount';
 
 export default ({ cards, type, onEditCard, onDeleteCard, moveToList }) => {
   if (!cards.length) return null;
 
-  const numberOfCards = getNumberOfCards(cards);
+  const numberOfCards = sumCardAmount(cards);
   const nameSuffix = type !== 'Commander' ? `(${numberOfCards})` : '';
   const title = `${type} ${nameSuffix}`;
 

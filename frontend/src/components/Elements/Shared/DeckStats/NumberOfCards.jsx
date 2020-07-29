@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography, Button } from 'antd';
 import styled from 'styled-components';
 
-import { getNumberOfCards } from '../../../../utils/deck';
+import sumCardAmount from '../../../../utils/sumCardAmount';
 
 const StyledLabel = styled(Typography.Text).attrs({ type: 'secondary' })`
   margin: 8px;
@@ -18,7 +18,7 @@ export default ({ deck, displayOwnedOnly, toggleDisplayOwnedOnly }) => {
 
   return (
     <span>
-      <StyledLabel>{`${getNumberOfCards(deck.cards)} cards`}</StyledLabel>
+      <StyledLabel>{`${sumCardAmount(deck.cards)} cards`}</StyledLabel>
       {Boolean(numberOfUnowned) && (
         <Button type="link" onClick={toggleDisplayOwnedOnly} style={{ paddingLeft: 0 }}>
           {unownedLabel}
