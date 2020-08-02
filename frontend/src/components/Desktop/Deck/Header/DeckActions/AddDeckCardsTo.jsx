@@ -3,11 +3,9 @@ import { Button } from 'antd';
 
 import { AddCardsTo } from '../../../../Elements/Shared';
 import { useToggle } from '../../../../Hooks';
-import sumCardAmount from '../../../../../utils/sumCardAmount';
 
 export default ({ cards }) => {
   const [visible, toggleVisible] = useToggle();
-  const numberOfSelectedCards = sumCardAmount(cards);
 
   return (
     <>
@@ -19,7 +17,6 @@ export default ({ cards }) => {
         onCancel={toggleVisible}
         onSubmit={toggleVisible}
         visible={visible}
-        numberOfSelectedCards={numberOfSelectedCards}
       />
     </>
   );

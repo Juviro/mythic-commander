@@ -78,7 +78,6 @@ export default ({ onEditCard, deleteByOracle, children, ...props }) => {
           setSelectedCards([]);
         }}
         visible={showMoveModal}
-        numberOfSelectedCards={numberOfSelectedCards}
       />
       {showEditModal && (
         <EditCardModal

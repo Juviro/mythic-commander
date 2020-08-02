@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Skeleton } from 'antd';
 import NotLegalWarning from './NotLegalWarning';
 import DeckName from './DeckName';
-import { getNumberOfCards } from '../../../../../utils/deck';
 import { getPriceLabel } from '../../../../../utils/cardStats';
+import sumCardAmount from '../../../../../utils/sumCardAmount';
 
 const StyledInfoBox = styled.div`
   width: 100%;
@@ -33,7 +33,7 @@ export default ({ deck, loading }) => {
 
   const commander = deck.cards.find(({ isCommander }) => isCommander);
   const numberOfUnowned = deck.cards.filter(({ owned }) => !owned).length;
-  const numberOfCards = `${getNumberOfCards(deck.cards)} cards ${
+  const numberOfCards = `${sumCardAmount(deck.cards)} cards ${
     numberOfUnowned ? `(${numberOfUnowned} not owned)` : ''
   }`;
   const totalValue = (deck.cards || []).reduce((acc, val) => acc + val.minPrice, 0);

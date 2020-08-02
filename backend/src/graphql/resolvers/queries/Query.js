@@ -1,9 +1,8 @@
 import getCachedCards from './getCachedCards';
-import cardSearch, { addNameClause } from './cardSearch';
+import cardSearch from './cardSearch';
 import proxies from './proxies';
 import unifyCardFormat from '../unifyCardFormat';
 import paginatedCollection from './paginatedCollection';
-import { getCurrentSnapshot } from './Collection';
 import { isCollectionPublic } from '../../../auth/authenticateUser';
 import wantedCards from './wantedCards';
 
