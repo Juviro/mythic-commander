@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useQueryParams, NumberParam, StringParam } from 'use-query-params';
-import { useQuery } from '@apollo/react-hooks';
+import { useLazyQuery } from '@apollo/react-hooks';
 
 import { paginatedCollection } from './queries';
 import unifyCardFormat from '../../../../utils/unifyCardFormat';
@@ -17,7 +17,7 @@ export default ({ children, username }) => {
   });
   const [search, setSearch] = useState('');
   const offset = (page - 1) * pageSize;
-  const { data, loading } = useQuery(paginatedCollection, {
+  const [fetchCards, { called, data, loading }] = useLazyQuery(paginatedCollection, {
     variables: {
       limit: pageSize,
       offset,
@@ -26,7 +26,12 @@ export default ({ children, username }) => {
       search,
       username,
     },
+    fetchPolicy: 'network-only',
   });
+
+  useEffect(() => {
+    if (!called && pageSize) fetchCards();
+  }, [pageSize, called, fetchCards]);
 
   const onSearch = query => {
     setParams({ page: 1 });

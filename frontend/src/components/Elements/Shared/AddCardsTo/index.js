@@ -1,1 +1,1 @@
-export { default } from './AddCardsTo';
+export { default } from './AddCardsToModal';

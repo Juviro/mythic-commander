@@ -1,49 +1,33 @@
 import React from 'react';
-import { withRouter } from 'react-router';
+import { useParams } from 'react-router';
 
-import { Divider } from 'antd';
-import Flex from '../../Flex';
-import AddToCollection from './AddToCollection';
 import List from './List';
+import Flex from '../../Flex';
+import ListTitle from './ListTitle';
+import { TYPES } from '../../../../../constants/types';
 
-const Lists = ({
-  data,
-  onAddToDeck,
-  onAddToWantsList,
-  onAddToCollection,
-  history,
-  cardsToAdd,
-}) => {
-  const { wantsLists, decks } = data.allLists;
+export default ({ data, type, onAddCards, onBack }) => {
+  const { id: currentId } = useParams();
+  const { wantsLists, decks } = data?.allLists ?? {};
   const wantsWithImg = wantsLists.map(({ deck, ...rest }) => ({
     ...deck,
     ...rest,
   }));
 
-  // check where we are to decide which options to show
-  const match = history.location.pathname.match(/^\/(wants|decks|search)+/);
-  const [, type, currentId] = match || [];
+  const filteredWants = wantsWithImg.filter(({ id }) => id !== currentId);
+  const filteredDecks = decks.filter(({ id }) => id !== currentId);
 
-  const shouldFilterWants = type === 'wants';
-  const filteredWants = shouldFilterWants
-    ? wantsWithImg.filter(({ id }) => id !== currentId)
-    : wantsWithImg;
-
-  const shouldFilterDecks = type === 'decks';
-  const filteredDecks = shouldFilterDecks
-    ? decks.filter(({ id }) => id !== currentId)
-    : decks;
+  const titleMap = {
+    [TYPES.DECK]: 'Decks',
+    [TYPES.WANTS]: 'Wants Lists',
+  };
+  const title = titleMap[type];
 
   return (
     <Flex direction="column">
-      {type && (
-        <AddToCollection onAddToCollection={onAddToCollection} cardsToAdd={cardsToAdd} />
-      )}
-      <Divider>Add to a list</Divider>
-      <List title="Deck" elements={filteredDecks} onClick={onAddToDeck} />
-      <List title="Wants List" elements={filteredWants} onClick={onAddToWantsList} />
+      <ListTitle title={title} onBack={onBack} />
+      {type === TYPES.DECK && <List elements={filteredDecks} onClick={onAddCards} />}
+      {type === TYPES.WANTS && <List elements={filteredWants} onClick={onAddCards} />}
     </Flex>
   );
 };
-
-export default withRouter(Lists);

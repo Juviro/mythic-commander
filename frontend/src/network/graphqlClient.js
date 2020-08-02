@@ -71,6 +71,14 @@ const client = new ApolloClient({
   queryDeduplication: true,
   connectToDevTools: true,
   assumeImmutableResults: true,
+  defaultOptions: {
+    query: {
+      fetchPolicy: 'network-only',
+    },
+    watchQuery: {
+      fetchPolicy: 'network-only',
+    },
+  },
 });
 
 export default client;
