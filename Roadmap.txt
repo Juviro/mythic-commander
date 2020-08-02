@@ -6,6 +6,7 @@ CURRENT:
         - 
 
 NEXT:
+    - when only displaying unowned in deck -> add cards to.. -> pre-select unowned only, but show all
     - lazy load images to improve rendering time of deck mobile
     - prevent re-ordering card lists in decks view - maybe re-order when category added / removed
     - add shortcut to toggle focus ?
