@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'antd';
-
 import styled from 'styled-components';
+
 import ListItem from './ListItem';
 import sumCardAmount from '../../../../utils/sumCardAmount';
 
@@ -13,12 +13,20 @@ const StyledWrapper = styled.div`
   }
 `;
 
+const getHeaderLabel = cards => {
+  const numberOfCards = sumCardAmount(cards);
+  const numberOfUniqueCards = cards.length;
+  if (numberOfCards === numberOfUniqueCards) return `${numberOfCards} cards selected`;
+
+  return `${numberOfUniqueCards} (${numberOfCards}) cards selected`;
+};
+
 export default ({ cards, selectedCardIds = [], setSelectedCardIds }) => {
   const selectedCards = cards.filter(({ id }) => selectedCardIds.includes(id));
-  const numberOfCards = sumCardAmount(selectedCards);
+
   const columns = [
     {
-      title: `${numberOfCards} cards selected`,
+      title: getHeaderLabel(selectedCards),
       width: 70,
       key: 'name',
       render: card => <ListItem card={card} />,

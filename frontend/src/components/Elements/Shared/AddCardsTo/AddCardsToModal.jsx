@@ -10,6 +10,7 @@ export default ({ onCancel, visible, ...props }) => {
       footer={null}
       onCancel={onCancel}
       destroyOnClose
+      width={658}
       focusId="modal.addCardsTo"
       bodyStyle={{ maxHeight: '70vh', overflowY: 'auto', padding: 16 }}
     >

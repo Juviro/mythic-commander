@@ -9,7 +9,7 @@ export default ({ card }) => {
     <Flex align="center">
       <Space>
         <PreviewCardImage card={card} highlightOnHover />
-        <Typography.Text>{`${card.amount}x`}</Typography.Text>
+        {card.amount && <Typography.Text>{`${card.amount}x`}</Typography.Text>}
         <Typography.Text ellipsis style={{ maxWidth: 135 }}>
           {card.name}
         </Typography.Text>

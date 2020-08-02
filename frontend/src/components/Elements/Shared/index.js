@@ -39,6 +39,7 @@ export { default as Flex } from './Flex';
 export { default as FlippableCard } from './FlippableCard';
 export { default as FocusedModal } from './FocusedModal';
 export { default as FoilIcon } from './FoilIcon';
+export { default as InactiveOverlay } from './InactiveOverlay';
 export { default as IncludedDecks } from './IncludedDecks';
 export { default as IncludedWants } from './IncludedWants';
 export { default as LayoutAndSortPicker } from './LayoutAndSortPicker';
