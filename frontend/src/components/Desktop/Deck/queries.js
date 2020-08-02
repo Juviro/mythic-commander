@@ -8,6 +8,7 @@ const CARD_FIELDS = `
     card {
       id
       name
+      cmc
       imgKey
       oracle_id
       set_name
