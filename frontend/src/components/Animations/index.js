@@ -1,1 +1,1 @@
-export { default as blendIn } from './blendIn';
+export { default as fadeIn } from './fadeIn';

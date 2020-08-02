@@ -3,10 +3,12 @@ import { Pagination } from 'antd';
 import styled from 'styled-components';
 
 import { withRouter } from 'react-router';
+import { LoadingOutlined } from '@ant-design/icons';
 import GridCard from './GridCard';
 import useGridShortcuts from './useGridShortcuts';
 import CardModalDesktop from '../../CardModalDesktop';
 import { useToggle, useShortcut } from '../../../../Hooks';
+import { Flex } from '../../../Shared';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -72,7 +74,15 @@ const CardGrid = ({
 
   return (
     <>
-      {Boolean(cards.length) && paginationComponent}
+      <Flex
+        direction="row"
+        justify="space-between"
+        align="center"
+        style={{ width: '100%' }}
+      >
+        <span>{loading && <LoadingOutlined style={{ marginLeft: 16 }} />}</span>
+        {Boolean(cards.length) && paginationComponent}
+      </Flex>
       <StyledWrapper>
         {cards.map((card, index) => {
           const isSelected = index + 1 === selectedElementPosition;

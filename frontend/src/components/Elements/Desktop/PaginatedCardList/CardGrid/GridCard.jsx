@@ -34,12 +34,13 @@ const StyledContextMenu = styled.div`
 const StyledImageWrapper = styled.div`
   position: relative;
   border-radius: 4%;
-  background-color: black;
+  background-color: white;
 
   ${({ isSelected }) =>
     isSelected
       ? css`
           box-shadow: 0px 0px 6px 6px ${primary};
+          background-color: #1890fff2;
         `
       : ''}
   ${({ markAsDisabled }) =>
@@ -47,7 +48,6 @@ const StyledImageWrapper = styled.div`
       ? css`
           opacity: 0.4;
         `
-      : ''}
       : ''}
 `;
 
@@ -120,7 +120,14 @@ const GridCard = ({
         markAsDisabled={markAsDisabled}
         ref={dragRef}
       >
-        <FlippableCard card={card} />
+        <FlippableCard
+          card={card}
+          lazyLoadProps={{
+            offset: 200,
+            overflow: true,
+            height: cardSize.height,
+          }}
+        />
         {displayedAmount > 1 && (
           <StyledAmountWrapper
             style={{ fontSize: textSize }}

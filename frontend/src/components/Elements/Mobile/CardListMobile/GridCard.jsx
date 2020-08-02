@@ -44,7 +44,14 @@ const GridCard = ({ moveToList, isLarge, card, onClick, onEditCard, onDeleteCard
   return (
     <StyledWrapper style={style} onClick={onClick}>
       <StyledCardWrapper isLarge={isLarge}>
-        <FlippableCard card={card} />
+        <FlippableCard
+          card={card}
+          lazyLoadProps={{
+            offset: 100,
+            height: isLarge ? 500 : 250,
+            animationDuration: 0.5,
+          }}
+        />
         {!isLarge && <EnlargeImage src={imgSrc} card={card} />}
         <EditGridCard
           card={card}

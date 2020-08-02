@@ -91,7 +91,14 @@ const Card = ({
     <StyledWrapper isSelected={selected}>
       <StyledScrollDummy ref={ref} />
       <StyledCard onClick={onClick} isSelected={selected} isTransparent={isTransparent}>
-        <FlippableCard card={card} hideFlipIcon={!selected} />
+        <FlippableCard
+          card={card}
+          hideFlipIcon={!selected}
+          lazyLoadProps={{
+            offset: 100,
+            overflow: true,
+          }}
+        />
         <AmountBadge amount={card.amount} />
       </StyledCard>
       {selected && (

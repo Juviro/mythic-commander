@@ -11,7 +11,6 @@ export default (cards, firstCard, cardsPerPage) => {
     );
     nextPageCards.forEach(({ id, imgKey }) => {
       const img = new Image();
-      img.crossOrigin = '';
       img.src = getImageUrl(id, imgKey, 'normal');
     });
     // eslint-disable-next-line
