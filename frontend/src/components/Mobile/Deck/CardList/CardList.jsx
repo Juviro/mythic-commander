@@ -91,8 +91,8 @@ const DeckList = ({ deck, loading }) => {
           {cardsByType.map(cardGroup => (
             <CardSubList
               {...cardGroup}
-              moveToList={moveToList}
               key={cardGroup.type}
+              moveToList={moveToList}
               commander={commander}
               onEditCard={onEditCard}
               onDeleteCard={onDeleteCard}

@@ -67,7 +67,7 @@ export default ({ card, large }) => {
           )}
         />
       ) : (
-        <Typography.Text type="secondary">
+        <Typography.Text type="secondary" style={{ marginTop: 32 }}>
           You don&apos;t have any deck containing this card
         </Typography.Text>
       )}

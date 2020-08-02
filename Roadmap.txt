@@ -2,8 +2,6 @@ BUGFIXES:
 
 CURRENT:
     - improve loading time of deck
-    - redesign add cards modal:
-        - 
 
 NEXT:
     - when only displaying unowned in deck -> add cards to.. -> pre-select unowned only, but show all

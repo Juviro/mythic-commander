@@ -86,4 +86,8 @@ export default createGlobalStyle`
   div.ant-typography-edit-content {
     left: 0 !important;
   }
+
+  .lazyload-wrapper {
+    display: initial;
+  }
 `;

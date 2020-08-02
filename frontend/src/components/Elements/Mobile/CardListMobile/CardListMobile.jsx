@@ -10,9 +10,10 @@ import CustomSkeleton from '../../Shared/CustomSkeleton';
 import GridCard from './GridCard';
 import Footer from './Footer';
 import CardModal from '../../../Mobile/Card/CardModal';
+import { LazyLoad } from '../../Shared';
 
 const StyledGridWrapper = styled.div`
-  display: flex;
+  display: ${({ isLarge }) => (isLarge ? 'block' : 'flex')};
   flex-wrap: wrap;
   align-items: flex-start;
 `;
@@ -60,18 +61,20 @@ const CardList = ({
         dataSource={cards}
         style={{ width: '100%' }}
         renderItem={card => (
-          <CardListItem
-            card={card}
-            moveToList={moveToList}
-            onEditCard={onEditCard}
-            onDeleteCard={onDeleteCard}
-            searchString={name}
-            onClick={() => onOpenDetailView(card)}
-          />
+          <LazyLoad offset={0} height={56}>
+            <CardListItem
+              card={card}
+              moveToList={moveToList}
+              onEditCard={onEditCard}
+              onDeleteCard={onDeleteCard}
+              searchString={name}
+              onClick={() => onOpenDetailView(card)}
+            />
+          </LazyLoad>
         )}
       />
     ) : (
-      <StyledGridWrapper>
+      <StyledGridWrapper isLarge={layout !== 'grid'}>
         {cards.map(card => (
           <GridCard
             key={card.id}

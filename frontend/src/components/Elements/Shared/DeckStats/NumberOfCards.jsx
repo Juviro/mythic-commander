@@ -20,7 +20,7 @@ export default ({ deck, displayOwnedOnly, toggleDisplayOwnedOnly }) => {
     <span>
       <StyledLabel>{`${sumCardAmount(deck.cards)} cards`}</StyledLabel>
       {Boolean(numberOfUnowned) && (
-        <Button type="link" onClick={toggleDisplayOwnedOnly} style={{ paddingLeft: 0 }}>
+        <Button type="link" onClick={toggleDisplayOwnedOnly} style={{ padding: 0 }}>
           {unownedLabel}
         </Button>
       )}

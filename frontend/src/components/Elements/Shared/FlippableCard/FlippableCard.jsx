@@ -8,6 +8,7 @@ import { getImageUrl } from '../../../../utils/cardImage';
 import CustomSkeleton from '../CustomSkeleton';
 import CardButton from '../CardButton';
 import { useToggle } from '../../../Hooks';
+import LazyLoad from '../LazyLoad';
 
 const StyledImageWrapper = styled.div`
   display: flex;
@@ -19,7 +20,13 @@ const StyledImageWrapper = styled.div`
   border-radius: 4%;
 `;
 
-export default ({ loading, card, hideFlipIcon, onFlipCard: onFlipCardCallback }) => {
+export default ({
+  loading,
+  card,
+  hideFlipIcon,
+  onFlipCard: onFlipCardCallback,
+  lazyLoadProps,
+}) => {
   const { id, imgKey, isTwoFaced } = card || {};
   const [isFlipped, toggleIsFlipped] = useToggle(false);
   const [showHighResImage, toggleShowHighResImage] = useToggle(false);
@@ -43,7 +50,6 @@ export default ({ loading, card, hideFlipIcon, onFlipCard: onFlipCardCallback })
     toggleShowHighResImage(false);
     if (frontLargeSrc) {
       const img = new Image();
-      img.crossOrigin = '';
       img.src = frontLargeSrc;
       img.onload = () => {
         if (!isMounted) return;
@@ -66,35 +72,36 @@ export default ({ loading, card, hideFlipIcon, onFlipCard: onFlipCardCallback })
   const frontImgSrc = getImageUrl(id, imgKey, showHighResImage ? 'normal' : 'small');
 
   return (
-    <StyledImageWrapper>
-      {(loading || !showHighResImage) && <CustomSkeleton.CardImage />}
-      {isTwoFaced && showHighResImage && (
-        <>
-          {!hideFlipIcon && (
-            <CardButton Icon={SyncOutlined} index={1} onClick={onFlipCard} />
-          )}
+    <LazyLoad {...lazyLoadProps}>
+      <StyledImageWrapper>
+        {(loading || !showHighResImage) && <CustomSkeleton.CardImage />}
+        {isTwoFaced && showHighResImage && (
+          <>
+            {!hideFlipIcon && (
+              <CardButton Icon={SyncOutlined} index={1} onClick={onFlipCard} />
+            )}
+            <a.img
+              className="flippable-card "
+              style={{
+                opacity,
+                transform: transform.interpolate(t => `${t} rotateY(-180deg)`),
+              }}
+              src={getImageUrl(id, imgKey, 'normal', 'back')}
+            />
+          </>
+        )}
+        {!loading && (
           <a.img
-            className="flippable-card "
+            alt={card.name}
+            className="flippable-card"
             style={{
-              opacity,
-              transform: transform.interpolate(t => `${t} rotateY(-180deg)`),
+              opacity: opacity.interpolate(o => 1 - o),
+              transform,
             }}
-            src={getImageUrl(id, imgKey, 'normal', 'back')}
+            src={frontImgSrc}
           />
-        </>
-      )}
-      {!loading && (
-        <img
-          alt={card.name}
-          crossOrigin=""
-          className="flippable-card"
-          style={{
-            opacity: opacity.interpolate(o => 1 - o),
-            transform,
-          }}
-          src={frontImgSrc}
-        />
-      )}
-    </StyledImageWrapper>
+        )}
+      </StyledImageWrapper>
+    </LazyLoad>
   );
 };
