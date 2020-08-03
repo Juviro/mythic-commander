@@ -17,7 +17,7 @@ const LoginWrapper = styled.div`
 
 const onError = error => {
   console.error(error);
-  throw new Error('Error loggin in. Please try again');
+  throw new Error('Error logging in. Please try again');
 };
 
 export default ({ history }) => {
