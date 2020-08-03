@@ -33,8 +33,7 @@ const resolver = {
   },
 
   relatedCards({ all_parts, layout }, _, { db }) {
-    if (!all_parts) return null;
-    if (layout === 'token') return null;
+    if (!all_parts || layout === 'token') return null;
 
     return Promise.all(all_parts.map(getCard(db)));
   },
