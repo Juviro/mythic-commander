@@ -13,6 +13,7 @@ import WantsLists from './WantsLists';
 
 import GlobalStyle from './GlobalStyle';
 import { UsernameModal } from '../Elements/Shared';
+import LifeTracker from './LifeTracker';
 
 const App = () => {
   message.config({
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/m/collection" exact component={Collection} />
         <Route path="/m/wants" exact component={WantsLists} />
         <Route path="/m/wants/:id" exact component={WantsList} />
+        <Route path="/m/life-tracker" exact component={LifeTracker} />
         <Redirect from="*" to="/m/collection" />
       </Switch>
       <GlobalStyle />
