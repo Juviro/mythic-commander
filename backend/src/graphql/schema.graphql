@@ -159,6 +159,7 @@ type User {
   avatar: String!
   email: String!
   username: String
+  featureFlags: [String]
 }
 
 ################################# Wants #################################
