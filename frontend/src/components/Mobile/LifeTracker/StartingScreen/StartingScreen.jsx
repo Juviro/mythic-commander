@@ -23,7 +23,7 @@ export default ({ onStart }) => {
           onChange={setNumberOfPlayers}
         />
         <SettingSelection
-          step={1}
+          step={10}
           minValue={10}
           title="Starting Life"
           value={startingLife}
