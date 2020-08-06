@@ -90,4 +90,8 @@ export default createGlobalStyle`
   .lazyload-wrapper {
     display: initial;
   }
+  .fullscreen {
+    width: 100%;
+    height: 100%;
+  }
 `;

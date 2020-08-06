@@ -10,9 +10,9 @@ import Flex from '../Flex';
 export default ({ small, showCharts }) => {
   const { data, loading } = useQuery(getCurrentSnapshot);
 
-  const currentSnapshot = data ? data.collection.currentSnapshot : {};
+  const currentSnapshot = data?.collection.currentSnapshot ?? {};
   currentSnapshot.dateLabel = 'Now';
-  const referenceSnapshot = data ? data.collection.referenceSnapshot : {};
+  const referenceSnapshot = data?.collection.referenceSnapshot ?? {};
 
   return (
     <Flex direction="column" justify="space-between" width="100%">
@@ -23,19 +23,19 @@ export default ({ small, showCharts }) => {
           <Statistic
             small={small}
             title="Total Cards"
-            value={currentSnapshot.amount}
+            value={currentSnapshot.amount ?? 0}
             referenceValue={referenceSnapshot.amount}
           />
           <Statistic
             small={small}
             title="Unique Cards"
-            value={currentSnapshot.amountUnique}
+            value={currentSnapshot.amountUnique ?? 0}
             referenceValue={referenceSnapshot.amountUnique}
           />
           <Statistic
             small={small}
             title="Total value"
-            value={currentSnapshot.value}
+            value={currentSnapshot.value ?? 0}
             suffix="$"
             referenceValue={referenceSnapshot.value}
           />
