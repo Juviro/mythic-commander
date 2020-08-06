@@ -39,7 +39,7 @@ export default gameSettings => {
     setPlayers(updatedPlayers);
   };
 
-  // @origin: string; either INFECT or playerId
+  // @param {string} origin: either INFECT or playerId
   const onTrackDamage = (playerId, newValue, origin) => {
     const updatedPlayers = players.map(player => {
       if (player.id !== playerId) return player;
