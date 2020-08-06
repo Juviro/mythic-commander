@@ -35,7 +35,7 @@ const App = () => {
         <Route path="/m/collection" exact component={Collection} />
         <Route path="/m/wants" exact component={WantsLists} />
         <Route path="/m/wants/:id" exact component={WantsList} />
-        <Route path="/m/life-tracker" exact component={LifeTracker} />
+        <Route path="/m/life-tracker" component={LifeTracker} />
         <Redirect from="*" to="/m/collection" />
       </Switch>
       <GlobalStyle />
