@@ -1,10 +1,11 @@
 import React from 'react';
-import { AutoComplete, Typography } from 'antd';
+import { AutoComplete, Typography, Empty } from 'antd';
 import styled from 'styled-components';
 import CardContext from '../../../Provider/CardProvider';
 import { filterAndSortByQuery } from '../../../../utils/cardFilter';
 import OwnedBadge from '../OwnedBadge';
 import { useBlurOnEsc } from '../../../Hooks';
+import Flex from '../Flex';
 
 export const splitAmountAndName = query => {
   const match = query.match(/^(\d*)x{0,1}\s{0,1}(.*)/);
@@ -18,10 +19,6 @@ const StyledOption = styled.span`
   display: flex;
   width: 100%;
   justify-content: space-between;
-`;
-
-const StyledOptionWrapper = styled.div`
-  display: flex;
 `;
 
 const getHighlightedOption = (
@@ -105,6 +102,9 @@ export default class CardSearch extends React.Component {
       containedCardNames,
       defaultActiveFirstOption,
       placeholder = 'Search for a card',
+      loading,
+      cards: overrideCards,
+      cardPrefix,
     } = this.props;
 
     const { searchString } = this.state;
@@ -112,7 +112,7 @@ export default class CardSearch extends React.Component {
 
     const { name, amount } = splitAmountAndName(searchString);
 
-    const suggestions = filterAndSortByQuery(cards, name).slice(0, 20);
+    const suggestions = filterAndSortByQuery(overrideCards || cards, name).slice(0, 20);
 
     return (
       <AutoComplete
@@ -126,6 +126,8 @@ export default class CardSearch extends React.Component {
         onSelect={this.onSubmit}
         tabIndex={0}
         style={{ width }}
+        loading={loading}
+        notFoundContent={<Empty description="No cards found" />}
         dropdownAlign={getDropdownAlign(alignTop)}
       >
         {suggestions.map(option => (
@@ -134,20 +136,21 @@ export default class CardSearch extends React.Component {
             style={{ display: 'flex' }}
             key={`${option.id};${option.name}`}
           >
-            <StyledOptionWrapper>
+            <Flex align="center">
               {amount > 1 && (
                 <Typography.Text
                   strong
                   style={{ marginRight: 8 }}
                 >{`${amount}x `}</Typography.Text>
               )}
+              {cardPrefix}
               {getHighlightedOption(
                 name,
                 option.name,
                 containedCardNames,
                 ownedCardNames
               )}
-            </StyledOptionWrapper>
+            </Flex>
           </AutoComplete.Option>
         ))}
       </AutoComplete>

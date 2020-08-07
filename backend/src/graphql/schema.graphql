@@ -257,6 +257,7 @@ type Query {
   ): PaginatedCards!
   cardByOracleId(oracle_id: String!): Card
 
+  cardsBySet(setKey: String!): [CachedCard!]!
   numberOfCachedCards: Int!
   cachedCards: [CachedCard!]!
 

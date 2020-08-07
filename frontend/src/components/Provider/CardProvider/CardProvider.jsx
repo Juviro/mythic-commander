@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getCollectionFromCache } from './cardCache';
 import { CARD_TYPES } from './staticTypes';
+import { formatCachedCards } from '../../../utils/cachedCards';
 
 const CardContext = React.createContext({});
 
@@ -20,12 +21,7 @@ export const CardContextProvider = ({ children }) => {
   };
   const getCards = async () => {
     const allCards = await getCollectionFromCache('cards');
-    const fullCards = allCards.map(({ i, n, k, o }) => ({
-      id: i,
-      oracle_id: o,
-      name: n,
-      imgKey: k,
-    }));
+    const fullCards = formatCachedCards(allCards);
     setCards(fullCards);
     setCardNames(fullCards.map(({ name }) => name));
   };
