@@ -8,7 +8,6 @@ const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: inline-block;
-  background-color: #00ff1f;
 `;
 
 const halfStyles = {
@@ -41,7 +40,7 @@ const StyledHalf = styled.div`
 
   display: flex;
   position: absolute;
-  flex-direction: row;
+  flex-direction: ${({ reverse }) => (reverse ? 'row-reverse' : 'row')};
 
   ${({ position }) => halfStyles[position]}
 `;
@@ -58,12 +57,24 @@ const GameScreen = ({ players, onSetLife, onChangeName, onTrackDamage }) => {
       <Prompt when message="Are you sure you want to leave the game?" />
       <StyledHalf position={position1}>
         {leftSidePlayers.map(player => (
-          <PlayerField onSetLife={onSetLife} player={player} key={player.id} />
+          <PlayerField
+            onSetLife={onSetLife}
+            player={player}
+            key={player.id}
+            players={players}
+            onChangeName={onChangeName}
+          />
         ))}
       </StyledHalf>
-      <StyledHalf position={position2}>
+      <StyledHalf position={position2} reverse>
         {rightSidePlayers.map(player => (
-          <PlayerField onSetLife={onSetLife} player={player} key={player.id} />
+          <PlayerField
+            onSetLife={onSetLife}
+            player={player}
+            key={player.id}
+            players={players}
+            onChangeName={onChangeName}
+          />
         ))}
       </StyledHalf>
     </StyledWrapper>

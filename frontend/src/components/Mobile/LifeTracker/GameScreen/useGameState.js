@@ -12,7 +12,7 @@ const getInitialPlayers = ({ numberOfPlayers, startingLife }) => {
   const playerIds = fillArrayWith(numberOfPlayers, getRandomId);
   const getPlayer = (id, index) => ({
     id,
-    name: `Player ${index}`,
+    name: `Player ${index + 1}`,
     life: startingLife,
     damageTaken: {
       players: playerIds
@@ -52,21 +52,19 @@ export default gameSettings => {
           },
         };
       }
-      if (origin === INFECT) {
-        return {
-          ...player,
-          damageTaken: {
-            ...player.damageTaken,
-            players: player.damageTaken.players.map(originPlayer => {
-              if (originPlayer.id !== origin) return originPlayer;
-              return {
-                ...originPlayer,
-                damage: newValue,
-              };
-            }),
-          },
-        };
-      }
+      return {
+        ...player,
+        damageTaken: {
+          ...player.damageTaken,
+          players: player.damageTaken.players.map(originPlayer => {
+            if (originPlayer.id !== origin) return originPlayer;
+            return {
+              ...originPlayer,
+              damage: newValue,
+            };
+          }),
+        },
+      };
     });
     setPlayers(updatedPlayers);
   };

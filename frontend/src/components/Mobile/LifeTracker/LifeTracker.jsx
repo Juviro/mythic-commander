@@ -22,9 +22,13 @@ const LifeTracker = ({ history }) => {
   const onStart = newGameSettings => {
     setGameSettings(newGameSettings);
     history.push(`/m/life-tracker/start`);
-    handle.enter();
+    // handle.enter();
   };
 
+  // TODO: remove
+  React.useEffect(() => {
+    setTimeout(() => onStart({ numberOfPlayers: 6, startingLife: 40 }), 500);
+  }, []);
   const hasStarted = history.location.pathname.includes('/m/life-tracker/start');
 
   return (
