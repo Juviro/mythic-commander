@@ -17,5 +17,5 @@ export default () => {
     });
   };
 
-  return <AddCards onAddCards={onAddCards} autoFocus={false} />;
+  return <AddCards onAddCards={onAddCards} autoFocus={false} isAdvanced />;
 };

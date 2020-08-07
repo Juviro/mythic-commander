@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { Tooltip } from 'antd';
 import { useQuery } from 'react-apollo';
 import CardSearch from '../../Shared/CardSearch';
 import MultiInput from './MultIinput';
+import AdvancedSearch from './AdvancedSearch';
 import { useShortcut } from '../../../Hooks';
 import { getOwnedCardNames } from '../../../../queries';
 
@@ -21,9 +22,12 @@ export default ({
   focusId,
   style,
   placeholder,
+  isAdvanced,
 }) => {
   const searchInputRef = useRef(null);
   const { data } = useQuery(getOwnedCardNames);
+  const [{ cardPrefix, cards, loading }, setCardOptions] = useState({});
+
   const focusInput = () => searchInputRef.current.focus();
   useShortcut('a', focusInput, focusId);
 
@@ -42,8 +46,15 @@ export default ({
           autoFocus={autoFocus}
           placeholder={placeholder}
           width="100%"
+          cards={cards}
+          loading={loading}
+          cardPrefix={cardPrefix}
         />
-        <MultiInput onAddCards={onAddCards} />
+        {isAdvanced ? (
+          <AdvancedSearch setCardOptions={setCardOptions} onAddCards={onAddCards} />
+        ) : (
+          <MultiInput onAddCards={onAddCards} />
+        )}
       </StyledWrapper>
     </Tooltip>
   );
