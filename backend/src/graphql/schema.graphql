@@ -384,6 +384,7 @@ input EditDeckFieldsInput {
 input CardInputType {
   id: String!
   amount: Int
+  isFoil: Boolean
 }
 
 input EditDeckCardInput {

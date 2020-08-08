@@ -7,7 +7,7 @@ import SearchSettings from './SearchSettings';
 import MultiInput from '../MultIinput';
 
 export default ({ setCardOptions, onAddCards }) => {
-  const [isExpanded, toggleExpanded] = useToggle(true);
+  const [isExpanded, toggleExpanded] = useToggle();
 
   return (
     <Flex direction="column">

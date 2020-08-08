@@ -23,6 +23,7 @@ export default ({
   style,
   placeholder,
   isAdvanced,
+  allowFoilInput,
 }) => {
   const searchInputRef = useRef(null);
   const { data } = useQuery(getOwnedCardNames);
@@ -49,6 +50,7 @@ export default ({
           cards={cards}
           loading={loading}
           cardPrefix={cardPrefix}
+          allowFoilInput={allowFoilInput}
         />
         {isAdvanced ? (
           <AdvancedSearch setCardOptions={setCardOptions} onAddCards={onAddCards} />
