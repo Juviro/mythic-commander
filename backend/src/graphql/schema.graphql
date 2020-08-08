@@ -257,6 +257,7 @@ type Query {
   ): PaginatedCards!
   cardByOracleId(oracle_id: String!): Card
 
+  cardsBySet(setKey: String!): [CachedCard!]!
   numberOfCachedCards: Int!
   cachedCards: [CachedCard!]!
 
@@ -383,6 +384,7 @@ input EditDeckFieldsInput {
 input CardInputType {
   id: String!
   amount: Int
+  isFoil: Boolean
 }
 
 input EditDeckCardInput {
