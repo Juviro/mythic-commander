@@ -1,4 +1,4 @@
-import getCachedCards from './getCachedCards';
+import { getCachedCards, getCachedCardsBySet } from './getCachedCards';
 import cardSearch from './cardSearch';
 import proxies from './proxies';
 import unifyCardFormat from '../unifyCardFormat';
@@ -92,6 +92,7 @@ const resolver = {
     };
   },
 
+  cardsBySet: (_, { setKey }, { db }) => getCachedCardsBySet(db, setKey),
   cachedCards: (_, __, { db }) => getCachedCards(db),
   numberOfCachedCards: async (_, __, { db }) => {
     const { count } = await db('distinctCards')
