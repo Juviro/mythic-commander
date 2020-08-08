@@ -17,5 +17,13 @@ export default () => {
     });
   };
 
-  return <AddCards onAddCards={onAddCards} autoFocus={false} isAdvanced />;
+  return (
+    <AddCards
+      onAddCards={onAddCards}
+      autoFocus={false}
+      isAdvanced
+      allowFoilInput
+      placeholder={'e.g. "2x foil negate"'}
+    />
+  );
 };
