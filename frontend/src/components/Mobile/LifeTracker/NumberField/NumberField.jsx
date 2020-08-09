@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 import { Flex } from '../../../Elements/Shared';
-import useLongPress from '../../../Hooks/useLongPress';
+import PlusMinus from './PlusMinus';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -21,26 +21,6 @@ const StyledWrapper = styled.div`
           text-shadow: 2px 2px 0px #333;
         `
       : ''}
-`;
-
-const StyledButton = styled.div`
-  width: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 200%;
-
-  &:active {
-    background-color: rgba(0, 0, 0, 0.02);
-    transform: scale(0.9);
-  }
-
-  &:nth-child(even) {
-    margin-left: 20%;
-  }
-  &:nth-child(odd) {
-    margin-right: 20%;
-  }
 `;
 
 const StyledValue = styled.div`
@@ -65,23 +45,22 @@ export default ({
     setValue(Math.min(Math.max(newValue, minValue), maxValue));
   };
 
-  const longPressMinuteProps = useLongPress(
-    () => changeValue(false, true),
-    () => changeValue(false, false)
-  );
-  const longPressPlusProps = useLongPress(
-    () => changeValue(true, true),
-    () => changeValue(true, false)
-  );
-
   return (
     <StyledWrapper whiteText={whiteText}>
       <Flex
         direction="row"
         style={{ position: 'absolute', width: '100%', height: '100%' }}
       >
-        <StyledButton {...longPressMinuteProps}>-</StyledButton>
-        <StyledButton {...longPressPlusProps}>+</StyledButton>
+        <PlusMinus
+          value="-"
+          onLongPress={() => changeValue(false, true)}
+          onPress={() => changeValue(false, false)}
+        />
+        <PlusMinus
+          value="+"
+          onLongPress={() => changeValue(true, true)}
+          onPress={() => changeValue(true, false)}
+        />
       </Flex>
       <StyledValue>{value}</StyledValue>
     </StyledWrapper>

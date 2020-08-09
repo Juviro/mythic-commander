@@ -12,6 +12,7 @@ const StyledContent = styled.div`
   height: 100%;
   margin-top: 0;
   transition: margin 0.3s;
+  will-change: margin-top;
 
   ${({ isExpanded }) =>
     !isExpanded

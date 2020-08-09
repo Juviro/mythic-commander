@@ -42,7 +42,6 @@ export default ({
           ownedCardNames={ownedCardNames}
           containedCardNames={containedCardNames}
           onSearch={(card, name) => onAddCards([card], name)}
-          defaultActiveFirstOption
           resetSearch
           autoFocus={autoFocus}
           placeholder={placeholder}

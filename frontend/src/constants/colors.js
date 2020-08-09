@@ -12,11 +12,23 @@ export const greyBorder = '#969696';
 export const success = '#1fb31f';
 export const error = '#ff4d4f';
 
-const LTGreen = '#2b772b';
-const LTRed = '#c11919';
-const LTBlue = '#1d48c3';
-const LTOrange = '#e4aa53';
-const LTTeal = '#06987d';
-const LTPurple = '#c337bf';
+// https://material.io/resources/color/  - 600
+const LTRed = '#e53935';
+const LTOrange = '#fb8c00';
+const LTYellow = '#fdd835';
+const LTGreen = '#7cb342';
+const LTBlue = '#1e88e5';
+const LTPurple = '#8e24aa';
+const LTBrown = '#6d4c41';
+const LTBlack = '#484848';
 
-export const lifeTrack = [LTGreen, LTRed, LTBlue, LTOrange, LTPurple, LTTeal];
+export const lifeTracker = [
+  LTRed,
+  LTOrange,
+  LTYellow,
+  LTGreen,
+  LTBlue,
+  LTPurple,
+  LTBrown,
+  LTBlack,
+];

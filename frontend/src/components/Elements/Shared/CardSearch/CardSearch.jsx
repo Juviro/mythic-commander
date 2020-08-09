@@ -106,7 +106,8 @@ export default class CardSearch extends React.Component {
     const { amount, isFoil } = splitSearchString(searchString, allowFoilInput);
 
     onSearch({ amount, id, isFoil }, name);
-    if (resetSearch) this.setState({ searchString: '' });
+    const newValue = resetSearch ? '' : name;
+    this.setState({ searchString: newValue });
   };
 
   render() {
@@ -116,7 +117,7 @@ export default class CardSearch extends React.Component {
       alignTop = false,
       ownedCardNames,
       containedCardNames,
-      defaultActiveFirstOption,
+      defaultActiveFirstOption = true,
       placeholder = 'Search for a card',
       loading,
       cards: overrideCards,
@@ -144,6 +145,7 @@ export default class CardSearch extends React.Component {
         tabIndex={0}
         style={{ width }}
         loading={loading}
+        onFocus={e => e.target.select()}
         notFoundContent={<Empty description="No cards found" />}
         dropdownAlign={getDropdownAlign(alignTop)}
       >

@@ -22,6 +22,7 @@ export default ({ setCardOptions }) => {
     if (!setKey) return;
     setCardOptions({ loading: true });
     fetchCards();
+    // eslint-disable-next-line
   }, [setKey]);
 
   useEffect(() => {
@@ -32,6 +33,7 @@ export default ({ setCardOptions }) => {
     }
     const cards = formatCachedCards(data.cardsBySet);
     setCardOptions({ cards, cardPrefix: getSetIcon(setKey) });
+    // eslint-disable-next-line
   }, [loading, data, setKey]);
 
   return (
