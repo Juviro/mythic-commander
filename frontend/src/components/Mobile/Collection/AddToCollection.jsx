@@ -21,5 +21,5 @@ export default () => {
 
   if (username) return null;
 
-  return <AddCardMobile onAddCard={onAddCard} visible />;
+  return <AddCardMobile onAddCard={onAddCard} visible allowFoilInput />;
 };

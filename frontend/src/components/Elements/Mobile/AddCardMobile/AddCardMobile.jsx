@@ -12,7 +12,7 @@ const StyledButton = styled.div`
   z-index: 1000;
 `;
 
-export default ({ onAddCard, containedCards = [], visible }) => {
+export default ({ onAddCard, containedCards = [], visible, allowFoilInput }) => {
   const [isAdding, toggleIsAdding] = useToggle(false);
 
   if (!visible) return null;
@@ -25,6 +25,7 @@ export default ({ onAddCard, containedCards = [], visible }) => {
         onAddCard={onAddCard}
         containedCardNames={containedCardNames}
         isVisible={isAdding}
+        allowFoilInput={allowFoilInput}
         onClose={() => toggleIsAdding(false)}
       />
       <StyledButton>

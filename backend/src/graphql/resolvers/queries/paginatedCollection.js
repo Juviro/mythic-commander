@@ -1,6 +1,6 @@
 import { getOrderColumn, addNameClause } from './cardSearch';
 
-export default async (
+export default (
   db,
   userId,
   limit,

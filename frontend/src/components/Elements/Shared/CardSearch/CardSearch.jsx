@@ -1,27 +1,39 @@
 import React from 'react';
-import { AutoComplete, Typography } from 'antd';
+import { AutoComplete, Typography, Empty } from 'antd';
 import styled from 'styled-components';
 import CardContext from '../../../Provider/CardProvider';
 import { filterAndSortByQuery } from '../../../../utils/cardFilter';
 import OwnedBadge from '../OwnedBadge';
 import { useBlurOnEsc } from '../../../Hooks';
+import Flex from '../Flex';
+import FoilIcon from '../FoilIcon';
 
-export const splitAmountAndName = query => {
-  const match = query.match(/^(\d*)x{0,1}\s{0,1}(.*)/);
-  if (!match) return { name: query, amount: 1 };
-  const [, matchedAmount, name] = match;
+export const splitSearchString = (query, allowFoilInput = false) => {
+  const matchAmount = query.match(/^(\d*)x{0,1}\s{0,1}(.*)/);
+  const [, matchedAmount, nameWithoutAmount] = matchAmount || [null, null, query];
+
   const amount = Number(matchedAmount) || 1;
-  return { amount, name };
+
+  if (!allowFoilInput) {
+    return {
+      amount,
+      name: nameWithoutAmount,
+    };
+  }
+
+  const matchFoil = nameWithoutAmount.match(/^\s*(foil)\s*([\w]+.*)$/);
+  const [, matchedFoil, name] = matchFoil || [null, null, nameWithoutAmount];
+
+  const isFoil = Boolean(matchedFoil);
+
+  return { amount, name, isFoil };
 };
 
 const StyledOption = styled.span`
   display: flex;
-  width: 100%;
   justify-content: space-between;
-`;
-
-const StyledOptionWrapper = styled.div`
-  display: flex;
+  overflow: hidden;
+  width: 100%;
 `;
 
 const getHighlightedOption = (
@@ -89,10 +101,11 @@ export default class CardSearch extends React.Component {
 
   onSubmit = idAndName => {
     const [id, name] = idAndName.split(';');
-    const { onSearch, resetSearch } = this.props;
+    const { onSearch, resetSearch, allowFoilInput } = this.props;
     const { searchString } = this.state;
-    const { amount } = splitAmountAndName(searchString);
-    onSearch({ amount, id }, name);
+    const { amount, isFoil } = splitSearchString(searchString, allowFoilInput);
+
+    onSearch({ amount, id, isFoil }, name);
     if (resetSearch) this.setState({ searchString: '' });
   };
 
@@ -105,14 +118,18 @@ export default class CardSearch extends React.Component {
       containedCardNames,
       defaultActiveFirstOption,
       placeholder = 'Search for a card',
+      loading,
+      cards: overrideCards,
+      cardPrefix,
+      allowFoilInput,
     } = this.props;
 
     const { searchString } = this.state;
     const { cards = [] } = this.context;
 
-    const { name, amount } = splitAmountAndName(searchString);
+    const { name, amount, isFoil } = splitSearchString(searchString, allowFoilInput);
 
-    const suggestions = filterAndSortByQuery(cards, name).slice(0, 20);
+    const suggestions = filterAndSortByQuery(overrideCards || cards, name).slice(0, 20);
 
     return (
       <AutoComplete
@@ -126,6 +143,8 @@ export default class CardSearch extends React.Component {
         onSelect={this.onSubmit}
         tabIndex={0}
         style={{ width }}
+        loading={loading}
+        notFoundContent={<Empty description="No cards found" />}
         dropdownAlign={getDropdownAlign(alignTop)}
       >
         {suggestions.map(option => (
@@ -134,20 +153,22 @@ export default class CardSearch extends React.Component {
             style={{ display: 'flex' }}
             key={`${option.id};${option.name}`}
           >
-            <StyledOptionWrapper>
+            <Flex align="center">
               {amount > 1 && (
                 <Typography.Text
                   strong
                   style={{ marginRight: 8 }}
                 >{`${amount}x `}</Typography.Text>
               )}
+              {isFoil && <FoilIcon style={{ marginRight: 6, marginLeft: 0 }} />}
+              {cardPrefix}
               {getHighlightedOption(
                 name,
                 option.name,
                 containedCardNames,
                 ownedCardNames
               )}
-            </StyledOptionWrapper>
+            </Flex>
           </AutoComplete.Option>
         ))}
       </AutoComplete>
