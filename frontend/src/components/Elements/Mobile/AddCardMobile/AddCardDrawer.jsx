@@ -5,7 +5,13 @@ import { useQuery } from 'react-apollo';
 import CardSearch from '../../Shared/CardSearch';
 import { getOwnedCardNames } from '../../../../queries';
 
-export default ({ containedCardNames, isVisible, onClose, onAddCard }) => {
+export default ({
+  containedCardNames,
+  isVisible,
+  onClose,
+  onAddCard,
+  allowFoilInput,
+}) => {
   const searchInputRef = React.createRef();
   const { data } = useQuery(getOwnedCardNames);
 
@@ -36,6 +42,7 @@ export default ({ containedCardNames, isVisible, onClose, onAddCard }) => {
         onSearch={onAddCard}
         containedCardNames={containedCardNames}
         defaultActiveFirstOption
+        allowFoilInput={allowFoilInput}
       />
     </Drawer>
   );

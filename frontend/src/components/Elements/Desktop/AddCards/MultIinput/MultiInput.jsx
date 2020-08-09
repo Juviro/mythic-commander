@@ -9,7 +9,7 @@ import {
   IconWrapper,
   StyledLink,
 } from './StyledMultiInput';
-import { splitAmountAndName } from '../../../Shared/CardSearch/CardSearch';
+import { splitSearchString } from '../../../Shared/CardSearch/CardSearch';
 import CardContext from '../../../../Provider/CardProvider';
 
 const NO_CARD = 'NO_CARD';
@@ -53,7 +53,7 @@ export default class MultiInput extends React.Component {
       }
       // Removes sideboard indicators (currently filtered by the function above)
       // and second half of a two faced name
-      const { amount, name } = splitAmountAndName(row);
+      const { amount, name } = splitSearchString(row);
       const normalize = str =>
         str.toLowerCase().replace(/(^[sb:\s]*[\d]+x*|\/\/.+$|[.,'\s]+)/g, '');
       const normalizedRow = normalize(name);
