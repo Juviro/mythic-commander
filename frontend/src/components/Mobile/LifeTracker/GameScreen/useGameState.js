@@ -9,19 +9,13 @@ const fillArrayWith = (arrayLength, fillFunction) => {
   return new Array(arrayLength).fill(null).map(fillFunction);
 };
 
-const getImg = () => {
-  return null;
-  if (Math.random() > 0.3) return null;
-  return 'https://img.scryfall.com/cards/art_crop/front/d/a/dada448c-6431-4172-b458-efa49c302dfb.jpg';
-};
-
 const getInitialPlayers = ({ numberOfPlayers, startingLife }) => {
   const playerIds = fillArrayWith(numberOfPlayers, getRandomId);
   const getPlayer = (id, index) => ({
     id,
     name: `Player ${index + 1}`,
     color: lifeTracker[index],
-    img: getImg(),
+    img: null,
     life: startingLife,
     damageTaken: {
       players: playerIds

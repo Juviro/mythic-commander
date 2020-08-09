@@ -8,7 +8,7 @@ import ImagePicker from './ImagePicker';
 export default ({ currentSettings, onPickColor, onPickImg }) => {
   return (
     <Flex direction="column">
-      <Divider>Pick your Background:</Divider>
+      <Divider>Pick a Background Color</Divider>
       <AvatarList
         elements={lifeTracker}
         type="color"
@@ -16,7 +16,7 @@ export default ({ currentSettings, onPickColor, onPickImg }) => {
         currentSelection={currentSettings.avatar}
       />
       <Divider>or</Divider>
-      <ImagePicker onPick={onPickImg} />
+      <ImagePicker onPick={onPickImg} currentSelection={currentSettings.avatar} />
     </Flex>
   );
 };

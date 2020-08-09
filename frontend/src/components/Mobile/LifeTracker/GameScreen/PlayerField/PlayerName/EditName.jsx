@@ -6,6 +6,7 @@ import { Flex, Expander } from '../../../../../Elements/Shared';
 import FullscreenModalContext from '../../../../../Provider/FullscreenModalProvider';
 import Avatar from './Avatar';
 import AvatarPicker from './AvatarPicker';
+import useSubmitOnEnter from '../../../../../Hooks/useSubmitOnEnter';
 
 const getInitialState = player => {
   const avatarType = player.img ? 'img' : 'color';
@@ -17,8 +18,7 @@ const getInitialState = player => {
 };
 
 export default ({ player, onClose, visible, onUpdatePlayer }) => {
-  // TODO: false
-  const [isExpanded, toggleIsExpanded] = useToggle(true);
+  const [isExpanded, toggleIsExpanded] = useToggle();
   const { getContainer } = useContext(FullscreenModalContext);
   const [currentSettings, setCurrentSettings] = useState(getInitialState(player));
 
@@ -58,6 +58,8 @@ export default ({ player, onClose, visible, onUpdatePlayer }) => {
       onCancel={onClose}
       onOk={onSubmit}
       closable={false}
+      destroyOnClose
+      style={{ top: 0 }}
       getContainer={getContainer}
     >
       <Flex direction="column">
@@ -70,9 +72,9 @@ export default ({ player, onClose, visible, onUpdatePlayer }) => {
           />
           <Input
             value={currentSettings.name}
-            // TODO: enable
-            // onFocus={e => e.target.select()}
+            onFocus={e => e.target.select()}
             onSubmit={onSubmit}
+            onKeyDown={useSubmitOnEnter(onSubmit)}
             onChange={onChangeName}
           />
         </Flex>

@@ -6,7 +6,7 @@ const StyledAvatar = styled.div`
   background-color: ${({ color }) => color};
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
-  border: 1px solid #353535;
+  border: ${({ color, img }) => (color || img ? '1px solid #353535' : 'none')};
   border-radius: 2px;
 
   ${({ img }) =>

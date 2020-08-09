@@ -101,18 +101,24 @@ const resolver = {
     return count;
   },
   cardImages: async (_, { cardId }, { db }) => {
-    const imageUris = await db.raw(
+    const { rows: imageUris } = await db.raw(
       `
-      SELECT image_uris FROM cards WHERE oracle_id = (
+      SELECT image_uris, card_faces FROM cards WHERE oracle_id = (
         SELECT oracle_id 
         FROM cards 
-        WHERE id = ?;
+        WHERE id = ?
+      );
     `,
       [cardId]
     );
 
-    console.log('imageUris :', imageUris);
-    return imageUris.map(({ art_crop }) => art_crop);
+    return imageUris
+      .map(({ image_uris, card_faces }) => {
+        if (card_faces)
+          return card_faces.map(cardFace => cardFace.image_uris.art_crop);
+        return image_uris.art_crop;
+      })
+      .flat();
   },
 
   cardSearch,
