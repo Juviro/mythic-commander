@@ -1,10 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import styled, { css } from 'styled-components';
 
 import PlayerName from './PlayerName';
 import NumberField from '../../NumberField';
-import { Flex } from '../../../../Elements/Shared';
-import { lifeTrack } from '../../../../../constants/colors';
+import { useWindowSize } from '../../../../Hooks';
+
+const initialHeight = window.innerHeight;
 
 const StyledWrapper = styled.div`
   flex: 1;
@@ -15,24 +16,50 @@ const StyledWrapper = styled.div`
 
   height: 100%;
   border: 1px solid black;
-  background-color: ${({ playerIndex }) => lifeTrack[playerIndex]};
+  background-color: ${({ color }) => color};
 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-image: url(https://cdnb.artstation.com/p/assets/images/images/027/681/525/large/paul-canavan-414596-felineincarnations-full.jpg?1592245465);
+  ${({ img }) =>
+    img
+      ? css`
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-image: url(${img});
+        `
+      : ''}
+  ${({ minWidth }) =>
+    minWidth
+      ? css`
+          min-width: ${minWidth};
+        `
+      : ''}
 `;
 
-export default ({ player, players, onSetLife, onChangeName }) => {
-  const playerIndex = players.findIndex(({ id }) => id === player.id);
+export default ({ player, players, numberOfPlayersInRow, onSetLife, onUpdatePlayer }) => {
+  useWindowSize();
+  const currentHeight = window.innerHeight;
+  const [fullscreenHeight, setFullscreenHeight] = useState(initialHeight);
+
+  useEffect(() => {
+    if (currentHeight >= initialHeight) {
+      setFullscreenHeight(currentHeight);
+    }
+  }, [currentHeight, setFullscreenHeight]);
+
   return (
-    <StyledWrapper playerIndex={playerIndex}>
+    <StyledWrapper
+      img={player.img}
+      color={player.color}
+      minWidth={
+        numberOfPlayersInRow !== 1 && `${fullscreenHeight / numberOfPlayersInRow}px`
+      }
+    >
       <NumberField
         whiteText
         value={player.life}
         setValue={val => onSetLife(player.id, val)}
       />
-      <PlayerName player={player} onChangeName={onChangeName} />
+      <PlayerName player={player} onUpdatePlayer={onUpdatePlayer} />
     </StyledWrapper>
   );
 };

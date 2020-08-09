@@ -250,6 +250,7 @@ type Query {
   wantedCards(username: String!): WantedCards
 
   card(id: String!): Card!
+  cardImages(cardId: String!): String!
   cardSearch(
     offset: Int
     limit: Int

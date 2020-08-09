@@ -45,7 +45,7 @@ const StyledHalf = styled.div`
   ${({ position }) => halfStyles[position]}
 `;
 
-const GameScreen = ({ players, onSetLife, onChangeName, onTrackDamage }) => {
+const GameScreen = ({ players, onSetLife, onUpdatePlayer, onTrackDamage }) => {
   const is2Player = players.length === 2;
   const [position1, position2] = is2Player ? ['top', 'bottom'] : ['left', 'right'];
 
@@ -61,8 +61,9 @@ const GameScreen = ({ players, onSetLife, onChangeName, onTrackDamage }) => {
             onSetLife={onSetLife}
             player={player}
             key={player.id}
+            numberOfPlayersInRow={leftSidePlayers.length}
             players={players}
-            onChangeName={onChangeName}
+            onUpdatePlayer={onUpdatePlayer}
           />
         ))}
       </StyledHalf>
@@ -72,8 +73,9 @@ const GameScreen = ({ players, onSetLife, onChangeName, onTrackDamage }) => {
             onSetLife={onSetLife}
             player={player}
             key={player.id}
+            numberOfPlayersInRow={rightSidePlayers.length}
             players={players}
-            onChangeName={onChangeName}
+            onUpdatePlayer={onUpdatePlayer}
           />
         ))}
       </StyledHalf>

@@ -1,25 +1,89 @@
-import React from 'react';
-import { Modal } from 'antd';
-import styled from 'styled-components';
+import React, { useContext, useState } from 'react';
+import { Modal, Input } from 'antd';
 
-const StyledTestModal = styled.div`
-  position: absolute;
-  z-index: 99;
-  width: 200px;
-  height: 200px;
-  background-color: white;
-  border-radius: 2px;
+import { useToggle } from '../../../../../Hooks';
+import { Flex, Expander } from '../../../../../Elements/Shared';
+import FullscreenModalContext from '../../../../../Provider/FullscreenModalProvider';
+import Avatar from './Avatar';
+import AvatarPicker from './AvatarPicker';
 
-  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08),
-    0 9px 28px 8px rgba(0, 0, 0, 0.05);
-`;
+const getInitialState = player => {
+  const avatarType = player.img ? 'img' : 'color';
+  return {
+    name: player.name,
+    avatarType,
+    avatar: player[avatarType],
+  };
+};
 
-export default ({ player, onClose, visible, onSubmit }) => {
-  //   return <StyledTestModal>{player.name}</StyledTestModal>;
+export default ({ player, onClose, visible, onUpdatePlayer }) => {
+  // TODO: false
+  const [isExpanded, toggleIsExpanded] = useToggle(true);
+  const { getContainer } = useContext(FullscreenModalContext);
+  const [currentSettings, setCurrentSettings] = useState(getInitialState(player));
+
+  const onSubmit = () => {
+    const newSettings = {
+      name: currentSettings.name || 'Player',
+      img: null,
+      color: null,
+      [currentSettings.avatarType]: currentSettings.avatar,
+    };
+    onUpdatePlayer(player.id, newSettings);
+    onClose();
+  };
+
+  const onChangeName = e => {
+    setCurrentSettings({
+      ...currentSettings,
+      name: e.target.value,
+    });
+  };
+
+  const onChangeAvatar = type => newValue => {
+    setCurrentSettings({
+      ...currentSettings,
+      avatar: newValue,
+      avatarType: type,
+    });
+  };
+
+  const avatarProps = {
+    [currentSettings.avatarType]: currentSettings.avatar,
+  };
 
   return (
-    <Modal visible={visible} onCancel={onClose}>
-      {player.name}
+    <Modal
+      visible={visible}
+      onCancel={onClose}
+      onOk={onSubmit}
+      closable={false}
+      getContainer={getContainer}
+    >
+      <Flex direction="column">
+        <Flex direction="row">
+          <Avatar
+            {...avatarProps}
+            style={{ marginRight: 8 }}
+            onClick={toggleIsExpanded}
+            height={36}
+          />
+          <Input
+            value={currentSettings.name}
+            // TODO: enable
+            // onFocus={e => e.target.select()}
+            onSubmit={onSubmit}
+            onChange={onChangeName}
+          />
+        </Flex>
+        <Expander isExpanded={isExpanded} c>
+          <AvatarPicker
+            currentSettings={currentSettings}
+            onPickColor={onChangeAvatar('color')}
+            onPickImg={onChangeAvatar('img')}
+          />
+        </Expander>
+      </Flex>
     </Modal>
   );
 };

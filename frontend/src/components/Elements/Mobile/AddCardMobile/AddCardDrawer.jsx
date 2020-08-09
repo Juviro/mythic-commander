@@ -41,7 +41,6 @@ export default ({
         ref={searchInputRef}
         onSearch={onAddCard}
         containedCardNames={containedCardNames}
-        defaultActiveFirstOption
         allowFoilInput={allowFoilInput}
       />
     </Drawer>

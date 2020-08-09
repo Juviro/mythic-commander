@@ -55,6 +55,8 @@ const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {
 
   iconStyle.padding = '10px 15px 10px 10px';
 
+  if (history.location.pathname.includes('/life-tracker/start')) return null;
+
   return (
     <>
       <StyledMenu transparent={transparent}>

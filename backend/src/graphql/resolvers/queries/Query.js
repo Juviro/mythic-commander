@@ -100,6 +100,20 @@ const resolver = {
       .first();
     return count;
   },
+  cardImages: async (_, { cardId }, { db }) => {
+    const imageUris = await db.raw(
+      `
+      SELECT image_uris FROM cards WHERE oracle_id = (
+        SELECT oracle_id 
+        FROM cards 
+        WHERE id = ?;
+    `,
+      [cardId]
+    );
+
+    console.log('imageUris :', imageUris);
+    return imageUris.map(({ art_crop }) => art_crop);
+  },
 
   cardSearch,
 

@@ -12,13 +12,8 @@ const StyledName = styled.div`
   text-shadow: 2px 2px 0px #333;
 `;
 
-export default ({ player, onChangeName }) => {
-  // TODO: false
-  const [isEditing, toggleIsEditing] = useToggle(player.name === 'Player 1');
-
-  const onSubmit = val => {
-    console.log('val :', val);
-  };
+export default ({ player, onUpdatePlayer }) => {
+  const [isEditing, toggleIsEditing] = useToggle(false);
 
   return (
     <>
@@ -26,8 +21,8 @@ export default ({ player, onChangeName }) => {
       <EditName
         visible={isEditing}
         onClose={toggleIsEditing}
-        onSubmit={onSubmit}
         player={player}
+        onUpdatePlayer={onUpdatePlayer}
       />
     </>
   );
