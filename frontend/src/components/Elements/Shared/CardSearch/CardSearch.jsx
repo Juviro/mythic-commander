@@ -99,6 +99,10 @@ export default class CardSearch extends React.Component {
     this.inputRef.current.focus();
   };
 
+  blur = () => {
+    this.inputRef.current.blur();
+  };
+
   onSubmit = idAndName => {
     const [id, name] = idAndName.split(';');
     const { onSearch, resetSearch, allowFoilInput } = this.props;
@@ -123,6 +127,7 @@ export default class CardSearch extends React.Component {
       cards: overrideCards,
       cardPrefix,
       allowFoilInput,
+      getContainer,
     } = this.props;
 
     const { searchString } = this.state;
@@ -148,6 +153,7 @@ export default class CardSearch extends React.Component {
         onFocus={e => e.target.select()}
         notFoundContent={<Empty description="No cards found" />}
         dropdownAlign={getDropdownAlign(alignTop)}
+        getPopupContainer={getContainer}
       >
         {suggestions.map(option => (
           <AutoComplete.Option

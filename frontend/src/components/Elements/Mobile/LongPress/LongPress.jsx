@@ -7,22 +7,9 @@ class LongPress extends Component {
 
   moved = false;
 
-  state = {
-    touch: true,
-  };
-
   static defaultProps = {
     time: 500,
   };
-
-  componentDidMount() {
-    try {
-      document.createEvent('TouchEvent');
-    } catch (e) {
-      // touch is not available, disable handlers
-      this.setState({ touch: false });
-    }
-  }
 
   componentWillUnmount() {
     this.cancelTimeout();
@@ -78,18 +65,21 @@ class LongPress extends Component {
 
   render() {
     const { children, disabled } = this.props;
-    const { touch } = this.state;
 
-    if (!touch || disabled) {
+    if (disabled) {
       return children;
     }
 
     const props = {
       onContextMenu: e => e.preventDefault(),
       onTouchStart: this.onTouchStart,
+      onMouseDown: this.onTouchStart,
       onTouchEnd: this.onTouchEnd,
+      onMouseUp: this.onTouchEnd,
       onTouchMove: this.onMove,
+      onMouseMove: this.onMove,
       onTouchCancel: this.onTouchCancel,
+      onMouseLeave: this.onTouchCancel,
       style: {
         ...children.props.style,
         WebkitUserSelect: 'none',
