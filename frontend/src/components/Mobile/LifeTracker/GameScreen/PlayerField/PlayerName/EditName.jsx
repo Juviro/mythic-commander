@@ -1,7 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { Modal, Input } from 'antd';
 
 import { useMutation } from '@apollo/react-hooks';
+import { pick } from 'lodash';
 import { useToggle } from '../../../../../Hooks';
 import { Flex, Expander } from '../../../../../Elements/Shared';
 import FullscreenModalContext from '../../../../../Provider/FullscreenModalProvider';
@@ -20,7 +21,7 @@ const getInitialState = player => {
   };
 };
 
-export default ({ player, onClose, visible, onUpdatePlayer }) => {
+export default ({ player, onClose, onUpdatePlayer }) => {
   const [isExpanded, toggleIsExpanded] = useToggle();
   const { getContainer } = useContext(FullscreenModalContext);
   const [currentSettings, setCurrentSettings] = useState(getInitialState(player));
@@ -42,12 +43,6 @@ export default ({ player, onClose, visible, onUpdatePlayer }) => {
     onClose();
   };
 
-  useEffect(() => {
-    if (visible || !isExpanded) return;
-    toggleIsExpanded(false);
-    // eslint-disable-next-line
-  }, [visible]);
-
   const onChangeName = e => {
     setCurrentSettings({
       ...currentSettings,
@@ -65,6 +60,10 @@ export default ({ player, onClose, visible, onUpdatePlayer }) => {
 
   const onSelectPlayer = selectedPlayer => {
     onUpdatePlayer(player.id, selectedPlayer);
+    const isDefaultName = selectedPlayer.name.match(/^Player\s\d/);
+    if (!isDefaultName) {
+      mutate({ variables: pick(selectedPlayer, ['name', 'img', 'color']) });
+    }
     onClose();
   };
 
@@ -74,7 +73,7 @@ export default ({ player, onClose, visible, onUpdatePlayer }) => {
 
   return (
     <Modal
-      visible={visible}
+      visible
       onCancel={onClose}
       onOk={onSubmit}
       closable={false}

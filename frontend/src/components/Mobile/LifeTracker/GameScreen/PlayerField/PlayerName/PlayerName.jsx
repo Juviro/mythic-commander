@@ -18,12 +18,13 @@ export default ({ player, onUpdatePlayer }) => {
   return (
     <>
       <StyledName onClick={toggleIsEditing}>{player.name}</StyledName>
-      <EditName
-        visible={isEditing}
-        onClose={toggleIsEditing}
-        player={player}
-        onUpdatePlayer={onUpdatePlayer}
-      />
+      {isEditing && (
+        <EditName
+          onClose={toggleIsEditing}
+          player={player}
+          onUpdatePlayer={onUpdatePlayer}
+        />
+      )}
     </>
   );
 };
