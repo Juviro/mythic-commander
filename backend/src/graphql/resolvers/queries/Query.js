@@ -162,6 +162,12 @@ const resolver = {
       wantsLists,
     };
   },
+
+  ltPlayer(_, __, { user: { id: userId }, db }) {
+    return db('ltPlayers')
+      .where({ userId })
+      .orderBy('lastEdit', 'DESC');
+  },
 };
 
 export default resolver;

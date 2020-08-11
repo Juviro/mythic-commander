@@ -1,12 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Modal, Input } from 'antd';
 
+import { useMutation } from '@apollo/react-hooks';
 import { useToggle } from '../../../../../Hooks';
 import { Flex, Expander } from '../../../../../Elements/Shared';
 import FullscreenModalContext from '../../../../../Provider/FullscreenModalProvider';
 import Avatar from './Avatar';
 import AvatarPicker from './AvatarPicker';
 import useSubmitOnEnter from '../../../../../Hooks/useSubmitOnEnter';
+import { updateLtPlayer } from './queries';
+import PreviousPlayers from './PreviousPlayers';
 
 const getInitialState = player => {
   const avatarType = player.img ? 'img' : 'color';
@@ -21,6 +24,7 @@ export default ({ player, onClose, visible, onUpdatePlayer }) => {
   const [isExpanded, toggleIsExpanded] = useToggle();
   const { getContainer } = useContext(FullscreenModalContext);
   const [currentSettings, setCurrentSettings] = useState(getInitialState(player));
+  const [mutate] = useMutation(updateLtPlayer);
 
   const onSubmit = () => {
     const newSettings = {
@@ -30,8 +34,19 @@ export default ({ player, onClose, visible, onUpdatePlayer }) => {
       [currentSettings.avatarType]: currentSettings.avatar,
     };
     onUpdatePlayer(player.id, newSettings);
+
+    const isDefaultName = currentSettings.name.match(/^Player\s\d/);
+    if (!isDefaultName) {
+      mutate({ variables: newSettings });
+    }
     onClose();
   };
+
+  useEffect(() => {
+    if (visible || !isExpanded) return;
+    toggleIsExpanded(false);
+    // eslint-disable-next-line
+  }, [visible]);
 
   const onChangeName = e => {
     setCurrentSettings({
@@ -46,6 +61,11 @@ export default ({ player, onClose, visible, onUpdatePlayer }) => {
       avatar: newValue,
       avatarType: type,
     });
+  };
+
+  const onSelectPlayer = selectedPlayer => {
+    onUpdatePlayer(player.id, selectedPlayer);
+    onClose();
   };
 
   const avatarProps = {
@@ -85,6 +105,7 @@ export default ({ player, onClose, visible, onUpdatePlayer }) => {
             onPickImg={onChangeAvatar('img')}
           />
         </Expander>
+        <PreviousPlayers onSelectPlayer={onSelectPlayer} />
       </Flex>
     </Modal>
   );
