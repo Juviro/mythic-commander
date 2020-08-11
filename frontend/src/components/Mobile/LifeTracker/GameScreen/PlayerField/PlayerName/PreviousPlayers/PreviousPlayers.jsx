@@ -10,7 +10,9 @@ export default ({ onSelectPlayer }) => {
 
   return (
     <>
-      <Divider style={{ margin: '32px 0px 16px' }}>Previous Players</Divider>
+      {Boolean(previousPLayers.length) && (
+        <Divider style={{ margin: '32px 0px 16px' }}>Previous Players</Divider>
+      )}
       <List loading={loading}>
         {previousPLayers.map(player => (
           <PreviousPlayer
