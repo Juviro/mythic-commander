@@ -26,10 +26,10 @@ const LifeTracker = ({ history }) => {
   };
 
   // TODO: remove
-  // React.useEffect(() => {
-  //   setTimeout(() => onStart({ numberOfPlayers: 5, startingLife: 40 }), 500);
-  //   // eslint-disable-next-line
-  // }, []);
+  React.useEffect(() => {
+    setTimeout(() => onStart({ numberOfPlayers: 5, startingLife: 40 }), 500);
+    // eslint-disable-next-line
+  }, []);
   const hasStarted = history.location.pathname.includes('/m/life-tracker/start');
 
   return (
