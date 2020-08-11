@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { lifeTracker } from '../../../../constants/colors';
+import { randomImages } from '../../../../constants/images';
 
 export const INFECT = 'INFECT';
 
@@ -14,8 +14,8 @@ const getInitialPlayers = ({ numberOfPlayers, startingLife }) => {
   const getPlayer = (id, index) => ({
     id,
     name: `Player ${index + 1}`,
-    color: lifeTracker[index],
-    img: null,
+    color: null,
+    img: randomImages[index],
     life: startingLife,
     damageTaken: {
       players: playerIds

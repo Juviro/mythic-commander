@@ -369,6 +369,7 @@ type Mutation {
 
   ########## Life Tracker ##########
   updateLtPlayer(name: String!, img: String, color: String): LTPlayer!
+  deleteLtPlayer(name: String!): Boolean
 }
 
 ################################# Move Card #################################
