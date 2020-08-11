@@ -226,6 +226,15 @@ type WantedCard {
   oracle_id: String!
 }
 
+################################# Life Tracker #################################
+
+type LTPlayer {
+  name: String!
+  img: String
+  color: String
+  lastEdit: String
+}
+
 ################################# Queries #################################
 
 type Query {
@@ -267,6 +276,8 @@ type Query {
 
   proxies(type: String!, id: String!, filter: String): [ProxyCard!]!
   allLists: AllLists!
+
+  ltPlayer: [LTPlayer!]!
 }
 
 input CardsOptionsInput {
@@ -355,6 +366,9 @@ type Mutation {
   ): [WantsListCard!]!
   linkWantsList(wantsListId: String!, deckId: String!): WantsList!
   unlinkWantsList(wantsListId: String!): WantsList!
+
+  ########## Life Tracker ##########
+  updateLtPlayer(name: String!, img: String, color: String): LTPlayer!
 }
 
 ################################# Move Card #################################
