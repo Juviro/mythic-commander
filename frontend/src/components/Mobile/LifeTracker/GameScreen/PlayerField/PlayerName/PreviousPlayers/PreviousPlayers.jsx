@@ -1,19 +1,19 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { List, Divider } from 'antd';
-import { ltPlayer } from './queries';
+import { ltPlayers } from './queries';
 import PreviousPlayer from './PreviousPlayer';
 
 export default ({ onSelectPlayer }) => {
-  const { data, loading } = useQuery(ltPlayer, { fetchPolicy: 'cache-first' });
-  const previousPLayers = data?.ltPlayer ?? [];
+  const { data } = useQuery(ltPlayers, { fetchPolicy: 'cache-and-network' });
+  const previousPLayers = data?.ltPlayers ?? [];
 
   return (
     <>
       {Boolean(previousPLayers.length) && (
         <Divider style={{ margin: '32px 0px 16px' }}>Previous Players</Divider>
       )}
-      <List loading={loading}>
+      <List loading={!data}>
         {previousPLayers.map(player => (
           <PreviousPlayer
             player={player}
