@@ -4,13 +4,15 @@ import styled, { css } from 'styled-components';
 import PlayerName from './PlayerName';
 import NumberField from '../../NumberField';
 import { useWindowSize } from '../../../../Hooks';
+import Flex from '../../../../Elements/Shared/Flex/index';
+import DamageTracker from './DamageTracker/DamageTracker';
 
 const initialHeight = window.innerHeight;
 
 const StyledWrapper = styled.div`
   flex: 1;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
 
@@ -28,15 +30,28 @@ const StyledWrapper = styled.div`
         `
       : ''}
   ${({ minWidth }) =>
-    minWidth
-      ? css`
-          min-width: ${minWidth};
-        `
-      : ''}
+    minWidth &&
+    css`
+      min-width: ${minWidth};
+    `}
+
+
+  &:last-child {
+    flex-direction: row-reverse;
+  }
 `;
 
-export default ({ player, players, numberOfPlayersInRow, onSetLife, onUpdatePlayer }) => {
+export default ({
+  player,
+  players,
+  onTrackDamage,
+  numberOfPlayersInRow,
+  onSetLife,
+  onUpdatePlayer,
+  displayDamage,
+}) => {
   useWindowSize();
+  // prevent resize of player fields when keyboard expanded
   const currentHeight = window.innerHeight;
   const [fullscreenHeight, setFullscreenHeight] = useState(initialHeight);
 
@@ -54,12 +69,20 @@ export default ({ player, players, numberOfPlayersInRow, onSetLife, onUpdatePlay
         numberOfPlayersInRow !== 1 && `${fullscreenHeight / numberOfPlayersInRow}px`
       }
     >
-      <NumberField
-        whiteText
-        value={player.life}
-        setValue={val => onSetLife(player.id, val)}
-      />
-      <PlayerName player={player} onUpdatePlayer={onUpdatePlayer} />
+      {displayDamage && (
+        <DamageTracker player={player} players={players} onTrackDamage={onTrackDamage} />
+      )}
+      <Flex
+        direction="column"
+        style={{ width: '100%', height: '100%', overflow: 'hidden' }}
+      >
+        <NumberField
+          whiteText
+          value={player.life}
+          setValue={val => onSetLife(player.id, val)}
+        />
+        <PlayerName player={player} onUpdatePlayer={onUpdatePlayer} />
+      </Flex>
     </StyledWrapper>
   );
 };

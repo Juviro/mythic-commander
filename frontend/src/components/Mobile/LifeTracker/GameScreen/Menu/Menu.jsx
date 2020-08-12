@@ -20,10 +20,6 @@ const StyledIconWrapper = styled.div`
     css`
       transform: scale(0.95);
     `}
-
-  &:active {
-    transform: scale(0.9);
-  }
 `;
 
 const StyledMenuIcon = styled.img`
@@ -40,14 +36,14 @@ export default ({ handle, onRestartGame }) => {
       align="center"
       style={{
         top: 0,
-        width: '100%',
-        height: '100%',
+        width: '100vw',
+        height: '100vh',
         position: 'absolute',
         pointerEvents: 'none',
       }}
     >
-      <StyledIconWrapper isOpen={isOpen}>
-        <StyledMenuIcon src={icon} onClick={toggleIsOpen} />
+      <StyledIconWrapper isOpen={isOpen} onClick={toggleIsOpen}>
+        <StyledMenuIcon src={icon} />
       </StyledIconWrapper>
       <MenuItems
         isOpen={isOpen}

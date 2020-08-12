@@ -10,4 +10,4 @@ export const images = [
   'https://img.scryfall.com/cards/art_crop/front/7/a/7a2c8b8e-2e28-4f10-b04f-9b313c60c0bb.jpg', // Plains
 ];
 
-export const randomImages = images.sort(() => (Math.random() > 0.5 ? 1 : -1));
+export const randomImages = [...images].sort(() => (Math.random() > 0.5 ? 1 : -1));

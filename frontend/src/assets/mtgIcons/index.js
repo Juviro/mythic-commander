@@ -8,6 +8,7 @@ import S from './S.svg';
 import X from './X.svg';
 import T from './T.svg';
 import Q from './Q.svg';
+import P from './P.svg';
 
 import cost_2R from './2R.svg';
 import cost_2U from './2U.svg';
@@ -124,6 +125,8 @@ export const colors = {
   19: cost_19,
   20: cost_20,
 };
+
+export const poison = P;
 
 export const loyalities = {
   up: loyalityUp,

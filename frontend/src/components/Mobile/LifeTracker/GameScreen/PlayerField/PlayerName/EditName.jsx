@@ -91,8 +91,8 @@ export default ({ player, onClose, onUpdatePlayer }) => {
           <Input
             value={currentSettings.name}
             onFocus={e => e.target.select()}
-            onSubmit={onSubmit}
-            onKeyDown={useSubmitOnEnter(onSubmit)}
+            onSubmit={onOk}
+            onKeyDown={useSubmitOnEnter(onOk)}
             onChange={onChangeName}
           />
         </Flex>
