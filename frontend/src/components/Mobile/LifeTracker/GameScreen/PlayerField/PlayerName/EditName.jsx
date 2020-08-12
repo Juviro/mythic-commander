@@ -27,20 +27,28 @@ export default ({ player, onClose, onUpdatePlayer }) => {
   const [currentSettings, setCurrentSettings] = useState(getInitialState(player));
   const [mutate] = useMutation(updateLtPlayer);
 
-  const onSubmit = () => {
+  const onSubmit = settings => {
+    onUpdatePlayer(player.id, settings);
+
+    const isDefaultName = currentSettings.name.match(/^Player\s\d/);
+    if (!isDefaultName) {
+      mutate({ variables: settings, refetchQueries: ['ltPlayers'] });
+    }
+    onClose();
+  };
+
+  const onOk = () => {
     const newSettings = {
       name: currentSettings.name || 'Player',
       img: null,
       color: null,
       [currentSettings.avatarType]: currentSettings.avatar,
     };
-    onUpdatePlayer(player.id, newSettings);
+    onSubmit(newSettings);
+  };
 
-    const isDefaultName = currentSettings.name.match(/^Player\s\d/);
-    if (!isDefaultName) {
-      mutate({ variables: newSettings });
-    }
-    onClose();
+  const onSelectPlayer = selectedPlayer => {
+    onSubmit(pick(selectedPlayer, ['name', 'img', 'color']));
   };
 
   const onChangeName = e => {
@@ -58,15 +66,6 @@ export default ({ player, onClose, onUpdatePlayer }) => {
     });
   };
 
-  const onSelectPlayer = selectedPlayer => {
-    onUpdatePlayer(player.id, selectedPlayer);
-    const isDefaultName = selectedPlayer.name.match(/^Player\s\d/);
-    if (!isDefaultName) {
-      mutate({ variables: pick(selectedPlayer, ['name', 'img', 'color']) });
-    }
-    onClose();
-  };
-
   const avatarProps = {
     [currentSettings.avatarType]: currentSettings.avatar,
   };
@@ -75,7 +74,7 @@ export default ({ player, onClose, onUpdatePlayer }) => {
     <Modal
       visible
       onCancel={onClose}
-      onOk={onSubmit}
+      onOk={onOk}
       closable={false}
       destroyOnClose
       style={{ top: 0 }}

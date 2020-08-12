@@ -12,7 +12,7 @@ export default ({ player, onSelectPlayer }) => {
 
   const onDeletePlayer = e => {
     e.stopPropagation();
-    mutate({ variables: { name: player.name }, refetchQueries: ['ltPlayer'] });
+    mutate({ variables: { name: player.name }, refetchQueries: ['ltPlayers'] });
   };
 
   return (
