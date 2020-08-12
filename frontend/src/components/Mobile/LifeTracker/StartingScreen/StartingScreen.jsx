@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button, Checkbox } from 'antd';
 import { Flex } from '../../../Elements/Shared';
 import useLocalStorage from '../../../Hooks/useLocalStorage';
 import SettingSelection from './SettingSelection';
@@ -7,6 +7,11 @@ import SettingSelection from './SettingSelection';
 export default ({ onStart }) => {
   const [numberOfPlayers, setNumberOfPlayers] = useLocalStorage('LT-numberOfPlayers', 4);
   const [startingLife, setStartingLife] = useLocalStorage('LT-startingLife', 40);
+  const [displayDamage, setDisplayDamage] = useLocalStorage('LT-displayDamage', true);
+
+  const onStartGame = () => {
+    onStart({ numberOfPlayers, startingLife, displayDamage });
+  };
 
   return (
     <Flex
@@ -30,7 +35,14 @@ export default ({ onStart }) => {
           onChange={setStartingLife}
         />
       </Flex>
-      <Button type="primary" onClick={() => onStart({ numberOfPlayers, startingLife })}>
+      <Checkbox
+        checked={displayDamage}
+        onChange={() => setDisplayDamage(!displayDamage)}
+        style={{ fontWeight: 400, fontSize: 18 }}
+      >
+        Display Damage Tracker
+      </Checkbox>
+      <Button type="primary" onClick={onStartGame}>
         Start Game
       </Button>
     </Flex>
