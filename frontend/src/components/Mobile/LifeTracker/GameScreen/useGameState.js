@@ -9,6 +9,15 @@ const fillArrayWith = (arrayLength, fillFunction) => {
   return new Array(arrayLength).fill(null).map(fillFunction);
 };
 
+const getDamageTaken = (id, playerIds) => {
+  return {
+    players: playerIds
+      .filter(playerId => playerId !== id)
+      .map(playerId => ({ id: playerId, damage: 0 })),
+    infect: 0,
+  };
+};
+
 const getInitialPlayers = ({ numberOfPlayers, startingLife }) => {
   const playerIds = fillArrayWith(numberOfPlayers, getRandomId);
   const getPlayer = (id, index) => ({
@@ -17,12 +26,7 @@ const getInitialPlayers = ({ numberOfPlayers, startingLife }) => {
     color: null,
     img: randomImages[index],
     life: startingLife,
-    damageTaken: {
-      players: playerIds
-        .filter(playerId => playerId !== id)
-        .map(playerId => ({ id: playerId, damage: 0 })),
-      infect: 0,
-    },
+    damageTaken: getDamageTaken(id, playerIds),
   });
 
   return playerIds.map(getPlayer);
@@ -80,10 +84,21 @@ export default gameSettings => {
     updatePlayer(playerId, updatedPlayer);
   };
 
+  const onRestartGame = () => {
+    const playerIds = players.map(({ id }) => id);
+    const newPlayers = players.map(player => ({
+      ...player,
+      life: gameSettings.startingLife,
+      damageTaken: getDamageTaken(player.id, playerIds),
+    }));
+    setPlayers(newPlayers);
+  };
+
   return {
     players,
     onSetLife,
-    onUpdatePlayer,
     onTrackDamage,
+    onRestartGame,
+    onUpdatePlayer,
   };
 };
