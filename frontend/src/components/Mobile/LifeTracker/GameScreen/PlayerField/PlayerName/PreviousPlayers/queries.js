@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
-export const ltPlayer = gql`
-  query ltPlayer {
-    ltPlayer {
+export const ltPlayers = gql`
+  query ltPlayers {
+    ltPlayers {
       name
       img
       color

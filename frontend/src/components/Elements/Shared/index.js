@@ -75,3 +75,4 @@ export { default as UsernameModal } from './UsernameModal';
 export { default as WantsListDeckLink } from './WantsListDeckLink';
 export { default as WantsListStats } from './WantsListStats';
 export { default as WantsListTitle } from './WantsListTitle';
+export { default as WithConfirm } from './WithConfirm';

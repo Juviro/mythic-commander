@@ -164,7 +164,7 @@ const resolver = {
     };
   },
 
-  ltPlayer(_, __, { user: { id: userId }, db }) {
+  ltPlayers(_, __, { user: { id: userId }, db }) {
     return db('ltPlayers')
       .where({ userId })
       .orderBy('lastEdit', 'DESC');
