@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { randomImages } from '../../../../constants/images';
+import { lifeTracker } from '../../../../constants/colors';
 
 export const INFECT = 'INFECT';
 
@@ -23,13 +24,13 @@ const getDamageTaken = (id, playerIds) => {
     .concat(defaultDamage);
 };
 
-const getInitialPlayers = ({ numberOfPlayers, startingLife }) => {
+const getInitialPlayers = ({ numberOfPlayers, startingLife, useImages }) => {
   const playerIds = fillArrayWith(numberOfPlayers, getRandomId);
   const getPlayer = (id, index) => ({
     id,
     name: `Player ${index + 1}`,
-    color: null,
-    img: randomImages[index],
+    color: !useImages ? lifeTracker[index] : null,
+    img: useImages ? randomImages[index] : null,
     life: startingLife,
     damageTaken: getDamageTaken(id, playerIds),
   });
@@ -54,7 +55,6 @@ export default gameSettings => {
 
   const onSetLife = (playerId, life) => onUpdatePlayer(playerId, { life });
 
-  // @param {string} origin: either INFECT or playerId
   const onTrackDamage = (playerId, newPlayerDamages) => {
     const updatedPlayers = players.map(player => {
       if (player.id !== playerId) return player;

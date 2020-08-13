@@ -23,13 +23,19 @@ const LifeTracker = ({ history }) => {
   };
 
   // TODO: remove
-  React.useEffect(() => {
-    setTimeout(
-      () => onStart({ numberOfPlayers: 6, startingLife: 40, displayDamage: true }),
-      500
-    );
-    // eslint-disable-next-line
-  }, []);
+  // React.useEffect(() => {
+  //   setTimeout(
+  //     () =>
+  //       onStart({
+  //         numberOfPlayers: 6,
+  //         startingLife: 40,
+  //         displayDamage: true,
+  //         useImages: true,
+  //       }),
+  //     500
+  //   );
+  //   // eslint-disable-next-line
+  // }, []);
 
   return (
     <StyledWrapper>
