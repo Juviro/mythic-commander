@@ -18,7 +18,7 @@ const StyledWrapper = styled.div`
 
   height: 100%;
   border: 1px solid black;
-  background-color: ${({ color }) => color};
+  background-color: ${({ color }) => color || '#f2f2f2'};
 
   ${({ img }) =>
     img
