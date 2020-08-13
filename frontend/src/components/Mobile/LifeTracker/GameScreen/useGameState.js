@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { randomImages } from '../../../../constants/images';
+import { lifeTracker } from '../../../../constants/colors';
 
 export const INFECT = 'INFECT';
 
@@ -10,21 +11,26 @@ const fillArrayWith = (arrayLength, fillFunction) => {
 };
 
 const getDamageTaken = (id, playerIds) => {
-  return {
-    players: playerIds
-      .filter(playerId => playerId !== id)
-      .map(playerId => ({ id: playerId, damage: 0 })),
-    infect: 0,
-  };
+  const defaultDamage = [
+    {
+      id: INFECT,
+      damage: 0,
+    },
+  ];
+
+  return playerIds
+    .filter(playerId => playerId !== id)
+    .map(playerId => ({ id: playerId, damage: 0 }))
+    .concat(defaultDamage);
 };
 
-const getInitialPlayers = ({ numberOfPlayers, startingLife }) => {
+const getInitialPlayers = ({ numberOfPlayers, startingLife, useImages }) => {
   const playerIds = fillArrayWith(numberOfPlayers, getRandomId);
   const getPlayer = (id, index) => ({
     id,
     name: `Player ${index + 1}`,
-    color: null,
-    img: randomImages[index],
+    color: !useImages ? lifeTracker[index] : null,
+    img: useImages ? randomImages[index] : null,
     life: startingLife,
     damageTaken: getDamageTaken(id, playerIds),
   });
@@ -35,7 +41,7 @@ const getInitialPlayers = ({ numberOfPlayers, startingLife }) => {
 export default gameSettings => {
   const [players, setPlayers] = useState(getInitialPlayers(gameSettings));
 
-  const updatePlayer = (playerId, newValues) => {
+  const onUpdatePlayer = (playerId, newValues) => {
     const updatedPlayers = players.map(player => {
       if (player.id !== playerId) return player;
 
@@ -47,41 +53,25 @@ export default gameSettings => {
     setPlayers(updatedPlayers);
   };
 
-  const onSetLife = (playerId, life) => updatePlayer(playerId, { life });
+  const onSetLife = (playerId, life) => onUpdatePlayer(playerId, { life });
 
-  // @param {string} origin: either INFECT or playerId
-  const onTrackDamage = (playerId, newValue, origin) => {
+  const onTrackDamage = (playerId, newPlayerDamages) => {
     const updatedPlayers = players.map(player => {
       if (player.id !== playerId) return player;
-      if (origin === INFECT) {
-        return {
-          ...player,
-          damageTaken: {
-            ...player.damageTaken,
-            infect: newValue,
-          },
-        };
-      }
       return {
         ...player,
-        damageTaken: {
-          ...player.damageTaken,
-          players: player.damageTaken.players.map(originPlayer => {
-            if (originPlayer.id !== origin) return originPlayer;
-            return {
-              ...originPlayer,
-              damage: newValue,
-            };
-          }),
-        },
+        damageTaken: player.damageTaken.map(originPlayer => {
+          const updatedplayer = newPlayerDamages.find(({ id }) => id === originPlayer.id);
+          if (!updatedplayer) return originPlayer;
+
+          return {
+            ...originPlayer,
+            damage: updatedplayer.damage,
+          };
+        }),
       };
     });
     setPlayers(updatedPlayers);
-  };
-
-  // @param {{img, color, name}} updatedPlayer
-  const onUpdatePlayer = (playerId, updatedPlayer) => {
-    updatePlayer(playerId, updatedPlayer);
   };
 
   const onRestartGame = () => {

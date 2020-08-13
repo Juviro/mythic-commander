@@ -3,10 +3,17 @@ import { Button } from 'antd';
 import { Flex } from '../../../Elements/Shared';
 import useLocalStorage from '../../../Hooks/useLocalStorage';
 import SettingSelection from './SettingSelection';
+import SwitchSetting from './SwitchSetting';
 
 export default ({ onStart }) => {
   const [numberOfPlayers, setNumberOfPlayers] = useLocalStorage('LT-numberOfPlayers', 4);
   const [startingLife, setStartingLife] = useLocalStorage('LT-startingLife', 40);
+  const [displayDamage, setDisplayDamage] = useLocalStorage('LT-displayDamage', true);
+  const [useImages, setUseImages] = useLocalStorage('LT-useImages', true);
+
+  const onStartGame = () => {
+    onStart({ numberOfPlayers, startingLife, displayDamage, useImages });
+  };
 
   return (
     <Flex
@@ -30,7 +37,17 @@ export default ({ onStart }) => {
           onChange={setStartingLife}
         />
       </Flex>
-      <Button type="primary" onClick={() => onStart({ numberOfPlayers, startingLife })}>
+      <SwitchSetting
+        checked={displayDamage}
+        label="Track Player Damage"
+        onChange={() => setDisplayDamage(!displayDamage)}
+      />
+      <SwitchSetting
+        checked={useImages}
+        label="Background Images"
+        onChange={() => setUseImages(!useImages)}
+      />
+      <Button type="primary" onClick={onStartGame}>
         Start Game
       </Button>
     </Flex>
