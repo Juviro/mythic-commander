@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Flex } from '../../../../../Elements/Shared';
-import DamageField, { DAMAGE_FIELD_SIZE } from './DamageField';
+import DamageField, { DAMAGE_FIELD_SIZE } from './DamageField/DamageField';
 import ShowAll from './ShowAll';
 import { INFECT } from '../../useGameState';
 
@@ -40,6 +40,7 @@ export default ({ player, players, onTrackDamage }) => {
       {displayedPlayerDamage.map(({ id, damage, name }) => (
         <DamageField
           key={id}
+          ownId={player.id}
           id={id}
           name={name}
           damage={damage}

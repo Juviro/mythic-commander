@@ -8,9 +8,10 @@ export default ({ onStart }) => {
   const [numberOfPlayers, setNumberOfPlayers] = useLocalStorage('LT-numberOfPlayers', 4);
   const [startingLife, setStartingLife] = useLocalStorage('LT-startingLife', 40);
   const [displayDamage, setDisplayDamage] = useLocalStorage('LT-displayDamage', true);
+  const [useImages, setUseImages] = useLocalStorage('LT-useImages', true);
 
   const onStartGame = () => {
-    onStart({ numberOfPlayers, startingLife, displayDamage });
+    onStart({ numberOfPlayers, startingLife, displayDamage, useImages });
   };
 
   return (
@@ -41,6 +42,13 @@ export default ({ onStart }) => {
         style={{ fontWeight: 400, fontSize: 18 }}
       >
         Display Damage Tracker
+      </Checkbox>
+      <Checkbox
+        checked={useImages}
+        onChange={() => setUseImages(!useImages)}
+        style={{ fontWeight: 400, fontSize: 18, marginLeft: 0 }}
+      >
+        Start with Background Images
       </Checkbox>
       <Button type="primary" onClick={onStartGame}>
         Start Game

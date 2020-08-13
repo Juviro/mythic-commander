@@ -10,15 +10,17 @@ import MenuItems from './MenuItems';
 const StyledIconWrapper = styled.div`
   border-radius: 50%;
   border: 3px solid black;
-  background-color: ${primary};
+  background-color: black;
   padding: 8px;
   pointer-events: auto;
   z-index: 10;
+  transition: all 0.3s;
 
   ${({ isOpen }) =>
     isOpen &&
     css`
       transform: scale(0.95);
+      background-color: ${primary};
     `}
 `;
 
