@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button, Checkbox } from 'antd';
+import { Button } from 'antd';
 import { Flex } from '../../../Elements/Shared';
 import useLocalStorage from '../../../Hooks/useLocalStorage';
 import SettingSelection from './SettingSelection';
+import SwitchSetting from './SwitchSetting';
 
 export default ({ onStart }) => {
   const [numberOfPlayers, setNumberOfPlayers] = useLocalStorage('LT-numberOfPlayers', 4);
@@ -36,20 +37,16 @@ export default ({ onStart }) => {
           onChange={setStartingLife}
         />
       </Flex>
-      <Checkbox
+      <SwitchSetting
         checked={displayDamage}
+        label="Track Player Damage"
         onChange={() => setDisplayDamage(!displayDamage)}
-        style={{ fontWeight: 400, fontSize: 18 }}
-      >
-        Display Damage Tracker
-      </Checkbox>
-      <Checkbox
+      />
+      <SwitchSetting
         checked={useImages}
+        label="Background Images"
         onChange={() => setUseImages(!useImages)}
-        style={{ fontWeight: 400, fontSize: 18, marginLeft: 0 }}
-      >
-        Start with Background Images
-      </Checkbox>
+      />
       <Button type="primary" onClick={onStartGame}>
         Start Game
       </Button>
