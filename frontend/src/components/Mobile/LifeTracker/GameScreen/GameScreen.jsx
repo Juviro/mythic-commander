@@ -6,7 +6,7 @@ import GameField from './GameField';
 import { FullscreenModalProvider } from '../../../Provider/FullscreenModalProvider';
 import Menu from './Menu';
 
-const GameScreen = ({ gameSettings, history, handle }) => {
+const GameScreen = ({ gameSettings, history, handle, displayDamage }) => {
   const isValidGame = Boolean(gameSettings.numberOfPlayers);
 
   const {
@@ -27,6 +27,7 @@ const GameScreen = ({ gameSettings, history, handle }) => {
     <FullscreenModalProvider>
       <GameField
         players={players}
+        displayDamage={displayDamage}
         onSetLife={onSetLife}
         onUpdatePlayer={onUpdatePlayer}
         onTrackDamage={onTrackDamage}

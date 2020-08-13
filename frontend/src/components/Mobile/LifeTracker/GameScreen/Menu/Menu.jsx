@@ -10,20 +10,18 @@ import MenuItems from './MenuItems';
 const StyledIconWrapper = styled.div`
   border-radius: 50%;
   border: 3px solid black;
-  background-color: ${primary};
+  background-color: black;
   padding: 8px;
   pointer-events: auto;
   z-index: 10;
+  transition: all 0.3s;
 
   ${({ isOpen }) =>
     isOpen &&
     css`
       transform: scale(0.95);
+      background-color: ${primary};
     `}
-
-  &:active {
-    transform: scale(0.9);
-  }
 `;
 
 const StyledMenuIcon = styled.img`
@@ -40,14 +38,14 @@ export default ({ handle, onRestartGame }) => {
       align="center"
       style={{
         top: 0,
-        width: '100%',
-        height: '100%',
+        width: '100vw',
+        height: '100vh',
         position: 'absolute',
         pointerEvents: 'none',
       }}
     >
-      <StyledIconWrapper isOpen={isOpen}>
-        <StyledMenuIcon src={icon} onClick={toggleIsOpen} />
+      <StyledIconWrapper isOpen={isOpen} onClick={toggleIsOpen}>
+        <StyledMenuIcon src={icon} />
       </StyledIconWrapper>
       <MenuItems
         isOpen={isOpen}

@@ -5,7 +5,7 @@ import { LongPress } from '../../../Elements/Mobile';
 const LONG_PRESS_DELAY = 400;
 
 const StyledValue = styled.div`
-  padding: 16px;
+  padding: 4px;
 `;
 
 const StyledButton = styled.div`

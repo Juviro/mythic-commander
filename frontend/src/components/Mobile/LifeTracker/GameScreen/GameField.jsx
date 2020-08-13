@@ -36,16 +36,21 @@ const halfStyles = {
 const StyledHalf = styled.div`
   width: 100vh;
   height: 50vw;
-  border: 1px solid black;
 
   display: flex;
   position: absolute;
-  flex-direction: ${({ reverse }) => (reverse ? 'row-reverse' : 'row')};
+  flex-direction: row;
 
   ${({ position }) => halfStyles[position]}
 `;
 
-const GameScreen = ({ players, onSetLife, onUpdatePlayer, onTrackDamage }) => {
+const GameScreen = ({
+  players,
+  onSetLife,
+  onUpdatePlayer,
+  onTrackDamage,
+  displayDamage,
+}) => {
   const is2Player = players.length === 2;
   const [position1, position2] = is2Player ? ['top', 'bottom'] : ['left', 'right'];
 
@@ -63,7 +68,9 @@ const GameScreen = ({ players, onSetLife, onUpdatePlayer, onTrackDamage }) => {
             key={player.id}
             numberOfPlayersInRow={leftSidePlayers.length}
             players={players}
+            onTrackDamage={onTrackDamage}
             onUpdatePlayer={onUpdatePlayer}
+            displayDamage={displayDamage}
           />
         ))}
       </StyledHalf>
@@ -75,7 +82,9 @@ const GameScreen = ({ players, onSetLife, onUpdatePlayer, onTrackDamage }) => {
             key={player.id}
             numberOfPlayersInRow={rightSidePlayers.length}
             players={players}
+            onTrackDamage={onTrackDamage}
             onUpdatePlayer={onUpdatePlayer}
+            displayDamage={displayDamage}
           />
         ))}
       </StyledHalf>
