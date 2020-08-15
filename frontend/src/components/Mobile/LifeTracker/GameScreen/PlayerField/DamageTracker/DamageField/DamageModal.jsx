@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Modal } from 'antd';
 
 import NumberField from '../../../../NumberField';
 import DamageFieldBackground from './DamageFieldBackground';
 import { Flex } from '../../../../../../Elements/Shared';
+import FullscreenModalContext from '../../../../../../Provider/FullscreenModalProvider';
 
 export default ({ onSubmit, damage, onCancel, player }) => {
   const originName = player?.name ?? 'Infect';
   const [currentDamage, setCurrentDamage] = useState(damage);
+  const { getContainer } = useContext(FullscreenModalContext);
 
   const onOk = () => {
     onSubmit(currentDamage);
@@ -16,6 +18,7 @@ export default ({ onSubmit, damage, onCancel, player }) => {
   return (
     <Modal
       visible
+      getContainer={getContainer}
       title={`Track Damage from ${originName}`}
       onCancel={onCancel}
       onOk={onOk}
