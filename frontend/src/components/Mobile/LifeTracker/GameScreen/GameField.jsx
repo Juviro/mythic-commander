@@ -50,6 +50,7 @@ const GameScreen = ({
   onUpdatePlayer,
   onTrackDamage,
   displayDamage,
+  highlightedPlayerId,
 }) => {
   const is2Player = players.length === 2;
   const [position1, position2] = is2Player ? ['top', 'bottom'] : ['left', 'right'];
@@ -66,6 +67,7 @@ const GameScreen = ({
             onSetLife={onSetLife}
             player={player}
             key={player.id}
+            highlighted={highlightedPlayerId === player.id}
             numberOfPlayersInRow={leftSidePlayers.length}
             players={players}
             onTrackDamage={onTrackDamage}
@@ -80,6 +82,7 @@ const GameScreen = ({
             onSetLife={onSetLife}
             player={player}
             key={player.id}
+            highlighted={highlightedPlayerId === player.id}
             numberOfPlayersInRow={rightSidePlayers.length}
             players={players}
             onTrackDamage={onTrackDamage}
