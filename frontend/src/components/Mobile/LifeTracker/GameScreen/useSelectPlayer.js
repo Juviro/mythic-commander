@@ -23,6 +23,7 @@ export default players => {
 
   const onBlink = (playerId, remainingLength = BLINK_LENGTH) => {
     if (!remainingLength) {
+      setHighlightedPlayerIndex(playerId);
       timeoutRef.current = setTimeout(() => setHighlightedPlayerIndex(null), 3000);
     } else {
       const nextPlayerIndex = playerIndexRef.current === null ? playerId : null;
@@ -35,8 +36,8 @@ export default players => {
   };
 
   const onRotateHighlight = (currentDelay, maxDelay) => {
-    const currentIndex = playerIndexRef.current;
-    const nextIndex = currentIndex === playerIds.length - 1 ? 0 : (currentIndex || 0) + 1;
+    const currentIndex = playerIndexRef.current ?? 0;
+    const nextIndex = currentIndex === playerIds.length - 1 ? 0 : currentIndex + 1;
     if (currentDelay >= maxDelay) {
       onBlink(playerIndexRef.current);
       return;
