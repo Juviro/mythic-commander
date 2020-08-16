@@ -1,15 +1,20 @@
 import { useState, useEffect, useRef } from 'react';
 
-const MAX_LAST_DELAY = 1500;
-const MIN_LAST_DELAY = 1000;
-const INITIAL_DELAY = 100;
+const INITIAL_DELAY = 50;
 const DELAY_GROWTH = 1.15;
 
 const BLINK_INTERVAL = 400;
-const BLINK_LENGTH = 15;
+const BLINK_LENGTH = 12;
 
-const getLastDelay = () => {
-  return Math.floor(Math.random() * (MAX_LAST_DELAY - MIN_LAST_DELAY)) + MIN_LAST_DELAY;
+const MIN_TICKS = 15;
+
+const getNumberOfTicks = numberOfPlayers => {
+  const startingPlayerIndex = Math.floor(Math.random() * numberOfPlayers);
+  let currentTicks = 0;
+  while (currentTicks < MIN_TICKS) {
+    currentTicks += numberOfPlayers;
+  }
+  return currentTicks + startingPlayerIndex;
 };
 
 export default players => {
@@ -35,24 +40,25 @@ export default players => {
     }
   };
 
-  const onRotateHighlight = (currentDelay, maxDelay) => {
+  const onRotateHighlight = (currentDelay, remainingTicks) => {
     const currentIndex = playerIndexRef.current ?? 0;
     const nextIndex = currentIndex === playerIds.length - 1 ? 0 : currentIndex + 1;
-    if (currentDelay >= maxDelay) {
+    if (!remainingTicks) {
       onBlink(playerIndexRef.current);
       return;
     }
     setHighlightedPlayerIndex(nextIndex);
 
     timeoutRef.current = setTimeout(
-      () => onRotateHighlight(currentDelay * DELAY_GROWTH, maxDelay),
+      () => onRotateHighlight(currentDelay * DELAY_GROWTH, remainingTicks - 1),
       currentDelay
     );
   };
 
   const onSelectRandomPlayer = () => {
-    const lastDelay = getLastDelay();
-    onRotateHighlight(INITIAL_DELAY, lastDelay);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    const numberOfTicks = getNumberOfTicks(playerIds.length);
+    onRotateHighlight(INITIAL_DELAY, numberOfTicks);
   };
 
   // eslint-disable-next-line
