@@ -18,6 +18,7 @@ const GameScreen = ({ gameSettings, history, handle, displayDamage }) => {
     onUpdatePlayer,
     onTrackDamage,
     onRestartGame,
+    highlightedPlayerId,
   } = useGameState(gameSettings);
 
   useEffect(() => {
@@ -34,6 +35,7 @@ const GameScreen = ({ gameSettings, history, handle, displayDamage }) => {
         onSetLife={onSetLife}
         onUpdatePlayer={onUpdatePlayer}
         onTrackDamage={onTrackDamage}
+        highlightedPlayerId={highlightedPlayerId}
       />
       <Menu handle={handle} onRestartGame={onRestartGame} />
     </FullscreenModalProvider>
