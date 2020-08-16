@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { randomImages } from '../../../../constants/images';
 import { lifeTracker } from '../../../../constants/colors';
+import useSelectPlayer from './useSelectPlayer';
 
 export const INFECT = 'INFECT';
 
@@ -39,7 +40,10 @@ const getInitialPlayers = ({ numberOfPlayers, startingLife, useImages }) => {
 };
 
 export default gameSettings => {
-  const [players, setPlayers] = useState(getInitialPlayers(gameSettings));
+  // eslint-disable-next-line
+  const initialPlayers = useMemo(() => getInitialPlayers(gameSettings), []);
+  const [players, setPlayers] = useState(initialPlayers);
+  const { highlightedPlayerId, onSelectRandomPlayer } = useSelectPlayer(initialPlayers);
 
   const onUpdatePlayer = (playerId, newValues) => {
     const updatedPlayers = players.map(player => {
@@ -82,6 +86,7 @@ export default gameSettings => {
       damageTaken: getDamageTaken(player.id, playerIds),
     }));
     setPlayers(newPlayers);
+    onSelectRandomPlayer();
   };
 
   return {
@@ -90,5 +95,6 @@ export default gameSettings => {
     onTrackDamage,
     onRestartGame,
     onUpdatePlayer,
+    highlightedPlayerId,
   };
 };

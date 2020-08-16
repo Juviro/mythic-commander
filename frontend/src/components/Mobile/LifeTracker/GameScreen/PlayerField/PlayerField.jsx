@@ -34,6 +34,11 @@ const StyledWrapper = styled.div`
     css`
       min-width: ${minWidth};
     `}
+  ${({ highlighted }) =>
+    highlighted &&
+    css`
+      filter: saturate(400%) brightness(1.5);
+    `}
 
 
   &:last-child {
@@ -49,6 +54,7 @@ export default ({
   onSetLife,
   onUpdatePlayer,
   displayDamage,
+  highlighted,
 }) => {
   useWindowSize();
   // prevent resize of player fields when keyboard expanded
@@ -65,6 +71,7 @@ export default ({
     <StyledWrapper
       img={player.img}
       color={player.color}
+      highlighted={highlighted}
       minWidth={
         numberOfPlayersInRow !== 1 && `${fullscreenHeight / numberOfPlayersInRow}px`
       }
