@@ -6,7 +6,7 @@ const DELAY_GROWTH = 1.15;
 const BLINK_INTERVAL = 400;
 const BLINK_LENGTH = 12;
 
-const MIN_TICKS = 15;
+const MIN_TICKS = 18;
 
 const getNumberOfTicks = numberOfPlayers => {
   const startingPlayerIndex = Math.floor(Math.random() * numberOfPlayers);
