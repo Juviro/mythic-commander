@@ -37,7 +37,7 @@ const StyledWrapper = styled.div`
   ${({ highlighted }) =>
     highlighted &&
     css`
-      filter: saturate(400%) brightness(1.5);
+      filter: saturate(200%) brightness(1.7);
     `}
 
 
