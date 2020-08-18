@@ -12,6 +12,7 @@ import { getDeckDesktop, addCardsToDeckDesktop } from './queries';
 import { Flex, ShortcutFocus } from '../../Elements/Shared';
 import sumCardAmount from '../../../utils/sumCardAmount';
 import { useToggle } from '../../Hooks';
+import { Deck } from 'types/graphql';
 
 const StyledDeck = styled.div`
   width: 100%;
@@ -30,7 +31,7 @@ export default () => {
   });
   const [mutate] = useMutation(addCardsToDeckDesktop);
 
-  const deck = data && data.deck;
+  const deck: Deck = data && data.deck;
   const cards = deck && unifyCardFormat(deck.cards);
 
   const unifiedDeck = deck && {

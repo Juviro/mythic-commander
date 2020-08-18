@@ -100,7 +100,7 @@ export type Collection = {
 export type CollectionCard = {
   __typename?: 'CollectionCard';
   id: Scalars['String'];
-  createdAt: Scalars['String'];
+  createdAt: Scalars['Int'];
   card: Card;
 };
 
@@ -123,7 +123,7 @@ export type Deck = {
   __typename?: 'Deck';
   id: Scalars['String'];
   name: Scalars['String'];
-  createdAt: Scalars['String'];
+  createdAt: Scalars['Int'];
   lastEdit: Scalars['String'];
   imgSrc: Scalars['String'];
   numberOfCards: Scalars['Int'];
@@ -135,7 +135,7 @@ export type DeckCard = {
   __typename?: 'DeckCard';
   id: Scalars['String'];
   amount: Scalars['Int'];
-  createdAt: Scalars['String'];
+  createdAt: Scalars['Int'];
   isCommander?: Maybe<Scalars['Boolean']>;
   card: Card;
 };
@@ -548,7 +548,7 @@ export type WantsList = {
   id: Scalars['String'];
   name: Scalars['String'];
   lastEdit: Scalars['String'];
-  createdAt: Scalars['String'];
+  createdAt: Scalars['Int'];
   numberOfCards: Scalars['Int'];
   deck?: Maybe<Deck>;
   cards: Array<WantsListCard>;
@@ -557,7 +557,7 @@ export type WantsList = {
 export type WantsListCard = {
   __typename?: 'WantsListCard';
   id: Scalars['String'];
-  createdAt: Scalars['String'];
+  createdAt: Scalars['Int'];
   amount: Scalars['Int'];
   card: Card;
 };

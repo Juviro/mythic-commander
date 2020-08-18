@@ -1,26 +1,30 @@
-export const trimName = str => {
+import { UnifiedCard } from 'types/unifiedTypes';
+
+export const trimName = (str: string) => {
   return str.toLowerCase();
 };
 
-// @Params card: string[] | { name: string }[]
-export const filterByName = (cards, searchString = '') => {
+export const filterByName = (
+  cards: UnifiedCard[],
+  searchString: string = ''
+): UnifiedCard[] => {
   if (!cards) return [];
   const cleanSearch = trimName(searchString);
   const searchRegExp = new RegExp(cleanSearch.split(' ').join('.*'));
 
-  return cards.filter(card => {
-    const name = typeof card === 'string' ? card : card.name;
+  return cards.filter(({ name }) => {
     return searchRegExp.test(trimName(name));
   });
 };
 
-const filterByColor = (colorString = '') => ({ color_identity }) => {
+const filterByColor = (colorString: string = '') => ({ color_identity }: UnifiedCard) => {
   if (!color_identity) return true;
   const [filteredColors] = colorString.match(/(w|u|b|r|g)+$/) || [''];
   const isExclude = colorString.includes('-');
   const isExact = colorString.includes('x');
 
-  const checkForColor = color => color && filteredColors.includes(color.toLowerCase());
+  const checkForColor = (color: string) =>
+    color && filteredColors.includes(color.toLowerCase());
   const someMatches = !filteredColors || color_identity.some(checkForColor);
   const onlySelected = !filteredColors.length
     ? !color_identity.length
@@ -35,32 +39,41 @@ const filterByColor = (colorString = '') => ({ color_identity }) => {
   return someMatches;
 };
 
-const filterByCreatureType = creatureType => ({ subTypes }) => {
+const filterByCreatureType = (creatureType: string) => ({ subTypes }: UnifiedCard) => {
   if (!creatureType) return true;
   if (!subTypes) return false;
   return subTypes.some(type => type.toLowerCase() === creatureType.toLowerCase());
 };
 
-const filterByCardType = cardType => ({ primaryTypes }) => {
+const filterByCardType = (cardType: string) => ({ primaryTypes }: UnifiedCard) => {
   if (!cardType) return true;
   if (!primaryTypes) return false;
   return primaryTypes.some(type => type.toLowerCase() === cardType.toLowerCase());
 };
-const filterByLegendary = isLegendary => ({ primaryTypes }) => {
+const filterByLegendary = (isLegendary: string) => ({ primaryTypes }: UnifiedCard) => {
   if (!isLegendary) return true;
   if (!primaryTypes) return isLegendary === 'false';
   const isCardLegendary = primaryTypes.includes('Legendary');
   return isLegendary === 'true' ? isCardLegendary : !isCardLegendary;
 };
-const filterByAddedWithin = addedWithin => ({ createdAt }) => {
+const filterByAddedWithin = (addedWithin?: number) => ({ createdAt }: UnifiedCard) => {
   if (!addedWithin || !createdAt) return true;
   const spanInMillies = addedWithin * 60 * 60 * 1000;
   return Date.now() - spanInMillies < createdAt;
 };
 
+interface FilterOptions {
+  name?: string;
+  colors?: string;
+  creatureType?: string;
+  cardType?: string;
+  isLegendary?: string;
+  addedWithin?: number;
+}
+
 export const filterCards = (
-  cards,
-  { name, colors, creatureType, cardType, isLegendary, addedWithin }
+  cards: UnifiedCard[],
+  { name, colors, creatureType, cardType, isLegendary, addedWithin }: FilterOptions
 ) => {
   return filterByName(cards, name)
     .filter(filterByAddedWithin(addedWithin))
