@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default text => {
+export default (text: string) => {
   const textParts = text.split(/<[/]*b>/g);
 
   const displayedMessage = textParts.map((part, index) => {
