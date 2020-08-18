@@ -1,12 +1,12 @@
-import { UnifiedCard2, ListCard } from 'types/unifiedTypes';
-import { DeckCard } from 'types/graphql';
+import { ListCard } from 'types/unifiedTypes';
+import { Card } from 'types/graphql';
 
-export const unifySingleCard = ({ oracleCard, ...coreFields }) => ({
+export const unifySingleCard = ({ oracleCard, ...coreFields }: Card) => ({
   ...oracleCard,
   ...coreFields,
 });
 
-export default (cards: DeckCard[]): UnifiedCard2[] => {
+export default (cards: ListCard[]) => {
   if (!cards) return null;
   return cards.map(({ card: { oracleCard, ...coreFields }, ...rest }) => {
     return { ...oracleCard, ...coreFields, ...rest };
