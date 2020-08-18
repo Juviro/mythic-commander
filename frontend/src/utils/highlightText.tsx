@@ -6,7 +6,7 @@ const StyledBoldLetter = styled.span`
   font-weight: 700;
 `;
 
-export const highlightText = (searchString, option) => {
+export const highlightText = (searchString: string, option: string) => {
   if (!searchString) return option;
 
   const searchTerms = trimName(searchString).split(' ');
