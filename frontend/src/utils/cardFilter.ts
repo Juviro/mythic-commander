@@ -59,7 +59,7 @@ const filterByLegendary = (isLegendary: string) => ({ primaryTypes }: UnifiedCar
 const filterByAddedWithin = (addedWithin?: number) => ({ createdAt }: UnifiedCard) => {
   if (!addedWithin || !createdAt) return true;
   const spanInMillies = addedWithin * 60 * 60 * 1000;
-  return Date.now() - spanInMillies < createdAt;
+  return Date.now() - spanInMillies < Number(createdAt);
 };
 
 interface FilterOptions {
