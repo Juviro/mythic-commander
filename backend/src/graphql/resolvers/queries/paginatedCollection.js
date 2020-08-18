@@ -1,6 +1,6 @@
 import { getOrderColumn, addNameClause } from './cardSearch';
 
-export default async (
+export default (
   db,
   userId,
   limit,
@@ -12,7 +12,7 @@ export default async (
 ) => {
   const [order, direction = 'asc'] = orderBy.split('-');
 
-  const result = await db
+  return db
     .with(
       'grouped',
       db.raw(
@@ -54,10 +54,4 @@ export default async (
     .offset(offset)
     .leftJoin('cards', { 'cards.id': 'grouped.id' })
     .orderByRaw(`${getOrderColumn(order)} ${direction.toUpperCase()}`);
-
-  console.log(
-    'result',
-    result.map(({ createdAt }) => createdAt)
-  );
-  return result;
 };

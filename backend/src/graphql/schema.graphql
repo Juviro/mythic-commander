@@ -112,7 +112,7 @@ type PaginatedCards {
 type Deck {
   id: String!
   name: String!
-  createdAt: Int!
+  createdAt: String!
   lastEdit: String!
   imgSrc: String!
   numberOfCards: Int!
@@ -123,7 +123,7 @@ type Deck {
 type DeckCard {
   id: String!
   amount: Int!
-  createdAt: Int!
+  createdAt: String!
   isCommander: Boolean
   card: Card!
 }
@@ -147,7 +147,7 @@ type PaginatedCollection {
 
 type CollectionCard {
   id: String!
-  createdAt: Int!
+  createdAt: String!
   card: Card!
 }
 
@@ -168,7 +168,7 @@ type WantsList {
   id: String!
   name: String!
   lastEdit: String!
-  createdAt: Int!
+  createdAt: String!
   numberOfCards: Int!
   deck: Deck
   cards: [WantsListCard!]!
@@ -176,7 +176,7 @@ type WantsList {
 
 type WantsListCard {
   id: String!
-  createdAt: Int!
+  createdAt: String!
   amount: Int!
   card: Card!
 }
