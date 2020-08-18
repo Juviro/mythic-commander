@@ -2,7 +2,7 @@ BUGFIXES:
     - highlighting of cardnames flawed
 
 CURRENT:
-    - use first card/ 4-split card as wants list image
+    - refactor authentication, remove from context creation
 
     - improve loading time of deck
 
