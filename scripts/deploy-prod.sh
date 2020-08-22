@@ -2,7 +2,7 @@
 set -e
 
 echo -e "\e[44mBuilding frontend\e[0m"
-cd /opt/mtg/frontend && yarn install --production=false && rm -rf /opt/mtg/frontend/build/* && ./node_modules/.bin/react-scripts --max_old_space_size=4096 build
+cd /opt/mtg/frontend && yarn install --production=false --ignore-engines && rm -rf /opt/mtg/frontend/build/* && ./node_modules/.bin/react-scripts --max_old_space_size=4096 build
 
 echo -e "\e[44mBuilding backend\e[0m"
 cd /opt/mtg/backend && yarn install --production=false && yarn build
