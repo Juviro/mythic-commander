@@ -1,14 +1,14 @@
 BUGFIXES:
     - highlighting of cardnames flawed
+    - ancient den listed as artifact instead of land in deck
 
 CURRENT:
-    - use first card/ 4-split card as wants list image
+    - refactor authentication, remove from context creation
 
     - improve loading time of deck
 
 NEXT:
     - when only displaying unowned in deck -> add cards to.. -> pre-select unowned only, but show all
-    - lazy load images to improve rendering time of deck mobile
     - prevent re-ordering card lists in decks view - maybe re-order when category added / removed
     - add shortcut to toggle focus ?
 
@@ -20,11 +20,8 @@ IMPROVEMENTS:
     - add to wants list dropdown: sort lists by name (same for decks I guess)
     - added to collection notification -> show amount as well
     - add optimistic response to card delete in deck (esp. mobile)
-    - add confirm delete for delete from deck/wants on mobile
-    - remove space between proxies, slightly increase size
     - show which cards are not legal in deck
-    - re-design moveTo modal
-     - wrap card table in affix ?
+    - remove basic lands from proxy queries
     - autofocus for deck sidebar input field
     - transition for inset shadow when focussing deck sidebar
 
@@ -47,7 +44,6 @@ BACKLOG:
     - remove all cards < 0.2$ from collection value , rename value to estimation
     - add enchantment types (e.g. shrine) to creature types in advanced search, rename to subtype or similar
 
-    - enable table actions for search
     - allow multiple selected elements in grid list with shift
     - allow search for unowned cards only
     - refresh google access ?
@@ -56,12 +52,9 @@ BACKLOG:
     - going back to list should preserve scroll position (desktop)
     - shortcuts should use modifier key ?
     - advanced adding:
-        - just display cards from specific set
         - display all versions from a card + their setname, maybe with preview
     - when opening login, redirect to / if user is logged in
     - add to advanced search: number of owned copies
-    - add possible combos section to detail card view (https://discordapp.com/channels/673601282946236417/673601283609067559, no api yet)
-    - add info tooltip for search: explain amount prefix, fuzzy search
     - allow searching for multiple sets/types/subtypes?
     - add error page (should be already started, search for branch)
     - clickable creature type in card details?
@@ -69,19 +62,16 @@ BACKLOG:
         - quick stats for collection
         - quick access for last edited decks + wants ?
     - show % owned of all cards (unique cards / distinct cards)
-    - in search field: *foil* suffix should add as foil
-    - when adding to deck or linked wants: show if card is in linked wants / deck (desktop)
     - prevent user from adding amount / amount foil if card is not available in foil / non-foil
     - prefer owned versions when adding to deck or wants
     - suggest similar cards when having invalid cardname in multiinput
     - dark mode
     - update document title based on content
     - allow text export/proxy of selected cards
-    - save selected element when going to next page
     - rework advanced search:
         - add *unownedOnly*
         - show all current search options for advanced search 
-    - update distinctCards
+    - use first card / 4-split card as wants list image
 
 
 BACKLOG BUGFIXES:
