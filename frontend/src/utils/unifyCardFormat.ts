@@ -9,6 +9,6 @@ export const unifySingleCard = ({ oracleCard, ...coreFields }: Card) => ({
 export default (cards: ListCard[]) => {
   if (!cards) return null;
   return cards.map(({ card: { oracleCard, ...coreFields }, ...rest }) => {
-    return { ...oracleCard, ...coreFields, ...rest };
+    return { ...rest, ...oracleCard, ...coreFields };
   });
 };
