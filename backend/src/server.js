@@ -8,22 +8,24 @@ const UNAUTHENTICATED_ACTIONS = ['login', 'cachedCards', 'numberOfCachedCards'];
 export default new ApolloServer({
   schema,
   context: async ({ ctx }) => {
-    const noAuthentication = UNAUTHENTICATED_ACTIONS.includes(
-      ctx.response.request.body.operationName
-    );
-
-    const authorization = ctx.request.header.authorization;
-    if (!authorization) throw new AuthenticationError('invalid token');
-    const sessionId = authorization.split(' ')[1];
-
     const context = {
       db,
-      session: { id: sessionId },
     };
+
+    const operationName = ctx.response.request.body.operationName;
+    const noAuthentication =
+      !operationName || UNAUTHENTICATED_ACTIONS.includes(operationName);
 
     if (noAuthentication) {
       return context;
     }
+
+    const authorization = ctx.request.header.authorization;
+    if (!authorization) {
+      throw new AuthenticationError('invalid token');
+    }
+
+    const sessionId = authorization.split(' ')[1];
 
     const {
       rows: [user],

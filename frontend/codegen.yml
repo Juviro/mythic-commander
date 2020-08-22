@@ -1,0 +1,11 @@
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+overwrite: true
+schema: 'http://localhost:4000/mtg-api/graphql'
+generates:
+  src/types/graphql.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'

@@ -1,6 +1,7 @@
 import React from 'react';
+import { message } from 'antd';
 
-export default text => {
+export default (text: string, type: string = 'success') => {
   const textParts = text.split(/<[/]*b>/g);
 
   const displayedMessage = textParts.map((part, index) => {
@@ -10,5 +11,5 @@ export default text => {
     return <span key={index}>{part}</span>;
   });
 
-  return displayedMessage;
+  message[type](displayedMessage);
 };

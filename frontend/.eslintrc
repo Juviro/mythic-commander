@@ -26,9 +26,24 @@
         "varsIgnorePattern": "^_",
         "argsIgnorePattern": "^_"
       }
+    ],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
     ]
   },
   "env": {
     "browser": true
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
   }
 }

@@ -1,13 +1,14 @@
 import { CARD_TYPES } from '../components/Provider/CardProvider/staticTypes';
+import { UnifiedCard } from 'types/unifiedTypes';
 
 const typeMap = {
   Sorcery: 'Sorceries',
   Commander: 'Commander',
 };
 
-const typeToPlural = type => typeMap[type] || `${type}s`;
+const typeToPlural = (type: string) => typeMap[type] || `${type}s`;
 
-const addMainType = card => {
+const addMainType = (card: UnifiedCard) => {
   const mainType = card.isCommander
     ? 'Commander'
     : CARD_TYPES.find(type => card.primaryTypes.includes(type));
@@ -17,7 +18,7 @@ const addMainType = card => {
   };
 };
 
-export default cards => {
+export default (cards: UnifiedCard[]) => {
   if (!cards) return {};
 
   const cardWithMainType = cards.map(addMainType);
