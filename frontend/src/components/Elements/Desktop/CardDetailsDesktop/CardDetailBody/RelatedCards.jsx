@@ -14,7 +14,7 @@ export default ({ card, loading }) => {
 
   return (
     <List size="small" style={{ width: '100%' }}>
-      {relatedCards.map(relatedCard => (
+      {relatedCards.map((relatedCard) => (
         <List.Item key={relatedCard.id}>
           <Link to={`/cards/${relatedCard.oracle_id}`}>
             <Flex direction="row" align="flex-start">

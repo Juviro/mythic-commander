@@ -14,9 +14,9 @@ export default ({ cards, loading, rawWantsList, hideFooter, moveToList, deckId }
   const [mutateDelete] = useMutation(deleteFromWantsList);
   const [mutateEdit] = useMutation(editWantsListCard);
 
-  const onDeleteCard = cardId => {
+  const onDeleteCard = (cardId) => {
     const { oracle_id } = cards.find(({ id }) => id === cardId);
-    const newCards = rawWantsList.cards.filter(card => card.id !== cardId);
+    const newCards = rawWantsList.cards.filter((card) => card.id !== cardId);
     const newNumberOfCards = rawWantsList.numberOfCards;
     mutateDelete({
       variables: { oracleIds: [oracle_id], wantsListId },
@@ -53,7 +53,7 @@ export default ({ cards, loading, rawWantsList, hideFooter, moveToList, deckId }
         }
         const { editWantsListCard: newCard } = data;
 
-        const newCards = existing.wantsList.cards.map(card => {
+        const newCards = existing.wantsList.cards.map((card) => {
           if (card.card.id !== cardId) return card;
           return newCard;
         });

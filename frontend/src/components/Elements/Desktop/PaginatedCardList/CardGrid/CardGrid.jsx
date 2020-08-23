@@ -50,7 +50,7 @@ const CardGrid = ({
     'deck.sidebar.add',
   ]);
 
-  const onClick = index => {
+  const onClick = (index) => {
     toggleShowDetail(true);
     setSelectedElementPosition(index + 1);
   };

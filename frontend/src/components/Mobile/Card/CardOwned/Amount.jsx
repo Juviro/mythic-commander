@@ -29,8 +29,8 @@ export default ({ isEditing, amount = 0, isFoil, cardId, onChangeAmount }) => {
       <Input
         type="number"
         defaultValue={amount}
-        onClick={e => e.stopPropagation()}
-        onChange={e => onChangeAmount(e.target.value, cardId, isFoil)}
+        onClick={(e) => e.stopPropagation()}
+        onChange={(e) => onChangeAmount(e.target.value, cardId, isFoil)}
         addonAfter={isFoil ? <FoilIcon /> : undefined}
       />
     </Col>

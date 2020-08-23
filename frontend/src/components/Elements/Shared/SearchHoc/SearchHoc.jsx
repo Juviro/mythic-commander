@@ -123,7 +123,7 @@ export default ({ children, researchOnOrderChange, blockInitialSearch }) => {
     // eslint-disable-next-line
   }, [page]);
 
-  const onChangeOption = key => value => {
+  const onChangeOption = (key) => (value) => {
     setCurrentOptions({ ...currentOptions, [key]: value });
   };
 

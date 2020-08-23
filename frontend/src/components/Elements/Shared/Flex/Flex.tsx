@@ -1,8 +1,17 @@
 import styled, { css } from 'styled-components';
 
+interface Props {
+  direction?: 'row' | 'column';
+  align?: 'flex-start' | 'flex-end ' | 'center' | 'baseline' | 'stretch';
+  justify?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around';
+  wrap?: 'wrap' | 'nowrap' | 'wrap-reversed';
+  flex?: number | string;
+  style?: React.CSSProperties;
+}
+
 const Flex = styled.div`
   display: flex;
-  ${props =>
+  ${(props: Props) =>
     props.direction === 'column'
       ? css`
           flex-direction: column;
@@ -10,22 +19,22 @@ const Flex = styled.div`
       : css`
           flex-direction: row;
         `};
-  ${props =>
+  ${(props: Props) =>
     props.align &&
     css`
       align-items: ${props.align};
     `};
-  ${props =>
+  ${(props: Props) =>
     props.justify &&
     css`
       justify-content: ${props.justify};
     `};
-  ${props =>
+  ${(props: Props) =>
     props.flex &&
     css`
       flex: ${props.flex};
     `};
-  ${props =>
+  ${(props: Props) =>
     props.wrap &&
     css`
       flex-wrap: ${props.wrap};

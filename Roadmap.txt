@@ -1,6 +1,7 @@
 BUGFIXES:
     - highlighting of cardnames flawed
     - ancient den listed as artifact instead of land in deck
+    - re-add loading animation to paginated list (e.g. collection desktop)
 
 CURRENT:
     - refactor authentication, remove from context creation

@@ -23,9 +23,9 @@ export default ({ style, elements, type = 'color', onClick, currentSelection }) 
 
   return (
     <Flex direction="column" style={{ padding: 4, ...style }}>
-      {rows.map(row => (
+      {rows.map((row) => (
         <Flex justify="space-between" key={row.join(';')} style={{ height: 48 }}>
-          {row.map(element => (
+          {row.map((element) => (
             <Avatar
               key={element || Math.random()}
               {...{ [type]: element }}

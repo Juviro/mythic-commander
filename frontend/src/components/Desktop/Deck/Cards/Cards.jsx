@@ -59,7 +59,7 @@ const getCardColumns = (cards, numberOfCols) => {
     return acc;
   }, columns);
 
-  return cardColumns.filter(column => column.length);
+  return cardColumns.filter((column) => column.length);
 };
 
 export default ({ deck, loading, currentTab, onAddCards, displayOwnedOnly }) => {

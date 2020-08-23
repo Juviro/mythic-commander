@@ -34,7 +34,7 @@ export default ({ menuItems, card }) => {
       placement="bottomRight"
       visible={isMenuOpen}
       onVisibleChange={toggleIsMenuOpen}
-      onClick={e => e.stopPropagation()}
+      onClick={(e) => e.stopPropagation()}
     >
       <MoreOutlined onClick={toggleIsMenuOpen} style={{ fontSize: 20, padding: 6 }} />
     </Dropdown>

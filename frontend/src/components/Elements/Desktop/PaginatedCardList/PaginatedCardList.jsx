@@ -63,12 +63,12 @@ export default ({
 
   const singleCardActions = [];
   const onEdit = onEditCard
-    ? card => {
+    ? (card) => {
         onEditCard(card);
       }
     : undefined;
   const onDelete = onDeleteCards
-    ? card => {
+    ? (card) => {
         setSelectedCards([card]);
         onDeleteCards();
       }
@@ -84,7 +84,7 @@ export default ({
     singleCardActions.push({
       title: 'Add to...',
       Icon: SendOutlined,
-      onClick: card => {
+      onClick: (card) => {
         setSelectedCards([card]);
         onMoveCards();
       },

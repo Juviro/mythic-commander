@@ -26,7 +26,7 @@ export default ({ onEnter, onAddList, search, setSearch, loading, buttonText }) 
             value={search}
             placeholder="Search by name..."
             style={{ maxWidth: 350 }}
-            onChange={e => setSearch(e.target.value)}
+            onChange={(e) => setSearch(e.target.value)}
           />
         </Tooltip>
         <Button onClick={onAddList} type="primary" icon={<PlusOutlined />}>

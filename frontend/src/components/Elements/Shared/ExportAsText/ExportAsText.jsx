@@ -78,7 +78,7 @@ export default ({ title, cards, visible, hideAmount }) => {
         <StyledInputWrapper>
           <Input.TextArea
             readOnly
-            onFocus={e => e.target.select()}
+            onFocus={(e) => e.target.select()}
             value={cardNameList}
             autoSize={{ maxRows: 20 }}
           />

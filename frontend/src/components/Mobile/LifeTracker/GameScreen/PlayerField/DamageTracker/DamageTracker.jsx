@@ -18,7 +18,7 @@ export default ({ player, players, onTrackDamage }) => {
       damage,
       ...players.find(({ id: playerId }) => playerId === id),
     }))
-    .map(damage => {
+    .map((damage) => {
       if (damage.id !== INFECT) return damage;
       return {
         ...damage,

@@ -3,7 +3,7 @@ import React from 'react';
 import { Checkbox } from 'antd';
 
 export default ({ onChange: onSubmit, isOwned }) => {
-  const onChange = e => {
+  const onChange = (e) => {
     const newValue = e.target.checked || undefined;
 
     onSubmit(newValue);

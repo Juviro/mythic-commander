@@ -95,7 +95,7 @@ const GridCard = ({
   const [, dragRef] = useDrag({
     item: { type: 'CARD', id: card.id, name: card.name },
     canDrag: draggable,
-    collect: monitor => ({
+    collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
   });
@@ -155,7 +155,7 @@ const areEqual = (prevProps, nextProps) => {
   if (prevProps.markAsDisabled !== nextProps.markAsDisabled) return false;
 
   return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
-    propKey => prevProps.card[propKey] === nextProps.card[propKey]
+    (propKey) => prevProps.card[propKey] === nextProps.card[propKey]
   );
 };
 

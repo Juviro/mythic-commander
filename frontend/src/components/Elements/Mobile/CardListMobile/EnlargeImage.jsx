@@ -7,7 +7,7 @@ import { useToggle } from '../../../Hooks';
 export default ({ card }) => {
   const [isPreviewOpen, toggleIsPreviewOpen] = useToggle(false);
 
-  const onChangeIsOpen = e => {
+  const onChangeIsOpen = (e) => {
     e.stopPropagation();
     toggleIsPreviewOpen();
   };

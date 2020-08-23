@@ -31,7 +31,7 @@ export default ({ cards, loading, widthOffset, wantsList }) => {
         });
         const { editWantsListCard: newCard } = data;
 
-        const newCards = existing.wantsList.cards.map(card => {
+        const newCards = existing.wantsList.cards.map((card) => {
           if (card.card.id !== cardId) return card;
           return newCard;
         });
@@ -54,9 +54,9 @@ export default ({ cards, loading, widthOffset, wantsList }) => {
 
   return (
     <WithActions deleteByOracle={deleteByOracle} onEditCard={onEditCard}>
-      {actionProps => (
+      {(actionProps) => (
         <WithFullList cards={cards} {...actionProps}>
-          {fullListProps => (
+          {(fullListProps) => (
             <PaginatedCardList
               {...fullListProps}
               loading={loading}

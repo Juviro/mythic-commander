@@ -1995,7 +1995,11 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
-"@types/hoist-non-react-statics@^3.3.1":
+"@types/history@*":
+  version "4.7.7"
+  resolved "https://registry.yarnpkg.com/@types/history/-/history-4.7.7.tgz#613957d900fab9ff84c8dfb24fa3eef0c2a40896"
+
+"@types/hoist-non-react-statics@*", "@types/hoist-non-react-statics@^3.3.1":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
   dependencies:
@@ -2084,6 +2088,19 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-native@*":
+  version "0.63.8"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.63.8.tgz#73ec087122c64c309eeaf150b565b8d755f0fb1f"
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-router@^5.1.8":
+  version "5.1.8"
+  resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-5.1.8.tgz#4614e5ba7559657438e17766bb95ef6ed6acc3fa"
+  dependencies:
+    "@types/history" "*"
+    "@types/react" "*"
+
 "@types/react@*":
   version "16.9.25"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.25.tgz#6ae2159b40138c792058a23c3c04fd3db49e929e"
@@ -2101,6 +2118,15 @@
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
+
+"@types/styled-components@^5.1.2":
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/@types/styled-components/-/styled-components-5.1.2.tgz#652af475b4af917b355ea1c3068acae63d46455f"
+  dependencies:
+    "@types/hoist-non-react-statics" "*"
+    "@types/react" "*"
+    "@types/react-native" "*"
+    csstype "^3.0.2"
 
 "@types/websocket@1.0.1":
   version "1.0.1"

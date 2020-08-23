@@ -17,7 +17,7 @@ const SelectFilter = ({
   getPrefix,
 }) => {
   const inputRef = React.useRef(null);
-  const unifiedOptions = options.map(option => {
+  const unifiedOptions = options.map((option) => {
     if (option.value) return option;
     return {
       value: option,
@@ -58,7 +58,7 @@ const SelectFilter = ({
 
   const onSelect = (_, { key, value: selectedValue }) => {
     onChange(key);
-    const currentOptionValue = options.find(option => option.value === selectedValue);
+    const currentOptionValue = options.find((option) => option.value === selectedValue);
     if (currentOptionValue) {
       setCurrentValue(currentOptionValue.name);
     }
@@ -73,7 +73,7 @@ const SelectFilter = ({
     setCurrentValue('');
   }, [value]);
 
-  const searchOnEnter = e => {
+  const searchOnEnter = (e) => {
     if (e.keyCode === keyCodes.ENTER && !isDropdownVisible && onSearch) {
       onSearch();
       setTimeout(() => inputRef.current.blur(), 100);

@@ -10,7 +10,7 @@ import { Flex } from '../../../../../../Elements/Shared';
 export default ({ player, onSelectPlayer }) => {
   const [mutate] = useMutation(deleteLtPlayer);
 
-  const onDeletePlayer = e => {
+  const onDeletePlayer = (e) => {
     e.stopPropagation();
     mutate({ variables: { name: player.name }, refetchQueries: ['ltPlayers'] });
   };

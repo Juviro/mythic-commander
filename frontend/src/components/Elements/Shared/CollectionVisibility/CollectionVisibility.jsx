@@ -30,7 +30,7 @@ export default ({ style }) => {
   const visibility = dataVisibility?.collection?.visibility;
   const username = dataUser?.user?.username;
 
-  const onChange = async value => {
+  const onChange = async (value) => {
     await mutate({ variables: { visibility: value } });
     message.success('Successfully changed visibility!');
   };

@@ -33,7 +33,7 @@ export default ({ children, username }) => {
     if (!called && pageSize) fetchCards();
   }, [pageSize, called, fetchCards]);
 
-  const onSearch = query => {
+  const onSearch = (query) => {
     setParams({ page: 1 });
     setSearch(query);
   };

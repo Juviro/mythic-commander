@@ -58,7 +58,7 @@ export default ({
 
   if (!isEditing) return null;
 
-  const onChangeProp = key => value => {
+  const onChangeProp = (key) => (value) => {
     setNewProps({
       ...newProps,
       [key]: value,

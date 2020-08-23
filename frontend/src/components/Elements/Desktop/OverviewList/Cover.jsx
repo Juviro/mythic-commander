@@ -18,7 +18,7 @@ const StyledCoverLetter = styled.div`
   border-bottom: 1px solid #f0f0f0;
 `;
 
-const getColorFromId = id => {
+const getColorFromId = (id) => {
   const possibleColors = [
     '#e57373',
     '#f06292',

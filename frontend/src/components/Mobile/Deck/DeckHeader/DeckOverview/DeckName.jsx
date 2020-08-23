@@ -31,7 +31,7 @@ export default ({ commander, name }) => {
   return (
     <StyledNameWrapepr>
       {name}
-      {colorIdentity.map(color => (
+      {colorIdentity.map((color) => (
         <StyledColorIcon src={colors[color]} alt={color} key={color} />
       ))}
     </StyledNameWrapepr>

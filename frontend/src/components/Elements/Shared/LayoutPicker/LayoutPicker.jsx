@@ -19,14 +19,14 @@ const getNextLayout = (layout, hideCard) => {
 
 export default ({ hideCard }) => {
   const [layout = 'list', setLayoutParam] = useStoredQueryParam('layout', StringParam);
-  const setLayout = newLayout => setLayoutParam(newLayout, 'replaceIn');
+  const setLayout = (newLayout) => setLayoutParam(newLayout, 'replaceIn');
   useShortcut('l', () => setLayout(getNextLayout(layout, hideCard)));
 
   return (
     <DesktopTooltip title="Change Layout [L]">
       <Radio.Group
         value={layout}
-        onChange={e => setLayout(e.target.value)}
+        onChange={(e) => setLayout(e.target.value)}
         style={{ display: 'flex' }}
       >
         <Radio.Button value="list">

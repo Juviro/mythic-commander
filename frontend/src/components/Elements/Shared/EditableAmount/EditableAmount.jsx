@@ -26,13 +26,13 @@ export default ({
         size="small"
         min={0}
         autoFocus={autoFocus}
-        onFocus={event => event.target.select()}
+        onFocus={(event) => event.target.select()}
         type="number"
         style={{ width: 50 }}
-        onChange={e => onChangeAmount(Number(e.target.value) || 0, card.id, amountKey)}
+        onChange={(e) => onChangeAmount(Number(e.target.value) || 0, card.id, amountKey)}
         onPressEnter={onPressEnter}
         defaultValue={displayedAmount}
-        onClick={e => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
       />
     );
   }

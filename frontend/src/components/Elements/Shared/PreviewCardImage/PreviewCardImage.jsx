@@ -25,7 +25,7 @@ const PreviewCardImage = ({ width = 36, height = 48, card, highlightOnHover }) =
   const [loading, toggleLoading] = useToggle(true);
   const { id, imgKey } = card;
 
-  const onChangeIsOpen = event => {
+  const onChangeIsOpen = (event) => {
     event.stopPropagation();
     toggleCardPreviewOpen();
   };
@@ -74,7 +74,7 @@ const isEqual = (prevProps, nextProps) => {
   if (prevProps.height !== nextProps.height) return false;
   if (prevProps.highlightOnHover !== nextProps.highlightOnHover) return false;
 
-  return ['id', 'imgKey'].every(propKey => {
+  return ['id', 'imgKey'].every((propKey) => {
     return prevProps.card[propKey] === nextProps.card[propKey];
   });
 };

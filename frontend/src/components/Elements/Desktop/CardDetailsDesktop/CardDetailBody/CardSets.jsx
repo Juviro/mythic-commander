@@ -38,11 +38,11 @@ export default ({ card, loading, selectedCardId, onChangeSet, showTitle }) => {
   const onSaveChanges = async () => {
     if (!Object.keys({ ...editedMap, ...addedMap }).length) return;
 
-    const edited = Object.keys(editedMap).map(id => ({
+    const edited = Object.keys(editedMap).map((id) => ({
       ...editedMap[id],
       id,
     }));
-    const added = Object.keys(addedMap).map(id => ({
+    const added = Object.keys(addedMap).map((id) => ({
       ...addedMap[id],
       id,
     }));

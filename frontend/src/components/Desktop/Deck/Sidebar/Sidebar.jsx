@@ -63,6 +63,7 @@ export default ({ currentTab, setCurrentTab, onAddCards, deck }) => {
       key: 'stats',
     },
   ];
+
   return (
     <StyledOuterWrapper>
       <Flex

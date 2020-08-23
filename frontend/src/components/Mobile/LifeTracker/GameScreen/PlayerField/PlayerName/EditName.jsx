@@ -12,7 +12,7 @@ import useSubmitOnEnter from '../../../../../Hooks/useSubmitOnEnter';
 import { updateLtPlayer } from './queries';
 import PreviousPlayers from './PreviousPlayers';
 
-const getInitialState = player => {
+const getInitialState = (player) => {
   const avatarType = player.img ? 'img' : 'color';
   return {
     name: player.name,
@@ -27,7 +27,7 @@ export default ({ player, onClose, onUpdatePlayer }) => {
   const [currentSettings, setCurrentSettings] = useState(getInitialState(player));
   const [mutate] = useMutation(updateLtPlayer);
 
-  const onSubmit = settings => {
+  const onSubmit = (settings) => {
     onUpdatePlayer(player.id, settings);
 
     const isDefaultName = currentSettings.name.match(/^Player\s\d/);
@@ -47,18 +47,18 @@ export default ({ player, onClose, onUpdatePlayer }) => {
     onSubmit(newSettings);
   };
 
-  const onSelectPlayer = selectedPlayer => {
+  const onSelectPlayer = (selectedPlayer) => {
     onSubmit(pick(selectedPlayer, ['name', 'img', 'color']));
   };
 
-  const onChangeName = e => {
+  const onChangeName = (e) => {
     setCurrentSettings({
       ...currentSettings,
       name: e.target.value,
     });
   };
 
-  const onChangeAvatar = type => newValue => {
+  const onChangeAvatar = (type) => (newValue) => {
     setCurrentSettings({
       ...currentSettings,
       avatar: newValue,
@@ -90,7 +90,7 @@ export default ({ player, onClose, onUpdatePlayer }) => {
           />
           <Input
             value={currentSettings.name}
-            onFocus={e => e.target.select()}
+            onFocus={(e) => e.target.select()}
             onSubmit={onOk}
             onKeyDown={useSubmitOnEnter(onOk)}
             onChange={onChangeName}

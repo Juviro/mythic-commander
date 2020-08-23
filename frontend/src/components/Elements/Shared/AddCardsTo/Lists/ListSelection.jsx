@@ -17,7 +17,7 @@ import Lists from './Lists';
 import { allLists } from '../queries';
 import { TYPES } from '../../../../../constants/types';
 
-const formatCards = cards =>
+const formatCards = (cards) =>
   cards.map(({ id, amount, totalAmount }) => ({
     id,
     amount: amount || totalAmount || 1,

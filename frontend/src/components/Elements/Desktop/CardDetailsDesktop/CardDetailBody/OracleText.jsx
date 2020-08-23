@@ -13,7 +13,7 @@ export default ({ card, loading, isFlipped }) => {
 
   return (
     <Flex justify="center" style={{ margin: '16px 0' }} direction="column">
-      {cardLines.map(line => (
+      {cardLines.map((line) => (
         <TextWithIcons text={line} key={line} />
       ))}
     </Flex>
