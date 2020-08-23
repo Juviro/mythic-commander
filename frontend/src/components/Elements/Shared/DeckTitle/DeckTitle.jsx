@@ -16,7 +16,7 @@ const StyledTitleWrapper = styled.div`
 export default ({ deck }) => {
   const [editDeckMutation] = useMutation(editDeck);
 
-  const onChangeName = async name => {
+  const onChangeName = async (name) => {
     message.success('Deck name changed!');
     editDeckMutation({
       variables: {
@@ -44,7 +44,7 @@ export default ({ deck }) => {
         ellipsis
         level={3}
         style={{ marginBottom: 0, display: 'flex' }}
-        editable={{ onChange: val => onChangeName(val || 'My Deck') }}
+        editable={{ onChange: (val) => onChangeName(val || 'My Deck') }}
       >
         {deck.name}
       </Typography.Title>

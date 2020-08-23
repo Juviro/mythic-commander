@@ -61,7 +61,7 @@ export default () => {
     <Flex direction="column" style={{ width: '100%' }}>
       <Input.Search
         allowClear
-        onSearch={value => setSearch(value)}
+        onSearch={(value) => setSearch(value)}
         style={{ marginTop: 16 }}
         placeholder="Search for a card"
       />

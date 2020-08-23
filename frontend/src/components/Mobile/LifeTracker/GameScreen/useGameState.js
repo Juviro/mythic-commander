@@ -20,8 +20,8 @@ const getDamageTaken = (id, playerIds) => {
   ];
 
   return playerIds
-    .filter(playerId => playerId !== id)
-    .map(playerId => ({ id: playerId, damage: 0 }))
+    .filter((playerId) => playerId !== id)
+    .map((playerId) => ({ id: playerId, damage: 0 }))
     .concat(defaultDamage);
 };
 
@@ -39,14 +39,14 @@ const getInitialPlayers = ({ numberOfPlayers, startingLife, useImages }) => {
   return playerIds.map(getPlayer);
 };
 
-export default gameSettings => {
+export default (gameSettings) => {
   // eslint-disable-next-line
   const initialPlayers = useMemo(() => getInitialPlayers(gameSettings), []);
   const [players, setPlayers] = useState(initialPlayers);
   const { highlightedPlayerId, onSelectRandomPlayer } = useSelectPlayer(initialPlayers);
 
   const onUpdatePlayer = (playerId, newValues) => {
-    const updatedPlayers = players.map(player => {
+    const updatedPlayers = players.map((player) => {
       if (player.id !== playerId) return player;
 
       return {
@@ -60,11 +60,11 @@ export default gameSettings => {
   const onSetLife = (playerId, life) => onUpdatePlayer(playerId, { life });
 
   const onTrackDamage = (playerId, newPlayerDamages) => {
-    const updatedPlayers = players.map(player => {
+    const updatedPlayers = players.map((player) => {
       if (player.id !== playerId) return player;
       return {
         ...player,
-        damageTaken: player.damageTaken.map(originPlayer => {
+        damageTaken: player.damageTaken.map((originPlayer) => {
           const updatedplayer = newPlayerDamages.find(({ id }) => id === originPlayer.id);
           if (!updatedplayer) return originPlayer;
 
@@ -80,7 +80,7 @@ export default gameSettings => {
 
   const onRestartGame = () => {
     const playerIds = players.map(({ id }) => id);
-    const newPlayers = players.map(player => ({
+    const newPlayers = players.map((player) => ({
       ...player,
       life: gameSettings.startingLife,
       damageTaken: getDamageTaken(player.id, playerIds),

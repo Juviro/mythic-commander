@@ -5,7 +5,7 @@ import { editWantsList } from './queries';
 
 export default ({ wantsList, level }) => {
   const [mutate] = useMutation(editWantsList);
-  const onChangeName = name => {
+  const onChangeName = (name) => {
     mutate({
       variables: {
         wantsListId: wantsList.id,

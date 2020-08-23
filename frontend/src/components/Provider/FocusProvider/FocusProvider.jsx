@@ -7,15 +7,15 @@ export const FocusContextProvider = ({ children }) => {
 
   const focusedElement = focusedElements[focusedElements.length - 1];
 
-  const addFocus = newId => {
+  const addFocus = (newId) => {
     if (!newId) return;
-    const filteredElements = focusedElements.filter(id => id !== newId);
+    const filteredElements = focusedElements.filter((id) => id !== newId);
     setFocusedElements(filteredElements.concat(newId));
   };
 
-  const removeFocus = idToRemove => {
+  const removeFocus = (idToRemove) => {
     if (!idToRemove) return;
-    const filteredElements = focusedElements.filter(id => id !== idToRemove);
+    const filteredElements = focusedElements.filter((id) => id !== idToRemove);
     setFocusedElements(filteredElements);
   };
 

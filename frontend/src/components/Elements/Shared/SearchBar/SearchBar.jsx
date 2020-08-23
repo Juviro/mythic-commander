@@ -56,7 +56,7 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
     setQuery(newQuery);
   };
 
-  const onSelect = oracleId => {
+  const onSelect = (oracleId) => {
     blur();
     onSetSearch();
     inputEl.current.blur();
@@ -68,7 +68,7 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
 
   const filteredCards = filterAndSortByQuery(cards, query);
 
-  const slicedCards = filteredCards.slice(0, MAX_RESULTS).map(card => ({
+  const slicedCards = filteredCards.slice(0, MAX_RESULTS).map((card) => ({
     ...card,
     owned: ownedCardNames.includes(card.name),
   }));

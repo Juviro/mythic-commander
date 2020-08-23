@@ -10,11 +10,11 @@ const StyledWrapper = styled.div`
 `;
 
 const TextWithIcons = ({ text }) => {
-  const addIcon = unreplacedText => (
+  const addIcon = (unreplacedText) => (
     <ReplaceText
       text={unreplacedText}
       replacementPattern={new RegExp(/({[\w/]+}|^[+−]?[\dX]{1,2}:)/)}
-      replacementFunction={manaIcon => <ManaSymbol symbol={manaIcon} size={14} />}
+      replacementFunction={(manaIcon) => <ManaSymbol symbol={manaIcon} size={14} />}
     />
   );
 
@@ -24,7 +24,7 @@ const TextWithIcons = ({ text }) => {
         text={text}
         replacementPattern={new RegExp(/\(.*\)/)}
         textFormatter={addIcon}
-        replacementFunction={cursiveText => <i>{cursiveText}</i>}
+        replacementFunction={(cursiveText) => <i>{cursiveText}</i>}
       />
     </StyledWrapper>
   );

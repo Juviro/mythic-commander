@@ -16,7 +16,7 @@ export default (numberOfCards, toggleShowDetail, toggleElementSelection) => {
 
   const setCurrentPage = (newPage, shouldReplace) =>
     setPageParam(newPage, shouldReplace ? 'replaceIn' : 'pushIn');
-  const setPageSize = newPageSize => setPageSizeParam(newPageSize, 'pushIn');
+  const setPageSize = (newPageSize) => setPageSizeParam(newPageSize, 'pushIn');
 
   const numberOfPages = numberOfCards ? Math.ceil(numberOfCards / pageSize) : 1;
 
@@ -51,7 +51,7 @@ export default (numberOfCards, toggleShowDetail, toggleElementSelection) => {
     }
   };
 
-  const onKeyDown = event => {
+  const onKeyDown = (event) => {
     if (!shortcutsActive || !numberOfCards || isInputField(event) || isModifierKey(event))
       return;
     let preventDefault = true;
@@ -103,7 +103,7 @@ export default (numberOfCards, toggleShowDetail, toggleElementSelection) => {
     total: numberOfCards,
     onShowSizeChange: (_, newPageSize) => setPageSize(newPageSize),
     pageSizeOptions: ['10', '25', '50'],
-    onChange: val => setCurrentPage(val),
+    onChange: (val) => setCurrentPage(val),
   };
 
   return { pagination, selectedElementPosition, setSelectedElementPosition };

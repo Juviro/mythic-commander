@@ -15,7 +15,7 @@ export default (cardsPerRow, toggleShowDetail, numberOfCards, blockShortcuts) =>
 
   const setCurrentPage = (newPage, shouldReplace) =>
     setPageParam(newPage, shouldReplace ? 'replaceIn' : 'pushIn');
-  const setPageSize = newPageSize => setPageSizeParam(newPageSize, 'replaceIn');
+  const setPageSize = (newPageSize) => setPageSizeParam(newPageSize, 'replaceIn');
 
   const [selectedElementPosition, setSelectedElementPosition] = useState(0);
 
@@ -87,7 +87,7 @@ export default (cardsPerRow, toggleShowDetail, numberOfCards, blockShortcuts) =>
     }
   };
 
-  const onKeyDown = event => {
+  const onKeyDown = (event) => {
     if (
       !numberOfCards ||
       !shortcutsActive ||
@@ -145,7 +145,7 @@ export default (cardsPerRow, toggleShowDetail, numberOfCards, blockShortcuts) =>
     total: numberOfCards,
     onShowSizeChange: (_, newPageSize) => setPageSize(newPageSize),
     pageSizeOptions: [10, 20, 50],
-    onChange: val => setCurrentPage(val),
+    onChange: (val) => setCurrentPage(val),
   };
 
   return { pagination, selectedElementPosition, setSelectedElementPosition };

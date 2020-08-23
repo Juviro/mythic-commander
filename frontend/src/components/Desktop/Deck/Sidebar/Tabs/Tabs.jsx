@@ -19,21 +19,26 @@ export default ({ currentTab, setCurrentTab }) => {
     {
       title: 'Search [S]',
       key: 'add',
+      shortcut: 's',
+    },
+    {
+      title: 'Wants [W]',
+      key: 'wants',
+      shortcut: 'w',
     },
     // {
-    //   title: 'Wants [W]',
-    //   key: 'wants',
-    // },
-    // {
-    //   title: 'Details [D]',
+    //   title: 'Insights [I]',
     //   key: 'stats',
+    //   shortcut: 'i',
     // },
   ];
 
   const focusIds = ['deck.sidebar.add', 'deck.sidebar.wants', 'deck.sidebar.stats'];
 
-  const onOpenTab = key => {
-    const filteredFocus = focusedElements.filter(focusId => !focusIds.includes(focusId));
+  const onOpenTab = (key) => {
+    const filteredFocus = focusedElements.filter(
+      (focusId) => !focusIds.includes(focusId)
+    );
 
     if (key === currentTab) {
       setCurrentTab(null);
@@ -44,9 +49,9 @@ export default ({ currentTab, setCurrentTab }) => {
     }
   };
 
-  useShortcut('s', () => onOpenTab('add'), focusIds.concat('deck.cards'));
-  // useShortcut('w', () => onOpenTab('wants'), focusIds.concat('deck.cards'));
-  // useShortcut('d', () => onOpenTab('stats'), focusIds.concat('deck.cards'));
+  tabs.forEach(({ key, shortcut }) => {
+    useShortcut(shortcut, () => onOpenTab(key), focusIds.concat('deck.cards'));
+  });
 
   return (
     <StyledWrapper>

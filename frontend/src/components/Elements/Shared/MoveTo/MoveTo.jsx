@@ -13,7 +13,7 @@ export default ({ moveToList, onClose, card: { id: cardId, name: cardName } }) =
   const [mutate] = useMutation(moveCard);
   const [isMoving, toggleIsMoving] = useToggle();
 
-  const onMove = targetType => async ({ id: targetId, name: targetName }) => {
+  const onMove = (targetType) => async ({ id: targetId, name: targetName }) => {
     toggleIsMoving();
     const { data } = await mutate({
       variables: {

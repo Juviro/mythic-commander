@@ -45,7 +45,7 @@ export default ({ onEditCard, deleteByOracle, children, ...props }) => {
     toggleShowEditModal(false);
   };
 
-  const onOpenEditCard = card => {
+  const onOpenEditCard = (card) => {
     setSelectedSingleCard(card);
     toggleShowEditModal(true);
   };

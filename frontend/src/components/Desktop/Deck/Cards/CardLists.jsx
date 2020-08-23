@@ -9,7 +9,7 @@ import CardModalDesktop from '../../../Elements/Desktop/CardModalDesktop';
 import { deleteFromDeckDesktop } from '../queries';
 import boldText from '../../../../utils/boldText';
 
-const getColumnKey = column => column.map(({ type }) => type).join('');
+const getColumnKey = (column) => column.map(({ type }) => type).join('');
 
 export default ({ columns, deck, displayOwnedOnly }) => {
   const [showDetails, toggleShowDetail] = useToggle(false);
@@ -31,7 +31,7 @@ export default ({ columns, deck, displayOwnedOnly }) => {
     if (!selectedCard) return;
     setIsDeleting(false);
     selectNextCard(null);
-    const newCards = deck.originalCards.filter(card => card.id !== selectedCard.id);
+    const newCards = deck.originalCards.filter((card) => card.id !== selectedCard.id);
     const newNumberOfCards = deck.numberOfCards;
     mutateDelete({
       variables: { cardId: selectedCard.id, deckId: deck.id },
@@ -56,7 +56,7 @@ export default ({ columns, deck, displayOwnedOnly }) => {
 
   return (
     <>
-      {columns.map(column => (
+      {columns.map((column) => (
         <Flex direction="column" key={getColumnKey(column)}>
           {column.map(({ type, cards: cardGroup }) => (
             <CardList

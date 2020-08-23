@@ -113,7 +113,7 @@ const areEqual = (prevProps, nextProps) => {
   if (prevProps.isTransparent !== nextProps.isTransparent) return false;
 
   return ['id', 'amount', 'owned', 'sumPrice', 'minPrice'].every(
-    propKey => prevProps.card[propKey] === nextProps.card[propKey]
+    (propKey) => prevProps.card[propKey] === nextProps.card[propKey]
   );
 };
 

@@ -12,7 +12,7 @@ export default ({ title, elements = [], onClick }) => {
         {elements.map(({ name, id }) => (
           <List.Item
             key={id}
-            onClick={e => {
+            onClick={(e) => {
               e.stopPropagation();
               onClick({ name, id });
             }}

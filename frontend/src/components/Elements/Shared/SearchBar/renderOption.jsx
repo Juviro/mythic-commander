@@ -39,7 +39,7 @@ const StyledCardImage = styled.img`
   display: flex;
 `;
 
-export default searchString => element => {
+export default (searchString) => (element) => {
   const { name, id, oracle_id, imgKey, owned } = element;
 
   return {

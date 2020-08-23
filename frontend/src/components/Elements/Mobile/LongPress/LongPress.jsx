@@ -43,7 +43,7 @@ class LongPress extends Component {
     clearInterval(this.timeout);
   };
 
-  onTouchStart = e => {
+  onTouchStart = (e) => {
     this.shouldShortPress = true;
     this.moved = false;
     this.startTimeout();
@@ -52,7 +52,7 @@ class LongPress extends Component {
     }
   };
 
-  onTouchEnd = e => {
+  onTouchEnd = (e) => {
     this.cancelTimeout();
     if (this.props.onPress && this.shouldShortPress && this.moved === false) {
       this.props.onPress();
@@ -62,14 +62,14 @@ class LongPress extends Component {
     }
   };
 
-  onTouchCancel = e => {
+  onTouchCancel = (e) => {
     this.cancelTimeout();
     if (typeof this.props.onTouchCancel === 'function') {
       this.props.onTouchCancel(e);
     }
   };
 
-  onMove = e => {
+  onMove = (e) => {
     this.moved = true;
     if (typeof this.props.onTouchMove === 'function') {
       this.props.onTouchMove(e);
@@ -94,7 +94,7 @@ class LongPress extends Component {
         };
 
     const props = {
-      onContextMenu: e => e.preventDefault(),
+      onContextMenu: (e) => e.preventDefault(),
       onTouchStart: this.onTouchStart,
       onTouchEnd: this.onTouchEnd,
       onTouchMove: this.onMove,

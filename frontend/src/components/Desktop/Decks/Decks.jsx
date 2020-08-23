@@ -24,7 +24,7 @@ const Wants = ({ history }) => {
   const [search, setSearch] = useState('');
   const [mutate] = useMutation(createDeckDesktop);
 
-  const onOpenDeck = id => {
+  const onOpenDeck = (id) => {
     history.push(`/decks/${id}`);
   };
 

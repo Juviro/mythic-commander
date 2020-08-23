@@ -10,7 +10,7 @@ export default ({ onEdit, card, onCancel }) => {
     onCancel();
   };
 
-  const onChangeProp = key => value => {
+  const onChangeProp = (key) => (value) => {
     setNewProps({
       ...newProps,
       [key]: value,

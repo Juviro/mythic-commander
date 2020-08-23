@@ -7,7 +7,7 @@ import { createDeck as createDeckMutation, getDecks } from '../../../queries';
 
 const DeckList = ({ decks, history }) => {
   const [mutate] = useMutation(createDeckMutation);
-  const onOpenDeck = id => {
+  const onOpenDeck = (id) => {
     history.push(`/m/decks/${id}`);
   };
   const onAddDeck = async () => {

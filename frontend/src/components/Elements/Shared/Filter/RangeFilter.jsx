@@ -16,7 +16,7 @@ export default ({ onSearch, onChange: onSubmit, value = '' }) => {
 
   const [, from = '', , to = ''] = value.match(/(\d*)(-)(\d*)/) || [];
 
-  const onChange = isFirst => event => {
+  const onChange = (isFirst) => (event) => {
     const val = event.target.value && Math.min(event.target.value, 99);
     const newValue = isFirst ? `${val}-${to}` : `${from}-${val}`;
 

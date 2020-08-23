@@ -56,7 +56,7 @@ export default () => {
   useEffect(() => {
     if (!data || displayedCards) return;
     const spreadCards = [];
-    data.proxies.forEach(card => {
+    data.proxies.forEach((card) => {
       for (let i = 0; i < card.amount; i++) {
         spreadCards.push(card);
       }
@@ -66,8 +66,8 @@ export default () => {
     // eslint-disable-next-line
   }, [data]);
 
-  const onRemoveCard = key => {
-    setDisplayedCards(displayedCards.filter(card => card.key !== key));
+  const onRemoveCard = (key) => {
+    setDisplayedCards(displayedCards.filter((card) => card.key !== key));
   };
 
   if (loading || !displayedCards) {

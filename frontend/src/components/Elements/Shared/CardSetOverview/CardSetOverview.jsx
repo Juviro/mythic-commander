@@ -18,7 +18,7 @@ export default ({
       dataSource={
         card &&
         card.allSets &&
-        card.allSets.map(cardSet => ({
+        card.allSets.map((cardSet) => ({
           ...cardSet,
           key: cardSet.id,
         }))
@@ -40,7 +40,7 @@ export default ({
         overflowY: 'auto',
         maxHeight,
       }}
-      rowClassName={row => (row.id === selectedCardId ? 'table-active' : '')}
+      rowClassName={(row) => (row.id === selectedCardId ? 'table-active' : '')}
     />
   );
 };

@@ -63,7 +63,7 @@ export default ({
     // eslint-disable-next-line
   }, [frontLargeSrc]);
 
-  const onFlipCard = e => {
+  const onFlipCard = (e) => {
     e.stopPropagation();
     if (onFlipCardCallback) onFlipCardCallback(!isFlipped);
     toggleIsFlipped();
@@ -84,7 +84,7 @@ export default ({
               className="flippable-card "
               style={{
                 opacity,
-                transform: transform.interpolate(t => `${t} rotateY(-180deg)`),
+                transform: transform.interpolate((t) => `${t} rotateY(-180deg)`),
               }}
               src={getImageUrl(id, imgKey, 'normal', 'back')}
             />
@@ -95,7 +95,7 @@ export default ({
             alt={card.name}
             className="flippable-card"
             style={{
-              opacity: opacity.interpolate(o => 1 - o),
+              opacity: opacity.interpolate((o) => 1 - o),
               transform,
             }}
             src={frontImgSrc}

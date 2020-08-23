@@ -35,11 +35,11 @@ const getSecondCommanders = (cards, firstCommander) => {
 
   if (possiblePartner === 'ALL') {
     return cards.filter(
-      card => card.id !== firstCommander.id && card.possiblePartner === 'ALL'
+      (card) => card.id !== firstCommander.id && card.possiblePartner === 'ALL'
     );
   }
 
-  return cards.filter(card => card.name === possiblePartner);
+  return cards.filter((card) => card.name === possiblePartner);
 };
 
 export default ({ deck }) => {
@@ -49,8 +49,8 @@ export default ({ deck }) => {
   const commanders = sortedCards.filter(({ isCommander }) => isCommander);
   const [firstCommander, secondCommander] = commanders;
 
-  const onSetCommanders = cardIds => {
-    const newCards = deck.originalCards.map(card => ({
+  const onSetCommanders = (cardIds) => {
+    const newCards = deck.originalCards.map((card) => ({
       ...card,
       isCommander: cardIds.includes(card.card.id),
     }));
@@ -69,18 +69,18 @@ export default ({ deck }) => {
     });
   };
 
-  const onSetFirstCommander = cardId => {
+  const onSetFirstCommander = (cardId) => {
     if (firstCommander && firstCommander.id === cardId) return;
     onSetCommanders([cardId]);
   };
 
-  const onSetSecondCommander = cardId => {
+  const onSetSecondCommander = (cardId) => {
     if (secondCommander && secondCommander.id === cardId) return;
     onSetCommanders([firstCommander.id, cardId]);
   };
 
-  const possibleFirstCommanders = deck.cards.filter(card =>
-    ['Legendary', 'Creature'].every(type => card.primaryTypes.includes(type))
+  const possibleFirstCommanders = deck.cards.filter((card) =>
+    ['Legendary', 'Creature'].every((type) => card.primaryTypes.includes(type))
   );
   const possibleSecondCommanders = getSecondCommanders(deck.cards, firstCommander);
 
@@ -101,7 +101,7 @@ export default ({ deck }) => {
     return (
       <StyledNameWrapper onClick={toggleIsEditing}>
         <Flex direction="column">
-          {commanders.map(commander => (
+          {commanders.map((commander) => (
             <Typography.Text
               strong
               ellipsis
@@ -127,7 +127,7 @@ export default ({ deck }) => {
           size="small"
           placeholder="Pick your commander"
         >
-          {possibleFirstCommanders.map(card => (
+          {possibleFirstCommanders.map((card) => (
             <Select.Option value={card.id} key={card.id}>
               {card.name}
             </Select.Option>
@@ -146,7 +146,7 @@ export default ({ deck }) => {
           size="small"
           placeholder="Pick your second commander"
         >
-          {possibleSecondCommanders.map(card => (
+          {possibleSecondCommanders.map((card) => (
             <Select.Option value={card.id} key={card.id}>
               {card.name}
             </Select.Option>

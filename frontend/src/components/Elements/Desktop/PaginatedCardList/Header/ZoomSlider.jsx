@@ -42,7 +42,7 @@ export default ({ zoom, setZoom }) => {
         min={MIN_ZOOM}
         max={MAX_ZOOM}
         onChange={setZoom}
-        tipFormatter={val => `${val}%`}
+        tipFormatter={(val) => `${val}%`}
       />
       <DesktopTooltip title="Zoom In [+]">
         <PlusOutlined onClick={onPlus} />

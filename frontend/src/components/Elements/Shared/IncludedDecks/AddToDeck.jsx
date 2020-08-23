@@ -26,8 +26,8 @@ export default ({
 
   const { decks } = data;
 
-  const onAddToList = id => {
-    const { name } = decks.find(wantsList => wantsList.id === id) || {
+  const onAddToList = (id) => {
+    const { name } = decks.find((wantsList) => wantsList.id === id) || {
       name: newListName,
     };
 
@@ -43,7 +43,7 @@ export default ({
       variables: {
         deckId: id,
         deckName: id === NEW_LIST_DUMMY_ID ? newListName : undefined,
-        cards: cardIds.map(cardId => ({ id: cardId })),
+        cards: cardIds.map((cardId) => ({ id: cardId })),
       },
       refetchQueries,
     });

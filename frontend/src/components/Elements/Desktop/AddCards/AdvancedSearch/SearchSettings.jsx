@@ -6,7 +6,7 @@ import { cardsBySet } from './queries';
 import SetSelection from '../../../Shared/Filter/SelectFilter/SetSelection';
 import { formatCachedCards } from '../../../../../utils/cachedCards';
 
-const getSetIcon = setKey => <SetIcon setKey={setKey} style={{ marginRight: 6 }} />;
+const getSetIcon = (setKey) => <SetIcon setKey={setKey} style={{ marginRight: 6 }} />;
 
 export default ({ setCardOptions }) => {
   const [setKey, setSetId] = useState(null);

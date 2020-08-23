@@ -40,7 +40,7 @@ export default ({ wantsList }) => {
 
   const decks = data ? data.decks : [];
 
-  const onLinkDeck = async deckId => {
+  const onLinkDeck = async (deckId) => {
     toggleIsModalVisible(false);
     toggleIsChanging(true);
     await mutate({

@@ -32,7 +32,7 @@ export default ({ children, onAddCards }) => {
     accept: 'CARD',
     drop: onDrop,
 
-    collect: monitor => ({
+    collect: (monitor) => ({
       isOver: !!monitor.isOver(),
       canDrop: !!monitor.canDrop(),
     }),

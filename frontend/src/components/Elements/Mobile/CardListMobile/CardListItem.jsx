@@ -66,7 +66,7 @@ const CardListItem = ({
     toggleIsEditing();
   };
 
-  const onChangeProp = key => value => {
+  const onChangeProp = (key) => (value) => {
     setNewProps({
       ...newProps,
       [key]: value,
@@ -171,7 +171,7 @@ const areEqual = (prevProps, nextProps) => {
   if (prevProps.onEditCard !== nextProps.onEditCard) return false;
 
   return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
-    propKey => {
+    (propKey) => {
       return prevProps.card[propKey] === nextProps.card[propKey];
     }
   );

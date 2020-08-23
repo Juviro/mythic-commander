@@ -51,7 +51,7 @@ export default () => {
           />
           {isSearching && (
             <WithActions>
-              {actionProps => (
+              {(actionProps) => (
                 <PaginatedCardList
                   {...actionProps}
                   loading={loading}

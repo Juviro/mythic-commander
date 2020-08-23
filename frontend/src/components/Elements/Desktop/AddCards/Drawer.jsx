@@ -5,7 +5,7 @@ import AddCards from './AddCards';
 export default ({ isVisible, setIsVisible, onAddCards }) => {
   const searchInputRef = React.createRef();
 
-  const afterVisibleChange = visible => {
+  const afterVisibleChange = (visible) => {
     if (!visible) return;
     searchInputRef.current.focus();
   };

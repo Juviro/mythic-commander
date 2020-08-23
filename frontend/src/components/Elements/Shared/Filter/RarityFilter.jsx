@@ -9,7 +9,7 @@ const RARITIES = [
 ];
 
 export default ({ onChange: onSubmit, value = '' }) => {
-  const onChange = rarity => e => {
+  const onChange = (rarity) => (e) => {
     const isSelected = e.target.checked;
     const rarityLetter = rarity[0].toLowerCase();
 
@@ -21,9 +21,9 @@ export default ({ onChange: onSubmit, value = '' }) => {
 
   return (
     <Flex direction="row" wrap="wrap" justify="space-between" style={{ maxWidth: 300 }}>
-      {RARITIES.map(rarityGroup => (
+      {RARITIES.map((rarityGroup) => (
         <Flex direction="column" key={Math.random()}>
-          {rarityGroup.map(rarity => (
+          {rarityGroup.map((rarity) => (
             <Checkbox
               onChange={onChange(rarity)}
               checked={value.includes(rarity[0].toLowerCase())}

@@ -38,7 +38,7 @@ const WantsListMenu = ({ history, wantsList }) => {
           variables: { deckId },
         },
       ],
-      update: cache => {
+      update: (cache) => {
         const existing = cache.readQuery({
           query: wantsLists,
         });

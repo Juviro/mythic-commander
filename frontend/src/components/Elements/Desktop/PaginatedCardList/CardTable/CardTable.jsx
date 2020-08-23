@@ -44,7 +44,7 @@ const CardTable = ({
   history,
 }) => {
   const [showDetails, toggleShowDetail] = useToggle(false);
-  const toggleElementSelection = elementPosition => {
+  const toggleElementSelection = (elementPosition) => {
     const elementToToggle = cards && cards[elementPosition - 1];
     if (!elementToToggle) return;
     const filteredCardsToDelete = selectedCards.filter(
@@ -92,7 +92,7 @@ const CardTable = ({
 
   const showRowSelection = onMoveCards || onDeleteCards;
   const rowSelection = showRowSelection && {
-    onChange: selectedRows =>
+    onChange: (selectedRows) =>
       setSelectedCards(cards.filter(({ id }) => selectedRows.includes(id))),
     selectedRowKeys: selectedCards.map(({ id }) => id),
   };

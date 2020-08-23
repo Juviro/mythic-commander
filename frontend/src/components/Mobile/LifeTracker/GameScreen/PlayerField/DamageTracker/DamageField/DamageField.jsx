@@ -27,7 +27,7 @@ export default ({ ownId, id, name, damage, onTrackDamage, players }) => {
   const [isEditing, toggleIsEditing] = useToggle();
   const player = players.find(({ id: playerId }) => playerId === id);
 
-  const onSubmit = newDamage => {
+  const onSubmit = (newDamage) => {
     onTrackDamage(ownId, [{ damage: newDamage, id }]);
     toggleIsEditing(false);
   };
