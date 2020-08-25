@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
+import { Deck, DeckCard, MutationAddCardsToDeckArgs, CardInputType } from 'types/graphql';
+import { UnifiedDeckCard } from 'types/unifiedTypes';
 import Cards from './Cards';
 import Sidebar from './Sidebar';
 import Header from './Header/Header';
@@ -12,7 +14,6 @@ import { getDeckDesktop, addCardsToDeckDesktop } from './queries';
 import { Flex, ShortcutFocus } from '../../Elements/Shared';
 import sumCardAmount from '../../../utils/sumCardAmount';
 import { useToggle } from '../../Hooks';
-import { Deck } from 'types/graphql';
 
 const StyledDeck = styled.div`
   width: 100%;
@@ -20,6 +21,11 @@ const StyledDeck = styled.div`
   display: flex;
   flex-direction: row;
 `;
+
+export interface UnifiedDeck extends Omit<Deck, 'cards'> {
+  originalCards: Array<DeckCard>;
+  cards: Array<UnifiedDeckCard>;
+}
 
 export default () => {
   const { id } = useParams();
@@ -29,18 +35,18 @@ export default () => {
     variables: { id },
     fetchPolicy: 'network-only',
   });
-  const [mutate] = useMutation(addCardsToDeckDesktop);
+  const [mutate] = useMutation<any, MutationAddCardsToDeckArgs>(addCardsToDeckDesktop);
 
-  const deck: Deck = data && data.deck;
-  const cards = deck && unifyCardFormat(deck.cards);
+  const deck: Deck = data?.deck;
+  const cards = unifyCardFormat(deck?.cards);
 
-  const unifiedDeck = deck && {
+  const unifiedDeck: UnifiedDeck = deck && {
     ...deck,
     originalCards: deck.cards,
     cards,
   };
 
-  const onAddCards = (newCards, name) => {
+  const onAddCards = (newCards: CardInputType[], name: string) => {
     const addedLabel = name || `${sumCardAmount(newCards)} cards`;
     message(`Added <b>${addedLabel}</b> to your deck!`);
     mutate({
