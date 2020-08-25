@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import styled, { css } from 'styled-components';
 
+import { CardInputType } from 'types/graphql';
 import Tabs from './Tabs';
 import { Flex, ShortcutFocus } from '../../../Elements/Shared';
 import AddCards from './AddCards/AddCards';
@@ -8,6 +9,7 @@ import DeckStats from './DeckStats';
 import DeckWants from './DeckWants';
 import FocusContext from '../../../Provider/FocusProvider/FocusProvider';
 import { primary } from '../../../../constants/colors';
+import { UnifiedDeck } from '../Deck';
 
 const StyledOuterWrapper = styled.div`
   position: relative;
@@ -16,7 +18,7 @@ const StyledOuterWrapper = styled.div`
   flex-direction: row;
 `;
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<{ visible: boolean; currentTabIndex: number }>`
   z-index: 10;
   box-shadow: 5px 5px 5px -5px #333;
   display: flex;
@@ -29,14 +31,14 @@ const StyledWrapper = styled.div`
   transform: translateY(-${({ currentTabIndex }) => (100 / 3) * currentTabIndex}%);
 `;
 
-const StyledView = styled.div`
+const StyledView = styled.div<{ visible: boolean }>`
   width: 100%;
   height: 100%;
   transition: all 0.3s;
   opacity: ${({ visible }) => (visible ? 1 : 0)};
 `;
 
-const StyledFocus = styled.div`
+const StyledFocus = styled.div<{ focused: boolean }>`
   min-height: 100%;
   ${({ focused }) =>
     focused
@@ -46,7 +48,14 @@ const StyledFocus = styled.div`
       : ''}
 `;
 
-export default ({ currentTab, setCurrentTab, onAddCards, deck }) => {
+interface Props {
+  currentTab: string | null;
+  setCurrentTab: (newTabId: string) => void;
+  onAddCards: (newCards: CardInputType[], name: string) => void;
+  deck: UnifiedDeck;
+}
+
+export default ({ currentTab, setCurrentTab, onAddCards, deck }: Props) => {
   const { focusedElement } = useContext(FocusContext);
   const tabs = [
     {
@@ -86,7 +95,7 @@ export default ({ currentTab, setCurrentTab, onAddCards, deck }) => {
             >
               <StyledView visible={currentTab === key}>
                 <StyledFocus focused={`deck.sidebar.${key}` === focusedElement}>
-                  <Component visible={currentTab === key} {...props} />
+                  <Component visible={currentTab === key} {...props} deck={deck} />
                 </StyledFocus>
               </StyledView>
             </ShortcutFocus>

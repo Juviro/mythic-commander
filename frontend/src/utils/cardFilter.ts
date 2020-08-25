@@ -4,10 +4,7 @@ export const trimName = (str: string) => {
   return str.toLowerCase();
 };
 
-export const filterByName = (
-  cards: UnifiedCard[],
-  searchString: string = ''
-): UnifiedCard[] => {
+export const filterByName = (cards: UnifiedCard[], searchString = ''): UnifiedCard[] => {
   if (!cards) return [];
   const cleanSearch = trimName(searchString);
   const searchRegExp = new RegExp(cleanSearch.split(' ').join('.*'));
@@ -17,7 +14,7 @@ export const filterByName = (
   });
 };
 
-const filterByColor = (colorString: string = '') => ({ color_identity }: UnifiedCard) => {
+const filterByColor = (colorString = '') => ({ color_identity }: UnifiedCard) => {
   if (!color_identity) return true;
   const [filteredColors] = colorString.match(/(w|u|b|r|g)+$/) || [''];
   const isExclude = colorString.includes('-');
@@ -32,7 +29,7 @@ const filterByColor = (colorString: string = '') => ({ color_identity }: Unified
 
   const hasAllColors = filteredColors
     .split('')
-    .every(cardColor => color_identity.includes(cardColor.toUpperCase()));
+    .every((cardColor) => color_identity.includes(cardColor.toUpperCase()));
 
   if (isExact) return hasAllColors && onlySelected;
   if (isExclude) return onlySelected;
@@ -42,13 +39,13 @@ const filterByColor = (colorString: string = '') => ({ color_identity }: Unified
 const filterByCreatureType = (creatureType: string) => ({ subTypes }: UnifiedCard) => {
   if (!creatureType) return true;
   if (!subTypes) return false;
-  return subTypes.some(type => type.toLowerCase() === creatureType.toLowerCase());
+  return subTypes.some((type) => type.toLowerCase() === creatureType.toLowerCase());
 };
 
 const filterByCardType = (cardType: string) => ({ primaryTypes }: UnifiedCard) => {
   if (!cardType) return true;
   if (!primaryTypes) return false;
-  return primaryTypes.some(type => type.toLowerCase() === cardType.toLowerCase());
+  return primaryTypes.some((type) => type.toLowerCase() === cardType.toLowerCase());
 };
 const filterByLegendary = (isLegendary: string) => ({ primaryTypes }: UnifiedCard) => {
   if (!isLegendary) return true;

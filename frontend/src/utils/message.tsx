@@ -1,7 +1,7 @@
 import React from 'react';
 import { message } from 'antd';
 
-export default (text: string, type: string = 'success') => {
+export default (text: string, type = 'success') => {
   const textParts = text.split(/<[/]*b>/g);
 
   const displayedMessage = textParts.map((part, index) => {
