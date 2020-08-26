@@ -85,6 +85,7 @@ const GridCard = ({
   shortcutsActive,
   markAsDisabled,
   draggable,
+  index: _index,
 }) => {
   const displayedAmount = card.amount || card.totalAmount;
   const [showMenu, toggleShowMenu] = useToggle();

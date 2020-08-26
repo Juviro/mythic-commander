@@ -5,7 +5,7 @@ import useLocalStorage from '../../../Hooks/useLocalStorage';
 interface Props {
   id: string;
   showIcon?: boolean;
-  type?: string;
+  type?: 'success' | 'info' | 'warning' | 'error';
   description?: string;
   message?: string;
   style?: React.CSSProperties;
