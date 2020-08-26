@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { Pagination } from 'antd';
 import styled from 'styled-components';
-
-import { withRouter } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router';
 import { LoadingOutlined } from '@ant-design/icons';
+
+import { UnifiedCard } from 'types/unifiedTypes';
+import { MenuItem } from 'components/Elements/Shared/ContextMenu/ContextMenu';
 import GridCard from './GridCard';
 import useGridShortcuts from './useGridShortcuts';
 import CardModalDesktop from '../../CardModalDesktop';
@@ -19,6 +21,25 @@ const StyledWrapper = styled.div`
   align-self: center;
 `;
 
+interface Props {
+  draggable?: boolean;
+  cards: UnifiedCard[];
+  loading?: boolean;
+  cardsPerRow?: number;
+  cardWidth?: number;
+  numberOfCards?: number;
+  zoom?: number;
+  search?: string;
+  actions?: MenuItem[];
+  onEditCard?: (card: UnifiedCard) => void;
+  onDeleteCard?: (card: UnifiedCard) => void;
+  onEnter?: (card: UnifiedCard) => void;
+  markAsDisabled?: (card: UnifiedCard) => boolean;
+  blockShortcuts?: boolean;
+}
+
+type PropsWithRouter = RouteComponentProps & Props;
+
 const CardGrid = ({
   cards,
   loading = false,
@@ -31,11 +52,11 @@ const CardGrid = ({
   onEditCard,
   onDeleteCard,
   history,
-  blockShortcuts,
   onEnter,
+  blockShortcuts,
   draggable,
   markAsDisabled,
-}) => {
+}: PropsWithRouter) => {
   const [showDetails, toggleShowDetail] = useToggle(false);
 
   const combinedNumberOfCards = numberOfCards || cards?.length || 0;

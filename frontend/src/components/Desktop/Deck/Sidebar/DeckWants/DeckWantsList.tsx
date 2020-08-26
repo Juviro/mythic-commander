@@ -5,6 +5,7 @@ import { OneTimeInfoBox } from 'components/Elements/Shared';
 import FocusContext from 'components/Provider/FocusProvider/FocusProvider';
 
 import { WantsList } from 'types/graphql';
+import unifyCardFormat from 'utils/unifyCardFormat';
 
 interface Props {
   wantsList: WantsList;
@@ -17,7 +18,8 @@ export default ({ wantsList }: Props) => {
     focusedElements.filter((focusId) => focusId !== 'modal.cardDetails').pop() !==
     'deck.sidebar.wants';
 
-  // @ts-ignore
+  const cards = unifyCardFormat(wantsList.cards);
+
   return (
     <>
       <OneTimeInfoBox
@@ -27,7 +29,7 @@ export default ({ wantsList }: Props) => {
       />
       <CardGrid
         draggable
-        cards={wantsList.cards}
+        cards={cards}
         cardsPerRow={2}
         cardWidth={200}
         // onEnter={onEnter}
