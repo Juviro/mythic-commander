@@ -21,7 +21,7 @@ const StyledWrapper = styled.div`
 
 const CardGrid = ({
   cards,
-  loading,
+  loading = false,
   cardsPerRow,
   cardWidth,
   numberOfCards,
@@ -38,11 +38,18 @@ const CardGrid = ({
 }) => {
   const [showDetails, toggleShowDetail] = useToggle(false);
 
+  const combinedNumberOfCards = numberOfCards || cards?.length || 0;
+
   const {
     pagination,
     selectedElementPosition,
     setSelectedElementPosition,
-  } = useGridShortcuts(cardsPerRow, toggleShowDetail, numberOfCards, blockShortcuts);
+  } = useGridShortcuts(
+    cardsPerRow,
+    toggleShowDetail,
+    combinedNumberOfCards,
+    blockShortcuts
+  );
 
   const selectedCard = cards[selectedElementPosition - 1];
   useShortcut('ENTER', onEnter && selectedCard ? () => onEnter(selectedCard) : null, [

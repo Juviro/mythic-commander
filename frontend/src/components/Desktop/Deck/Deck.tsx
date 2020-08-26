@@ -29,7 +29,8 @@ export interface UnifiedDeck extends Omit<Deck, 'cards'> {
 
 export default () => {
   const { id } = useParams();
-  const [currentTab, setCurrentTab] = useState(null);
+  const [currentTab, setCurrentTab] = useState('wants');
+  // const [currentTab, setCurrentTab] = useState(null); TODO
   const [displayOwnedOnly, toggleDisplayOwnedOnly] = useToggle();
   const { data, loading } = useQuery(getDeckDesktop, {
     variables: { id },
