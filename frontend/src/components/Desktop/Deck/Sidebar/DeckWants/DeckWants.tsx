@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import { useLazyQuery } from 'react-apollo';
 
 import { Query, QueryWantsListsArgs, CardInputType } from 'types/graphql';
+import FullscreenSpinner from 'components/Elements/Shared/Spinner';
 import { wantsListsForDeck } from './queries';
 import WantsListsCollapse from './WantsListsCollapse';
 import { UnifiedDeck } from '../../Deck';
@@ -11,7 +12,7 @@ import { UnifiedDeck } from '../../Deck';
 const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding: 16px;
+  padding: 8px;
 `;
 
 interface Props {
@@ -32,13 +33,18 @@ export default ({ visible, deck }: Props) => {
   useEffect(() => {
     if (!visible || called) return;
     fetchCards();
+    // eslint-disable-next-line
   }, [visible]);
 
-  const wantsLists = data?.wantsLists;
+  const wantsLists = data?.wantsLists ?? [];
 
   return (
     <StyledWrapper>
-      <WantsListsCollapse wantsLists={wantsLists} deck={deck} />
+      {loading ? (
+        <FullscreenSpinner />
+      ) : (
+        <WantsListsCollapse wantsLists={wantsLists} deck={deck} />
+      )}
     </StyledWrapper>
   );
 };

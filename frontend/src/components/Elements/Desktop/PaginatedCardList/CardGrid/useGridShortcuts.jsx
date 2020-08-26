@@ -144,7 +144,7 @@ export default (cardsPerRow, toggleShowDetail, numberOfCards, blockShortcuts) =>
     current: currentPage,
     total: numberOfCards,
     onShowSizeChange: (_, newPageSize) => setPageSize(newPageSize),
-    pageSizeOptions: [10, 20, 50],
+    pageSizeOptions: ['10', '20', '50'],
     onChange: (val) => setCurrentPage(val),
   };
 

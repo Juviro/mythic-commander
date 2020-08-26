@@ -1,6 +1,6 @@
 import React from 'react';
-import { Spin } from 'antd';
 import styled from 'styled-components';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 export default () => {
   return (
     <Wrapper>
-      <Spin />
+      <LoadingOutlined />
     </Wrapper>
   );
 };

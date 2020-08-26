@@ -8,4 +8,5 @@ export {
   WithActions,
   WithFullList,
 } from './PaginatedCardList';
+export { default as CardGrid } from './PaginatedCardList/CardGrid/CardGrid';
 export { default as Sidebar } from './Sidebar';
