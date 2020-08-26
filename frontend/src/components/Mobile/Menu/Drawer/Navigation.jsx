@@ -24,7 +24,6 @@ export default ({ onCloseDrawer }) => {
     {
       href: '/m/life-tracker',
       title: 'Life Tracker (Beta)',
-      flag: 'LIFETRACKER',
     },
   ];
   return (
