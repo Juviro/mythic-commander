@@ -65,6 +65,7 @@ export default ({ currentTab, setCurrentTab, onAddCards, deck }: Props) => {
     },
     {
       Component: DeckWants,
+      props: { onAddCards, deck },
       key: 'wants',
     },
     {
@@ -95,7 +96,7 @@ export default ({ currentTab, setCurrentTab, onAddCards, deck }: Props) => {
             >
               <StyledView visible={currentTab === key}>
                 <StyledFocus focused={`deck.sidebar.${key}` === focusedElement}>
-                  <Component visible={currentTab === key} {...props} deck={deck} />
+                  <Component visible={currentTab === key} {...props} />
                 </StyledFocus>
               </StyledView>
             </ShortcutFocus>

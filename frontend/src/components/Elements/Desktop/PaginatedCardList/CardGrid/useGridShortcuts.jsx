@@ -9,7 +9,10 @@ export default (cardsPerRow, toggleShowDetail, numberOfCards, blockShortcuts) =>
   const [pageSize, setPageSizeParam] = useQueryParam('pageSize', NumberParam);
   const { focusedElement } = useContext(FocusContext);
   const shortcutsActive =
-    !focusedElement || ['modal.cardDetails', 'deck.sidebar.add'].includes(focusedElement);
+    !focusedElement ||
+    ['modal.cardDetails', 'deck.sidebar.add', 'deck.sidebar.wants'].includes(
+      focusedElement
+    );
 
   const numberOfRows = Math.ceil(pageSize / cardsPerRow);
 
@@ -76,7 +79,10 @@ export default (cardsPerRow, toggleShowDetail, numberOfCards, blockShortcuts) =>
         Math.min(selectedElementPosition % cardsPerRow || cardsPerRow, lastCardOnNextPage)
       );
     } else {
-      const nextPosition = Math.min(selectedElementPosition + cardsPerRow, pageSize);
+      const nextPosition = Math.min(
+        selectedElementPosition + cardsPerRow,
+        pageSize || Infinity
+      );
       const hasNoNext = currentPage === numberOfPages && nextPosition > cardsOnLastPage;
       if (hasNoNext) {
         const isLastPage = currentPage === numberOfPages;
@@ -94,8 +100,9 @@ export default (cardsPerRow, toggleShowDetail, numberOfCards, blockShortcuts) =>
       isInputField(event) ||
       isModifierKey(event) ||
       blockShortcuts
-    )
+    ) {
       return;
+    }
     let preventDefault = true;
 
     switch (event.keyCode) {

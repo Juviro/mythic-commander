@@ -21,7 +21,7 @@ interface Props {
   onAddCards: (newCards: CardInputType[], name: string) => void;
 }
 
-export default ({ visible, deck }: Props) => {
+export default ({ visible, deck, onAddCards }: Props) => {
   const { id: deckId } = useParams();
   const [fetchCards, { called, data, loading }] = useLazyQuery<
     Query,
@@ -43,7 +43,7 @@ export default ({ visible, deck }: Props) => {
       {loading ? (
         <FullscreenSpinner />
       ) : (
-        <WantsListsCollapse wantsLists={wantsLists} deck={deck} />
+        <WantsListsCollapse wantsLists={wantsLists} deck={deck} onAddCards={onAddCards} />
       )}
     </StyledWrapper>
   );

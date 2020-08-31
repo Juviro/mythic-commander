@@ -10,7 +10,7 @@ import CardLists from './CardLists';
 import { sortByCmc, sortByName } from '../../../../utils/cardFilter';
 import FocusContext from '../../../Provider/FocusProvider/FocusProvider';
 import { primary } from '../../../../constants/colors';
-import DropZone from './DropZone';
+import { Dropzone } from '../../../Elements/Desktop';
 
 const StyledWrapper = styled.div`
   margin: 8px;
@@ -82,9 +82,13 @@ export default ({ deck, loading, currentTab, onAddCards, displayOwnedOnly }) => 
 
   const cardColumns = getCardColumns(deck.cards, numberOfCols);
 
+  const onDrop = ({ id, name }) => {
+    onAddCards([{ id, amount: 1 }], name);
+  };
+
   return (
     <StyledWrapper isFocused={isFocused}>
-      <DropZone onAddCards={onAddCards}>
+      <Dropzone onDrop={onDrop}>
         {cardColumns.length ? (
           <Flex direction="row" wrap="wrap" style={{ padding: 8, width: 'fit-content' }}>
             <CardLists
@@ -98,7 +102,7 @@ export default ({ deck, loading, currentTab, onAddCards, displayOwnedOnly }) => 
             <Empty description="No Cards" />
           </Flex>
         )}
-      </DropZone>
+      </Dropzone>
     </StyledWrapper>
   );
 };

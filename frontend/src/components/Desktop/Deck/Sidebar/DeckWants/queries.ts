@@ -43,3 +43,11 @@ export const createLinkedWantsList = gql`
     }
   }
 `;
+
+export const deleteFromWantsList = gql`
+  mutation deleteFromWantsList($oracleIds: [String!]!, $wantsListId: String!) {
+    deleteFromWantsList(oracleIds: $oracleIds, wantsListId: $wantsListId) {
+      ${WANTS_LIST_FIELDS}
+    }
+  }
+`;

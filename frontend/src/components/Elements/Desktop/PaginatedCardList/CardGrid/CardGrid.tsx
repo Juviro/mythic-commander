@@ -21,8 +21,13 @@ const StyledWrapper = styled.div`
   align-self: center;
 `;
 
+export interface DragProps {
+  canDrag: boolean;
+  listId?: string;
+  onSuccessfullDrop?: (card: UnifiedCard) => void;
+}
+
 interface Props {
-  draggable?: boolean;
   cards: UnifiedCard[];
   loading?: boolean;
   cardsPerRow?: number;
@@ -36,6 +41,8 @@ interface Props {
   onEnter?: (card: UnifiedCard) => void;
   markAsDisabled?: (card: UnifiedCard) => boolean;
   blockShortcuts?: boolean;
+  hidePagination?: boolean;
+  dragProps?: DragProps;
 }
 
 type PropsWithRouter = RouteComponentProps & Props;
@@ -54,8 +61,9 @@ const CardGrid = ({
   history,
   onEnter,
   blockShortcuts,
-  draggable,
   markAsDisabled,
+  hidePagination,
+  dragProps,
 }: PropsWithRouter) => {
   const [showDetails, toggleShowDetail] = useToggle(false);
 
@@ -76,9 +84,10 @@ const CardGrid = ({
   useShortcut('ENTER', onEnter && selectedCard ? () => onEnter(selectedCard) : null, [
     'modal.cardDetails',
     'deck.sidebar.add',
+    'deck.sidebar.wants',
   ]);
 
-  const onClick = (index) => {
+  const onClick = (index: number) => {
     toggleShowDetail(true);
     setSelectedElementPosition(index + 1);
   };
@@ -90,7 +99,8 @@ const CardGrid = ({
     // eslint-disable-next-line
   }, [history.location.pathname]);
 
-  const paginationComponent = (
+  const showPagination = Boolean(cards.length) && !hidePagination;
+  const paginationComponent = showPagination ? (
     <Pagination
       {...pagination}
       showSizeChanger
@@ -98,7 +108,7 @@ const CardGrid = ({
       showTotal={(total, [from, to]) => `${from}-${to} of ${total} cards`}
       style={{ alignSelf: 'flex-end', margin: '16px 0' }}
     />
-  );
+  ) : null;
 
   return (
     <>
@@ -109,7 +119,7 @@ const CardGrid = ({
         style={{ width: '100%' }}
       >
         <span>{loading && <LoadingOutlined style={{ marginLeft: 16 }} />}</span>
-        {Boolean(cards.length) && paginationComponent}
+        {paginationComponent}
       </Flex>
       <StyledWrapper>
         {cards.map((card, index) => {
@@ -119,7 +129,7 @@ const CardGrid = ({
             <GridCard
               card={card}
               zoom={zoom}
-              draggable={draggable}
+              dragProps={dragProps}
               key={card.id}
               actions={actions}
               width={cardWidth}
@@ -136,7 +146,7 @@ const CardGrid = ({
           );
         })}
       </StyledWrapper>
-      {Boolean(cards.length) && paginationComponent}
+      {paginationComponent}
       <CardModalDesktop
         loading={loading}
         selectedCard={selectedCard}

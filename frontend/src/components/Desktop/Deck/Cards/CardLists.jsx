@@ -35,6 +35,7 @@ export default ({ columns, deck, displayOwnedOnly }) => {
     const newNumberOfCards = deck.numberOfCards;
     mutateDelete({
       variables: { cardId: selectedCard.id, deckId: deck.id },
+      // TODO: check if this is correct
       optimisticResponse: () => ({
         __typename: 'Mutation',
         deleteFromWantsList: {
