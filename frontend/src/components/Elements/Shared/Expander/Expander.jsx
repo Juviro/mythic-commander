@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
+import { setTimeout } from 'timers';
+
+const ANIMATION_DURATION_MS = 300;
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -10,22 +13,33 @@ const StyledWrapper = styled.div`
 const StyledContent = styled.div`
   width: 100%;
   height: 100%;
-  margin-top: 0;
-  transition: margin 0.3s;
-  will-change: margin-top;
+  transition: max-height ${ANIMATION_DURATION_MS}ms;
+  will-change: max-height;
+  max-height: auto;
 
   ${({ isExpanded }) =>
     !isExpanded
       ? css`
-          margin-top: -100%;
+          max-height: 0;
         `
       : ''}
 `;
 
-export default ({ isExpanded, children }) => {
+export default ({ isExpanded, children, destroyOnClose = false }) => {
+  const [shouldRender, toggleShouldRender] = useState(isExpanded || !destroyOnClose);
+
+  useEffect(() => {
+    if (!destroyOnClose) return;
+    if (isExpanded) {
+      toggleShouldRender(true);
+    } else {
+      setTimeout(() => toggleShouldRender(false), ANIMATION_DURATION_MS);
+    }
+  }, [isExpanded]);
+
   return (
     <StyledWrapper>
-      <StyledContent isExpanded={isExpanded}>{children}</StyledContent>
+      <StyledContent isExpanded={isExpanded}>{shouldRender && children}</StyledContent>
     </StyledWrapper>
   );
 };

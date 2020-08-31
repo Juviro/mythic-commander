@@ -1,14 +1,15 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { useDrop } from 'react-dnd';
+import { useDrop, DragObjectWithType } from 'react-dnd';
 
 import { primaryDrop, primaryLight } from '../../../../constants/colors';
 
-const StyledDropzone = styled.div`
-  width: 100%;
-  height: 100%;
-  z-index: 99;
-  user-select: none;
+interface DropzoneProps {
+  isOver: boolean;
+  canDrop: boolean;
+}
+
+export const dropZoneStyle = css<DropzoneProps>`
   ${({ canDrop }) =>
     canDrop
       ? css`
@@ -23,11 +24,25 @@ const StyledDropzone = styled.div`
       : ''}
 `;
 
-export default ({ children, onAddCards }) => {
-  const onDrop = ({ id, name }) => {
-    onAddCards([{ id, amount: 1 }], name);
-  };
+const StyledDropzone = styled.div<DropzoneProps>`
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  user-select: none;
+  ${dropZoneStyle}
+`;
 
+interface DropCard {
+  id: string;
+  name: string;
+}
+
+interface Props {
+  children: React.ReactNode;
+  onDrop: (card: DragObjectWithType) => void;
+}
+
+export default ({ children, onDrop }: Props) => {
   const [{ isOver, canDrop }, dropRef] = useDrop({
     accept: 'CARD',
     drop: onDrop,

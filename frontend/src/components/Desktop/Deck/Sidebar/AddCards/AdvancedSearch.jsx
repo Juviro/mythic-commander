@@ -41,8 +41,7 @@ export default ({ onAddCards, alreadyInDeck }) => {
           onOk={onAddCard}
           onCancel={() => setCardToAdd(null)}
           okText="Add"
-          title="Add card to deck"
-          text={boldText(`Add <b>${cardToAdd.name}</b> to your deck?`)}
+          title={boldText(`Add <b>${cardToAdd.name}</b> to your deck?`)}
         />
       )}
       <SearchHoc blockInitialSearch>
@@ -88,7 +87,7 @@ export default ({ onAddCards, alreadyInDeck }) => {
                     description="Drag and drop cards to add them to your deck"
                   />
                   <CardGrid
-                    draggable
+                    dragProps={{ canDrag: true }}
                     cards={currentCards}
                     loading={loading}
                     cardsPerRow={2}

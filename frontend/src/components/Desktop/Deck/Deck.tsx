@@ -3,7 +3,13 @@ import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
-import { Deck, DeckCard, MutationAddCardsToDeckArgs, CardInputType } from 'types/graphql';
+import {
+  Deck,
+  DeckCard,
+  MutationAddCardsToDeckArgs,
+  CardInputType,
+  Query,
+} from 'types/graphql';
 import { UnifiedDeckCard } from 'types/unifiedTypes';
 import Cards from './Cards';
 import Sidebar from './Sidebar';
@@ -32,13 +38,13 @@ export default () => {
   const [currentTab, setCurrentTab] = useState('wants');
   // const [currentTab, setCurrentTab] = useState(null); TODO
   const [displayOwnedOnly, toggleDisplayOwnedOnly] = useToggle();
-  const { data, loading } = useQuery(getDeckDesktop, {
+  const { data, loading } = useQuery<Query>(getDeckDesktop, {
     variables: { id },
     fetchPolicy: 'network-only',
   });
   const [mutate] = useMutation<any, MutationAddCardsToDeckArgs>(addCardsToDeckDesktop);
 
-  const deck: Deck = data?.deck;
+  const deck = data?.deck;
   const cards = unifyCardFormat(deck?.cards);
 
   const unifiedDeck: UnifiedDeck = deck && {
