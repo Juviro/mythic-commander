@@ -118,7 +118,7 @@ const resolver = {
           return card_faces.map(cardFace => cardFace.image_uris.art_crop);
         return image_uris.art_crop;
       })
-      .map(artCrop => artCrop.split('?')[0])
+      .map(artCrop => artCrop.split('?')[0].replace(/\$.+$/, ''))
       .flat();
   },
 
