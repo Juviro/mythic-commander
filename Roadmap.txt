@@ -1,5 +1,6 @@
 BUGFIXES:
     - highlighting of cardnames flawed
+    - flip card icon displaced
     - ancient den listed as artifact instead of land in deck
     - re-add loading animation to paginated list (e.g. collection desktop)
 

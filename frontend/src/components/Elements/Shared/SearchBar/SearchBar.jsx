@@ -9,7 +9,7 @@ import OptionGroupHeader from './OptionGroupHeader';
 import CardContext from '../../../Provider/CardProvider';
 import renderOption from './renderOption';
 import { filterAndSortByQuery } from '../../../../utils/cardFilter';
-import { useToggle, useBlurOnEsc } from '../../../Hooks';
+import { useToggle, useBlurOnEsc, useShortcut } from '../../../Hooks';
 import getDynamicUrl from '../../../../utils/getDynamicUrl';
 import isMobile from '../../../../utils/isMobile';
 
@@ -50,6 +50,9 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
   const ownedCardNames = ownedCardNamesData ? ownedCardNamesData.ownedCardNames : [];
 
   const [query, setQuery] = useState('');
+
+  const focusInput = () => inputEl.current.focus();
+  useShortcut('c', focusInput);
 
   const onSetSearch = (value = '') => {
     const newQuery = value.startsWith('{') ? '' : value.split(';')[0];
@@ -105,7 +108,7 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
         dropdownMatchSelectWidth={false}
         listHeight={360}
         dropdownStyle={dropdownStyle}
-        placeholder="Search for a card..."
+        placeholder="Search for a card... [C]"
         style={{ width: 'calc(100% - 16px)', ...style }}
         className={transparent ? 'transparent' : 'dark-placeholder'}
       >

@@ -4,6 +4,9 @@
 `sudo certbot`
 `sudo service nginx start`
 
+Auto renew (not tested - seems to not have worked):
+`echo "0 0,12 * * * root python -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew -q" | sudo tee -a /etc/crontab > /dev/null`
+
 ###Nginx
 
 - located at `/etc/nginx/`
