@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Empty } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 
 import { CardGrid, Dropzone } from 'components/Elements/Desktop';
@@ -11,7 +12,6 @@ import { UnifiedCard } from 'types/unifiedTypes';
 
 import sumCardAmount from 'utils/sumCardAmount';
 import boldText from 'utils/boldText';
-import { Empty } from 'antd';
 import { deleteFromWantsList } from './queries';
 
 interface Props {
