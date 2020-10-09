@@ -13,14 +13,14 @@ const StyledWrapper = styled.div`
 const StyledContent = styled.div`
   width: 100%;
   height: 100%;
-  transition: max-height ${ANIMATION_DURATION_MS}ms;
-  will-change: max-height;
-  max-height: auto;
+  transition: transform ${ANIMATION_DURATION_MS}ms;
+  will-change: transform;
+  transform: translateY(0);
 
   ${({ isExpanded }) =>
     !isExpanded
       ? css`
-          max-height: 0;
+          transform: translateY(-100%);
         `
       : ''}
 `;

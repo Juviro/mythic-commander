@@ -65,6 +65,7 @@ export default ({ wantsLists, deck, onAddCards }: Props) => {
     <Flex direction="column" style={{ width: '100%', height: '100%' }}>
       {wantsLists.map((wantsList) => (
         <WantsListElement
+          key={wantsList.id}
           wantsList={wantsList}
           alreadyInDeck={alreadyInDeck}
           onAddCards={onAddCards}
