@@ -11,7 +11,7 @@ const StyledFadeInWrapper = styled.div`
 
 export default ({ children, animationDuration, ...props }) => {
   return (
-    <LazyLoad {...props}>
+    <LazyLoad {...props} width="100%">
       <StyledFadeInWrapper animationDuration={animationDuration}>
         {children}
       </StyledFadeInWrapper>
