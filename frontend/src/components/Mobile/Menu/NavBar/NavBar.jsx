@@ -34,7 +34,7 @@ const StyledInvisibleWrapper = styled.div`
 const isCardView = (pathname) => Boolean(pathname.match(/^\/m\/cards\/[\w-/]+$/));
 
 const isTransparentSearchBar = (pathname = '') => {
-  return Boolean(pathname.match(/^\/m\/decks\/[0-9]+$/));
+  return Boolean(pathname.match(/^\/m\/decks\/[0-9A-z-]+$/));
 };
 
 const Menu = ({ onToggleDrawer, location: { pathname }, history }) => {

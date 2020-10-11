@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react';
 import { Empty } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 
-import { CardGrid, Dropzone } from 'components/Elements/Desktop';
-import { OneTimeInfoBox, Confirm } from 'components/Elements/Shared';
+import { CardGrid } from 'components/Elements/Desktop';
+import { Confirm } from 'components/Elements/Shared';
 import FocusContext from 'components/Provider/FocusProvider/FocusProvider';
 
 import { WantsList, MutationDeleteFromWantsListArgs, CardInputType } from 'types/graphql';
@@ -13,6 +13,12 @@ import { UnifiedCard } from 'types/unifiedTypes';
 import sumCardAmount from 'utils/sumCardAmount';
 import boldText from 'utils/boldText';
 import { deleteFromWantsList } from './queries';
+import styled from 'styled-components';
+
+const StyledDeckWantsList = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 interface Props {
   wantsList: WantsList;
@@ -59,17 +65,12 @@ export default ({ wantsList, alreadyInDeck, onAddCards, active }: Props) => {
   };
   const onEnter = blockShortcuts ? null : (card: UnifiedCard) => setCardToAdd(card);
 
-  const onAddToWantsList = (card) => {
-    console.log('card :', card);
-  };
-
   if (!cards.length) {
-    return <Empty description="" style={{ marginBottom: 16 }} />;
+    return <Empty description="" style={{ margin: 16 }} />;
   }
 
   return (
-    <>
-      {/* <Dropzone onDrop={onAddToWantsList}> */}
+    <StyledDeckWantsList>
       {cardToAdd && (
         <Confirm
           onOk={onAddCard}
@@ -78,11 +79,6 @@ export default ({ wantsList, alreadyInDeck, onAddCards, active }: Props) => {
           title={boldText(`Add <b>${cardToAdd.name}</b> to your deck?`)}
         />
       )}
-      <OneTimeInfoBox
-        showIcon
-        id="deck.wants.drag"
-        description="Drag and drop cards to add them to your Deck or other Wants Lists"
-      />
       <CardGrid
         dragProps={{
           canDrag: true,
@@ -97,7 +93,6 @@ export default ({ wantsList, alreadyInDeck, onAddCards, active }: Props) => {
         markAsDisabled={alreadyInDeck}
         blockShortcuts={blockShortcuts}
       />
-      {/* <DropzoneProps> */}
-    </>
+    </StyledDeckWantsList>
   );
 };
