@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { setTimeout } from 'timers';
 
@@ -13,33 +13,52 @@ const StyledWrapper = styled.div`
 const StyledContent = styled.div`
   width: 100%;
   height: 100%;
-  transition: transform ${ANIMATION_DURATION_MS}ms;
-  will-change: transform;
-  transform: translateY(0);
+  padding: 16px;
+  will-change: margin-top;
+  margin-top: 0;
+  transition: margin-top ${({ isActive }) => (isActive ? ANIMATION_DURATION_MS : 0)}ms;
 
   ${({ isExpanded }) =>
     !isExpanded
       ? css`
-          transform: translateY(-100%);
+          margin-top: ${({ offset }) => -offset}px;
         `
-      : ''}
+      : css``}
 `;
 
 export default ({ isExpanded, children, destroyOnClose = false }) => {
-  const [shouldRender, toggleShouldRender] = useState(isExpanded || !destroyOnClose);
+  const [isActive, toggleIsActive] = useState(isExpanded);
+  const shouldRender = isActive || !destroyOnClose;
+  console.log('isActive, isExpanded', isActive, isExpanded);
+
+  const wrapperRef = useRef(null);
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    if (!destroyOnClose) return;
     if (isExpanded) {
-      toggleShouldRender(true);
+      toggleIsActive(true);
     } else {
-      setTimeout(() => toggleShouldRender(false), ANIMATION_DURATION_MS);
+      setTimeout(() => toggleIsActive(false), ANIMATION_DURATION_MS);
     }
-  }, [isExpanded]);
+    // eslint-disable react-hooks/exhaustive-deps
+  }, [isExpanded, destroyOnClose]);
+
+  useEffect(() => {
+    if (!wrapperRef.current || !wrapperRef.current.offsetHeight) return;
+    setHeight(wrapperRef.current.offsetHeight);
+    // eslint-disable
+  });
 
   return (
     <StyledWrapper>
-      <StyledContent isExpanded={isExpanded}>{shouldRender && children}</StyledContent>
+      <StyledContent
+        isExpanded={isExpanded}
+        offset={height}
+        ref={wrapperRef}
+        isActive={isExpanded || isActive}
+      >
+        {shouldRender && children}
+      </StyledContent>
     </StyledWrapper>
   );
 };

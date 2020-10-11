@@ -40,6 +40,8 @@ const StyledView = styled.div<{ visible: boolean }>`
 
 const StyledFocus = styled.div<{ focused: boolean }>`
   min-height: 100%;
+  position: relative;
+
   ${({ focused }) =>
     focused
       ? css`

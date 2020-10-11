@@ -4,6 +4,8 @@ BUGFIXES:
     - ancient den listed as artifact instead of land in deck
     - re-add loading animation to paginated list (e.g. collection desktop)
 
+    - "Hidd stri" search crashes client?
+
 CURRENT:
     - refactor authentication, remove from context creation
 

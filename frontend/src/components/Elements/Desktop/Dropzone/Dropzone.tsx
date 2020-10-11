@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { useDrop, DragObjectWithType } from 'react-dnd';
+import { useDrop, DragObjectWithType, DropTargetMonitor } from 'react-dnd';
 
 import { primaryDrop, primaryLight } from '../../../../constants/colors';
 
@@ -16,8 +16,8 @@ export const dropZoneStyle = css<DropzoneProps>`
           background-color: ${primaryLight};
         `
       : ''}
-  ${({ isOver }) =>
-    isOver
+  ${({ isOver, canDrop }) =>
+    isOver && canDrop
       ? css`
           background-color: ${primaryDrop};
         `
@@ -40,12 +40,14 @@ interface DropCard {
 interface Props {
   children: React.ReactNode;
   onDrop: (card: DragObjectWithType) => void;
+  canDrop?: (monitor: DropTargetMonitor) => boolean;
 }
 
-export default ({ children, onDrop }: Props) => {
+export default ({ children, onDrop, canDrop: additionalCanDrop }: Props) => {
   const [{ isOver, canDrop }, dropRef] = useDrop({
     accept: 'CARD',
     drop: onDrop,
+    canDrop: (_, monitor) => !additionalCanDrop || additionalCanDrop(monitor),
 
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),

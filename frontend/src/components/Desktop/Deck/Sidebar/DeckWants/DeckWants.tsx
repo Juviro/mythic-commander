@@ -22,7 +22,7 @@ interface Props {
 }
 
 export default ({ visible, deck, onAddCards }: Props) => {
-  const { id: deckId } = useParams();
+  const { id: deckId } = useParams<{ id: string }>();
   const [fetchCards, { called, data, loading }] = useLazyQuery<
     Query,
     QueryWantsListsArgs
