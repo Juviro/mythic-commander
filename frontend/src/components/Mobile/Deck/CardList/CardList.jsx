@@ -30,8 +30,8 @@ const DeckList = ({ deck, loading }) => {
 
   const { cardsByType = [], commander } = getCardsByType(cards);
 
-  const onDeleteCard = cardId => {
-    const newCards = deck.cards.filter(card => card.id !== cardId);
+  const onDeleteCard = (cardId) => {
+    const newCards = deck.cards.filter((card) => card.id !== cardId);
     const newNumberOfCards = deck.numberOfCards;
     mutateDelete({
       variables: { cardId, deckId: deck.id },
@@ -55,7 +55,7 @@ const DeckList = ({ deck, loading }) => {
           variables: { id: deck.id },
         });
 
-        const newCards = existing.deck.cards.map(card => {
+        const newCards = existing.deck.cards.map((card) => {
           if (card.card.id !== cardId) return card;
           return newCard;
         });
@@ -88,7 +88,7 @@ const DeckList = ({ deck, loading }) => {
       <LayoutAndSortPicker showCollectionFilters />
       <div style={{ marginTop: 16 }}>
         <Skeleton loading={loading} active>
-          {cardsByType.map(cardGroup => (
+          {cardsByType.map((cardGroup) => (
             <CardSubList
               {...cardGroup}
               key={cardGroup.type}

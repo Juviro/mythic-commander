@@ -11,12 +11,6 @@ export default ({ id: wantsListId }) => {
   const onUnlink = async () => {
     mutate({
       variables: { wantsListId },
-      // refetchQueries: [
-      //   {
-      //     query: wantsListsForDeckMobile,
-      //     variables: { deckId },
-      //   },
-      // ],
       optimisticResponse: () => ({
         __typename: 'Mutation',
         unlinkWantsList: {

@@ -22,6 +22,7 @@ export default ({
   setSelectedCardOracleId,
   onDelete,
   displayOwnedOnly,
+  onDeleteImmediately,
 }) => {
   const nameSuffix =
     type !== 'Commander' || cards.length !== 1 ? `(${sumCardAmount(cards)})` : '';
@@ -40,7 +41,7 @@ export default ({
           <span>{valueLabel}</span>
         </Flex>
         <div style={{ position: 'relative', height: '100%' }}>
-          {cards.map(card => (
+          {cards.map((card) => (
             <Card
               card={card}
               key={card.id}
@@ -48,6 +49,7 @@ export default ({
               isTransparent={displayOwnedOnly && card.owned}
               onDelete={onDelete}
               onOpenDetails={onOpenDetails}
+              onDeleteImmediately={onDeleteImmediately}
               setSelectedCardOracleId={setSelectedCardOracleId}
             />
           ))}

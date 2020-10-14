@@ -14,7 +14,7 @@ export default ({ canSubmit, card, size, onSubmit, onChange, autoFocus }) => {
       min={1}
       defaultValue={displayedAmount}
       onPressEnter={canSubmit && onSubmit ? onSubmit : undefined}
-      onChange={e => onChange(Number(e.target.value) || 1)}
+      onChange={(e) => onChange(Number(e.target.value) || 1)}
     />
   );
 };

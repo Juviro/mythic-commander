@@ -28,7 +28,7 @@ export default () => {
 
   const currentValue = currentOption && currentOption.label;
 
-  const onChange = val => {
+  const onChange = (val) => {
     if (val) return;
     setAddedWithing(undefined);
   };
@@ -40,7 +40,7 @@ export default () => {
       value={currentValue}
       placeholder="Show recently added..."
       dropdownStyle={{ minWidth: 200 }}
-      onSelect={value => setAddedWithing(value)}
+      onSelect={(value) => setAddedWithing(value)}
       style={{ width: 200, marginLeft: 16 }}
       onChange={onChange}
     >

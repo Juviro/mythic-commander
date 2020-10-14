@@ -62,7 +62,7 @@ const GameScreen = ({
     <StyledWrapper>
       <Prompt when message="Are you sure you want to leave the game?" />
       <StyledHalf position={position1}>
-        {leftSidePlayers.map(player => (
+        {leftSidePlayers.map((player) => (
           <PlayerField
             onSetLife={onSetLife}
             player={player}
@@ -77,7 +77,7 @@ const GameScreen = ({
         ))}
       </StyledHalf>
       <StyledHalf position={position2} reverse>
-        {rightSidePlayers.map(player => (
+        {rightSidePlayers.map((player) => (
           <PlayerField
             onSetLife={onSetLife}
             player={player}

@@ -10,7 +10,7 @@ export default ({ text }) => {
       align="center"
       style={{ marginTop: 8, width: '100%' }}
     >
-      <Input readOnly value={text} onFocus={e => e.target.select()} />
+      <Input readOnly value={text} onFocus={(e) => e.target.select()} />
       <Typography.Text copyable={{ text }} style={{ marginLeft: 8 }} />
     </Flex>
   );

@@ -8,14 +8,14 @@ import { wantedCards as wantedCardsQuery } from './queries';
 import Flex from '../Flex';
 import FoundCards from './FoundCards';
 
-const getDistinctCards = wantedCards => {
+const getDistinctCards = (wantedCards) => {
   if (!wantedCards) return [];
 
   const { decks, wantsLists } = wantedCards;
   const allCards = [...decks, ...wantsLists].map(({ cards }) => cards).flat();
 
   return allCards.filter(
-    ({ id }, index) => allCards.findIndex(card => card.id === id) === index
+    ({ id }, index) => allCards.findIndex((card) => card.id === id) === index
   );
 };
 

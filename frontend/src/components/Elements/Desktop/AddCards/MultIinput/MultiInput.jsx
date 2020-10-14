@@ -54,10 +54,12 @@ export default class MultiInput extends React.Component {
       // Removes sideboard indicators (currently filtered by the function above)
       // and second half of a two faced name
       const { amount, name } = splitSearchString(row);
-      const normalize = str =>
+      const normalize = (str) =>
         str.toLowerCase().replace(/(^[sb:\s]*[\d]+x*|\/\/.+$|[.,'\s]+)/g, '');
       const normalizedRow = normalize(name);
-      const foundName = cardNames.find(cardName => normalize(cardName) === normalizedRow);
+      const foundName = cardNames.find(
+        (cardName) => normalize(cardName) === normalizedRow
+      );
       return { name: foundName, amount };
     });
 
@@ -69,7 +71,7 @@ export default class MultiInput extends React.Component {
     this.setState({ cardResults: newCardResult, isValidInput });
   }
 
-  onChange = event => {
+  onChange = (event) => {
     const { value } = event.target;
     this.setState({ value });
   };
@@ -86,10 +88,10 @@ export default class MultiInput extends React.Component {
     const cardNames = cardResults.filter(({ name }) => name && name !== NO_CARD);
     const cardIds = cardNames.map(({ name, amount }) => ({
       amount,
-      id: cards.find(card => card.name === name).id,
+      id: cards.find((card) => card.name === name).id,
     }));
     const uniqueCardIds = cardIds.filter(
-      ({ id }, index) => cardIds.findIndex(cardId => cardId.id === id) === index
+      ({ id }, index) => cardIds.findIndex((cardId) => cardId.id === id) === index
     );
     onAddCards(uniqueCardIds);
 
@@ -129,7 +131,7 @@ export default class MultiInput extends React.Component {
                 onChange={this.onChange}
                 autoSize={{ minRows: 9 }}
                 style={{ whiteSpace: 'pre' }}
-                onPressEnter={e => {
+                onPressEnter={(e) => {
                   const isSubmit = e.metaKey || e.ctrlKey;
                   if (isSubmit && isValidInput) this.onSubmit();
                 }}

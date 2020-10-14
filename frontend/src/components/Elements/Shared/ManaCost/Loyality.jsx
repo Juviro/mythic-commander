@@ -28,7 +28,7 @@ const StyledText = styled(Typography.Text)`
   color: white;
 `;
 
-const getIcon = symbol => {
+const getIcon = (symbol) => {
   if (symbol.startsWith('+')) return { icon: loyalitiyIcons.up, offset: 2 };
   if (symbol.startsWith('−')) return { icon: loyalitiyIcons.down, offset: -2 };
   return { icon: loyalitiyIcons.neutral, offset: 0 };

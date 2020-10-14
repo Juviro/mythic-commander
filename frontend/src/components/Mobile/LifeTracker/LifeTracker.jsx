@@ -17,7 +17,7 @@ const LifeTracker = ({ history }) => {
   const [gameSettings, setGameSettings] = useState({});
   const handle = useFullScreenHandle();
 
-  const onStart = newGameSettings => {
+  const onStart = (newGameSettings) => {
     setGameSettings(newGameSettings);
     history.push(`/m/life-tracker/start`);
   };

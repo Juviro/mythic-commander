@@ -32,7 +32,7 @@ export default ({
     setSearch(currentSearch);
   };
 
-  const onSetCurrentSearch = val => {
+  const onSetCurrentSearch = (val) => {
     setCurrentSearch(val);
     if (!val) setSearch('');
   };

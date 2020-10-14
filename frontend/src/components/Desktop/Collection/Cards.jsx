@@ -36,7 +36,7 @@ export default ({ isSidebarVisible }) => {
           setSearch={setSearch}
           search={search}
         >
-          {actionProps => (
+          {(actionProps) => (
             <PaginatedCardList
               {...actionProps}
               title={title}

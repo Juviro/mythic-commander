@@ -13,10 +13,10 @@ export default ({
 }) => {
   const { sets } = useContext(CardContext);
   const allSets = Object.keys(sets)
-    .map(key => ({ value: key, ...sets[key] }))
+    .map((key) => ({ value: key, ...sets[key] }))
     .sort((a, b) => (a.name > b.name ? 1 : -1));
 
-  const getPrefix = setKey => <SetIcon setKey={setKey} />;
+  const getPrefix = (setKey) => <SetIcon setKey={setKey} />;
 
   return (
     <SelectFilter

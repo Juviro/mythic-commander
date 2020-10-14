@@ -40,7 +40,6 @@ const StyledImageWrapper = styled.div`
     isSelected
       ? css`
           box-shadow: 0px 0px 6px 6px ${primary};
-          background-color: #1890fff2;
         `
       : ''}
   ${({ markAsDisabled }) =>
@@ -84,8 +83,11 @@ const GridCard = ({
   onEditCard,
   shortcutsActive,
   markAsDisabled,
-  draggable,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  index: _index,
+  dragProps,
 }) => {
+  const { canDrag = false, listId, onSuccessfullDrop } = dragProps ?? {};
   const displayedAmount = card.amount || card.totalAmount;
   const [showMenu, toggleShowMenu] = useToggle();
   useShortcut('BACKSPACE', shortcutsActive && onDeleteCard ? onDeleteCard : null);
@@ -93,9 +95,14 @@ const GridCard = ({
   const ref = useRef(null);
 
   const [, dragRef] = useDrag({
-    item: { type: 'CARD', id: card.id, name: card.name },
-    canDrag: draggable,
-    collect: monitor => ({
+    item: { type: 'CARD', id: card.id, name: card.name, listId, amount: card.amount },
+    canDrag,
+    end: (_, monitor) => {
+      if (monitor.didDrop() && onSuccessfullDrop) {
+        onSuccessfullDrop(card);
+      }
+    },
+    collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
   });
@@ -155,7 +162,7 @@ const areEqual = (prevProps, nextProps) => {
   if (prevProps.markAsDisabled !== nextProps.markAsDisabled) return false;
 
   return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
-    propKey => prevProps.card[propKey] === nextProps.card[propKey]
+    (propKey) => prevProps.card[propKey] === nextProps.card[propKey]
   );
 };
 

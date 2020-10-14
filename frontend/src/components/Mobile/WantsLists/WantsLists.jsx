@@ -25,7 +25,7 @@ export const splitWantsLists = (data, search = '') => {
   );
   const [unlinkedLists, linkedLists] = partition(
     filteredWantsLists,
-    wantsList => !wantsList.deck
+    (wantsList) => !wantsList.deck
   );
 
   return [
@@ -46,7 +46,7 @@ const Wants = ({ history }) => {
   const [unlinkedLists, linkedLists] = splitWantsLists(data);
   const [mutate] = useMutation(createWantsList);
 
-  const onOpenWantsList = id => {
+  const onOpenWantsList = (id) => {
     history.push(`/m/wants/${id}`);
   };
   const onAddDeck = async () => {

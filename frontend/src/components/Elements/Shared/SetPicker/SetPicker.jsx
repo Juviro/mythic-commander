@@ -40,7 +40,7 @@ export default ({
         })
       );
 
-  const onSelectOption = cardId => {
+  const onSelectOption = (cardId) => {
     if (onSelect) onSelect(cardId);
     if (onSelectCard) {
       const selectedCard = allCardSets.find(({ id }) => cardId === id);
@@ -57,7 +57,7 @@ export default ({
       onKeyDown={useSubmitOnEnter(!isOpen && onSubmit)}
       onSelect={onSelectOption}
       dropdownStyle={{ minWidth: 200 }}
-      onClick={e => e.stopPropagation()}
+      onClick={(e) => e.stopPropagation()}
       onDropdownVisibleChange={toggleIsOpen}
       disabled={allCardSets.length <= 1}
     >

@@ -43,7 +43,7 @@ export default () => {
       </Typography.Text>
       <Input
         value={value}
-        onChange={e => setValue(e.target.value)}
+        onChange={(e) => setValue(e.target.value)}
         style={{ marginTop: 32 }}
         placeholder="Pick a username..."
         onKeyDown={useSubmitOnEnter(isValid && onSubmit)}

@@ -41,7 +41,7 @@ const CardList = ({
     return <CustomSkeleton.List />;
   }
 
-  const onOpenDetailView = card => {
+  const onOpenDetailView = (card) => {
     setDetailCard(card);
     history.push(`${history.location.pathname}${history.location.search}#details`);
   };
@@ -60,7 +60,7 @@ const CardList = ({
         size="small"
         dataSource={cards}
         style={{ width: '100%' }}
-        renderItem={card => (
+        renderItem={(card) => (
           <LazyLoad offset={0} height={56}>
             <CardListItem
               card={card}
@@ -75,7 +75,7 @@ const CardList = ({
       />
     ) : (
       <StyledGridWrapper isLarge={layout !== 'grid'}>
-        {cards.map(card => (
+        {cards.map((card) => (
           <GridCard
             key={card.id}
             onClick={() => onOpenDetailView(card)}

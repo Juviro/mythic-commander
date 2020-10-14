@@ -35,11 +35,11 @@ export default ({ cardOracleId, cards, onChangeSet, selectedCardId }) => {
   };
 
   const onSaveChanges = async () => {
-    const edited = Object.keys(editedMap).map(id => ({
+    const edited = Object.keys(editedMap).map((id) => ({
       ...editedMap[id],
       id,
     }));
-    const added = Object.keys(addedMap).map(id => ({
+    const added = Object.keys(addedMap).map((id) => ({
       ...addedMap[id],
       id,
     }));
@@ -62,7 +62,7 @@ export default ({ cardOracleId, cards, onChangeSet, selectedCardId }) => {
     onResetEditing();
   };
 
-  const onChangeAmount = cardAlreadyOwned => (amountOwned, cardId, isFoil) => {
+  const onChangeAmount = (cardAlreadyOwned) => (amountOwned, cardId, isFoil) => {
     const key = isFoil ? 'amountOwnedFoil' : 'amountOwned';
     const [currentValue, setMethod] = cardAlreadyOwned
       ? [editedMap, setEditedMap]
@@ -76,7 +76,7 @@ export default ({ cardOracleId, cards, onChangeSet, selectedCardId }) => {
     });
   };
 
-  const onAddCard = id => {
+  const onAddCard = (id) => {
     setAddedMap({
       ...addedMap,
       [id]: { amountOwned: 1, amountOwnedFoil: 0 },
@@ -102,7 +102,7 @@ export default ({ cardOracleId, cards, onChangeSet, selectedCardId }) => {
           setIsEditing(!isEditing);
         }}
       />
-      {ownedCards.map(card => (
+      {ownedCards.map((card) => (
         <CardRow
           key={card.id}
           card={card}
@@ -124,7 +124,7 @@ export default ({ cardOracleId, cards, onChangeSet, selectedCardId }) => {
       )}
       {isEditing && (
         <>
-          {Object.keys(addedMap).map(key => {
+          {Object.keys(addedMap).map((key) => {
             const baseCardProps = cards.find(({ id }) => id === key);
             const card = {
               ...baseCardProps,

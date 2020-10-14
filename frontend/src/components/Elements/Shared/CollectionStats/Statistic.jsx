@@ -13,7 +13,7 @@ const StyledWrapper = styled.div`
   ${({ small }) => (small ? '' : 'margin-bottom: 16px;')};
 `;
 
-const getSpecificProps = development => {
+const getSpecificProps = (development) => {
   if (development > 0) {
     return {
       prefix: '+',

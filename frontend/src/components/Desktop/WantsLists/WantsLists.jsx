@@ -25,7 +25,7 @@ const Wants = ({ history }) => {
   const [search, setSearch] = useState('');
   const [mutate] = useMutation(createWantsListDesktop);
 
-  const onOpenWantsList = id => {
+  const onOpenWantsList = (id) => {
     history.push(`/wants/${id}`);
   };
 

@@ -43,7 +43,7 @@ const sortByAmount = (columnKey, fallbackKey) => (a, b) => {
   const key = a[columnKey] === undefined ? fallbackKey : columnKey;
   return Number(a[key]) - Number(b[key]);
 };
-const sortByName = columnKey => (a, b) => {
+const sortByName = (columnKey) => (a, b) => {
   return a[columnKey] > b[columnKey] ? 1 : -1;
 };
 
@@ -55,16 +55,16 @@ const sortByName = columnKey => (a, b) => {
 //   return getIndex(a) - getIndex(b);
 // };
 
-const renderActions = actions => card => {
+const renderActions = (actions) => (card) => {
   return <ContextMenu menuItems={actions} card={card} />;
 };
 
-const columns = search => [
+const columns = (search) => [
   {
     title: 'Card',
     key: 'img',
     width: 50,
-    render: card => <PreviewCardImage card={card} highlightOnHover />,
+    render: (card) => <PreviewCardImage card={card} highlightOnHover />,
   },
   {
     title: 'Amount',
@@ -79,7 +79,7 @@ const columns = search => [
     dataIndex: 'name',
     width: 200,
     key: 'name',
-    render: name => highlightText(search, name),
+    render: (name) => highlightText(search, name),
     sorter: sortByName('name'),
   },
   {
@@ -87,7 +87,7 @@ const columns = search => [
     dataIndex: 'owned',
     width: 65,
     key: 'owned',
-    render: owned => (owned ? <OwnedBadge marginLeft={0} /> : null),
+    render: (owned) => (owned ? <OwnedBadge marginLeft={0} /> : null),
   },
   // {
   //   title: 'CMC',
@@ -103,7 +103,7 @@ const columns = search => [
     dataIndex: 'mana_cost',
     width: 200,
     align: 'center',
-    render: manaCost => <ManaCost costString={manaCost} />,
+    render: (manaCost) => <ManaCost costString={manaCost} />,
     sorter: byColor,
   },
   // {
@@ -133,7 +133,7 @@ const columns = search => [
   },
 ];
 
-const getActionColumn = actions => {
+const getActionColumn = (actions) => {
   if (!actions) return [];
 
   return {

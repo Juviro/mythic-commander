@@ -8,7 +8,7 @@ export default ({ moveToList, onCancel, visible, card }) => {
     <Modal
       centered
       footer={null}
-      onCancel={e => {
+      onCancel={(e) => {
         e.stopPropagation();
         onCancel();
       }}

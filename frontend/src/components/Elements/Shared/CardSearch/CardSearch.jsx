@@ -43,7 +43,7 @@ const getHighlightedOption = (
   ownedCardNames = []
 ) => {
   let currentSearchString = searchString;
-  const highlightedOption = cardName.split('').map(char => {
+  const highlightedOption = cardName.split('').map((char) => {
     if (
       !currentSearchString.length ||
       char.toLowerCase() !== currentSearchString[0].toLowerCase()
@@ -70,7 +70,7 @@ const getHighlightedOption = (
   );
 };
 
-const getDropdownAlign = alignTop => {
+const getDropdownAlign = (alignTop) => {
   if (!alignTop) return undefined;
   return {
     points: ['bl', 'tl'],
@@ -91,7 +91,7 @@ export default class CardSearch extends React.Component {
     searchString: '',
   };
 
-  setSearch = searchString => {
+  setSearch = (searchString) => {
     this.setState({ searchString });
   };
 
@@ -103,7 +103,7 @@ export default class CardSearch extends React.Component {
     this.inputRef.current.blur();
   };
 
-  onSubmit = idAndName => {
+  onSubmit = (idAndName) => {
     const [id, name] = idAndName.split(';');
     const { onSearch, resetSearch, allowFoilInput } = this.props;
     const { searchString } = this.state;
@@ -145,17 +145,17 @@ export default class CardSearch extends React.Component {
         onKeyDown={useBlurOnEsc}
         placeholder={placeholder}
         defaultActiveFirstOption={defaultActiveFirstOption}
-        onChange={val => this.setSearch(val)}
+        onChange={(val) => this.setSearch(val)}
         onSelect={this.onSubmit}
         tabIndex={0}
         style={{ width }}
         loading={loading}
-        onFocus={e => e.target.select()}
+        onFocus={(e) => e.target.select()}
         notFoundContent={<Empty description="No cards found" />}
         dropdownAlign={getDropdownAlign(alignTop)}
         getPopupContainer={getContainer}
       >
-        {suggestions.map(option => (
+        {suggestions.map((option) => (
           <AutoComplete.Option
             text={option.name}
             style={{ display: 'flex' }}

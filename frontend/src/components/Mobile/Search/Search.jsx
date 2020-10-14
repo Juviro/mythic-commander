@@ -66,7 +66,7 @@ const Search = ({ history }) => {
 
   // search when initial values are set or params change
   useEffect(() => {
-    const hasOptions = Object.values(options).some(val => val !== undefined);
+    const hasOptions = Object.values(options).some((val) => val !== undefined);
     if (!hasOptions) return;
     if (loading && buttonRef) {
       buttonRef.current.scrollIntoView({ behavior: 'smooth', inline: 'start' });
@@ -76,7 +76,7 @@ const Search = ({ history }) => {
     // eslint-disable-next-line
   }, [history.location.search]);
 
-  const onChangeOption = key => value => {
+  const onChangeOption = (key) => (value) => {
     setCurrentOptions({ ...currentOptions, [key]: value });
   };
 

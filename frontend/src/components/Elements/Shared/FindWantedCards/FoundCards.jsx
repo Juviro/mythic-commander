@@ -26,7 +26,7 @@ export default ({ wantedCards, distinctCards }) => {
       {Boolean(decks.length) && (
         <>
           <Divider style={{ marginBottom: 40 }}>Decks</Divider>
-          {decks.map(deck => (
+          {decks.map((deck) => (
             <CardsList key={deck.id} list={deck} />
           ))}
         </>
@@ -34,7 +34,7 @@ export default ({ wantedCards, distinctCards }) => {
       {Boolean(wantsLists.length) && (
         <>
           <Divider style={{ marginBottom: 40 }}>Wants</Divider>
-          {wantsLists.map(wantsList => (
+          {wantsLists.map((wantsList) => (
             <CardsList key={wantsList.id} list={wantsList} />
           ))}
         </>

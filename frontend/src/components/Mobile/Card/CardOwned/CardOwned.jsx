@@ -3,7 +3,7 @@ import { Skeleton, Collapse } from 'antd';
 
 import OwnedOverview from './OwnedOverview';
 
-const getOwnedAmount = card => {
+const getOwnedAmount = (card) => {
   return card.allSets.reduce(
     ({ ownedNonfoil: onf, ownedFoil: of }, { amountOwned, amountOwnedFoil }) => ({
       ownedNonfoil: onf + amountOwned,

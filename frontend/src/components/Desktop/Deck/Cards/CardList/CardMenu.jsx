@@ -31,7 +31,7 @@ export default ({ card, onOpenDetails, onDelete }) => {
           variables: { id: deckId },
         });
 
-        const newCards = existing.deck.cards.map(deckCard => {
+        const newCards = existing.deck.cards.map((deckCard) => {
           if (deckCard.card.id !== cardId) return deckCard;
           return newCard;
         });

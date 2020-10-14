@@ -10,7 +10,7 @@ import CardLists from './CardLists';
 import { sortByCmc, sortByName } from '../../../../utils/cardFilter';
 import FocusContext from '../../../Provider/FocusProvider/FocusProvider';
 import { primary } from '../../../../constants/colors';
-import DropZone from './DropZone';
+import { Dropzone } from '../../../Elements/Desktop';
 
 const StyledWrapper = styled.div`
   margin: 8px;
@@ -59,7 +59,7 @@ const getCardColumns = (cards, numberOfCols) => {
     return acc;
   }, columns);
 
-  return cardColumns.filter(column => column.length);
+  return cardColumns.filter((column) => column.length);
 };
 
 export default ({ deck, loading, currentTab, onAddCards, displayOwnedOnly }) => {
@@ -69,6 +69,7 @@ export default ({ deck, loading, currentTab, onAddCards, displayOwnedOnly }) => 
   const isFocused = focusedElement === 'deck.cards';
 
   // padding of wrapper, tabs, tabMargin, wrapper margin, ???
+  // TODO: use a ref for the wrapper and take size from there
   const innerWidth = window.innerWidth - widthOffset - 16 - 40 - 8 - 8 - 23;
   const cardWidth = CARD_WIDTH + 20; // padding and margin of card
   const numberOfCols = Math.max(Math.floor(innerWidth / cardWidth), 1);
@@ -82,9 +83,13 @@ export default ({ deck, loading, currentTab, onAddCards, displayOwnedOnly }) => 
 
   const cardColumns = getCardColumns(deck.cards, numberOfCols);
 
+  const onDrop = ({ id, name, amount = 1 }) => {
+    onAddCards([{ id, amount }], name);
+  };
+
   return (
     <StyledWrapper isFocused={isFocused}>
-      <DropZone onAddCards={onAddCards}>
+      <Dropzone onDrop={onDrop} listId={deck.id}>
         {cardColumns.length ? (
           <Flex direction="row" wrap="wrap" style={{ padding: 8, width: 'fit-content' }}>
             <CardLists
@@ -98,7 +103,7 @@ export default ({ deck, loading, currentTab, onAddCards, displayOwnedOnly }) => 
             <Empty description="No Cards" />
           </Flex>
         )}
-      </DropZone>
+      </Dropzone>
     </StyledWrapper>
   );
 };

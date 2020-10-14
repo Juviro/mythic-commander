@@ -20,13 +20,7 @@ const DuplicateList = ({ id: wantsListId, history }) => {
       variables: {
         wantsListId,
       },
-      refetchQueries: [
-        'wantsListsDesktop',
-        // {
-        //   query: wantsListsForDeckMobile,
-        //   variables: { deckId },
-        // },
-      ],
+      refetchQueries: ['wantsListsDesktop'],
     });
     history.push(`/wants/${id}`);
   };

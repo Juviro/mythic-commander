@@ -7,7 +7,7 @@ import unifyCardFormat from '../../../../utils/unifyCardFormat';
 import { WantsListMobile } from '../../../Elements/Mobile';
 
 export default ({ wantsLists, deck = {} }) => {
-  const getMoveToList = wantsListId => ({
+  const getMoveToList = (wantsListId) => ({
     decks: [deck],
     wantsLists: wantsLists.filter(({ id }) => id !== wantsListId),
   });
@@ -18,7 +18,7 @@ export default ({ wantsLists, deck = {} }) => {
       style={{ backgroundColor: 'white', marginTop: 16 }}
       className="no-padding-collapse"
     >
-      {wantsLists.map(wantsList => (
+      {wantsLists.map((wantsList) => (
         <Collapse.Panel
           key={wantsList.id}
           style={{ marginBottom: 8 }}
