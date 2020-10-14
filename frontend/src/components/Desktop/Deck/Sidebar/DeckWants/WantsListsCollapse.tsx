@@ -4,6 +4,7 @@ import { WantsList, CardInputType } from 'types/graphql';
 import { Flex, OneTimeInfoBox } from 'components/Elements/Shared';
 import { UnifiedDeck } from '../../Deck';
 import WantsListElement from './WantsListElement';
+import AddWantsList from './AddWantsList';
 
 interface Props {
   wantsLists: WantsList[];
@@ -42,6 +43,7 @@ export default ({ wantsLists, deck, onAddCards }: Props) => {
           onClick={() => onClickPanel(wantsList.id)}
         />
       ))}
+      <AddWantsList />
     </Flex>
   );
 };

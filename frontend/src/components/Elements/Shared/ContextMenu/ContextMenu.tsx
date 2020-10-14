@@ -3,7 +3,6 @@ import { Dropdown, Menu } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
 
 import { UnifiedCard } from 'types/unifiedTypes';
-import styled from 'styled-components';
 import { primary } from '../../../../constants/colors';
 import { useToggle } from '../../../Hooks';
 
@@ -17,10 +16,6 @@ interface Props {
   menuItems: MenuItem[];
   card: UnifiedCard;
 }
-
-const StyledWrapper = styled.div`
-  padding: 8px;
-`;
 
 export default ({ menuItems, card }: Props) => {
   const [isMenuOpen, toggleIsMenuOpen] = useToggle();
@@ -44,18 +39,16 @@ export default ({ menuItems, card }: Props) => {
   );
 
   return (
-    <StyledWrapper>
-      <Dropdown
-        overlay={menu}
-        trigger={['click']}
-        placement="bottomRight"
-        visible={isMenuOpen}
-        onVisibleChange={toggleIsMenuOpen}
-        // @ts-ignore
-        onClick={(e) => e.stopPropagation()}
-      >
-        <MoreOutlined onClick={toggleIsMenuOpen} style={{ fontSize: 20, padding: 6 }} />
-      </Dropdown>
-    </StyledWrapper>
+    <Dropdown
+      overlay={menu}
+      trigger={['click']}
+      placement="bottomRight"
+      visible={isMenuOpen}
+      onVisibleChange={toggleIsMenuOpen}
+      // @ts-ignore
+      onClick={(e) => e.stopPropagation()}
+    >
+      <MoreOutlined onClick={toggleIsMenuOpen} style={{ fontSize: 20, padding: 6 }} />
+    </Dropdown>
   );
 };
