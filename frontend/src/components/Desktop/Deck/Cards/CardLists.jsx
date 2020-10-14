@@ -27,14 +27,16 @@ export default ({ columns, deck, displayOwnedOnly }) => {
     .flat()
     .find(({ oracle_id }) => oracle_id === selectedCardOracleId);
 
-  const onDeleteCard = () => {
-    if (!selectedCard) return;
+  const onDeleteCard = (cardId) => {
+    if (!cardId) return;
     setIsDeleting(false);
-    selectNextCard(null);
-    const newCards = deck.originalCards.filter((card) => card.id !== selectedCard.id);
+    if (cardId === selectedCard?.id) {
+      selectNextCard(null);
+    }
+    const newCards = deck.originalCards.filter((card) => card.id !== cardId);
     const newNumberOfCards = deck.numberOfCards;
     mutateDelete({
-      variables: { cardId: selectedCard.id, deckId: deck.id },
+      variables: { cardId, deckId: deck.id },
       // TODO: check if this is correct
       optimisticResponse: () => ({
         __typename: 'Mutation',
@@ -66,6 +68,7 @@ export default ({ columns, deck, displayOwnedOnly }) => {
               cards={cardGroup}
               displayOwnedOnly={displayOwnedOnly}
               onDelete={onOpenDeleteModal}
+              onDeleteImmediately={onDeleteCard}
               setSelectedCardOracleId={setSelectedCardOracleId}
               onOpenDetails={toggleShowDetail}
               selectedCardId={selectedCard && selectedCard.id}
@@ -82,7 +85,7 @@ export default ({ columns, deck, displayOwnedOnly }) => {
         <ConfirmDelete
           text={boldText(`Delete <b>${selectedCard.name}</b> from this deck?`)}
           onCancel={() => setIsDeleting(false)}
-          onOk={onDeleteCard}
+          onOk={() => onDeleteCard(selectedCard.id)}
         />
       )}
     </>

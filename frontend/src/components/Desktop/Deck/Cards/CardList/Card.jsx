@@ -1,6 +1,9 @@
 import React, { useRef, useEffect, useContext } from 'react';
 import styled, { css } from 'styled-components';
 
+import { useDrag } from 'react-dnd';
+import { useParams } from 'react-router';
+import { useToggle } from 'components/Hooks';
 import { primary } from '../../../../../constants/colors';
 import scrollIntoView from '../../../../../utils/scrollIntoView';
 import CardMenu from './CardMenu';
@@ -54,11 +57,18 @@ const StyledCard = styled.div`
   position: relative;
   opacity: ${({ isTransparent }) => (isTransparent ? 0.1 : 1)};
   transition: opacity 0.5s;
+
   ${({ isSelected }) =>
     isSelected
       ? css`
           box-shadow: 0px 0px 6px 6px ${primary};
           opacity: ${({ isTransparent }) => (isTransparent ? 0.6 : 1)};
+        `
+      : ''}
+  ${({ isHighlighted }) =>
+    isHighlighted
+      ? css`
+          z-index: 1;
         `
       : ''}
 `;
@@ -70,8 +80,11 @@ const Card = ({
   setSelectedCardOracleId,
   onDelete,
   isTransparent,
+  onDeleteImmediately,
 }) => {
+  const { id: deckId } = useParams();
   const { focusedElement } = useContext(FocusContext);
+  const [isHighlighted, toggleIsHighlighted] = useToggle();
   const isFocused = focusedElement !== 'deck.sidebar';
 
   const selected = isSelected && isFocused;
@@ -87,10 +100,31 @@ const Card = ({
     setTimeout(() => scrollIntoView(ref.current), ANIMATION_DURATION);
   }, [selected]);
 
+  const [, dragRef] = useDrag({
+    item: { type: 'CARD', id: card.id, name: card.name, listId: deckId },
+    end: (_, monitor) => {
+      if (!monitor.didDrop()) return;
+      onDeleteImmediately(card.id);
+    },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  });
+
   return (
-    <StyledWrapper isSelected={selected}>
+    <StyledWrapper
+      isSelected={selected}
+      onDragStart={() => toggleIsHighlighted(true)}
+      onDragEnd={() => toggleIsHighlighted(false)}
+    >
       <StyledScrollDummy ref={ref} />
-      <StyledCard onClick={onClick} isSelected={selected} isTransparent={isTransparent}>
+      <StyledCard
+        ref={dragRef}
+        onClick={onClick}
+        isSelected={selected}
+        isTransparent={isTransparent}
+        isHighlighted={isHighlighted}
+      >
         <FlippableCard
           card={card}
           hideFlipIcon={!selected}

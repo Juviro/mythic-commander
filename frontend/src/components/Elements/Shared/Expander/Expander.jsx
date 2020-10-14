@@ -29,7 +29,6 @@ const StyledContent = styled.div`
 export default ({ isExpanded, children, destroyOnClose = false }) => {
   const [isActive, toggleIsActive] = useState(isExpanded);
   const shouldRender = isActive || !destroyOnClose;
-  console.log('isActive, isExpanded', isActive, isExpanded);
 
   const wrapperRef = useRef(null);
   const [height, setHeight] = useState(0);

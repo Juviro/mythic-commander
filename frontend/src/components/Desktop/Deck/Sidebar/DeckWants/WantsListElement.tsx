@@ -9,13 +9,22 @@ import { WantsList, CardInputType } from 'types/graphql';
 
 import { Flex, Expander } from 'components/Elements/Shared';
 import { greyBorder } from 'constants/colors';
-import DeckWantsList from './DeckWantsList';
 import { Dropzone } from 'components/Elements/Desktop';
-import { DropTargetMonitor } from 'react-dnd';
-import { addCardsToWantsList, wantsListsForDeck } from './queries';
 import { useMutation } from 'react-apollo';
 import message from 'utils/message';
-import { useToggle } from 'components/Hooks';
+import { addCardsToWantsList, wantsListsForDeck } from './queries';
+import DeckWantsList from './DeckWantsList';
+
+const StyledWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 4px;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid ${greyBorder};
+  }
+`;
 
 const StyledArrow = styled.div<{ active: boolean }>`
   margin-right: 4px;
@@ -31,23 +40,19 @@ const StyledHeader = styled.div`
   flex-direction: row;
   cursor: pointer;
   width: 100%;
-
-  &:not(:last-child) {
-    border-bottom: 1px solid ${greyBorder};
-  }
 `;
 
 interface Props {
   wantsList: WantsList;
   alreadyInDeck: (card: UnifiedCard) => boolean;
   onAddCards: (newCards: CardInputType[], name: string) => void;
+  active: boolean;
+  onClick: () => void;
 }
 
-export default ({ wantsList, alreadyInDeck, onAddCards }: Props) => {
+export default ({ wantsList, alreadyInDeck, onAddCards, active, onClick }: Props) => {
   const { id: deckId } = useParams<{ id: string }>();
   const [addToWantsList] = useMutation(addCardsToWantsList);
-
-  const [active, toggleActive] = useToggle();
 
   const onAddToWantsList = (card) => {
     addToWantsList({
@@ -65,14 +70,14 @@ export default ({ wantsList, alreadyInDeck, onAddCards }: Props) => {
     message(`Added <b>${card.name}</b> cards to <b>${wantsList.name}</b>!`);
   };
 
-  const canDrop = (monitor: DropTargetMonitor) => {
-    return monitor.getItem().listId !== wantsList.id;
-  };
-
   return (
-    <Flex direction="column" style={{ width: '100%', padding: 8 }}>
-      <Dropzone onDrop={onAddToWantsList} canDrop={canDrop}>
-        <StyledHeader onClick={toggleActive}>
+    <StyledWrapper>
+      <Dropzone
+        onDrop={onAddToWantsList}
+        listId={wantsList.id}
+        style={{ borderRadius: 2 }}
+      >
+        <StyledHeader onClick={onClick}>
           <Flex direction="row" align="center">
             <StyledArrow active={active}>
               <RightOutlined />
@@ -87,13 +92,13 @@ export default ({ wantsList, alreadyInDeck, onAddCards }: Props) => {
         </StyledHeader>
         <Expander isExpanded={active}>
           <DeckWantsList
-            active
+            active={active}
             wantsList={wantsList}
             alreadyInDeck={alreadyInDeck}
             onAddCards={onAddCards}
           />
         </Expander>
       </Dropzone>
-    </Flex>
+    </StyledWrapper>
   );
 };
