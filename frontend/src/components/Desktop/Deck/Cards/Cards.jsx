@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Skeleton, Empty } from 'antd';
 import styled, { css } from 'styled-components';
 
-import { useWindowSize } from '../../../Hooks';
+import { useToggle, useWindowSize } from '../../../Hooks';
 import { Flex } from '../../../Elements/Shared';
 import { CARD_WIDTH } from './CardList/Card';
 import getCardsByType from '../../../../utils/getCardsByType';
@@ -69,6 +69,7 @@ export default ({ deck, loading, currentTab, onAddCards, displayOwnedOnly }) => 
   const isFocused = focusedElement === 'deck.cards';
 
   // padding of wrapper, tabs, tabMargin, wrapper margin, ???
+  // TODO: use a ref for the wrapper and take size from there
   const innerWidth = window.innerWidth - widthOffset - 16 - 40 - 8 - 8 - 23;
   const cardWidth = CARD_WIDTH + 20; // padding and margin of card
   const numberOfCols = Math.max(Math.floor(innerWidth / cardWidth), 1);
@@ -88,7 +89,7 @@ export default ({ deck, loading, currentTab, onAddCards, displayOwnedOnly }) => 
 
   return (
     <StyledWrapper isFocused={isFocused}>
-      <Dropzone onDrop={onDrop}>
+      <Dropzone onDrop={onDrop} listId={deck.id}>
         {cardColumns.length ? (
           <Flex direction="row" wrap="wrap" style={{ padding: 8, width: 'fit-content' }}>
             <CardLists

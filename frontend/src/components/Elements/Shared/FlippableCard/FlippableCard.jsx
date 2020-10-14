@@ -72,36 +72,36 @@ export default ({
   const frontImgSrc = getImageUrl(id, imgKey, showHighResImage ? 'normal' : 'small');
 
   return (
-    <LazyLoad {...lazyLoadProps}>
-      <StyledImageWrapper>
-        {(loading || !showHighResImage) && <CustomSkeleton.CardImage />}
-        {isTwoFaced && showHighResImage && (
-          <>
-            {!hideFlipIcon && (
-              <CardButton Icon={SyncOutlined} index={1} onClick={onFlipCard} />
-            )}
-            <a.img
-              className="flippable-card "
-              style={{
-                opacity,
-                transform: transform.interpolate((t) => `${t} rotateY(-180deg)`),
-              }}
-              src={getImageUrl(id, imgKey, 'normal', 'back')}
-            />
-          </>
-        )}
-        {!loading && (
+    // <LazyLoad {...lazyLoadProps}>
+    <StyledImageWrapper>
+      {(loading || !showHighResImage) && <CustomSkeleton.CardImage />}
+      {isTwoFaced && showHighResImage && (
+        <>
+          {!hideFlipIcon && (
+            <CardButton Icon={SyncOutlined} index={1} onClick={onFlipCard} />
+          )}
           <a.img
-            alt={card.name}
-            className="flippable-card"
+            className="flippable-card "
             style={{
-              opacity: opacity.interpolate((o) => 1 - o),
-              transform,
+              opacity,
+              transform: transform.interpolate((t) => `${t} rotateY(-180deg)`),
             }}
-            src={frontImgSrc}
+            src={getImageUrl(id, imgKey, 'normal', 'back')}
           />
-        )}
-      </StyledImageWrapper>
-    </LazyLoad>
+        </>
+      )}
+      {!loading && (
+        <a.img
+          alt={card.name}
+          className="flippable-card"
+          style={{
+            opacity: opacity.interpolate((o) => 1 - o),
+            transform,
+          }}
+          src={frontImgSrc}
+        />
+      )}
+    </StyledImageWrapper>
+    // </LazyLoad>
   );
 };

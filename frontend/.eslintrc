@@ -29,6 +29,7 @@
     "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "@typescript-eslint/ban-ts-comment": "off",
+    "react/require-default-props": 0,
     "@typescript-eslint/no-explicit-any": "off",
     "no-unused-vars": [
       "error",

@@ -1,17 +1,19 @@
 BUGFIXES:
     - highlighting of cardnames flawed
-    - flip card icon displaced
+    - a lot of the cards are white on render, display only on scroll
     - ancient den listed as artifact instead of land in deck
-    - re-add loading animation to paginated list (e.g. collection desktop)
 
     - "Hidd stri" search crashes client?
 
 CURRENT:
-    - refactor authentication, remove from context creation
-
-    - improve loading time of deck
+    - fix shortcut use when there are multiple wants list
+    - allow add to wants from deck
 
 NEXT:
+    - re-add loading animation to paginated list (e.g. collection desktop)
+    - refactor authentication, remove from context creation
+    - improve loading time of deck
+    - add stylelint
     - when only displaying unowned in deck -> add cards to.. -> pre-select unowned only, but show all
     - prevent re-ordering card lists in decks view - maybe re-order when category added / removed
     - add shortcut to toggle focus ?

@@ -42,7 +42,7 @@ const MythicCommanderBanner = ({
       style={{ ...style, cursor: showCollectionOnClick && 'pointer' }}
       onClick={showCollectionOnClick && navigateToCollection}
     >
-      <StyledIcon src={icon} />
+      <StyledIcon src={icon} alt="mythic-commander-logo" />
       <StyledTextWrapper hideWhenSmall={hideWhenSmall}>
         <Typography.Text style={{ fontSize, color: 'rgba(255, 255, 255, 0.8)' }}>
           Mythic Commander

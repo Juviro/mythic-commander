@@ -39,15 +39,16 @@ interface DropCard {
 
 interface Props {
   children: React.ReactNode;
+  listId?: string;
   onDrop: (card: DragObjectWithType) => void;
-  canDrop?: (monitor: DropTargetMonitor) => boolean;
+  style?: React.CSSProperties;
 }
 
-export default ({ children, onDrop, canDrop: additionalCanDrop }: Props) => {
+export default ({ children, onDrop, listId, style }: Props) => {
   const [{ isOver, canDrop }, dropRef] = useDrop({
     accept: 'CARD',
     drop: onDrop,
-    canDrop: (_, monitor) => !additionalCanDrop || additionalCanDrop(monitor),
+    canDrop: (_, monitor) => listId !== monitor.getItem().listId,
 
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
@@ -56,7 +57,7 @@ export default ({ children, onDrop, canDrop: additionalCanDrop }: Props) => {
   });
 
   return (
-    <StyledDropzone isOver={isOver} canDrop={canDrop}>
+    <StyledDropzone isOver={isOver} canDrop={canDrop} style={style}>
       <div ref={dropRef}>{children}</div>
     </StyledDropzone>
   );
