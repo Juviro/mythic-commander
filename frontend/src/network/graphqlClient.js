@@ -22,7 +22,7 @@ const authLink = setContext((_, { headers }) => {
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     const isUnauthenticated = graphQLErrors.some(
-      error => error.extensions.code === 'UNAUTHENTICATED'
+      (error) => error.extensions.code === 'UNAUTHENTICATED'
     );
     console.info('isUnauthenticated, graphQLErrors', isUnauthenticated, graphQLErrors);
     if (isUnauthenticated) {
@@ -42,7 +42,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 const retryLink = new RetryLink({
   attempts: {
     max: 5,
-    retryIf: error => {
+    retryIf: (error) => {
       if (error.response) {
         console.error('retry link - error:', error.response);
         // There was an actual response from the server.

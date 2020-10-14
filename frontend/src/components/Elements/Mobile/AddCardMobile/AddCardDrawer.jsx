@@ -15,7 +15,7 @@ export default ({
   const searchInputRef = React.createRef();
   const { data } = useQuery(getOwnedCardNames);
 
-  const afterVisibleChange = visible => {
+  const afterVisibleChange = (visible) => {
     if (!visible) return;
     searchInputRef.current.focus();
   };

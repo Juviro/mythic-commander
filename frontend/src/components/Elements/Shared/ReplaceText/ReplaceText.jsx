@@ -3,7 +3,7 @@ import React from 'react';
 const ReplaceText = ({
   text,
   replacementPattern,
-  textFormatter = e => e,
+  textFormatter = (e) => e,
   replacementFunction,
 }) => {
   let remainingText = text;
@@ -30,7 +30,7 @@ const ReplaceText = ({
 
   return (
     <>
-      {elements.map(element => (
+      {elements.map((element) => (
         <span key={Math.random()}>{element}</span>
       ))}
     </>

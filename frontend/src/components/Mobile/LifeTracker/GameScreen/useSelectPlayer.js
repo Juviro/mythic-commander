@@ -8,7 +8,7 @@ const BLINK_LENGTH = 12;
 
 const MIN_TICKS = 18;
 
-const getNumberOfTicks = numberOfPlayers => {
+const getNumberOfTicks = (numberOfPlayers) => {
   const startingPlayerIndex = Math.floor(Math.random() * numberOfPlayers);
   let currentTicks = 0;
   while (currentTicks < MIN_TICKS) {
@@ -17,7 +17,7 @@ const getNumberOfTicks = numberOfPlayers => {
   return currentTicks + startingPlayerIndex;
 };
 
-export default players => {
+export default (players) => {
   const playerIds = players.map(({ id }) => id);
 
   const [highlightedPlayerIndex, setHighlightedPlayerIndex] = useState(null);

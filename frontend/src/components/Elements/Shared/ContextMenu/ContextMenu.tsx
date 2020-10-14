@@ -2,10 +2,22 @@ import React from 'react';
 import { Dropdown, Menu } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
 
+import { UnifiedCard } from 'types/unifiedTypes';
 import { primary } from '../../../../constants/colors';
 import { useToggle } from '../../../Hooks';
 
-export default ({ menuItems, card }) => {
+export interface MenuItem {
+  Icon: any;
+  title: string;
+  onClick: (card: UnifiedCard) => void;
+}
+
+interface Props {
+  menuItems: MenuItem[];
+  card: UnifiedCard;
+}
+
+export default ({ menuItems, card }: Props) => {
   const [isMenuOpen, toggleIsMenuOpen] = useToggle();
   if (!menuItems.length) return null;
 
@@ -28,13 +40,13 @@ export default ({ menuItems, card }) => {
 
   return (
     <Dropdown
-      style={{ padding: 8 }}
       overlay={menu}
-      trigger="click"
+      trigger={['click']}
       placement="bottomRight"
       visible={isMenuOpen}
       onVisibleChange={toggleIsMenuOpen}
-      onClick={e => e.stopPropagation()}
+      // @ts-ignore
+      onClick={(e) => e.stopPropagation()}
     >
       <MoreOutlined onClick={toggleIsMenuOpen} style={{ fontSize: 20, padding: 6 }} />
     </Dropdown>

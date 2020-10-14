@@ -13,7 +13,7 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const getHeaderLabel = cards => {
+const getHeaderLabel = (cards) => {
   const numberOfCards = sumCardAmount(cards);
   const numberOfUniqueCards = cards.length;
   if (numberOfCards === numberOfUniqueCards) return `${numberOfCards} cards selected`;
@@ -29,14 +29,14 @@ export default ({ cards, selectedCardIds = [], setSelectedCardIds }) => {
       title: getHeaderLabel(selectedCards),
       width: 70,
       key: 'name',
-      render: card => <ListItem card={card} />,
+      render: (card) => <ListItem card={card} />,
     },
   ];
 
   const onClickRow = ({ id }) => {
     const isSelected = selectedCardIds.includes(id);
     const newCardIds = isSelected
-      ? selectedCardIds.filter(cardId => cardId !== id)
+      ? selectedCardIds.filter((cardId) => cardId !== id)
       : [...selectedCardIds, id];
     setSelectedCardIds(newCardIds);
   };
@@ -55,7 +55,7 @@ export default ({ cards, selectedCardIds = [], setSelectedCardIds }) => {
         pagination={false}
         dataSource={cards}
         rowKey={({ id }) => id}
-        onRow={row => ({
+        onRow={(row) => ({
           onClick: () => onClickRow(row),
         })}
       />

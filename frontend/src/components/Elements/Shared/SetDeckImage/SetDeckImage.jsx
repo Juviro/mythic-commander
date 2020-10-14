@@ -19,11 +19,11 @@ export default ({ deck, visible, onClose }) => {
   const [mutate] = useMutation(editDeckImage);
 
   const getImgSrc = ({ id, imgKey }) => getImageUrl(id, imgKey, 'art_crop');
-  const currentImage = deck.cards.find(card => getImgSrc(card) === deck.imgSrc) || {};
+  const currentImage = deck.cards.find((card) => getImgSrc(card) === deck.imgSrc) || {};
 
   const [selectedCard, setSelectedCard] = useState(currentImage);
 
-  const onSelectImage = cardId => {
+  const onSelectImage = (cardId) => {
     setSelectedCard(deck.cards.find(({ id }) => id === cardId));
   };
 
@@ -70,7 +70,7 @@ export default ({ deck, visible, onClose }) => {
         onSelect={onSelectImage}
         size="large"
       >
-        {deck.cards.sort(byName).map(card => (
+        {deck.cards.sort(byName).map((card) => (
           <Select.Option value={card.id} key={card.id}>
             <StyledPreview src={getImgSrc(card)} />
             {card.name}

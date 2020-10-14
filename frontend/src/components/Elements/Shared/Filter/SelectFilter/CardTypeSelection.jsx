@@ -7,7 +7,7 @@ import SelectFilter from './SelectFilter';
 export default ({ onChangeOption, value, isLegendary, onSearch }) => {
   const { cardTypes } = useContext(CardContext);
 
-  const displayLegendary = shouldDisplay => e => {
+  const displayLegendary = (shouldDisplay) => (e) => {
     const isChecked = e.target.checked;
     const newValue = isChecked ? shouldDisplay : '';
 

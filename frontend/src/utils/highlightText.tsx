@@ -13,7 +13,7 @@ export const highlightText = (searchString: string, option: string) => {
   let remainingOption = option;
   const optionChars = [];
 
-  searchTerms.forEach(searchTerm => {
+  searchTerms.forEach((searchTerm) => {
     const startingIndex = remainingOption.toLowerCase().indexOf(searchTerm);
     const termLength = searchTerm.length;
     let i = 0;

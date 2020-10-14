@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
+import { setTimeout } from 'timers';
+
+const ANIMATION_DURATION_MS = 300;
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -10,22 +13,51 @@ const StyledWrapper = styled.div`
 const StyledContent = styled.div`
   width: 100%;
   height: 100%;
-  margin-top: 0;
-  transition: margin 0.3s;
+  padding: 16px;
   will-change: margin-top;
+  margin-top: 0;
+  transition: margin-top ${({ isActive }) => (isActive ? ANIMATION_DURATION_MS : 0)}ms;
 
   ${({ isExpanded }) =>
     !isExpanded
       ? css`
-          margin-top: -100%;
+          margin-top: ${({ offset }) => -offset}px;
         `
-      : ''}
+      : css``}
 `;
 
-export default ({ isExpanded, children }) => {
+export default ({ isExpanded, children, destroyOnClose = false }) => {
+  const [isActive, toggleIsActive] = useState(isExpanded);
+  const shouldRender = isActive || !destroyOnClose;
+
+  const wrapperRef = useRef(null);
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    if (isExpanded) {
+      toggleIsActive(true);
+    } else {
+      setTimeout(() => toggleIsActive(false), ANIMATION_DURATION_MS);
+    }
+    // eslint-disable react-hooks/exhaustive-deps
+  }, [isExpanded, destroyOnClose]);
+
+  useEffect(() => {
+    if (!wrapperRef.current || !wrapperRef.current.offsetHeight) return;
+    setHeight(wrapperRef.current.offsetHeight);
+    // eslint-disable
+  });
+
   return (
     <StyledWrapper>
-      <StyledContent isExpanded={isExpanded}>{children}</StyledContent>
+      <StyledContent
+        isExpanded={isExpanded}
+        offset={height}
+        ref={wrapperRef}
+        isActive={isExpanded || isActive}
+      >
+        {shouldRender && children}
+      </StyledContent>
     </StyledWrapper>
   );
 };

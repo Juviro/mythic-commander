@@ -13,7 +13,7 @@ export default (key, initialValue) => {
     }
   });
 
-  const setValue = value => {
+  const setValue = (value) => {
     if (value === null || value === undefined) {
       window.localStorage.setItem(fullKey, '');
     } else {

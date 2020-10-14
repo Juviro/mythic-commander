@@ -24,7 +24,7 @@ export default ({ onAddCards, alreadyInDeck }) => {
   const { focusedElements } = useContext(FocusContext);
   // check if this has focus, ignore if details modal is open
   const blockShortcuts =
-    focusedElements.filter(focusId => focusId !== 'modal.cardDetails').pop() !==
+    focusedElements.filter((focusId) => focusId !== 'modal.cardDetails').pop() !==
     'deck.sidebar.add';
 
   const [cardToAdd, setCardToAdd] = useState(null);
@@ -32,7 +32,7 @@ export default ({ onAddCards, alreadyInDeck }) => {
     onAddCards([{ id: cardToAdd.id, amount: 1 }], cardToAdd.name);
     setCardToAdd(null);
   };
-  const onEnter = blockShortcuts ? null : card => setCardToAdd(card);
+  const onEnter = blockShortcuts ? null : (card) => setCardToAdd(card);
 
   return (
     <>
@@ -41,8 +41,7 @@ export default ({ onAddCards, alreadyInDeck }) => {
           onOk={onAddCard}
           onCancel={() => setCardToAdd(null)}
           okText="Add"
-          title="Add card to deck"
-          text={boldText(`Add <b>${cardToAdd.name}</b> to your deck?`)}
+          title={boldText(`Add <b>${cardToAdd.name}</b> to your deck?`)}
         />
       )}
       <SearchHoc blockInitialSearch>
@@ -66,7 +65,7 @@ export default ({ onAddCards, alreadyInDeck }) => {
             />
             <Flex>
               <Typography.Text strong style={{ width: 130 }}>
-                Order by:
+                Order by
               </Typography.Text>
               <OrderBy />
             </Flex>
@@ -88,7 +87,7 @@ export default ({ onAddCards, alreadyInDeck }) => {
                     description="Drag and drop cards to add them to your deck"
                   />
                   <CardGrid
-                    draggable
+                    dragProps={{ canDrag: true }}
                     cards={currentCards}
                     loading={loading}
                     cardsPerRow={2}

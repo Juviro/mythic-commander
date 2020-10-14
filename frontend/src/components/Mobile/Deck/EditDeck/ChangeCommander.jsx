@@ -16,12 +16,12 @@ export default ({ deck }) => {
   const [editMutation] = useMutation(editDeckCard);
 
   // TODO: Add support for planeswalker commanders
-  const possibleCommanders = deck.cards.filter(card =>
-    ['Legendary', 'Creature'].every(type => card.primaryTypes.includes(type))
+  const possibleCommanders = deck.cards.filter((card) =>
+    ['Legendary', 'Creature'].every((type) => card.primaryTypes.includes(type))
   );
-  const currentCommander = deck.cards.find(card => card.isCommander) || {};
+  const currentCommander = deck.cards.find((card) => card.isCommander) || {};
 
-  const onSetCommander = async newCommanderId => {
+  const onSetCommander = async (newCommanderId) => {
     const changeZone = (cardId, isCommander) => {
       return editMutation({
         variables: { cardId, deckId: deck.id, newProps: { isCommander } },
@@ -43,7 +43,7 @@ export default ({ deck }) => {
         style={{ width: '100%' }}
         onSelect={onSetCommander}
       >
-        {possibleCommanders.map(card => (
+        {possibleCommanders.map((card) => (
           <Select.Option value={card.id} key={card.id}>
             {card.name}
           </Select.Option>

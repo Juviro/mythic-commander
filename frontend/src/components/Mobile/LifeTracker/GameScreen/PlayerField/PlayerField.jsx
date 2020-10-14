@@ -86,7 +86,7 @@ export default ({
         <NumberField
           whiteText
           value={player.life}
-          setValue={val => onSetLife(player.id, val)}
+          setValue={(val) => onSetLife(player.id, val)}
         />
         <PlayerName player={player} onUpdatePlayer={onUpdatePlayer} />
       </Flex>

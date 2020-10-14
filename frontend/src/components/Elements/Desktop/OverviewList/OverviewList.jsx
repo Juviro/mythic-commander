@@ -14,7 +14,7 @@ export default ({ lists, onClick, loading }) => {
   return (
     <StyledListWrapper loading={loading}>
       <Flex wrap="wrap">
-        {lists.map(list => (
+        {lists.map((list) => (
           <OverviewListItem list={list} onClick={onClick} key={list.id} />
         ))}
         {!lists.length && (

@@ -22,7 +22,7 @@ const getPossibleNewPosition = (x, y, direction) => {
 
 const getNextItem = (cardGrid, selectedCardOracleId, direction) => {
   if (!selectedCardOracleId) return cardGrid[0][0];
-  const x = cardGrid.findIndex(columns =>
+  const x = cardGrid.findIndex((columns) =>
     columns.find(({ oracle_id }) => oracle_id === selectedCardOracleId)
   );
   const y = cardGrid[x].findIndex(({ oracle_id }) => oracle_id === selectedCardOracleId);
@@ -42,17 +42,17 @@ const getNextItem = (cardGrid, selectedCardOracleId, direction) => {
   return cardGrid[nextX][actualY];
 };
 
-export default columns => {
+export default (columns) => {
   const [selectedCardOracleId, setSelectedCardOracleId] = useState(null);
   const { focusedElements } = useContext(FocusContext);
   const shortcutsActive =
-    focusedElements.filter(focusId => focusId !== 'modal.cardDetails').pop() ===
+    focusedElements.filter((focusId) => focusId !== 'modal.cardDetails').pop() ===
     'deck.cards';
 
   const numberOfCards = sumBy(columns.flat(), ({ cards }) => cards.length);
-  const cardGrid = columns.map(column => column.map(({ cards }) => cards).flat());
+  const cardGrid = columns.map((column) => column.map(({ cards }) => cards).flat());
 
-  const moveSelected = direction => {
+  const moveSelected = (direction) => {
     const nextElement = getNextItem(cardGrid, selectedCardOracleId, direction);
     setSelectedCardOracleId(nextElement.oracle_id);
   };
@@ -75,7 +75,7 @@ export default columns => {
     setSelectedCardOracleId(null);
   };
 
-  const onKeyDown = event => {
+  const onKeyDown = (event) => {
     if (isInputField(event) || isModifierKey(event) || !numberOfCards || !shortcutsActive)
       return;
     let preventDefault = true;

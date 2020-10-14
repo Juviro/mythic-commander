@@ -8,8 +8,8 @@ const colors = ['w', 'u', 'b', 'r', 'g'];
 
 const addColor = (currentColors, newColor) => {
   if (!currentColors) return newColor;
-  const findColorIndex = colorLetter =>
-    colors.findIndex(letter => letter === colorLetter);
+  const findColorIndex = (colorLetter) =>
+    colors.findIndex((letter) => letter === colorLetter);
 
   return currentColors
     .concat(newColor)
@@ -18,7 +18,7 @@ const addColor = (currentColors, newColor) => {
     .join('');
 };
 
-const getColorTagProps = invert => ({ isSelected }) => {
+const getColorTagProps = (invert) => ({ isSelected }) => {
   const showSelectedStyle = invert ? !isSelected : isSelected;
   return showSelectedStyle
     ? `
@@ -46,15 +46,15 @@ const StyledColorTag = styled.img`
 `;
 
 export default ({ onChange, value = '' }) => {
-  const isColorSelected = letter => value && value.includes(letter);
+  const isColorSelected = (letter) => value && value.includes(letter);
 
-  const onSelectColor = letter => {
+  const onSelectColor = (letter) => {
     const isSelected = isColorSelected(letter);
     const newColors = isSelected ? value.replace(letter, '') : addColor(value, letter);
     onChange(newColors);
   };
 
-  const onSetExcluded = symbol => e => {
+  const onSetExcluded = (symbol) => (e) => {
     const isExclude = e.target.checked;
     const withoutSymbol = value.replace(new RegExp(symbol, 'g'), '');
     const newColors = isExclude ? symbol.concat(withoutSymbol) : withoutSymbol;
@@ -65,7 +65,7 @@ export default ({ onChange, value = '' }) => {
   return (
     <Flex direction="column">
       <Flex direction="row" justify="space-between" style={{ maxWidth: 250 }}>
-        {colors.map(letter => (
+        {colors.map((letter) => (
           <StyledColorTag
             key={letter}
             src={colorIcons[letter.toUpperCase()]}

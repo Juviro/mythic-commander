@@ -29,7 +29,7 @@ export default ({
       onKeyDown={useBlurOnEsc}
       placeholder={placeholder}
       autoFocus={autoFocus}
-      onChange={e => onChange(e.target.value)}
+      onChange={(e) => onChange(e.target.value)}
       style={{ width: '100%', ...style }}
       size={size}
     />

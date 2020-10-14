@@ -31,7 +31,7 @@ export default ({ setKey, name: overwriteName }) => {
     <DesktopTooltip title={setName}>
       <StyledSetName>
         <StyledSetIcon src={icon_svg_uri} alt="icon" />
-        <Link to={to} onClick={e => e.stopPropagation()} tabIndex="-1">
+        <Link to={to} onClick={(e) => e.stopPropagation()} tabIndex="-1">
           {setName}
         </Link>
       </StyledSetName>

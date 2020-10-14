@@ -68,7 +68,7 @@ export default ({ showCollectionFilters, style }) => {
       listHeight={390}
       value={currentValue}
       dropdownStyle={{ minWidth: 200 }}
-      onSelect={value => setOrderBy(value)}
+      onSelect={(value) => setOrderBy(value)}
       style={{ width: 215, ...style }}
     >
       {orderOptions.map(({ label, value }) => (

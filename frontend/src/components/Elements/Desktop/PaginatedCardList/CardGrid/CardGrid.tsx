@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { Pagination } from 'antd';
 import styled from 'styled-components';
-
-import { withRouter } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router';
 import { LoadingOutlined } from '@ant-design/icons';
+
+import { UnifiedCard } from 'types/unifiedTypes';
+import { MenuItem } from 'components/Elements/Shared/ContextMenu/ContextMenu';
 import GridCard from './GridCard';
 import useGridShortcuts from './useGridShortcuts';
 import CardModalDesktop from '../../CardModalDesktop';
@@ -19,9 +21,35 @@ const StyledWrapper = styled.div`
   align-self: center;
 `;
 
+export interface DragProps {
+  canDrag: boolean;
+  listId?: string;
+  onSuccessfullDrop?: (card: UnifiedCard) => void;
+}
+
+interface Props {
+  cards: UnifiedCard[];
+  loading?: boolean;
+  cardsPerRow?: number;
+  cardWidth?: number;
+  numberOfCards?: number;
+  zoom?: number;
+  search?: string;
+  actions?: MenuItem[];
+  onEditCard?: (card: UnifiedCard) => void;
+  onDeleteCard?: (card: UnifiedCard) => void;
+  onEnter?: (card: UnifiedCard) => void;
+  markAsDisabled?: (card: UnifiedCard) => boolean;
+  blockShortcuts?: boolean;
+  hidePagination?: boolean;
+  dragProps?: DragProps;
+}
+
+type PropsWithRouter = RouteComponentProps & Props;
+
 const CardGrid = ({
   cards,
-  loading,
+  loading = false,
   cardsPerRow,
   cardWidth,
   numberOfCards,
@@ -31,26 +59,35 @@ const CardGrid = ({
   onEditCard,
   onDeleteCard,
   history,
-  blockShortcuts,
   onEnter,
-  draggable,
+  blockShortcuts,
   markAsDisabled,
-}) => {
+  hidePagination,
+  dragProps,
+}: PropsWithRouter) => {
   const [showDetails, toggleShowDetail] = useToggle(false);
+
+  const combinedNumberOfCards = numberOfCards || cards?.length || 0;
 
   const {
     pagination,
     selectedElementPosition,
     setSelectedElementPosition,
-  } = useGridShortcuts(cardsPerRow, toggleShowDetail, numberOfCards, blockShortcuts);
+  } = useGridShortcuts(
+    cardsPerRow,
+    toggleShowDetail,
+    combinedNumberOfCards,
+    blockShortcuts
+  );
 
   const selectedCard = cards[selectedElementPosition - 1];
   useShortcut('ENTER', onEnter && selectedCard ? () => onEnter(selectedCard) : null, [
     'modal.cardDetails',
     'deck.sidebar.add',
+    'deck.sidebar.wants',
   ]);
 
-  const onClick = index => {
+  const onClick = (index: number) => {
     toggleShowDetail(true);
     setSelectedElementPosition(index + 1);
   };
@@ -62,7 +99,8 @@ const CardGrid = ({
     // eslint-disable-next-line
   }, [history.location.pathname]);
 
-  const paginationComponent = (
+  const showPagination = Boolean(cards.length) && !hidePagination;
+  const paginationComponent = showPagination ? (
     <Pagination
       {...pagination}
       showSizeChanger
@@ -70,7 +108,7 @@ const CardGrid = ({
       showTotal={(total, [from, to]) => `${from}-${to} of ${total} cards`}
       style={{ alignSelf: 'flex-end', margin: '16px 0' }}
     />
-  );
+  ) : null;
 
   return (
     <>
@@ -81,7 +119,7 @@ const CardGrid = ({
         style={{ width: '100%' }}
       >
         <span>{loading && <LoadingOutlined style={{ marginLeft: 16 }} />}</span>
-        {Boolean(cards.length) && paginationComponent}
+        {paginationComponent}
       </Flex>
       <StyledWrapper>
         {cards.map((card, index) => {
@@ -91,7 +129,7 @@ const CardGrid = ({
             <GridCard
               card={card}
               zoom={zoom}
-              draggable={draggable}
+              dragProps={dragProps}
               key={card.id}
               actions={actions}
               width={cardWidth}
@@ -108,7 +146,7 @@ const CardGrid = ({
           );
         })}
       </StyledWrapper>
-      {Boolean(cards.length) && paginationComponent}
+      {paginationComponent}
       <CardModalDesktop
         loading={loading}
         selectedCard={selectedCard}

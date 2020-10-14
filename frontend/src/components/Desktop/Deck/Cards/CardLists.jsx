@@ -9,7 +9,7 @@ import CardModalDesktop from '../../../Elements/Desktop/CardModalDesktop';
 import { deleteFromDeckDesktop } from '../queries';
 import boldText from '../../../../utils/boldText';
 
-const getColumnKey = column => column.map(({ type }) => type).join('');
+const getColumnKey = (column) => column.map(({ type }) => type).join('');
 
 export default ({ columns, deck, displayOwnedOnly }) => {
   const [showDetails, toggleShowDetail] = useToggle(false);
@@ -27,14 +27,17 @@ export default ({ columns, deck, displayOwnedOnly }) => {
     .flat()
     .find(({ oracle_id }) => oracle_id === selectedCardOracleId);
 
-  const onDeleteCard = () => {
-    if (!selectedCard) return;
+  const onDeleteCard = (cardId) => {
+    if (!cardId) return;
     setIsDeleting(false);
-    selectNextCard(null);
-    const newCards = deck.originalCards.filter(card => card.id !== selectedCard.id);
+    if (cardId === selectedCard?.id) {
+      selectNextCard(null);
+    }
+    const newCards = deck.originalCards.filter((card) => card.id !== cardId);
     const newNumberOfCards = deck.numberOfCards;
     mutateDelete({
-      variables: { cardId: selectedCard.id, deckId: deck.id },
+      variables: { cardId, deckId: deck.id },
+      // TODO: check if this is correct
       optimisticResponse: () => ({
         __typename: 'Mutation',
         deleteFromWantsList: {
@@ -56,7 +59,7 @@ export default ({ columns, deck, displayOwnedOnly }) => {
 
   return (
     <>
-      {columns.map(column => (
+      {columns.map((column) => (
         <Flex direction="column" key={getColumnKey(column)}>
           {column.map(({ type, cards: cardGroup }) => (
             <CardList
@@ -65,6 +68,7 @@ export default ({ columns, deck, displayOwnedOnly }) => {
               cards={cardGroup}
               displayOwnedOnly={displayOwnedOnly}
               onDelete={onOpenDeleteModal}
+              onDeleteImmediately={onDeleteCard}
               setSelectedCardOracleId={setSelectedCardOracleId}
               onOpenDetails={toggleShowDetail}
               selectedCardId={selectedCard && selectedCard.id}
@@ -81,7 +85,7 @@ export default ({ columns, deck, displayOwnedOnly }) => {
         <ConfirmDelete
           text={boldText(`Delete <b>${selectedCard.name}</b> from this deck?`)}
           onCancel={() => setIsDeleting(false)}
-          onOk={onDeleteCard}
+          onOk={() => onDeleteCard(selectedCard.id)}
         />
       )}
     </>

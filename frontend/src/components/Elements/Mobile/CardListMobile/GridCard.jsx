@@ -98,7 +98,7 @@ const areEqual = (prevProps, nextProps) => {
   if (prevProps.isLarge !== nextProps.isLarge) return false;
 
   return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
-    propKey => {
+    (propKey) => {
       return prevProps.card[propKey] === nextProps.card[propKey];
     }
   );

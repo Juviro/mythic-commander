@@ -36,7 +36,7 @@ const StyledOverlay = styled.div`
 export default ({ moveToList, card, onEditCard, onDeleteCard, isLarge }) => {
   const [isEditing, toggleIsEditing] = useToggle(false);
 
-  const onChangeIsEditing = e => {
+  const onChangeIsEditing = (e) => {
     e.stopPropagation();
     toggleIsEditing();
   };
@@ -47,7 +47,7 @@ export default ({ moveToList, card, onEditCard, onDeleteCard, isLarge }) => {
     <>
       <CardButton onClick={onChangeIsEditing} index={0} Icon={EditOutlined} />
       <StyledWrapper>
-        <StyledBody visible={isEditing} onClick={e => e.stopPropagation()}>
+        <StyledBody visible={isEditing} onClick={(e) => e.stopPropagation()}>
           <StyledOverlay />
           <EditMenu
             card={card}

@@ -106,7 +106,7 @@ const OverviewList = ({ addElementText, onAddElement, elements, onClick, header 
       header={<StyledHeader>{header}</StyledHeader>}
       dataSource={dataSource}
       style={{ width: '100%' }}
-      renderItem={element => element}
+      renderItem={(element) => element}
     />
   );
 };

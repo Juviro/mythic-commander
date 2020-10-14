@@ -9,7 +9,7 @@ export default ({ cards, size = 18 }) => {
   );
   return (
     <>
-      {colorIdentity.map(symbol => (
+      {colorIdentity.map((symbol) => (
         <ManaSymbol key={symbol} symbol={symbol} size={size} margin="0 2px" />
       ))}
     </>

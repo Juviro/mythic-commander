@@ -4,7 +4,23 @@ import { Typography } from 'antd';
 import { useShortcut } from '../../../Hooks';
 import FocusedModal from '../FocusedModal';
 
-export default ({ onCancel, title, text, onOk, okText = 'Confirm', visible = true }) => {
+interface Props {
+  title: React.ReactNode;
+  text?: React.ReactNode;
+  okText?: string;
+  visible?: boolean;
+  onCancel: () => void;
+  onOk: () => void;
+}
+
+export default ({
+  onCancel,
+  title,
+  text,
+  onOk,
+  okText = 'Confirm',
+  visible = true,
+}: Props) => {
   useShortcut('ENTER', onOk, 'modal.confirm');
 
   return (
@@ -14,7 +30,7 @@ export default ({ onCancel, title, text, onOk, okText = 'Confirm', visible = tru
       okText={okText}
       okButtonProps={{ onClick: onOk }}
       onCancel={onCancel}
-      bodyStyle={{ display: 'none', maxHeight: 400, overflowY: 'auto' }}
+      bodyStyle={{ display: text ? 'block' : 'none', maxHeight: 400, overflowY: 'auto' }}
       focusId="modal.confirm"
     >
       {text && <Typography.Text>{text}</Typography.Text>}

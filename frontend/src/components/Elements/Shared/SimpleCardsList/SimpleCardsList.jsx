@@ -4,7 +4,7 @@ import PreviewCardImage from '../PreviewCardImage';
 
 export default ({ cards }) => (
   <List>
-    {cards.map(card => (
+    {cards.map((card) => (
       <List.Item key={card.id}>
         <Space>
           <PreviewCardImage card={card} />

@@ -15,14 +15,14 @@ const LoginWrapper = styled.div`
   align-items: center;
 `;
 
-const onError = error => {
+const onError = (error) => {
   console.error(error);
   throw new Error('Error logging in. Please try again');
 };
 
 export default ({ history }) => {
   const [mutate] = useMutation(login);
-  const onSuccess = async response => {
+  const onSuccess = async (response) => {
     const { data } = await mutate({
       variables: { token: response.tokenId },
     });

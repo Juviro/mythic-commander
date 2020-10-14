@@ -8,8 +8,8 @@ export default ({ playerDamage, onClose, playerId, onTrackDamage }) => {
   const [currentPlayerDamage, setCurrentPlayerDamage] = useState(playerDamage);
   const { getContainer } = useContext(FullscreenModalContext);
 
-  const onSetDamage = originId => damage => {
-    const newPlayerDamage = currentPlayerDamage.map(player => {
+  const onSetDamage = (originId) => (damage) => {
+    const newPlayerDamage = currentPlayerDamage.map((player) => {
       if (player.id !== originId) return player;
 
       return {
@@ -35,7 +35,7 @@ export default ({ playerDamage, onClose, playerId, onTrackDamage }) => {
       getContainer={getContainer}
     >
       <Flex direction="column">
-        {currentPlayerDamage.map(player => (
+        {currentPlayerDamage.map((player) => (
           <Player {...player} key={player.id} onSetDamage={onSetDamage(player.id)} />
         ))}
       </Flex>

@@ -11,8 +11,8 @@ const StyledParam = styled.div`
   margin-right: 8px;
 `;
 
-const formatKey = key => {
-  const capitalizeFirstLetter = value => {
+const formatKey = (key) => {
+  const capitalizeFirstLetter = (value) => {
     return value.charAt(0).toUpperCase() + value.slice(1);
   };
   switch (key) {
@@ -31,10 +31,10 @@ const formatKey = key => {
   }
 };
 
-const formatRarity = rarity => {
+const formatRarity = (rarity) => {
   return rarity
     .split('')
-    .map(rarityKey => {
+    .map((rarityKey) => {
       switch (rarityKey) {
         case 'm':
           return 'Mythic';
@@ -51,10 +51,10 @@ const formatRarity = rarity => {
     .join(', ');
 };
 
-const formatColors = colors => {
+const formatColors = (colors) => {
   return colors
     .split('')
-    .map(rarityKey => {
+    .map((rarityKey) => {
       switch (rarityKey) {
         case 'w':
           return 'White';
@@ -101,7 +101,7 @@ export default ({ style, showDivider }) => {
   const [params] = useQueryParams(searchParams);
 
   const activeParams = Object.keys(params)
-    .map(key => ({ key, value: params[key] }))
+    .map((key) => ({ key, value: params[key] }))
     .filter(({ value }) => Boolean(value));
 
   if (!activeParams.length) return null;
