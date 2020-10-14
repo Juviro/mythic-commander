@@ -12,8 +12,9 @@ import { UnifiedCard } from 'types/unifiedTypes';
 
 import sumCardAmount from 'utils/sumCardAmount';
 import boldText from 'utils/boldText';
-import { deleteFromWantsList } from './queries';
 import styled from 'styled-components';
+import { sortByCmc } from 'utils/cardFilter';
+import { deleteFromWantsList } from './queries';
 
 const StyledDeckWantsList = styled.div`
   display: flex;
@@ -69,6 +70,8 @@ export default ({ wantsList, alreadyInDeck, onAddCards, active }: Props) => {
     return <Empty description="" style={{ margin: 16 }} />;
   }
 
+  const sortedCards = sortByCmc([...cards]);
+
   return (
     <StyledDeckWantsList>
       {cardToAdd && (
@@ -86,7 +89,7 @@ export default ({ wantsList, alreadyInDeck, onAddCards, active }: Props) => {
           listId: wantsList.id,
         }}
         hidePagination
-        cards={cards}
+        cards={sortedCards}
         cardsPerRow={2}
         cardWidth={200}
         onEnter={onEnter}

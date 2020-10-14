@@ -83,6 +83,7 @@ const GridCard = ({
   onEditCard,
   shortcutsActive,
   markAsDisabled,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   index: _index,
   dragProps,
 }) => {
@@ -94,7 +95,7 @@ const GridCard = ({
   const ref = useRef(null);
 
   const [, dragRef] = useDrag({
-    item: { type: 'CARD', id: card.id, name: card.name, listId },
+    item: { type: 'CARD', id: card.id, name: card.name, listId, amount: card.amount },
     canDrag,
     end: (_, monitor) => {
       if (monitor.didDrop() && onSuccessfullDrop) {

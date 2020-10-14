@@ -6,8 +6,6 @@ BUGFIXES:
     - "Hidd stri" search crashes client?
 
 CURRENT:
-    - fix shortcut use when there are multiple wants list
-    - allow add to wants from deck
 
 NEXT:
     - re-add loading animation to paginated list (e.g. collection desktop)
@@ -20,6 +18,7 @@ NEXT:
 
     - add button to add card to deck in sidebar ?
     - add option to export unowned cards from deck to wants
+    - allow sorting by added in advanced search
 
 IMPROVEMENTS:
     - improve re-rendering of table columns and grid card. especially table.

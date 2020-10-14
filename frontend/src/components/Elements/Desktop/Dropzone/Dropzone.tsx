@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { useDrop, DragObjectWithType, DropTargetMonitor } from 'react-dnd';
+import { useDrop, DragObjectWithType } from 'react-dnd';
 
 import { primaryDrop, primaryLight } from '../../../../constants/colors';
 

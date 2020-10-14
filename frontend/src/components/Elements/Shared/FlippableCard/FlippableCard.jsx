@@ -8,7 +8,7 @@ import { getImageUrl } from '../../../../utils/cardImage';
 import CustomSkeleton from '../CustomSkeleton';
 import CardButton from '../CardButton';
 import { useToggle } from '../../../Hooks';
-import LazyLoad from '../LazyLoad';
+// import LazyLoad from '../LazyLoad';
 
 const StyledImageWrapper = styled.div`
   display: flex;
@@ -25,7 +25,7 @@ export default ({
   card,
   hideFlipIcon,
   onFlipCard: onFlipCardCallback,
-  lazyLoadProps,
+  // lazyLoadProps,
 }) => {
   const { id, imgKey, isTwoFaced } = card || {};
   const [isFlipped, toggleIsFlipped] = useToggle(false);

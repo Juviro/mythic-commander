@@ -13,7 +13,7 @@ import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
 export const CARD_WIDTH = 220;
 const CARD_HEIGHT = CARD_WIDTH * 1.4;
 
-const ANIMATION_DURATION = 0;
+const ANIMATION_DURATION = 100;
 
 const StyledWrapper = styled.div`
   width: ${CARD_WIDTH}px;
@@ -101,7 +101,13 @@ const Card = ({
   }, [selected]);
 
   const [, dragRef] = useDrag({
-    item: { type: 'CARD', id: card.id, name: card.name, listId: deckId },
+    item: {
+      type: 'CARD',
+      id: card.id,
+      name: card.name,
+      listId: deckId,
+      amount: card.amount,
+    },
     end: (_, monitor) => {
       if (!monitor.didDrop()) return;
       onDeleteImmediately(card.id);
