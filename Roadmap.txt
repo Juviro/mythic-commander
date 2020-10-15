@@ -6,6 +6,7 @@ BUGFIXES:
     - "Hidd stri" search crashes client?
 
 CURRENT:
+    - on high latency network: move card from deck wants to deck -> wrong cards displayed in deck wants
 
 NEXT:
     - re-add loading animation to paginated list (e.g. collection desktop)

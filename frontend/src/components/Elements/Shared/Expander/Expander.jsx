@@ -39,13 +39,13 @@ export default ({ isExpanded, children, destroyOnClose = false }) => {
     } else {
       setTimeout(() => toggleIsActive(false), ANIMATION_DURATION_MS);
     }
-    // eslint-disable react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [isExpanded, destroyOnClose]);
 
+  // eslint-disable-next-line
   useEffect(() => {
     if (!wrapperRef.current || !wrapperRef.current.offsetHeight) return;
     setHeight(wrapperRef.current.offsetHeight);
-    // eslint-disable
   });
 
   return (
