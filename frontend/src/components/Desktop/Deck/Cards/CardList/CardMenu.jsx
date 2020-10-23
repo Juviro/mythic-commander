@@ -1,19 +1,16 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Typography, Button } from 'antd';
+import { Typography, Tooltip, Space } from 'antd';
 import { useMutation } from 'react-apollo';
 import { useParams } from 'react-router';
-import { Flex, EditCardModal, UnownedBadge } from '../../../../Elements/Shared';
+import { DeleteOutlined, EditOutlined, InfoCircleOutlined } from '@ant-design/icons';
 
-import { getPriceLabel } from '../../../../../utils/cardStats';
-import keySymbols from '../../../../../constants/keySymbols';
-import { useToggle, useShortcut } from '../../../../Hooks';
+import { primary, error } from 'constants/colors';
+import keySymbols from 'constants/keySymbols';
+import OwnedBadge from 'components/Elements/Shared/OwnedBadge/index';
+import { getPriceLabel } from 'utils/cardStats';
+import { Flex, EditCardModal, UnownedBadge } from 'components/Elements/Shared';
+import { useToggle, useShortcut } from 'components/Hooks';
 import { editDeckCardDesktop, getDeckDesktop } from '../../queries';
-import OwnedBadge from '../../../../Elements/Shared/OwnedBadge/index';
-
-const StyledButton = styled(Button)`
-  margin-top: 8px;
-`;
 
 export default ({ card, onOpenDetails, onDelete }) => {
   const { id: deckId } = useParams();
@@ -51,20 +48,26 @@ export default ({ card, onOpenDetails, onDelete }) => {
 
   return (
     <>
-      <Flex direction="column" style={{ marginTop: 4 }}>
-        <Flex justify="space-between" style={{ padding: '0 8px' }}>
-          {card.owned ? <OwnedBadge /> : <UnownedBadge />}
+      <Flex direction="column" style={{ marginTop: 4, padding: '0 8px' }}>
+        <Flex justify="space-between">
+          {card.owned ? <OwnedBadge marginLeft={0} /> : <UnownedBadge marginLeft={0} />}
           <Typography.Text strong>{value}</Typography.Text>
         </Flex>
-        <StyledButton type="link" onClick={onOpenDetails}>
-          {`Details [${keySymbols.SPACE}]`}
-        </StyledButton>
-        <StyledButton type="link" onClick={toggleIsEditing}>
-          Edit [E]
-        </StyledButton>
-        <StyledButton type="link" onClick={onDelete} danger>
-          {`Delete [${keySymbols.BACKSPACE}]`}
-        </StyledButton>
+        <Flex justify="space-between" style={{ marginTop: 4, fontSize: 18 }}>
+          <Space size={8}>
+            <Tooltip title={`Details [${keySymbols.SPACE}]`}>
+              <InfoCircleOutlined onClick={onOpenDetails} style={{ color: primary }} />
+            </Tooltip>
+            <Tooltip title="Edit [E]">
+              <EditOutlined onClick={toggleIsEditing} style={{ color: primary }} />
+            </Tooltip>
+          </Space>
+          <Space>
+            <Tooltip title={`Delete [${keySymbols.BACKSPACE}]`}>
+              <DeleteOutlined onClick={onDelete} style={{ color: error }} />
+            </Tooltip>
+          </Space>
+        </Flex>
       </Flex>
       {isEditing && (
         <EditCardModal card={card} onCancel={toggleIsEditing} onEdit={onEditCard} />
