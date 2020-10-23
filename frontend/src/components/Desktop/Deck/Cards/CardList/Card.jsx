@@ -15,6 +15,12 @@ const CARD_HEIGHT = CARD_WIDTH * 1.4;
 
 const ANIMATION_DURATION = 100;
 
+const StyledSlicedCard = styled.div`
+  height: ${({ isFullSize }) => (isFullSize ? '100%' : '46px')};
+  width: 100%;
+  overflow: hidden;
+`;
+
 const StyledWrapper = styled.div`
   width: ${CARD_WIDTH}px;
 
@@ -34,6 +40,10 @@ const StyledWrapper = styled.div`
 
   &:not(:first-child) {
     margin-top: ${40 - CARD_HEIGHT}px;
+  }
+
+  &:last-child ${StyledSlicedCard} {
+    height: 100%;
   }
 `;
 
@@ -73,15 +83,21 @@ const StyledCard = styled.div`
       : ''}
 `;
 
+const StyledCardWrapper = styled.div`
+  height: ${CARD_HEIGHT - 2}px;
+  width: 100%;
+`;
+
 const Card = ({
   card,
   isSelected,
   onOpenDetails,
   setSelectedCardOracleId,
   onDelete,
-  isTransparent,
+  displayOwnedOnly,
   onDeleteImmediately,
 }) => {
+  // console.log('displayOwnedOnly', displayOwnedOnly);
   const { id: deckId } = useParams();
   const { focusedElement } = useContext(FocusContext);
   const [isHighlighted, toggleIsHighlighted] = useToggle();
@@ -117,6 +133,8 @@ const Card = ({
     }),
   });
 
+  const isTransparent = displayOwnedOnly && card.owned;
+
   return (
     <StyledWrapper
       isSelected={selected}
@@ -131,14 +149,18 @@ const Card = ({
         isTransparent={isTransparent}
         isHighlighted={isHighlighted}
       >
-        <FlippableCard
-          card={card}
-          hideFlipIcon={!selected}
-          lazyLoadProps={{
-            offset: 100,
-            overflow: true,
-          }}
-        />
+        <StyledSlicedCard isFullSize={selected || displayOwnedOnly}>
+          <StyledCardWrapper>
+            <FlippableCard
+              card={card}
+              hideFlipIcon={!selected}
+              lazyLoadProps={{
+                offset: 100,
+                overflow: true,
+              }}
+            />
+          </StyledCardWrapper>
+        </StyledSlicedCard>
         <AmountBadge amount={card.amount} />
       </StyledCard>
       {selected && (
@@ -150,7 +172,7 @@ const Card = ({
 
 const areEqual = (prevProps, nextProps) => {
   if (prevProps.isSelected !== nextProps.isSelected) return false;
-  if (prevProps.isTransparent !== nextProps.isTransparent) return false;
+  if (prevProps.displayOwnedOnly !== nextProps.displayOwnedOnly) return false;
 
   return ['id', 'amount', 'owned', 'sumPrice', 'minPrice'].every(
     (propKey) => prevProps.card[propKey] === nextProps.card[propKey]

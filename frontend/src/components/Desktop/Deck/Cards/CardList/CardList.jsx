@@ -46,7 +46,7 @@ export default ({
               card={card}
               key={card.id}
               isSelected={selectedCardId === card.id}
-              isTransparent={displayOwnedOnly && card.owned}
+              displayOwnedOnly={displayOwnedOnly}
               onDelete={onDelete}
               onOpenDetails={onOpenDetails}
               onDeleteImmediately={onDeleteImmediately}
