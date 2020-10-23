@@ -25,6 +25,7 @@ export default ({
   card,
   hideFlipIcon,
   onFlipCard: onFlipCardCallback,
+  cardHeight,
   // lazyLoadProps,
 }) => {
   const { id, imgKey, isTwoFaced } = card || {};
@@ -84,6 +85,7 @@ export default ({
             className="flippable-card "
             style={{
               opacity,
+              height: cardHeight,
               transform: transform.interpolate((t) => `${t} rotateY(-180deg)`),
             }}
             src={getImageUrl(id, imgKey, 'normal', 'back')}
@@ -96,6 +98,7 @@ export default ({
           className="flippable-card"
           style={{
             opacity: opacity.interpolate((o) => 1 - o),
+            height: cardHeight,
             transform,
           }}
           src={frontImgSrc}
