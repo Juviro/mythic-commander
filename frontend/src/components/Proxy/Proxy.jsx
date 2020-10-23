@@ -14,7 +14,7 @@ const StyledCardWrapper = styled.div`
   height: 332px;
   width: 238px;
   padding: 1px;
-  border: 1px dashed #000;
+  border: 1px solid rgb(0, 0, 0, 0.85);
   float: left;
   position: relative;
 `;

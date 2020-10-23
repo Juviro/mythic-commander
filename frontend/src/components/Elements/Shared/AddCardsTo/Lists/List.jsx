@@ -16,7 +16,9 @@ export default ({ elements, onClick }) => (
         <List.Item key={id} onClick={() => onClick(id, name)}>
           <Space>
             {imgSrc && <StyledPreview src={imgSrc} />}
-            <Typography.Text ellipsis>{name}</Typography.Text>
+            <Typography.Text ellipsis style={{ maxWidth: 180 }}>
+              {name}
+            </Typography.Text>
           </Space>
         </List.Item>
       ))}

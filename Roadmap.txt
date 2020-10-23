@@ -1,9 +1,7 @@
 BUGFIXES:
     - highlighting of cardnames flawed
     - a lot of the cards are white on render, display only on scroll
-    - ancient den listed as artifact instead of land in deck
 
-    - "Hidd stri" search crashes client?
 
 CURRENT:
     - on high latency network: move card from deck wants to deck -> wrong cards displayed in deck wants
