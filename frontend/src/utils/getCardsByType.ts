@@ -1,5 +1,8 @@
 import { UnifiedDeckCard } from 'types/unifiedTypes';
-import { CARD_TYPES } from '../components/Provider/CardProvider/staticTypes';
+import {
+  CARD_TYPES,
+  CARD_TYPE_DECK_ORDER,
+} from '../components/Provider/CardProvider/staticTypes';
 
 const typeMap = {
   Sorcery: 'Sorceries',
@@ -22,7 +25,7 @@ export default (cards: UnifiedDeckCard[]) => {
   if (!cards) return {};
 
   const cardWithMainType = cards.map(addMainType);
-  const cardsByType = ['Commander', ...CARD_TYPES].map((type) => ({
+  const cardsByType = ['Commander', ...CARD_TYPE_DECK_ORDER].map((type) => ({
     type: typeToPlural(type),
     cards: cardWithMainType.filter((card) => card.mainType === type),
   }));

@@ -2,7 +2,6 @@ import React from 'react';
 
 import PreviewCardImage from '../../../Shared/PreviewCardImage';
 import ManaCost from '../../../Shared/ManaCost';
-// import { CARD_TYPES } from '../../../../Provider/CardProvider/staticTypes';
 import { getPriceLabel } from '../../../../../utils/cardStats';
 import formatDate from '../../../../../utils/formatDate';
 import { highlightText } from '../../../../../utils/highlightText';
@@ -11,21 +10,6 @@ import { ContextMenu, OwnedBadge } from '../../../Shared';
 
 // TODO: move columns to table file, simplify, remove sorters
 const renderAmount = ({ totalAmount, amount }) => amount || totalAmount || 0;
-
-// const renderType = ({ primaryTypes, subTypes }) => {
-//   const primaryTypesLabel = primaryTypes.join(' ');
-//   if (!subTypes.length) {
-//     return <Typography.Text>{primaryTypesLabel}</Typography.Text>;
-//   }
-//   const subTypesLabel = subTypes.join(' ');
-
-//   return (
-//     <Flex direction="column">
-//       <Typography.Text>{`${primaryTypesLabel} -`}</Typography.Text>
-//       <Typography.Text>{subTypesLabel}</Typography.Text>
-//     </Flex>
-//   );
-// };
 
 const renderPrice = ({ price, minPrice, sumPrice, totalAmount }) => {
   const displayedPrice = price || minPrice;
@@ -46,14 +30,6 @@ const sortByAmount = (columnKey, fallbackKey) => (a, b) => {
 const sortByName = (columnKey) => (a, b) => {
   return a[columnKey] > b[columnKey] ? 1 : -1;
 };
-
-// const sortType = (a, b) => {
-//   const getIndex = ({ primaryTypes }) => {
-//     const mainType = primaryTypes[primaryTypes.length - 1];
-//     return CARD_TYPES.indexOf(mainType);
-//   };
-//   return getIndex(a) - getIndex(b);
-// };
 
 const renderActions = (actions) => (card) => {
   return <ContextMenu menuItems={actions} card={card} />;
@@ -89,14 +65,6 @@ const columns = (search) => [
     key: 'owned',
     render: (owned) => (owned ? <OwnedBadge marginLeft={0} /> : null),
   },
-  // {
-  //   title: 'CMC',
-  //   key: 'cmc',
-  //   dataIndex: 'cmc',
-  //   width: 70,
-  //   align: 'center',
-  //   sorter: sortByAmount('cmc'),
-  // },
   {
     title: 'Mana Cost',
     key: 'manaCost',
@@ -106,14 +74,6 @@ const columns = (search) => [
     render: (manaCost) => <ManaCost costString={manaCost} />,
     sorter: byColor,
   },
-  // {
-  //   title: 'Type',
-  //   key: 'type',
-  //   width: 200,
-  //   align: 'center',
-  //   render: renderType,
-  //   sorter: sortType,
-  // },
   {
     title: 'Price',
     key: 'minPrice',
