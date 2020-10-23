@@ -24,7 +24,7 @@ const StyledWrapper = styled.div<{ visible: boolean; currentTabIndex: number }>`
   display: flex;
   overflow: hidden;
   height: 300%;
-  transition: all 0.3s;
+  transition: all 0.15s cubic-bezier(0.4, 0, 1, 1);
   flex-direction: column;
   width: 500px;
   margin-left: ${({ visible }) => (visible ? 0 : -500)}px;
