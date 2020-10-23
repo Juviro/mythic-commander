@@ -133,7 +133,7 @@ const Card = ({
     }),
   });
 
-  const isTransparent = displayOwnedOnly && card.owned;
+  const isTransparent = displayOwnedOnly && card.owned && !selected;
 
   return (
     <StyledWrapper
