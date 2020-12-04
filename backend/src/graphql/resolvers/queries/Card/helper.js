@@ -29,18 +29,28 @@ export const getAllSets = async (oracle_id, userId, db) => {
       const cardsWithSameSet = cards
         .filter(({ set }) => set === card.set)
         .sort((a, b) => {
-          const premiumFrameEffects = ['extendedart', 'showcase', 'inverted'];
-          const isSpecialCard = card =>
-            card.frame_effects &&
-            premiumFrameEffects.some(effect =>
-              card.frame_effects.includes(effect)
+          const premiumFrameEffects = [
+            'extendedart',
+            'showcase',
+            'inverted',
+            'etched',
+          ];
+          const isSpecialCard = card => {
+            if (card.booster === false) return true;
+            return (
+              card.frame_effects &&
+              premiumFrameEffects.some(effect =>
+                card.frame_effects.includes(effect)
+              )
             );
+          };
           if (isSpecialCard(a) === isSpecialCard(b)) return 0;
           return isSpecialCard(a) ? 1 : -1;
         });
       if (cardsWithSameSet.length === 1) return card;
       const version =
         cardsWithSameSet.findIndex(({ id }) => id === card.id) + 1;
+
       return {
         ...card,
         set_name: `${card.set_name} (Version ${version})`,
