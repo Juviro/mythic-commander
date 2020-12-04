@@ -57,6 +57,11 @@ const updateCards = async (type, tableName) => {
   );
 };
 
+const deleteOldCards = async () =>
+  knex.raw(
+    `DELETE from cards WHERE to_date("lastUpdate"::TEXT,'YYYY-MM-DD')  < NOW() - INTERVAL '7 days';`
+  );
+
 export default async () => {
   const start = Date.now();
   console.info(
@@ -65,6 +70,7 @@ export default async () => {
   );
 
   await updateCards('default_cards', 'cards');
+  await deleteOldCards();
 
   await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCards"`);
   await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCardsPerSet"`);
