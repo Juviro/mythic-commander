@@ -20,6 +20,7 @@ export default ({
 
   return (
     <SelectFilter
+      size="default"
       value={value}
       onSearch={onSearch}
       options={allSets}

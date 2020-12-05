@@ -52,7 +52,10 @@ const DesktopMenu = ({ location: { pathname } }) => {
           style={{ marginLeft: 12 }}
         >
           {MENU_ENTRIES.map(({ title, href }) => (
-            <Menu.Item key={href} style={{ padding: '0 3vw' }}>
+            <Menu.Item
+              key={href}
+              style={{ padding: '0 3vw', fontSize: 16, fontWeight: 400 }}
+            >
               <Link to={href}>{title}</Link>
             </Menu.Item>
           ))}

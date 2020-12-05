@@ -3,7 +3,6 @@ import { Tooltip } from 'antd';
 import styled from 'styled-components';
 
 import { LayoutPicker, OrderBy, Flex, AddedBeforeFilter } from '../../../Shared';
-import ZoomSlider from './ZoomSlider';
 import NameFilter from '../../../Shared/Filter/TextFilter/NameFilter';
 import { useShortcut } from '../../../../Hooks';
 

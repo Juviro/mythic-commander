@@ -1,6 +1,7 @@
 import React from 'react';
-import { AutoComplete, Typography, Empty } from 'antd';
+import { AutoComplete, Typography, Empty, Input } from 'antd';
 import styled from 'styled-components';
+import { primary } from 'constants/colors';
 import CardContext from '../../../Provider/CardProvider';
 import { filterAndSortByQuery } from '../../../../utils/cardFilter';
 import OwnedBadge from '../OwnedBadge';
@@ -128,6 +129,7 @@ export default class CardSearch extends React.Component {
       cardPrefix,
       allowFoilInput,
       getContainer,
+      inputProps,
     } = this.props;
 
     const { searchString } = this.state;
@@ -137,13 +139,31 @@ export default class CardSearch extends React.Component {
 
     const suggestions = filterAndSortByQuery(overrideCards || cards, name).slice(0, 20);
 
+    const renderOption = (option) => (
+      <Flex align="center">
+        {amount > 1 && (
+          <Typography.Text
+            strong
+            style={{ marginRight: 8 }}
+          >{`${amount}x `}</Typography.Text>
+        )}
+        {isFoil && <FoilIcon style={{ marginRight: 6, marginLeft: 0 }} />}
+        {cardPrefix}
+        {getHighlightedOption(name, option.name, containedCardNames, ownedCardNames)}
+      </Flex>
+    );
+
+    const options = suggestions.map((option) => ({
+      label: renderOption(option),
+      value: `${option.id};${option.name}`,
+    }));
+
     return (
       <AutoComplete
         autoFocus={autoFocus}
         ref={this.inputRef}
         value={searchString}
         onKeyDown={useBlurOnEsc}
-        placeholder={placeholder}
         defaultActiveFirstOption={defaultActiveFirstOption}
         onChange={(val) => this.setSearch(val)}
         onSelect={this.onSubmit}
@@ -154,31 +174,9 @@ export default class CardSearch extends React.Component {
         notFoundContent={<Empty description="No cards found" />}
         dropdownAlign={getDropdownAlign(alignTop)}
         getPopupContainer={getContainer}
+        options={options}
       >
-        {suggestions.map((option) => (
-          <AutoComplete.Option
-            text={option.name}
-            style={{ display: 'flex' }}
-            key={`${option.id};${option.name}`}
-          >
-            <Flex align="center">
-              {amount > 1 && (
-                <Typography.Text
-                  strong
-                  style={{ marginRight: 8 }}
-                >{`${amount}x `}</Typography.Text>
-              )}
-              {isFoil && <FoilIcon style={{ marginRight: 6, marginLeft: 0 }} />}
-              {cardPrefix}
-              {getHighlightedOption(
-                name,
-                option.name,
-                containedCardNames,
-                ownedCardNames
-              )}
-            </Flex>
-          </AutoComplete.Option>
-        ))}
+        <Input prefix={cardPrefix} placeholder={placeholder} {...inputProps} />
       </AutoComplete>
     );
   }

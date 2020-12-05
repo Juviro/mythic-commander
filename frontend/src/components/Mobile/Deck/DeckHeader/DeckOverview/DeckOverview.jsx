@@ -51,7 +51,7 @@ export default ({ deck, loading }) => {
         </StyledHeader>
         <StyledStat>{numberOfCards}</StyledStat>
         <StyledStat>{commander && commander.name}</StyledStat>
-        <StyledStat>{`Total value: ${getPriceLabel(totalValue)}${
+        <StyledStat>{`Total Value: ${getPriceLabel(totalValue)}${
           unownedValue ? ` (${getPriceLabel(unownedValue)} not owned)` : ''
         }`}</StyledStat>
       </StyledInfoBox>

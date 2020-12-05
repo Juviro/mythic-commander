@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLazyQuery } from '@apollo/react-hooks';
 
-import { Flex, SetIcon } from '../../../Shared';
+import { SetIcon } from '../../../Shared';
 import { cardsBySet } from './queries';
 import SetSelection from '../../../Shared/Filter/SelectFilter/SetSelection';
 import { formatCachedCards } from '../../../../../utils/cachedCards';
@@ -37,13 +37,12 @@ export default ({ setCardOptions }) => {
   }, [loading, data, setKey]);
 
   return (
-    <Flex style={{ margin: '16px 0' }} direction="column">
-      <SetSelection
-        onChange={setSetId}
-        value={setKey}
-        placeholder="Select Set..."
-        allowClear
-      />
-    </Flex>
+    <SetSelection
+      onChange={setSetId}
+      value={setKey}
+      placeholder="Select Set..."
+      allowClear
+      size="small"
+    />
   );
 };

@@ -13,6 +13,7 @@ export default (wrapperRef, toggleShowDetail, numberOfCards, blockShortcuts) => 
   const [cardsPerRow, setCardsPerRow] = useState(6);
   const [currentPage = 1, setPageParam] = useQueryParam('page', NumberParam);
   const [pageSize, setPageSizeParam] = useQueryParam('pageSize', NumberParam);
+  const [addedWithin] = useQueryParam('addedWithin', NumberParam);
   const { focusedElement } = useContext(FocusContext);
   const shortcutsActive =
     !focusedElement ||
@@ -20,6 +21,7 @@ export default (wrapperRef, toggleShowDetail, numberOfCards, blockShortcuts) => 
       focusedElement
     );
 
+  // eslint-disable-next-line
   useEffect(() => {
     if (!wrapperRef.current) return;
     const currentWidth = wrapperRef.current.offsetWidth;
@@ -28,6 +30,11 @@ export default (wrapperRef, toggleShowDetail, numberOfCards, blockShortcuts) => 
 
     setCardsPerRow(newNumberOfCardsPerRow);
   });
+
+  useEffect(() => {
+    setPageParam(1);
+    // eslint-disable-next-line
+  }, [addedWithin]);
 
   const numberOfRows = Math.ceil(pageSize / cardsPerRow);
 
