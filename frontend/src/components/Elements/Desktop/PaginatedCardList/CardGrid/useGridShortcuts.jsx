@@ -1,10 +1,16 @@
 import { useEffect, useState, useContext } from 'react';
 import { useQueryParam, NumberParam } from 'use-query-params';
-import { isInputField, isModifierKey } from '../../../../Hooks/useShortcut';
+
+import { useWindowSize } from 'components/Hooks';
+import { isInputField, isModifierKey } from 'components/Hooks/useShortcut';
 import keyCodes from '../../../../../constants/keyCodes';
 import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
 
-export default (cardsPerRow, toggleShowDetail, numberOfCards, blockShortcuts) => {
+export const CARD_WIDTH = 240;
+
+export default (wrapperRef, toggleShowDetail, numberOfCards, blockShortcuts) => {
+  useWindowSize();
+  const [cardsPerRow, setCardsPerRow] = useState(6);
   const [currentPage = 1, setPageParam] = useQueryParam('page', NumberParam);
   const [pageSize, setPageSizeParam] = useQueryParam('pageSize', NumberParam);
   const { focusedElement } = useContext(FocusContext);
@@ -13,6 +19,15 @@ export default (cardsPerRow, toggleShowDetail, numberOfCards, blockShortcuts) =>
     ['modal.cardDetails', 'deck.sidebar.add', 'deck.sidebar.wants'].includes(
       focusedElement
     );
+
+  useEffect(() => {
+    if (!wrapperRef.current) return;
+    const currentWidth = wrapperRef.current.offsetWidth;
+    const newNumberOfCardsPerRow = Math.floor(currentWidth / CARD_WIDTH);
+    if (newNumberOfCardsPerRow === cardsPerRow) return;
+
+    setCardsPerRow(newNumberOfCardsPerRow);
+  });
 
   const numberOfRows = Math.ceil(pageSize / cardsPerRow);
 

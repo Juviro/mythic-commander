@@ -1,6 +1,7 @@
 BUGFIXES:
     - highlighting of cardnames flawed
     - a lot of the cards are white on render, display only on scroll
+    - add cards: type xa -> x is ignored
 
 
 CURRENT:
