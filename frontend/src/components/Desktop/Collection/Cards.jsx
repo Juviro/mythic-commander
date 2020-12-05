@@ -2,7 +2,6 @@ import React from 'react';
 import { useMutation } from 'react-apollo';
 
 import { useParams } from 'react-router';
-import styled from 'styled-components';
 import message from '../../../utils/message';
 import { deleteAllFromCollection } from './queries';
 import PaginatedCardList, {

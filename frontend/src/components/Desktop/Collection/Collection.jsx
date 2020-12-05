@@ -1,26 +1,22 @@
 import React from 'react';
+import { useParams } from 'react-router';
 
 import { PageLayout } from 'components/Elements/Desktop';
+import AddToCollection from 'components/Desktop/Collection/AddToCollection';
 import Cards from './Cards';
-import CollectionSidebar from './CollectionSidebar';
-import useLocalStorage from '../../Hooks/useLocalStorage';
+import CollectionOverview from './CollectionOverview';
+import CollectionCard from './CollectionCard';
 
 export default () => {
-  const [isSidebarVisible, setIsSidebarVisible] = useLocalStorage(
-    'isSidebarVisible',
-    true
-  );
-  const toggleIsSidebarVisible = () => setIsSidebarVisible(!isSidebarVisible);
+  const { username } = useParams();
 
   return (
     <PageLayout>
-      <div style={{ position: 'absolute', left: 0 }}>
-        <CollectionSidebar
-          isVisible={isSidebarVisible}
-          toggleIsVisible={toggleIsSidebarVisible}
-        />
-      </div>
-      <Cards isSidebarVisible={isSidebarVisible} />
+      {!username && <CollectionOverview />}
+      {!username && <AddToCollection />}
+      <CollectionCard title="Your Cards" style={{ height: 'auto' }}>
+        <Cards />
+      </CollectionCard>
     </PageLayout>
   );
 };

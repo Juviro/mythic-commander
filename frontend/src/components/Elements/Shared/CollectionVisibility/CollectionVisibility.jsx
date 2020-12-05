@@ -1,75 +1,30 @@
 import React from 'react';
-import { Select, Typography, message } from 'antd';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { LockOutlined, GlobalOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
+import { ShareAltOutlined } from '@ant-design/icons';
 
-import Flex from '../Flex';
-import { collectionVisibility, changeCollectionVisibility, getUser } from './queries';
-import CopyableText from '../CopyableText';
+import styled from 'styled-components';
+import { useToggle } from 'components/Hooks';
+import ChangeVisibilityModal from './ChangeVisibilityModal';
 
-const VISIBILITY_OPTIONS = [
-  {
-    title: 'Only you',
-    value: 'private',
-    icon: <LockOutlined />,
-  },
-  {
-    title: 'Everyone with this link',
-    value: 'public',
-    icon: <GlobalOutlined />,
-  },
-];
+const StyledWrapper = styled.div`
+  align-self: flex-end;
+`;
 
-export default ({ style }) => {
-  const [mutate] = useMutation(changeCollectionVisibility);
-  const { data: dataVisibility, loading: loadingVisibility } = useQuery(
-    collectionVisibility
-  );
-  const { data: dataUser, loading: loadingUser } = useQuery(getUser);
-
-  const visibility = dataVisibility?.collection?.visibility;
-  const username = dataUser?.user?.username;
-
-  const onChange = async (value) => {
-    await mutate({ variables: { visibility: value } });
-    message.success('Successfully changed visibility!');
-  };
-
-  const isPubliclyVisible = visibility === 'public';
-  const publicUrl = `${window.location.origin}/collection/${username}`;
-
-  if (loadingVisibility || loadingUser) return null;
-
-  if (!username)
-    return (
-      <div style={style}>
-        <Typography.Text type="warning">
-          You need a username to share your collection. Please reload the page to pick
-          one.
-        </Typography.Text>
-      </div>
-    );
+export default () => {
+  const [showModal, toggleShowModal] = useToggle();
 
   return (
-    <Flex direction="column" style={style}>
-      <Typography.Text style={{ fontSize: 12 }} strong>
-        Your collection is visible to:
-      </Typography.Text>
-      <Select
-        style={{ width: '100%', marginTop: 8 }}
-        defaultValue={visibility}
-        onChange={onChange}
+    <StyledWrapper>
+      <Button
+        ghost
+        type="primary"
+        icon={<ShareAltOutlined />}
+        onClick={toggleShowModal}
+        style={{ alignSelf: 'flex-end' }}
       >
-        {VISIBILITY_OPTIONS.map(({ title, value, icon }) => (
-          <Select.Option key={value} value={value}>
-            {icon}
-            <Typography.Text style={{ marginLeft: 8, fontSize: 12 }} strong>
-              {title}
-            </Typography.Text>
-          </Select.Option>
-        ))}
-      </Select>
-      {isPubliclyVisible && <CopyableText text={publicUrl} />}
-    </Flex>
+        Share
+      </Button>
+      <ChangeVisibilityModal visibile={showModal} onClose={toggleShowModal} />
+    </StyledWrapper>
   );
 };

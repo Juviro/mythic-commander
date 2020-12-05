@@ -136,8 +136,6 @@ export default ({
       direction="column"
       style={{
         width,
-        overflowY: 'auto',
-        padding: 24,
         transition: 'width 0.2s',
         position: 'relative',
       }}

@@ -26,6 +26,7 @@ export default (numberOfCards, toggleShowDetail, toggleElementSelection) => {
 
   useEffect(() => {
     setCurrentPage(1);
+    // eslint-disable-next-line
   }, [addedWithin]);
 
   const onLeft = () => {

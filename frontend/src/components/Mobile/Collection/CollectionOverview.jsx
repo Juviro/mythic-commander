@@ -1,5 +1,5 @@
 import React from 'react';
-import { Collapse, Typography } from 'antd';
+import { Card, Typography } from 'antd';
 
 import { useParams } from 'react-router';
 import { CollectionStats, CollectionVisibility } from '../../Elements/Shared';
@@ -16,18 +16,12 @@ export default () => {
   }
 
   return (
-    <Collapse
-      style={{ width: '100%', backgroundColor: 'white' }}
-      expandIcon={() => <div />}
-      expandIconPosition="right"
-      defaultActiveKey={['overview']}
+    <Card
+      title="Your Collection"
+      style={{ width: '100%' }}
+      extra={<CollectionVisibility />}
     >
-      <Collapse.Panel key="overview" size="small" header="Overview">
-        <CollectionStats small />
-      </Collapse.Panel>
-      <Collapse.Panel key="share" size="small" header="Share...">
-        <CollectionVisibility />
-      </Collapse.Panel>
-    </Collapse>
+      <CollectionStats />
+    </Card>
   );
 };

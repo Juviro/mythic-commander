@@ -22,7 +22,7 @@ export default ({ deck, displayOwnedOnly, toggleDisplayOwnedOnly }) => {
     0
   );
 
-  const valueLabel = `Total value: ${getPriceLabel(totalValue, {
+  const valueLabel = `Total Value: ${getPriceLabel(totalValue, {
     round: true,
   })}${
     unownedValue ? ` (${getPriceLabel(unownedValue, { round: true })} not owned)` : ''

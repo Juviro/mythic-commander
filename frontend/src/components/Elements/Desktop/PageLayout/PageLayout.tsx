@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 const StyledBackground = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: center;
   min-height: 100%;
   background-color: ${pageBackground};
@@ -15,6 +14,8 @@ const StyledContent = styled.div`
   width: 100%;
   box-shadow: 0px 0px 12px 0px #6f6f6f;
   background-color: white;
+  display: flex;
+  flex-direction: column;
 `;
 
 interface Props {

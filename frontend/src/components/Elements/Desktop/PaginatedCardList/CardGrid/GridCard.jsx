@@ -15,6 +15,7 @@ const StyledCenterWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 24px;
 `;
 
 const StyledCardWrapper = styled.div`
