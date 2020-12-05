@@ -1,15 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 
+import { PageLayout } from 'components/Elements/Desktop';
 import Cards from './Cards';
 import CollectionSidebar from './CollectionSidebar';
 import useLocalStorage from '../../Hooks/useLocalStorage';
-
-const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-`;
 
 export default () => {
   const [isSidebarVisible, setIsSidebarVisible] = useLocalStorage(
@@ -19,12 +13,14 @@ export default () => {
   const toggleIsSidebarVisible = () => setIsSidebarVisible(!isSidebarVisible);
 
   return (
-    <StyledWrapper>
-      <CollectionSidebar
-        isVisible={isSidebarVisible}
-        toggleIsVisible={toggleIsSidebarVisible}
-      />
+    <PageLayout>
+      <div style={{ position: 'absolute', left: 0 }}>
+        <CollectionSidebar
+          isVisible={isSidebarVisible}
+          toggleIsVisible={toggleIsSidebarVisible}
+        />
+      </div>
       <Cards isSidebarVisible={isSidebarVisible} />
-    </StyledWrapper>
+    </PageLayout>
   );
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import { useMutation } from 'react-apollo';
 
 import { useParams } from 'react-router';
+import styled from 'styled-components';
 import message from '../../../utils/message';
 import { deleteAllFromCollection } from './queries';
 import PaginatedCardList, {
@@ -9,10 +10,9 @@ import PaginatedCardList, {
 } from '../../Elements/Desktop/PaginatedCardList/index';
 import { CollectionHoc, FindWantedCards } from '../../Elements/Shared';
 
-export default ({ isSidebarVisible }) => {
+export default () => {
   const { username } = useParams();
   const [mutate] = useMutation(deleteAllFromCollection);
-  const widthOffset = isSidebarVisible && !username ? 300 : 0;
 
   const deleteByOracle = (selectedCardIds, numberOfCards) => {
     const oracleIds = selectedCardIds;
@@ -46,7 +46,6 @@ export default ({ isSidebarVisible }) => {
               hiddenColumns={username ? null : ['owned']}
               cards={cards}
               showAddedBeforeFilter
-              widthOffset={widthOffset}
               numberOfCards={numberOfCards}
             />
           )}

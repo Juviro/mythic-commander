@@ -9,15 +9,23 @@ import { useShortcut, useToggle } from '../../../../Hooks';
 import CardInfo from './CardInfo';
 import { ContextMenu } from '../../../Shared';
 
+const StyledCenterWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const StyledCardWrapper = styled.div`
-  padding: 8px;
   height: fit-content;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   position: relative;
-  width: ${({ widthPercentage }) => widthPercentage}%;
+  width: 220px;
+  height: 360px;
 `;
 
 const StyledContextMenu = styled.div`
@@ -35,6 +43,8 @@ const StyledImageWrapper = styled.div`
   position: relative;
   border-radius: 4%;
   background-color: white;
+  width: 100%;
+  height: 100%;
 
   ${({ isSelected }) =>
     isSelected
@@ -76,9 +86,6 @@ const GridCard = ({
   onClick,
   isSelected,
   actions = [],
-  widthPercentage,
-  width,
-  zoom,
   search,
   onEditCard,
   shortcutsActive,
@@ -92,7 +99,7 @@ const GridCard = ({
   const [showMenu, toggleShowMenu] = useToggle();
   useShortcut('BACKSPACE', shortcutsActive && onDeleteCard ? onDeleteCard : null);
   useShortcut('e', shortcutsActive && onEditCard ? onEditCard : null);
-  const ref = useRef(null);
+  const scrollDummyRef = useRef(null);
 
   const [, dragRef] = useDrag({
     item: { type: 'CARD', id: card.id, name: card.name, listId, amount: card.amount },
@@ -108,46 +115,41 @@ const GridCard = ({
   });
 
   useEffect(() => {
-    if (!isSelected || !ref) return;
-    scrollIntoView(ref.current);
+    if (!isSelected || !scrollDummyRef) return;
+    scrollIntoView(scrollDummyRef.current);
   }, [isSelected]);
 
-  const cardSize = { width, height: width * 1.39 };
-  const textSize = Math.max(10 + 4 * (zoom / 100));
-
   return (
-    <StyledCardWrapper key={card.id} widthPercentage={widthPercentage}>
-      <StyledScrollDummy ref={ref} />
-      <StyledImageWrapper
-        isSelected={isSelected}
-        onClick={onClick}
-        style={cardSize}
-        onMouseMove={() => toggleShowMenu(true)}
-        onMouseLeave={() => toggleShowMenu(false)}
-        markAsDisabled={markAsDisabled}
-        ref={dragRef}
-      >
-        <FlippableCard
-          card={card}
-          lazyLoadProps={{
-            offset: 200,
-            overflow: true,
-            height: cardSize.height,
-          }}
-        />
-        {displayedAmount > 1 && (
-          <StyledAmountWrapper
-            style={{ fontSize: textSize }}
-          >{`${displayedAmount}x`}</StyledAmountWrapper>
-        )}
-        {Boolean(showMenu && actions.length) && (
-          <StyledContextMenu>
-            <ContextMenu card={card} menuItems={actions} />
-          </StyledContextMenu>
-        )}
-      </StyledImageWrapper>
-      <CardInfo card={card} search={search} textSize={textSize} width={width} />
-    </StyledCardWrapper>
+    <StyledCenterWrapper>
+      <StyledCardWrapper key={card.id}>
+        <StyledScrollDummy ref={scrollDummyRef} />
+        <StyledImageWrapper
+          isSelected={isSelected}
+          onClick={onClick}
+          onMouseMove={() => toggleShowMenu(true)}
+          onMouseLeave={() => toggleShowMenu(false)}
+          markAsDisabled={markAsDisabled}
+          ref={dragRef}
+        >
+          <FlippableCard
+            card={card}
+            lazyLoadProps={{
+              offset: 200,
+              overflow: true,
+            }}
+          />
+          {displayedAmount > 1 && (
+            <StyledAmountWrapper>{`${displayedAmount}x`}</StyledAmountWrapper>
+          )}
+          {Boolean(showMenu && actions.length) && (
+            <StyledContextMenu>
+              <ContextMenu card={card} menuItems={actions} />
+            </StyledContextMenu>
+          )}
+        </StyledImageWrapper>
+        <CardInfo card={card} search={search} />
+      </StyledCardWrapper>
+    </StyledCenterWrapper>
   );
 };
 

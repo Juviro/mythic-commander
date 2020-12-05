@@ -11,7 +11,6 @@ import Header from './Header';
 import FullscreenSpinner from '../../Shared/Spinner';
 import useLocalStorage from '../../../Hooks/useLocalStorage';
 import keySymbols from '../../../../constants/keySymbols';
-import useNumberOfCards from './useNumberOfCards';
 
 const StyledEmpty = styled(Empty)`
   width: 100%;
@@ -43,14 +42,13 @@ export default ({
   onMoveCards,
 }) => {
   const [initialPageSize, setInitialPageSize] = useLocalStorage('pageSize', 25);
-  const [zoom, setZoom] = useLocalStorage('zoom', 100);
   const [{ layout, pageSize }, setParams] = useQueryParams({
     layout: StringParam,
     pageSize: NumberParam,
   });
   const width = `calc(100% - ${widthOffset}px)`;
 
-  const { cardsPerRow, numberOfRows, cardWidth } = useNumberOfCards(widthOffset, zoom);
+  // const { cardsPerRow, numberOfRows, cardWidth } = useNumberOfCards(widthOffset);
 
   useEffect(() => {
     if (!pageSize) {
@@ -119,7 +117,6 @@ export default ({
   } else if (layout === 'grid' && cards.length) {
     cardList = (
       <CardGrid
-        zoom={zoom}
         search={search}
         cards={cards}
         loading={loading}
@@ -128,9 +125,6 @@ export default ({
         actions={singleCardActions}
         onEditCard={onEdit}
         onDeleteCard={onDelete}
-        cardsPerRow={cardsPerRow}
-        numberOfRows={numberOfRows}
-        cardWidth={cardWidth}
       />
     );
   } else {
@@ -166,9 +160,6 @@ export default ({
         orderByParamName={orderByParamName}
         showAddedBeforeFilter={showAddedBeforeFilter}
         showCollectionFilters={showCollectionFilters}
-        showZoomSlider={layout === 'grid'}
-        zoom={zoom}
-        setZoom={setZoom}
       />
       {loading && !numberOfCards ? <FullscreenSpinner /> : cardList}
     </Flex>

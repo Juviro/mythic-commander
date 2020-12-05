@@ -28,7 +28,7 @@ const CardModalDesktop = ({ selectedCard, onClose, loading: parentLoading }) => 
       width={1100}
       bodyStyle={{
         overflow: 'auto',
-        maxHeight: 'calc(100vh - 32px)',
+        maxHeight: 'calc(100vh - 128px)',
       }}
       style={{ maxWidth: '100%' }}
       focusId="modal.cardDetails"

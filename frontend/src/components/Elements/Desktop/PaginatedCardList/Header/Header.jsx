@@ -16,9 +16,6 @@ const StyledWrapper = styled.div`
 
 export default ({
   setSearch,
-  showZoomSlider,
-  zoom,
-  setZoom,
   showCollectionFilters,
   orderByParamName,
   showAddedBeforeFilter,
@@ -61,10 +58,7 @@ export default ({
         />
         {showAddedBeforeFilter && <AddedBeforeFilter />}
       </Flex>
-      <Flex direction="row">
-        {showZoomSlider && <ZoomSlider zoom={zoom} setZoom={setZoom} />}
-        <LayoutPicker hideCard />
-      </Flex>
+      <LayoutPicker hideCard />
     </StyledWrapper>
   );
 };
