@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import { useDrag } from 'react-dnd';
 import { useParams } from 'react-router';
 import { useToggle } from 'components/Hooks';
+import shimmer from 'components/Animations/shimmer';
 import { primary } from '../../../../../constants/colors';
 import scrollIntoView from '../../../../../utils/scrollIntoView';
 import CardMenu from './CardMenu';
@@ -61,7 +62,7 @@ const StyledCard = styled.div`
   height: ${CARD_HEIGHT}px;
   border-radius: 4%;
   cursor: pointer;
-  background-color: #cecece;
+  ${shimmer};
   border: 1px solid black;
   overflow: hidden;
   position: relative;
