@@ -49,6 +49,7 @@ export { default as LazyLoad } from './LazyLoad';
 export { default as Login } from './Login';
 export { default as Logout } from './Logout';
 export { default as ManaCost, TextWithIcons } from './ManaCost';
+export { default as Menu } from './Menu';
 export { default as MoveTo } from './MoveTo';
 export { default as MoveToModal } from './MoveTo/MoveToModal';
 export { default as MythicCommanderBanner } from './MythicCommanderBanner';

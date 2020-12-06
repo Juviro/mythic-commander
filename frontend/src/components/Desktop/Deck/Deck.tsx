@@ -3,14 +3,8 @@ import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
-import {
-  Deck,
-  DeckCard,
-  MutationAddCardsToDeckArgs,
-  CardInputType,
-  Query,
-} from 'types/graphql';
-import { UnifiedDeckCard } from 'types/unifiedTypes';
+import { MutationAddCardsToDeckArgs, CardInputType, Query } from 'types/graphql';
+import { UnifiedDeck } from 'types/unifiedTypes';
 import Cards from './Cards';
 import Sidebar from './Sidebar';
 import Header from './Header/Header';
@@ -27,11 +21,6 @@ const StyledDeck = styled.div`
   display: flex;
   flex-direction: row;
 `;
-
-export interface UnifiedDeck extends Omit<Deck, 'cards'> {
-  originalCards: Array<DeckCard>;
-  cards: Array<UnifiedDeckCard>;
-}
 
 export default () => {
   const { id } = useParams<{ id: string }>();

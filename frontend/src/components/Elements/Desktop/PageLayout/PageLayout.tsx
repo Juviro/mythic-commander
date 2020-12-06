@@ -3,9 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledBackground = styled.div`
+  height: 100%;
   display: flex;
+  overflow: auto;
   justify-content: center;
-  min-height: 100%;
   background-color: ${lightBackground};
 `;
 
@@ -16,6 +17,8 @@ const StyledContent = styled.div`
   background-color: white;
   display: flex;
   flex-direction: column;
+  min-height: 100%;
+  height: fit-content;
 `;
 
 interface Props {

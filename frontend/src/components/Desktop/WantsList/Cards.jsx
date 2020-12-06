@@ -1,7 +1,12 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
 
-import { WithFullList, PaginatedCardList, WithActions } from '../../Elements/Desktop';
+import {
+  WithFullList,
+  PaginatedCardList,
+  WithActions,
+  PageCard,
+} from '../../Elements/Desktop';
 import message from '../../../utils/message';
 import {
   deleteFromWantsListDesktop,
@@ -9,7 +14,7 @@ import {
   wantsListDesktop,
 } from './queries';
 
-export default ({ cards, loading, widthOffset, wantsList }) => {
+export default ({ cards, loading, wantsList }) => {
   const [mutateDelete] = useMutation(deleteFromWantsListDesktop);
   const [mutateEdit] = useMutation(editWantsListCardDesktop);
 
@@ -50,25 +55,23 @@ export default ({ cards, loading, widthOffset, wantsList }) => {
     });
   };
 
-  const title = wantsList && wantsList.name;
-
   return (
-    <WithActions deleteByOracle={deleteByOracle} onEditCard={onEditCard}>
-      {(actionProps) => (
-        <WithFullList cards={cards} {...actionProps}>
-          {(fullListProps) => (
-            <PaginatedCardList
-              {...fullListProps}
-              loading={loading}
-              title={title}
-              widthOffset={widthOffset}
-              showAddedBeforeFilter
-              showCollectionFilters
-              orderByParamName="orderByAdvanced"
-            />
-          )}
-        </WithFullList>
-      )}
-    </WithActions>
+    <PageCard style={{ height: 'auto' }}>
+      <WithActions deleteByOracle={deleteByOracle} onEditCard={onEditCard}>
+        {(actionProps) => (
+          <WithFullList cards={cards} {...actionProps}>
+            {(fullListProps) => (
+              <PaginatedCardList
+                {...fullListProps}
+                loading={loading}
+                showAddedBeforeFilter
+                showCollectionFilters
+                orderByParamName="orderByAdvanced"
+              />
+            )}
+          </WithFullList>
+        )}
+      </WithActions>
+    </PageCard>
   );
 };

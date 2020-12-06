@@ -48,8 +48,6 @@ export default ({
   });
   const width = `calc(100% - ${widthOffset}px)`;
 
-  // const { cardsPerRow, numberOfRows, cardWidth } = useNumberOfCards(widthOffset);
-
   useEffect(() => {
     if (!pageSize) {
       setParams({ pageSize: initialPageSize });

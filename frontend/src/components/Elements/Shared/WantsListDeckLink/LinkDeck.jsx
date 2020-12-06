@@ -10,8 +10,8 @@ import { getDecks, linkWantsList } from './queries';
 import { wantsListsForDeckMobile } from '../../../Mobile/Deck/LinkedWants/queries';
 
 const StyledLinkButton = styled.div`
-  width: 120px;
-  height: 84px;
+  width: ${({ large }) => (large ? 210 : 120)}px;
+  height: ${({ large }) => (large ? 153 : 88)}px;
   display: flex;
   padding: 12px;
   margin: 4px 8px;
@@ -30,7 +30,7 @@ const StyledDeckPreview = styled.img`
   border-radius: 2px;
 `;
 
-export default ({ wantsList }) => {
+export default ({ wantsList, large }) => {
   const [modalVisible, toggleIsModalVisible] = useToggle(false);
   const [isChanging, toggleIsChanging] = useToggle(false);
   const { data, loading } = useQuery(getDecks);
@@ -62,7 +62,7 @@ export default ({ wantsList }) => {
 
   return (
     <>
-      <StyledLinkButton onClick={() => toggleIsModalVisible(true)}>
+      <StyledLinkButton large={large} onClick={() => toggleIsModalVisible(true)}>
         {isChanging ? (
           <LoadingOutlined style={{ fontSize: 24 }} />
         ) : (

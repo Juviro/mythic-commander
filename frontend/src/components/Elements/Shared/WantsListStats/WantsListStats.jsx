@@ -1,24 +1,27 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Descriptions, Skeleton } from 'antd';
-import { getPriceLabel } from '../../../../utils/cardStats';
+
+import { getListStats } from 'utils/getListStats';
+
+const StyledDescription = styled(Descriptions)`
+  margin-left: 8px;
+
+  .ant-descriptions-view table {
+    width: auto;
+  }
+`;
 
 export default ({ wantsList }) => {
   if (!wantsList) return <Skeleton />;
-  const { cards } = wantsList;
-  const numberOfCards = cards.reduce((sum, { amount }) => sum + amount, 0);
-  const numberOfUniqueCards = cards.length;
-  const wantsListValue = cards.reduce(
-    (sum, { minPrice, amount }) => sum + minPrice * amount,
-    0
-  );
+
+  const { numberOfCards, numberOfUniqueCards, valueLabel } = getListStats(wantsList);
 
   return (
-    <Descriptions style={{ marginLeft: 8 }} column={1}>
+    <StyledDescription column={1}>
       <Descriptions.Item label="Total Cards">{numberOfCards}</Descriptions.Item>
       <Descriptions.Item label="Unique Cards">{numberOfUniqueCards}</Descriptions.Item>
-      <Descriptions.Item label="Total costs">
-        {getPriceLabel(wantsListValue)}
-      </Descriptions.Item>
-    </Descriptions>
+      <Descriptions.Item label="Total costs">{valueLabel}</Descriptions.Item>
+    </StyledDescription>
   );
 };

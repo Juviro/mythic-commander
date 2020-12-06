@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography } from 'antd';
 import styled from 'styled-components';
 
-import { getPriceLabel } from '../../../../utils/cardStats';
+import { getListStats } from 'utils/getListStats';
 import Flex from '../Flex';
 import CommanderPicker from '../CommanderPicker';
 import NumberOfCards from './NumberOfCards';
@@ -13,20 +13,7 @@ const StyledLabel = styled(Typography.Text).attrs({ type: 'secondary' })`
 `;
 
 export default ({ deck, displayOwnedOnly, toggleDisplayOwnedOnly }) => {
-  const totalValue = deck.cards.reduce(
-    (acc, { minPrice, amount }) => acc + minPrice * amount,
-    0
-  );
-  const unownedValue = deck.cards.reduce(
-    (acc, val) => (val.owned ? acc : acc + val.minPrice),
-    0
-  );
-
-  const valueLabel = `Total Value: ${getPriceLabel(totalValue, {
-    round: true,
-  })}${
-    unownedValue ? ` (${getPriceLabel(unownedValue, { round: true })} not owned)` : ''
-  }`;
+  const { valueLabel } = getListStats(deck);
 
   return (
     <Flex direction="column" justify="space-around">
@@ -36,7 +23,7 @@ export default ({ deck, displayOwnedOnly, toggleDisplayOwnedOnly }) => {
         displayOwnedOnly={displayOwnedOnly}
         toggleDisplayOwnedOnly={toggleDisplayOwnedOnly}
       />
-      <StyledLabel>{valueLabel}</StyledLabel>
+      <StyledLabel>{`Total Value: ${valueLabel}`}</StyledLabel>
     </Flex>
   );
 };

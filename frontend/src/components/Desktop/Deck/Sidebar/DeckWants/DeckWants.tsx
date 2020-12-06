@@ -5,9 +5,9 @@ import { useLazyQuery } from 'react-apollo';
 
 import { Query, QueryWantsListsArgs, CardInputType } from 'types/graphql';
 import FullscreenSpinner from 'components/Elements/Shared/Spinner';
+import { UnifiedDeck } from 'types/unifiedTypes';
 import { wantsListsForDeck } from './queries';
 import WantsListsCollapse from './WantsListsCollapse';
-import { UnifiedDeck } from '../../Deck';
 
 const StyledWrapper = styled.div`
   width: 100%;

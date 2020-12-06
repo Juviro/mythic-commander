@@ -20,6 +20,7 @@ const StyledCoverLetter = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: ${({ color }) => color};
 `;
 
 const getColorFromId = (id) => {
@@ -32,8 +33,10 @@ export default ({ list }) => {
 
   if (!imgSrc) {
     return (
-      <StyledCoverLetterWrapper style={{ backgroundColor: getColorFromId(id) }}>
-        <StyledCoverLetter>{name.slice(0, 1)}</StyledCoverLetter>
+      <StyledCoverLetterWrapper>
+        <StyledCoverLetter color={getColorFromId(id)}>
+          {name.slice(0, 1)}
+        </StyledCoverLetter>
       </StyledCoverLetterWrapper>
     );
   }

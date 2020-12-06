@@ -15,7 +15,6 @@ export default ({
 }) => {
   return (
     <PageCard
-      isFirst
       loading={loading}
       extra={
         <Button onClick={onAddList} type="primary" icon={<PlusOutlined />}>
@@ -35,7 +34,7 @@ export default ({
             onSearch={onEnter}
             onPressEnter={onEnter}
             value={search}
-            placeholder="Search by name..."
+            placeholder="Search by Name..."
             style={{ maxWidth: 350 }}
             onChange={(e) => setSearch(e.target.value)}
           />

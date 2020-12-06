@@ -30,7 +30,7 @@ export default ({ onClose }) => {
 
   const title = loading
     ? 'Searching for cards...'
-    : `${username} owns ${numberOfCards} cards you need:`;
+    : `${username} owns ${numberOfCards} cards you need`;
 
   return (
     <Modal visible onCancel={onClose} title={title} footer={null} style={{ top: 20 }}>

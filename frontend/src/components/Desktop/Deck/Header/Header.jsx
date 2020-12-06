@@ -41,7 +41,6 @@ export default ({ deck, onAddCards, displayOwnedOnly, toggleDisplayOwnedOnly }) 
         <Flex direction="column" justify="space-between" align="flex-end">
           <DeckActions deck={deck} />
           <AddCards
-            style={{ width: 250 }}
             onAddCards={onAddCards}
             autoFocus={false}
             placeholder="Add a card..."

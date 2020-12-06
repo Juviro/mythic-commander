@@ -3,8 +3,9 @@ import { Button } from 'antd';
 import { useMutation } from 'react-apollo';
 
 import { withRouter } from 'react-router';
-import { duplicateWantsListDesktop } from '../../queries';
-import { useToggle } from '../../../../Hooks';
+import { CopyOutlined } from '@ant-design/icons';
+import { duplicateWantsListDesktop } from '../queries';
+import { useToggle } from '../../../Hooks';
 
 const DuplicateList = ({ id: wantsListId, history }) => {
   const [mutate] = useMutation(duplicateWantsListDesktop);
@@ -26,7 +27,7 @@ const DuplicateList = ({ id: wantsListId, history }) => {
   };
 
   return (
-    <Button type="link" onClick={onDuplicate} loading={loading}>
+    <Button type="link" onClick={onDuplicate} loading={loading} icon={<CopyOutlined />}>
       Duplicate
     </Button>
   );
