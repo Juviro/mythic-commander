@@ -16,7 +16,7 @@ export default ({ name, onChange, level = 4 }) => {
         ellipsis
         level={level}
         editable={{ onChange }}
-        style={{ display: 'block', marginLeft: 8 }}
+        style={{ display: 'block', marginLeft: 8, marginBottom: 0 }}
       >
         {name}
       </Typography.Title>

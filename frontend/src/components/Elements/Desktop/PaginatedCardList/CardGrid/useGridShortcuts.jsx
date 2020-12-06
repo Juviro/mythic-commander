@@ -169,7 +169,6 @@ export default (wrapperRef, toggleShowDetail, numberOfCards, blockShortcuts) => 
   }, [currentPage]);
 
   const onChange = (newVal) => {
-    // setTimeout(() => window.scrollTo(0, 0)); TODO
     setCurrentPage(newVal);
   };
 

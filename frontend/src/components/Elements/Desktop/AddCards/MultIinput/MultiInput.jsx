@@ -107,16 +107,16 @@ export default class MultiInput extends React.Component {
 
   render() {
     const { cardResults, isValidInput, value, isOpen } = this.state;
+    const { buttonProps = { ghost: true, type: 'primary' } } = this.props;
 
     return (
       <>
         <Button
-          type="primary"
-          ghost
           onClick={() => this.setState({ isOpen: true })}
           icon={<ImportOutlined />}
+          {...buttonProps}
         >
-          Import card list
+          Import Card List
         </Button>
         <Modal
           destroyOnClose

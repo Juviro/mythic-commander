@@ -26,7 +26,13 @@ const StyledLabel = styled.div`
   margin-right: 16px;
 `;
 
-export default ({ onAddCards, isAdvanced }) => {
+export default ({
+  containedCardNames,
+  onAddCards,
+  isAdvanced,
+  focusId,
+  placeholder = 'Add cards, e.g. "2x foil negate"',
+}) => {
   const [cardOptions, setCardOptions] = useState({});
 
   return (
@@ -34,11 +40,13 @@ export default ({ onAddCards, isAdvanced }) => {
       <StyledSingleInputWrapper>
         <SingleInput
           isAdvanced
+          focusId={focusId}
           allowFoilInput
           autoFocus={false}
           onAddCards={onAddCards}
           cardOptions={cardOptions}
-          placeholder={'Add cards, e.g. "2x foil negate"'}
+          placeholder={placeholder}
+          containedCardNames={containedCardNames}
           inputProps={{
             size: 'large',
             suffix: <SearchOutlined />,

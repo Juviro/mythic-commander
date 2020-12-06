@@ -28,7 +28,7 @@ export default () => {
           numberOfCards,
         }) => (
           <>
-            <PageCard title="Advanced Search" isFirst>
+            <PageCard title="Advanced Search">
               <SearchOptions
                 loading={loading}
                 onSearch={onSearch}
@@ -41,7 +41,9 @@ export default () => {
               />
             </PageCard>
             {isSearching && (
-              <PageCard title={`Found ${numberOfCards} Cards`}>
+              <PageCard
+                title={numberOfCards !== undefined && `Found ${numberOfCards} Cards`}
+              >
                 <WithActions>
                   {(actionProps) => (
                     <PaginatedCardList

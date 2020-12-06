@@ -6,7 +6,7 @@ const ON_DUPLICATE =
 // TODO: remove cardOracleId
 export default async (
   _,
-  { cardOracleId, added = [], edited = [], deleted = [], cardId },
+  { cardOracleId, added = [], edited = [], deleted = [] },
   { user: { id: userId }, db }
 ) => {
   const promises = [];

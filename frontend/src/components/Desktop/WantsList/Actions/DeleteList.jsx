@@ -3,10 +3,11 @@ import { Button, message } from 'antd';
 import { useMutation } from 'react-apollo';
 
 import { withRouter } from 'react-router';
-import { useToggle } from '../../../../Hooks';
-import { ConfirmDelete } from '../../../../Elements/Shared';
-import boldText from '../../../../../utils/boldText';
-import { deleteWantsListDesktop } from '../../queries';
+import { DeleteOutlined } from '@ant-design/icons';
+import { useToggle } from '../../../Hooks';
+import { ConfirmDelete } from '../../../Elements/Shared';
+import boldText from '../../../../utils/boldText';
+import { deleteWantsListDesktop } from '../queries';
 
 const DeleteList = ({ wantsList: { id: wantsListId, name }, history }) => {
   const [isDeleting, toggleisDeleting] = useToggle();
@@ -29,7 +30,7 @@ const DeleteList = ({ wantsList: { id: wantsListId, name }, history }) => {
 
   return (
     <>
-      <Button type="link" danger onClick={toggleisDeleting}>
+      <Button type="link" danger onClick={toggleisDeleting} icon={<DeleteOutlined />}>
         Delete
       </Button>
       {isDeleting && (

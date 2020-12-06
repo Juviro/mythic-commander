@@ -13,7 +13,7 @@ const StyledStats = styled.div`
 
 export default () => {
   return (
-    <PageCard title="Overview" extra={<CollectionVisibility />} isFirst>
+    <PageCard title="Overview" extra={<CollectionVisibility />}>
       <Flex wrap="wrap">
         <StyledStats>
           <CollectionStats showCharts horizontal />
