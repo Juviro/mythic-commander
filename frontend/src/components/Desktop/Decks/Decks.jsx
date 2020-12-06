@@ -1,21 +1,9 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { withRouter } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
-import { OverviewList, OverviewListHeader } from '../../Elements/Desktop';
-import { lightBackground } from '../../../constants/colors';
+import { OverviewList, OverviewListHeader, PageLayout } from '../../Elements/Desktop';
 import { getDecksDesktop, createDeckDesktop } from './queries';
-
-const StyledWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  height: fit-content;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100%;
-  background-color: ${lightBackground};
-`;
 
 const Wants = ({ history }) => {
   const { data, loading } = useQuery(getDecksDesktop, {
@@ -62,17 +50,22 @@ const Wants = ({ history }) => {
   };
 
   return (
-    <StyledWrapper>
+    <PageLayout>
       <OverviewListHeader
         onAddList={onAddDeck}
         search={search}
         setSearch={setSearch}
         loading={loading}
         buttonText="New Deck"
+        title="Your Decks"
         onEnter={onOpenFirstDeck}
       />
-      <OverviewList loading={loading} lists={filteredDecks} onClick={onOpenDeck} />
-    </StyledWrapper>
+      <OverviewList
+        lists={filteredDecks}
+        onClick={onOpenDeck}
+        emptyText="No Decks found"
+      />
+    </PageLayout>
   );
 };
 

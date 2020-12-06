@@ -9,14 +9,16 @@ import SingleInput from './SingleInput';
 
 const StyledSingleInputWrapper = styled.div`
   width: 500px;
+  margin-bottom: 8px;
+  margin-right: 24px;
 `;
 
 const StyledSetSelectionWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: 24px;
   width: 500px;
+  margin-right: 24px;
 `;
 
 const StyledLabel = styled.div`
@@ -24,7 +26,7 @@ const StyledLabel = styled.div`
   margin-right: 16px;
 `;
 
-export default ({ onAddCards }) => {
+export default ({ onAddCards, isAdvanced }) => {
   const [cardOptions, setCardOptions] = useState({});
 
   return (
@@ -44,10 +46,12 @@ export default ({ onAddCards }) => {
           }}
         />
       </StyledSingleInputWrapper>
-      <StyledSetSelectionWrapper>
-        <StyledLabel>Filter by Set</StyledLabel>
-        <SearchSettings setCardOptions={setCardOptions} onAddCards={onAddCards} />
-      </StyledSetSelectionWrapper>
+      {isAdvanced && (
+        <StyledSetSelectionWrapper>
+          <StyledLabel>Filter by Set</StyledLabel>
+          <SearchSettings setCardOptions={setCardOptions} onAddCards={onAddCards} />
+        </StyledSetSelectionWrapper>
+      )}
     </Flex>
   );
 };
