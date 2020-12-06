@@ -1,4 +1,4 @@
-import { pageBackground } from 'constants/colors';
+import { lightBackground } from 'constants/colors';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -6,7 +6,7 @@ const StyledBackground = styled.div`
   display: flex;
   justify-content: center;
   min-height: 100%;
-  background-color: ${pageBackground};
+  background-color: ${lightBackground};
 `;
 
 const StyledContent = styled.div`

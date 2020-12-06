@@ -26,9 +26,10 @@ const addColorClause = (q, colors) => {
   }
 };
 
-const addOwnedClause = (q, userId) => {
+const addOwnedClause = (q, userId, isOwned) => {
+  const operator = isOwned === 'true' ? 'IN' : 'NOT IN';
   q.whereRaw(
-    `oracle_id IN (SELECT DISTINCT oracle_id FROM "collectionWithOracle" WHERE "userId" = ?)`,
+    `oracle_id ${operator} (SELECT DISTINCT oracle_id FROM "collectionWithOracle" WHERE "userId" = ?)`,
     userId
   );
 };
@@ -106,13 +107,15 @@ export default async (
     if (creatureType) q.where('type_line', 'LIKE', `%${creatureType}%`);
     if (cardType) q.where('type_line', 'ILIKE', `%${cardType}%`);
     if (set) q.where('set', set);
-    if (isCommanderLegal)
+    if (isCommanderLegal === 'true')
       q.whereRaw("(legalities->>'commander')::text = 'legal'");
+    if (isCommanderLegal === 'false')
+      q.whereRaw("(legalities->>'commander')::text = 'not_legal'");
     if (isLegendary === 'true') q.where('type_line', 'ILIKE', `%Legendary%`);
     if (isLegendary === 'false')
       q.whereNot('type_line', 'ILIKE', `%Legendary%`);
     if (colors.length) addColorClause(q, colors);
-    if (isOwned && user) addOwnedClause(q, user.id);
+    if (isOwned && user) addOwnedClause(q, user.id, isOwned);
     if (cmc) addRangeClause(q, cmc, 'cmc');
     if (power) addRangeClause(q, power, 'power');
     if (toughness) addRangeClause(q, toughness, 'toughness');

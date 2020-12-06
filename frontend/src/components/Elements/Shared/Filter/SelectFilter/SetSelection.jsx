@@ -9,6 +9,7 @@ export default ({
   value,
   onSearch,
   allowClear,
+  size,
   placeholder = 'e.g. "Theros"',
 }) => {
   const { sets } = useContext(CardContext);
@@ -20,8 +21,8 @@ export default ({
 
   return (
     <SelectFilter
-      size="default"
       value={value}
+      size={size}
       onSearch={onSearch}
       options={allSets}
       onChange={onChange}

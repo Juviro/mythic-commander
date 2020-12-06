@@ -94,6 +94,7 @@ const Search = ({ history }) => {
     <>
       <StyledWrapper>
         <Header />
+        <Divider />
         <Filter
           headerText="Advanced"
           onSearch={onSearch}

@@ -1,71 +1,64 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
 
-import Sidebar from './Sidebar';
+import SearchOptions from './SearchOptions';
 import { useToggle } from '../../Hooks';
-import { PaginatedCardList, WithActions } from '../../Elements/Desktop';
-import { lightBackground } from '../../../constants/colors';
+import {
+  PageCategory,
+  PageLayout,
+  PaginatedCardList,
+  WithActions,
+} from '../../Elements/Desktop';
 import { SearchHoc } from '../../Elements/Shared';
-
-const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  background-color: 'white';
-  ${({ isFullscreen }) =>
-    isFullscreen
-      ? css`
-          height: fit-content;
-          min-height: 100%;
-          background-color: ${lightBackground};
-        `
-      : ''};
-`;
 
 export default () => {
   const [isSidebarVisible, toggleIsSidebarVisible] = useToggle(true);
 
   return (
-    <SearchHoc researchOnOrderChange>
-      {({
-        isSearching,
-        loading,
-        onSearch,
-        onResetOptions,
-        onChangeOption,
-        currentOptions,
-        lastSearchOptions,
-        currentCards,
-        numberOfCards,
-      }) => (
-        <StyledWrapper isFullscreen={!isSearching}>
-          <Sidebar
-            loading={loading}
-            onSearch={onSearch}
-            onResetOptions={onResetOptions}
-            onChangeOption={onChangeOption}
-            options={currentOptions}
-            isVisible={isSidebarVisible}
-            isFullscreen={!isSearching}
-            toggleIsVisible={toggleIsSidebarVisible}
-          />
-          {isSearching && (
-            <WithActions>
-              {(actionProps) => (
-                <PaginatedCardList
-                  {...actionProps}
-                  loading={loading}
-                  search={lastSearchOptions.name}
-                  hiddenColumns={['added', 'amount']}
-                  cards={currentCards}
-                  widthOffset={isSidebarVisible ? 329 : 0}
-                  numberOfCards={numberOfCards}
-                />
-              )}
-            </WithActions>
-          )}
-        </StyledWrapper>
-      )}
-    </SearchHoc>
+    <PageLayout>
+      <SearchHoc researchOnOrderChange>
+        {({
+          isSearching,
+          loading,
+          onSearch,
+          onResetOptions,
+          onChangeOption,
+          currentOptions,
+          lastSearchOptions,
+          currentCards,
+          numberOfCards,
+        }) => (
+          <>
+            <PageCategory title="Advanced Search" isFirst>
+              <SearchOptions
+                loading={loading}
+                onSearch={onSearch}
+                onResetOptions={onResetOptions}
+                onChangeOption={onChangeOption}
+                options={currentOptions}
+                isVisible={isSidebarVisible}
+                isFullscreen={!isSearching}
+                toggleIsVisible={toggleIsSidebarVisible}
+              />
+            </PageCategory>
+            {isSearching && (
+              <PageCategory title={`Found ${numberOfCards} Cards`}>
+                <WithActions>
+                  {(actionProps) => (
+                    <PaginatedCardList
+                      {...actionProps}
+                      loading={loading}
+                      search={lastSearchOptions.name}
+                      hiddenColumns={['added', 'amount']}
+                      cards={currentCards}
+                      numberOfCards={numberOfCards}
+                    />
+                  )}
+                </WithActions>
+              </PageCategory>
+            )}
+          </>
+        )}
+      </SearchHoc>
+    </PageLayout>
   );
 };

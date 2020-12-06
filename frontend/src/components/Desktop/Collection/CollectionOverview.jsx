@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import CollectionCard from './CollectionCard';
+import { PageCategory } from 'components/Elements/Desktop';
 import { CollectionStats, CollectionVisibility, Flex } from '../../Elements/Shared';
 
 const StyledStats = styled.div`
@@ -13,13 +13,13 @@ const StyledStats = styled.div`
 
 export default () => {
   return (
-    <CollectionCard title="Overview" extra={<CollectionVisibility />} isFirst>
+    <PageCategory title="Overview" extra={<CollectionVisibility />} isFirst>
       <Flex wrap="wrap">
         <StyledStats>
           <CollectionStats showCharts horizontal />
         </StyledStats>
         <Flex flex={1} direction="column" />
       </Flex>
-    </CollectionCard>
+    </PageCategory>
   );
 };

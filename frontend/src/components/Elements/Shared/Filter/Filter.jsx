@@ -2,39 +2,63 @@ import React from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
 
-import { Typography } from 'antd';
+import { Divider, Typography } from 'antd';
+import BooleanSelection from 'components/Elements/Shared/Filter/SelectFilter/BooleanSelection';
 import ColorSelection from './ColorSelection';
 import NameFilter from './TextFilter/NameFilter';
 import OracleTextFilter from './TextFilter/OracleTextFilter';
 import CreatureTypeSelection from './SelectFilter/CreatureTypeSelection';
 import CardTypeSelection from './SelectFilter/CardTypeSelection';
 import SetSelection from './SelectFilter/SetSelection';
-import IsCommanderLegal from './CheckboxFilter/IsCommanderLegal';
-import IsOwned from './CheckboxFilter/IsOwned';
 import RangeFilter from './RangeFilter';
 import RarityFilter from './RarityFilter';
 import Flex from '../Flex';
 
-const FilterWrapper = styled.div`
+const StyledCenterWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+const SytledFilterWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  max-width: 700px;
 `;
 
 const StyledLabel = styled(Typography.Text)`
-  width: 130px;
+  min-width: 120px;
+  width: 40%;
 `;
 
-const FilterElement = ({ title, children }) => (
-  <Flex direction="row" align="end" style={{ marginBottom: 24 }}>
-    <StyledLabel strong> {title}</StyledLabel>
-    <Flex direction="column" style={{ flex: 1 }}>
-      {children}
+const getFontSize = (size) => {
+  const sizes = {
+    small: 14,
+    default: 16,
+    large: 18,
+  };
+
+  return sizes[size] ?? 14;
+};
+
+const FilterElement = ({ title, children, dividerAbove, size }) => (
+  <>
+    {dividerAbove && <Divider />}
+    <Flex
+      direction="row"
+      align="end"
+      style={{ marginBottom: 24, fontSize: getFontSize(size) }}
+    >
+      <StyledLabel strong>{title}</StyledLabel>
+      <Flex direction="column" style={{ flex: 1 }}>
+        {children}
+      </Flex>
     </Flex>
-  </Flex>
+  </>
 );
 
-const Filter = ({ onSearch, autoFocus, options, onChangeOption }) => {
+const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }) => {
   const {
     name,
     rarity,
@@ -56,6 +80,7 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption }) => {
       title: 'Card name',
       component: (
         <NameFilter
+          size={size}
           value={name}
           onSearch={onSearch}
           autoFocus={autoFocus}
@@ -68,6 +93,7 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption }) => {
       component: (
         <OracleTextFilter
           value={text}
+          size={size}
           onSearch={onSearch}
           onChange={onChangeOption('text')}
         />
@@ -76,24 +102,31 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption }) => {
     {
       title: 'Set',
       component: (
-        <SetSelection onChange={onChangeOption('set')} value={set} onSearch={onSearch} />
-      ),
-    },
-    {
-      title: 'Card Type',
-      component: (
-        <CardTypeSelection
-          onChangeOption={onChangeOption}
-          value={cardType}
+        <SetSelection
+          size={size}
+          onChange={onChangeOption('set')}
+          value={set}
           onSearch={onSearch}
-          isLegendary={isLegendary}
         />
       ),
     },
     {
-      title: 'Creature Type',
+      title: 'Supertype',
+      dividerAbove: true,
+      component: (
+        <CardTypeSelection
+          size={size}
+          onChangeOption={onChangeOption}
+          value={cardType}
+          onSearch={onSearch}
+        />
+      ),
+    },
+    {
+      title: 'Subtype',
       component: (
         <CreatureTypeSelection
+          size={size}
           onChange={onChangeOption('creatureType')}
           onSearch={onSearch}
           value={creatureType}
@@ -101,23 +134,48 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption }) => {
       ),
     },
     {
-      title: 'Color Identity',
-      component: <ColorSelection onChange={onChangeOption('colors')} value={colors} />,
+      title: 'Is Legendary',
+      dividerAbove: true,
+      component: (
+        <BooleanSelection
+          onChangeOption={onChangeOption}
+          value={isLegendary}
+          onChange={onChangeOption('isLegendary')}
+          trueLabel="Legendary Only"
+          falseLabel="Non-Legandary Only"
+        />
+      ),
     },
     {
       title: 'Rarity',
-      component: <RarityFilter onChange={onChangeOption('rarity')} value={rarity} />,
+      component: (
+        <RarityFilter size={size} onChange={onChangeOption('rarity')} value={rarity} />
+      ),
     },
     {
-      title: 'Cmc',
+      title: 'Color Identity',
+      dividerAbove: true,
       component: (
-        <RangeFilter value={cmc} onSearch={onSearch} onChange={onChangeOption('cmc')} />
+        <ColorSelection size={size} onChange={onChangeOption('colors')} value={colors} />
+      ),
+    },
+    {
+      title: 'Converted Mana Cost',
+      dividerAbove: true,
+      component: (
+        <RangeFilter
+          size={size}
+          value={cmc}
+          onSearch={onSearch}
+          onChange={onChangeOption('cmc')}
+        />
       ),
     },
     {
       title: 'Power',
       component: (
         <RangeFilter
+          size={size}
           value={power}
           onSearch={onSearch}
           onChange={onChangeOption('power')}
@@ -128,6 +186,7 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption }) => {
       title: 'Toughness',
       component: (
         <RangeFilter
+          size={size}
           value={toughness}
           onSearch={onSearch}
           onChange={onChangeOption('toughness')}
@@ -136,27 +195,44 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption }) => {
     },
     {
       title: 'Legality',
+      dividerAbove: true,
       component: (
-        <IsCommanderLegal
+        <BooleanSelection
           onChange={onChangeOption('isCommanderLegal')}
-          isCommanderLegal={isCommanderLegal}
+          value={isCommanderLegal}
+          trueLabel="Commander Legal"
+          falseLabel="Not Commander Legal"
         />
       ),
     },
     {
       title: 'Owned',
-      component: <IsOwned onChange={onChangeOption('isOwned')} isOwned={isOwned} />,
+      component: (
+        <BooleanSelection
+          onChange={onChangeOption('isOwned')}
+          value={isOwned}
+          trueLabel="Owned Cards Only"
+          falseLabel="Unowned Cards Only"
+        />
+      ),
     },
   ];
 
   return (
-    <FilterWrapper>
-      {filterElements.map(({ title, component }) => (
-        <FilterElement key={title} title={title}>
-          {component}
-        </FilterElement>
-      ))}
-    </FilterWrapper>
+    <StyledCenterWrapper>
+      <SytledFilterWrapper>
+        {filterElements.map(({ title, component, dividerAbove }) => (
+          <FilterElement
+            key={title}
+            title={title}
+            dividerAbove={dividerAbove}
+            size={size}
+          >
+            {component}
+          </FilterElement>
+        ))}
+      </SytledFilterWrapper>
+    </StyledCenterWrapper>
   );
 };
 
