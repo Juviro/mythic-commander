@@ -108,7 +108,7 @@ const Search = ({ history }) => {
           loading={loading}
           onResetOptions={onResetOptions}
           isFilterResettable={isFilterResettable}
-          style={{ marginTop: 24, width: '80%' }}
+          style={{ marginTop: 24 }}
         />
         <Divider />
         {allCards && (

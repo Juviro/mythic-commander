@@ -10,7 +10,7 @@ const StyledBackground = styled.div`
 `;
 
 const StyledContent = styled.div`
-  max-width: 1500px;
+  max-width: 1250px;
   width: 100%;
   box-shadow: 0px 0px 12px 0px #6f6f6f;
   background-color: white;

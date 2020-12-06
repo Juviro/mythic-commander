@@ -14,17 +14,10 @@ import RangeFilter from './RangeFilter';
 import RarityFilter from './RarityFilter';
 import Flex from '../Flex';
 
-const StyledCenterWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-`;
-
 const SytledFilterWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  max-width: 700px;
 `;
 
 const StyledLabel = styled(Typography.Text)`
@@ -68,7 +61,7 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
     set,
     text,
     colors,
-    creatureType,
+    subType,
     cardType,
     isLegendary,
     isOwned,
@@ -127,9 +120,9 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
       component: (
         <CreatureTypeSelection
           size={size}
-          onChange={onChangeOption('creatureType')}
+          onChange={onChangeOption('subType')}
           onSearch={onSearch}
-          value={creatureType}
+          value={subType}
         />
       ),
     },
@@ -219,20 +212,13 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
   ];
 
   return (
-    <StyledCenterWrapper>
-      <SytledFilterWrapper>
-        {filterElements.map(({ title, component, dividerAbove }) => (
-          <FilterElement
-            key={title}
-            title={title}
-            dividerAbove={dividerAbove}
-            size={size}
-          >
-            {component}
-          </FilterElement>
-        ))}
-      </SytledFilterWrapper>
-    </StyledCenterWrapper>
+    <SytledFilterWrapper>
+      {filterElements.map(({ title, component, dividerAbove }) => (
+        <FilterElement key={title} title={title} dividerAbove={dividerAbove} size={size}>
+          {component}
+        </FilterElement>
+      ))}
+    </SytledFilterWrapper>
   );
 };
 

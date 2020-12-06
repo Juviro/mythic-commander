@@ -6,7 +6,7 @@ export default {
   set: StringParam,
   cardType: StringParam,
   isLegendary: StringParam,
-  creatureType: StringParam,
+  subType: StringParam,
   colors: StringParam,
   rarity: StringParam,
   cmc: StringParam,

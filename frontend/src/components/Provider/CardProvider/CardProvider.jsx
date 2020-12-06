@@ -8,7 +8,7 @@ const CardContext = React.createContext({});
 export const CardContextProvider = ({ children }) => {
   const [cardNames, setCardNames] = useState();
   const [cards, setCards] = useState([]);
-  const [creatureTypes, setCreatureTypes] = useState([]);
+  const [subTypes, setSubTypes] = useState([]);
   const [sets, setSets] = useState({});
 
   const getSets = async () => {
@@ -16,8 +16,8 @@ export const CardContextProvider = ({ children }) => {
     setSets(allSets);
   };
   const getCreatureTypes = async () => {
-    const allcreatureTypes = await getCollectionFromCache('creatureTypes');
-    setCreatureTypes(allcreatureTypes);
+    const allcreatureTypes = await getCollectionFromCache('subTypes');
+    setSubTypes(allcreatureTypes);
   };
   const getCards = async () => {
     const allCards = await getCollectionFromCache('cards');
@@ -37,7 +37,7 @@ export const CardContextProvider = ({ children }) => {
       value={{
         cardNames,
         cards,
-        creatureTypes,
+        subTypes,
         sets,
         cardTypes: CARD_TYPES,
       }}

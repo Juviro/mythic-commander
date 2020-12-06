@@ -36,10 +36,10 @@ const filterByColor = (colorString = '') => ({ color_identity }: UnifiedCard) =>
   return someMatches;
 };
 
-const filterByCreatureType = (creatureType: string) => ({ subTypes }: UnifiedCard) => {
-  if (!creatureType) return true;
+const filterBySubType = (subType: string) => ({ subTypes }: UnifiedCard) => {
+  if (!subType) return true;
   if (!subTypes) return false;
-  return subTypes.some((type) => type.toLowerCase() === creatureType.toLowerCase());
+  return subTypes.some((type) => type.toLowerCase() === subType.toLowerCase());
 };
 
 const filterByCardType = (cardType: string) => ({ primaryTypes }: UnifiedCard) => {
@@ -62,7 +62,7 @@ const filterByAddedWithin = (addedWithin?: number) => ({ createdAt }: UnifiedCar
 interface FilterOptions {
   name?: string;
   colors?: string;
-  creatureType?: string;
+  subType?: string;
   cardType?: string;
   isLegendary?: string;
   addedWithin?: number;
@@ -70,14 +70,14 @@ interface FilterOptions {
 
 export const filterCards = (
   cards: UnifiedCard[],
-  { name, colors, creatureType, cardType, isLegendary, addedWithin }: FilterOptions
+  { name, colors, subType, cardType, isLegendary, addedWithin }: FilterOptions
 ) => {
   return filterByName(cards, name)
     .filter(filterByAddedWithin(addedWithin))
     .filter(filterByColor(colors))
     .filter(filterByCardType(cardType))
     .filter(filterByLegendary(isLegendary))
-    .filter(filterByCreatureType(creatureType));
+    .filter(filterBySubType(subType));
 };
 
 export const sortCardsBySearch = (searchString = '') => (
