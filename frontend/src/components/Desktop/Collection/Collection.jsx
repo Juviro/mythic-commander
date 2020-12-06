@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router';
 
-import { PageCategory, PageLayout } from 'components/Elements/Desktop';
+import { PageCard, PageLayout } from 'components/Elements/Desktop';
 import AddToCollection from 'components/Desktop/Collection/AddToCollection';
 import Cards from './Cards';
 import CollectionOverview from './CollectionOverview';
@@ -13,9 +13,9 @@ export default () => {
     <PageLayout>
       {!username && <CollectionOverview />}
       {!username && <AddToCollection />}
-      <PageCategory title="Your Cards" style={{ height: 'auto' }}>
+      <PageCard title="Your Cards" style={{ height: 'auto' }}>
         <Cards />
-      </PageCategory>
+      </PageCard>
     </PageLayout>
   );
 };

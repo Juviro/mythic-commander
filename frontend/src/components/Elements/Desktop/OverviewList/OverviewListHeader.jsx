@@ -1,17 +1,28 @@
 import React from 'react';
-import { Card, Input, Button, Tooltip } from 'antd';
+import { Input, Button, Tooltip } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { PageCard } from 'components/Elements/Desktop/PageLayout';
 import { Flex } from '../../Shared';
 
-export default ({ onEnter, onAddList, search, setSearch, loading, buttonText }) => {
+export default ({
+  onEnter,
+  onAddList,
+  search,
+  setSearch,
+  loading,
+  buttonText,
+  title,
+}) => {
   return (
-    <Card
+    <PageCard
+      isFirst
       loading={loading}
-      style={{
-        width: 1000,
-        margin: 16,
-        maxWidth: 'calc(100% - 32px)',
-      }}
+      extra={
+        <Button onClick={onAddList} type="primary" icon={<PlusOutlined />}>
+          {buttonText}
+        </Button>
+      }
+      title={title}
     >
       <Flex direction="row" justify="space-between">
         <Tooltip
@@ -29,10 +40,7 @@ export default ({ onEnter, onAddList, search, setSearch, loading, buttonText }) 
             onChange={(e) => setSearch(e.target.value)}
           />
         </Tooltip>
-        <Button onClick={onAddList} type="primary" icon={<PlusOutlined />}>
-          {buttonText}
-        </Button>
       </Flex>
-    </Card>
+    </PageCard>
   );
 };

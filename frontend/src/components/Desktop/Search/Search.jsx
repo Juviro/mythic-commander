@@ -3,7 +3,7 @@ import React from 'react';
 import SearchOptions from './SearchOptions';
 import { useToggle } from '../../Hooks';
 import {
-  PageCategory,
+  PageCard,
   PageLayout,
   PaginatedCardList,
   WithActions,
@@ -28,7 +28,7 @@ export default () => {
           numberOfCards,
         }) => (
           <>
-            <PageCategory title="Advanced Search" isFirst>
+            <PageCard title="Advanced Search" isFirst>
               <SearchOptions
                 loading={loading}
                 onSearch={onSearch}
@@ -39,9 +39,9 @@ export default () => {
                 isFullscreen={!isSearching}
                 toggleIsVisible={toggleIsSidebarVisible}
               />
-            </PageCategory>
+            </PageCard>
             {isSearching && (
-              <PageCategory title={`Found ${numberOfCards} Cards`}>
+              <PageCard title={`Found ${numberOfCards} Cards`}>
                 <WithActions>
                   {(actionProps) => (
                     <PaginatedCardList
@@ -54,7 +54,7 @@ export default () => {
                     />
                   )}
                 </WithActions>
-              </PageCategory>
+              </PageCard>
             )}
           </>
         )}

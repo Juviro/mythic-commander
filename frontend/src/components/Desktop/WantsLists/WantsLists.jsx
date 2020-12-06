@@ -1,22 +1,10 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { withRouter } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
 import { wantsListsDesktop as getWantsLists, createWantsListDesktop } from './queries';
 import { splitWantsLists } from '../../Mobile/WantsLists/WantsLists';
-import { OverviewList, OverviewListHeader } from '../../Elements/Desktop';
-import { lightBackground } from '../../../constants/colors';
-
-const StyledWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  height: fit-content;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100%;
-  background-color: ${lightBackground};
-`;
+import { OverviewList, OverviewListHeader, PageLayout } from '../../Elements/Desktop';
 
 const Wants = ({ history }) => {
   const { data, loading } = useQuery(getWantsLists, {
@@ -53,6 +41,8 @@ const Wants = ({ history }) => {
   };
   const [unlinkedLists, linkedLists] = splitWantsLists(data, search);
 
+  const wantsLists = unlinkedLists.concat(linkedLists);
+
   const onOpenFirstDeck = () => {
     const firstList = [...unlinkedLists, ...linkedLists][0];
     if (!firstList) return;
@@ -60,7 +50,7 @@ const Wants = ({ history }) => {
   };
 
   return (
-    <StyledWrapper>
+    <PageLayout>
       <OverviewListHeader
         onAddList={onAddWantsList}
         search={search}
@@ -68,12 +58,15 @@ const Wants = ({ history }) => {
         loading={loading}
         buttonText="New Wants List"
         onEnter={onOpenFirstDeck}
+        title="Your Wants Lists"
       />
-      <OverviewList loading={loading} lists={unlinkedLists} onClick={onOpenWantsList} />
-      {Boolean(linkedLists.length) && (
-        <OverviewList loading={loading} lists={linkedLists} onClick={onOpenWantsList} />
-      )}
-    </StyledWrapper>
+      <OverviewList
+        loading={loading}
+        lists={wantsLists}
+        onClick={onOpenWantsList}
+        emptyText="No Wants Lists found"
+      />
+    </PageLayout>
   );
 };
 

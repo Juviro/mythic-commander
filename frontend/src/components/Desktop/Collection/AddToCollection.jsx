@@ -3,7 +3,7 @@ import { useMutation } from 'react-apollo';
 
 import MultiInput from 'components/Elements/Desktop/AddCards/MultIinput';
 import message from '../../../utils/message';
-import { AddCards, PageCategory } from '../../Elements/Desktop';
+import { AddCards, PageCard } from '../../Elements/Desktop';
 import { addToCollectionDesktop } from './queries';
 
 export default () => {
@@ -19,7 +19,7 @@ export default () => {
   };
 
   return (
-    <PageCategory
+    <PageCard
       title="Add Cards to your Collection"
       extra={<MultiInput onAddCards={onAddCards} />}
     >
@@ -30,6 +30,6 @@ export default () => {
         allowFoilInput
         placeholder={'e.g. "2x foil negate"'}
       />
-    </PageCategory>
+    </PageCard>
   );
 };

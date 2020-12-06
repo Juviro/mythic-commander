@@ -1,22 +1,25 @@
 import { css, keyframes } from 'styled-components';
 
 const shimmer = keyframes`
-  0% {
-    background-position: -468px 0;
-  }
-  
+  0%,
   100% {
-    background-position: 468px 0; 
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
   }
 `;
 
 export default css`
-  border-radius: 4%;
-  background-color: #f7f7f7;
-  background: linear-gradient(110deg, #f7f7f7 16%, #e6e4e4 26%, #f7f7f7 34%);
-  background-size: 100rem 50rem;
+  background: linear-gradient(
+    90deg,
+    rgba(207, 216, 220, 0.2),
+    rgba(207, 216, 220, 0.4),
+    rgba(207, 216, 220, 0.2)
+  );
+  background-size: 600% 600%;
 
-  animation: ${shimmer} 2s;
+  animation: ${shimmer} 1.4s;
   animation-fill-mode: forwards;
   animation-iteration-count: infinite;
   animation-timing-function: linear;

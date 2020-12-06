@@ -1,2 +1,2 @@
 export { default } from './PageLayout';
-export { default as PageCategory } from './PageCategory';
+export { default as PageCard } from './PageCard';
