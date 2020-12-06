@@ -17,10 +17,10 @@ export default ({
   moveToList,
   name: nameQuery,
 }) => {
-  const [{ name, colors, layout, creatureType, cardType, isLegendary }] = useQueryParams({
+  const [{ name, colors, layout, subType, cardType, isLegendary }] = useQueryParams({
     name: StringParam,
     colors: StringParam,
-    creatureType: StringParam,
+    subType: StringParam,
     cardType: StringParam,
     isLegendary: StringParam,
     layout: StringParam,
@@ -45,7 +45,7 @@ export default ({
   const filteredCards = filterCards(cards, {
     colors,
     name: name || nameQuery,
-    creatureType,
+    subType,
     cardType,
     isLegendary,
   });

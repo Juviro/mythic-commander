@@ -85,7 +85,7 @@ export default async (
     name,
     set,
     text,
-    creatureType,
+    subType,
     cardType,
     isLegendary,
     isCommanderLegal,
@@ -104,7 +104,7 @@ export default async (
   const where = q => {
     if (name) addNameClause(q, name);
     if (text) q.where('oracle_text', 'ILIKE', `%${text}%`);
-    if (creatureType) q.where('type_line', 'LIKE', `%${creatureType}%`);
+    if (subType) q.where('type_line', 'LIKE', `%${subType}%`);
     if (cardType) q.where('type_line', 'ILIKE', `%${cardType}%`);
     if (set) q.where('set', set);
     if (isCommanderLegal === 'true')

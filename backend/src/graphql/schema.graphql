@@ -283,7 +283,7 @@ type Query {
 input CardsOptionsInput {
   name: String
   colors: String
-  creatureType: String
+  subType: String
   cardType: String
   isLegendary: String
   isCommanderLegal: String

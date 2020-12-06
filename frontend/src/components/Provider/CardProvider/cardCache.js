@@ -1,11 +1,11 @@
 import { message } from 'antd';
-import { getAllSets, getAllCreatureTypes } from '../../../network/mtgApi';
+import { getAllSets, getSubtypes } from '../../../network/mtgApi';
 import client from '../../../network/graphqlClient';
 import { cachedCards, numberOfCachedCards } from './queries';
 
 const REFRESH_PERIOD = 24 * 60 * 60 * 1000;
 
-const FORCE_UPDATE_IF_BEFORE = 1595590481265;
+const FORCE_UPDATE_IF_BEFORE = 1607273255255;
 
 const getCards = async (currentCards = [], shouldForceUpdate) => {
   const {
@@ -34,7 +34,7 @@ const updateCollection = async (
   const getter = {
     sets: getAllSets,
     cards: getCards,
-    creatureTypes: getAllCreatureTypes,
+    subTypes: getSubtypes,
   };
 
   const stored = await getter[type](parsedCollection, shouldForceUpdate);
@@ -80,7 +80,7 @@ export const getCollectionFromCache = async (type, forceUpdate) => {
 const updateCache = async () => {
   console.info('updating chache...');
   await getCollectionFromCache('sets', true);
-  await getCollectionFromCache('creatureTypes', true);
+  await getCollectionFromCache('subTypes', true);
   await getCollectionFromCache('cards', true);
   console.info('cache updated!');
 };

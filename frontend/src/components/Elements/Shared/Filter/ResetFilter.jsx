@@ -8,13 +8,14 @@ const StyledButton = styled(Button)`
   animation: ${fadeIn} 0.3s linear;
 `;
 
-export default ({ title = 'reset filter', onReset }) => {
+export default ({ title = 'Reset Filter', onReset }) => {
   return (
     <StyledButton
       danger
-      type="link"
+      ghost
+      type="primary"
       onClick={onReset}
-      style={{ height: 14, lineHeight: 0 }}
+      // style={{ height: 14, lineHeight: 0 }}
     >
       {title}
     </StyledButton>
