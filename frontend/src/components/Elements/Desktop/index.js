@@ -9,6 +9,6 @@ export {
   WithActions,
   WithFullList,
 } from './PaginatedCardList';
-export { default as PageLayout } from './PageLayout';
+export { default as PageLayout, PageCategory } from './PageLayout';
 export { default as CardGrid } from './PaginatedCardList/CardGrid/CardGrid';
 export { default as Sidebar } from './Sidebar';

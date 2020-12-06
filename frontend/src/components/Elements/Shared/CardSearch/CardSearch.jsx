@@ -1,7 +1,6 @@
 import React from 'react';
 import { AutoComplete, Typography, Empty, Input } from 'antd';
 import styled from 'styled-components';
-import { primary } from 'constants/colors';
 import CardContext from '../../../Provider/CardProvider';
 import { filterAndSortByQuery } from '../../../../utils/cardFilter';
 import OwnedBadge from '../OwnedBadge';

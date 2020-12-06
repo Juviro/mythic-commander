@@ -15,7 +15,7 @@ const SelectFilter = ({
   onSearch,
   allowClear,
   getPrefix,
-  size = 'small',
+  size = 'default',
 }) => {
   const inputRef = React.useRef(null);
   const unifiedOptions = options.map((option) => {
@@ -86,7 +86,6 @@ const SelectFilter = ({
 
   return (
     <AutoComplete
-      size={size}
       value={currentValue}
       ref={inputRef}
       dropdownMatchSelectWidth
@@ -99,7 +98,8 @@ const SelectFilter = ({
       onDropdownVisibleChange={toggleIsVisible}
       options={filteredOptions}
     >
-      <Input
+      <Input.Search
+        size={size}
         placeholder={placeholder}
         prefix={<span>{getPrefix && value && getPrefix(value)}</span>}
       />

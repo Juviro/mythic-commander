@@ -4,13 +4,13 @@ import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
   display: flex;
-  width: 150px;
+  width: 170px;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
 `;
 
-export default ({ onSearch, onChange: onSubmit, value = '' }) => {
+export default ({ onSearch, onChange: onSubmit, value = '', size = 'small' }) => {
   const inputRefFrom = useRef(null);
   const inputRefTo = useRef(null);
 
@@ -34,8 +34,8 @@ export default ({ onSearch, onChange: onSubmit, value = '' }) => {
   return (
     <StyledWrapper>
       <Input
-        size="small"
-        style={{ width: 65 }}
+        size={size}
+        style={{ width: 75 }}
         type="number"
         value={from}
         placeholder="from"
@@ -45,8 +45,8 @@ export default ({ onSearch, onChange: onSubmit, value = '' }) => {
       />
       <Typography.Text>-</Typography.Text>
       <Input
-        size="small"
-        style={{ width: 65 }}
+        size={size}
+        style={{ width: 75 }}
         type="number"
         value={to}
         placeholder="to"

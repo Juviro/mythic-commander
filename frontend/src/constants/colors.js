@@ -12,8 +12,6 @@ export const greyBorder = '#969696';
 export const success = '#1fb31f';
 export const error = '#ff4d4f';
 
-export const pageBackground = '#f3f3f3';
-
 // https://material.io/resources/color/  - 600
 const LTRed = '#e53935';
 const LTOrange = '#fb8c00';

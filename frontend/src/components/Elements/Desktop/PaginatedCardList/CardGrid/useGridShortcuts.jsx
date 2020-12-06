@@ -168,13 +168,18 @@ export default (wrapperRef, toggleShowDetail, numberOfCards, blockShortcuts) => 
     setSelectedElementPosition(1);
   }, [currentPage]);
 
+  const onChange = (newVal) => {
+    // setTimeout(() => window.scrollTo(0, 0)); TODO
+    setCurrentPage(newVal);
+  };
+
   const pagination = {
     pageSize: pageSize || 10,
     current: currentPage,
     total: numberOfCards,
     onShowSizeChange: (_, newPageSize) => setPageSize(newPageSize),
     pageSizeOptions: ['10', '20', '50'],
-    onChange: (val) => setCurrentPage(val),
+    onChange,
   };
 
   return { pagination, selectedElementPosition, setSelectedElementPosition };
