@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { AutoComplete } from 'antd';
+import { AutoComplete, Input } from 'antd';
 import CustomSkeleton from '../../CustomSkeleton';
 import isMobile from '../../../../../utils/isMobile';
 import keyCodes from '../../../../../constants/keyCodes';
@@ -15,6 +15,7 @@ const SelectFilter = ({
   onSearch,
   allowClear,
   getPrefix,
+  size = 'default',
 }) => {
   const inputRef = React.useRef(null);
   const unifiedOptions = options.map((option) => {
@@ -37,12 +38,15 @@ const SelectFilter = ({
   }, [value]);
 
   const filteredOptions = filterAndSortByQuery(unifiedOptions, currentValue).map(
-    ({ name, value: optionValue }) => (
-      <AutoComplete.Option value={optionValue} key={optionValue}>
-        {getPrefix && getPrefix(optionValue)}
-        {name}
-      </AutoComplete.Option>
-    )
+    ({ name, value: optionValue }) => ({
+      label: (
+        <span>
+          {getPrefix && getPrefix(optionValue)}
+          {name}
+        </span>
+      ),
+      value: optionValue,
+    })
   );
 
   const onChangeInput = (inputValue = '') => {
@@ -56,9 +60,9 @@ const SelectFilter = ({
     }
   };
 
-  const onSelect = (_, { key, value: selectedValue }) => {
+  const onSelect = (key) => {
     onChange(key);
-    const currentOptionValue = options.find((option) => option.value === selectedValue);
+    const currentOptionValue = options.find((option) => option.value === key);
     if (currentOptionValue) {
       setCurrentValue(currentOptionValue.name);
     }
@@ -82,20 +86,23 @@ const SelectFilter = ({
 
   return (
     <AutoComplete
-      size="small"
       value={currentValue}
       ref={inputRef}
+      dropdownMatchSelectWidth
       allowClear={allowClear}
       style={{ width: '100%' }}
-      placeholder={placeholder}
       onSelect={onSelect}
       onKeyDown={searchOnEnter}
       onChange={onChangeInput}
       defaultActiveFirstOption
-      dropdownStyle={{ minWidth: 250 }}
       onDropdownVisibleChange={toggleIsVisible}
+      options={filteredOptions}
     >
-      {filteredOptions}
+      <Input.Search
+        size={size}
+        placeholder={placeholder}
+        prefix={<span>{getPrefix && value && getPrefix(value)}</span>}
+      />
     </AutoComplete>
   );
 };

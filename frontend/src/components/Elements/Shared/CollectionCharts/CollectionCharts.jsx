@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
-import { Typography, Divider } from 'antd';
+import { Typography, Divider, Space } from 'antd';
+import { LineChartOutlined } from '@ant-design/icons';
 
 import { useToggle } from '../../../Hooks';
 import { collectionSnapshots } from './queries';
@@ -15,6 +16,8 @@ const StyledWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  align-self: flex-start;
+  margin-top: 8px;
 `;
 
 export default ({ currentSnapshot }) => {
@@ -36,10 +39,13 @@ export default ({ currentSnapshot }) => {
   return (
     <StyledWrapper>
       <Typography.Text
-        style={{ color: primary, cursor: 'pointer' }}
+        style={{ color: primary, cursor: 'pointer', marginTop: 8 }}
         onClick={toggleVisible}
       >
-        show trend
+        <Space>
+          <LineChartOutlined />
+          Show Trend
+        </Space>
       </Typography.Text>
       <FocusedModal
         destroyOnClose

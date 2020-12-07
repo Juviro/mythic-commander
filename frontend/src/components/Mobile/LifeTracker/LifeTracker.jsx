@@ -22,21 +22,6 @@ const LifeTracker = ({ history }) => {
     history.push(`/m/life-tracker/start`);
   };
 
-  // TODO: remove
-  // React.useEffect(() => {
-  //   setTimeout(
-  //     () =>
-  //       onStart({
-  //         numberOfPlayers: 6,
-  //         startingLife: 40,
-  //         displayDamage: true,
-  //         useImages: true,
-  //       }),
-  //     500
-  //   );
-  //   // eslint-disable-next-line
-  // }, []);
-
   return (
     <StyledWrapper>
       <Flex style={{ width: '100%', flexGrow: 1 }} direction="column">

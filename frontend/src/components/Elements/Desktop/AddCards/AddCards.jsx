@@ -1,62 +1,65 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { Tooltip } from 'antd';
-import { useQuery } from 'react-apollo';
-import CardSearch from '../../Shared/CardSearch';
-import MultiInput from './MultIinput';
-import AdvancedSearch from './AdvancedSearch';
-import { useShortcut } from '../../../Hooks';
-import { getOwnedCardNames } from '../../../../queries';
+import { Flex } from 'components/Elements/Shared';
+import { SearchOutlined } from '@ant-design/icons';
+import { primary } from 'constants/colors';
+import SearchSettings from './AdvancedSearch/SearchSettings';
+import SingleInput from './SingleInput';
 
-const StyledWrapper = styled.div`
-  width: 100%;
+const StyledSingleInputWrapper = styled.div`
+  width: 500px;
+  margin-bottom: 8px;
+  margin-right: 24px;
+`;
+
+const StyledSetSelectionWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  width: 500px;
+  margin-right: 24px;
+`;
+
+const StyledLabel = styled.div`
+  white-space: nowrap;
+  margin-right: 16px;
 `;
 
 export default ({
-  onAddCards,
-  autoFocus,
   containedCardNames,
-  focusId,
-  style,
-  placeholder,
+  onAddCards,
   isAdvanced,
-  allowFoilInput,
+  focusId,
+  placeholder = 'Add cards, e.g. "2x foil negate"',
 }) => {
-  const searchInputRef = useRef(null);
-  const { data } = useQuery(getOwnedCardNames);
-  const [{ cardPrefix, cards, loading }, setCardOptions] = useState({});
-
-  const focusInput = () => searchInputRef.current.focus();
-  useShortcut('a', focusInput, focusId);
-
-  const ownedCardNames = data ? data.ownedCardNames : [];
+  const [cardOptions, setCardOptions] = useState({});
 
   return (
-    <Tooltip title="Add card [A]">
-      <StyledWrapper style={style}>
-        <CardSearch
-          ref={searchInputRef}
-          ownedCardNames={ownedCardNames}
-          containedCardNames={containedCardNames}
-          onSearch={(card, name) => onAddCards([card], name)}
-          resetSearch
-          autoFocus={autoFocus}
+    <Flex direction="row" wrap="wrap">
+      <StyledSingleInputWrapper>
+        <SingleInput
+          isAdvanced
+          focusId={focusId}
+          allowFoilInput
+          autoFocus={false}
+          onAddCards={onAddCards}
+          cardOptions={cardOptions}
           placeholder={placeholder}
-          width="100%"
-          cards={cards}
-          loading={loading}
-          cardPrefix={cardPrefix}
-          allowFoilInput={allowFoilInput}
+          containedCardNames={containedCardNames}
+          inputProps={{
+            size: 'large',
+            suffix: <SearchOutlined />,
+            style: { borderColor: primary },
+          }}
         />
-        {isAdvanced ? (
-          <AdvancedSearch setCardOptions={setCardOptions} onAddCards={onAddCards} />
-        ) : (
-          <MultiInput onAddCards={onAddCards} />
-        )}
-      </StyledWrapper>
-    </Tooltip>
+      </StyledSingleInputWrapper>
+      {isAdvanced && (
+        <StyledSetSelectionWrapper>
+          <StyledLabel>Filter by Set</StyledLabel>
+          <SearchSettings setCardOptions={setCardOptions} onAddCards={onAddCards} />
+        </StyledSetSelectionWrapper>
+      )}
+    </Flex>
   );
 };

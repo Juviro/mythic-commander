@@ -68,11 +68,11 @@ export type CardInputType = {
 export type CardsOptionsInput = {
   name?: Maybe<Scalars['String']>;
   colors?: Maybe<Scalars['String']>;
-  creatureType?: Maybe<Scalars['String']>;
+  subType?: Maybe<Scalars['String']>;
   cardType?: Maybe<Scalars['String']>;
   isLegendary?: Maybe<Scalars['String']>;
-  isCommanderLegal?: Maybe<Scalars['Boolean']>;
-  isOwned?: Maybe<Scalars['Boolean']>;
+  isCommanderLegal?: Maybe<Scalars['String']>;
+  isOwned?: Maybe<Scalars['String']>;
   text?: Maybe<Scalars['String']>;
   cmc?: Maybe<Scalars['String']>;
   rarity?: Maybe<Scalars['String']>;

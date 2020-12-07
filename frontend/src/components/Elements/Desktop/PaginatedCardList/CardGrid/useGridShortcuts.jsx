@@ -1,18 +1,40 @@
 import { useEffect, useState, useContext } from 'react';
 import { useQueryParam, NumberParam } from 'use-query-params';
-import { isInputField, isModifierKey } from '../../../../Hooks/useShortcut';
+
+import { useWindowSize } from 'components/Hooks';
+import { isInputField, isModifierKey } from 'components/Hooks/useShortcut';
 import keyCodes from '../../../../../constants/keyCodes';
 import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
 
-export default (cardsPerRow, toggleShowDetail, numberOfCards, blockShortcuts) => {
+export const CARD_WIDTH = 240;
+
+export default (wrapperRef, toggleShowDetail, numberOfCards, blockShortcuts) => {
+  useWindowSize();
+  const [cardsPerRow, setCardsPerRow] = useState(6);
   const [currentPage = 1, setPageParam] = useQueryParam('page', NumberParam);
   const [pageSize, setPageSizeParam] = useQueryParam('pageSize', NumberParam);
+  const [addedWithin] = useQueryParam('addedWithin', NumberParam);
   const { focusedElement } = useContext(FocusContext);
   const shortcutsActive =
     !focusedElement ||
     ['modal.cardDetails', 'deck.sidebar.add', 'deck.sidebar.wants'].includes(
       focusedElement
     );
+
+  // eslint-disable-next-line
+  useEffect(() => {
+    if (!wrapperRef.current) return;
+    const currentWidth = wrapperRef.current.offsetWidth;
+    const newNumberOfCardsPerRow = Math.floor(currentWidth / CARD_WIDTH);
+    if (newNumberOfCardsPerRow === cardsPerRow) return;
+
+    setCardsPerRow(newNumberOfCardsPerRow);
+  });
+
+  useEffect(() => {
+    setPageParam(1);
+    // eslint-disable-next-line
+  }, [addedWithin]);
 
   const numberOfRows = Math.ceil(pageSize / cardsPerRow);
 
@@ -146,13 +168,17 @@ export default (cardsPerRow, toggleShowDetail, numberOfCards, blockShortcuts) =>
     setSelectedElementPosition(1);
   }, [currentPage]);
 
+  const onChange = (newVal) => {
+    setCurrentPage(newVal);
+  };
+
   const pagination = {
     pageSize: pageSize || 10,
     current: currentPage,
     total: numberOfCards,
     onShowSizeChange: (_, newPageSize) => setPageSize(newPageSize),
     pageSizeOptions: ['10', '20', '50'],
-    onChange: (val) => setCurrentPage(val),
+    onChange,
   };
 
   return { pagination, selectedElementPosition, setSelectedElementPosition };

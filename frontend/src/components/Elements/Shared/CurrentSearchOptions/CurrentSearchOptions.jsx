@@ -16,8 +16,8 @@ const formatKey = (key) => {
     return value.charAt(0).toUpperCase() + value.slice(1);
   };
   switch (key) {
-    case 'creatureType':
-      return 'Creature Type';
+    case 'subType':
+      return 'Subtype';
     case 'cardType':
       return 'Card Type';
     case 'isLegendary':

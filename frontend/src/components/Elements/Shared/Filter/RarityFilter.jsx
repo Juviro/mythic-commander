@@ -20,9 +20,9 @@ export default ({ onChange: onSubmit, value = '' }) => {
   };
 
   return (
-    <Flex direction="row" wrap="wrap" justify="space-between" style={{ maxWidth: 300 }}>
+    <Flex direction="row" wrap="wrap" justify="space-between">
       {RARITIES.map((rarityGroup) => (
-        <Flex direction="column" key={Math.random()}>
+        <Flex direction="column" key={Math.random()} style={{ width: 180 }}>
           {rarityGroup.map((rarity) => (
             <Checkbox
               onChange={onChange(rarity)}

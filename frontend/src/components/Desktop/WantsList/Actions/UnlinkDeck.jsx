@@ -2,8 +2,9 @@ import React from 'react';
 import { Button } from 'antd';
 import { useMutation } from 'react-apollo';
 
+import { DisconnectOutlined } from '@ant-design/icons';
 import { unlinkWantsListDesktop } from './queries';
-import message from '../../../../../utils/message';
+import message from '../../../../utils/message';
 
 export default ({ id: wantsListId }) => {
   const [mutate] = useMutation(unlinkWantsListDesktop);
@@ -24,7 +25,7 @@ export default ({ id: wantsListId }) => {
   };
 
   return (
-    <Button type="link" onClick={onUnlink}>
+    <Button type="link" onClick={onUnlink} icon={<DisconnectOutlined />}>
       Unlink Deck
     </Button>
   );

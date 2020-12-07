@@ -1,30 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
+import { useParams } from 'react-router';
 
+import { PageLayout } from 'components/Elements/Desktop';
+import AddToCollection from 'components/Desktop/Collection/AddToCollection';
 import Cards from './Cards';
-import CollectionSidebar from './CollectionSidebar';
-import useLocalStorage from '../../Hooks/useLocalStorage';
-
-const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-`;
+import CollectionOverview from './CollectionOverview';
 
 export default () => {
-  const [isSidebarVisible, setIsSidebarVisible] = useLocalStorage(
-    'isSidebarVisible',
-    true
-  );
-  const toggleIsSidebarVisible = () => setIsSidebarVisible(!isSidebarVisible);
+  const { username } = useParams();
 
   return (
-    <StyledWrapper>
-      <CollectionSidebar
-        isVisible={isSidebarVisible}
-        toggleIsVisible={toggleIsSidebarVisible}
-      />
-      <Cards isSidebarVisible={isSidebarVisible} />
-    </StyledWrapper>
+    <PageLayout>
+      {!username && <CollectionOverview />}
+      {!username && <AddToCollection />}
+      <Cards />
+    </PageLayout>
   );
 };

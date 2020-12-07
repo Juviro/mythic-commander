@@ -15,6 +15,7 @@ const StyledTitleWrapper = styled.div`
   align-items: center;
   margin-right: 8px;
   font-size: 26px;
+  margin-bottom: 16px;
   justify-content: space-between;
 `;
 

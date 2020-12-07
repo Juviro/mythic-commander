@@ -1,8 +1,9 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
 
-import { AddCards } from '../../Elements/Desktop';
+import MultiInput from 'components/Elements/Desktop/AddCards/MultIinput';
 import message from '../../../utils/message';
+import { AddCards, PageCard } from '../../Elements/Desktop';
 import { addToCollectionDesktop } from './queries';
 
 export default () => {
@@ -18,12 +19,17 @@ export default () => {
   };
 
   return (
-    <AddCards
-      onAddCards={onAddCards}
-      autoFocus={false}
-      isAdvanced
-      allowFoilInput
-      placeholder={'e.g. "2x foil negate"'}
-    />
+    <PageCard
+      title="Add Cards to your Collection"
+      extra={<MultiInput onAddCards={onAddCards} />}
+    >
+      <AddCards
+        onAddCards={onAddCards}
+        autoFocus={false}
+        isAdvanced
+        allowFoilInput
+        placeholder={'e.g. "2x foil negate"'}
+      />
+    </PageCard>
   );
 };

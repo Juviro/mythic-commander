@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Table, Button, Space } from 'antd';
 import styled, { css } from 'styled-components';
 
@@ -8,9 +8,6 @@ import useTableShortcuts from './useTableShortcuts';
 import { useToggle, useShortcut } from '../../../../Hooks';
 import CardModalDesktop from '../../CardModalDesktop';
 import scrollIntoView from '../../../../../utils/scrollIntoView';
-
-// NavBar, pagination
-const DEFAULT_HEIGHT_OFFSET = 160;
 
 const StyledButtonWrapper = styled.div`
   width: 150px;
@@ -43,6 +40,7 @@ const CardTable = ({
   onDeleteCard,
   history,
 }) => {
+  const tableRef = useRef(null);
   const [showDetails, toggleShowDetail] = useToggle(false);
   const toggleElementSelection = (elementPosition) => {
     const elementToToggle = cards && cards[elementPosition - 1];
@@ -88,8 +86,6 @@ const CardTable = ({
     scrollIntoView(element);
   }, [selectedElementPosition]);
 
-  const innerTableWidth = window.innerHeight - DEFAULT_HEIGHT_OFFSET;
-
   const showRowSelection = onMoveCards || onDeleteCards;
   const rowSelection = showRowSelection && {
     onChange: (selectedRows) =>
@@ -98,7 +94,7 @@ const CardTable = ({
   };
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: 'relative' }} ref={tableRef}>
       <StyledButtonWrapper isVisible={Boolean(selectedCards && selectedCards.length)}>
         <Space>
           {onMoveCards && (
@@ -117,7 +113,6 @@ const CardTable = ({
         rowKey="id"
         style={{ width: '100%' }}
         size="small"
-        fixed={false}
         loading={loading}
         dataSource={cards}
         columns={columns({
@@ -126,19 +121,22 @@ const CardTable = ({
           hiddenColumns,
           actions,
         })}
-        showSorterTooltip={false}
+        scroll={{ scrollToFirstRowOnChange: true }}
         pagination={{
           ...pagination,
+          onChange: (val) => {
+            pagination.onChange(val);
+            tableRef.current.scrollIntoView();
+          },
           showSizeChanger: true,
           responsive: true,
-          position: ['topRight'],
+          position: ['topRight', 'bottomRight'],
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} cards`,
         }}
         rowClassName={(_, index) => {
           if (index + 1 !== selectedElementPosition) return null;
           return 'selected';
         }}
-        scroll={{ y: innerTableWidth }}
         onRow={(_, index) => ({
           onClick: () => {
             toggleShowDetail(true);

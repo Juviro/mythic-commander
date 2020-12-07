@@ -1,4 +1,4 @@
-import { StringParam, BooleanParam } from 'use-query-params';
+import { StringParam } from 'use-query-params';
 
 export default {
   name: StringParam,
@@ -6,12 +6,12 @@ export default {
   set: StringParam,
   cardType: StringParam,
   isLegendary: StringParam,
-  creatureType: StringParam,
+  subType: StringParam,
   colors: StringParam,
   rarity: StringParam,
   cmc: StringParam,
   power: StringParam,
   toughness: StringParam,
-  isCommanderLegal: BooleanParam,
-  isOwned: BooleanParam,
+  isCommanderLegal: StringParam,
+  isOwned: StringParam,
 };

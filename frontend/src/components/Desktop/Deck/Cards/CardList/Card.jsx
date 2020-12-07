@@ -98,7 +98,6 @@ const Card = ({
   displayOwnedOnly,
   onDeleteImmediately,
 }) => {
-  // console.log('displayOwnedOnly', displayOwnedOnly);
   const { id: deckId } = useParams();
   const { focusedElement } = useContext(FocusContext);
   const [isHighlighted, toggleIsHighlighted] = useToggle();

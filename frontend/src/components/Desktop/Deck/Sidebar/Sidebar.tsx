@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styled, { css } from 'styled-components';
 
 import { CardInputType } from 'types/graphql';
+import { UnifiedDeck } from 'types/unifiedTypes';
 import Tabs from './Tabs';
 import { Flex, ShortcutFocus } from '../../../Elements/Shared';
 import AddCards from './AddCards/AddCards';
@@ -9,7 +10,8 @@ import DeckStats from './DeckStats';
 import DeckWants from './DeckWants';
 import FocusContext from '../../../Provider/FocusProvider/FocusProvider';
 import { primary } from '../../../../constants/colors';
-import { UnifiedDeck } from '../Deck';
+
+export const DECK_SIDEBAR_WIDTH = 560;
 
 const StyledOuterWrapper = styled.div`
   position: relative;
@@ -26,8 +28,8 @@ const StyledWrapper = styled.div<{ visible: boolean; currentTabIndex: number }>`
   height: 300%;
   transition: all 0.15s cubic-bezier(0.4, 0, 1, 1);
   flex-direction: column;
-  width: 500px;
-  margin-left: ${({ visible }) => (visible ? 0 : -500)}px;
+  width: ${DECK_SIDEBAR_WIDTH}px;
+  margin-left: ${({ visible }) => (visible ? 0 : -DECK_SIDEBAR_WIDTH)}px;
   transform: translateY(-${({ currentTabIndex }) => (100 / 3) * currentTabIndex}%);
 `;
 
