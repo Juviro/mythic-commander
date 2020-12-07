@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { WantsList, CardInputType } from 'types/graphql';
 import { Flex, OneTimeInfoBox } from 'components/Elements/Shared';
-import { UnifiedDeck } from '../../Deck';
+import { UnifiedDeck } from 'types/unifiedTypes';
 import WantsListElement from './WantsListElement';
 import AddWantsList from './AddWantsList';
 

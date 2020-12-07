@@ -11,6 +11,7 @@ import { sortByCmc, sortByName } from '../../../../utils/cardFilter';
 import FocusContext from '../../../Provider/FocusProvider/FocusProvider';
 import { primary } from '../../../../constants/colors';
 import { Dropzone } from '../../../Elements/Desktop';
+import { DECK_SIDEBAR_WIDTH } from '../Sidebar/Sidebar';
 
 const StyledWrapper = styled.div`
   margin: 8px;
@@ -63,7 +64,7 @@ const getCardColumns = (cards, numberOfCols) => {
 };
 
 export default ({ deck, loading, currentTab, onAddCards, displayOwnedOnly }) => {
-  const widthOffset = currentTab ? 500 : 0;
+  const widthOffset = currentTab ? DECK_SIDEBAR_WIDTH : 0;
   useWindowSize();
   const { focusedElement } = useContext(FocusContext);
   const isFocused = focusedElement === 'deck.cards';

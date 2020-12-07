@@ -1,14 +1,13 @@
 import { useEffect, useState, useContext } from 'react';
 import { useQueryParam, NumberParam } from 'use-query-params';
 import { isInputField, isModifierKey } from '../../../../Hooks/useShortcut';
-import { useWindowSize } from '../../../../Hooks';
 import keyCodes from '../../../../../constants/keyCodes';
 import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
 
 export default (numberOfCards, toggleShowDetail, toggleElementSelection) => {
-  useWindowSize();
   const [currentPage = 1, setPageParam] = useQueryParam('page', NumberParam);
   const [pageSize, setPageSizeParam] = useQueryParam('pageSize', NumberParam);
+  const [addedWithin] = useQueryParam('addedWithin', NumberParam);
   const [selectedElementPosition, setSelectedElementPosition] = useState(0);
   const { focusedElement } = useContext(FocusContext);
   const shortcutsActive =
@@ -24,6 +23,11 @@ export default (numberOfCards, toggleShowDetail, toggleElementSelection) => {
     if (numberOfPages === 1 || numberOfPages >= currentPage) return;
     setCurrentPage(numberOfPages, true);
   });
+
+  useEffect(() => {
+    setCurrentPage(1);
+    // eslint-disable-next-line
+  }, [addedWithin]);
 
   const onLeft = () => {
     setCurrentPage(Math.max(currentPage - 1, 1));

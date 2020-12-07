@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 interface Props {
   direction?: 'row' | 'column';
-  align?: 'flex-start' | 'flex-end ' | 'center' | 'baseline' | 'stretch';
+  align?: 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch';
   justify?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around';
   wrap?: 'wrap' | 'nowrap' | 'wrap-reversed';
   flex?: number | string;

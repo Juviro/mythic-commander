@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input, Switch, Typography, Space, Button } from 'antd';
 import styled from 'styled-components';
-import { DownloadOutlined } from '@ant-design/icons';
+import { DownloadOutlined, ExportOutlined } from '@ant-design/icons';
 import Flex from '../Flex';
 import useLocalStorage from '../../../Hooks/useLocalStorage';
 import { useToggle } from '../../../Hooks';
@@ -22,7 +22,14 @@ const downloadAsTxt = (cardNameList, deckName) => {
   element.click();
 };
 
-export default ({ title, cards, visible, hideAmount }) => {
+export default ({
+  title,
+  cards,
+  visible,
+  hideAmount,
+  buttonProps,
+  buttonTitle = 'Export as Text',
+}) => {
   const [exportViewOpen, toggleExportViewOpen] = useToggle(visible);
   const [showAmount, setShowAmount] = useLocalStorage('showAmount', true);
   const cardNameList = cards
@@ -33,8 +40,13 @@ export default ({ title, cards, visible, hideAmount }) => {
 
   return (
     <>
-      <Button type="link" onClick={toggleExportViewOpen}>
-        Export as Text
+      <Button
+        icon={<ExportOutlined />}
+        type="link"
+        onClick={toggleExportViewOpen}
+        {...buttonProps}
+      >
+        {buttonTitle}
       </Button>
       <FocusedModal
         title={title}

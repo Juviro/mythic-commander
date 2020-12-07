@@ -90,8 +90,6 @@ export default ({ wantsList, alreadyInDeck, onAddCards, active }: Props) => {
         }}
         hidePagination
         cards={sortedCards}
-        cardsPerRow={2}
-        cardWidth={200}
         onEnter={onEnter}
         markAsDisabled={alreadyInDeck}
         blockShortcuts={blockShortcuts}

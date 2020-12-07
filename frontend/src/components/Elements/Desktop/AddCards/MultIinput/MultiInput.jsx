@@ -1,13 +1,16 @@
 import React from 'react';
 import { Input, Tooltip, Button, Modal, message } from 'antd';
-import { CheckCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import {
+  CheckCircleOutlined,
+  ExclamationCircleOutlined,
+  ImportOutlined,
+} from '@ant-design/icons';
 
 import {
   StyledWrapper,
   StyledInputWrapper,
   StyledStatus,
   IconWrapper,
-  StyledLink,
 } from './StyledMultiInput';
 import { splitSearchString } from '../../../Shared/CardSearch/CardSearch';
 import CardContext from '../../../../Provider/CardProvider';
@@ -27,9 +30,10 @@ Ignore line with //
 // TODO: refactor
 export default class MultiInput extends React.Component {
   state = {
+    value: '',
+    isOpen: false,
     cardResults: [],
     isValidInput: false,
-    value: '',
   };
 
   static contextType = CardContext;
@@ -97,21 +101,27 @@ export default class MultiInput extends React.Component {
 
     this.setState({
       value: '',
+      isOpen: false,
     });
   };
 
   render() {
     const { cardResults, isValidInput, value, isOpen } = this.state;
+    const { buttonProps = { ghost: true, type: 'primary' } } = this.props;
 
     return (
       <>
-        <StyledLink onClick={() => this.setState({ isOpen: true })}>
-          Import card list
-        </StyledLink>
+        <Button
+          onClick={() => this.setState({ isOpen: true })}
+          icon={<ImportOutlined />}
+          {...buttonProps}
+        >
+          Import Card List
+        </Button>
         <Modal
           destroyOnClose
           visible={isOpen}
-          title="Import card list"
+          title="Import Multiple"
           onCancel={() => this.setState({ isOpen: false })}
           footer={
             <Button

@@ -27,9 +27,10 @@ export default ({
       style={{ marginTop: 24, width: '100%', ...style }}
     >
       <span>
-        {isFilterResettable && <ResetFilter title="reset" onReset={onResetOptions} />}
+        {isFilterResettable && (
+          <ResetFilter title="Reset Search" onReset={onResetOptions} />
+        )}
       </span>
-
       <StyledWrapper ref={buttonRef}>
         <Button
           loading={loading}

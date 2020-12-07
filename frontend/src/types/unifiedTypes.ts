@@ -1,4 +1,12 @@
-import { OracleCard, Card, CollectionCard, WantsListCard, DeckCard } from './graphql';
+import {
+  OracleCard,
+  Card,
+  CollectionCard,
+  WantsListCard,
+  DeckCard,
+  Deck,
+  WantsList,
+} from './graphql';
 
 export type UnifiedDeckCard = OracleCard & DeckCard & Card;
 export type UnifiedCollectionCard = OracleCard & CollectionCard & Card;
@@ -18,3 +26,14 @@ export type UnifiedCardType<T> = T extends DeckCard
 export type UnifiedCard = UnifiedDeckCard | UnifiedCollectionCard | UnifiedWantsListCard;
 
 export type ListCard = DeckCard | CollectionCard | WantsListCard;
+
+export interface UnifiedDeck extends Omit<Deck, 'cards'> {
+  originalCards: Array<DeckCard>;
+  cards: Array<UnifiedDeckCard>;
+}
+
+export interface UnifiedWantsList extends Omit<WantsList, 'cards'> {
+  originalCards: Array<WantsListCard>;
+  cards: Array<UnifiedWantsListCard>;
+}
+export type UnifiedList = UnifiedDeck | UnifiedWantsList;

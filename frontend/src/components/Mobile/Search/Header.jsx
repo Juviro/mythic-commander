@@ -11,7 +11,6 @@ const StyledWrapper = styled.div`
 const StyledTitle = styled.div`
   font-size: 24px;
   font-weight: 400;
-  margin-bottom: 8px;
 `;
 
 export default () => {

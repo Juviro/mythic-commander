@@ -1,19 +1,24 @@
 import React, { useContext } from 'react';
 
 import CardContext from '../../../../Provider/CardProvider';
-import SelectFilter from './SelectFilter';
+import MultiSelectFilter from './MultiSelectFilter';
 
-export default ({ onChange, value, onSearch }) => {
-  const { creatureTypes } = useContext(CardContext);
+export default ({ onChange, value, onSearch, size }) => {
+  const { subTypes } = useContext(CardContext);
+  const options = subTypes.map(({ category, types }) => ({
+    label: category,
+    options: types,
+  }));
 
   return (
-    <SelectFilter
-      options={creatureTypes}
+    <MultiSelectFilter
+      options={options}
       onChange={onChange}
+      size={size}
       value={value}
       onSearch={onSearch}
-      paramName="creatureType"
-      placeholder={'e.g. "Brushwagg"'}
+      paramName="subType"
+      placeholder={'e.g. "Shrine"'}
     />
   );
 };
