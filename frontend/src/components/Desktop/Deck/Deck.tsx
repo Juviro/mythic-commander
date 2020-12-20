@@ -51,12 +51,12 @@ export default () => {
 
   return (
     <StyledDeck>
-      <Sidebar
+      {/* <Sidebar
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
         onAddCards={onAddCards}
         deck={unifiedDeck}
-      />
+      /> */}
       <ShortcutFocus focusId="deck.cards" style={{ overflow: 'auto', flex: 1 }}>
         <Flex style={{ marginLeft: 50 }} direction="column">
           <Header

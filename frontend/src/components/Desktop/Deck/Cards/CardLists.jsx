@@ -59,7 +59,7 @@ export default ({ columns, deck, displayOwnedOnly }) => {
   return (
     <>
       {columns.map((column) => (
-        <Flex direction="column" key={getColumnKey(column)}>
+        <Flex direction="column" key={getColumnKey(column)} flex={1}>
           {column.map(({ type, cards: cardGroup }) => (
             <CardList
               type={type}
