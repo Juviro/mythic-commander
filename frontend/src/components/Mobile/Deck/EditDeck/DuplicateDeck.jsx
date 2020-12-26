@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'antd';
 import { useMutation } from 'react-apollo';
+import { CopyOutlined } from '@ant-design/icons';
 import { useParams, withRouter } from 'react-router';
 
 import { duplicateDeck } from '../../../../queries';
@@ -21,7 +22,7 @@ const DuplicateDeck = ({ history }) => {
     history.push(getDynamicUrl(`/decks/${id}`));
   };
   return (
-    <Button type="link" onClick={onDuplicateDeck}>
+    <Button type="link" onClick={onDuplicateDeck} icon={<CopyOutlined />}>
       Duplicate Deck
     </Button>
   );

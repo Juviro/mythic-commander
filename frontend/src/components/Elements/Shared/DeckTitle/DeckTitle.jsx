@@ -10,7 +10,7 @@ const StyledTitleWrapper = styled.div`
   margin-left: 16px;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
+  height: 24px;
 `;
 
 export default ({ deck }) => {

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 import { useParams } from 'react-router';
 
+import { PageCard, PageLayout } from 'components/Elements/Desktop';
 import CardDetailsDesktop from '../../Elements/Desktop/CardDetailsDesktop';
 import { cardDetailsDesktop } from '../../Elements/Desktop/CardDetailsDesktop/queries';
 import { unifySingleCard } from '../../../utils/unifyCardFormat';
@@ -39,10 +40,10 @@ export default () => {
   }, [oracle_id]);
 
   return (
-    <StyledOuterWrapper>
-      <StyledWrapper>
+    <PageLayout>
+      <PageCard>
         <CardDetailsDesktop card={card} loading={loading} largeHeader />
-      </StyledWrapper>
-    </StyledOuterWrapper>
+      </PageCard>
+    </PageLayout>
   );
 };
