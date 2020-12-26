@@ -71,5 +71,9 @@ export const getTypes = ({ type_line }) => {
 export const getImageKey = ({ image_uris, card_faces }) => {
   const cardFront = image_uris || card_faces[0].image_uris;
 
-  return cardFront.small.match(/front\/(.*)\//)[1];
+  const cardMatch = cardFront.small.match(/front\/(.*)\//);
+
+  if (!cardMatch) return '';
+
+  return cardMatch[1];
 };
