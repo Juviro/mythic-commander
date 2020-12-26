@@ -81,7 +81,7 @@ export default ({ wantsList, loading }: Props) => {
           <WantsListDeckLink wantsList={wantsList} large />
           <WantsListStats wantsList={wantsList} />
         </Flex>
-        <Flex align="flex-start">
+        <Flex align="flex-end">
           <AddToWantsList cards={wantsList?.cards} onAddCards={onAddCards} />
         </Flex>
       </Flex>

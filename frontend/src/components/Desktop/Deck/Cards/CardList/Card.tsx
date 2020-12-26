@@ -12,8 +12,8 @@ export default ({ card }: Props) => {
     <List.Item style={{ padding: '2px 0' }}>
       <List.Item.Meta
         style={{ overflow: 'hidden' }}
-        title={card.name}
         avatar={<PreviewCardImage card={card} highlightOnHover />}
+        title={card.name}
       />
     </List.Item>
   );

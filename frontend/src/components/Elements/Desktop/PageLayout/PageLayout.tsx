@@ -10,8 +10,7 @@ const StyledBackground = styled.div`
   background-color: ${lightBackground};
 `;
 
-const StyledContent = styled.div`
-  max-width: 1250px;
+const StyledContent = styled.div<{ fullWidth: boolean }>`
   width: 100%;
   box-shadow: 0px 0px 12px 0px #6f6f6f;
   background-color: white;
@@ -19,16 +18,18 @@ const StyledContent = styled.div`
   flex-direction: column;
   min-height: 100%;
   height: fit-content;
+  max-width: ${({ fullWidth }) => (fullWidth ? '100%' : '1250px')};
 `;
 
 interface Props {
   children: React.ReactNode;
+  fullWidth?: boolean;
 }
 
-export default ({ children }: Props) => {
+export default ({ children, fullWidth }: Props) => {
   return (
     <StyledBackground>
-      <StyledContent>{children}</StyledContent>
+      <StyledContent fullWidth={fullWidth}>{children}</StyledContent>
     </StyledBackground>
   );
 };

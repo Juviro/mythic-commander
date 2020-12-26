@@ -26,7 +26,7 @@ const StyledWrapper = styled.div`
   ${({ isFocused }) =>
     isFocused
       ? css`
-          box-shadow: 0 0 10px ${primary};
+          box-shadow: inset 0 0 10px 3px ${primary};
         `
       : ''}
 `;
@@ -74,7 +74,7 @@ export default ({ deck, loading, currentTab, onAddCards, displayOwnedOnly }) => 
   const [columnOrder, setColumnOrder] = useState(null);
 
   const [isSmall, setIsSmall] = useState(false);
-  const debounceRef = useRef(debounce(setColumnOrder, 100));
+  const debounceRef = useRef(debounce(setColumnOrder, 150));
 
   const wrapperRef = useRef(null);
   const { numberOfCols } = useNumberOfCols(wrapperRef);

@@ -3,6 +3,7 @@ import { Modal, message, Button } from 'antd';
 import { useMutation } from 'react-apollo';
 import { useParams, withRouter } from 'react-router';
 
+import { DeleteOutlined } from '@ant-design/icons';
 import { useToggle } from '../../../Hooks';
 import boldText from '../../../../utils/boldText';
 import { deleteDeck, getDecks } from '../../../../queries';
@@ -42,7 +43,7 @@ const DeleteDeck = ({ history }) => {
 
   return (
     <>
-      <Button type="link" onClick={toggleIsModalVisible} danger>
+      <Button type="link" onClick={toggleIsModalVisible} danger icon={<DeleteOutlined />}>
         Delete Deck
       </Button>
       <Modal
