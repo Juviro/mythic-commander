@@ -8,7 +8,12 @@ const ManaCost = ({ costString, size }) => {
   if (!costs) return '';
 
   return (
-    <Flex direction="row" align="center" justify="center">
+    <Flex
+      direction="row"
+      align="center"
+      justify="center"
+      style={{ width: 'fit-content' }}
+    >
       {costs.map((cost, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <ManaSymbol symbol={cost} key={cost + index} size={size} />

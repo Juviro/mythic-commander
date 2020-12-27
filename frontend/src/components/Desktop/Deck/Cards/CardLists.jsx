@@ -56,6 +56,7 @@ export default ({ columns, deck, displayOwnedOnly }) => {
   useShortcut('SPACE', selectedCard ? toggleShowDetail : null, 'deck.cards');
   useShortcut('ESC', () => setSelectedCardOracleId(null), 'deck.cards');
 
+  console.log('columns', columns);
   return (
     <>
       {columns.map((column) => (

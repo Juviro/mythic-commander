@@ -10,8 +10,10 @@ export default (wrapperRef) => {
     new ResizeObserver((entries) => {
       // Only care about the first element, we expect one element to be watched
       const { width } = entries[0].contentRect;
+      const usedWidth = width - 32;
       const newNumberOfCols = Math.max(
-        Math.min(Math.floor(width / MIN_COLUMN_WIDTH), MAX_COLUMNS),
+        // add margin
+        Math.min(Math.floor(usedWidth / (MIN_COLUMN_WIDTH + 8)), MAX_COLUMNS),
         1
       );
 
