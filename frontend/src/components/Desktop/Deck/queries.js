@@ -12,6 +12,7 @@ const CARD_FIELDS = `
       imgKey
       oracle_id
       set_name
+      mana_cost
       color_identity
       possiblePartner
       
