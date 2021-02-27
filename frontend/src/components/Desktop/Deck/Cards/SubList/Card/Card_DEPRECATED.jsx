@@ -5,11 +5,11 @@ import { useDrag } from 'react-dnd';
 import { useParams } from 'react-router';
 import { useToggle } from 'components/Hooks';
 import shimmer from 'components/Animations/shimmer';
-import { primary } from '../../../../../constants/colors';
-import scrollIntoView from '../../../../../utils/scrollIntoView';
-import CardMenu from './CardMenu';
-import { FlippableCard, AmountBadge } from '../../../../Elements/Shared';
-import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
+import { primary } from '../../../../../../constants/colors';
+import scrollIntoView from '../../../../../../utils/scrollIntoView';
+import CardMenu from './CardMenu_DEPRECATED';
+import { FlippableCard, AmountBadge } from '../../../../../Elements/Shared';
+import FocusContext from '../../../../../Provider/FocusProvider/FocusProvider';
 
 export const CARD_WIDTH = 220;
 const CARD_HEIGHT = CARD_WIDTH * 1.4;

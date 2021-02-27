@@ -46,14 +46,13 @@ export default ({
       <List>
         {cards.map((card) => (
           <Card
-            card={card}
             key={card.id}
+            card={card}
             isSelected={selectedCardId === card.id}
-            displayOwnedOnly={displayOwnedOnly}
             onDelete={onDelete}
             onOpenDetails={onOpenDetails}
-            onDeleteImmediately={onDeleteImmediately}
-            setSelectedCardOracleId={setSelectedCardOracleId}
+            // onDeleteImmediately={onDeleteImmediately}
+            // setSelectedCardOracleId={setSelectedCardOracleId}
           />
         ))}
       </List>
