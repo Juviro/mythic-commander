@@ -30,6 +30,7 @@ const CardList = ({
   onEditCard,
   onDeleteCard,
   showTotalResults,
+  backTopStyle,
 }) => {
   const [detailCard, setDetailCard] = useState(null);
   const [{ name, layout = 'list' }] = useQueryParams({
@@ -109,7 +110,7 @@ const CardList = ({
           totalResults={totalResults}
         />
       )}
-      <BackTop style={{ left: 20, bottom: 20 }} />
+      <BackTop style={{ left: 20, bottom: 20, ...backTopStyle }} />
       <CardModal {...detailCard} onClose={onCloseModal} />
     </>
   );

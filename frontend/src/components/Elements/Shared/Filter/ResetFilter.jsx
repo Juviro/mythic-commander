@@ -10,13 +10,7 @@ const StyledButton = styled(Button)`
 
 export default ({ title = 'Reset Filter', onReset }) => {
   return (
-    <StyledButton
-      danger
-      ghost
-      type="primary"
-      onClick={onReset}
-      // style={{ height: 14, lineHeight: 0 }}
-    >
+    <StyledButton danger ghost type="primary" onClick={onReset}>
       {title}
     </StyledButton>
   );

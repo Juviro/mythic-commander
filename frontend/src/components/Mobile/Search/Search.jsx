@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { Divider } from 'antd';
+import { Affix, Divider } from 'antd';
 import { withRouter } from 'react-router';
 import { useApolloClient } from 'react-apollo';
 import { useQueryParams, StringParam } from 'use-query-params';
@@ -23,8 +23,14 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
+const StyledLoadingPlaceholder = styled.div`
+  height: 100vh;
+`;
+
 const Search = ({ history }) => {
   const buttonRef = useRef(null);
+  const scrollRef = useRef(null);
+  const [isButtonAffixed, setIsButtonAffixed] = useState(false);
   const [allCards, setAllCards] = useState(null);
   const [queryResult, setQueryResult] = useState({});
   const [loading, toggleLoading] = useToggle(false);
@@ -55,9 +61,15 @@ const Search = ({ history }) => {
     toggleLoading(false);
   };
 
+  const scrollToButton = () => {
+    if (!scrollRef.current) return;
+    scrollRef.current.scrollIntoView({ behavior: 'smooth', inline: 'start' });
+  };
+
   const onSearch = () => {
     setParams(currentOptions);
     fetchCards(currentOptions);
+    setTimeout(scrollToButton, 50);
   };
 
   const onLoadMore = () => {
@@ -68,8 +80,8 @@ const Search = ({ history }) => {
   useEffect(() => {
     const hasOptions = Object.values(options).some((val) => val !== undefined);
     if (!hasOptions) return;
-    if (loading && buttonRef) {
-      buttonRef.current.scrollIntoView({ behavior: 'smooth', inline: 'start' });
+    if (loading) {
+      scrollToButton();
     }
     setCurrentOptions(options);
     fetchCards(options);
@@ -102,15 +114,21 @@ const Search = ({ history }) => {
           options={currentOptions}
         />
         <LayoutAndSortPicker />
-        <SearchButton
-          buttonRef={buttonRef}
-          onSearch={onSearch}
-          loading={loading}
-          onResetOptions={onResetOptions}
-          isFilterResettable={isFilterResettable}
-          style={{ marginTop: 24 }}
-        />
+        <div ref={scrollRef} />
+        <Affix offsetBottom={0} onChange={setIsButtonAffixed} style={{ width: '100%' }}>
+          <SearchButton
+            buttonRef={buttonRef}
+            onSearch={onSearch}
+            loading={loading}
+            isAffixed={isButtonAffixed}
+            onResetOptions={onResetOptions}
+            isFilterResettable={isFilterResettable}
+            wrapperStyle={{ height: 32 }}
+            style={{ height: isButtonAffixed ? 40 : 32 }}
+          />
+        </Affix>
         <Divider />
+        {loading && <StyledLoadingPlaceholder />}
         {allCards && (
           <CardList
             showTotalResults
@@ -119,6 +137,7 @@ const Search = ({ history }) => {
             loading={loading}
             totalResults={totalResults}
             onLoadMore={onLoadMore}
+            backTopStyle={isButtonAffixed ? { bottom: 45 } : null}
           />
         )}
       </StyledWrapper>
