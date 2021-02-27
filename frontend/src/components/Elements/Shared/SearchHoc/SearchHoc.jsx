@@ -9,7 +9,7 @@ import { unifySingleCard } from '../../../../utils/unifyCardFormat';
 import preloadImages from '../../../../utils/preloadImages';
 import useLocalStorage from '../../../Hooks/useLocalStorage';
 
-export default ({ children, researchOnOrderChange, blockInitialSearch }) => {
+export default ({ children, researchOnOrderChange, blockInitialSearch = false }) => {
   const [currentCards, setCurrentCards] = useState([]);
   const [loading, toggleLoading] = useToggle(false);
   const [queryResult, setQueryResult] = useState({});
