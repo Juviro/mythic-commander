@@ -8,15 +8,12 @@ CURRENT:
     - on high latency network: move card from deck wants to deck -> wrong cards displayed in deck wants
 
 NEXT:
+    - Split code with React.lazy
     - re-add loading animation to paginated list (e.g. collection desktop)
     - refactor authentication, remove from context creation
     - improve loading time of deck
     - add stylelint
-    - when only displaying unowned in deck -> add cards to.. -> pre-select unowned only, but show all
-    - prevent re-ordering card lists in decks view - maybe re-order when category added / removed
-    - add shortcut to toggle focus ?
 
-    - add button to add card to deck in sidebar ?
     - add option to export unowned cards from deck to wants
     - allow sorting by added in advanced search
 
@@ -25,8 +22,7 @@ IMPROVEMENTS:
     - add to wants list dropdown: sort lists by name (same for decks I guess)
     - added to collection notification -> show amount as well
     - add optimistic response to card delete in deck (esp. mobile)
-    - show which cards are not legal in deck
-    - remove basic lands from proxy queries
+    - remove basic lands from proxy queries (or add as option -> proxy rework)
     - autofocus for deck sidebar input field
     - transition for inset shadow when focussing deck sidebar
 

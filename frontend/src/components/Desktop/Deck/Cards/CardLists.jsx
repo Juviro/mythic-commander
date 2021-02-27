@@ -2,7 +2,7 @@ import React from 'react';
 import { useMutation } from 'react-apollo';
 
 import { Flex, ConfirmDelete } from '../../../Elements/Shared';
-import CardList from './CardList';
+import SubList from './SubList';
 import useCardListShortcuts from './useCardListShortcuts';
 import { useToggle, useShortcut } from '../../../Hooks';
 import CardModalDesktop from '../../../Elements/Desktop/CardModalDesktop';
@@ -56,13 +56,17 @@ export default ({ columns, deck, displayOwnedOnly }) => {
   useShortcut('SPACE', selectedCard ? toggleShowDetail : null, 'deck.cards');
   useShortcut('ESC', () => setSelectedCardOracleId(null), 'deck.cards');
 
-  console.log('columns', columns);
+  const onOpenDetails = (cardId) => {
+    setSelectedCardOracleId(cardId);
+    toggleShowDetail();
+  };
+
   return (
     <>
       {columns.map((column) => (
         <Flex direction="column" key={getColumnKey(column)} flex={1}>
           {column.map(({ type, cards: cardGroup }) => (
-            <CardList
+            <SubList
               type={type}
               key={type}
               cards={cardGroup}
@@ -70,7 +74,7 @@ export default ({ columns, deck, displayOwnedOnly }) => {
               onDelete={onOpenDeleteModal}
               onDeleteImmediately={onDeleteCard}
               setSelectedCardOracleId={setSelectedCardOracleId}
-              onOpenDetails={toggleShowDetail}
+              onOpenDetails={onOpenDetails}
               selectedCardId={selectedCard && selectedCard.id}
             />
           ))}
