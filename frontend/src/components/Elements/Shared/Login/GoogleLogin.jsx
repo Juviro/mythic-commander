@@ -3,6 +3,8 @@ import GoogleLogin from 'react-google-login';
 import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
 import message from 'utils/message';
+import { useHistory } from 'react-router';
+import { getUser } from 'components/Provider/UserProvider/queries';
 import { login } from './queries';
 
 const CLIENT_ID =
@@ -21,13 +23,28 @@ const onError = (error) => {
 
 export default () => {
   const [mutate] = useMutation(login);
+  const { push } = useHistory();
+
   const onSuccess = async (response) => {
-    const { data } = await mutate({
+    await mutate({
       variables: { token: response.tokenId },
+      update: (cache, { data }) => {
+        const { session, user } = data.login;
+        window.localStorage.setItem('session', session);
+        cache.writeQuery({
+          query: getUser,
+          data: {
+            user,
+          },
+        });
+        const name = user.username ?? user.name;
+        message(`Welcome <b>${name}</b>`);
+      },
     });
-    window.localStorage.setItem('session', data.login.session);
-    message('Login successful');
-    window.location.reload();
+
+    if (window.location.pathname === '/login') {
+      push('/');
+    }
   };
 
   return (

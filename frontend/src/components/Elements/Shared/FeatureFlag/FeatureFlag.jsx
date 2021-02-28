@@ -1,4 +1,3 @@
-import { useQuery } from '@apollo/react-hooks';
 import UserContext from 'components/Provider/UserProvider';
 import { useContext } from 'react';
 
