@@ -367,6 +367,10 @@ type Mutation {
   ): [WantsListCard!]!
   linkWantsList(wantsListId: String!, deckId: String!): WantsList!
   unlinkWantsList(wantsListId: String!): WantsList!
+  changeWantsListVisibility(
+    wantsListId: String!
+    visibility: String!
+  ): WantsList!
 
   ########## Life Tracker ##########
   updateLtPlayer(name: String!, img: String, color: String): LTPlayer!
