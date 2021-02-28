@@ -23,7 +23,6 @@ export default () => {
   const { data, loading } = useQuery(wantsListQuery, {
     variables: { id },
   });
-  console.log('data', data);
 
   const wantsList = data?.wantsList;
   const cards = wantsList && unifyCardFormat(wantsList.cards);
