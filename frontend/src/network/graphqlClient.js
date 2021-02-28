@@ -24,11 +24,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     const isUnauthenticated = graphQLErrors.some(
       (error) => error.extensions.code === 'UNAUTHENTICATED'
     );
-    console.info('isUnauthenticated, graphQLErrors', isUnauthenticated, graphQLErrors);
-    if (isUnauthenticated) {
-      const next = decodeURIComponent(window.location.href);
-      window.location.href = `/login?next=${next}`;
-    } else {
+    console.error('isUnauthenticated, graphQLErrors', isUnauthenticated, graphQLErrors);
+    if (!isUnauthenticated) {
       const errorMessage = graphQLErrors.length ? graphQLErrors[0].message : '';
       message.error(`An error occurred: ${errorMessage}`);
     }

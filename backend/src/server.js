@@ -1,9 +1,7 @@
-import { ApolloServer, AuthenticationError } from 'apollo-server-koa';
+import { ApolloServer } from 'apollo-server-koa';
 
 import schema from './graphql';
 import db from './database';
-
-const UNAUTHENTICATED_ACTIONS = ['login', 'cachedCards', 'numberOfCachedCards'];
 
 export default new ApolloServer({
   schema,
@@ -12,17 +10,9 @@ export default new ApolloServer({
       db,
     };
 
-    const operationName = ctx.response.request.body.operationName;
-    const noAuthentication =
-      !operationName || UNAUTHENTICATED_ACTIONS.includes(operationName);
-
-    if (noAuthentication) {
-      return context;
-    }
-
     const authorization = ctx.request.header.authorization;
     if (!authorization) {
-      throw new AuthenticationError('invalid token');
+      return { ...context, user: {} };
     }
 
     const sessionId = authorization.split(' ')[1];

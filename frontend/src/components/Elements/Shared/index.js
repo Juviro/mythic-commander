@@ -53,6 +53,7 @@ export { default as Menu } from './Menu';
 export { default as MoveTo } from './MoveTo';
 export { default as MoveToModal } from './MoveTo/MoveToModal';
 export { default as MythicCommanderBanner } from './MythicCommanderBanner';
+export { default as NotFound } from './NotFound';
 export { default as OneTimeInfoBox } from './OneTimeInfoBox';
 export { default as OrderBy } from './OrderBy';
 export { default as OwnedBadge } from './OwnedBadge';
