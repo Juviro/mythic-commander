@@ -53,7 +53,7 @@ const WantsListMenu = ({ history, wantsList }) => {
         message('Deleted wants list!');
       },
     });
-    history.replace('/m/wants');
+    history.replace('/m/my-wants');
   };
 
   const onDuplicate = async () => {

@@ -20,11 +20,11 @@ const StyledMenu = styled.div`
 const MENU_ENTRIES = [
   {
     title: 'Decks',
-    href: '/decks',
+    href: '/my-decks',
   },
   {
     title: 'Wants',
-    href: '/wants',
+    href: '/my-wants',
   },
   {
     title: 'Collection',
