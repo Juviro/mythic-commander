@@ -18,7 +18,7 @@ export default () => {
     message(`Welcome <b>${value}</b>!`);
   };
 
-  if (!data || loading || data.user.username) return null;
+  if (!data || loading || !data.user || data.user.username) return null;
 
   const isValid = value.match(/^[A-z0-9-_]{4,25}$/);
 
