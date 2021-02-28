@@ -24,7 +24,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     const isUnauthenticated = graphQLErrors.some(
       (error) => error.extensions.code === 'UNAUTHENTICATED'
     );
-    console.error('isUnauthenticated, graphQLErrors', isUnauthenticated, graphQLErrors);
+    console.warn('isUnauthenticated, graphQLErrors', isUnauthenticated, graphQLErrors);
     if (!isUnauthenticated) {
       const errorMessage = graphQLErrors.length ? graphQLErrors[0].message : '';
       console.error('Graphql Error:', errorMessage);

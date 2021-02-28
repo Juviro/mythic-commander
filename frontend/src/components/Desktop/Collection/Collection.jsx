@@ -13,7 +13,7 @@ export default () => {
   const { user, loading } = useContext(UserContext);
 
   if (!username && !user && !loading) {
-    return <LoginRequired message="Login to create your own collection" />;
+    return <LoginRequired message="Log in to create your own collection" />;
   }
 
   return (

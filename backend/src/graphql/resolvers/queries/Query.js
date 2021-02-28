@@ -4,6 +4,7 @@ import proxies from './proxies';
 import unifyCardFormat from '../unifyCardFormat';
 import paginatedCollection from './paginatedCollection';
 import {
+  canAccessDeck,
   canAccessWantsList,
   isCollectionPublic,
 } from '../../../auth/authenticateUser';
@@ -34,8 +35,9 @@ const resolver = {
       .first();
   },
 
-  deck(_, { id }, { user, db }) {
-    if (!user) return null;
+  async deck(_, { id }, { user, db }) {
+    await canAccessDeck(user.id, id);
+
     return db('decks')
       .where({ userId: user.id, id })
       .first();
@@ -138,9 +140,14 @@ const resolver = {
   async wantsList(_, { id }, { user: { id: userId }, db }) {
     await canAccessWantsList(userId, id);
 
-    return db('wantsLists')
+    const wantsList = await db('wantsLists')
       .where({ id })
       .first();
+
+    return {
+      ...wantsList,
+      canEdit: wantsList?.userId === userId,
+    };
   },
 
   wantsLists(_, { deckId }, { user: { id: userId }, db }) {

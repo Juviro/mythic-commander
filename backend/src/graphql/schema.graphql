@@ -171,6 +171,7 @@ type WantsList {
   createdAt: String!
   numberOfCards: Int!
   deck: Deck
+  canEdit: Boolean
   cards: [WantsListCard!]!
 }
 
@@ -240,7 +241,7 @@ type LTPlayer {
 type Query {
   user: User
 
-  deck(id: String!): Deck!
+  deck(id: String!): Deck
   decks: [Deck!]!
 
   collection: Collection!

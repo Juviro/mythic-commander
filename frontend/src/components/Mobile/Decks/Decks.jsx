@@ -23,7 +23,7 @@ export default () => {
   const { user, loading: userLoading } = useContext(UserContext);
 
   if (!user && !userLoading) {
-    return <LoginRequired message="Login to create your own decks" />;
+    return <LoginRequired message="Log in to create your own decks" />;
   }
 
   return (
