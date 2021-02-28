@@ -148,6 +148,8 @@ const resolver = {
       .orderBy('createdAt', 'asc');
   },
   async collectionSnapshots(_, __, { user: { id: userId }, db }) {
+    if (!userId) return [];
+
     return db('collectionSnapshot')
       .where({ userId })
       .orderBy('date');

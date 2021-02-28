@@ -13,7 +13,7 @@ export default () => {
 
   const logOut = async () => {
     const sessionId = window.localStorage.getItem('session');
-    await mutate({ variables: { sessionId }, refetchQueries: ['user'] });
+    await mutate({ variables: { sessionId }, refetchQueries: ['getUser'] });
     window.localStorage.setItem('session', null);
     push('/');
   };
