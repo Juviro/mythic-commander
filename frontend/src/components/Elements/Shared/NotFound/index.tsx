@@ -19,6 +19,7 @@ const Styled404 = styled(Typography.Title)`
 
 const StyledMessage = styled(Typography.Text)`
   font-size: 2rem;
+  padding: 24px;
 `;
 
 interface Props {

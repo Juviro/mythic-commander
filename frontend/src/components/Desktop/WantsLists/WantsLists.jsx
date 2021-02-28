@@ -18,7 +18,7 @@ const Wants = ({ history }) => {
   const { user, loading: userLoading } = useContext(UserContext);
 
   if (!user && !userLoading) {
-    return <LoginRequired message="Login to create your own wants lists" />;
+    return <LoginRequired message="Log in to create your own wants lists" />;
   }
 
   const onOpenWantsList = (id) => {

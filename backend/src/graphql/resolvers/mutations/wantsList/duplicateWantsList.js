@@ -10,7 +10,7 @@ export default async (_, { wantsListId }, { user: { id: userId }, db }) => {
       INSERT INTO "wantsLists" 
         ("userId", "deckId", name, "lastEdit", "createdAt") 
       SELECT 
-        "userId", 
+        ?, 
         "deckId", 
         CONCAT(name, ' - Copy'), 
         NOW() as "lastEdit", 
@@ -18,7 +18,7 @@ export default async (_, { wantsListId }, { user: { id: userId }, db }) => {
       FROM "wantsLists" 
       WHERE id=? RETURNING id
     `,
-    wantsListId
+    [userId, wantsListId]
   );
 
   await db.raw(

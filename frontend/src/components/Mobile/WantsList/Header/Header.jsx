@@ -19,19 +19,19 @@ const StyledTitleWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export default ({ wantsList }) => {
+export default ({ wantsList, canEdit }) => {
   return (
     <>
       <StyledTitleWrapper>
-        <WantsListTitle wantsList={wantsList} />
-        {wantsList && <Menu wantsList={wantsList} />}
+        <WantsListTitle wantsList={wantsList} canEdit={canEdit} />
+        {wantsList && <Menu wantsList={wantsList} canEdit={canEdit} />}
       </StyledTitleWrapper>
       <Row>
         <Col span={12}>
           <WantsListStats wantsList={wantsList} />
         </Col>
         <Col span={12} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <WantsListDeckLink wantsList={wantsList} />
+          <WantsListDeckLink wantsList={wantsList} canEdit={canEdit} />
         </Col>
       </Row>
     </>
