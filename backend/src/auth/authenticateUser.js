@@ -1,8 +1,8 @@
 import db from '../database';
-import { ValidationError } from 'apollo-server-koa';
+import { AuthenticationError } from 'apollo-server-koa';
 
-const throwAuthError = () => {
-  throw new ValidationError('Not authenticated');
+const throwAuthError = (message = 'Not authenticated') => {
+  throw new AuthenticationError(message);
 };
 
 export const canAccessDeck = async (userId, deckId) => {
@@ -16,7 +16,7 @@ export const canEditWantsList = async (userId, wantsListId) => {
   const isOwner = await db('wantsLists')
     .where({ userId, id: wantsListId })
     .first();
-  if (!isOwner) throw new ValidationError('Not authenticated');
+  if (!isOwner) throwAuthError();
 };
 
 export const canAccessWantsList = async (userId, wantsListId) => {
@@ -40,6 +40,6 @@ export const isCollectionPublic = async userId => {
     .first();
 
   if (!collectionVisibility || collectionVisibility.visibility !== 'hidden') {
-    throw new ValidationError('This collection is private.');
+    throw new throwAuthError('This collection is private.');
   }
 };
