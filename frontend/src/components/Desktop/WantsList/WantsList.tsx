@@ -18,6 +18,7 @@ export default () => {
   });
   const cards = data && unifyCardFormat(data.wantsList.cards);
   const wantsList: UnifiedWantsList = data && { ...data.wantsList, cards };
+  const canEdit = data?.wantsList?.canEdit;
 
   if (!data && !loading) {
     return <NotFound message="This wants list does not seem to exist.." />;
@@ -25,8 +26,8 @@ export default () => {
 
   return (
     <PageLayout>
-      <Overview wantsList={wantsList} loading={loading} />
-      <Cards cards={cards} loading={loading} wantsList={wantsList} />
+      <Overview wantsList={wantsList} loading={loading} canEdit={canEdit} />
+      <Cards cards={cards} loading={loading} wantsList={wantsList} canEdit={canEdit} />
     </PageLayout>
   );
 };

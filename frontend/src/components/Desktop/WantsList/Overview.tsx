@@ -25,9 +25,10 @@ import { addCardsToWantsListDesktop, wantsListDesktop } from './queries';
 interface Props {
   wantsList: UnifiedWantsList;
   loading: boolean;
+  canEdit: boolean;
 }
 
-export default ({ wantsList, loading }: Props) => {
+export default ({ wantsList, loading, canEdit }: Props) => {
   const { id: wantsListId } = useParams<{ id: string }>();
   const [mutate] = useMutation<any, MutationAddCardsToWantsListArgs>(
     addCardsToWantsListDesktop
@@ -72,18 +73,24 @@ export default ({ wantsList, loading }: Props) => {
   return (
     <PageCard
       style={{ height: 'auto' }}
-      title={<WantsListTitle wantsList={wantsList} level={3} />}
+      title={<WantsListTitle wantsList={wantsList} level={3} canEdit={canEdit} />}
       loading={loading}
-      extra={wantsList && <Actions wantsList={wantsList} onAddCards={onAddCards} />}
+      extra={
+        wantsList && (
+          <Actions wantsList={wantsList} onAddCards={onAddCards} canEdit={canEdit} />
+        )
+      }
     >
       <Flex direction="row" justify="space-between" wrap="wrap">
         <Flex direction="row" wrap="wrap">
-          <WantsListDeckLink wantsList={wantsList} large />
+          <WantsListDeckLink wantsList={wantsList} large canEdit={canEdit} />
           <WantsListStats wantsList={wantsList} />
         </Flex>
-        <Flex align="flex-start">
-          <AddToWantsList cards={wantsList?.cards} onAddCards={onAddCards} />
-        </Flex>
+        {canEdit && (
+          <Flex align="flex-start">
+            <AddToWantsList cards={wantsList?.cards} onAddCards={onAddCards} />
+          </Flex>
+        )}
       </Flex>
     </PageCard>
   );

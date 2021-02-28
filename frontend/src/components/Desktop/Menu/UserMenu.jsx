@@ -6,15 +6,16 @@ import UserContext from 'components/Provider/UserProvider';
 import { useToggle } from '../../Hooks';
 import { UserAvatar, Logout } from '../../Elements/Shared';
 
-const StyledAvatarWrapper = styled.span`
+const StyledAvatarWrapper = styled.div`
   margin-right: 8px;
+  min-width: 160px;
 `;
 
 export default () => {
   const [isOpen, toggleIsOpen] = useToggle();
   const { user, loading } = useContext(UserContext);
 
-  if (loading) return null;
+  if (loading) return <StyledAvatarWrapper />;
 
   const avatarComponent = (
     <StyledAvatarWrapper>
