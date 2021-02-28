@@ -16,7 +16,7 @@ const VISIBILITY_OPTIONS = [
   },
   {
     title: 'Everyone with this link',
-    value: 'public',
+    value: 'hidden',
     icon: <GlobalOutlined />,
   },
 ];
@@ -36,7 +36,7 @@ export default ({ style, visibile: modalVisible, onClose }) => {
     message.success('Successfully changed visibility!');
   };
 
-  const isPubliclyVisible = visibility === 'public';
+  const isPubliclyVisible = visibility === 'hidden';
   const publicUrl = `${window.location.origin}/collection/${username}`;
 
   if (loadingVisibility || loadingUser) return null;

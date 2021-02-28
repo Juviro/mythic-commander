@@ -3,7 +3,10 @@ import cardSearch from './cardSearch';
 import proxies from './proxies';
 import unifyCardFormat from '../unifyCardFormat';
 import paginatedCollection from './paginatedCollection';
-import { isCollectionPublic } from '../../../auth/authenticateUser';
+import {
+  canAccessWantsList,
+  isCollectionPublic,
+} from '../../../auth/authenticateUser';
 import wantedCards from './wantedCards';
 
 const resolver = {
@@ -124,9 +127,11 @@ const resolver = {
 
   cardSearch,
 
-  wantsList(_, { id }, { user: { id: userId }, db }) {
+  async wantsList(_, { id }, { user: { id: userId }, db }) {
+    await canAccessWantsList(userId, id);
+
     return db('wantsLists')
-      .where({ id, userId })
+      .where({ id })
       .first();
   },
 
