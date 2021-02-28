@@ -1,4 +1,4 @@
-import { canAccessWantsList } from '../../../../auth/authenticateUser';
+import { canEditWantsList } from '../../../../auth/authenticateUser';
 import unifyCardFormat from '../../unifyCardFormat';
 
 export default async (
@@ -6,7 +6,7 @@ export default async (
   { cardId, wantsListId, newProps },
   { user: { id: userId }, db }
 ) => {
-  await canAccessWantsList(userId, wantsListId);
+  await canEditWantsList(userId, wantsListId);
 
   const [id] = await db('cardToWantsList')
     .where({ id: cardId, wantsListId })

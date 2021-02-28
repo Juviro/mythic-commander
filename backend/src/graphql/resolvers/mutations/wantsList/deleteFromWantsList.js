@@ -1,8 +1,8 @@
-import { canAccessWantsList } from '../../../../auth/authenticateUser';
+import { canEditWantsList } from '../../../../auth/authenticateUser';
 import { updateLastEdit } from './helper';
 
 export default async (_, { oracleIds, wantsListId }, { user, db }) => {
-  await canAccessWantsList(user.id, wantsListId);
+  await canEditWantsList(user.id, wantsListId);
 
   await db.raw(
     `

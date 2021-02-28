@@ -39,9 +39,7 @@ export default new ApolloServer({
       [sessionId]
     );
 
-    if (!user) throw new AuthenticationError('invalid token');
-
-    return { ...context, user };
+    return { ...context, user: user ?? {} };
   },
   formatError: error => {
     console.error('error', error);

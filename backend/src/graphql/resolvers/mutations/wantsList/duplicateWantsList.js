@@ -13,7 +13,8 @@ export default async (_, { wantsListId }, { user: { id: userId }, db }) => {
         "userId", 
         "deckId", 
         CONCAT(name, ' - Copy'), 
-        NOW() as "lastEdit", NOW() as "createdAt" 
+        NOW() as "lastEdit", 
+        NOW() as "createdAt" 
       FROM "wantsLists" 
       WHERE id=? RETURNING id
     `,
