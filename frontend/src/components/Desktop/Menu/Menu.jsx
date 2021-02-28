@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Menu } from 'antd';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
+import UserContext from 'components/Provider/UserProvider';
 import { MythicCommanderBanner, Flex, SearchBar } from '../../Elements/Shared';
 import { darkBackground } from '../../../constants/colors';
 import UserMenu from './UserMenu';
@@ -17,26 +18,30 @@ const StyledMenu = styled.div`
   background-color: ${darkBackground};
 `;
 
-const MENU_ENTRIES = [
-  {
-    title: 'Decks',
-    href: '/my-decks',
-  },
-  {
-    title: 'Wants',
-    href: '/my-wants',
-  },
-  {
-    title: 'Collection',
-    href: '/collection',
-  },
-  {
-    title: 'Advanced Search',
-    href: '/search',
-  },
-];
-
 const DesktopMenu = ({ location: { pathname } }) => {
+  const { user } = useContext(UserContext);
+  const menuItems = [
+    {
+      title: 'Decks',
+      href: '/my-decks',
+      hidden: !user,
+    },
+    {
+      title: 'Wants',
+      href: '/my-wants',
+      hidden: !user,
+    },
+    {
+      title: 'Collection',
+      href: '/collection',
+      hidden: !user,
+    },
+    {
+      title: 'Advanced Search',
+      href: '/search',
+    },
+  ].filter(({ hidden }) => !hidden);
+
   return (
     <StyledMenu>
       <Flex direction="row" align="center">
@@ -51,7 +56,7 @@ const DesktopMenu = ({ location: { pathname } }) => {
           theme="dark"
           style={{ marginLeft: 12 }}
         >
-          {MENU_ENTRIES.map(({ title, href }) => (
+          {menuItems.map(({ title, href }) => (
             <Menu.Item
               key={href}
               style={{ padding: '0 3vw', fontSize: 16, fontWeight: 400 }}

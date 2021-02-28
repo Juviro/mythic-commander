@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Spin } from 'antd';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 
+import UserContext from 'components/Provider/UserProvider';
+import { LoginRequired } from 'components/Elements/Shared';
 import { getDecks } from '../../../queries';
 import DeckList from './DeckList';
 
@@ -18,6 +20,11 @@ const StyledWrapper = styled.div`
 export default () => {
   const { data, loading } = useQuery(getDecks);
   const decks = data ? data.decks : [];
+  const { user, loading: userLoading } = useContext(UserContext);
+
+  if (!user && !userLoading) {
+    return <LoginRequired message="Login to create your own decks" />;
+  }
 
   return (
     <StyledWrapper>

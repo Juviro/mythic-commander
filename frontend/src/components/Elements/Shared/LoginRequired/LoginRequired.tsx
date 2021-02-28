@@ -13,8 +13,8 @@ const StyledWrapper = styled.section`
 `;
 
 const StyledMessage = styled(Typography.Text)`
-  margin-top: 2rem;
   font-size: 24px;
+  padding: 2rem;
 `;
 
 interface Props {

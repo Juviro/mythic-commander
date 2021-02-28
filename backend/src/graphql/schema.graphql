@@ -277,7 +277,7 @@ type Query {
   proxies(type: String!, id: String!, filter: String): [ProxyCard!]!
   allLists: AllLists!
 
-  ltPlayers: [LTPlayer!]!
+  ltPlayers: [LTPlayer!]
 }
 
 input CardsOptionsInput {

@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { withRouter } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
+import UserContext from 'components/Provider/UserProvider';
+import { LoginRequired } from 'components/Elements/Shared';
 import { wantsListsDesktop as getWantsLists, createWantsListDesktop } from './queries';
 import { splitWantsLists } from '../../Mobile/WantsLists/WantsLists';
 import { OverviewList, OverviewListHeader, PageLayout } from '../../Elements/Desktop';
@@ -12,6 +14,12 @@ const Wants = ({ history }) => {
   });
   const [search, setSearch] = useState('');
   const [mutate] = useMutation(createWantsListDesktop);
+
+  const { user, loading: userLoading } = useContext(UserContext);
+
+  if (!user && !userLoading) {
+    return <LoginRequired message="Login to create your own wants lists" />;
+  }
 
   const onOpenWantsList = (id) => {
     history.push(`/wants/${id}`);

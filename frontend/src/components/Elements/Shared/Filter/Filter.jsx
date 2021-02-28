@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
 
 import { Divider, Typography } from 'antd';
 import BooleanSelection from 'components/Elements/Shared/Filter/SelectFilter/BooleanSelection';
+import UserContext from 'components/Provider/UserProvider';
 import ColorSelection from './ColorSelection';
 import NameFilter from './TextFilter/NameFilter';
 import OracleTextFilter from './TextFilter/OracleTextFilter';
@@ -67,6 +68,8 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
     isOwned,
     isCommanderLegal,
   } = options;
+
+  const { user } = useContext(UserContext);
 
   const filterElements = [
     {
@@ -200,6 +203,7 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
     },
     {
       title: 'Owned',
+      hidden: !user,
       component: (
         <BooleanSelection
           onChange={onChangeOption('isOwned')}
@@ -211,9 +215,11 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
     },
   ];
 
+  const displayedFilter = filterElements.filter(({ hidden }) => !hidden);
+
   return (
     <SytledFilterWrapper>
-      {filterElements.map(({ title, component, dividerAbove }) => (
+      {displayedFilter.map(({ title, component, dividerAbove }) => (
         <FilterElement key={title} title={title} dividerAbove={dividerAbove} size={size}>
           {component}
         </FilterElement>
