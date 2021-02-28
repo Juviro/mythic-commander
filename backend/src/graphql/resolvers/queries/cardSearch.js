@@ -27,6 +27,8 @@ const addColorClause = (q, colors) => {
 };
 
 const addOwnedClause = (q, userId, isOwned) => {
+  if (!userId) return;
+
   const operator = isOwned === 'true' ? 'IN' : 'NOT IN';
   q.whereRaw(
     `oracle_id ${operator} (SELECT DISTINCT oracle_id FROM "collectionWithOracle" WHERE "userId" = ?)`,

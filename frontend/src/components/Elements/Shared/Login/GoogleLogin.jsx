@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
 import message from 'utils/message';
 import { useHistory } from 'react-router';
-import { getUser } from 'components/Provider/UserProvider/queries';
 import { login } from './queries';
 
 const CLIENT_ID =
@@ -26,24 +25,20 @@ export default () => {
   const { push } = useHistory();
 
   const onSuccess = async (response) => {
-    await mutate({
+    const { data } = await mutate({
       variables: { token: response.tokenId },
-      update: (cache, { data }) => {
-        const { session, user } = data.login;
-        window.localStorage.setItem('session', session);
-        cache.writeQuery({
-          query: getUser,
-          data: {
-            user,
-          },
-        });
-        const name = user.username ?? user.name;
-        message(`Welcome <b>${name}</b>`);
-      },
     });
+
+    const { session, user } = data.login;
+    window.localStorage.setItem('session', session);
+
+    const name = user.username ?? user.name;
+    message(`Welcome <b>${name}</b>`);
 
     if (window.location.pathname === '/login') {
       push('/');
+    } else {
+      window.location.reload();
     }
   };
 

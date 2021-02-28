@@ -40,6 +40,7 @@ const resolver = {
       .first();
   },
   decks(_, __, { user, db }) {
+    if (!user.id) return null;
     return db('decks')
       .where({ userId: user.id })
       .orderBy('lastEdit', 'desc');
@@ -75,6 +76,8 @@ const resolver = {
         .first();
       collectionUserId = id;
       await isCollectionPublic(collectionUserId);
+    } else if (!userId) {
+      return null;
     }
 
     const cards = await paginatedCollection(
@@ -140,6 +143,7 @@ const resolver = {
   },
 
   wantsLists(_, { deckId }, { user: { id: userId }, db }) {
+    if (!userId) return null;
     const where = { userId };
     if (deckId) where.deckId = deckId;
 
@@ -160,6 +164,7 @@ const resolver = {
   },
 
   async allLists(_, __, { user: { id: userId }, db }) {
+    if (!userId) return null;
     const wantsLists = await db('wantsLists')
       .where({ userId })
       .orderBy('deckId', 'asc')
@@ -176,6 +181,8 @@ const resolver = {
   },
 
   ltPlayers(_, __, { user: { id: userId }, db }) {
+    if (!userId) return null;
+
     return db('ltPlayers')
       .where({ userId })
       .orderBy('lastEdit', 'DESC');
