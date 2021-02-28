@@ -20,11 +20,13 @@ export const canEditWantsList = async (userId, wantsListId) => {
 };
 
 export const canAccessWantsList = async (userId, wantsListId) => {
-  const isOwner = await db('wantsLists')
-    .where({ userId, id: wantsListId })
-    .first();
+  if (userId) {
+    const isOwner = await db('wantsLists')
+      .where({ userId, id: wantsListId })
+      .first();
 
-  if (isOwner) return;
+    if (isOwner) return;
+  }
 
   const isPublic = await db('wantsLists')
     .where({ id: wantsListId })

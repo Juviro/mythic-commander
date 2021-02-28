@@ -238,7 +238,7 @@ type LTPlayer {
 ################################# Queries #################################
 
 type Query {
-  user: User!
+  user: User
 
   deck(id: String!): Deck!
   decks: [Deck!]!
@@ -421,6 +421,7 @@ input ChangeCollectionInput {
 
 type LoginResponse {
   session: String!
+  user: User!
 }
 
 ################################# Wants List #################################

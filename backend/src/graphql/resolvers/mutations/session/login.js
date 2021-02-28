@@ -12,5 +12,5 @@ export default async (_, { token }, { db }) => {
   const session = getSession(user.id);
   await db('sessions').insert(session);
 
-  return { session: session.sessionId };
+  return { session: session.sessionId, user: dbUser ?? user };
 };

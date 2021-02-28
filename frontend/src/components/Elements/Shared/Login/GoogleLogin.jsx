@@ -2,14 +2,13 @@ import React from 'react';
 import GoogleLogin from 'react-google-login';
 import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
+import message from 'utils/message';
 import { login } from './queries';
 
 const CLIENT_ID =
   '985753697547-184gkcavnrc8f4flq1tdjra30amuchgo.apps.googleusercontent.com';
 
 const LoginWrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,15 +19,16 @@ const onError = (error) => {
   throw new Error('Error logging in. Please try again');
 };
 
-export default ({ history }) => {
+export default () => {
   const [mutate] = useMutation(login);
   const onSuccess = async (response) => {
     const { data } = await mutate({
       variables: { token: response.tokenId },
+      refetchQueries: ['user', 'getUser'],
     });
     window.localStorage.setItem('session', data.login.session);
-    // TODO: redirect to next in params
-    history.push('/');
+    message('Login successful');
+    window.location.reload();
   };
 
   return (

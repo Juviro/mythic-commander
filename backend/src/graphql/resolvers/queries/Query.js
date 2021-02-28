@@ -11,6 +11,8 @@ import wantedCards from './wantedCards';
 
 const resolver = {
   user(_, __, { db, user: { id } }) {
+    if (!id) return null;
+
     return db('users')
       .where({ id })
       .first();
@@ -48,6 +50,8 @@ const resolver = {
   },
 
   async ownedCardNames(_, __, { db, user: { id: userId } }) {
+    if (!userId) return [];
+
     const cardNames = await db('collection')
       .leftJoin('cards', { 'cards.id': 'collection.id' })
       .distinct('name')

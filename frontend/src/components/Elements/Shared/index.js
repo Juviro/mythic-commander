@@ -46,7 +46,7 @@ export { default as IncludedWants } from './IncludedWants';
 export { default as LayoutAndSortPicker } from './LayoutAndSortPicker';
 export { default as LayoutPicker } from './LayoutPicker';
 export { default as LazyLoad } from './LazyLoad';
-export { default as Login } from './Login';
+export { default as Login, LoginButton } from './Login';
 export { default as Logout } from './Logout';
 export { default as ManaCost, TextWithIcons } from './ManaCost';
 export { default as Menu } from './Menu';

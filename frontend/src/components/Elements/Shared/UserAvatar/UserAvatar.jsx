@@ -3,6 +3,7 @@ import { Spin, Typography } from 'antd';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/react-hooks';
 
+import { LoginButton } from 'components/Elements/Shared/Login';
 import { getUser } from './queries';
 import Flex from '../Flex';
 
@@ -21,8 +22,13 @@ const StyledAvatar = styled.img`
 
 export default ({ textPosition, onClick, textColor }) => {
   const { data, loading } = useQuery(getUser);
+  if (!data && loading) return null;
 
-  const username = data && (data.user.username || data.user.name);
+  if (!data?.user) {
+    return <LoginButton />;
+  }
+
+  const username = data?.user.username ?? data?.user.name;
 
   return (
     <StyledWrapper onClick={onClick}>
