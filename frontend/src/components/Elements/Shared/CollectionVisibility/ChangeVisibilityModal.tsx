@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Select, Typography, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { LockOutlined, GlobalOutlined } from '@ant-design/icons';
 
 import Modal from 'antd/lib/modal/Modal';
+import UserContext from 'components/Provider/UserProvider';
 import Flex from '../Flex';
-import { collectionVisibility, changeCollectionVisibility, getUser } from './queries';
+import { collectionVisibility, changeCollectionVisibility } from './queries';
 import CopyableText from '../CopyableText';
 
 const VISIBILITY_OPTIONS = [
@@ -26,10 +27,10 @@ export default ({ style, visibile: modalVisible, onClose }) => {
   const { data: dataVisibility, loading: loadingVisibility } = useQuery(
     collectionVisibility
   );
-  const { data: dataUser, loading: loadingUser } = useQuery(getUser);
+  const { user, loading: loadingUser } = useContext(UserContext);
 
   const visibility = dataVisibility?.collection?.visibility;
-  const username = dataUser?.user?.username;
+  const username = user?.username;
 
   const onChange = async (value) => {
     await mutate({ variables: { visibility: value } });

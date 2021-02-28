@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Modal, Typography, Input } from 'antd';
-import { useQuery, useMutation } from 'react-apollo';
+import { useMutation } from 'react-apollo';
 
+import UserContext from 'components/Provider/UserProvider';
 import message from '../../../../utils/message';
-import { getUser, setUsername } from './queries';
+import { setUsername } from './queries';
 import { useToggle } from '../../../Hooks';
 import useSubmitOnEnter from '../../../Hooks/useSubmitOnEnter';
 
 export default () => {
-  const { data, loading } = useQuery(getUser);
+  const { user, loading } = useContext(UserContext);
   const [mutate] = useMutation(setUsername);
   const [isVisible, toggleIsVisible] = useToggle(true);
   const [value, setValue] = useState('');
@@ -18,7 +19,7 @@ export default () => {
     message(`Welcome <b>${value}</b>!`);
   };
 
-  if (!data || loading || !data.user || data.user.username) return null;
+  if (!user || loading || user.username) return null;
 
   const isValid = value.match(/^[A-z0-9-_]{4,25}$/);
 
