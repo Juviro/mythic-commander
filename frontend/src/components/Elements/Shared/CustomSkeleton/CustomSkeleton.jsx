@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import shimmer from 'components/Animations/shimmer';
 
 import { CardGridSkeleton } from './CardGridSkeleton';
+import { MobileCardGridSkeleton } from './MobileCardGridSkeleton';
 import { CardListSkeleton } from './CardListSkeleton';
 
 const StyledImagePreview = styled.div`
@@ -19,6 +20,7 @@ export const Line = ({ style = {} }) => (
 
 export const List = CardListSkeleton;
 export const Grid = CardGridSkeleton;
+export const GridMobile = MobileCardGridSkeleton;
 export const CardImage = () => <StyledImagePreview />;
 
 export default () => <Skeleton active />;

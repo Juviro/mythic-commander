@@ -8,7 +8,7 @@ import { UserAvatar, Logout } from '../../Elements/Shared';
 
 const StyledAvatarWrapper = styled.div`
   margin-right: 8px;
-  min-width: 160px;
+  min-width: 60px;
 `;
 
 export default () => {

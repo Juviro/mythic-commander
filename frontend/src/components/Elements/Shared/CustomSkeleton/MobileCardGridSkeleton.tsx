@@ -1,7 +1,12 @@
 import shimmer from 'components/Animations/shimmer';
-import { StyledCardGridWrapper } from 'components/Elements/Desktop/PaginatedCardList/CardGrid/CardGrid';
 import React from 'react';
 import styled from 'styled-components';
+
+const StyledWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
 
 const StyledElement = styled.div`
   margin-bottom: 12px;
@@ -10,8 +15,8 @@ const StyledElement = styled.div`
 `;
 
 const StyledCard = styled.div<{ large?: boolean }>`
-  width: 100%;
-  height: 100%;
+  width: ${({ large }) => (large ? 90 : 43)}vw;
+  height: ${({ large }) => (large ? 125 : 60)}vw;
   border-radius: 3%;
   ${shimmer}
 `;
@@ -27,11 +32,11 @@ interface Props {
   large?: boolean;
 }
 
-export const CardGridSkeleton = ({ large }: Props) => {
+export const MobileCardGridSkeleton = ({ large }: Props) => {
   const dummyElements = [...new Array(10)].map((_, i) => i);
 
   return (
-    <StyledCardGridWrapper>
+    <StyledWrapper>
       {dummyElements.map((key) => (
         <StyledElement key={key}>
           <StyledCard large={large} />
@@ -39,6 +44,6 @@ export const CardGridSkeleton = ({ large }: Props) => {
           <StyledDescription small />
         </StyledElement>
       ))}
-    </StyledCardGridWrapper>
+    </StyledWrapper>
   );
 };

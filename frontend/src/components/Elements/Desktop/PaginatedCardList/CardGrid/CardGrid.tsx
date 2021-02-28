@@ -12,7 +12,7 @@ import CardModalDesktop from '../../CardModalDesktop';
 import { useToggle, useShortcut } from '../../../../Hooks';
 import { Flex } from '../../../Shared';
 
-const StyledWrapper = styled.div`
+export const StyledCardGridWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(${CARD_WIDTH}px, 1fr));
   padding-top: 8px;
@@ -117,7 +117,7 @@ const CardGrid = ({
         <span>{loading && <LoadingOutlined style={{ marginLeft: 16 }} />}</span>
         {paginationComponent}
       </Flex>
-      <StyledWrapper>
+      <StyledCardGridWrapper>
         {cards.map((card, index) => {
           const isSelected = index + 1 === selectedElementPosition;
 
@@ -138,7 +138,7 @@ const CardGrid = ({
             />
           );
         })}
-      </StyledWrapper>
+      </StyledCardGridWrapper>
       {paginationComponent}
       <CardModalDesktop
         loading={loading}
