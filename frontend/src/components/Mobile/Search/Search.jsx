@@ -23,17 +23,15 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
-const StyledLoadingPlaceholder = styled.div`
-  height: 100vh;
-`;
-
 const Search = ({ history }) => {
   const buttonRef = useRef(null);
   const scrollRef = useRef(null);
   const [isButtonAffixed, setIsButtonAffixed] = useState(false);
+  const [isNewSearch, setIsNewSearch] = useState(false);
   const [allCards, setAllCards] = useState(null);
   const [queryResult, setQueryResult] = useState({});
   const [loading, toggleLoading] = useToggle(false);
+  const [isSearching, toggleIsSearching] = useToggle(false);
   const [orderBy] = useStoredQueryParam('orderBy', StringParam);
   const [options, setParams] = useQueryParams(searchParams);
   const [currentOptions, setCurrentOptions] = useState(options);
@@ -44,6 +42,8 @@ const Search = ({ history }) => {
 
   const fetchCards = async (searchOptions, offset = 0) => {
     if (!orderBy) return;
+    setIsNewSearch(!offset);
+    toggleIsSearching(true);
     toggleLoading(true);
     const { data } = await client.query({
       fetchPolicy: 'cache-first',
@@ -124,21 +124,28 @@ const Search = ({ history }) => {
             onResetOptions={onResetOptions}
             isFilterResettable={isFilterResettable}
             wrapperStyle={{ height: 32 }}
-            style={{ height: isButtonAffixed ? 40 : 32 }}
+            style={{
+              height: isButtonAffixed ? 40 : 32,
+              // prevent height change to be animated
+              // while keeping transitions for hover etc
+              transition: 'all 0.3s, height 1ms',
+            }}
           />
         </Affix>
-        <Divider />
-        {loading && <StyledLoadingPlaceholder />}
-        {allCards && (
-          <CardList
-            showTotalResults
-            cards={allCards}
-            hasMore={hasMore}
-            loading={loading}
-            totalResults={totalResults}
-            onLoadMore={onLoadMore}
-            backTopStyle={isButtonAffixed ? { bottom: 45 } : null}
-          />
+        {isSearching && (
+          <>
+            <Divider />
+            <CardList
+              showTotalResults
+              cards={allCards}
+              hasMore={hasMore}
+              loading={loading}
+              totalResults={totalResults}
+              onLoadMore={onLoadMore}
+              isNewSearch={isNewSearch}
+              backTopStyle={isButtonAffixed ? { bottom: 45 } : null}
+            />
+          </>
         )}
       </StyledWrapper>
     </>

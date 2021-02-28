@@ -31,6 +31,7 @@ const CardList = ({
   onDeleteCard,
   showTotalResults,
   backTopStyle,
+  isNewSearch,
 }) => {
   const [detailCard, setDetailCard] = useState(null);
   const [{ name, layout = 'list' }] = useQueryParams({
@@ -38,8 +39,12 @@ const CardList = ({
     layout: StringParam,
   });
 
-  if (!cards) {
-    return <CustomSkeleton.List />;
+  // we don't want to display the skeletons when loading more with infinite scroll
+  // only when a new search is triggered
+  if (!cards || (isNewSearch && loading)) {
+    if (layout === 'list') return <CustomSkeleton.List />;
+    if (layout === 'grid') return <CustomSkeleton.Grid />;
+    if (layout === 'card') return <CustomSkeleton.Grid large />;
   }
 
   const onOpenDetailView = (card) => {
