@@ -28,6 +28,8 @@ export default {
     return snapshots[snapshots.length - 1];
   },
   currentSnapshot(_, __, { user: { id: userId }, db }) {
+    if (!userId) return null;
+
     return getCurrentSnapshot(db, userId);
   },
   async visibility(_, __, { user: { id: userId }, db }) {
