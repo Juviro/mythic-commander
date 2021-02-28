@@ -112,7 +112,7 @@ export default ({
         onDeleteCard={onDelete}
       />
     );
-  } else if (layout === 'grid' && cards.length) {
+  } else if (cards.length) {
     cardList = (
       <CardGrid
         search={search}
