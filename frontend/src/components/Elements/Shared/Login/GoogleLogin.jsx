@@ -24,7 +24,6 @@ export default () => {
   const onSuccess = async (response) => {
     const { data } = await mutate({
       variables: { token: response.tokenId },
-      refetchQueries: ['user', 'getUser'],
     });
     window.localStorage.setItem('session', data.login.session);
     message('Login successful');
