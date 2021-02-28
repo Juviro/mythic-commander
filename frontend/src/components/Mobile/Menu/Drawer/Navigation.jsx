@@ -6,11 +6,11 @@ import { FeatureFlag } from '../../../Elements/Shared';
 export default ({ onCloseDrawer }) => {
   const options = [
     {
-      href: '/m/decks',
+      href: '/m/my-decks',
       title: 'Decks',
     },
     {
-      href: '/m/wants',
+      href: '/m/my-wants',
       title: 'Wants',
     },
     {
