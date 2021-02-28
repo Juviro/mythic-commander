@@ -35,6 +35,7 @@ const resolver = {
   },
 
   deck(_, { id }, { user, db }) {
+    if (!user) return null;
     return db('decks')
       .where({ userId: user.id, id })
       .first();
