@@ -115,7 +115,7 @@ export default async (
     if (isLegendary === 'false')
       q.whereNot('type_line', 'ILIKE', `%Legendary%`);
     if (colors.length) addColorClause(q, colors);
-    if (isOwned && user) addOwnedClause(q, user.id, isOwned);
+    if (isOwned && user && user.id) addOwnedClause(q, user.id, isOwned);
     if (cmc) addRangeClause(q, cmc, 'cmc');
     if (power) addRangeClause(q, power, 'power');
     if (toughness) addRangeClause(q, toughness, 'toughness');

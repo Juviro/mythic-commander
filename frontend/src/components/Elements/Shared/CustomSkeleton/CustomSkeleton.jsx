@@ -1,15 +1,11 @@
 import React from 'react';
-import { Skeleton, List as AntdList } from 'antd';
+import { Skeleton } from 'antd';
 import styled from 'styled-components';
 import shimmer from 'components/Animations/shimmer';
 
-const SkeletonWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 16px;
-`;
+import { CardGridSkeleton } from './CardGridSkeleton';
+import { MobileCardGridSkeleton } from './MobileCardGridSkeleton';
+import { CardListSkeleton } from './CardListSkeleton';
 
 const StyledImagePreview = styled.div`
   width: 100%;
@@ -18,27 +14,17 @@ const StyledImagePreview = styled.div`
   ${shimmer};
 `;
 
-export const Line = ({ style = {} }) => (
-  <Skeleton active paragraph={null} style={style} />
+const StyledLine = styled.div`
+  ${shimmer};
+`;
+
+export const Line = ({ style = {}, height = 32 }) => (
+  <StyledLine style={{ ...style, height }} />
 );
 
-export const List = () => {
-  const dummyArray = [];
-  for (let i = 0; i < 10; i++) {
-    dummyArray.push(true);
-  }
-
-  return (
-    <SkeletonWrapper>
-      <AntdList
-        style={{ width: '100%' }}
-        dataSource={dummyArray}
-        renderItem={() => <Skeleton active paragraph={null} />}
-      />
-    </SkeletonWrapper>
-  );
-};
-
+export const List = CardListSkeleton;
+export const Grid = CardGridSkeleton;
+export const GridMobile = MobileCardGridSkeleton;
 export const CardImage = () => <StyledImagePreview />;
 
 export default () => <Skeleton active />;

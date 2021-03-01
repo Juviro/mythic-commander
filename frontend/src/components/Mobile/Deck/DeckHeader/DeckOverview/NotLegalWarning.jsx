@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Popover } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { warning } from 'constants/colors';
 import { isDeckLegal, isDeckOwned } from '../../../../../utils/cardStats';
 import sumCardAmount from '../../../../../utils/sumCardAmount';
 
@@ -40,7 +41,7 @@ export default ({ deck, size = 16 }) => {
       content={renderIssues}
       trigger="click"
     >
-      <ExclamationCircleOutlined style={{ color: 'orange', fontSize: size }} />
+      <ExclamationCircleOutlined style={{ color: warning, fontSize: size }} />
     </Popover>
   );
 };

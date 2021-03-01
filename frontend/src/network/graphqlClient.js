@@ -4,7 +4,7 @@ import { setContext } from 'apollo-link-context';
 import { onError } from 'apollo-link-error';
 import { HttpLink } from 'apollo-link-http';
 import { RetryLink } from 'apollo-link-retry';
-import { message } from 'antd';
+
 import { SERVER_URL } from '../constants/network';
 
 const httpLink = new HttpLink({ uri: SERVER_URL });
@@ -24,13 +24,10 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     const isUnauthenticated = graphQLErrors.some(
       (error) => error.extensions.code === 'UNAUTHENTICATED'
     );
-    console.info('isUnauthenticated, graphQLErrors', isUnauthenticated, graphQLErrors);
-    if (isUnauthenticated) {
-      const next = decodeURIComponent(window.location.href);
-      window.location.href = `/login?next=${next}`;
-    } else {
+    console.warn('isUnauthenticated, graphQLErrors', isUnauthenticated, graphQLErrors);
+    if (!isUnauthenticated) {
       const errorMessage = graphQLErrors.length ? graphQLErrors[0].message : '';
-      message.error(`An error occurred: ${errorMessage}`);
+      console.error('Graphql Error:', errorMessage);
     }
   }
 

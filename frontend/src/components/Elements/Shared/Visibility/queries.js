@@ -18,11 +18,11 @@ export const changeCollectionVisibility = gql`
   }
 `;
 
-export const getUser = gql`
-  query getUser {
-    user {
+export const changeWantsListVisibility = gql`
+  mutation changeWantsListVisibility($wantsListId: String!, $visibility: String!) {
+    changeWantsListVisibility(wantsListId: $wantsListId, visibility: $visibility) {
       id
-      username
+      visibility
     }
   }
 `;

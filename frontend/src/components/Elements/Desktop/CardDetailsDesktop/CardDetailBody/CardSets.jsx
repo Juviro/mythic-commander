@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
 
 import { message, Typography } from 'antd';
+import UserContext from 'components/Provider/UserProvider';
 import { changeCollection, cardDetailsDesktop } from '../queries';
 import { CardSetOverview, EditIcon } from '../../../Shared';
 import { useToggle, useShortcut } from '../../../../Hooks';
@@ -19,6 +20,7 @@ const StyledTitleWrapper = styled.div`
 
 export default ({ card, loading, selectedCardId, onChangeSet, showTitle }) => {
   const [mutate] = useMutation(changeCollection);
+  const { user } = useContext(UserContext);
   const [isEditing, toggleIsEditing] = useToggle(false);
   const [editedMap, setEditedMap] = useState({});
   const [addedMap, setAddedMap] = useState({});
@@ -105,7 +107,9 @@ export default ({ card, loading, selectedCardId, onChangeSet, showTitle }) => {
           </Typography.Title>
         )}
       </StyledTitleWrapper>
-      <EditIcon onClick={onToggleEdit} isEditing={isEditing} onDiscard={onDiscard} />
+      {user && (
+        <EditIcon onClick={onToggleEdit} isEditing={isEditing} onDiscard={onDiscard} />
+      )}
       <CardSetOverview
         card={card}
         loading={loading}

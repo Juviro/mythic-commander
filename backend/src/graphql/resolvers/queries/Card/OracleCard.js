@@ -9,6 +9,7 @@ const resolver = {
     _,
     { db, user: { id: userId } }
   ) {
+    if (!userId) return false;
     if (typeof owned === 'boolean') return owned;
     if (type_line.startsWith('Basic')) return true;
 
@@ -31,6 +32,8 @@ const resolver = {
   },
 
   containingDecks({ oracle_id }, _, { db, user: { id: userId } }) {
+    if (!userId) return [];
+
     return db('decks')
       .select('decks.*')
       .leftJoin('cardToDeckWithOracle', {
@@ -45,6 +48,8 @@ const resolver = {
   },
 
   async containingWantsLists({ oracle_id }, _, { db, user: { id: userId } }) {
+    if (!userId) return [];
+
     const result = await db('wantsLists')
       .leftJoin('cardToWantsListWithOracle', {
         'cardToWantsListWithOracle.wantsListId': 'wantsLists.id',
@@ -60,6 +65,8 @@ const resolver = {
 
   async sumPrice({ sumPrice, oracle_id }, _, { db, user: { id: userId } }) {
     if (typeof sumPrice === 'number') return sumPrice;
+    if (!userId) return 0;
+
     const {
       rows: [result],
     } = await db.raw(
@@ -101,6 +108,7 @@ const resolver = {
     { db, user: { id: userId } }
   ) {
     if (totalAmount) return totalAmount;
+    if (!userId) return 1;
 
     const { rows } = await db.raw(
       `

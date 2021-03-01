@@ -1,25 +1,52 @@
 import db from '../database';
-import { ValidationError } from 'apollo-server-koa';
+import { AuthenticationError } from 'apollo-server-koa';
 
-export const canAccessDeck = async (userId, deckId) => {
-  const isAuthenticated = await db('decks')
-    .where({ userId, id: deckId })
-    .first();
-  if (!isAuthenticated) throw new ValidationError('Not authenticated');
+const throwAuthError = (message = 'Not authenticated') => {
+  throw new AuthenticationError(message);
 };
 
-export const canAccessWantsList = async (userId, wantsListId) => {
-  const isAuthenticated = await db('wantsLists')
-    .where({ userId, id: wantsListId })
+const canAccess = async (type, userId, id) => {
+  if (userId) {
+    const isOwner = await db(type)
+      .where({ userId, id })
+      .first();
+
+    if (isOwner) return;
+  }
+
+  const isPublic = await db(type)
+    .where({ id })
+    .andWhereNot('visibility', 'private')
     .first();
-  if (!isAuthenticated) throw new ValidationError('Not authenticated');
+
+  if (!isPublic) throwAuthError();
 };
+
+const canEdit = async (type, userId, id) => {
+  const isOwner = await db(type)
+    .where({ userId, id })
+    .first();
+  if (!isOwner) throwAuthError();
+};
+
+export const canAccessDeck = async (userId, deckId) =>
+  canAccess('decks', userId, deckId);
+
+export const canEditDeck = async (userId, deckId) =>
+  canEdit('decks', userId, deckId);
+
+export const canAccessWantsList = async (userId, wantsListId) =>
+  canAccess('wantsLists', userId, wantsListId);
+
+export const canEditWantsList = async (userId, wantsListId) =>
+  canEdit('wantsLists', userId, wantsListId);
 
 export const isCollectionPublic = async userId => {
   const collectionVisibility = await db('collectionVisibility')
     .where({ userId })
     .first();
-  if (!collectionVisibility || collectionVisibility.visibility !== 'public') {
-    throw new ValidationError('This collection is private.');
+
+  if (!collectionVisibility || collectionVisibility.visibility !== 'hidden') {
+    throw new throwAuthError('This collection is private.');
   }
 };

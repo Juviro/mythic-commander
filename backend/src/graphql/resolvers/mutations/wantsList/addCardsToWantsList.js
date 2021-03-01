@@ -1,5 +1,8 @@
 import { updateLastEdit } from './helper';
-import { canAccessWantsList } from '../../../../auth/authenticateUser';
+import {
+  canAccessWantsList,
+  canEditWantsList,
+} from '../../../../auth/authenticateUser';
 import unifyCardFormat from '../../unifyCardFormat';
 
 const ON_CONFLICT = `
@@ -14,6 +17,7 @@ export default async (
   { cards, wantsListId, wantsListName },
   { user: { id: userId }, db }
 ) => {
+  await canEditWantsList(userId, wantsListId);
   if (wantsListName) {
     const [id] = await db('wantsLists')
       .insert({ userId, name: wantsListName })

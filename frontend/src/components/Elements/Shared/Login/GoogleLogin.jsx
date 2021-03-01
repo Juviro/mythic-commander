@@ -2,14 +2,14 @@ import React from 'react';
 import GoogleLogin from 'react-google-login';
 import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
+import message from 'utils/message';
+import { useHistory } from 'react-router';
 import { login } from './queries';
 
 const CLIENT_ID =
   '985753697547-184gkcavnrc8f4flq1tdjra30amuchgo.apps.googleusercontent.com';
 
 const LoginWrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,15 +20,26 @@ const onError = (error) => {
   throw new Error('Error logging in. Please try again');
 };
 
-export default ({ history }) => {
+export default () => {
   const [mutate] = useMutation(login);
+  const { push } = useHistory();
+
   const onSuccess = async (response) => {
     const { data } = await mutate({
       variables: { token: response.tokenId },
     });
-    window.localStorage.setItem('session', data.login.session);
-    // TODO: redirect to next in params
-    history.push('/');
+
+    const { session, user } = data.login;
+    window.localStorage.setItem('session', session);
+
+    const name = user.username ?? user.name;
+    message(`Welcome <b>${name}</b>`);
+
+    if (window.location.pathname === '/login') {
+      push('/');
+    } else {
+      window.location.reload();
+    }
   };
 
   return (
