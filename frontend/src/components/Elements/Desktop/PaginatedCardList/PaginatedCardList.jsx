@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { StringParam, useQueryParams, NumberParam } from 'use-query-params';
 
 import styled from 'styled-components';
 import { Empty, Typography } from 'antd';
 import { DeleteOutlined, SendOutlined, EditOutlined } from '@ant-design/icons';
+import UserContext from 'components/Provider/UserProvider';
 import Flex from '../../Shared/Flex';
 import CardTable from './CardTable';
 import CardGrid from './CardGrid';
@@ -41,6 +42,7 @@ export default ({
   onEditCard,
   onMoveCards,
 }) => {
+  const { user } = useContext(UserContext);
   const [initialPageSize, setInitialPageSize] = useLocalStorage('pageSize', 25);
   const [{ layout, pageSize }, setParams] = useQueryParams({
     layout: StringParam,
@@ -76,7 +78,7 @@ export default ({
       onClick: onEdit,
     });
   }
-  if (onMoveCards) {
+  if (onMoveCards && user) {
     singleCardActions.push({
       title: 'Add to...',
       Icon: SendOutlined,
@@ -100,7 +102,7 @@ export default ({
         cards={cards}
         search={search}
         loading={loading}
-        onMoveCards={onMoveCards}
+        onMoveCards={user ? onMoveCards : undefined}
         showSorter={showSorter}
         hiddenColumns={hiddenColumns}
         numberOfCards={numberOfCards}
@@ -112,7 +114,7 @@ export default ({
         onDeleteCard={onDelete}
       />
     );
-  } else if (layout === 'grid' && cards.length) {
+  } else if (cards.length) {
     cardList = (
       <CardGrid
         search={search}

@@ -12,7 +12,7 @@ import Header from './Header/Header';
 import message from '../../../utils/message';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
 import { getDeckDesktop, addCardsToDeckDesktop } from './queries';
-import { Flex, ShortcutFocus } from '../../Elements/Shared';
+import { Flex, NotFound, ShortcutFocus } from '../../Elements/Shared';
 import sumCardAmount from '../../../utils/sumCardAmount';
 import { useToggle } from '../../Hooks';
 
@@ -32,6 +32,10 @@ export default () => {
     fetchPolicy: 'network-only',
   });
   const [mutate] = useMutation<any, MutationAddCardsToDeckArgs>(addCardsToDeckDesktop);
+
+  if (!data && !loading) {
+    return <NotFound message="This deck does not seem to exist.." />;
+  }
 
   const deck = data?.deck;
   const cards = unifyCardFormat(deck?.cards);

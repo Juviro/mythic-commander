@@ -1,3 +1,4 @@
+import shimmer from 'components/Animations/shimmer';
 import { coverBackgroundColors } from 'constants/colors';
 import React from 'react';
 import styled from 'styled-components';
@@ -23,6 +24,21 @@ const StyledCoverLetter = styled.div`
   background-color: ${({ color }) => color};
 `;
 
+const StyledWrapper = styled.div`
+  width: 100%;
+  padding-bottom: 73.5%;
+  position: relative;
+  ${shimmer};
+`;
+
+const StyledImage = styled.img`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+`;
+
 const getColorFromId = (id) => {
   const index = id % coverBackgroundColors.length;
   return coverBackgroundColors[index];
@@ -41,5 +57,9 @@ export default ({ list }) => {
     );
   }
 
-  return <img src={imgSrc} alt={name} />;
+  return (
+    <StyledWrapper>
+      <StyledImage src={imgSrc} alt={name} />
+    </StyledWrapper>
+  );
 };

@@ -176,6 +176,7 @@ export type Legalities = {
 export type LoginResponse = {
   __typename?: 'LoginResponse';
   session: Scalars['String'];
+  user: User;
 };
 
 export type LtPlayer = {
@@ -232,6 +233,7 @@ export type Mutation = {
   addCardsToWantsList: Array<WantsListCard>;
   linkWantsList: WantsList;
   unlinkWantsList: WantsList;
+  changeWantsListVisibility: WantsList;
   updateLtPlayer: LtPlayer;
   deleteLtPlayer?: Maybe<Scalars['Boolean']>;
 };
@@ -356,6 +358,11 @@ export type MutationUnlinkWantsListArgs = {
   wantsListId: Scalars['String'];
 };
 
+export type MutationChangeWantsListVisibilityArgs = {
+  wantsListId: Scalars['String'];
+  visibility: Scalars['String'];
+};
+
 export type MutationUpdateLtPlayerArgs = {
   name: Scalars['String'];
   img?: Maybe<Scalars['String']>;
@@ -421,8 +428,8 @@ export type PurchaseUris = {
 
 export type Query = {
   __typename?: 'Query';
-  user: User;
-  deck: Deck;
+  user?: Maybe<User>;
+  deck?: Maybe<Deck>;
   decks: Array<Deck>;
   collection: Collection;
   paginatedCollection: PaginatedCollection;
@@ -441,7 +448,7 @@ export type Query = {
   wantsLists: Array<WantsList>;
   proxies: Array<ProxyCard>;
   allLists: AllLists;
-  ltPlayers: Array<LtPlayer>;
+  ltPlayers?: Maybe<Array<LtPlayer>>;
 };
 
 export type QueryDeckArgs = {
@@ -550,6 +557,8 @@ export type WantsList = {
   createdAt: Scalars['String'];
   numberOfCards: Scalars['Int'];
   deck?: Maybe<Deck>;
+  canEdit?: Maybe<Scalars['Boolean']>;
+  visibility: Scalars['String'];
   cards: Array<WantsListCard>;
 };
 

@@ -22,12 +22,14 @@ const resolver = {
       .where({ wantsListId });
     return sum || 0;
   },
-  deck({ deckId, deck }, _, { db }) {
+  deck({ deckId, deck }, _, { user: { id: userId = '' }, db }) {
     if (deck) return deck;
     if (!deckId) return null;
 
     return db('decks')
       .where({ id: deckId })
+      .andWhere({ userId })
+      .orWhereNot('visibility', 'private')
       .first();
   },
 };

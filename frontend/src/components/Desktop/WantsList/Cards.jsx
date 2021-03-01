@@ -14,7 +14,7 @@ import {
   wantsListDesktop,
 } from './queries';
 
-export default ({ cards, loading, wantsList }) => {
+export default ({ cards, loading, wantsList, canEdit }) => {
   const [mutateDelete] = useMutation(deleteFromWantsListDesktop);
   const [mutateEdit] = useMutation(editWantsListCardDesktop);
 
@@ -57,7 +57,10 @@ export default ({ cards, loading, wantsList }) => {
 
   return (
     <PageCard style={{ height: 'auto' }}>
-      <WithActions deleteByOracle={deleteByOracle} onEditCard={onEditCard}>
+      <WithActions
+        deleteByOracle={canEdit ? deleteByOracle : undefined}
+        onEditCard={canEdit ? onEditCard : undefined}
+      >
         {(actionProps) => (
           <WithFullList cards={cards} {...actionProps}>
             {(fullListProps) => (

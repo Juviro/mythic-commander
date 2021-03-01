@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Spin, Typography } from 'antd';
 import styled from 'styled-components';
-import { useQuery } from '@apollo/react-hooks';
 
-import { getUser } from './queries';
+import { LoginButton } from 'components/Elements/Shared/Login';
+
+import UserContext from 'components/Provider/UserProvider';
 import Flex from '../Flex';
 
 const StyledWrapper = styled.div`
@@ -20,9 +21,14 @@ const StyledAvatar = styled.img`
 `;
 
 export default ({ textPosition, onClick, textColor }) => {
-  const { data, loading } = useQuery(getUser);
+  const { user, loading } = useContext(UserContext);
+  if (loading) return null;
 
-  const username = data && (data.user.username || data.user.name);
+  if (!user) {
+    return <LoginButton />;
+  }
+
+  const username = user.username ?? user.name;
 
   return (
     <StyledWrapper onClick={onClick}>
@@ -43,7 +49,7 @@ export default ({ textPosition, onClick, textColor }) => {
               {username}
             </Typography.Text>
           )}
-          <StyledAvatar src={data.user.avatar} alt="avatar" />
+          <StyledAvatar src={user.avatar} alt="avatar" />
           {textPosition === 'right' && (
             <Flex
               direction="column"

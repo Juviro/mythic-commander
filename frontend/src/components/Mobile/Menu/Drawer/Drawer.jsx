@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Drawer, Divider } from 'antd';
 
+import UserContext from 'components/Provider/UserProvider';
 import Header from './Header';
 import Navigation from './Navigation';
 import { Logout, UserAvatar } from '../../../Elements/Shared';
 import { darkBackground } from '../../../../constants/colors';
 
 export default ({ isVisible, onCloseDrawer }) => {
+  const { user } = useContext(UserContext);
+
   return (
     <Drawer
       title={<Header />}
@@ -30,10 +33,10 @@ export default ({ isVisible, onCloseDrawer }) => {
     >
       <span>
         <UserAvatar textPosition="right" />
-        <Divider style={{ width: '120%', margin: '16px -24px 8px' }} />
+        <Divider />
         <Navigation onCloseDrawer={onCloseDrawer} />
       </span>
-      <Logout />
+      {user && <Logout />}
     </Drawer>
   );
 };

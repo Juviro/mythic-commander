@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import SearchOptions from './SearchOptions';
-import { useToggle } from '../../Hooks';
 import {
   PageCard,
   PageLayout,
@@ -11,7 +10,7 @@ import {
 import { SearchHoc } from '../../Elements/Shared';
 
 export default () => {
-  const [isSidebarVisible, toggleIsSidebarVisible] = useToggle(true);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   return (
     <PageLayout>
@@ -31,15 +30,19 @@ export default () => {
             <PageCard title="Advanced Search">
               <SearchOptions
                 loading={loading}
-                onSearch={onSearch}
+                onSearch={() => {
+                  onSearch();
+                  setTimeout(
+                    () => scrollRef.current?.scrollIntoView({ behavior: 'smooth' }),
+                    100
+                  );
+                }}
                 onResetOptions={onResetOptions}
                 onChangeOption={onChangeOption}
                 options={currentOptions}
-                isVisible={isSidebarVisible}
-                isFullscreen={!isSearching}
-                toggleIsVisible={toggleIsSidebarVisible}
               />
             </PageCard>
+            <div ref={scrollRef} />
             {isSearching && (
               <PageCard
                 title={numberOfCards !== undefined && `Found ${numberOfCards} Cards`}

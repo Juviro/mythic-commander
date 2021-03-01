@@ -3,11 +3,17 @@ import cardSearch from './cardSearch';
 import proxies from './proxies';
 import unifyCardFormat from '../unifyCardFormat';
 import paginatedCollection from './paginatedCollection';
-import { isCollectionPublic } from '../../../auth/authenticateUser';
+import {
+  canAccessDeck,
+  canAccessWantsList,
+  isCollectionPublic,
+} from '../../../auth/authenticateUser';
 import wantedCards from './wantedCards';
 
 const resolver = {
   user(_, __, { db, user: { id } }) {
+    if (!id) return null;
+
     return db('users')
       .where({ id })
       .first();
@@ -29,12 +35,15 @@ const resolver = {
       .first();
   },
 
-  deck(_, { id }, { user, db }) {
+  async deck(_, { id }, { user, db }) {
+    await canAccessDeck(user.id, id);
+
     return db('decks')
       .where({ userId: user.id, id })
       .first();
   },
   decks(_, __, { user, db }) {
+    if (!user.id) return null;
     return db('decks')
       .where({ userId: user.id })
       .orderBy('lastEdit', 'desc');
@@ -45,6 +54,8 @@ const resolver = {
   },
 
   async ownedCardNames(_, __, { db, user: { id: userId } }) {
+    if (!userId) return [];
+
     const cardNames = await db('collection')
       .leftJoin('cards', { 'cards.id': 'collection.id' })
       .distinct('name')
@@ -68,6 +79,8 @@ const resolver = {
         .first();
       collectionUserId = id;
       await isCollectionPublic(collectionUserId);
+    } else if (!userId) {
+      return null;
     }
 
     const cards = await paginatedCollection(
@@ -124,13 +137,21 @@ const resolver = {
 
   cardSearch,
 
-  wantsList(_, { id }, { user: { id: userId }, db }) {
-    return db('wantsLists')
-      .where({ id, userId })
+  async wantsList(_, { id }, { user: { id: userId }, db }) {
+    await canAccessWantsList(userId, id);
+
+    const wantsList = await db('wantsLists')
+      .where({ id })
       .first();
+
+    return {
+      ...wantsList,
+      canEdit: wantsList?.userId === userId,
+    };
   },
 
   wantsLists(_, { deckId }, { user: { id: userId }, db }) {
+    if (!userId) return null;
     const where = { userId };
     if (deckId) where.deckId = deckId;
 
@@ -139,6 +160,8 @@ const resolver = {
       .orderBy('createdAt', 'asc');
   },
   async collectionSnapshots(_, __, { user: { id: userId }, db }) {
+    if (!userId) return [];
+
     return db('collectionSnapshot')
       .where({ userId })
       .orderBy('date');
@@ -149,6 +172,7 @@ const resolver = {
   },
 
   async allLists(_, __, { user: { id: userId }, db }) {
+    if (!userId) return null;
     const wantsLists = await db('wantsLists')
       .where({ userId })
       .orderBy('deckId', 'asc')
@@ -165,6 +189,8 @@ const resolver = {
   },
 
   ltPlayers(_, __, { user: { id: userId }, db }) {
+    if (!userId) return null;
+
     return db('ltPlayers')
       .where({ userId })
       .orderBy('lastEdit', 'DESC');

@@ -15,13 +15,13 @@ const StyledDescription = styled(Descriptions)`
 export default ({ wantsList }) => {
   if (!wantsList) return <Skeleton />;
 
-  const { numberOfCards, numberOfUniqueCards, valueLabel } = getListStats(wantsList);
+  const { numberOfCards, numberOfUniqueCards, ownedValueLabel } = getListStats(wantsList);
 
   return (
     <StyledDescription column={1}>
       <Descriptions.Item label="Total Cards">{numberOfCards}</Descriptions.Item>
       <Descriptions.Item label="Unique Cards">{numberOfUniqueCards}</Descriptions.Item>
-      <Descriptions.Item label="Total costs">{valueLabel}</Descriptions.Item>
+      <Descriptions.Item label="Total costs">{ownedValueLabel}</Descriptions.Item>
     </StyledDescription>
   );
 };

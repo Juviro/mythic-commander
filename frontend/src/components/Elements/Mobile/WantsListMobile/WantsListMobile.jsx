@@ -9,7 +9,15 @@ import {
 import FilteredCardList from '../CardListMobile/FilteredCardList';
 import { wantsListsForDeckMobile } from '../../../Mobile/Deck/LinkedWants/queries';
 
-export default ({ cards, loading, rawWantsList, hideFooter, moveToList, deckId }) => {
+export default ({
+  cards,
+  loading,
+  rawWantsList,
+  hideFooter,
+  moveToList,
+  deckId,
+  canEdit,
+}) => {
   const wantsListId = rawWantsList && rawWantsList.id;
   const [mutateDelete] = useMutation(deleteFromWantsList);
   const [mutateEdit] = useMutation(editWantsListCard);
@@ -76,9 +84,9 @@ export default ({ cards, loading, rawWantsList, hideFooter, moveToList, deckId }
       hideFooter={hideFooter}
       cards={cards}
       loading={loading}
-      moveToList={moveToList}
-      onEditCard={onEditCard}
-      onDeleteCard={onDeleteCard}
+      moveToList={canEdit ? moveToList : undefined}
+      onEditCard={canEdit ? onEditCard : undefined}
+      onDeleteCard={canEdit ? onDeleteCard : undefined}
     />
   );
 };

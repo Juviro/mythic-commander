@@ -18,6 +18,11 @@ const StyledGridWrapper = styled.div`
   align-items: flex-start;
 `;
 
+const StyledPlaceholderWrapper = styled.div`
+  padding: 4px 8px;
+  width: 100%;
+`;
+
 const CardList = ({
   cards,
   loading,
@@ -30,6 +35,8 @@ const CardList = ({
   onEditCard,
   onDeleteCard,
   showTotalResults,
+  backTopStyle,
+  isNewSearch,
 }) => {
   const [detailCard, setDetailCard] = useState(null);
   const [{ name, layout = 'list' }] = useQueryParams({
@@ -37,8 +44,17 @@ const CardList = ({
     layout: StringParam,
   });
 
-  if (!cards) {
-    return <CustomSkeleton.List />;
+  // we don't want to display the skeletons when loading more with infinite scroll
+  // only when a new search is triggered
+  if (!cards || (isNewSearch && loading)) {
+    const getPlaceholder = () => {
+      if (layout === 'list') return <CustomSkeleton.List />;
+      if (layout === 'grid') return <CustomSkeleton.GridMobile />;
+      if (layout === 'card') return <CustomSkeleton.GridMobile large />;
+      return null;
+    };
+
+    return <StyledPlaceholderWrapper>{getPlaceholder()}</StyledPlaceholderWrapper>;
   }
 
   const onOpenDetailView = (card) => {
@@ -109,7 +125,7 @@ const CardList = ({
           totalResults={totalResults}
         />
       )}
-      <BackTop style={{ left: 20, bottom: 20 }} />
+      <BackTop style={{ left: 20, bottom: 20, ...backTopStyle }} />
       <CardModal {...detailCard} onClose={onCloseModal} />
     </>
   );

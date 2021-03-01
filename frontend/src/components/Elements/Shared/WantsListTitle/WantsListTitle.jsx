@@ -3,7 +3,7 @@ import { useMutation } from 'react-apollo';
 import { EditableTitle } from '..';
 import { editWantsList } from './queries';
 
-export default ({ wantsList, level }) => {
+export default ({ wantsList, level, canEdit }) => {
   const [mutate] = useMutation(editWantsList);
   const onChangeName = (name) => {
     mutate({
@@ -27,6 +27,7 @@ export default ({ wantsList, level }) => {
   return (
     <EditableTitle
       level={level}
+      canEdit={canEdit}
       name={wantsList && wantsList.name}
       onChange={onChangeName}
     />

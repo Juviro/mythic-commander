@@ -73,6 +73,7 @@ export default () => {
         loading={loading}
       />
       <CardListMobile
+        isNewSearch
         hasMore={hasMore}
         loading={loading}
         cards={formattedCards}
