@@ -172,6 +172,7 @@ type WantsList {
   numberOfCards: Int!
   deck: Deck
   canEdit: Boolean
+  visibility: String!
   cards: [WantsListCard!]!
 }
 
