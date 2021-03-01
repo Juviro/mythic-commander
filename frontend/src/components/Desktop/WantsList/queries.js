@@ -31,6 +31,7 @@ const WANTS_LIST_FIELDS = `
   lastEdit
   numberOfCards
   visibility
+  canEdit
   deck {
     id
     imgSrc

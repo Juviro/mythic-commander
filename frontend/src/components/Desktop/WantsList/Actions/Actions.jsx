@@ -30,10 +30,11 @@ export default ({ wantsList, onAddCards, canEdit }) => {
   ];
 
   const unlinkAction = <UnlinkDeck id={wantsList.id} />;
+
   const actions = baseActions;
-  if (canEdit) actions.push(...editActions);
-  if (user) actions.push(...loggedInActions);
   if (canUnlink) actions.push(unlinkAction);
+  if (user) actions.push(...loggedInActions);
+  if (canEdit) actions.push(...editActions);
 
   return (
     <Space>
