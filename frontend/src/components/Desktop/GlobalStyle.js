@@ -51,4 +51,14 @@ export default createGlobalStyle`
       background-color: aliceblue;
     }
   }
+
+  /* 
+    For some very strange reason, whenever you select a card
+    from the search dropdown an input element is 
+    briefly visible in the bottom of the screen.
+    Seems like an antd bug.
+   */
+  body > input {
+    display: none;
+  }
 `;
