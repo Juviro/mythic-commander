@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import { useQueryParams, StringParam } from 'use-query-params';
-import CustomSkeleton from '../../Shared/CustomSkeleton';
 import { filterCards, sortCards } from '../../../../utils/cardFilter';
 import CardList from '.';
 import { useStoredQueryParam } from '../../../Hooks';
@@ -34,27 +33,25 @@ export default ({
     // eslint-disable-next-line
   }, [layout]);
 
-  if (!cards) {
-    return <CustomSkeleton.List />;
-  }
-
   const onLoadMore = () => {
     setDisplayedResults(displayedResults + CARDS_PER_PAGE);
   };
 
-  const filteredCards = filterCards(cards, {
-    colors,
-    name: name || nameQuery,
-    subType,
-    cardType,
-    isLegendary,
-  });
+  const filteredCards =
+    cards &&
+    filterCards(cards, {
+      colors,
+      name: name || nameQuery,
+      subType,
+      cardType,
+      isLegendary,
+    });
 
-  const sortedCards = sortCards(filteredCards, orderBy);
+  const sortedCards = cards && sortCards(filteredCards, orderBy);
 
-  const hasMore = displayedResults < sortedCards.length;
+  const hasMore = displayedResults < sortedCards?.length;
 
-  const displayedCards = sortedCards.slice(0, displayedResults);
+  const displayedCards = sortedCards?.slice(0, displayedResults);
 
   return (
     <CardList
@@ -66,7 +63,7 @@ export default ({
       onLoadMore={onLoadMore}
       onEditCard={onEditCard}
       onDeleteCard={onDeleteCard}
-      totalResults={cards.length}
+      totalResults={cards?.length}
     />
   );
 };

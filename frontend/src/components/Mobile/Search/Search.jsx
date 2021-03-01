@@ -128,7 +128,7 @@ const Search = ({ history }) => {
               height: isButtonAffixed ? 40 : 32,
               // prevent height change to be animated
               // while keeping transitions for hover etc
-              transition: 'all 0.3s, height 1ms',
+              transition: 'all 0.3s, height 0ms',
             }}
           />
         </Affix>
