@@ -3,7 +3,7 @@ import { Typography } from 'antd';
 import styled from 'styled-components';
 import { CustomSkeleton } from '../../../Shared';
 
-const StyledWrapper = styled.span`
+const StyledWrapper = styled.div`
   height: 55px;
 `;
 

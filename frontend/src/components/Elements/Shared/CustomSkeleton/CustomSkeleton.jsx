@@ -14,8 +14,12 @@ const StyledImagePreview = styled.div`
   ${shimmer};
 `;
 
-export const Line = ({ style = {} }) => (
-  <Skeleton active paragraph={null} style={style} />
+const StyledLine = styled.div`
+  ${shimmer};
+`;
+
+export const Line = ({ style = {}, height = 32 }) => (
+  <StyledLine style={{ ...style, height }} />
 );
 
 export const List = CardListSkeleton;
