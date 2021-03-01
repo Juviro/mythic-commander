@@ -17,3 +17,12 @@ export const changeCollectionVisibility = gql`
     }
   }
 `;
+
+export const changeWantsListVisibility = gql`
+  mutation changeWantsListVisibility($wantsListId: String!, $visibility: String!) {
+    changeWantsListVisibility(wantsListId: $wantsListId, visibility: $visibility) {
+      id
+      visibility
+    }
+  }
+`;

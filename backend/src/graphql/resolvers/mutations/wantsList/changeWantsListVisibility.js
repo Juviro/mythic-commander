@@ -7,7 +7,12 @@ export default async (
 ) => {
   await canEditWantsList(userId, wantsListId);
 
-  return db('wantsLists')
+  await db('wantsLists')
     .update({ visibility })
     .where({ userId, id: wantsListId });
+
+  return {
+    id: wantsListId,
+    visibility,
+  };
 };

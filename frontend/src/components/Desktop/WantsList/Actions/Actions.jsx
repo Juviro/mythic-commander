@@ -1,7 +1,13 @@
+import { Space } from 'antd';
 import MultiInput from 'components/Elements/Desktop/AddCards/MultIinput';
 import UserContext from 'components/Provider/UserProvider';
 import React, { useContext } from 'react';
-import { ProxyCards, ExportAsText, Menu } from '../../../Elements/Shared';
+import {
+  ProxyCards,
+  ExportAsText,
+  Menu,
+  WantsListVisibility,
+} from '../../../Elements/Shared';
 import DeleteList from './DeleteList';
 import DuplicateList from './DuplicateList';
 import UnlinkDeck from './UnlinkDeck';
@@ -29,5 +35,10 @@ export default ({ wantsList, onAddCards, canEdit }) => {
   if (user) actions.push(...loggedInActions);
   if (canUnlink) actions.push(unlinkAction);
 
-  return <Menu actions={actions} placement="bottomRight" />;
+  return (
+    <Space>
+      <WantsListVisibility visibility={wantsList.visibility} wantsListId={wantsList.id} />
+      <Menu actions={actions} placement="bottomRight" />
+    </Space>
+  );
 };
