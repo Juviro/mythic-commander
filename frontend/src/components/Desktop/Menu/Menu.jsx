@@ -24,11 +24,13 @@ const DesktopMenu = ({ location: { pathname } }) => {
     {
       title: 'Decks',
       href: '/my-decks',
+      additionalPaths: ['/decks'],
       hidden: !user,
     },
     {
       title: 'Wants',
       href: '/my-wants',
+      additionalPaths: ['/wants'],
       hidden: !user,
     },
     {
@@ -42,6 +44,12 @@ const DesktopMenu = ({ location: { pathname } }) => {
     },
   ].filter(({ hidden }) => !hidden);
 
+  const selectedMenuKeys = menuItems
+    .filter(({ href, additionalPaths = [] }) => {
+      return [href, ...additionalPaths].some((path) => pathname.includes(path));
+    })
+    .map(({ href }) => href);
+
   return (
     <StyledMenu>
       <Flex direction="row" align="center">
@@ -52,7 +60,7 @@ const DesktopMenu = ({ location: { pathname } }) => {
         />
         <Menu
           mode="horizontal"
-          selectedKeys={pathname}
+          selectedKeys={selectedMenuKeys}
           theme="dark"
           style={{ marginLeft: 12 }}
         >
