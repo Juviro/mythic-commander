@@ -37,7 +37,7 @@ export default ({ wantsList, onAddCards, canEdit }) => {
 
   return (
     <Space>
-      <WantsListVisibility visibility={wantsList.visibility} wantsListId={wantsList.id} />
+      <WantsListVisibility visibility={wantsList.visibility} />
       <Menu actions={actions} placement="bottomRight" />
     </Space>
   );

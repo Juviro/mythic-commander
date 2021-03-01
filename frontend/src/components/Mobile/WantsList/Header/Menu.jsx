@@ -9,6 +9,7 @@ import { Dropdown, Menu, Popconfirm } from 'antd';
 import { withRouter } from 'react-router';
 import { useMutation } from 'react-apollo';
 import UserContext from 'components/Provider/UserProvider';
+import { WantsListVisibility } from 'components/Elements/Shared';
 import { deleteWantsList, duplicateWantsList, unlinkWantsList } from '../queries';
 import { wantsListsMobile as wantsLists } from '../../WantsLists/queries';
 import message from '../../../../utils/message';
@@ -111,18 +112,27 @@ const WantsListMenu = ({ history, wantsList, canEdit }) => {
         </Menu.Item>
       )}
       {canEdit && (
-        <Menu.Item key="3">
-          <Popconfirm
-            placement="bottomRight"
-            title="Are you sure you want to delete this list?"
-            onConfirm={onDelete}
-            okText="Yes"
-            cancelText="No"
-          >
-            <DeleteOutlined />
-            <span>Delete</span>
-          </Popconfirm>
-        </Menu.Item>
+        <>
+          <Menu.Item key="3">
+            <WantsListVisibility
+              visibility={wantsList?.visibility}
+              asListItem
+              callback={toggleIsOpen}
+            />
+          </Menu.Item>
+          <Menu.Item key="4">
+            <Popconfirm
+              placement="bottomRight"
+              title="Are you sure you want to delete this list?"
+              onConfirm={onDelete}
+              okText="Yes"
+              cancelText="No"
+            >
+              <DeleteOutlined />
+              <span>Delete</span>
+            </Popconfirm>
+          </Menu.Item>
+        </>
       )}
     </Menu>
   );

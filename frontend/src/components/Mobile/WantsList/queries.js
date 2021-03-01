@@ -28,6 +28,7 @@ const WANTS_LIST_FIELDS = `
   lastEdit
   numberOfCards
   canEdit
+  visibility
   deck {
     id
     imgSrc
