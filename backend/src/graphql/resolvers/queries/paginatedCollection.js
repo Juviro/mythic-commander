@@ -10,6 +10,7 @@ export default (
   addedWithin,
   allOwned
 ) => {
+  if (!userId) return [];
   const [order, direction = 'asc'] = orderBy.split('-');
 
   return db

@@ -21,7 +21,7 @@ const DeleteList = ({ wantsList: { id: wantsListId, name }, history }) => {
       },
     });
     message.success('Deleted wants list!');
-    history.replace('/wants');
+    history.replace('/my-wants');
   };
 
   const text = boldText(

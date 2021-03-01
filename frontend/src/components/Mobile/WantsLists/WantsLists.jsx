@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Spin } from 'antd';
 import styled from 'styled-components';
 import { partition } from 'lodash';
 import { useQuery, useMutation } from 'react-apollo';
 
 import { withRouter } from 'react-router';
+import UserContext from 'components/Provider/UserProvider';
+import { LoginRequired } from 'components/Elements/Shared';
 import { wantsListsMobile as getWantsLists, createWantsList } from './queries';
 import { OverviewList } from '../../Elements/Mobile';
 
@@ -45,6 +47,12 @@ const Wants = ({ history }) => {
   const { data, loading } = useQuery(getWantsLists);
   const [unlinkedLists, linkedLists] = splitWantsLists(data);
   const [mutate] = useMutation(createWantsList);
+
+  const { user, loading: userLoading } = useContext(UserContext);
+
+  if (!user && !userLoading) {
+    return <LoginRequired message="Log in to create your own wants lists" />;
+  }
 
   const onOpenWantsList = (id) => {
     history.push(`/m/wants/${id}`);

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Table } from 'antd';
 
+import UserContext from 'components/Provider/UserProvider';
 import columns from './columns';
 
 export default ({
@@ -13,6 +14,7 @@ export default ({
   onSaveChanges,
   maxHeight = 400,
 }) => {
+  const { user } = useContext(UserContext);
   return (
     <Table
       dataSource={
@@ -24,7 +26,7 @@ export default ({
         }))
       }
       loading={loading}
-      columns={columns(card, isEditing, onChangeAmount, onSaveChanges)}
+      columns={columns(card, isEditing, onChangeAmount, onSaveChanges, !user)}
       onRow={({ id }) => ({
         onClick: () => onChangeSet(id),
       })}

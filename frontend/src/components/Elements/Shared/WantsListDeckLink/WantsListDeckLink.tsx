@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Space, Typography } from 'antd';
+import { Typography } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { LinkOutlined } from '@ant-design/icons';
 
 import { UnifiedWantsList } from 'types/unifiedTypes';
 import getDynamicUrl from '../../../../utils/getDynamicUrl';
@@ -29,9 +28,10 @@ const DeckPreview = styled.img<{ large: boolean }>`
 interface Props extends RouteComponentProps {
   wantsList: UnifiedWantsList;
   large?: boolean;
+  canEdit?: boolean;
 }
 
-const WantsListDeckLink = ({ wantsList, history, large }: Props) => {
+const WantsListDeckLink = ({ wantsList, history, large, canEdit }: Props) => {
   const deck = wantsList && wantsList.deck;
 
   const onClickDeck = () => {
@@ -39,22 +39,20 @@ const WantsListDeckLink = ({ wantsList, history, large }: Props) => {
     history.push(getDynamicUrl(`/decks/${deck.id}`));
   };
 
+  if (!deck && !canEdit) return null;
   if (!deck) return <LinkDeck wantsList={wantsList} large={large} />;
 
   return (
     <StyledDeckWrapper>
       <DeckPreview src={deck.imgSrc} large={large} onClick={onClickDeck} />
       <StyledLink large={large}>
-        <Space>
-          <LinkOutlined />
-          <Typography.Link
-            ellipsis
-            style={{ maxWidth: large ? 180 : 90 }}
-            onClick={onClickDeck}
-          >
-            {deck.name}
-          </Typography.Link>
-        </Space>
+        <Typography.Link
+          ellipsis
+          style={{ maxWidth: large ? 210 : 120 }}
+          onClick={onClickDeck}
+        >
+          {deck.name}
+        </Typography.Link>
       </StyledLink>
     </StyledDeckWrapper>
   );

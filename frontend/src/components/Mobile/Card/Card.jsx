@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 
 import { useParams } from 'react-router';
 import { Divider } from 'antd';
 
+import UserContext from 'components/Provider/UserProvider';
 import CardImage from './CardImage';
 import {
   CardLegal,
@@ -39,6 +40,7 @@ const StyledBodyWrapper = styled.div`
 
 export default ({ overwriteOracleId, defaultCardId }) => {
   const { oracle_id: paramOracleId } = useParams();
+  const { user } = useContext(UserContext);
   const [selectedCardId, setSelectedCardId] = useState(null);
   const oracle_id = overwriteOracleId || paramOracleId;
   const { data, loading } = useQuery(getCardByOracleId, {
@@ -75,17 +77,21 @@ export default ({ overwriteOracleId, defaultCardId }) => {
           selectedCardId={selectedCardId}
           onChangeSet={setSelectedCardId}
         />
-        <Divider>Your Collection</Divider>
-        <CardOwned
-          card={card}
-          loading={loading}
-          onChangeSet={setSelectedCardId}
-          selectedCardId={selectedCardId}
-        />
-        <Divider>Wants Lists</Divider>
-        <IncludedWants card={card} />
-        <Divider>Decks</Divider>
-        <IncludedDecks card={card} />
+        {user && (
+          <>
+            <Divider>Your Collection</Divider>
+            <CardOwned
+              card={card}
+              loading={loading}
+              onChangeSet={setSelectedCardId}
+              selectedCardId={selectedCardId}
+            />
+            <Divider>Wants Lists</Divider>
+            <IncludedWants card={card} />
+            <Divider>Decks</Divider>
+            <IncludedDecks card={card} />
+          </>
+        )}
         <Divider>Resources</Divider>
         <CardLinks card={card} />
         <div style={{ margin: '16px 0' }}>

@@ -28,12 +28,12 @@ const App = () => {
       <UsernameModal />
       <Switch>
         <Route path="/m/search" exact component={Search} />
-        <Route path="/m/decks" exact component={Decks} />
+        <Route path="/m/my-decks" exact component={Decks} />
         <Route path="/m/decks/:id" exact component={Deck} />
         <Route path="/m/cards/:oracle_id" component={Card} />
         <Route path="/m/collection/:username" exact component={Collection} />
         <Route path="/m/collection" exact component={Collection} />
-        <Route path="/m/wants" exact component={WantsLists} />
+        <Route path="/m/my-wants" exact component={WantsLists} />
         <Route path="/m/wants/:id" exact component={WantsList} />
         <Route path="/m/life-tracker" component={LifeTracker} />
         <Redirect from="*" to="/m/collection" />

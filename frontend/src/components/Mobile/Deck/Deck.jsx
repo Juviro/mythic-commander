@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
+import { NotFound } from 'components/Elements/Shared';
 import DeckHeader from './DeckHeader';
 import DeckMenu from './DeckMenu';
 import DeckBody from './DeckBody';
@@ -26,7 +27,11 @@ export default () => {
   const { data, loading } = useQuery(getDeck, { variables: { id } });
   const [mutate] = useMutation(addCardsToDeck);
 
-  const deck = data && data.deck;
+  if (!data && !loading) {
+    return <NotFound message="This deck does not seem to exist.." />;
+  }
+
+  const deck = data?.deck;
   const cards = deck && unifyCardFormat(deck.cards);
 
   const unifiedDeck = deck && {

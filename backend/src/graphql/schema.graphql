@@ -171,6 +171,8 @@ type WantsList {
   createdAt: String!
   numberOfCards: Int!
   deck: Deck
+  canEdit: Boolean
+  visibility: String!
   cards: [WantsListCard!]!
 }
 
@@ -238,9 +240,9 @@ type LTPlayer {
 ################################# Queries #################################
 
 type Query {
-  user: User!
+  user: User
 
-  deck(id: String!): Deck!
+  deck(id: String!): Deck
   decks: [Deck!]!
 
   collection: Collection!
@@ -277,7 +279,7 @@ type Query {
   proxies(type: String!, id: String!, filter: String): [ProxyCard!]!
   allLists: AllLists!
 
-  ltPlayers: [LTPlayer!]!
+  ltPlayers: [LTPlayer!]
 }
 
 input CardsOptionsInput {
@@ -366,6 +368,10 @@ type Mutation {
   ): [WantsListCard!]!
   linkWantsList(wantsListId: String!, deckId: String!): WantsList!
   unlinkWantsList(wantsListId: String!): WantsList!
+  changeWantsListVisibility(
+    wantsListId: String!
+    visibility: String!
+  ): WantsList!
 
   ########## Life Tracker ##########
   updateLtPlayer(name: String!, img: String, color: String): LTPlayer!
@@ -421,6 +427,7 @@ input ChangeCollectionInput {
 
 type LoginResponse {
   session: String!
+  user: User!
 }
 
 ################################# Wants List #################################

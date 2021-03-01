@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { List, Divider } from 'antd';
+import UserContext from 'components/Provider/UserProvider';
 import { ltPlayers } from './queries';
 import PreviousPlayer from './PreviousPlayer';
 
 export default ({ onSelectPlayer }) => {
+  const { user } = useContext(UserContext);
   const { data } = useQuery(ltPlayers, { fetchPolicy: 'cache-and-network' });
   const previousPLayers = data?.ltPlayers ?? [];
+
+  if (!user) return null;
 
   return (
     <>

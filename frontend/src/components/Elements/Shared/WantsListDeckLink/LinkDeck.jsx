@@ -21,6 +21,7 @@ const StyledLinkButton = styled.div`
   border: 1px solid #dddddd;
   justify-content: space-evenly;
   cursor: pointer;
+  margin-bottom: 32px;
 `;
 
 const StyledDeckPreview = styled.img`

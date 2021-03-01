@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Select, Typography, message } from 'antd';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { LockOutlined, GlobalOutlined } from '@ant-design/icons';
+import { LockOutlined, GlobalOutlined, LinkOutlined } from '@ant-design/icons';
 
 import Modal from 'antd/lib/modal/Modal';
+import UserContext from 'components/Provider/UserProvider';
 import Flex from '../Flex';
-import { collectionVisibility, changeCollectionVisibility, getUser } from './queries';
 import CopyableText from '../CopyableText';
 
 const VISIBILITY_OPTIONS = [
@@ -16,32 +15,42 @@ const VISIBILITY_OPTIONS = [
   },
   {
     title: 'Everyone with this link',
+    value: 'hidden',
+    icon: <LinkOutlined />,
+  },
+  {
+    title: 'Public',
     value: 'public',
     icon: <GlobalOutlined />,
   },
 ];
 
-export default ({ style, visibile: modalVisible, onClose }) => {
-  const [mutate] = useMutation(changeCollectionVisibility);
-  const { data: dataVisibility, loading: loadingVisibility } = useQuery(
-    collectionVisibility
-  );
-  const { data: dataUser, loading: loadingUser } = useQuery(getUser);
+export default ({
+  style,
+  visibile: modalVisible,
+  onClose,
+  visibility,
+  onChange: mutate,
+  loading,
+  title,
+  description,
+  publicUrl,
+  hidePublic,
+}) => {
+  const { user, loading: loadingUser } = useContext(UserContext);
 
-  const visibility = dataVisibility?.collection?.visibility;
-  const username = dataUser?.user?.username;
+  const username = user?.username;
 
-  const onChange = async (value) => {
-    await mutate({ variables: { visibility: value } });
+  const onChange = async (value: string) => {
+    mutate(value);
     message.success('Successfully changed visibility!');
   };
 
-  const isPubliclyVisible = visibility === 'public';
-  const publicUrl = `${window.location.origin}/collection/${username}`;
+  const isPubliclyVisible = visibility !== 'private';
 
-  if (loadingVisibility || loadingUser) return null;
+  if (loading || loadingUser) return null;
 
-  if (!username)
+  if (!username) {
     return (
       <div style={style}>
         <Typography.Text type="warning">
@@ -50,28 +59,28 @@ export default ({ style, visibile: modalVisible, onClose }) => {
         </Typography.Text>
       </div>
     );
+  }
+
+  const visibilityOptions = VISIBILITY_OPTIONS.filter(
+    ({ value }) => !hidePublic || value !== 'public'
+  );
 
   return (
-    <Modal
-      onOk={onClose}
-      onCancel={onClose}
-      visible={modalVisible}
-      title="Share your Collection"
-    >
+    <Modal onOk={onClose} onCancel={onClose} visible={modalVisible} title={title}>
       <Flex direction="column" style={style}>
         <Typography.Text style={{ fontSize: 12 }} strong>
-          Your collection is visible to:
+          {description}
         </Typography.Text>
         <Select
           style={{ width: '100%', marginTop: 8 }}
           defaultValue={visibility}
           onChange={onChange}
         >
-          {VISIBILITY_OPTIONS.map(({ title, value, icon }) => (
+          {visibilityOptions.map(({ title: option, value, icon }) => (
             <Select.Option key={value} value={value}>
               {icon}
               <Typography.Text style={{ marginLeft: 8, fontSize: 12 }} strong>
-                {title}
+                {option}
               </Typography.Text>
             </Select.Option>
           ))}

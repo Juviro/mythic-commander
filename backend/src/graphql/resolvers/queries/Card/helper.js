@@ -7,7 +7,7 @@ const sortSets = (a, b) =>
     ? 1
     : -1;
 
-export const getAllSets = async (oracle_id, userId, db) => {
+export const getAllSets = async (oracle_id, userId = '', db) => {
   const { rows: cards } = await db.raw(
     `
       SELECT 
