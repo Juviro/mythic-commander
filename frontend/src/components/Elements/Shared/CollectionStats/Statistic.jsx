@@ -70,7 +70,7 @@ const Development = ({ value, referenceValue, unit = 'cards' }) => {
 export default ({ horizontal, title, value, referenceValue, prefix }) => {
   return (
     <StyledWrapper horizontal={horizontal}>
-      <Statistic loading title={title} value={value} prefix={prefix} precision={0} />
+      <Statistic title={title} value={value} prefix={prefix} precision={0} />
       <Development value={value} unit={prefix} referenceValue={referenceValue} />
     </StyledWrapper>
   );
