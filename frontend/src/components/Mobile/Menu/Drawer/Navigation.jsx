@@ -1,21 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { List } from 'antd';
 import { Link } from 'react-router-dom';
+import UserContext from 'components/Provider/UserProvider';
 import { FeatureFlag } from '../../../Elements/Shared';
 
 export default ({ onCloseDrawer }) => {
+  const { user } = useContext(UserContext);
+
   const options = [
     {
-      href: '/m/decks',
+      href: '/m/my-decks',
       title: 'Decks',
+      hidden: !user,
     },
     {
-      href: '/m/wants',
+      href: '/m/my-wants',
       title: 'Wants',
+      hidden: !user,
     },
     {
       href: '/m/collection',
       title: 'Collection',
+      hidden: !user,
     },
     {
       href: '/m/search',
@@ -26,9 +32,12 @@ export default ({ onCloseDrawer }) => {
       title: 'Life Tracker',
     },
   ];
+
+  const filteredOptions = options.filter(({ hidden }) => !hidden);
+
   return (
     <List>
-      {options.map(({ href, title, flag }) => (
+      {filteredOptions.map(({ href, title, flag }) => (
         <FeatureFlag flag={flag} key={title}>
           <List.Item onClick={onCloseDrawer} style={{ padding: 0 }}>
             <Link

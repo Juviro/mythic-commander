@@ -34,9 +34,9 @@ const App = () => {
             <Route path="/search" exact component={Search} />
             <Route path="/collection/:username" component={Collection} />
             <Route path="/collection" component={Collection} />
-            <Route path="/decks" exact component={Decks} />
+            <Route path="/my-decks" exact component={Decks} />
             <Route path="/decks/:id" exact component={Deck} />
-            <Route path="/wants" exact component={WantsLists} />
+            <Route path="/my-wants" exact component={WantsLists} />
             <Route path="/wants/:id" exact component={WantsList} />
             <Route path="/cards/:oracle_id" exact component={Card} />
             <Redirect from="*" to="/collection" />

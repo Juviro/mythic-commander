@@ -1,16 +1,33 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Dropdown, Menu } from 'antd';
 import styled from 'styled-components';
 
+import UserContext from 'components/Provider/UserProvider';
 import { useToggle } from '../../Hooks';
 import { UserAvatar, Logout } from '../../Elements/Shared';
 
-const StyledAvatarWrapper = styled.span`
+const StyledAvatarWrapper = styled.div`
   margin-right: 8px;
+  min-width: 60px;
 `;
 
 export default () => {
   const [isOpen, toggleIsOpen] = useToggle();
+  const { user, loading } = useContext(UserContext);
+
+  if (loading) return <StyledAvatarWrapper />;
+
+  const avatarComponent = (
+    <StyledAvatarWrapper>
+      <UserAvatar
+        onClick={toggleIsOpen}
+        textPosition="left"
+        textColor="rgba(255, 255, 255, 0.9)"
+      />
+    </StyledAvatarWrapper>
+  );
+
+  if (!user) return avatarComponent;
 
   const menu = (
     <Menu>
@@ -28,13 +45,7 @@ export default () => {
       trigger="click"
       style={{ width: 30 }}
     >
-      <StyledAvatarWrapper>
-        <UserAvatar
-          onClick={toggleIsOpen}
-          textPosition="left"
-          textColor="rgba(255, 255, 255, 0.9)"
-        />
-      </StyledAvatarWrapper>
+      {avatarComponent}
     </Dropdown>
   );
 };

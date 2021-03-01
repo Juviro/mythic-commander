@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Menu } from 'antd';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
+import UserContext from 'components/Provider/UserProvider';
 import { MythicCommanderBanner, Flex, SearchBar } from '../../Elements/Shared';
 import { darkBackground } from '../../../constants/colors';
 import UserMenu from './UserMenu';
@@ -17,26 +18,38 @@ const StyledMenu = styled.div`
   background-color: ${darkBackground};
 `;
 
-const MENU_ENTRIES = [
-  {
-    title: 'Decks',
-    href: '/decks',
-  },
-  {
-    title: 'Wants',
-    href: '/wants',
-  },
-  {
-    title: 'Collection',
-    href: '/collection',
-  },
-  {
-    title: 'Advanced Search',
-    href: '/search',
-  },
-];
-
 const DesktopMenu = ({ location: { pathname } }) => {
+  const { user } = useContext(UserContext);
+  const menuItems = [
+    {
+      title: 'Decks',
+      href: '/my-decks',
+      additionalPaths: ['/decks'],
+      hidden: !user,
+    },
+    {
+      title: 'Wants',
+      href: '/my-wants',
+      additionalPaths: ['/wants'],
+      hidden: !user,
+    },
+    {
+      title: 'Collection',
+      href: '/collection',
+      hidden: !user,
+    },
+    {
+      title: 'Advanced Search',
+      href: '/search',
+    },
+  ].filter(({ hidden }) => !hidden);
+
+  const selectedMenuKeys = menuItems
+    .filter(({ href, additionalPaths = [] }) => {
+      return [href, ...additionalPaths].some((path) => pathname.includes(path));
+    })
+    .map(({ href }) => href);
+
   return (
     <StyledMenu>
       <Flex direction="row" align="center">
@@ -47,11 +60,11 @@ const DesktopMenu = ({ location: { pathname } }) => {
         />
         <Menu
           mode="horizontal"
-          selectedKeys={pathname}
+          selectedKeys={selectedMenuKeys}
           theme="dark"
           style={{ marginLeft: 12 }}
         >
-          {MENU_ENTRIES.map(({ title, href }) => (
+          {menuItems.map(({ title, href }) => (
             <Menu.Item
               key={href}
               style={{ padding: '0 3vw', fontSize: 16, fontWeight: 400 }}
@@ -61,8 +74,10 @@ const DesktopMenu = ({ location: { pathname } }) => {
           ))}
         </Menu>
       </Flex>
-      <SearchBar hideLayover style={{ margin: '0 8px', width: 330 }} />
-      <UserMenu />
+      <Flex direction="row">
+        <SearchBar hideLayover style={{ margin: '0 16px', width: 330 }} />
+        <UserMenu />
+      </Flex>
     </StyledMenu>
   );
 };

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
+import UserContext from 'components/Provider/UserProvider';
 import DecksAndWants from './DecksAndWants';
 import PreviewAndSets from './PreviewAndSets';
 import AdditionalInfos from './AdditionalInfos';
@@ -8,6 +9,7 @@ import { useToggle } from '../../../../Hooks';
 
 export default ({ card, loading, selectedCardId, setSelectedCardId, largeHeader }) => {
   const [isFlipped, toggleIsFlipped] = useToggle(false);
+  const { user } = useContext(UserContext);
 
   return (
     <>
@@ -20,7 +22,7 @@ export default ({ card, loading, selectedCardId, setSelectedCardId, largeHeader 
         selectedCardId={selectedCardId}
         setSelectedCardId={setSelectedCardId}
       />
-      <DecksAndWants card={card} />
+      {user && <DecksAndWants card={card} />}
       <AdditionalInfos card={card} loading={loading} isFlipped={isFlipped} />
     </>
   );

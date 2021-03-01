@@ -2,6 +2,8 @@ import { canAccessDeck } from '../../../../auth/authenticateUser';
 import randomId from '../../../../utils/randomId';
 
 export default async (_, { deckId }, { user: { id: userId }, db }) => {
+  if (!userId) return;
+
   const newWantsList = { userId, id: randomId() };
   if (deckId) {
     await canAccessDeck(userId, deckId);

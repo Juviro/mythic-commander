@@ -43,8 +43,8 @@ const CardList = ({
   // only when a new search is triggered
   if (!cards || (isNewSearch && loading)) {
     if (layout === 'list') return <CustomSkeleton.List />;
-    if (layout === 'grid') return <CustomSkeleton.Grid />;
-    if (layout === 'card') return <CustomSkeleton.Grid large />;
+    if (layout === 'grid') return <CustomSkeleton.MobileGrid />;
+    if (layout === 'card') return <CustomSkeleton.MobileGrid large />;
   }
 
   const onOpenDetailView = (card) => {

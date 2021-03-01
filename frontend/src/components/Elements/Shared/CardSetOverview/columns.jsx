@@ -103,9 +103,9 @@ const ownedColumns = (card, isEditing, onChangeAmount, onSaveChanges) => [
   },
 ];
 
-export default (card, isEditing, onChangeAmount, onSaveChanges) => {
+export default (card, isEditing, onChangeAmount, onSaveChanges, hideOwnedColumns) => {
   const isMobile = getIsMobile();
-  if (isMobile) return baseColumns;
+  if (isMobile || hideOwnedColumns) return baseColumns;
 
   return baseColumns.concat(ownedColumns(card, isEditing, onChangeAmount, onSaveChanges));
 };
