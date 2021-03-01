@@ -18,6 +18,11 @@ const StyledGridWrapper = styled.div`
   align-items: flex-start;
 `;
 
+const StyledPlaceholderWrapper = styled.div`
+  padding: 4px 8px;
+  width: 100%;
+`;
+
 const CardList = ({
   cards,
   loading,
@@ -42,9 +47,14 @@ const CardList = ({
   // we don't want to display the skeletons when loading more with infinite scroll
   // only when a new search is triggered
   if (!cards || (isNewSearch && loading)) {
-    if (layout === 'list') return <CustomSkeleton.List />;
-    if (layout === 'grid') return <CustomSkeleton.MobileGrid />;
-    if (layout === 'card') return <CustomSkeleton.MobileGrid large />;
+    const getPlaceholder = () => {
+      if (layout === 'list') return <CustomSkeleton.List />;
+      if (layout === 'grid') return <CustomSkeleton.GridMobile />;
+      if (layout === 'card') return <CustomSkeleton.GridMobile large />;
+      return null;
+    };
+
+    return <StyledPlaceholderWrapper>{getPlaceholder()}</StyledPlaceholderWrapper>;
   }
 
   const onOpenDetailView = (card) => {
