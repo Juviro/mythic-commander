@@ -1,4 +1,6 @@
+import { useToggle } from 'components/Hooks';
 import { useState, useEffect, useRef } from 'react';
+import { preloadByStrings } from 'utils/preloadImages';
 
 const INITIAL_DELAY = 50;
 const DELAY_GROWTH = 1.15;
@@ -18,6 +20,7 @@ const getNumberOfTicks = (numberOfPlayers) => {
 };
 
 export default (players) => {
+  const [isLoading, toggleIsLoading] = useToggle(true);
   const playerIds = players.map(({ id }) => id);
 
   const [highlightedPlayerIndex, setHighlightedPlayerIndex] = useState(null);
@@ -65,9 +68,17 @@ export default (players) => {
   useEffect(() => () => timeoutRef.current && clearTimeout(timeoutRef.current), []);
 
   // eslint-disable-next-line
-  useEffect(onSelectRandomPlayer, []);
+  useEffect(() => {
+    const preloadImages = async () => {
+      await preloadByStrings(players.map(({ img }) => img));
+      toggleIsLoading();
+      onSelectRandomPlayer();
+    };
+    preloadImages();
+    // eslint-disable-next-line
+  }, []);
 
   const highlightedPlayerId = playerIds[highlightedPlayerIndex];
 
-  return { highlightedPlayerId, onSelectRandomPlayer };
+  return { highlightedPlayerId, onSelectRandomPlayer, isLoading };
 };
