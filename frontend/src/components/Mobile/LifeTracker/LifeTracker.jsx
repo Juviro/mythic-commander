@@ -10,7 +10,7 @@ import { Flex } from '../../Elements/Shared';
 const StyledWrapper = styled.div`
   flex-flow: column;
   display: flex;
-  height: 100%;
+  height: calc(100% - 50px);
 `;
 
 const LifeTracker = ({ history }) => {
