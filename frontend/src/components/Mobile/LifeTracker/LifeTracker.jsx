@@ -3,6 +3,7 @@ import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { withRouter, Switch, Route } from 'react-router-dom';
 
 import styled from 'styled-components';
+import { LoadingScreen } from 'components/Mobile/LifeTracker/GameScreen/LoadingScreen';
 import StartingScreen from './StartingScreen';
 import GameScreen from './GameScreen';
 import { Flex } from '../../Elements/Shared';

@@ -2,19 +2,22 @@ import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useBeforeunload } from 'react-beforeunload';
 
+import { IS_DEV } from 'constants/network.js';
 import useGameState from './useGameState';
 import GameField from './GameField';
 import { FullscreenModalProvider } from '../../../Provider/FullscreenModalProvider';
 import Menu from './Menu';
+import { LoadingScreen } from './LoadingScreen';
 
 const GameScreen = ({ gameSettings, history, handle, displayDamage }) => {
   const isValidGame = Boolean(gameSettings.numberOfPlayers);
 
-  useBeforeunload(() => 'Are you sure you want to leave the game?');
+  useBeforeunload(IS_DEV ? undefined : () => 'Are you sure you want to leave the game?');
 
   const {
     players,
     onSetLife,
+    isLoading,
     onUpdatePlayer,
     onTrackDamage,
     onRestartGame,
@@ -26,6 +29,8 @@ const GameScreen = ({ gameSettings, history, handle, displayDamage }) => {
   });
 
   if (!isValidGame) return null;
+
+  if (isLoading) return <LoadingScreen />;
 
   return (
     <FullscreenModalProvider>
