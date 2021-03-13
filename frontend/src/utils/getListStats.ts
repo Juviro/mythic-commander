@@ -38,7 +38,7 @@ export const getListStats = (list?: UnifiedList) => {
   const numberOfCardsLabel = `${numberOfCards} Cards ${uniqueAddon}`;
 
   return {
-    totalValue,
+    totalValue, // Number, sum of TODO doc this
     ownedValue,
     unownedValue,
     ownedValueLabel,

@@ -7,16 +7,17 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { UnifiedCard } from 'types/unifiedTypes';
 import { MenuItem } from 'components/Elements/Shared/ContextMenu/ContextMenu';
 import GridCard from './GridCard';
-import useGridShortcuts, { CARD_WIDTH } from './useGridShortcuts';
+import useGridShortcuts, { CARD_COLUMN_GAP, CARD_WIDTH } from './useGridShortcuts';
 import CardModalDesktop from '../../CardModalDesktop';
 import { useToggle, useShortcut } from '../../../../Hooks';
 import { Flex } from '../../../Shared';
 
 export const StyledCardGridWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(${CARD_WIDTH}px, 1fr));
-  padding-top: 8px;
+  grid-template-columns: repeat(auto-fill, ${CARD_WIDTH}px);
+  grid-gap: ${CARD_COLUMN_GAP}px;
   width: 100%;
+  justify-content: center;
   align-self: center;
 `;
 

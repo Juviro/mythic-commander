@@ -26,7 +26,7 @@ const StyledCardWrapper = styled.div`
   flex-direction: column;
   position: relative;
   width: 220px;
-  height: 360px;
+  height: 356px;
 `;
 
 const StyledContextMenu = styled.div`
