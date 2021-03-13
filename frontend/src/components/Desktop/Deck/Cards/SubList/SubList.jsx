@@ -2,18 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { List } from 'antd';
+import {
+  CardGrid,
+  PaginatedCardList,
+  WithActions,
+  WithFullList,
+} from 'components/Elements/Desktop';
 import Card from './Card';
 import sumCardAmount from '../../../../../utils/sumCardAmount';
 import { getPriceLabel } from '../../../../../utils/cardStats';
 import { Flex } from '../../../../Elements/Shared';
-import { MIN_COLUMN_WIDTH } from '../useNumberOfCols';
+// import { MIN_COLUMN_WIDTH } from '../useNumberOfCols';
 
 const StyledWrapper = styled.div`
   padding: 6px;
   margin: 4px 4px 16px;
   position: relative;
   box-shadow: 0px 0px 4px 0px #b3b3b3;
-  min-width: ${MIN_COLUMN_WIDTH}px;
 `;
 
 export default ({
@@ -35,27 +40,16 @@ export default ({
   const valueLabel = getPriceLabel(Math.ceil(value), { round: true });
 
   return (
-    <StyledWrapper>
-      <Flex
-        justify="space-between"
-        style={{ fontSize: 18, fontWeight: 600, marginBottom: 4 }}
-      >
-        <span>{title}</span>
-        <span>{valueLabel}</span>
-      </Flex>
-      <List>
-        {cards.map((card) => (
-          <Card
-            key={card.id}
-            card={card}
-            isSelected={selectedCardId === card.id}
-            onDelete={onDelete}
-            onOpenDetails={onOpenDetails}
-            // onDeleteImmediately={onDeleteImmediately}
-            // setSelectedCardOracleId={setSelectedCardOracleId}
-          />
-        ))}
-      </List>
-    </StyledWrapper>
+    <>
+      <h2>{title}</h2>
+      <CardGrid
+        hidePagination
+        cards={cards}
+        // loading={loading}
+        showAddedBeforeFilter
+        showCollectionFilters
+        orderByParamName="orderByAdvanced"
+      />
+    </>
   );
 };

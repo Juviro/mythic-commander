@@ -55,8 +55,11 @@ export default () => {
   };
 
   return (
-    <ShortcutFocus focusId="deck.cards" style={{ overflow: 'auto', flex: 1 }}>
-      <PageLayout fullWidth>
+    <ShortcutFocus
+      focusId="deck.cards"
+      style={{ overflow: 'auto', flex: 1, height: '100%' }}
+    >
+      <PageLayout large>
         <Header
           deck={unifiedDeck}
           loading={loading}
@@ -67,7 +70,7 @@ export default () => {
         <Cards
           deck={unifiedDeck}
           loading={loading}
-          currentTab={currentTab}
+          // currentTab={currentTab}
           onAddCards={onAddCards}
           displayOwnedOnly={displayOwnedOnly}
         />

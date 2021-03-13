@@ -6,7 +6,8 @@ import { isInputField, isModifierKey } from 'components/Hooks/useShortcut';
 import keyCodes from '../../../../../constants/keyCodes';
 import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
 
-export const CARD_WIDTH = 240;
+export const CARD_WIDTH = 220;
+export const CARD_COLUMN_GAP = 16;
 
 export default (wrapperRef, toggleShowDetail, numberOfCards, blockShortcuts) => {
   useWindowSize();

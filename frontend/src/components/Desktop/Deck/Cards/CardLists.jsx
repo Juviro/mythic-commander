@@ -11,87 +11,83 @@ import boldText from '../../../../utils/boldText';
 
 const getColumnKey = (column) => column.map(({ type }) => type).join('');
 
-export default ({ columns, deck, displayOwnedOnly }) => {
+export default ({ cardsByType, deck, displayOwnedOnly }) => {
   const [showDetails, toggleShowDetail] = useToggle(false);
-  const {
-    selectedCardOracleId,
-    setSelectedCardOracleId,
-    selectNextCard,
-  } = useCardListShortcuts(columns);
+  // const {
+  //   selectedCardOracleId,
+  //   setSelectedCardOracleId,
+  //   selectNextCard,
+  // } = useCardListShortcuts(columns);
   const [isDeleting, setIsDeleting] = useToggle();
   const [mutateDelete] = useMutation(deleteFromDeckDesktop);
 
-  const selectedCard = columns
-    .flat()
-    .map(({ cards }) => cards)
-    .flat()
-    .find(({ oracle_id }) => oracle_id === selectedCardOracleId);
+  // const selectedCard = columns
+  //   .flat()
+  //   .map(({ cards }) => cards)
+  //   .flat()
+  //   .find(({ oracle_id }) => oracle_id === selectedCardOracleId);
 
   const onDeleteCard = (cardId) => {
-    if (!cardId) return;
-    setIsDeleting(false);
-    if (cardId === selectedCard?.id) {
-      selectNextCard(null);
-    }
-    const newCards = deck.originalCards.filter((card) => card.id !== cardId);
-    const newNumberOfCards = deck.numberOfCards;
-    mutateDelete({
-      variables: { cardId, deckId: deck.id },
-      optimisticResponse: () => ({
-        __typename: 'Mutation',
-        deleteFromWantsList: {
-          ...deck,
-          cards: newCards,
-          numberOfCards: newNumberOfCards,
-        },
-      }),
-    });
+    // if (!cardId) return;
+    // setIsDeleting(false);
+    // if (cardId === selectedCard?.id) {
+    //   selectNextCard(null);
+    // }
+    // const newCards = deck.originalCards.filter((card) => card.id !== cardId);
+    // const newNumberOfCards = deck.numberOfCards;
+    // mutateDelete({
+    //   variables: { cardId, deckId: deck.id },
+    //   optimisticResponse: () => ({
+    //     __typename: 'Mutation',
+    //     deleteFromWantsList: {
+    //       ...deck,
+    //       cards: newCards,
+    //       numberOfCards: newNumberOfCards,
+    //     },
+    //   }),
+    // });
   };
   const onOpenDeleteModal = () => {
-    if (!selectedCard) return;
-    setIsDeleting(true);
+    // if (!selectedCard) return;
+    // setIsDeleting(true);
   };
 
-  useShortcut('BACKSPACE', onOpenDeleteModal, 'deck.cards');
-  useShortcut('SPACE', selectedCard ? toggleShowDetail : null, 'deck.cards');
-  useShortcut('ESC', () => setSelectedCardOracleId(null), 'deck.cards');
+  // useShortcut('BACKSPACE', onOpenDeleteModal, 'deck.cards');
+  // useShortcut('SPACE', selectedCard ? toggleShowDetail : null, 'deck.cards');
+  // useShortcut('ESC', () => setSelectedCardOracleId(null), 'deck.cards');
 
   const onOpenDetails = (cardId) => {
-    setSelectedCardOracleId(cardId);
-    toggleShowDetail();
+    // setSelectedCardOracleId(cardId);
+    // toggleShowDetail();
   };
 
   return (
     <>
-      {columns.map((column) => (
-        <Flex direction="column" key={getColumnKey(column)} flex={1}>
-          {column.map(({ type, cards: cardGroup }) => (
-            <SubList
-              type={type}
-              key={type}
-              cards={cardGroup}
-              displayOwnedOnly={displayOwnedOnly}
-              onDelete={onOpenDeleteModal}
-              onDeleteImmediately={onDeleteCard}
-              setSelectedCardOracleId={setSelectedCardOracleId}
-              onOpenDetails={onOpenDetails}
-              selectedCardId={selectedCard && selectedCard.id}
-            />
-          ))}
-        </Flex>
+      {cardsByType.map(({ type, cards }) => (
+        <SubList
+          type={type}
+          key={type}
+          cards={cards}
+          displayOwnedOnly={displayOwnedOnly}
+          // onDelete={onOpenDeleteModal}
+          // onDeleteImmediately={onDeleteCard}
+          // setSelectedCardOracleId={setSelectedCardOracleId}
+          // onOpenDetails={onOpenDetails}
+          // selectedCardId={selectedCard && selectedCard.id}
+        />
       ))}
-      <CardModalDesktop
+      {/* <CardModalDesktop
         selectedCard={selectedCard}
         visible={selectedCard && showDetails}
         onClose={toggleShowDetail}
-      />
-      {isDeleting && (
+      /> */}
+      {/* {isDeleting && (
         <ConfirmDelete
           text={boldText(`Delete <b>${selectedCard.name}</b> from this deck?`)}
           onCancel={() => setIsDeleting(false)}
           onOk={() => onDeleteCard(selectedCard.id)}
         />
-      )}
+      )} */}
     </>
   );
 };

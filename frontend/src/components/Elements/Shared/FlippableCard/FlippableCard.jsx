@@ -13,7 +13,7 @@ import { useToggle } from '../../../Hooks';
 const StyledImageWrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 100%;
+  padding-bottom: 140%;
   position: relative;
   justify-content: center;
   align-items: center;
