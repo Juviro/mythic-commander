@@ -18,7 +18,7 @@ export default ({ onStart }) => {
   return (
     <Flex
       direction="column"
-      style={{ padding: 24, height: 'calc(100% - 50px)' }}
+      style={{ padding: 24, height: '100%' }}
       justify="space-between"
     >
       <Flex direction="column">

@@ -43,7 +43,9 @@ export default (gameSettings) => {
   // eslint-disable-next-line
   const initialPlayers = useMemo(() => getInitialPlayers(gameSettings), []);
   const [players, setPlayers] = useState(initialPlayers);
-  const { highlightedPlayerId, onSelectRandomPlayer } = useSelectPlayer(initialPlayers);
+  const { highlightedPlayerId, onSelectRandomPlayer, isLoading } = useSelectPlayer(
+    initialPlayers
+  );
 
   const onUpdatePlayer = (playerId, newValues) => {
     const updatedPlayers = players.map((player) => {
@@ -91,6 +93,7 @@ export default (gameSettings) => {
 
   return {
     players,
+    isLoading,
     onSetLife,
     onTrackDamage,
     onRestartGame,
