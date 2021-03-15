@@ -8,9 +8,9 @@ import { useBlurOnEsc } from '../../../Hooks';
 import Flex from '../Flex';
 import FoilIcon from '../FoilIcon';
 
-export const splitSearchString = (query, allowFoilInput = false) => {
-  const matchAmount = query.match(/^(\d*)x{0,1}\s{0,1}(.*)/);
-  const [, matchedAmount, nameWithoutAmount] = matchAmount || [null, null, query];
+export const splitSearchString = (query = '', allowFoilInput = false) => {
+  const matchAmount = query.match(/^((\d+)x{0,1}){0,1}\s{0,1}(.*)/);
+  const [, , matchedAmount, nameWithoutAmount] = matchAmount || [null, null, query];
 
   const amount = Number(matchedAmount) || 1;
 
