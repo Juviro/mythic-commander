@@ -1,21 +1,22 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import { message } from 'antd';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
-import { message } from 'antd';
 import Menu from './Menu';
-import Deck from './Deck';
-import Decks from './Decks';
-import Card from './Card';
-import Search from './Search';
-import Collection from './Collection';
-import WantsList from './WantsList';
-import WantsLists from './WantsLists';
 
 import GlobalStyle from './GlobalStyle';
 import { UsernameModal } from '../Elements/Shared';
 import LifeTracker from './LifeTracker';
 
-const App = () => {
+const Deck = React.lazy(() => import('./Deck'));
+const Decks = React.lazy(() => import('./Decks'));
+const Card = React.lazy(() => import('./Card'));
+const Search = React.lazy(() => import('./Search'));
+const Collection = React.lazy(() => import('./Collection'));
+const WantsList = React.lazy(() => import('./WantsList'));
+const WantsLists = React.lazy(() => import('./WantsLists'));
+
+const Mobile = () => {
   message.config({
     top: 55,
     duration: 3,
@@ -26,21 +27,23 @@ const App = () => {
     <>
       <Menu />
       <UsernameModal />
-      <Switch>
-        <Route path="/m/search" exact component={Search} />
-        <Route path="/m/my-decks" exact component={Decks} />
-        <Route path="/m/decks/:id" exact component={Deck} />
-        <Route path="/m/cards/:oracle_id" component={Card} />
-        <Route path="/m/collection/:username" exact component={Collection} />
-        <Route path="/m/collection" exact component={Collection} />
-        <Route path="/m/my-wants" exact component={WantsLists} />
-        <Route path="/m/wants/:id" exact component={WantsList} />
-        <Route path="/m/life-tracker" component={LifeTracker} />
-        <Redirect from="*" to="/m/collection" />
-      </Switch>
+      <Suspense fallback={<div />}>
+        <Switch>
+          <Route path="/m/search" exact component={Search} />
+          <Route path="/m/my-decks" exact component={Decks} />
+          <Route path="/m/decks/:id" exact component={Deck} />
+          <Route path="/m/cards/:oracle_id" component={Card} />
+          <Route path="/m/collection/:username" exact component={Collection} />
+          <Route path="/m/collection" exact component={Collection} />
+          <Route path="/m/my-wants" exact component={WantsLists} />
+          <Route path="/m/wants/:id" exact component={WantsList} />
+          <Route path="/m/life-tracker" component={LifeTracker} />
+          <Redirect from="*" to="/m/collection" />
+        </Switch>
+      </Suspense>
       <GlobalStyle />
     </>
   );
 };
 
-export default App;
+export default Mobile;
