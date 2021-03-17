@@ -1,39 +1,30 @@
+/* eslint-disable import/no-commonjs */
+
+const { database } = require('./credentials');
+
+const defaultSettings = {
+  client: 'pg',
+  migrations: {
+    directory: './src/database/migrations',
+  },
+  connection: {
+    database: 'mtg',
+    host: 'localhost',
+  },
+};
+
 module.exports = {
   development: {
-    client: 'pg',
-    connection: {
-      database: 'mtg',
-      host: 'localhost',
-    },
+    ...defaultSettings,
     useNullAsDefault: true,
-    migrations: {
-      directory: './src/database/migrations',
-    },
   },
 
   staging: {
-    client: 'pg',
-    connection: {
-      user: 'hauke',
-      database: 'mtg',
-      password:
-        'dqwfhife83hfwkrh38fnwfbcxsi3r2uu9fcewrb321f90d8fy2b3r98dsfye9vhdqww83rnfY',
-      host: 'localhost',
-    },
-    migrations: {
-      directory: './src/database/migrations',
-    },
+    ...defaultSettings,
+    connection: database.staging,
   },
   production: {
-    client: 'pg',
-    connection: {
-      user: 'hauke',
-      database: 'mtg',
-      password: '17ARqkNuJWKgyDHAEVDP',
-      host: 'mtg.cr9n9thq5jyt.eu-central-1.rds.amazonaws.com',
-    },
-    migrations: {
-      directory: './src/database/migrations',
-    },
+    ...defaultSettings,
+    connection: database.prod,
   },
 };
