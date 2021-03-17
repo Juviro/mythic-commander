@@ -25,5 +25,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# scryfall data
-/backend/src/cardApi/*.json
+# scryfall and mkm data
+/backend/src/cardApi/*/tmp/*
+!/backend/src/cardApi/*/tmp/.gitkeep
