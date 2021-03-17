@@ -1,8 +1,6 @@
 import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { UserContextProvider } from 'components/Provider/UserProvider';
-
 import Proxy from './Proxy';
 import GlobalStyle from './GlobalStyle';
 
@@ -13,7 +11,7 @@ const NotFound = React.lazy(() => import('./Elements/Shared/NotFound'));
 
 const App = () => {
   return (
-    <UserContextProvider>
+    <>
       <Suspense fallback={<div />}>
         <Switch>
           <Route path="/404" exact component={NotFound} />
@@ -24,7 +22,7 @@ const App = () => {
         </Switch>
       </Suspense>
       <GlobalStyle />
-    </UserContextProvider>
+    </>
   );
 };
 
