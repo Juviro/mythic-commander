@@ -161,6 +161,16 @@ export const CARD_FIELDS_ADDITION_5 = [
     type: 'string',
   },
 ];
+export const CARD_FIELDS_ADDITION_6 = [
+  {
+    key: 'cardmarket_id',
+    type: 'integer',
+  },
+  {
+    key: 'cardmarket_prices',
+    type: 'jsonb',
+  },
+];
 
 export const ALL_CARD_FIELDS = [
   CARD_FIELDS_INITIAL,
@@ -169,4 +179,5 @@ export const ALL_CARD_FIELDS = [
   CARD_FIELDS_ADDITION_3,
   CARD_FIELDS_ADDITION_4,
   CARD_FIELDS_ADDITION_5,
+  CARD_FIELDS_ADDITION_6,
 ].flat();
