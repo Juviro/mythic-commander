@@ -7,7 +7,7 @@ const REFRESH_PERIOD = 24 * 60 * 60 * 1000;
 
 const FORCE_UPDATE_IF_BEFORE = 1607273255255;
 
-const getCards = async (currentCards = [], shouldForceUpdate) => {
+const getCards = async (currentCards = [], shouldForceUpdate, debug) => {
   const {
     data: { numberOfCachedCards: updatedCardCount },
   } = await client.query({
@@ -18,9 +18,9 @@ const getCards = async (currentCards = [], shouldForceUpdate) => {
     return currentCards;
   }
 
-  message.info('Updating cards... this may take some time');
+  if (debug) message.info('Updating cards... this may take some time');
   const { data } = await client.query({ query: cachedCards });
-  message.success('Cards updated successfully!');
+  if (debug) message.success('Cards updated successfully!');
   return data.cachedCards || [];
 };
 
@@ -28,8 +28,7 @@ const updateCollection = async (
   type,
   collectionKey,
   lastUpdateKey,
-  parsedCollection,
-  shouldForceUpdate
+  { parsedCollection, shouldForceUpdate, debug }
 ) => {
   const getter = {
     sets: getAllSets,
@@ -37,7 +36,7 @@ const updateCollection = async (
     subTypes: getSubtypes,
   };
 
-  const stored = await getter[type](parsedCollection, shouldForceUpdate);
+  const stored = await getter[type](parsedCollection, shouldForceUpdate, debug);
 
   localStorage.setItem(collectionKey, JSON.stringify(stored));
   localStorage.setItem(lastUpdateKey, Date.now());
@@ -45,7 +44,7 @@ const updateCollection = async (
   return stored;
 };
 
-export const getCollectionFromCache = async (type, forceUpdate) => {
+export const getCollectionFromCache = async (type, { forceUpdate, debug }) => {
   const lastUpdateKey = `lastUpdate-${type}`;
   const collectionKey = `stored-${type}`;
 
@@ -64,24 +63,22 @@ export const getCollectionFromCache = async (type, forceUpdate) => {
   }
 
   if (cachedCollection) {
-    updateCollection(
-      type,
-      collectionKey,
-      lastUpdateKey,
+    updateCollection(type, collectionKey, lastUpdateKey, {
       parsedCollection,
-      shouldForceUpdate
-    );
+      shouldForceUpdate,
+      debug,
+    });
     return parsedCollection;
   }
 
-  return updateCollection(type, collectionKey, lastUpdateKey);
+  return updateCollection(type, collectionKey, lastUpdateKey, { debug });
 };
 
 const updateCache = async () => {
   console.info('updating chache...');
-  await getCollectionFromCache('sets', true);
-  await getCollectionFromCache('subTypes', true);
-  await getCollectionFromCache('cards', true);
+  await getCollectionFromCache('sets', { forceUpdate: true });
+  await getCollectionFromCache('subTypes', { forceUpdate: true });
+  await getCollectionFromCache('cards', { forceUpdate: true });
   console.info('cache updated!');
 };
 

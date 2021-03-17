@@ -8,6 +8,7 @@ import { createBrowserHistory } from 'history';
 import 'antd/dist/antd.css';
 import './index.css';
 
+import { UserContextProvider } from 'components/Provider/UserProvider';
 import App from './components';
 import client from './network/graphqlClient';
 import { CardContextProvider } from './components/Provider/CardProvider';
@@ -17,15 +18,17 @@ export const history = createBrowserHistory();
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <FocusContextProvider>
-      <CardContextProvider>
-        <Router history={history}>
-          <QueryParamProvider ReactRouterRoute={Route}>
-            <App />
-          </QueryParamProvider>
-        </Router>
-      </CardContextProvider>
-    </FocusContextProvider>
+    <UserContextProvider>
+      <FocusContextProvider>
+        <CardContextProvider>
+          <Router history={history}>
+            <QueryParamProvider ReactRouterRoute={Route}>
+              <App />
+            </QueryParamProvider>
+          </Router>
+        </CardContextProvider>
+      </FocusContextProvider>
+    </UserContextProvider>
   </ApolloProvider>,
   document.getElementById('root')
 );
