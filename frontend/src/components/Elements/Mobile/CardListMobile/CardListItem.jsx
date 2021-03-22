@@ -43,8 +43,8 @@ const CardListItem = ({
   const [isMovingCard, toggleIsMovingCard] = useToggle();
   const [newProps, setNewProps] = useState({});
 
-  const { minPrice, owned } = card;
-  const hasMinPrice = minPrice !== undefined;
+  const { minPriceUsd, owned } = card;
+  const hasMinPrice = minPriceUsd !== undefined;
   const cardId = card.id;
 
   useEffect(() => {
@@ -117,7 +117,7 @@ const CardListItem = ({
               {highlightText(searchString, card.name)}
             </Typography.Text>
             {hasMinPrice && !isEditing && (
-              <Typography.Text>{getPriceLabel(minPrice)}</Typography.Text>
+              <Typography.Text>{getPriceLabel(minPriceUsd)}</Typography.Text>
             )}
           </StyledDescription>
         }
@@ -175,7 +175,8 @@ const areEqual = (prevProps, nextProps) => {
     'totalAmount',
     'sumPriceEur',
     'sumPriceUsd',
-    'minPrice',
+    'minPriceUsd',
+    'minPriceEur',
   ].every((propKey) => {
     return prevProps.card[propKey] === nextProps.card[propKey];
   });

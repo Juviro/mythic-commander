@@ -14,7 +14,7 @@ import { editDeckCardDesktop, getDeckDesktop } from '../../queries';
 
 export default ({ card, onOpenDetails, onDelete }) => {
   const { id: deckId } = useParams();
-  const value = getPriceLabel(card.minPrice);
+  const value = getPriceLabel(card.minPriceUsd);
   const [isEditing, toggleIsEditing] = useToggle();
   const [mutateEdit] = useMutation(editDeckCardDesktop);
   useShortcut('e', toggleIsEditing, 'deck.cards');

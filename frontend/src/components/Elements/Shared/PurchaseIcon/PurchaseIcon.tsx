@@ -13,6 +13,14 @@ const StyledPurchaseIcon = styled.img`
   margin-right: 4px;
 `;
 
+const StyledWrapper = styled.span`
+  display: flex;
+  align-items: center;
+`;
+const StyledLabel = styled.span`
+  word-break: keep-all;
+`;
+
 export type ExternalService =
   | 'cardmarket'
   | 'edhrec'
@@ -74,11 +82,11 @@ export const PurchaseIcon = ({
   const { icon, name, uri } = service;
 
   const body = (
-    <span>
+    <StyledWrapper style={asLink ? undefined : style}>
       <StyledPurchaseIcon src={icon} alt={name} />
       {displayName && <span>{name}</span>}
-      {label && <span>{label}</span>}
-    </span>
+      {label && <StyledLabel>{label}</StyledLabel>}
+    </StyledWrapper>
   );
 
   if (!asLink) {

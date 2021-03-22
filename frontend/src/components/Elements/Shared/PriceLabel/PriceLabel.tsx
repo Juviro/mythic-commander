@@ -1,7 +1,8 @@
-import { Tooltip } from 'antd';
+import React from 'react';
+
+import { DesktopTooltip } from 'components/Elements/Desktop';
 import Flex from 'components/Elements/Shared/Flex';
 import PurchaseIcon from 'components/Elements/Shared/PurchaseIcon';
-import React from 'react';
 import { UnifiedCard } from 'types/unifiedTypes';
 import { getPriceLabel } from 'utils/cardStats';
 
@@ -49,7 +50,9 @@ export const PriceLabel = ({ card, direction = 'row' }: Props) => {
 
   return (
     <Flex justify="space-between" direction={direction}>
-      <Tooltip title={getFullPriceLabel(usedPriceUsd, sumPriceUsd, 'USD', 'TCGplayer')}>
+      <DesktopTooltip
+        title={getFullPriceLabel(usedPriceUsd, sumPriceUsd, 'USD', 'TCGplayer')}
+      >
         <span>
           <PurchaseIcon
             cardName={name}
@@ -57,8 +60,10 @@ export const PriceLabel = ({ card, direction = 'row' }: Props) => {
             label={getPriceLabel(usedPriceUsd, { currency: 'USD' })}
           />
         </span>
-      </Tooltip>
-      <Tooltip title={getFullPriceLabel(usedPriceEur, sumPriceEur, 'EUR', 'Cardmarket')}>
+      </DesktopTooltip>
+      <DesktopTooltip
+        title={getFullPriceLabel(usedPriceEur, sumPriceEur, 'EUR', 'Cardmarket')}
+      >
         <span>
           <PurchaseIcon
             cardName={name}
@@ -66,7 +71,7 @@ export const PriceLabel = ({ card, direction = 'row' }: Props) => {
             label={getPriceLabel(usedPriceEur, { currency: 'EUR' })}
           />
         </span>
-      </Tooltip>
+      </DesktopTooltip>
     </Flex>
   );
 };
