@@ -1,7 +1,7 @@
 import React from 'react';
-import { EyeOutlined } from '@ant-design/icons';
-import FullscreenCardModal from '../FullscreenCardModal/FullscreenCardModal';
-import CardButton from '../../Shared/CardButton';
+import { ZoomInOutlined } from '@ant-design/icons';
+import CardButton from 'components/Elements/Shared/CardButton';
+import { FullscreenCardModal } from 'components/Elements/Mobile';
 import { useToggle } from '../../../Hooks';
 
 export default ({ card }) => {
@@ -14,7 +14,7 @@ export default ({ card }) => {
 
   return (
     <>
-      <CardButton index={2} onClick={onChangeIsOpen} Icon={EyeOutlined} />
+      <CardButton index={2} onClick={onChangeIsOpen} Icon={ZoomInOutlined} />
       <FullscreenCardModal
         visible={isPreviewOpen}
         card={card}

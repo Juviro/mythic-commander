@@ -25,23 +25,20 @@ export const getImageUris = (card: UnifiedCard) => {
   return card.image_uris ? card.image_uris : card.card_faces[0].image_uris;
 };
 
-export const getPrice = ({ prices: { usd, usd_foil } }: UnifiedCard) => {
-  const price = usd || usd_foil;
-  return Number(price) || 0;
-};
+export const getPriceLabel = (
+  passedAmount: string | number,
+  { round = false, currency = 'USD' } = {}
+) => {
+  const parsedAmount = Number(passedAmount);
+  if (!parsedAmount) return '-';
 
-export const getPriceLabel = (amountInUsd: string | number, { round = false } = {}) => {
-  const parsedAmount = Number(amountInUsd);
-  const isLong = parsedAmount >= 1000;
+  const isLong = parsedAmount >= 100;
   const numberOfDigits = round || isLong ? 0 : 2;
 
-  const formatPrice = (amount: string | number) =>
-    Number(amount).toLocaleString('de-DE', {
-      style: 'currency',
-      maximumFractionDigits: numberOfDigits,
-      minimumFractionDigits: numberOfDigits,
-      currency: 'USD',
-    });
-
-  return parsedAmount ? formatPrice(parsedAmount) : '-';
+  return Number(parsedAmount).toLocaleString('de-DE', {
+    style: 'currency',
+    maximumFractionDigits: numberOfDigits,
+    minimumFractionDigits: numberOfDigits,
+    currency,
+  });
 };

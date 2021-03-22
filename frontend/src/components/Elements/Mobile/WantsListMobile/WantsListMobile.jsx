@@ -1,5 +1,6 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
+import message from 'utils/message';
 import {
   deleteFromWantsListMobile as deleteFromWantsList,
   editWantsListCard,
@@ -22,21 +23,18 @@ export default ({
   const [mutateDelete] = useMutation(deleteFromWantsList);
   const [mutateEdit] = useMutation(editWantsListCard);
 
+  const deleteByOracle = (oracleIds, numberOfCards) => {
+    const cardsLabel = numberOfCards > 1 ? 'cards' : 'card';
+    message(`Deleted <b>${numberOfCards}</b> ${cardsLabel}!`);
+
+    mutateDelete({
+      variables: { oracleIds, wantsListId },
+    });
+  };
+
   const onDeleteCard = (cardId) => {
     const { oracle_id } = cards.find(({ id }) => id === cardId);
-    const newCards = rawWantsList.cards.filter((card) => card.id !== cardId);
-    const newNumberOfCards = rawWantsList.numberOfCards;
-    mutateDelete({
-      variables: { oracleIds: [oracle_id], wantsListId },
-      optimisticResponse: () => ({
-        __typename: 'Mutation',
-        deleteFromWantsList: {
-          ...rawWantsList,
-          cards: newCards,
-          numberOfCards: newNumberOfCards,
-        },
-      }),
-    });
+    deleteByOracle([oracle_id], 1);
   };
 
   const onEditCard = (cardId, newProps) => {
@@ -87,6 +85,7 @@ export default ({
       moveToList={canEdit ? moveToList : undefined}
       onEditCard={canEdit ? onEditCard : undefined}
       onDeleteCard={canEdit ? onDeleteCard : undefined}
+      deleteByOracle={canEdit ? deleteByOracle : undefined}
     />
   );
 };

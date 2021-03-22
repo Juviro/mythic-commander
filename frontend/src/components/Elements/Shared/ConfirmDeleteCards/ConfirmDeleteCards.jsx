@@ -15,6 +15,7 @@ export default ({ onCancel, cardsToDelete, numberOfSelectedCards, onDelete }) =>
   return (
     <FocusedModal
       visible
+      centered
       title={title}
       okText="Delete"
       okButtonProps={{ type: 'danger', onClick: onDelete }}

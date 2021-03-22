@@ -25,6 +25,6 @@ export const Line = ({ style = {}, height = 32 }) => (
 export const List = CardListSkeleton;
 export const Grid = CardGridSkeleton;
 export const GridMobile = MobileCardGridSkeleton;
-export const CardImage = () => <StyledImagePreview />;
+export const CardImage = ({ style = {} }) => <StyledImagePreview style={style} />;
 
 export default () => <Skeleton active />;

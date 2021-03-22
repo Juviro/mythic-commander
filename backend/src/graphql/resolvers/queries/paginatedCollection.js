@@ -27,8 +27,13 @@ export default (
           SUM(
             coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * amount + 
             coalesce(GREATEST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * "amountFoil"
-          ) as "sumPrice",
-          MIN(coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0)) as "minPrice",
+          ) as "sumPriceUsd",
+          SUM(
+            coalesce(LEAST((prices->>'eur')::float, (prices->>'eur_foil')::float), 0) * amount + 
+            coalesce(GREATEST((prices->>'eur')::float, (prices->>'eur_foil')::float), 0) * "amountFoil"
+          ) as "sumPriceEur",
+          MIN(coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float))) as "minPriceUsd",
+          MIN(coalesce(LEAST((prices->>'eur')::float, (prices->>'eur_foil')::float))) as "minPriceEur",
           MAX(cards.id) as id
           FROM collection 
           LEFT JOIN cards 

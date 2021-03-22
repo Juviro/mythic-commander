@@ -1,3 +1,4 @@
+import { gql } from '@apollo/client';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
@@ -30,7 +31,8 @@ export type Card = {
   name: Scalars['String'];
   image_uris?: Maybe<ImageUris>;
   card_faces?: Maybe<Array<CardFace>>;
-  price: Scalars['Float'];
+  priceUsd: Scalars['Float'];
+  priceEur: Scalars['Float'];
   prices: Prices;
   rarity: Scalars['String'];
   oracle_text?: Maybe<Scalars['String']>;
@@ -376,8 +378,10 @@ export type MutationDeleteLtPlayerArgs = {
 export type OracleCard = {
   __typename?: 'OracleCard';
   _id: Scalars['String'];
-  sumPrice?: Maybe<Scalars['Float']>;
-  minPrice: Scalars['Float'];
+  sumPriceUsd?: Maybe<Scalars['Float']>;
+  sumPriceEur?: Maybe<Scalars['Float']>;
+  minPriceUsd: Scalars['Float'];
+  minPriceEur: Scalars['Float'];
   allSets: Array<Card>;
   owned: Scalars['Boolean'];
   totalAmount: Scalars['Int'];
@@ -410,6 +414,7 @@ export type Prices = {
   __typename?: 'Prices';
   eur?: Maybe<Scalars['String']>;
   usd?: Maybe<Scalars['String']>;
+  eur_foil?: Maybe<Scalars['String']>;
   usd_foil?: Maybe<Scalars['String']>;
 };
 

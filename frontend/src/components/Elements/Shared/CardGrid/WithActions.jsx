@@ -3,7 +3,7 @@ import { useQueryParams, NumberParam, StringParam } from 'use-query-params';
 
 import { useToggle } from '../../../Hooks';
 import sumCardAmount from '../../../../utils/sumCardAmount';
-import { ConfirmDeleteCards, AddCardsTo, EditCardModal } from '../../Shared';
+import { ConfirmDeleteCards, EditCardModal } from '..';
 
 export default ({ onEditCard = null, deleteByOracle = null, children, ...props }) => {
   const [{ page, layout }] = useQueryParams({
@@ -13,7 +13,6 @@ export default ({ onEditCard = null, deleteByOracle = null, children, ...props }
   const [selectedCards, setSelectedCards] = useState([]);
   const [selectedSingleCard, setSelectedSingleCard] = useState(null);
   const [showDeleteModal, toggleShowDeleteModal] = useToggle();
-  const [showMoveModal, toggleShowMoveModal] = useToggle();
   const [showEditModal, toggleShowEditModal] = useToggle();
 
   const [search, setSearch] = useState('');
@@ -26,6 +25,11 @@ export default ({ onEditCard = null, deleteByOracle = null, children, ...props }
       numberOfSelectedCards
     );
     setSelectedCards([]);
+  };
+
+  const onDeleteCard = (card) => {
+    toggleShowDeleteModal(true);
+    setSelectedCards([card]);
   };
 
   useEffect(() => {
@@ -41,7 +45,6 @@ export default ({ onEditCard = null, deleteByOracle = null, children, ...props }
 
   const onCancel = () => {
     toggleShowDeleteModal(false);
-    toggleShowMoveModal(false);
     toggleShowEditModal(false);
   };
 
@@ -55,11 +58,8 @@ export default ({ onEditCard = null, deleteByOracle = null, children, ...props }
       {children({
         search,
         setSearch,
-        selectedCards,
-        setSelectedCards,
-        onMoveCards: toggleShowMoveModal,
         onEditCard: onEditCard ? onOpenEditCard : undefined,
-        onDeleteCards: deleteByOracle ? toggleShowDeleteModal : undefined,
+        onDeleteCard: deleteByOracle ? onDeleteCard : undefined,
         ...props,
       })}
       {showDeleteModal && (
@@ -70,15 +70,6 @@ export default ({ onEditCard = null, deleteByOracle = null, children, ...props }
           numberOfSelectedCards={numberOfSelectedCards}
         />
       )}
-      <AddCardsTo
-        cardsToAdd={selectedCards}
-        onCancel={onCancel}
-        onSubmit={() => {
-          onCancel();
-          setSelectedCards([]);
-        }}
-        visible={showMoveModal}
-      />
       {showEditModal && (
         <EditCardModal
           onEdit={onEditCard}

@@ -1,5 +1,5 @@
 import shimmer from 'components/Animations/shimmer';
-import { StyledCardGridWrapper } from 'components/Elements/Desktop/PaginatedCardList/CardGrid/CardGrid';
+import { StyledCardGridWrapper } from 'components/Elements/Shared/CardGrid/CardGrid';
 import React from 'react';
 import styled from 'styled-components';
 

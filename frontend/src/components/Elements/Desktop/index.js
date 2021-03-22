@@ -4,11 +4,6 @@ export { default as CardModalDesktop } from './CardModalDesktop';
 export { default as DesktopTooltip } from './DesktopTooltip';
 export { default as Dropzone } from './Dropzone';
 export { default as OverviewList, OverviewListHeader } from './OverviewList';
-export {
-  default as PaginatedCardList,
-  WithActions,
-  WithFullList,
-} from './PaginatedCardList';
+export { default as PaginatedCardList, WithFullList } from './PaginatedCardList';
 export { default as PageLayout, PageCard } from './PageLayout';
-export { default as CardGrid } from './PaginatedCardList/CardGrid/CardGrid';
 export { default as Sidebar } from './Sidebar';

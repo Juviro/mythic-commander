@@ -21,6 +21,7 @@ export default ({
   onSelectCard,
   width = '100%',
   size = 'small',
+  style,
 }) => {
   const [isOpen, toggleIsOpen] = useToggle();
   const { sets } = useContext(CardContext);
@@ -53,16 +54,15 @@ export default ({
       loading={loading}
       size={size}
       defaultValue={card.set_name}
-      style={{ width }}
+      style={{ width, ...style }}
       onKeyDown={useSubmitOnEnter(!isOpen && onSubmit)}
       onSelect={onSelectOption}
-      dropdownStyle={{ minWidth: 200 }}
+      dropdownStyle={{ width }}
       onClick={(e) => e.stopPropagation()}
       onDropdownVisibleChange={toggleIsOpen}
-      disabled={allCardSets.length <= 1}
     >
       {allCardSets.map(({ name, icon_svg_uri, id }) => (
-        <Select.Option value={id} key={id}>
+        <Select.Option value={id} key={id} style={{ width }}>
           <StyledSetIcon src={icon_svg_uri} alt={name} />
           {name}
         </Select.Option>

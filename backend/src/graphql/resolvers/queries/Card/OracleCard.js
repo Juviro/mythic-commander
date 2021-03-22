@@ -1,5 +1,37 @@
 import { getAllSets, getTypes } from './helper';
 
+const sumPrice = async (currency, sumPrice, oracle_id, userId, db) => {
+  if (typeof sumPrice === 'number') return sumPrice;
+  if (!userId) return 0;
+
+  const {
+    rows: [result],
+  } = await db.raw(
+    `
+      SELECT SUM(coalesce(
+        LEAST(
+            (prices->>'${currency}')::float, 
+            (prices->>'${currency}_foil')::float
+          ), 0
+          ) * amount + 
+          coalesce(
+        GREATEST(
+          (prices->>'${currency}')::float, 
+          (prices->>'${currency}_foil')::float
+          ), 0
+          ) * "amountFoil") AS price
+      FROM "collectionWithOracle" 
+      LEFT JOIN cards ON cards.id = "collectionWithOracle".id 
+      WHERE cards.oracle_id = ? 
+        AND "userId" = ?
+      GROUP BY cards.oracle_id;
+    `,
+    [oracle_id, userId]
+  );
+
+  return result ? result.price : 0;
+};
+
 const resolver = {
   _id({ oracle_id }) {
     return oracle_id;
@@ -42,9 +74,13 @@ const resolver = {
       .where({ userId, oracle_id });
   },
 
-  minPrice({ minPrice, prices: { usd, usd_foil } }) {
-    if (minPrice) return minPrice;
+  minPriceUsd({ minPriceUsd, prices: { usd, usd_foil } }) {
+    if (minPriceUsd) return minPriceUsd ?? 0;
     return usd || usd_foil || 0;
+  },
+  minPriceEur({ minPriceEur, prices: { eur, eur_foil } }) {
+    if (minPriceEur) return minPriceEur ?? 0;
+    return eur || eur_foil || 0;
   },
 
   async containingWantsLists({ oracle_id }, _, { db, user: { id: userId } }) {
@@ -63,36 +99,12 @@ const resolver = {
     }));
   },
 
-  async sumPrice({ sumPrice, oracle_id }, _, { db, user: { id: userId } }) {
-    if (typeof sumPrice === 'number') return sumPrice;
-    if (!userId) return 0;
+  sumPriceUsd({ sumPriceUsd, oracle_id }, _, { db, user: { id: userId } }) {
+    return sumPrice('usd', sumPriceUsd, oracle_id, userId, db);
+  },
 
-    const {
-      rows: [result],
-    } = await db.raw(
-      `
-    SELECT SUM(coalesce(
-      LEAST(
-        (prices->>'usd')::float, 
-        (prices->>'usd_foil')::float
-        ), 0
-        ) * amount + 
-        coalesce(
-      GREATEST(
-        (prices->>'usd')::float, 
-        (prices->>'usd_foil')::float
-        ), 0
-        ) * "amountFoil") AS price
-    FROM "collectionWithOracle" 
-    LEFT JOIN cards ON cards.id = "collectionWithOracle".id 
-    WHERE cards.oracle_id = ? 
-      AND "userId" = ?
-    GROUP BY cards.oracle_id;
-            `,
-      [oracle_id, userId]
-    );
-
-    return result ? result.price : 0;
+  sumPriceEur({ sumPriceEur, oracle_id }, _, { db, user: { id: userId } }) {
+    return sumPrice('eur', sumPriceEur, oracle_id, userId, db);
   },
 
   isTwoFaced({ image_uris }) {

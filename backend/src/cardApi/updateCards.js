@@ -1,5 +1,5 @@
 import knex from '../database';
-import { updateCardmarketPrices } from './cardmarket/updateCardmarketPrices';
+// import { updateCardmarketPrices } from './cardmarket/updateCardmarketPrices';
 import { updateScryfallCards } from './scryfall/updateScryfallCards';
 
 const deleteOldCards = async () => {
@@ -17,7 +17,7 @@ const updateCards = async () => {
   await updateScryfallCards('default_cards', 'cards');
   await deleteOldCards();
 
-  await updateCardmarketPrices();
+  // await updateCardmarketPrices();
 
   await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCards"`);
   await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCardsPerSet"`);
