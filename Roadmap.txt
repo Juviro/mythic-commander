@@ -2,10 +2,12 @@ BUGFIXES:
     - a lot of the cards are white on render, display only on scroll
     - no error boundary for card search desktop (https://mythic-commander.com/cards/XXX)
     - collection -> sort by price -> last page: reloading changes order of elements
+    - lifetracker: stuck in loading screen when bg images disabled
     - move to new image service
 
 
 CURRENT:
+    - when no eur price available: estimate based on avg price diff (calc in psql once)
     - on high latency network: move card from deck wants to deck -> wrong cards displayed in deck wants
 
 NEXT:

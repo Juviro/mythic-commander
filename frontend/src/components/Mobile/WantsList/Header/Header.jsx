@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Row, Col } from 'antd';
 
 import Menu from './Menu';
 import {
   WantsListDeckLink,
   WantsListTitle,
-  WantsListStats,
+  ListStats,
+  Flex,
 } from '../../../Elements/Shared';
 
 const StyledTitleWrapper = styled.div`
@@ -26,14 +26,10 @@ export default ({ wantsList, canEdit }) => {
         <WantsListTitle wantsList={wantsList} canEdit={canEdit} />
         {wantsList && <Menu wantsList={wantsList} canEdit={canEdit} />}
       </StyledTitleWrapper>
-      <Row>
-        <Col span={12}>
-          <WantsListStats wantsList={wantsList} />
-        </Col>
-        <Col span={12} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <WantsListDeckLink wantsList={wantsList} canEdit={canEdit} />
-        </Col>
-      </Row>
+      <Flex direction="row" justify="space-between" style={{ margin: '0 8px' }}>
+        <ListStats list={wantsList} />
+        <WantsListDeckLink wantsList={wantsList} canEdit={canEdit} />
+      </Flex>
     </>
   );
 };

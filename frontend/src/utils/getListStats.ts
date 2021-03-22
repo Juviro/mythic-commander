@@ -10,24 +10,38 @@ export const getListStats = (list?: UnifiedList) => {
   const [ownedCards, unownedCards] = partition(list.cards, (card) => card.owned);
 
   const getValue = (cards) =>
-    cards.reduce((acc, { minPrice, amount, totalAmount }) => {
-      const usedAmount = Number(amount) ?? Number(totalAmount) ?? 0;
-      return acc + minPrice * usedAmount;
-    }, 0);
+    cards.reduce(
+      ({ usd, eur }, { minPriceEur, minPriceUsd, amount, totalAmount }) => {
+        const usedAmount = Number(amount) ?? Number(totalAmount) ?? 0;
+        return {
+          usd: usd + minPriceUsd * usedAmount,
+          eur: eur + minPriceEur * usedAmount,
+        };
+      },
+      { usd: 0, eur: 0 }
+    );
 
   const totalValue = getValue(list.cards);
   const ownedValue = getValue(ownedCards);
   const unownedValue = getValue(unownedCards);
 
-  const unownedValueLabel = unownedValue
-    ? ` (${getPriceLabel(unownedValue, { round: true })} not owned)`
+  const unownedValueLabelUsd = unownedValue
+    ? ` (${getPriceLabel(unownedValue.usd, { round: true })} not owned)`
+    : '';
+  const unownedValueLabelEur = unownedValue
+    ? ` (${getPriceLabel(unownedValue.eur, { round: true, currency: 'EUR' })} not owned)`
     : '';
 
-  const ownedValueLabel = getPriceLabel(totalValue, {
+  const ownedValueLabelUsd = getPriceLabel(totalValue.usd, {
     round: true,
   });
+  const ownedValueLabelEur = getPriceLabel(totalValue.eur, {
+    round: true,
+    currency: 'EUR',
+  });
 
-  const valueLabel = `${ownedValueLabel}${unownedValueLabel}`;
+  const valueLabelUsd = `${ownedValueLabelUsd}${unownedValueLabelUsd}`;
+  const valueLabelEur = `${ownedValueLabelEur}${unownedValueLabelEur}`;
 
   const numberOfCards = sumCardAmount(list?.cards);
   const numberOfUniqueCards = list?.cards.length;
@@ -41,8 +55,10 @@ export const getListStats = (list?: UnifiedList) => {
     totalValue,
     ownedValue,
     unownedValue,
-    ownedValueLabel,
-    valueLabel,
+    ownedValueLabelUsd,
+    ownedValueLabelEur,
+    valueLabelUsd,
+    valueLabelEur,
 
     numberOfCards,
     numberOfUniqueCards,

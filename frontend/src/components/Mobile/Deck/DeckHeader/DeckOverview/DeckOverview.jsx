@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Skeleton } from 'antd';
+
+import { ListStats } from 'components/Elements/Shared';
 import NotLegalWarning from './NotLegalWarning';
 import DeckName from './DeckName';
-import { getPriceLabel } from '../../../../../utils/cardStats';
-import sumCardAmount from '../../../../../utils/sumCardAmount';
 
 const StyledInfoBox = styled.div`
   width: 100%;
@@ -18,10 +18,6 @@ const StyledHeader = styled.div`
   justify-content: space-between;
 `;
 
-const StyledStat = styled.div`
-  font-size: 12px;
-`;
-
 export default ({ deck, loading }) => {
   if (loading) {
     return (
@@ -32,15 +28,6 @@ export default ({ deck, loading }) => {
   }
 
   const commander = deck.cards.find(({ isCommander }) => isCommander);
-  const numberOfUnowned = deck.cards.filter(({ owned }) => !owned).length;
-  const numberOfCards = `${sumCardAmount(deck.cards)} cards ${
-    numberOfUnowned ? `(${numberOfUnowned} not owned)` : ''
-  }`;
-  const totalValue = (deck.cards || []).reduce((acc, val) => acc + val.minPrice, 0);
-  const unownedValue = (deck.cards || []).reduce(
-    (acc, val) => (val.owned ? acc : acc + val.minPrice),
-    0
-  );
 
   return (
     <>
@@ -49,11 +36,7 @@ export default ({ deck, loading }) => {
           <DeckName name={deck.name} commander={commander} />
           <NotLegalWarning deck={deck} />
         </StyledHeader>
-        <StyledStat>{numberOfCards}</StyledStat>
-        <StyledStat>{commander && commander.name}</StyledStat>
-        <StyledStat>{`Total Value: ${getPriceLabel(totalValue)}${
-          unownedValue ? ` (${getPriceLabel(unownedValue)} not owned)` : ''
-        }`}</StyledStat>
+        <ListStats list={deck} hideUnique style={{ marginTop: 16 }} />
       </StyledInfoBox>
     </>
   );
