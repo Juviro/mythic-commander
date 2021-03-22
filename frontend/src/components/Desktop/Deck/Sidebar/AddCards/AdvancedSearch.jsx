@@ -12,7 +12,7 @@ import {
   Confirm,
   OneTimeInfoBox,
 } from '../../../../Elements/Shared';
-import CardGrid from '../../../../Elements/Desktop/PaginatedCardList/CardGrid/CardGrid';
+import CardGrid from '../../../../Elements/Shared/CardGrid/CardGrid';
 import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
 import boldText from '../../../../../utils/boldText';
 

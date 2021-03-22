@@ -10,7 +10,6 @@ import {
 
 import { highlightText } from '../../../../utils/highlightText';
 import { getPriceLabel } from '../../../../utils/cardStats';
-import message from '../../../../utils/message';
 import PreviewCardImage from '../../Shared/PreviewCardImage';
 import OwnedBadge from '../../Shared/OwnedBadge';
 import SetPicker from '../../Shared/SetPicker';
@@ -55,7 +54,6 @@ const CardListItem = ({
 
   const onDelete = () => {
     onDeleteCard(card.id);
-    message(`Deleted <b>${card.name}</b>!`);
   };
 
   const onToggleEditing = () => {
@@ -170,10 +168,16 @@ const areEqual = (prevProps, nextProps) => {
   if (prevProps.onDeleteCard !== nextProps.onDeleteCard) return false;
   if (prevProps.onEditCard !== nextProps.onEditCard) return false;
 
-  return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
-    (propKey) => {
-      return prevProps.card[propKey] === nextProps.card[propKey];
-    }
-  );
+  return [
+    'id',
+    'amount',
+    'owned',
+    'totalAmount',
+    'sumPriceEur',
+    'sumPriceUsd',
+    'minPrice',
+  ].every((propKey) => {
+    return prevProps.card[propKey] === nextProps.card[propKey];
+  });
 };
 export default React.memo(CardListItem, areEqual);

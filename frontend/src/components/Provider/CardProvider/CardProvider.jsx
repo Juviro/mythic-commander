@@ -36,6 +36,7 @@ export const CardContextProvider = ({ children }) => {
     getSets();
     getCreatureTypes();
     getCards();
+    // eslint-disable-next-line
   }, [debug]);
 
   return (

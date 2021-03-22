@@ -140,14 +140,9 @@ const resolver = {
   async wantsList(_, { id }, { user: { id: userId }, db }) {
     await canAccessWantsList(userId, id);
 
-    const wantsList = await db('wantsLists')
+    return db('wantsLists')
       .where({ id })
       .first();
-
-    return {
-      ...wantsList,
-      canEdit: wantsList?.userId === userId,
-    };
   },
 
   wantsLists(_, { deckId }, { user: { id: userId }, db }) {

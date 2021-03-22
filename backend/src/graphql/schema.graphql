@@ -7,7 +7,8 @@ type Card {
   name: String!
   image_uris: ImageUris
   card_faces: [CardFace!]
-  price: Float!
+  priceUsd: Float!
+  priceEur: Float!
   prices: Prices!
   rarity: String!
   oracle_text: String
@@ -34,8 +35,10 @@ type Card {
 
 type OracleCard {
   _id: String!
-  sumPrice: Float
-  minPrice: Float!
+  sumPriceUsd: Float
+  sumPriceEur: Float
+  minPriceUsd: Float!
+  minPriceEur: Float!
   allSets: [Card!]!
 
   owned: Boolean!
@@ -72,6 +75,7 @@ type PurchaseUris {
 type Prices {
   eur: String
   usd: String
+  eur_foil: String
   usd_foil: String
 }
 

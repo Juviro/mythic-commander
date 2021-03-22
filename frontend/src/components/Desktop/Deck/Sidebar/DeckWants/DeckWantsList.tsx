@@ -1,10 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Empty } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 
-import { CardGrid } from 'components/Elements/Desktop';
-import { Confirm } from 'components/Elements/Shared';
-import FocusContext from 'components/Provider/FocusProvider/FocusProvider';
+import { Confirm, CardGrid } from 'components/Elements/Shared';
 
 import { WantsList, MutationDeleteFromWantsListArgs, CardInputType } from 'types/graphql';
 import unifyCardFormat from 'utils/unifyCardFormat';
@@ -25,17 +23,10 @@ interface Props {
   wantsList: WantsList;
   alreadyInDeck: (card: UnifiedCard) => boolean;
   onAddCards: (newCards: CardInputType[], name: string) => void;
-  active: boolean;
 }
 
-export default ({ wantsList, alreadyInDeck, onAddCards, active }: Props) => {
+export default ({ wantsList, alreadyInDeck, onAddCards }: Props) => {
   const [mutate] = useMutation<any, MutationDeleteFromWantsListArgs>(deleteFromWantsList);
-  const { focusedElements } = useContext(FocusContext);
-  // check if this has focus
-  const blockShortcuts =
-    !active ||
-    focusedElements.filter((focusId) => focusId !== 'modal.cardDetails').pop() !==
-      'deck.sidebar.wants';
 
   const [cardToAdd, setCardToAdd] = useState<UnifiedCard | null>(null);
 
@@ -64,7 +55,6 @@ export default ({ wantsList, alreadyInDeck, onAddCards, active }: Props) => {
     onAddCards([{ id: cardToAdd.id, amount: 1 }], cardToAdd.name);
     setCardToAdd(null);
   };
-  const onEnter = blockShortcuts ? null : (card: UnifiedCard) => setCardToAdd(card);
 
   if (!cards.length) {
     return <Empty description="" style={{ margin: 16 }} />;
@@ -90,9 +80,7 @@ export default ({ wantsList, alreadyInDeck, onAddCards, active }: Props) => {
         }}
         hidePagination
         cards={sortedCards}
-        onEnter={onEnter}
         markAsDisabled={alreadyInDeck}
-        blockShortcuts={blockShortcuts}
       />
     </StyledDeckWantsList>
   );

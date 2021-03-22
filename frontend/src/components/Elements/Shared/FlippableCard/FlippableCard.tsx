@@ -4,29 +4,36 @@ import { SyncOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 import './index.css';
+import { UnifiedCard } from 'types/unifiedTypes';
 import { getImageUrl } from '../../../../utils/cardImage';
 import CustomSkeleton from '../CustomSkeleton';
 import CardButton from '../CardButton';
 import { useToggle } from '../../../Hooks';
-// import LazyLoad from '../LazyLoad';
 
 const StyledImageWrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 0;
+  padding-bottom: 140%;
   position: relative;
   justify-content: center;
   align-items: center;
   border-radius: 4%;
 `;
 
+interface Props {
+  card: UnifiedCard;
+  loading?: boolean;
+  hideFlipIcon?: boolean;
+  onFlipCard?: (isFlipped: boolean) => void;
+}
+
 export default ({
   loading,
   card,
   hideFlipIcon,
   onFlipCard: onFlipCardCallback,
-  // lazyLoadProps,
-}) => {
+}: Props) => {
   const { id, imgKey, isTwoFaced } = card || {};
   const [isFlipped, toggleIsFlipped] = useToggle(false);
   const [showHighResImage, toggleShowHighResImage] = useToggle(false);
@@ -72,9 +79,8 @@ export default ({
   const frontImgSrc = getImageUrl(id, imgKey, showHighResImage ? 'normal' : 'small');
 
   return (
-    // <LazyLoad {...lazyLoadProps}>
     <StyledImageWrapper>
-      {(loading || !showHighResImage) && <CustomSkeleton.CardImage />}
+      <CustomSkeleton.CardImage style={{ position: 'absolute', top: 0 }} />
       {isTwoFaced && showHighResImage && (
         <>
           {!hideFlipIcon && (
@@ -94,14 +100,17 @@ export default ({
         <a.img
           alt={card.name}
           className="flippable-card"
-          style={{
-            opacity: opacity.interpolate((o) => 1 - o),
-            transform,
-          }}
+          style={
+            isTwoFaced
+              ? {
+                  opacity: opacity.interpolate((o: number) => 1 - o),
+                  transform,
+                }
+              : undefined
+          }
           src={frontImgSrc}
         />
       )}
     </StyledImageWrapper>
-    // </LazyLoad>
   );
 };

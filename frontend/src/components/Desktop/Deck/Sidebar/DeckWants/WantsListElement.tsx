@@ -92,7 +92,6 @@ export default ({ wantsList, alreadyInDeck, onAddCards, active, onClick }: Props
         </StyledHeader>
         <Expander isExpanded={active}>
           <DeckWantsList
-            active={active}
             wantsList={wantsList}
             alreadyInDeck={alreadyInDeck}
             onAddCards={onAddCards}

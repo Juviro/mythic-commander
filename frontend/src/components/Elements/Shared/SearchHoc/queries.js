@@ -12,7 +12,8 @@ export const cardSearch = gql`
         cmc
         mana_cost
         oracle_id
-        price
+        priceUsd
+        priceEur
 
         oracleCard {
           _id

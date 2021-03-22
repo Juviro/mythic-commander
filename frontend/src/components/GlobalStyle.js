@@ -42,8 +42,8 @@ export default createGlobalStyle`
     left: 0;
     right: 0;
     border: 0;
-    width: auto;
-    height: 100%;
+    width: 100%;
+    height: auto;
     cursor: pointer;
     position: absolute;
     border-radius: 4%;

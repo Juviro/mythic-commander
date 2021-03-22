@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { useQuery } from 'react-apollo';
+import { useMutation, useQuery } from 'react-apollo';
 import { useQueryParams, StringParam } from 'use-query-params';
 import { useParams } from 'react-router';
 import { Input, Divider } from 'antd';
 
+import message from 'utils/message';
+import { deleteAllFromCollection } from 'components/Desktop/Collection/queries';
 import CardListMobile from '../../Elements/Mobile/CardListMobile/index';
 import { paginatedCollection } from './queries';
 import { CARDS_PER_PAGE } from '../../Elements/Mobile/CardListMobile/FilteredCardList';
@@ -13,6 +15,7 @@ import { Flex, FoundCardsLabel, FindWantedCards } from '../../Elements/Shared';
 export default () => {
   const { username } = useParams();
   const [search, setSearch] = useState('');
+  const [mutate] = useMutation(deleteAllFromCollection);
   const [{ orderByAdvanced = '' }] = useQueryParams({
     orderByAdvanced: StringParam,
   });
@@ -57,6 +60,17 @@ export default () => {
     });
   };
 
+  const deleteByOracle = (selectedCardIds, numberOfCards) => {
+    const oracleIds = selectedCardIds;
+    const numberOfCardsLabel = numberOfCards > 1 ? `<b>${numberOfCards}</b> cards ` : '';
+
+    message(`Deleted ${numberOfCardsLabel}from your collection!`);
+    mutate({
+      variables: { oracleIds },
+      refetchQueries: ['currentSnapshots', 'paginatedCollection', 'ownedCardNames'],
+    });
+  };
+
   return (
     <Flex direction="column" style={{ width: '100%' }}>
       <Input.Search
@@ -78,6 +92,7 @@ export default () => {
         loading={loading}
         cards={formattedCards}
         onLoadMore={onLoadMore}
+        deleteByOracle={deleteByOracle}
         totalResults={totalResults}
       />
     </Flex>

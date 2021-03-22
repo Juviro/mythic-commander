@@ -21,8 +21,11 @@ const resolver = {
       .join('\n<cardface>\n');
   },
 
-  price({ prices: { usd, usd_foil } }) {
+  priceUsd({ prices: { usd, usd_foil } }) {
     return usd || usd_foil || 0;
+  },
+  priceEur({ prices: { eur, eur_foil } }) {
+    return eur || eur_foil || 0;
   },
   imgKey(card) {
     return getImageKey(card);

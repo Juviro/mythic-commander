@@ -23,6 +23,7 @@ export default ({ onEdit, card, onCancel }) => {
     <FocusedModal
       onCancel={onCancel}
       visible
+      centered
       width={660}
       okText="Save"
       okButtonProps={{
@@ -30,6 +31,7 @@ export default ({ onEdit, card, onCancel }) => {
         onClick: onSubmit,
       }}
       focusId="modal.editCard"
+      title={`Edit ${card.name}`}
       focusStyle={{ display: 'flex', width: 400, height: 400 }}
     >
       <EditCardBody

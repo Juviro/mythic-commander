@@ -174,9 +174,15 @@ const areEqual = (prevProps, nextProps) => {
   if (prevProps.isSelected !== nextProps.isSelected) return false;
   if (prevProps.displayOwnedOnly !== nextProps.displayOwnedOnly) return false;
 
-  return ['id', 'amount', 'owned', 'sumPrice', 'minPrice'].every(
-    (propKey) => prevProps.card[propKey] === nextProps.card[propKey]
-  );
+  return [
+    'id',
+    'amount',
+    'owned',
+    'sumPriceEur',
+    'sumPriceUsd',
+    'minPriceEur',
+    'minPriceUsd',
+  ].every((propKey) => prevProps.card[propKey] === nextProps.card[propKey]);
 };
 
 export default React.memo(Card, areEqual);
