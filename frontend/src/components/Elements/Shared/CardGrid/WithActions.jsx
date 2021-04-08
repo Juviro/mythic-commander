@@ -3,7 +3,7 @@ import { useQueryParams, NumberParam, StringParam } from 'use-query-params';
 
 import { useToggle } from '../../../Hooks';
 import sumCardAmount from '../../../../utils/sumCardAmount';
-import { ConfirmDeleteCards, EditCardModal } from '..';
+import { AddCardsTo, ConfirmDeleteCards, EditCardModal } from '..';
 
 export default ({ onEditCard = null, deleteByOracle = null, children, ...props }) => {
   const [{ page, layout }] = useQueryParams({
@@ -13,6 +13,8 @@ export default ({ onEditCard = null, deleteByOracle = null, children, ...props }
   const [selectedCards, setSelectedCards] = useState([]);
   const [selectedSingleCard, setSelectedSingleCard] = useState(null);
   const [showDeleteModal, toggleShowDeleteModal] = useToggle();
+  const [showCopyModal, toggleShowCopyModal] = useToggle();
+  const [showMoveModal, toggleShowMoveModal] = useToggle();
   const [showEditModal, toggleShowEditModal] = useToggle();
 
   const [search, setSearch] = useState('');
@@ -27,9 +29,9 @@ export default ({ onEditCard = null, deleteByOracle = null, children, ...props }
     setSelectedCards([]);
   };
 
-  const onDeleteCard = (card) => {
+  const onDeleteCards = (cards) => {
     toggleShowDeleteModal(true);
-    setSelectedCards([card]);
+    setSelectedCards(cards);
   };
 
   useEffect(() => {
@@ -46,6 +48,8 @@ export default ({ onEditCard = null, deleteByOracle = null, children, ...props }
   const onCancel = () => {
     toggleShowDeleteModal(false);
     toggleShowEditModal(false);
+    toggleShowCopyModal(false);
+    toggleShowMoveModal(false);
   };
 
   const onOpenEditCard = (card) => {
@@ -53,13 +57,24 @@ export default ({ onEditCard = null, deleteByOracle = null, children, ...props }
     toggleShowEditModal(true);
   };
 
+  const onMoveCards = (cards) => {
+    setSelectedCards(cards);
+    toggleShowMoveModal(true);
+  };
+  const onCopyCardsTo = (cards) => {
+    setSelectedCards(cards);
+    toggleShowCopyModal(true);
+  };
+
   return (
     <>
       {children({
         search,
         setSearch,
+        onMoveCards,
+        onCopyCardsTo: deleteByOracle ? onCopyCardsTo : undefined,
         onEditCard: onEditCard ? onOpenEditCard : undefined,
-        onDeleteCard: deleteByOracle ? onDeleteCard : undefined,
+        onDeleteCards: deleteByOracle ? onDeleteCards : undefined,
         ...props,
       })}
       {showDeleteModal && (
@@ -77,6 +92,19 @@ export default ({ onEditCard = null, deleteByOracle = null, children, ...props }
           onCancel={onCancel}
         />
       )}
+      <AddCardsTo
+        cardsToAdd={selectedCards}
+        title={showMoveModal ? 'Move cards to' : 'Copy cards to'}
+        onCancel={onCancel}
+        onSubmit={() => {
+          if (showMoveModal) {
+            onDelete();
+          }
+          onCancel();
+          setSelectedCards([]);
+        }}
+        visible={showMoveModal || showCopyModal}
+      />
     </>
   );
 };

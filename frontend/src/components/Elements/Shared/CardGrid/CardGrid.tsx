@@ -6,11 +6,13 @@ import { EditOutlined, LoadingOutlined, DeleteOutlined } from '@ant-design/icons
 
 import { UnifiedCard } from 'types/unifiedTypes';
 import { MenuItem } from 'components/Elements/Shared/ContextMenu/ContextMenu';
+import { useSelectCards } from 'components/Elements/Shared/CardGrid/useSelectCards';
 import usePagination from './usePagination';
 import CardModalDesktop from '../../Desktop/CardModalDesktop';
 import { Flex } from '..';
 import GridCard from './GridCard';
 import WithActions from './WithActions';
+import { SelectionMenu } from './SelectionMenu';
 
 export const StyledCardGridWrapper = styled.div<{ itemsPerRow?: number }>`
   display: grid;
@@ -37,9 +39,11 @@ interface Props {
   search?: string;
   actions?: MenuItem[];
   onEditCard?: (card: UnifiedCard) => void;
-  onDeleteCard?: (card: UnifiedCard) => void;
   markAsDisabled?: (card: UnifiedCard) => boolean;
   onOpenDetails?: (card: UnifiedCard) => void;
+  onMoveCards?: (cards: UnifiedCard[]) => void;
+  onCopyCardsTo?: (cards: UnifiedCard[]) => void;
+  onDeleteCards?: (cards: UnifiedCard[]) => void;
   hidePagination?: boolean;
   dragProps?: DragProps;
   itemsPerRow?: number;
@@ -53,15 +57,18 @@ const CardGrid = ({
   numberOfCards,
   search,
   onEditCard,
-  onDeleteCard,
+  onDeleteCards,
   history,
   markAsDisabled,
   hidePagination,
   dragProps,
   onOpenDetails,
   itemsPerRow,
+  onMoveCards,
+  onCopyCardsTo,
 }: PropsWithRouterProps) => {
   const [detailCard, setDetailCard] = useState(null);
+  const { selectedCardIds, onSelectCard, onClearSelection } = useSelectCards(cards);
 
   const wrapperRef = useRef(null);
 
@@ -98,16 +105,46 @@ const CardGrid = ({
       onClick: onEditCard,
     });
   }
-  if (onDeleteCard) {
+  if (onDeleteCards) {
     actions.push({
       title: 'Delete',
       Icon: DeleteOutlined,
-      onClick: onDeleteCard,
+      onClick: (card: UnifiedCard) => onDeleteCards([card]),
     });
   }
 
+  const getSelectedCards = () => cards.filter(({ id }) => selectedCardIds.includes(id));
+
+  const onDeleteSelectedCards = onDeleteCards
+    ? () => {
+        const selectedCards = getSelectedCards();
+        onDeleteCards(selectedCards);
+      }
+    : undefined;
+
+  const onMoveSelectedCards = onMoveCards
+    ? () => {
+        const selectedCards = getSelectedCards();
+        onMoveCards(selectedCards);
+      }
+    : undefined;
+
+  const onCopySelectedCardsTo = onCopyCardsTo
+    ? () => {
+        const selectedCards = getSelectedCards();
+        onCopyCardsTo(selectedCards);
+      }
+    : undefined;
+
   return (
     <>
+      <SelectionMenu
+        onClearSelection={onClearSelection}
+        selectedCardIds={selectedCardIds}
+        onMoveCards={onMoveSelectedCards}
+        onDeleteCards={onDeleteSelectedCards}
+        onCopyCardsTo={onCopySelectedCardsTo}
+      />
       <Flex
         direction="row"
         justify="space-between"
@@ -126,7 +163,10 @@ const CardGrid = ({
             key={card.id}
             actions={actions}
             search={search}
+            isSelected={selectedCardIds.includes(card.id)}
+            isAnyCardSelected={Boolean(selectedCardIds.length)}
             canZoomIn={itemsPerRow === 2}
+            onSelect={() => onSelectCard(card.id)}
             markAsDisabled={markAsDisabled && markAsDisabled(card)}
             onOpenDetails={() =>
               onOpenDetails ? onOpenDetails(card) : onOpenDetailsDesktop(card)
