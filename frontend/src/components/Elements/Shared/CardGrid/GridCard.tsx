@@ -2,11 +2,13 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { useDrag } from 'react-dnd';
 
-import EnlargeImage from 'components/Elements/Shared/CardGrid/EnlargeImage';
+import { primarySemiLight } from 'constants/colors';
+import EnlargeImage from './EnlargeImage';
 import FlippableCard from '../FlippableCard';
 import { useToggle } from '../../../Hooks';
 import CardInfo from './CardInfo';
 import { CardMenu } from './CardMenu';
+import { SelectButton } from './SelectButton';
 
 const StyledCenterWrapper = styled.div`
   width: 100%;
@@ -26,18 +28,26 @@ const StyledCardWrapper = styled.div`
   height: 100%;
 `;
 
-const StyledImageWrapper = styled.div<{ markAsDisabled?: boolean }>`
+const StyledImageWrapper = styled.div<{ isSelected: boolean; markAsDisabled?: boolean }>`
   position: relative;
   border-radius: 4%;
   overflow: hidden;
   background-color: white;
   width: 100%;
-  height: 100%;
 
   ${({ markAsDisabled }) =>
     markAsDisabled
       ? css`
           opacity: 0.4;
+        `
+      : ''}
+
+  ${({ isSelected }) =>
+    isSelected
+      ? css`
+          box-shadow: 0px 0px 6px 6px ${primarySemiLight};
+          width: calc(100% - 8px);
+          margin: 6px 0 5px;
         `
       : ''}
 `;
@@ -61,6 +71,9 @@ const GridCard = ({
   markAsDisabled,
   dragProps,
   canZoomIn,
+  onSelect,
+  isSelected,
+  isAnyCardSelected,
 }) => {
   const { canDrag = false, listId, onSuccessfullDrop } = dragProps ?? {};
   const displayedAmount = card.amount || card.totalAmount;
@@ -79,14 +92,22 @@ const GridCard = ({
     }),
   });
 
-  const onClick =
-    actions.length && !showMenu ? () => toggleShowMenu(true) : onOpenDetails;
+  const onClick = () => {
+    if (isAnyCardSelected) {
+      onSelect();
+    } else if (actions.length && !showMenu) {
+      toggleShowMenu(true);
+    } else {
+      onOpenDetails();
+    }
+  };
 
   return (
     <StyledCenterWrapper>
       <StyledCardWrapper key={card.id}>
         <StyledImageWrapper
           onClick={onClick}
+          isSelected={isSelected}
           onMouseMove={(e) => {
             if (!e.movementX && !e.movementY) return;
             toggleShowMenu(true);
@@ -100,7 +121,7 @@ const GridCard = ({
           {displayedAmount > 1 && (
             <StyledAmountWrapper>{`${displayedAmount}x`}</StyledAmountWrapper>
           )}
-          {Boolean(showMenu && actions.length) && (
+          {Boolean(showMenu && actions.length && !isAnyCardSelected) && (
             <CardMenu
               card={card}
               actions={actions}
@@ -108,34 +129,17 @@ const GridCard = ({
               onClose={() => toggleShowMenu(false)}
             />
           )}
+          <SelectButton
+            onSelect={onSelect}
+            isSelected={isSelected}
+            isHovering={showMenu}
+            isAnyCardSelected={isAnyCardSelected}
+          />
         </StyledImageWrapper>
         <CardInfo card={card} search={search} />
       </StyledCardWrapper>
     </StyledCenterWrapper>
   );
 };
-
-// const areEqual = (prevProps, nextProps) => {
-//   if (prevProps.isSelected !== nextProps.isSelected) return false;
-//   if (prevProps.widthPercentage !== nextProps.widthPercentage) return false;
-//   if (prevProps.width !== nextProps.width) return false;
-//   if (prevProps.loading !== nextProps.loading) return false;
-//   if (prevProps.index !== nextProps.index) return false;
-//   if (prevProps.search !== nextProps.search) return false;
-//   if (prevProps.shortcutsActive !== nextProps.shortcutsActive) return false;
-//   if (prevProps.markAsDisabled !== nextProps.markAsDisabled) return false;
-//   if (prevProps.canZoomIn !== nextProps.markAsDisabled) return false;
-
-//   return [
-//     'id',
-//     'amount',
-//     'owned',
-//     'totalAmount',
-//     'sumPriceEur',
-//     'sumPriceUsd',
-//     'minPriceEur',
-//     'minPriceUsd',
-//   ].every((propKey) => prevProps.card[propKey] === nextProps.card[propKey]);
-// };
 
 export default GridCard;

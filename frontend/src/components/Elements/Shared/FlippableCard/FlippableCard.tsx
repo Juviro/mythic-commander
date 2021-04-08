@@ -14,7 +14,7 @@ const StyledImageWrapper = styled.div`
   display: flex;
   width: 100%;
   height: 0;
-  padding-bottom: 140%;
+  padding-bottom: 139%;
   position: relative;
   justify-content: center;
   align-items: center;

@@ -1,24 +1,27 @@
 BUGFIXES:
-    - a lot of the cards are white on render, display only on scroll
-    - Sahre button visible for non-owned wants lists
+    - a lot of the cards are white on render, display only on scroll (mobile, guess this is fixed in migration)
+    - Share button visible for non-owned wants lists
     - no error boundary for card search desktop (https://mythic-commander.com/cards/XXX)
     - collection -> sort by price -> last page: reloading changes order of elements
     - lifetracker: stuck in loading screen when bg images disabled
-    - move to new image service
 
+EVEN MORE CURRENT:
+    * re-add arrow keys left/right to navigate between selected card
 
 CURRENT:
+    - redesign moveTo modal, especially for mobile
+    - display how many cards are included in eur price
     - when no eur price available: estimate based on avg price diff (calc in psql once)
     - on high latency network: move card from deck wants to deck -> wrong cards displayed in deck wants
 
 NEXT:
+    - CHANGE TITLE BASED ON CONTENT (Deckname, Collection etc)
     - re-add loading animation to paginated list (e.g. collection desktop)
+    - move to new image service
     - refactor authentication, remove from context creation
     - improve loading time of deck
-    - add stylelint
+    - add stylelint (or don't)
     - when only displaying unowned in deck -> add cards to.. -> pre-select unowned only, but show all
-    - prevent re-ordering card lists in decks view - maybe re-order when category added / removed
-    - add shortcut to toggle focus ?
 
     - add button to add card to deck in sidebar ?
     - add option to export unowned cards from deck to wants
@@ -85,7 +88,6 @@ BACKLOG:
 
 BACKLOG BUGFIXES:
     - sometimes rules of previously viewed cards displayed instead of current card
-    - don't ignore umlaute in search (backend and frontend) e.g. Jötun Grunt
 
     - backend deployment not reloading
     - when editing in card details, versions of same set are changing
