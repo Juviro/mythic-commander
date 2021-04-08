@@ -1,5 +1,6 @@
 BUGFIXES:
     - a lot of the cards are white on render, display only on scroll
+    - Sahre button visible for non-owned wants lists
     - no error boundary for card search desktop (https://mythic-commander.com/cards/XXX)
     - collection -> sort by price -> last page: reloading changes order of elements
     - lifetracker: stuck in loading screen when bg images disabled
