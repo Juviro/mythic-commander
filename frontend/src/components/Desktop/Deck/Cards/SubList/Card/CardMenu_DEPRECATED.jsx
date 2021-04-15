@@ -6,11 +6,11 @@ import { DeleteOutlined, EditOutlined, InfoCircleOutlined } from '@ant-design/ic
 
 import { primary, error } from 'constants/colors';
 import keySymbols from 'constants/keySymbols';
-import OwnedBadge from 'components/Elements/Shared/OwnedBadge/index';
+import OwnedBadge from 'components/Elements/Shared/OwnedBadge';
 import { getPriceLabel } from 'utils/cardStats';
 import { Flex, EditCardModal, UnownedBadge } from 'components/Elements/Shared';
 import { useToggle, useShortcut } from 'components/Hooks';
-import { editDeckCardDesktop, getDeckDesktop } from '../../queries';
+import { editDeckCardDesktop, getDeckDesktop } from '../../../queries';
 
 export default ({ card, onOpenDetails, onDelete }) => {
   const { id: deckId } = useParams();

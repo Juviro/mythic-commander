@@ -1,17 +1,14 @@
-import React, { useContext } from 'react';
-import { Skeleton, Empty } from 'antd';
+import React, { useContext, useRef, useState } from 'react';
+import { Skeleton, Empty, Button } from 'antd';
 import styled, { css } from 'styled-components';
 
-import { useWindowSize } from '../../../Hooks';
 import { Flex } from '../../../Elements/Shared';
-import { CARD_WIDTH } from './CardList/Card';
 import getCardsByType from '../../../../utils/getCardsByType';
 import CardLists from './CardLists';
 import { sortByCmc, sortByName } from '../../../../utils/cardFilter';
 import FocusContext from '../../../Provider/FocusProvider/FocusProvider';
 import { primary } from '../../../../constants/colors';
 import { Dropzone } from '../../../Elements/Desktop';
-import { DECK_SIDEBAR_WIDTH } from '../Sidebar/Sidebar';
 
 const StyledWrapper = styled.div`
   margin: 8px;
@@ -20,60 +17,27 @@ const StyledWrapper = styled.div`
   display: flex;
   justify-content: center;
   min-height: 400px;
-  padding-bottom: 200px;
+  flex: 1;
 
   ${({ isFocused }) =>
     isFocused
       ? css`
-          box-shadow: 0 0 10px ${primary};
+          box-shadow: inset 0 0 10px 3px ${primary};
         `
       : ''}
 `;
 
-const getCardColumns = (cards, numberOfCols) => {
-  if (!cards || numberOfCols === null) return [];
-
-  const sortedCards = sortByCmc(sortByName(cards));
-  const { cardsByType } = getCardsByType(sortedCards);
-  const displayedCardsByType = cardsByType
-    .filter(({ cards: _cards }) => _cards.length)
-    .sort((a, b) => b.cards.length - a.cards.length);
-
-  const columns = [];
-  while (columns.length < numberOfCols) {
-    columns.push([]);
-  }
-
-  const cardColumns = displayedCardsByType.reduce((acc, val) => {
-    const columnWithLeastCards = acc
-      .map((column, index) => ({
-        height: column.reduce(
-          // The 8 is is an offset for column title and fully displayed card
-          (sum, { cards: columnCards }) => sum + columnCards.length + 8,
-          0
-        ),
-        index,
-      }))
-      .sort((a, b) => a.height - b.height)[0].index;
-
-    acc[columnWithLeastCards].push(val);
-    return acc;
-  }, columns);
-
-  return cardColumns.filter((column) => column.length);
-};
-
-export default ({ deck, loading, currentTab, onAddCards, displayOwnedOnly }) => {
-  const widthOffset = currentTab ? DECK_SIDEBAR_WIDTH : 0;
-  useWindowSize();
+export default ({ deck, loading, onAddCards, displayOwnedOnly }) => {
   const { focusedElement } = useContext(FocusContext);
   const isFocused = focusedElement === 'deck.cards';
 
-  // padding of wrapper, tabs, tabMargin, wrapper margin, ???
-  // TODO: use a ref for the wrapper and take size from there
-  const innerWidth = window.innerWidth - widthOffset - 16 - 40 - 8 - 8 - 23;
-  const cardWidth = CARD_WIDTH + 20; // padding and margin of card
-  const numberOfCols = Math.max(Math.floor(innerWidth / cardWidth), 1);
+  const [isSmall, setIsSmall] = useState(false);
+
+  const wrapperRef = useRef(null);
+
+  const sortedCards = deck && sortByCmc(sortByName(deck.cards));
+  const cardsByType = deck && getCardsByType(sortedCards).cardsByType;
+  console.log('cardsByType', cardsByType);
 
   if (loading)
     return (
@@ -82,29 +46,38 @@ export default ({ deck, loading, currentTab, onAddCards, displayOwnedOnly }) => 
       </Flex>
     );
 
-  const cardColumns = getCardColumns(deck.cards, numberOfCols);
-
   const onDrop = ({ id, name, amount = 1 }) => {
     onAddCards([{ id, amount }], name);
   };
 
   return (
-    <StyledWrapper isFocused={isFocused}>
-      <Dropzone onDrop={onDrop} listId={deck.id}>
-        {cardColumns.length ? (
-          <Flex direction="row" wrap="wrap" style={{ padding: 8, width: 'fit-content' }}>
-            <CardLists
-              columns={cardColumns}
-              deck={deck}
-              displayOwnedOnly={displayOwnedOnly}
-            />
-          </Flex>
-        ) : (
-          <Flex justify="center" align="center" style={{ width: '100%', marginTop: 120 }}>
-            <Empty description="No Cards" />
-          </Flex>
-        )}
-      </Dropzone>
-    </StyledWrapper>
+    <>
+      <Button onClick={() => setIsSmall(!isSmall)}>Toggle Width</Button>
+      <StyledWrapper
+        isFocused={isFocused}
+        ref={wrapperRef}
+        style={{ width: isSmall ? 800 : undefined }}
+      >
+        <Dropzone onDrop={onDrop} listId={deck.id}>
+          {cardsByType.length ? (
+            <Flex direction="row" wrap="wrap">
+              <CardLists
+                cardsByType={cardsByType}
+                deck={deck}
+                displayOwnedOnly={displayOwnedOnly}
+              />
+            </Flex>
+          ) : (
+            <Flex
+              justify="center"
+              align="center"
+              style={{ width: '100%', marginTop: 120 }}
+            >
+              <Empty description="No Cards" />
+            </Flex>
+          )}
+        </Dropzone>
+      </StyledWrapper>
+    </>
   );
 };
