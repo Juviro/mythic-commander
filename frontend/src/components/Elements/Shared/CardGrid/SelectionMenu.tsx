@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Space, Typography } from 'antd';
+import { Button, Space, Typography } from 'antd';
 import {
+  CheckSquareOutlined,
   CloseOutlined,
   DeleteOutlined,
   DiffOutlined,
@@ -48,6 +49,7 @@ interface Props {
   onMoveCards?: () => void;
   onCopyCardsTo?: () => void;
   onDeleteCards?: () => void;
+  onSelectAll?: () => void;
 }
 
 export const SelectionMenu = ({
@@ -56,11 +58,19 @@ export const SelectionMenu = ({
   onMoveCards,
   onCopyCardsTo,
   onDeleteCards,
+  onSelectAll,
 }: Props) => {
   if (!selectedCardIds.length) return null;
 
   const actions = [];
 
+  if (isMobile()) {
+    actions.push({
+      icon: <CheckSquareOutlined />,
+      title: 'Select All',
+      onClick: onSelectAll,
+    });
+  }
   if (onCopyCardsTo) {
     actions.push({
       icon: <DiffOutlined />,
@@ -92,13 +102,18 @@ export const SelectionMenu = ({
           </DesktopTooltip>
         </StyledActionIconWrapper>
         <Typography.Text>{`${selectedCardIds.length} cards selected`}</Typography.Text>
+        {!isMobile() && (
+          <Button onClick={onSelectAll} type="link">
+            Select All
+          </Button>
+        )}
       </Space>
       {isMobile() ? (
         <Menu actions={actions} placement="bottomRight" fontSize={24} />
       ) : (
         <Space size={24}>
           {actions.map(({ icon, title, onClick }) => (
-            <DesktopTooltip title={title} placement="bottomRight">
+            <DesktopTooltip key={title} title={title} placement="bottomRight">
               <StyledActionIconWrapper onClick={onClick}>{icon}</StyledActionIconWrapper>
             </DesktopTooltip>
           ))}

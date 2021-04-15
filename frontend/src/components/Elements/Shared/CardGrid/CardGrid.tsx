@@ -13,6 +13,7 @@ import { Flex } from '..';
 import GridCard from './GridCard';
 import WithActions from './WithActions';
 import { SelectionMenu } from './SelectionMenu';
+import useCardDetailNavigation from './useCardDetailNavigation';
 
 export const StyledCardGridWrapper = styled.div<{ itemsPerRow?: number }>`
   display: grid;
@@ -67,22 +68,27 @@ const CardGrid = ({
   onMoveCards,
   onCopyCardsTo,
 }: PropsWithRouterProps) => {
-  const [detailCard, setDetailCard] = useState(null);
-  const { selectedCardIds, onSelectCard, onClearSelection } = useSelectCards(cards);
+  const [detailCardIndex, setDetailCardIndex] = useState<number | null>(null);
+  const detailCard = cards[detailCardIndex];
+  const { selectedCardIds, onSelectCard, onClearSelection, onSelectAll } = useSelectCards(
+    cards
+  );
 
   const wrapperRef = useRef(null);
 
   const combinedNumberOfCards = numberOfCards || cards?.length || 0;
 
   const pagination = usePagination(combinedNumberOfCards);
-
-  const onOpenDetailsDesktop = (card: UnifiedCard) => {
-    setDetailCard(card);
-  };
+  const cardDetailNavigation = useCardDetailNavigation({
+    detailCardIndex,
+    setDetailCardIndex,
+    cards,
+    pagination,
+  });
 
   // close modal when list changes
   useEffect(() => {
-    setDetailCard(false);
+    setDetailCardIndex(null);
     // eslint-disable-next-line
   }, [history.location.pathname]);
 
@@ -144,6 +150,7 @@ const CardGrid = ({
         onMoveCards={onMoveSelectedCards}
         onDeleteCards={onDeleteSelectedCards}
         onCopyCardsTo={onCopySelectedCardsTo}
+        onSelectAll={onSelectAll}
       />
       <Flex
         direction="row"
@@ -156,7 +163,7 @@ const CardGrid = ({
         {paginationComponent}
       </Flex>
       <StyledCardGridWrapper itemsPerRow={itemsPerRow}>
-        {cards.map((card) => (
+        {cards.map((card, index) => (
           <GridCard
             card={card}
             dragProps={dragProps}
@@ -169,7 +176,7 @@ const CardGrid = ({
             onSelect={() => onSelectCard(card.id)}
             markAsDisabled={markAsDisabled && markAsDisabled(card)}
             onOpenDetails={() =>
-              onOpenDetails ? onOpenDetails(card) : onOpenDetailsDesktop(card)
+              onOpenDetails ? onOpenDetails(card) : setDetailCardIndex(index)
             }
           />
         ))}
@@ -179,7 +186,8 @@ const CardGrid = ({
         loading={loading}
         selectedCard={detailCard}
         visible={Boolean(detailCard)}
-        onClose={() => setDetailCard(false)}
+        onClose={() => setDetailCardIndex(null)}
+        {...cardDetailNavigation}
       />
     </>
   );

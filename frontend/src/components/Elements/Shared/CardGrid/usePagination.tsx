@@ -4,9 +4,20 @@ import { useQueryParam, NumberParam } from 'use-query-params';
 
 export const CARD_WIDTH = 240;
 
-export default (numberOfCards) => {
+export interface Pagination {
+  pageSize: number;
+  current: number;
+  total: number;
+  onShowSizeChange: (_: any, newPageSize: number) => void;
+  pageSizeOptions: string[];
+  onChange: (page: number) => void;
+  hasPrevious: boolean;
+  hasNext: boolean;
+}
+
+export default (numberOfCards: number) => {
   const [currentPage = 1, setPageParam] = useQueryParam('page', NumberParam);
-  const [pageSize, setPageSizeParam] = useQueryParam('pageSize', NumberParam);
+  const [pageSize = 10, setPageSizeParam] = useQueryParam('pageSize', NumberParam);
   const [addedWithin] = useQueryParam('addedWithin', NumberParam);
   const [isInitialRender, toggleIsInitialRender] = useToggle(true);
 
@@ -19,21 +30,26 @@ export default (numberOfCards) => {
     // eslint-disable-next-line
   }, [addedWithin]);
 
-  const setCurrentPage = (newPage, shouldReplace) =>
+  const setCurrentPage = (newPage: number, shouldReplace = false) =>
     setPageParam(newPage, shouldReplace ? 'replaceIn' : 'pushIn');
-  const setPageSize = (newPageSize) => setPageSizeParam(newPageSize, 'replaceIn');
+  const setPageSize = (newPageSize: number) => setPageSizeParam(newPageSize, 'replaceIn');
 
-  const onChange = (newVal) => {
+  const onChange = (newVal: number) => {
     setCurrentPage(newVal);
   };
 
+  const hasPrevious = currentPage > 1;
+  const hasNext = currentPage * pageSize < numberOfCards;
+
   const pagination = {
-    pageSize: pageSize || 10,
+    pageSize,
     current: currentPage,
     total: numberOfCards,
-    onShowSizeChange: (_, newPageSize) => setPageSize(newPageSize),
+    onShowSizeChange: (_: any, newPageSize: number) => setPageSize(newPageSize),
     pageSizeOptions: ['10', '20', '50'],
     onChange,
+    hasPrevious,
+    hasNext,
   };
 
   return pagination;

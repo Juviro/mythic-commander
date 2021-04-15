@@ -16,6 +16,11 @@ export const useSelectCards = (cards: UnifiedCard[]) => {
     setSelectedCardIds([]);
   };
 
+  const onSelectAll = () => {
+    const allCardIds = cards.map(({ id }) => id);
+    setSelectedCardIds(allCardIds);
+  };
+
   // check for deleted cards to clear the selection after deleting cards
   useEffect(() => {
     if (!selectedCardIds.length) return;
@@ -31,5 +36,6 @@ export const useSelectCards = (cards: UnifiedCard[]) => {
     selectedCardIds,
     onSelectCard,
     onClearSelection,
+    onSelectAll,
   };
 };

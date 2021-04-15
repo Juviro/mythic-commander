@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { CheckCircleFilled, CheckCircleOutlined } from '@ant-design/icons';
 
 import { primary, lightWhite } from 'constants/colors';
+import { MOBILE_SCREEN_SIZE } from 'utils/isMobile';
 
 const StyledWrapper = styled.div<{ visible: boolean; isHovering: boolean }>`
   position: absolute;
-  top: 26px;
+  top: 8px;
   left: 12px;
   z-index: 99;
   font-size: 24px;
@@ -19,6 +20,11 @@ const StyledWrapper = styled.div<{ visible: boolean; isHovering: boolean }>`
   }
 
   ${({ isHovering }) => isHovering && 'transform: scale(1.05);'}
+
+
+  @media (min-width: ${MOBILE_SCREEN_SIZE}px) {
+    top: 26px;
+  }
 `;
 
 interface Props {
