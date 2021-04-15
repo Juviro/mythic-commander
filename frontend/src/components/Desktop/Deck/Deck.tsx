@@ -5,6 +5,7 @@ import { useQuery, useMutation } from 'react-apollo';
 
 import { MutationAddCardsToDeckArgs, CardInputType, Query } from 'types/graphql';
 import { UnifiedDeck } from 'types/unifiedTypes';
+import { PageLayout } from 'components/Elements/Desktop';
 import Cards from './Cards';
 import Sidebar from './Sidebar';
 import Header from './Header/Header';
@@ -54,30 +55,26 @@ export default () => {
   };
 
   return (
-    <StyledDeck>
-      <Sidebar
-        currentTab={currentTab}
-        setCurrentTab={setCurrentTab}
-        onAddCards={onAddCards}
-        deck={unifiedDeck}
-      />
-      <ShortcutFocus focusId="deck.cards" style={{ overflow: 'auto', flex: 1 }}>
-        <Flex style={{ marginLeft: 50 }} direction="column">
-          <Header
-            deck={unifiedDeck}
-            onAddCards={onAddCards}
-            displayOwnedOnly={displayOwnedOnly}
-            toggleDisplayOwnedOnly={toggleDisplayOwnedOnly}
-          />
-          <Cards
-            deck={unifiedDeck}
-            loading={loading}
-            currentTab={currentTab}
-            onAddCards={onAddCards}
-            displayOwnedOnly={displayOwnedOnly}
-          />
-        </Flex>
-      </ShortcutFocus>
-    </StyledDeck>
+    <ShortcutFocus
+      focusId="deck.cards"
+      style={{ overflow: 'auto', flex: 1, height: '100%' }}
+    >
+      <PageLayout large>
+        <Header
+          deck={unifiedDeck}
+          loading={loading}
+          onAddCards={onAddCards}
+          displayOwnedOnly={displayOwnedOnly}
+          toggleDisplayOwnedOnly={toggleDisplayOwnedOnly}
+        />
+        <Cards
+          deck={unifiedDeck}
+          loading={loading}
+          // currentTab={currentTab}
+          onAddCards={onAddCards}
+          displayOwnedOnly={displayOwnedOnly}
+        />
+      </PageLayout>
+    </ShortcutFocus>
   );
 };

@@ -87,7 +87,7 @@ export default ({ wantsList, loading, canEdit }: Props) => {
           <ListStats list={wantsList} style={{ marginLeft: 8 }} />
         </Flex>
         {canEdit && (
-          <Flex align="flex-start">
+          <Flex align="flex-end">
             <AddToWantsList cards={wantsList?.cards} onAddCards={onAddCards} />
           </Flex>
         )}
