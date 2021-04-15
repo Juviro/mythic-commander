@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { useDrag } from 'react-dnd';
 
-import { primarySemiLight } from 'constants/colors';
+import { primary } from 'constants/colors';
 import EnlargeImage from './EnlargeImage';
 import FlippableCard from '../FlippableCard';
 import { useToggle } from '../../../Hooks';
@@ -45,9 +45,10 @@ const StyledImageWrapper = styled.div<{ isSelected: boolean; markAsDisabled?: bo
   ${({ isSelected }) =>
     isSelected
       ? css`
-          box-shadow: 0px 0px 6px 6px ${primarySemiLight};
+          box-shadow: 0px 0px 6px 6px ${primary};
           width: calc(100% - 8px);
           margin: 6px 0 5px;
+          opacity: 0.6;
         `
       : ''}
 `;
@@ -109,6 +110,7 @@ const GridCard = ({
           onClick={onClick}
           isSelected={isSelected}
           onMouseMove={(e) => {
+            // Hotfix for touch devices
             if (!e.movementX && !e.movementY) return;
             toggleShowMenu(true);
           }}

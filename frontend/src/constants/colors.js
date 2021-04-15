@@ -10,7 +10,7 @@ export const darkBackgroundTransparent = '#00152933';
 export const lightBackground = '#f5f5f5';
 export const lightWhite = 'rgba(255, 255, 255, 0.7)';
 
-export const greyBorder = '#969696';
+export const greyBorder = '#d9d9d9';
 export const buttonHoverBackground = '#e0dfdf';
 
 export const success = '#1fb31f';

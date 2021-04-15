@@ -28,8 +28,8 @@ const StyledWrapper = styled.div`
 
 const StyledCloseIcon = styled(CloseOutlined)`
   position: absolute;
-  right: 8px;
-  top: 8px;
+  right: 12px;
+  top: 32px;
   color: ${lightBackground};
   font-size: 32px;
 

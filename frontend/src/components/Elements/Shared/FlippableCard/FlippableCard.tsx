@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import './index.css';
 import { UnifiedCard } from 'types/unifiedTypes';
+import isMobile from 'utils/isMobile';
 import { getImageUrl } from '../../../../utils/cardImage';
 import CustomSkeleton from '../CustomSkeleton';
 import CardButton from '../CardButton';
@@ -84,7 +85,14 @@ export default ({
       {isTwoFaced && showHighResImage && (
         <>
           {!hideFlipIcon && (
-            <CardButton Icon={SyncOutlined} index={1} onClick={onFlipCard} />
+            <CardButton
+              Icon={SyncOutlined}
+              index={1}
+              onClick={onFlipCard}
+              // On Desktop devices, this button needs to be over
+              // the grid card overlay that displays on hover
+              zIndex={!isMobile() ? 11 : undefined}
+            />
           )}
           <a.img
             className="flippable-card "
