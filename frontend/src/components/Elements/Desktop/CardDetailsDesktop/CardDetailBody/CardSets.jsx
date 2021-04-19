@@ -24,7 +24,7 @@ export default ({ card, loading, selectedCardId, onChangeSet, showTitle }) => {
   const [isEditing, toggleIsEditing] = useToggle(false);
   const [editedMap, setEditedMap] = useState({});
   const [addedMap, setAddedMap] = useState({});
-  useShortcut('e', () => toggleIsEditing(true), 'modal.cardDetails');
+  useShortcut('e', () => toggleIsEditing(true), { focusId: 'modal.cardDetails' });
 
   const onDiscard = () => {
     setEditedMap({});

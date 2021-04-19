@@ -89,8 +89,8 @@ export const addCardsToDeckDesktop = gql`
 `;
 
 export const deleteFromDeckDesktop = gql`
-  mutation deleteFromDeckDesktop($cardId: String!, $deckId: String!) {
-    deleteFromDeck(cardId: $cardId, deckId: $deckId) {
+  mutation deleteFromDeckDesktop($cardId: String, $cardIds: [String], $deckId: String!) {
+    deleteFromDeck(cardId: $cardId, cardIds: $cardIds, deckId: $deckId) {
       ${DECK_FIELDS}
     }
   }

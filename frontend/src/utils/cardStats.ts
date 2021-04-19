@@ -35,7 +35,9 @@ export const getPriceLabel = (
   const isLong = parsedAmount >= 100;
   const numberOfDigits = round || isLong ? 0 : 2;
 
-  return Number(parsedAmount).toLocaleString('de-DE', {
+  const usedAmount = round && parsedAmount < 1 ? 1 : parsedAmount;
+
+  return Number(usedAmount).toLocaleString('de-DE', {
     style: 'currency',
     maximumFractionDigits: numberOfDigits,
     minimumFractionDigits: numberOfDigits,

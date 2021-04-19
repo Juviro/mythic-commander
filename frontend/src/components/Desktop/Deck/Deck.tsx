@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
 import { MutationAddCardsToDeckArgs, CardInputType, Query } from 'types/graphql';
 import { UnifiedDeck } from 'types/unifiedTypes';
-import { PageLayout } from 'components/Elements/Desktop';
+import { PageCard, PageLayout } from 'components/Elements/Desktop';
+import { Affix, Typography } from 'antd';
 import Cards from './Cards';
 import Sidebar from './Sidebar';
 import Header from './Header/Header';
@@ -14,19 +14,11 @@ import unifyCardFormat from '../../../utils/unifyCardFormat';
 import { getDeckDesktop, addCardsToDeckDesktop } from './queries';
 import { Flex, NotFound, ShortcutFocus } from '../../Elements/Shared';
 import sumCardAmount from '../../../utils/sumCardAmount';
-import { useToggle } from '../../Hooks';
-
-const StyledDeck = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-`;
+import { DeckStats } from './DeckStats/DeckStats';
 
 export default () => {
   const { id } = useParams<{ id: string }>();
-  const [currentTab, setCurrentTab] = useState(null);
-  const [displayOwnedOnly, toggleDisplayOwnedOnly] = useToggle();
+  const [currentTab, setCurrentTab] = useState<string>('add');
   const { data, loading } = useQuery<Query>(getDeckDesktop, {
     variables: { id },
     fetchPolicy: 'network-only',
@@ -60,20 +52,24 @@ export default () => {
       style={{ overflow: 'auto', flex: 1, height: '100%' }}
     >
       <PageLayout large>
-        <Header
-          deck={unifiedDeck}
-          loading={loading}
-          onAddCards={onAddCards}
-          displayOwnedOnly={displayOwnedOnly}
-          toggleDisplayOwnedOnly={toggleDisplayOwnedOnly}
-        />
-        <Cards
-          deck={unifiedDeck}
-          loading={loading}
-          // currentTab={currentTab}
-          onAddCards={onAddCards}
-          displayOwnedOnly={displayOwnedOnly}
-        />
+        <Header deck={unifiedDeck} loading={loading} onAddCards={onAddCards} />
+        <Affix offsetTop={160}>
+          <PageCard>
+            <Typography.Title level={3}>Cards</Typography.Title>
+          </PageCard>
+        </Affix>
+        <PageCard style={{ marginTop: 0 }}>
+          <Flex>
+            <Cards deck={unifiedDeck} loading={loading} onAddCards={onAddCards} />
+            <DeckStats />
+            {/* <Sidebar
+              currentTab={currentTab}
+              setCurrentTab={setCurrentTab}
+              onAddCards={onAddCards}
+              deck={unifiedDeck}
+            /> */}
+          </Flex>
+        </PageCard>
       </PageLayout>
     </ShortcutFocus>
   );

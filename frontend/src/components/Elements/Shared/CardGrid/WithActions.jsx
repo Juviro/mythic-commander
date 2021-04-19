@@ -71,9 +71,9 @@ export default ({ onEditCard = null, deleteByOracle = null, children, ...props }
       {children({
         search,
         setSearch,
-        onMoveCards,
-        onCopyCardsTo: deleteByOracle ? onCopyCardsTo : undefined,
+        onCopyCardsTo,
         onEditCard: onEditCard ? onOpenEditCard : undefined,
+        onMoveCards: deleteByOracle ? onMoveCards : undefined,
         onDeleteCards: deleteByOracle ? onDeleteCards : undefined,
         ...props,
       })}

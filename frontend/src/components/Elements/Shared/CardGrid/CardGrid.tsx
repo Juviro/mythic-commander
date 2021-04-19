@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Pagination } from 'antd';
+import { Divider, Pagination, Typography } from 'antd';
 import styled from 'styled-components';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { EditOutlined, LoadingOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -33,9 +33,16 @@ export interface DragProps {
   onSuccessfullDrop?: (card: UnifiedCard) => void;
 }
 
-interface Props {
+interface CardList {
+  title?: string;
+  key?: string;
   cards: UnifiedCard[];
+}
+
+interface Props {
+  cards?: UnifiedCard[];
   loading?: boolean;
+  title?: string;
   numberOfCards?: number;
   search?: string;
   actions?: MenuItem[];
@@ -48,12 +55,14 @@ interface Props {
   hidePagination?: boolean;
   dragProps?: DragProps;
   itemsPerRow?: number;
+  cardLists?: CardList[];
 }
 
 type PropsWithRouterProps = RouteComponentProps & Props;
 
 const CardGrid = ({
   cards,
+  title,
   loading = false,
   numberOfCards,
   search,
@@ -67,12 +76,22 @@ const CardGrid = ({
   itemsPerRow,
   onMoveCards,
   onCopyCardsTo,
+  cardLists: passedCardLists,
 }: PropsWithRouterProps) => {
   const [detailCardIndex, setDetailCardIndex] = useState<number | null>(null);
-  const detailCard = cards[detailCardIndex];
-  const { selectedCardIds, onSelectCard, onClearSelection, onSelectAll } = useSelectCards(
-    cards
-  );
+  const detailCard = cards?.[detailCardIndex];
+  const {
+    selectedCardIds,
+    onSelectCard,
+    onClearSelection,
+    onSelectAll,
+    canSelectAll,
+  } = useSelectCards(cards);
+
+  const setDetailCard = (card: UnifiedCard) => {
+    const cardIndex = cards.findIndex(({ id }) => id === card.id);
+    setDetailCardIndex(cardIndex);
+  };
 
   const wrapperRef = useRef(null);
 
@@ -92,7 +111,7 @@ const CardGrid = ({
     // eslint-disable-next-line
   }, [history.location.pathname]);
 
-  const showPagination = Boolean(cards.length) && !hidePagination;
+  const showPagination = Boolean(cards?.length) && !hidePagination;
   const paginationComponent = showPagination ? (
     <Pagination
       {...pagination}
@@ -142,6 +161,8 @@ const CardGrid = ({
       }
     : undefined;
 
+  const cardLists = passedCardLists ?? [{ title, key: 'main', cards }];
+
   return (
     <>
       <SelectionMenu
@@ -151,6 +172,7 @@ const CardGrid = ({
         onDeleteCards={onDeleteSelectedCards}
         onCopyCardsTo={onCopySelectedCardsTo}
         onSelectAll={onSelectAll}
+        canSelectAll={canSelectAll}
       />
       <Flex
         direction="row"
@@ -162,25 +184,31 @@ const CardGrid = ({
         <span>{loading && <LoadingOutlined style={{ marginLeft: 16 }} />}</span>
         {paginationComponent}
       </Flex>
-      <StyledCardGridWrapper itemsPerRow={itemsPerRow}>
-        {cards.map((card, index) => (
-          <GridCard
-            card={card}
-            dragProps={dragProps}
-            key={card.id}
-            actions={actions}
-            search={search}
-            isSelected={selectedCardIds.includes(card.id)}
-            isAnyCardSelected={Boolean(selectedCardIds.length)}
-            canZoomIn={itemsPerRow === 2}
-            onSelect={() => onSelectCard(card.id)}
-            markAsDisabled={markAsDisabled && markAsDisabled(card)}
-            onOpenDetails={() =>
-              onOpenDetails ? onOpenDetails(card) : setDetailCardIndex(index)
-            }
-          />
-        ))}
-      </StyledCardGridWrapper>
+      {cardLists.map((list: CardList, index) => (
+        <React.Fragment key={list.key ?? list.title}>
+          {Boolean(index) && <Divider />}
+          {list.title && <Typography.Title level={4}>{list.title}</Typography.Title>}
+          <StyledCardGridWrapper itemsPerRow={itemsPerRow}>
+            {list.cards?.map((card) => (
+              <GridCard
+                card={card}
+                dragProps={dragProps}
+                key={card.id}
+                actions={actions}
+                search={search}
+                isSelected={selectedCardIds.includes(card.id)}
+                isAnyCardSelected={Boolean(selectedCardIds.length)}
+                canZoomIn={itemsPerRow === 2}
+                onSelect={() => onSelectCard(card.id)}
+                markAsDisabled={markAsDisabled && markAsDisabled(card)}
+                onOpenDetails={() =>
+                  onOpenDetails ? onOpenDetails(card) : setDetailCard(card)
+                }
+              />
+            ))}
+          </StyledCardGridWrapper>
+        </React.Fragment>
+      ))}
       {paginationComponent}
       <CardModalDesktop
         loading={loading}

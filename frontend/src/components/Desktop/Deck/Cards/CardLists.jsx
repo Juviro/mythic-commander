@@ -1,93 +1,68 @@
 import React from 'react';
+import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
 
-import { Flex, ConfirmDelete } from '../../../Elements/Shared';
-import SubList from './SubList';
-import useCardListShortcuts from './useCardListShortcuts';
-import { useToggle, useShortcut } from '../../../Hooks';
-import CardModalDesktop from '../../../Elements/Desktop/CardModalDesktop';
+import { getListStats } from 'utils/getListStats';
+import { lightText } from 'constants/colors';
+import { Flex, CardGrid } from '../../../Elements/Shared';
 import { deleteFromDeckDesktop } from '../queries';
-import boldText from '../../../../utils/boldText';
 
-const getColumnKey = (column) => column.map(({ type }) => type).join('');
+const StyledSubtitle = styled.span`
+  font-size: 12px;
+  color: ${lightText};
+`;
 
-export default ({ cardsByType, deck, displayOwnedOnly }) => {
-  const [showDetails, toggleShowDetail] = useToggle(false);
-  // const {
-  //   selectedCardOracleId,
-  //   setSelectedCardOracleId,
-  //   selectNextCard,
-  // } = useCardListShortcuts(columns);
-  const [isDeleting, setIsDeleting] = useToggle();
+export default ({ loading, cardsByType, deck }) => {
   const [mutateDelete] = useMutation(deleteFromDeckDesktop);
 
-  // const selectedCard = columns
-  //   .flat()
-  //   .map(({ cards }) => cards)
-  //   .flat()
-  //   .find(({ oracle_id }) => oracle_id === selectedCardOracleId);
+  const deleteByOracle = (oracleIds, numberOfCards) => {
+    const cardsToDelete = deck.cards.filter(({ oracle_id }) =>
+      oracleIds.includes(oracle_id)
+    );
+    const cardIds = cardsToDelete.map(({ id }) => id);
 
-  const onDeleteCard = (cardId) => {
-    // if (!cardId) return;
-    // setIsDeleting(false);
-    // if (cardId === selectedCard?.id) {
-    //   selectNextCard(null);
-    // }
-    // const newCards = deck.originalCards.filter((card) => card.id !== cardId);
-    // const newNumberOfCards = deck.numberOfCards;
-    // mutateDelete({
-    //   variables: { cardId, deckId: deck.id },
-    //   optimisticResponse: () => ({
-    //     __typename: 'Mutation',
-    //     deleteFromWantsList: {
-    //       ...deck,
-    //       cards: newCards,
-    //       numberOfCards: newNumberOfCards,
-    //     },
-    //   }),
-    // });
-  };
-  const onOpenDeleteModal = () => {
-    // if (!selectedCard) return;
-    // setIsDeleting(true);
+    const newCards = deck.originalCards.filter(({ card }) => !cardIds.includes(card.id));
+    const newNumberOfCards = deck.numberOfCards - numberOfCards;
+
+    mutateDelete({
+      variables: { cardIds, deckId: deck.id },
+      optimisticResponse: () => ({
+        __typename: 'Mutation',
+        deleteFromDeck: {
+          ...deck,
+          cards: newCards,
+          numberOfCards: newNumberOfCards,
+        },
+      }),
+    });
   };
 
-  // useShortcut('BACKSPACE', onOpenDeleteModal, 'deck.cards');
-  // useShortcut('SPACE', selectedCard ? toggleShowDetail : null, 'deck.cards');
-  // useShortcut('ESC', () => setSelectedCardOracleId(null), 'deck.cards');
+  const cardLists = cardsByType?.map(({ type, cards }) => {
+    const { valueLabelEur, valueLabelUsd } = getListStats({ cards });
+    const numberOfCardsLabel = type === 'Commander' ? '' : `(${cards.length})`;
+    const listTitle = type === 'Commander' ? `Commander - ${cards[0]?.name}` : type;
 
-  const onOpenDetails = (cardId) => {
-    // setSelectedCardOracleId(cardId);
-    // toggleShowDetail();
-  };
+    const title = (
+      <Flex direction="column">
+        <span>{`${listTitle} ${numberOfCardsLabel}`}</span>
+        <StyledSubtitle>{`${valueLabelUsd} | ${valueLabelEur}`}</StyledSubtitle>
+      </Flex>
+    );
+    return { title, cards, key: type };
+  });
+
+  const allCardsInOrder = cardsByType?.map(({ cards }) => cards).flat();
 
   return (
-    <>
-      {cardsByType.map(({ type, cards }) => (
-        <SubList
-          type={type}
-          key={type}
-          cards={cards}
-          displayOwnedOnly={displayOwnedOnly}
-          // onDelete={onOpenDeleteModal}
-          // onDeleteImmediately={onDeleteCard}
-          // setSelectedCardOracleId={setSelectedCardOracleId}
-          // onOpenDetails={onOpenDetails}
-          // selectedCardId={selectedCard && selectedCard.id}
-        />
-      ))}
-      {/* <CardModalDesktop
-        selectedCard={selectedCard}
-        visible={selectedCard && showDetails}
-        onClose={toggleShowDetail}
-      /> */}
-      {/* {isDeleting && (
-        <ConfirmDelete
-          text={boldText(`Delete <b>${selectedCard.name}</b> from this deck?`)}
-          onCancel={() => setIsDeleting(false)}
-          onOk={() => onDeleteCard(selectedCard.id)}
-        />
-      )} */}
-    </>
+    <CardGrid
+      hidePagination
+      loading={loading}
+      cards={allCardsInOrder}
+      cardLists={cardLists}
+      deleteByOracle={deleteByOracle}
+      showAddedBeforeFilter
+      showCollectionFilters
+      orderByParamName="orderByAdvanced"
+    />
   );
 };

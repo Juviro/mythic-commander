@@ -16,6 +16,8 @@ const StyledCenterWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  content-visibility: auto;
+  contain-intrinsic-size: 380px;
 `;
 
 const StyledCardWrapper = styled.div`

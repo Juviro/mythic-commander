@@ -17,11 +17,18 @@ export const isModifierKey = (event) => {
   return altKey || ctrlKey || metaKey || shiftKey;
 };
 
-export default (triggerKey, action, focusId) => {
+interface Options {
+  focusId?: string;
+  disabled?: boolean;
+}
+
+export default (triggerKey: string, action: () => void, options?: Options) => {
+  const { focusId = null, disabled = false } = options ?? {};
   const { focusedElement } = useContext(FocusContext);
   const focusIds = typeof focusId === 'string' ? [focusId] : focusId;
 
-  const onKeyDown = (event) => {
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (disabled) return;
     const shouldBlock =
       focusedElement && (!focusIds || !focusIds.includes(focusedElement));
     if (!action || isInputField(event) || isModifierKey(event) || shouldBlock) {

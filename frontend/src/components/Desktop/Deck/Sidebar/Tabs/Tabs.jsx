@@ -50,7 +50,9 @@ export default ({ currentTab, setCurrentTab }) => {
   };
 
   tabs.forEach(({ key, shortcut }) => {
-    useShortcut(shortcut, () => onOpenTab(key), focusIds.concat('deck.cards'));
+    useShortcut(shortcut, () => onOpenTab(key), {
+      focusId: focusIds.concat('deck.cards'),
+    });
   });
 
   return (

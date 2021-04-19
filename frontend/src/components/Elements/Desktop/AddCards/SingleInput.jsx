@@ -28,7 +28,7 @@ export default ({
   const { data } = useQuery(getOwnedCardNames);
 
   const focusInput = () => searchInputRef.current.focus();
-  useShortcut('a', focusInput, focusId);
+  useShortcut('a', focusInput, { focusId });
 
   const ownedCardNames = data?.ownedCardNames ?? [];
 

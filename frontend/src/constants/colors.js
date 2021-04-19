@@ -9,6 +9,7 @@ export const darkBackground = '#001529';
 export const darkBackgroundTransparent = '#00152933';
 export const lightBackground = '#f5f5f5';
 export const lightWhite = 'rgba(255, 255, 255, 0.7)';
+export const lightText = 'rgba(0, 0, 0, 0.45)';
 
 export const greyBorder = '#d9d9d9';
 export const buttonHoverBackground = '#e0dfdf';
