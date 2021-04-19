@@ -56,7 +56,7 @@ interface Props {
   currentTab: string | null;
   setCurrentTab: (newTabId: string) => void;
   onAddCards: (newCards: CardInputType[], name: string) => void;
-  deck: UnifiedDeck;
+  deck?: UnifiedDeck;
 }
 
 export default ({ currentTab, setCurrentTab, onAddCards, deck }: Props) => {

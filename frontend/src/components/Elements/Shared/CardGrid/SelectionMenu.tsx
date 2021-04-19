@@ -50,6 +50,7 @@ interface Props {
   onCopyCardsTo?: () => void;
   onDeleteCards?: () => void;
   onSelectAll?: () => void;
+  canSelectAll: boolean;
 }
 
 export const SelectionMenu = ({
@@ -59,12 +60,13 @@ export const SelectionMenu = ({
   onCopyCardsTo,
   onDeleteCards,
   onSelectAll,
+  canSelectAll,
 }: Props) => {
   if (!selectedCardIds.length) return null;
 
   const actions = [];
 
-  if (isMobile()) {
+  if (isMobile() && canSelectAll) {
     actions.push({
       icon: <CheckSquareOutlined />,
       title: 'Select All',
@@ -102,7 +104,7 @@ export const SelectionMenu = ({
           </DesktopTooltip>
         </StyledActionIconWrapper>
         <Typography.Text>{`${selectedCardIds.length} cards selected`}</Typography.Text>
-        {!isMobile() && (
+        {!isMobile() && canSelectAll && (
           <Button onClick={onSelectAll} type="link">
             Select All
           </Button>

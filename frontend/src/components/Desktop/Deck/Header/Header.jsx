@@ -7,13 +7,7 @@ import { Flex, DeckStats } from '../../../Elements/Shared';
 import NotLegalWarning from '../../../Mobile/Deck/DeckHeader/DeckOverview/NotLegalWarning';
 import { AddCards, PageCard } from '../../../Elements/Desktop';
 
-export default ({
-  loading,
-  deck,
-  onAddCards,
-  displayOwnedOnly,
-  toggleDisplayOwnedOnly,
-}) => {
+export default ({ loading, deck, onAddCards }) => {
   return (
     <PageCard
       loading={loading}
@@ -24,11 +18,7 @@ export default ({
         <Flex direction="row" justify="space-between">
           <Flex direction="row">
             <DeckImage deck={deck} />
-            <DeckStats
-              deck={deck}
-              displayOwnedOnly={displayOwnedOnly}
-              toggleDisplayOwnedOnly={toggleDisplayOwnedOnly}
-            />
+            <DeckStats deck={deck} />
           </Flex>
           <Flex direction="column" justify="space-between" align="flex-end">
             <NotLegalWarning deck={deck} size={26} />

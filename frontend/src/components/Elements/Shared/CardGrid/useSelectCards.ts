@@ -4,6 +4,8 @@ import { UnifiedCard } from 'types/unifiedTypes';
 export const useSelectCards = (cards: UnifiedCard[]) => {
   const [selectedCardIds, setSelectedCardIds] = useState([]);
 
+  const canSelectAll = selectedCardIds?.length !== cards?.length;
+
   const onSelectCard = (cardId: string) => {
     if (selectedCardIds.includes(cardId)) {
       setSelectedCardIds(selectedCardIds.filter((id) => id !== cardId));
@@ -37,5 +39,6 @@ export const useSelectCards = (cards: UnifiedCard[]) => {
     onSelectCard,
     onClearSelection,
     onSelectAll,
+    canSelectAll,
   };
 };

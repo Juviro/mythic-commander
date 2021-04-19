@@ -16,7 +16,7 @@ const CardModalDesktop = ({
   onPrevious = null,
 }) => {
   const { oracle_id, id: initialCardId } = selectedCard;
-  useShortcut('SPACE', onClose, 'modal.cardDetails');
+  useShortcut('SPACE', onClose, { focusId: 'modal.cardDetails' });
   const { data, loading: cardLoading } = useQuery(cardDetailsDesktop, {
     variables: { oracle_id },
     fetchPolicy: 'network-only',
@@ -39,7 +39,7 @@ const CardModalDesktop = ({
       style={{ maxWidth: '100%' }}
       focusId="modal.cardDetails"
     >
-      <Flex direction="row" style={{ position: 'relative' }}>
+      <Flex direction="row">
         {onPrevious && <NavigationButton type="previous" onClick={onPrevious} />}
         <Flex direction="column" style={{ padding: '0 16px' }}>
           <CardDetailsDesktop

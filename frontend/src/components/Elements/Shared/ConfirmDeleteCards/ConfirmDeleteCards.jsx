@@ -5,7 +5,7 @@ import SimpleCardsList from '../SimpleCardsList';
 import FocusedModal from '../FocusedModal';
 
 export default ({ onCancel, cardsToDelete, numberOfSelectedCards, onDelete }) => {
-  useShortcut('ENTER', onDelete, 'modal.confirmDeleteCards');
+  useShortcut('ENTER', onDelete, { focusId: 'modal.confirmDeleteCards' });
   if (!cardsToDelete.length) return null;
 
   const title = `Delete ${numberOfSelectedCards} ${

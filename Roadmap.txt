@@ -8,10 +8,26 @@ BUGFIXES:
     - on high latency network: move card from deck wants to deck -> wrong cards displayed in deck wants
     - auto update cards on prod not working
 
+NEXT STEPS:
+    * Add action to commander: "Change Commander"
+    * Add "Add Commander" button when no commander is selected
+
+
 REQUIRED IN MIGRATION BRANCH:
     - fix or rebuild deck
+        - allow sorting
+        - fix price tag
+        - delete from deck
+        - edit card
+        - sidebar
+            - wants
+            - advanced search
+    - empty view for grid
+    - switch page in grid: jumpt to top of list
 
 OPTIONAL IN MIGRATION BRANCH:
+    - display eur prices in card detail view
+    - display eur prices in collection value + graphs
     - display how many cards are included in eur/usd price
     - when no eur price available: estimate based on avg price diff (calc in psql once) (?)
     - redesign moveTo modal, especially for mobile

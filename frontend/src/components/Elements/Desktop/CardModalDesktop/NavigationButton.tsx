@@ -14,7 +14,7 @@ const StyledWrapper = styled.div<{ isLeft: boolean }>`
   justify-content: center;
   padding: 0 2px;
 
-  ${({ isLeft }) => (isLeft ? 'left' : 'right')}: -20px;
+  ${({ isLeft }) => (isLeft ? 'left' : 'right')}: 4px;
 `;
 
 const StyledButton = styled(Button)`

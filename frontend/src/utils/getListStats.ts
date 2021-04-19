@@ -1,13 +1,16 @@
 import { partition } from 'lodash';
 
-import { UnifiedList } from 'types/unifiedTypes';
+import { UnifiedCard } from 'types/unifiedTypes';
 import { getPriceLabel } from './cardStats';
 import sumCardAmount from './sumCardAmount';
 
-export const getListStats = (list?: UnifiedList) => {
+export const getListStats = (list?: { cards: UnifiedCard[] }) => {
   if (!list) return {};
 
-  const [ownedCards, unownedCards] = partition(list.cards, (card) => card.owned);
+  const [ownedCards, unownedCards] = partition(
+    list.cards,
+    (card: UnifiedCard) => card.owned
+  );
 
   const getValue = (cards) =>
     cards.reduce(
@@ -25,10 +28,10 @@ export const getListStats = (list?: UnifiedList) => {
   const ownedValue = getValue(ownedCards);
   const unownedValue = getValue(unownedCards);
 
-  const unownedValueLabelUsd = unownedValue
+  const unownedValueLabelUsd = unownedValue.usd
     ? ` (${getPriceLabel(unownedValue.usd, { round: true })} not owned)`
     : '';
-  const unownedValueLabelEur = unownedValue
+  const unownedValueLabelEur = unownedValue.eur
     ? ` (${getPriceLabel(unownedValue.eur, { round: true, currency: 'EUR' })} not owned)`
     : '';
 
@@ -52,7 +55,7 @@ export const getListStats = (list?: UnifiedList) => {
   const numberOfCardsLabel = `${numberOfCards} Cards ${uniqueAddon}`;
 
   return {
-    totalValue, // Number, sum of TODO doc this
+    totalValue,
     ownedValue,
     unownedValue,
     ownedValueLabelUsd,

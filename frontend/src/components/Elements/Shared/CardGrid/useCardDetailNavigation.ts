@@ -5,7 +5,7 @@ import { Pagination } from './usePagination';
 interface Props {
   detailCardIndex: number | null;
   setDetailCardIndex: (index: number) => void;
-  cards: UnifiedCard[];
+  cards?: UnifiedCard[];
   pagination: Pagination;
 }
 
@@ -20,12 +20,12 @@ const useCardDetailNavigation = ({
   cards,
   pagination,
 }: Props): CardDetailNavigationType => {
-  const hasNext = pagination.hasNext || detailCardIndex + 1 < cards.length;
+  const hasNext = pagination.hasNext || detailCardIndex + 1 < cards?.length;
   const hasPrevious = pagination.hasPrevious || detailCardIndex > 0;
 
   const onNext = () => {
     const nextIndex = detailCardIndex + 1;
-    if (nextIndex === cards.length) {
+    if (nextIndex === cards?.length) {
       setDetailCardIndex(0);
       pagination.onChange(pagination.current + 1);
     } else {
@@ -42,10 +42,17 @@ const useCardDetailNavigation = ({
     }
   };
 
-  useShortcut('ARROW_RIGHT', hasNext ? onNext : null, 'modal.cardDetails');
-  useShortcut('ARROW_LEFT', hasPrevious ? onPrevious : null, 'modal.cardDetails');
+  const disabled = detailCardIndex === null || !cards;
+  useShortcut('ARROW_RIGHT', hasNext ? onNext : null, {
+    focusId: 'modal.cardDetails',
+    disabled,
+  });
+  useShortcut('ARROW_LEFT', hasPrevious ? onPrevious : null, {
+    focusId: 'modal.cardDetails',
+    disabled,
+  });
 
-  if (detailCardIndex === null) return null;
+  if (disabled) return null;
 
   return {
     onNext: hasNext ? onNext : null,

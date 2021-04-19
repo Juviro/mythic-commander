@@ -12,17 +12,13 @@ const StyledLabel = styled(Typography.Text).attrs({ type: 'secondary' })`
   font-size: 16px;
 `;
 
-export default ({ deck, displayOwnedOnly, toggleDisplayOwnedOnly }) => {
+export default ({ deck }) => {
   const { valueLabel } = getListStats(deck);
 
   return (
     <Flex direction="column" justify="space-around">
       <CommanderPicker deck={deck} />
-      <NumberOfCards
-        deck={deck}
-        displayOwnedOnly={displayOwnedOnly}
-        toggleDisplayOwnedOnly={toggleDisplayOwnedOnly}
-      />
+      <NumberOfCards deck={deck} />
       <StyledLabel>{`Total Value: ${valueLabel}`}</StyledLabel>
     </Flex>
   );

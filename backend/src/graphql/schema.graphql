@@ -324,7 +324,7 @@ type Mutation {
   ): DeckCard!
   setCommander(cardIds: [String!]!, deckId: String!): Deck!
   deleteDeck(deckId: String!): Boolean
-  deleteFromDeck(cardId: String!, deckId: String!): Deck!
+  deleteFromDeck(cardId: String, cardIds: [String], deckId: String!): Deck!
   duplicateDeck(deckId: String!): String!
 
   moveCard(
