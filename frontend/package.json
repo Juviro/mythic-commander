@@ -13,7 +13,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-lazyload": "^3.0.0",
     "@types/styled-components": "^5.1.2",
-    "antd": "4.10.0",
+    "antd": "^4.15.2",
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.4",
     "apollo-link": "^1.2.13",
@@ -46,7 +46,7 @@
     "use-query-params": "^0.5.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=1234 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

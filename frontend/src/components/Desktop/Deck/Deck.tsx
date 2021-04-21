@@ -5,16 +5,18 @@ import { useQuery, useMutation } from 'react-apollo';
 import { MutationAddCardsToDeckArgs, CardInputType, Query } from 'types/graphql';
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { PageCard, PageLayout } from 'components/Elements/Desktop';
-import { Affix, Typography } from 'antd';
+import { Divider } from 'antd';
 import Cards from './Cards';
 import Sidebar from './Sidebar';
-import Header from './Header/Header';
 import message from '../../../utils/message';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
 import { getDeckDesktop, addCardsToDeckDesktop } from './queries';
 import { Flex, NotFound, ShortcutFocus } from '../../Elements/Shared';
 import sumCardAmount from '../../../utils/sumCardAmount';
-import { DeckStats } from './DeckStats/DeckStats';
+import { DeckBreakdown } from './DeckBreakdown/DeckBreakdown';
+import DeckActions from './Header/DeckActions';
+import Title from './Header/Title';
+import { ActionBar } from './ActionBar/ActionBar';
 
 export default () => {
   const { id } = useParams<{ id: string }>();
@@ -52,16 +54,14 @@ export default () => {
       style={{ overflow: 'auto', flex: 1, height: '100%' }}
     >
       <PageLayout large>
-        <Header deck={unifiedDeck} loading={loading} onAddCards={onAddCards} />
-        <Affix offsetTop={160}>
-          <PageCard>
-            <Typography.Title level={3}>Cards</Typography.Title>
-          </PageCard>
-        </Affix>
-        <PageCard style={{ marginTop: 0 }}>
+        <PageCard
+          title={<Title deck={unifiedDeck} />}
+          extra={<DeckActions deck={unifiedDeck} />}
+          style={{ height: 'calc(100% - 80px)', marginBottom: 70 }}
+        >
           <Flex>
             <Cards deck={unifiedDeck} loading={loading} onAddCards={onAddCards} />
-            <DeckStats />
+            <DeckBreakdown deck={unifiedDeck} />
             {/* <Sidebar
               currentTab={currentTab}
               setCurrentTab={setCurrentTab}
@@ -70,6 +70,7 @@ export default () => {
             /> */}
           </Flex>
         </PageCard>
+        <ActionBar onAddCards={onAddCards} deck={unifiedDeck} />
       </PageLayout>
     </ShortcutFocus>
   );

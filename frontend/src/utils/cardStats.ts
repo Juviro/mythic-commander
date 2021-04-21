@@ -1,14 +1,20 @@
 import { UnifiedCard, UnifiedDeckCard } from 'types/unifiedTypes';
 
+export const hasCorrectColorIdentity = (card: UnifiedCard, commander: UnifiedCard) => {
+  const { color_identity } = card;
+  return (
+    !color_identity ||
+    color_identity.every((color) => commander.color_identity.includes(color))
+  );
+};
+
 export const isCardLegal = (card: UnifiedCard, commander: UnifiedCard) => {
-  const { color_identity, isCommanderLegal } = card;
+  const { isCommanderLegal } = card;
   if (!commander) return isCommanderLegal;
 
-  const rightColorIdentity =
-    !color_identity ||
-    color_identity.every((color) => commander.color_identity.includes(color));
+  const correctColorIdentity = hasCorrectColorIdentity(card, commander);
 
-  return rightColorIdentity && isCommanderLegal;
+  return correctColorIdentity && isCommanderLegal;
 };
 
 export const isDeckLegal = ({ cards = [] }: { cards: UnifiedDeckCard[] }) => {

@@ -18,17 +18,19 @@ const StyledContent = styled.div<{ large: boolean }>`
   flex-direction: column;
   min-height: 100%;
   height: fit-content;
+  position: relative;
   max-width: ${({ large }) => (large ? '1800px' : '1250px')};
 `;
 
 interface Props {
   children: React.ReactNode;
   large?: boolean;
+  style?: React.CSSProperties;
 }
 
-export default ({ children, large }: Props) => {
+export default ({ children, large, style }: Props) => {
   return (
-    <StyledBackground>
+    <StyledBackground style={style}>
       <StyledContent large={large}>{children}</StyledContent>
     </StyledBackground>
   );

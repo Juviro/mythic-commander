@@ -6,6 +6,8 @@ import DuplicateDeck from '../../../../Mobile/Deck/EditDeck/DuplicateDeck';
 import DeleteDeck from '../../../../Mobile/Deck/EditDeck/DeleteDeck';
 
 export default ({ deck }) => {
+  if (!deck) return null;
+
   const actions = [
     <ExportAsText cards={deck.cards} title={deck.name} />,
     <ProxyCards id={deck.id} type="deck" />,

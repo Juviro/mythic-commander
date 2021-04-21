@@ -77,6 +77,7 @@ export { default as Spinner } from './Spinner';
 export { default as UnownedBadge } from './UnownedBadge';
 export { default as UserAvatar } from './UserAvatar';
 export { default as UsernameModal } from './UsernameModal';
+export { default as ValueLabel } from './ValueLabel';
 export { default as WantsListDeckLink } from './WantsListDeckLink';
 export { default as ListStats } from './ListStats';
 export { default as WantsListTitle } from './WantsListTitle';
