@@ -6,6 +6,7 @@ import edhrecIcon from '../../../../assets/purchaseIcons/edhrec.png';
 import tcgplayer from '../../../../assets/purchaseIcons/tcgplayer.svg';
 import scryfallIcon from '../../../../assets/purchaseIcons/scryfall.png';
 import cardKingdomIcon from '../../../../assets/purchaseIcons/cardKingdom.ico';
+import { NotIncludedInfo } from './NotIncludedInfo';
 
 const StyledPurchaseIcon = styled.img`
   width: 18px;
@@ -36,6 +37,7 @@ interface Props {
   style?: React.CSSProperties;
   label?: React.ReactNode;
   asLink?: boolean;
+  numberOfNotIncludedCards?: number;
 }
 
 export const PurchaseIcon = ({
@@ -46,6 +48,7 @@ export const PurchaseIcon = ({
   label,
   scryfall_uri,
   asLink = true,
+  numberOfNotIncludedCards,
 }: Props) => {
   const encodedName = encodeURI(cardName);
   const services = {
@@ -86,6 +89,7 @@ export const PurchaseIcon = ({
       <StyledPurchaseIcon src={icon} alt={name} />
       {displayName && <span>{name}</span>}
       {label && <StyledLabel>{label}</StyledLabel>}
+      <NotIncludedInfo numberOfNotIncludedCards={numberOfNotIncludedCards} />
     </StyledWrapper>
   );
 

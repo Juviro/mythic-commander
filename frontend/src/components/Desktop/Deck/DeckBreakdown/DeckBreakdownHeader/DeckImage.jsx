@@ -2,9 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { EditOutlined } from '@ant-design/icons';
 
-import { useToggle } from '../../../Hooks';
-import { primary } from '../../../../constants/colors';
-import { SetDeckImage } from '../../../Elements/Shared';
+import { primary } from 'constants/colors';
+import { useToggle } from 'components/Hooks';
+import { SetDeckImage } from 'components/Elements/Shared';
+import shimmer from 'components/Animations/shimmer';
 
 const StyledEditIcon = styled(EditOutlined)`
   opacity: 0;
@@ -24,7 +25,6 @@ const StyledEditIcon = styled(EditOutlined)`
 const StyledWrapper = styled.div`
   width: 200px;
   height: 140px;
-  background-color: #cecece;
   border-radius: 4px;
   overflow: hidden;
   position: relative;
@@ -38,8 +38,21 @@ const StyledImage = styled.img`
   height: 100%;
 `;
 
+const StyledPlaceholder = styled.div`
+  ${shimmer};
+  height: 100%;
+`;
+
 export default ({ deck }) => {
   const [isEditing, toggleIsEditing] = useToggle();
+
+  if (!deck)
+    return (
+      <StyledWrapper>
+        <StyledPlaceholder />
+      </StyledWrapper>
+    );
+
   return (
     <>
       <StyledWrapper>

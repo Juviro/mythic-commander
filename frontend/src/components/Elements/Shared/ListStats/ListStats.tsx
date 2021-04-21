@@ -3,9 +3,8 @@ import styled from 'styled-components';
 import { Descriptions, Skeleton } from 'antd';
 
 import { getListStats } from 'utils/getListStats';
-import PurchaseIcon from 'components/Elements/Shared/PurchaseIcon';
-import Flex from 'components/Elements/Shared/Flex';
 import { UnifiedList } from 'types/unifiedTypes';
+import ValueLabel from '../ValueLabel';
 
 const StyledDescription = styled(Descriptions)`
   .ant-descriptions-view table {
@@ -22,12 +21,7 @@ interface Props {
 export default ({ list, hideUnique, style }: Props) => {
   if (!list) return <Skeleton />;
 
-  const {
-    numberOfCards,
-    numberOfUniqueCards,
-    ownedValueLabelUsd,
-    ownedValueLabelEur,
-  } = getListStats(list);
+  const { numberOfCards, numberOfUniqueCards } = getListStats(list);
 
   return (
     <StyledDescription column={1} style={style}>
@@ -36,19 +30,7 @@ export default ({ list, hideUnique, style }: Props) => {
         <Descriptions.Item label="Unique Cards">{numberOfUniqueCards}</Descriptions.Item>
       )}
       <Descriptions.Item label="Estimated value" style={{ whiteSpace: 'nowrap' }}>
-        <Flex wrap="wrap">
-          <PurchaseIcon
-            asLink={false}
-            serviceName="tcgplayer"
-            label={ownedValueLabelUsd}
-            style={{ marginRight: 16 }}
-          />
-          <PurchaseIcon
-            asLink={false}
-            serviceName="cardmarket"
-            label={ownedValueLabelEur}
-          />
-        </Flex>
+        <ValueLabel list={list} />
       </Descriptions.Item>
     </StyledDescription>
   );

@@ -17,16 +17,16 @@ const StyledCenterWrapper = styled.div`
   justify-content: center;
   align-items: center;
   content-visibility: auto;
-  contain-intrinsic-size: 380px;
+  contain-intrinsic-size: 353.8px;
 `;
 
-const StyledCardWrapper = styled.div`
+const StyledCardWrapper = styled.div<{ fixedSize: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   position: relative;
-  width: 100%;
+  width: ${({ fixedSize }) => (fixedSize ? '220px' : '100%')};
   height: 100%;
 `;
 
@@ -77,6 +77,7 @@ const GridCard = ({
   onSelect,
   isSelected,
   isAnyCardSelected,
+  fixedSize,
 }) => {
   const { canDrag = false, listId, onSuccessfullDrop } = dragProps ?? {};
   const displayedAmount = card.amount || card.totalAmount;
@@ -107,7 +108,7 @@ const GridCard = ({
 
   return (
     <StyledCenterWrapper>
-      <StyledCardWrapper key={card.id}>
+      <StyledCardWrapper key={card.id} fixedSize={fixedSize}>
         <StyledImageWrapper
           onClick={onClick}
           isSelected={isSelected}

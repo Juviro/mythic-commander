@@ -196,6 +196,7 @@ const CardGrid = ({
                 key={card.id}
                 actions={actions}
                 search={search}
+                fixedSize={!itemsPerRow}
                 isSelected={selectedCardIds.includes(card.id)}
                 isAnyCardSelected={Boolean(selectedCardIds.length)}
                 canZoomIn={itemsPerRow === 2}

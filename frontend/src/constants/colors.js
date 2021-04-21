@@ -16,7 +16,7 @@ export const buttonHoverBackground = '#e0dfdf';
 
 export const success = '#1fb31f';
 export const error = '#ff4d4f';
-export const warning = 'orange';
+export const warning = '#faad14';
 
 // https://material.io/resources/color/  - 600
 const LTRed = '#e53935';

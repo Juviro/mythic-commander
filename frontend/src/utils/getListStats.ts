@@ -12,10 +12,23 @@ export const getListStats = (list?: { cards: UnifiedCard[] }) => {
     (card: UnifiedCard) => card.owned
   );
 
+  const { numberOfNoEurPrice, numberOfNoUsdPrice } = list.cards.reduce(
+    // @ts-ignore: amount does not exists for some lists (collection) which is okay
+    (acc, { minPriceEur, minPriceUsd, amount, totalAmount }) => {
+      const current = { ...acc };
+      const usedAmount = Number(amount) ?? Number(totalAmount) ?? 0;
+      if (!minPriceEur) current.numberOfNoEurPrice += usedAmount;
+      if (!minPriceUsd) current.numberOfNoUsdPrice += usedAmount;
+      return current;
+    },
+    { numberOfNoEurPrice: 0, numberOfNoUsdPrice: 0 }
+  );
+
   const getValue = (cards) =>
     cards.reduce(
       ({ usd, eur }, { minPriceEur, minPriceUsd, amount, totalAmount }) => {
         const usedAmount = Number(amount) ?? Number(totalAmount) ?? 0;
+
         return {
           usd: usd + minPriceUsd * usedAmount,
           eur: eur + minPriceEur * usedAmount,
@@ -47,6 +60,7 @@ export const getListStats = (list?: { cards: UnifiedCard[] }) => {
   const valueLabelEur = `${ownedValueLabelEur}${unownedValueLabelEur}`;
 
   const numberOfCards = sumCardAmount(list?.cards);
+  const numberOfUnownedCards = sumCardAmount(unownedCards);
   const numberOfUniqueCards = list?.cards.length;
 
   const uniqueAddon =
@@ -64,7 +78,11 @@ export const getListStats = (list?: { cards: UnifiedCard[] }) => {
     valueLabelEur,
 
     numberOfCards,
+    numberOfUnownedCards,
     numberOfUniqueCards,
     numberOfCardsLabel,
+
+    numberOfNoEurPrice,
+    numberOfNoUsdPrice,
   };
 };
