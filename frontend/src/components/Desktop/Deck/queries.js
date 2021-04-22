@@ -39,6 +39,10 @@ const DECK_FIELDS = `
     cards {
       ${CARD_FIELDS}
     }
+    wantsLists {
+      id
+      name
+    }
 `;
 
 export const getDeckDesktop = gql`

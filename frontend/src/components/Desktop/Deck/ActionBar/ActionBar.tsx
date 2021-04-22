@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { AddCards } from 'components/Elements/Desktop';
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { CardInputType } from 'types/graphql';
+import { ActionButtons } from './ActionButtons/ActionButtons';
 
 const StyledWrapper = styled(Space)`
   padding: 18px;
@@ -14,6 +15,7 @@ const StyledWrapper = styled(Space)`
   max-width: 1800px;
   position: fixed;
   bottom: 0;
+  z-index: 1;
 
   box-shadow: 0px -9px 10px -4px #9c9c9c;
 `;
@@ -33,6 +35,7 @@ export const ActionBar = ({ onAddCards, deck }: Props) => {
         placeholder="Add a card..."
         containedCardNames={deck?.cards.map(({ name }) => name)}
       />
+      <ActionButtons deck={deck} onAddCards={onAddCards} />
     </StyledWrapper>
   );
 };
