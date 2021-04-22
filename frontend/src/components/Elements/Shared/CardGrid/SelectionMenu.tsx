@@ -19,11 +19,11 @@ const StyledWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100vw;
+  width: 100%;
   top: 0;
   background-color: white;
   left: 0;
-  z-index: 1000;
+  z-index: 1001;
   padding: 8px 24px;
   font-size: 22px;
   box-shadow: 0px 0px 12px 0px #6f6f6f;

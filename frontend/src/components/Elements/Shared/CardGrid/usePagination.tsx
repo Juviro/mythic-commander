@@ -1,6 +1,7 @@
 import { useToggle } from 'components/Hooks';
 import { useEffect } from 'react';
 import { useQueryParam, NumberParam } from 'use-query-params';
+import scrollIntoView from 'utils/scrollIntoView';
 
 export const CARD_WIDTH = 240;
 
@@ -15,7 +16,10 @@ export interface Pagination {
   hasNext: boolean;
 }
 
-export default (numberOfCards: number) => {
+export default (
+  numberOfCards: number,
+  wrapperRef: { current: HTMLDivElement | null }
+) => {
   const [currentPage = 1, setPageParam] = useQueryParam('page', NumberParam);
   const [pageSize = 10, setPageSizeParam] = useQueryParam('pageSize', NumberParam);
   const [addedWithin] = useQueryParam('addedWithin', NumberParam);
@@ -35,6 +39,9 @@ export default (numberOfCards: number) => {
   const setPageSize = (newPageSize: number) => setPageSizeParam(newPageSize, 'replaceIn');
 
   const onChange = (newVal: number) => {
+    if (wrapperRef.current) {
+      scrollIntoView(wrapperRef.current);
+    }
     setCurrentPage(newVal);
   };
 

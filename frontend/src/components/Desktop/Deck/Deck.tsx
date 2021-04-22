@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
 import { MutationAddCardsToDeckArgs, CardInputType, Query } from 'types/graphql';
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { PageCard, PageLayout } from 'components/Elements/Desktop';
-import { Divider } from 'antd';
 import Cards from './Cards';
-import Sidebar from './Sidebar';
 import message from '../../../utils/message';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
 import { getDeckDesktop, addCardsToDeckDesktop } from './queries';
@@ -20,7 +18,6 @@ import { ActionBar } from './ActionBar/ActionBar';
 
 export default () => {
   const { id } = useParams<{ id: string }>();
-  const [currentTab, setCurrentTab] = useState<string>('add');
   const { data, loading } = useQuery<Query>(getDeckDesktop, {
     variables: { id },
     fetchPolicy: 'network-only',
@@ -62,12 +59,6 @@ export default () => {
           <Flex>
             <Cards deck={unifiedDeck} loading={loading} onAddCards={onAddCards} />
             <DeckBreakdown deck={unifiedDeck} />
-            {/* <Sidebar
-              currentTab={currentTab}
-              setCurrentTab={setCurrentTab}
-              onAddCards={onAddCards}
-              deck={unifiedDeck}
-            /> */}
           </Flex>
         </PageCard>
         <ActionBar onAddCards={onAddCards} deck={unifiedDeck} />

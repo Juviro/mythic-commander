@@ -93,11 +93,11 @@ const CardGrid = ({
     setDetailCardIndex(cardIndex);
   };
 
-  const wrapperRef = useRef(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
 
   const combinedNumberOfCards = numberOfCards || cards?.length || 0;
 
-  const pagination = usePagination(combinedNumberOfCards);
+  const pagination = usePagination(combinedNumberOfCards, wrapperRef);
   const cardDetailNavigation = useCardDetailNavigation({
     detailCardIndex,
     setDetailCardIndex,

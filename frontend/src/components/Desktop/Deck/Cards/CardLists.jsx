@@ -5,7 +5,7 @@ import { useMutation } from 'react-apollo';
 import { getListStats } from 'utils/getListStats';
 import { lightText } from 'constants/colors';
 import { Flex, CardGrid } from '../../../Elements/Shared';
-import { deleteFromDeckDesktop } from '../queries';
+import { deleteFromDeckDesktop, editDeckCardDesktop, getDeckDesktop } from '../queries';
 
 const StyledSubtitle = styled.span`
   font-size: 12px;
@@ -14,6 +14,7 @@ const StyledSubtitle = styled.span`
 
 export default ({ loading, cardsByType, deck }) => {
   const [mutateDelete] = useMutation(deleteFromDeckDesktop);
+  const [mutateEdit] = useMutation(editDeckCardDesktop);
 
   const deleteByOracle = (oracleIds, numberOfCards) => {
     const cardsToDelete = deck.cards.filter(({ oracle_id }) =>
@@ -34,6 +35,33 @@ export default ({ loading, cardsByType, deck }) => {
           numberOfCards: newNumberOfCards,
         },
       }),
+    });
+  };
+
+  const onEditCard = (cardId, newProps) => {
+    mutateEdit({
+      variables: { deckId: deck.id, newProps, cardId },
+      update: (cache, { data: { editDeckCard: newCard } }) => {
+        const existing = cache.readQuery({
+          query: getDeckDesktop,
+          variables: { id: deck.id },
+        });
+
+        const newCards = existing.deck.cards.map((deckCard) => {
+          if (deckCard.card.id !== cardId) return deckCard;
+          return newCard;
+        });
+
+        cache.writeQuery({
+          query: getDeckDesktop,
+          data: {
+            deck: {
+              ...existing.deck,
+              cards: newCards,
+            },
+          },
+        });
+      },
     });
   };
 
@@ -60,6 +88,7 @@ export default ({ loading, cardsByType, deck }) => {
       cards={allCardsInOrder}
       cardLists={cardLists}
       deleteByOracle={deleteByOracle}
+      onEditCard={onEditCard}
       showAddedBeforeFilter
       showCollectionFilters
       orderByParamName="orderByAdvanced"
