@@ -89,7 +89,7 @@ const CardList = ({
         loading={loading}
         onOpenDetails={onOpenDetails}
         hidePagination
-        itemsPerRow={layout === 'grid' ? 2 : 1}
+        cardsPerRow={layout === 'grid' ? 2 : 1}
         onEditCard={onEditCard}
         onDeleteCard={onDeleteCard}
         deleteByOracle={deleteByOracle}

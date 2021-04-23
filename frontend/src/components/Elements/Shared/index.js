@@ -33,6 +33,7 @@ export { default as EditCardModal } from './EditCardModal';
 export { default as EditGridCard } from './EditGridCard';
 export { default as Expander } from './Expander';
 export { default as ExportAsText } from './ExportAsText';
+export { default as FadeIn } from './FadeIn';
 export { default as FeatureFlag } from './FeatureFlag';
 export { default as Filter } from './Filter';
 export { default as FoundCardsLabel } from './FoundCardsLabel';

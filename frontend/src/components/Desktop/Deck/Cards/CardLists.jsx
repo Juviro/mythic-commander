@@ -92,6 +92,11 @@ export default ({ loading, cardsByType, deck }) => {
       showAddedBeforeFilter
       showCollectionFilters
       orderByParamName="orderByAdvanced"
+      dragProps={{
+        canDrag: true,
+        onSuccessfullDrop: (card) => deleteByOracle([card.oracle_id], 1),
+        listId: deck?.id,
+      }}
     />
   );
 };

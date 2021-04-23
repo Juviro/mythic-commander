@@ -64,7 +64,7 @@ export default ({ onAddCards, alreadyInDeck }) => {
               onChangeOption={onChangeOption}
             />
             <Flex>
-              <Typography.Text strong style={{ width: 130 }}>
+              <Typography.Text strong style={{ width: 180 }}>
                 Order by
               </Typography.Text>
               <OrderBy />
@@ -93,6 +93,7 @@ export default ({ onAddCards, alreadyInDeck }) => {
                     cardsPerRow={2}
                     cardWidth={200}
                     onEnter={onEnter}
+                    disableSelection
                     markAsDisabled={alreadyInDeck}
                     blockShortcuts={blockShortcuts}
                     search={lastSearchOptions.name}

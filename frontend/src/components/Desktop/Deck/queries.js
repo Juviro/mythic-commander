@@ -42,6 +42,7 @@ const DECK_FIELDS = `
     wantsLists {
       id
       name
+      numberOfCards
     }
 `;
 

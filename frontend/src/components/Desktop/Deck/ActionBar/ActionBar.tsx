@@ -15,7 +15,9 @@ const StyledWrapper = styled(Space)`
   max-width: 1800px;
   position: fixed;
   bottom: 0;
-  z-index: 1;
+  @media (max-width: 1600px) {
+    z-index: 11;
+  }
 
   box-shadow: 0px -9px 10px -4px #9c9c9c;
 `;

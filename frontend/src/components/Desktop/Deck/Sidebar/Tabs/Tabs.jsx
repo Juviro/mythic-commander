@@ -1,69 +1,54 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
+import { ADVANCED_SEARCH } from 'components/Desktop/Deck/ActionBar/ActionButtons/ActionButtons';
 import Tab from './Tab';
-import { useShortcut } from '../../../../Hooks';
-import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
 
 const StyledWrapper = styled.div`
-  margin-right: 8px;
   user-select: none;
-  height: fit-content;
   position: absolute;
-  right: -49px;
+  left: -40px;
+  top: -2px;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 9999;
+
+  transform: rotate(90deg) translateY(-100%);
+  transform-origin: left top;
+
+  width: calc(100vh - 50px);
+  height: 40px;
+
+  @media (max-width: 1600px) {
+    width: calc(100vh - 125px);
+  }
 `;
 
-export default ({ currentTab, setCurrentTab }) => {
-  const { focusedElements, setFocus } = useContext(FocusContext);
-  const tabs = [
-    {
-      title: 'Search [S]',
-      key: 'add',
-      shortcut: 's',
-    },
-    {
-      title: 'Wants [W]',
-      key: 'wants',
-      shortcut: 'w',
-    },
-    // {
-    //   title: 'Insights [I]',
-    //   key: 'stats',
-    //   shortcut: 'i',
-    // },
-  ];
+export default ({ deck, setCurrentTabId, currentTabId }) => {
+  const wantsListsTabs = deck?.wantsLists?.map(({ id, name, numberOfCards }) => ({
+    title: `${name} (${numberOfCards})`,
+    wantsList: { id, name },
+    id,
+  }));
 
-  const focusIds = ['deck.sidebar.add', 'deck.sidebar.wants', 'deck.sidebar.stats'];
-
-  const onOpenTab = (key) => {
-    const filteredFocus = focusedElements.filter(
-      (focusId) => !focusIds.includes(focusId)
-    );
-
-    if (key === currentTab) {
-      setCurrentTab(null);
-      setFocus(filteredFocus);
-    } else {
-      setCurrentTab(key);
-      setFocus(filteredFocus.concat(`deck.sidebar.${key}`));
-    }
+  const advancedSearch = {
+    title: 'Advanced Search',
+    id: ADVANCED_SEARCH,
+    isSecondary: true,
   };
-
-  tabs.forEach(({ key, shortcut }) => {
-    useShortcut(shortcut, () => onOpenTab(key), {
-      focusId: focusIds.concat('deck.cards'),
-    });
-  });
+  const tabs = [advancedSearch, ...wantsListsTabs];
 
   return (
     <StyledWrapper>
-      {tabs.map(({ title, key }, index) => (
+      {tabs.map(({ title, id, isSecondary, wantsList }, index) => (
         <Tab
           index={index}
-          key={key}
+          key={id}
           title={title}
-          active={key === currentTab}
-          onClick={() => onOpenTab(key)}
+          wantsList={wantsList}
+          isSecondary={isSecondary}
+          active={id === currentTabId}
+          onClick={() => setCurrentTabId(id)}
         />
       ))}
     </StyledWrapper>
