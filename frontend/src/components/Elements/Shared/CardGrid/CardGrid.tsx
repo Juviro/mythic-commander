@@ -15,11 +15,11 @@ import WithActions from './WithActions';
 import { SelectionMenu } from './SelectionMenu';
 import useCardDetailNavigation from './useCardDetailNavigation';
 
-export const StyledCardGridWrapper = styled.div<{ itemsPerRow?: number }>`
+export const StyledCardGridWrapper = styled.div<{ cardsPerRow?: number }>`
   display: grid;
-  grid-template-columns: ${({ itemsPerRow }) =>
-    itemsPerRow
-      ? `repeat(${itemsPerRow}, minmax(0, 1fr))`
+  grid-template-columns: ${({ cardsPerRow }) =>
+    cardsPerRow
+      ? `repeat(${cardsPerRow}, minmax(0, 1fr))`
       : 'repeat(auto-fill, minmax(220px, 1fr))'};
   grid-gap: 16px;
   padding-top: 8px;
@@ -54,8 +54,9 @@ interface Props {
   onDeleteCards?: (cards: UnifiedCard[]) => void;
   hidePagination?: boolean;
   dragProps?: DragProps;
-  itemsPerRow?: number;
+  cardsPerRow?: number;
   cardLists?: CardList[];
+  disableSelection?: boolean;
 }
 
 type PropsWithRouterProps = RouteComponentProps & Props;
@@ -73,10 +74,11 @@ const CardGrid = ({
   hidePagination,
   dragProps,
   onOpenDetails,
-  itemsPerRow,
+  cardsPerRow,
   onMoveCards,
   onCopyCardsTo,
   cardLists: passedCardLists,
+  disableSelection,
 }: PropsWithRouterProps) => {
   const [detailCardIndex, setDetailCardIndex] = useState<number | null>(null);
   const detailCard = cards?.[detailCardIndex];
@@ -188,7 +190,7 @@ const CardGrid = ({
         <React.Fragment key={list.key ?? list.title}>
           {Boolean(index) && <Divider />}
           {list.title && <Typography.Title level={4}>{list.title}</Typography.Title>}
-          <StyledCardGridWrapper itemsPerRow={itemsPerRow}>
+          <StyledCardGridWrapper cardsPerRow={cardsPerRow}>
             {list.cards?.map((card) => (
               <GridCard
                 card={card}
@@ -196,10 +198,11 @@ const CardGrid = ({
                 key={card.id}
                 actions={actions}
                 search={search}
-                fixedSize={!itemsPerRow}
+                disableSelection={disableSelection}
+                fixedSize={!cardsPerRow}
                 isSelected={selectedCardIds.includes(card.id)}
                 isAnyCardSelected={Boolean(selectedCardIds.length)}
-                canZoomIn={itemsPerRow === 2}
+                canZoomIn={cardsPerRow === 2}
                 onSelect={() => onSelectCard(card.id)}
                 markAsDisabled={markAsDisabled && markAsDisabled(card)}
                 onOpenDetails={() =>

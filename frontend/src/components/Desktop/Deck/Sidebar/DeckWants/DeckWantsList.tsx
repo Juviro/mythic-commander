@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
-import { Empty } from 'antd';
-import { useMutation } from '@apollo/react-hooks';
 
 import { Confirm, CardGrid } from 'components/Elements/Shared';
 
-import { WantsList, MutationDeleteFromWantsListArgs, CardInputType } from 'types/graphql';
-import unifyCardFormat from 'utils/unifyCardFormat';
-import { UnifiedCard } from 'types/unifiedTypes';
+import { CardInputType } from 'types/graphql';
+import { UnifiedCard, UnifiedDeck, UnifiedWantsList } from 'types/unifiedTypes';
 
-import sumCardAmount from 'utils/sumCardAmount';
 import boldText from 'utils/boldText';
 import styled from 'styled-components';
-import { sortByCmc } from 'utils/cardFilter';
-import { deleteFromWantsList } from './queries';
+import { sortByAdded } from 'utils/cardFilter';
 
 const StyledDeckWantsList = styled.div`
   display: flex;
@@ -20,47 +15,24 @@ const StyledDeckWantsList = styled.div`
 `;
 
 interface Props {
-  wantsList: WantsList;
-  alreadyInDeck: (card: UnifiedCard) => boolean;
-  onAddCards: (newCards: CardInputType[], name: string) => void;
+  wantsList: UnifiedWantsList;
+  deck: UnifiedDeck;
+  onAddCardsToDeck: (newCards: CardInputType[], name: string) => void;
+  onDeleteCard: (card: UnifiedCard) => void;
 }
 
-export default ({ wantsList, alreadyInDeck, onAddCards }: Props) => {
-  const [mutate] = useMutation<any, MutationDeleteFromWantsListArgs>(deleteFromWantsList);
+export default ({ wantsList, deck, onAddCardsToDeck, onDeleteCard }: Props) => {
+  const cardNames = deck?.cards.map(({ name }) => name);
+  const alreadyInDeck = ({ name }) => cardNames?.includes(name);
+  const sortedCards = wantsList && sortByAdded([...wantsList?.cards]);
 
   const [cardToAdd, setCardToAdd] = useState<UnifiedCard | null>(null);
 
-  const cards = unifyCardFormat(wantsList.cards);
-
-  const onDeleteFromList = (card: UnifiedCard) => {
-    const newCards = wantsList.cards.filter(
-      ({ card: { oracle_id } }) => oracle_id !== card.oracle_id
-    );
-    const newNumberOfCards = sumCardAmount(newCards);
-    mutate({
-      variables: { oracleIds: [card.oracle_id], wantsListId: wantsList.id },
-      optimisticResponse: () => ({
-        __typename: 'Mutation',
-        deleteFromWantsList: {
-          ...wantsList,
-          cards: newCards,
-          numberOfCards: newNumberOfCards,
-        },
-      }),
-    });
-  };
-
   const onAddCard = () => {
-    onDeleteFromList(cardToAdd);
-    onAddCards([{ id: cardToAdd.id, amount: 1 }], cardToAdd.name);
+    onDeleteCard(cardToAdd);
+    onAddCardsToDeck([{ id: cardToAdd.id, amount: 1 }], cardToAdd.name);
     setCardToAdd(null);
   };
-
-  if (!cards.length) {
-    return <Empty description="" style={{ margin: 16 }} />;
-  }
-
-  const sortedCards = sortByCmc([...cards]);
 
   return (
     <StyledDeckWantsList>
@@ -75,11 +47,13 @@ export default ({ wantsList, alreadyInDeck, onAddCards }: Props) => {
       <CardGrid
         dragProps={{
           canDrag: true,
-          onSuccessfullDrop: onDeleteFromList,
-          listId: wantsList.id,
+          onSuccessfullDrop: onDeleteCard,
+          listId: wantsList?.id,
         }}
+        loading={!wantsList}
         hidePagination
         cards={sortedCards}
+        cardsPerRow={2}
         markAsDisabled={alreadyInDeck}
       />
     </StyledDeckWantsList>

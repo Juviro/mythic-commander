@@ -5,6 +5,7 @@ import { LoadingOutlined, UpOutlined } from '@ant-design/icons';
 
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { primary, primarySemiLight } from 'constants/colors';
+import { ADVANCED_SEARCH } from './ActionButtons';
 
 const StyledButton = styled(Button)`
   width: 220px;
@@ -51,11 +52,21 @@ export const WantsListsButton = ({ deck, currentTabId, setCurrentTabId }: Props)
     </Menu>
   );
 
+  const onClickButton = () => {
+    const firstWantsId = deck?.wantsLists?.[0]?.id;
+    if (currentTabId && currentTabId !== ADVANCED_SEARCH) {
+      setCurrentTabId(null);
+    } else if (firstWantsId) {
+      setCurrentTabId(firstWantsId);
+    }
+  };
+
   return (
     <Dropdown overlay={menu} placement="topCenter">
       <StyledButton
         ghost={!deck?.wantsLists.some(({ id }) => id === currentTabId)}
         type="primary"
+        onClick={onClickButton}
       >
         <span>{label}</span>
         {deck ? <UpOutlined /> : <LoadingOutlined />}

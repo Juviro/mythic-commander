@@ -1,4 +1,5 @@
 import React from 'react';
+import FadeIn from 'components/Elements/Shared/FadeIn';
 import AdvancedSearch from './AdvancedSearch';
 
 export default ({ onAddCards, deck, visible }) => {
@@ -7,5 +8,9 @@ export default ({ onAddCards, deck, visible }) => {
   const cardNames = deck && deck.cards.map(({ name }) => name);
   const alreadyInDeck = ({ name }) => cardNames && cardNames.includes(name);
 
-  return <AdvancedSearch onAddCards={onAddCards} alreadyInDeck={alreadyInDeck} />;
+  return (
+    <FadeIn>
+      <AdvancedSearch onAddCards={onAddCards} alreadyInDeck={alreadyInDeck} />
+    </FadeIn>
+  );
 };

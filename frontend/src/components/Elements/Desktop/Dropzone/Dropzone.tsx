@@ -27,7 +27,6 @@ export const dropZoneStyle = css<DropzoneProps>`
 const StyledDropzone = styled.div<DropzoneProps>`
   width: 100%;
   height: 100%;
-  /* z-index: 99; */
   user-select: none;
   ${dropZoneStyle}
 `;
@@ -42,10 +41,21 @@ interface Props {
   listId?: string;
   onDrop: (card: DragObjectWithType) => void;
   style?: React.CSSProperties;
+  isOverStyle?: React.CSSProperties;
+  canDropStyle?: React.CSSProperties;
+  disabled?: boolean;
 }
 
-export default ({ children, onDrop, listId, style }: Props) => {
-  const [{ isOver, canDrop }, dropRef] = useDrop({
+export default ({
+  children,
+  onDrop,
+  listId,
+  style,
+  isOverStyle,
+  canDropStyle,
+  disabled,
+}: Props) => {
+  const [{ isOver, canDrop, offset }, dropRef] = useDrop({
     accept: 'CARD',
     drop: onDrop,
     canDrop: (_, monitor) => listId !== monitor.getItem().listId,
@@ -53,12 +63,34 @@ export default ({ children, onDrop, listId, style }: Props) => {
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
       canDrop: !!monitor.canDrop(),
+      offset: monitor.getDifferenceFromInitialOffset(),
     }),
   });
 
+  if (disabled) {
+    if (typeof children === 'function') {
+      return children({});
+    }
+    return children;
+  }
+
+  const getStyle = () => {
+    if (isOver && isOverStyle) return { ...style, ...isOverStyle };
+    if (canDrop && canDropStyle) return { ...style, ...canDropStyle };
+    return style;
+  };
+
+  if (typeof children === 'function') {
+    return (
+      <StyledDropzone isOver={isOver} canDrop={canDrop} style={getStyle()} ref={dropRef}>
+        {children({ isOver, canDrop, offset })}
+      </StyledDropzone>
+    );
+  }
+
   return (
-    <StyledDropzone isOver={isOver} canDrop={canDrop} style={style}>
-      <div ref={dropRef}>{children}</div>
+    <StyledDropzone isOver={isOver} canDrop={canDrop} style={getStyle()} ref={dropRef}>
+      {children}
     </StyledDropzone>
   );
 };

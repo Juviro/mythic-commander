@@ -1,18 +1,22 @@
-import React, { useContext } from 'react';
-import styled, { css } from 'styled-components';
+import React from 'react';
+import { Drawer } from 'antd';
+import styled from 'styled-components';
 
 import { CardInputType } from 'types/graphql';
 import { UnifiedDeck } from 'types/unifiedTypes';
-import { Drawer } from 'antd';
-import Tabs from './Tabs';
-import { Flex, ShortcutFocus } from '../../../Elements/Shared';
-import AddCards from './AddCards/AddCards';
 import DeckWants from './DeckWants';
-import FocusContext from '../../../Provider/FocusProvider/FocusProvider';
-import { primary } from '../../../../constants/colors';
+import AddCards from './AddCards/AddCards';
+import { ADVANCED_SEARCH } from '../ActionBar/ActionButtons/ActionButtons';
+import Tabs from './Tabs';
 
-export const DECK_SIDEBAR_WIDTH = 560;
-
+const StyledDrawer = styled(Drawer)`
+  && .ant-drawer-content {
+    overflow: visible;
+    @media (max-width: 1600px) {
+      padding-bottom: 50px;
+    }
+  }
+`;
 interface Props {
   currentTabId: string | null;
   setCurrentTabId: (newTabId: string) => void;
@@ -21,29 +25,40 @@ interface Props {
 }
 
 export default ({ currentTabId, setCurrentTabId, onAddCards, deck }: Props) => {
-  const tabs = [
-    {
-      Component: AddCards,
-      props: { onAddCards, deck },
-      key: 'add',
-    },
-    {
-      Component: DeckWants,
-      props: { onAddCards, deck },
-      key: 'wants',
-    },
-  ];
-
   return (
-    <Drawer
-      width={600}
+    <StyledDrawer
+      width={550}
       mask={false}
       visible={Boolean(currentTabId)}
       onClose={() => setCurrentTabId(null)}
-      zIndex={0}
-      style={{ height: 'calc(100% - 125px)', marginTop: 48 }}
+      zIndex={10}
+      style={{
+        height: 'calc(100% - 50px)',
+        marginTop: 48,
+        paddingBottom: 6,
+        overflow: !currentTabId ? 'hidden' : undefined,
+      }}
     >
-      <AddCards onAddCards={onAddCards} deck={deck} visible />
-    </Drawer>
+      {currentTabId && (
+        <Tabs deck={deck} setCurrentTabId={setCurrentTabId} currentTabId={currentTabId} />
+      )}
+      <AddCards
+        onAddCards={onAddCards}
+        deck={deck}
+        visible={currentTabId === ADVANCED_SEARCH}
+      />
+      {deck?.wantsLists
+        .filter(({ id }) => id === currentTabId)
+        .map(({ id, name, numberOfCards }) => (
+          <DeckWants
+            name={name}
+            key={id}
+            deck={deck}
+            id={id}
+            onAddCards={onAddCards}
+            numberOfCards={numberOfCards}
+          />
+        ))}
+    </StyledDrawer>
   );
 };

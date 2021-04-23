@@ -1,9 +1,14 @@
 export const primary = '#1890ff';
 export const primarySemiLight = '#1890ff80';
 export const primaryLight = '#1890ff1a';
+export const primaryDark = '#0c589e';
 export const primaryDrop = '#1890ff4d';
 export const primaryHover = '#40a9ff';
 export const primaryActive = '#096dd9';
+
+export const secondary = '#b51b1b';
+export const secondaryHover = '#f35a5a';
+export const secondaryActive = '#821212';
 
 export const darkBackground = '#001529';
 export const darkBackgroundTransparent = '#00152933';

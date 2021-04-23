@@ -9,6 +9,7 @@ import { useToggle } from '../../../Hooks';
 import CardInfo from './CardInfo';
 import { CardMenu } from './CardMenu';
 import { SelectButton } from './SelectButton';
+import { GridPreviewImage } from './GridPreviewImage';
 
 const StyledCenterWrapper = styled.div`
   width: 100%;
@@ -78,18 +79,23 @@ const GridCard = ({
   isSelected,
   isAnyCardSelected,
   fixedSize,
+  disableSelection,
 }) => {
   const { canDrag = false, listId, onSuccessfullDrop } = dragProps ?? {};
   const displayedAmount = card.amount || card.totalAmount;
   const [showMenu, toggleShowMenu] = useToggle();
 
-  const [, dragRef] = useDrag({
+  const [{ isDragging }, dragRef, preview] = useDrag({
     item: { type: 'CARD', id: card.id, name: card.name, listId, amount: card.amount },
     canDrag,
     end: (_, monitor) => {
       if (monitor.didDrop() && onSuccessfullDrop) {
         onSuccessfullDrop(card);
       }
+    },
+    previewOptions: {
+      anchorX: 0,
+      anchorY: 0,
     },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
@@ -109,11 +115,12 @@ const GridCard = ({
   return (
     <StyledCenterWrapper>
       <StyledCardWrapper key={card.id} fixedSize={fixedSize}>
+        {/* <GridPreviewImage preview={preview} card={card} /> */}
         <StyledImageWrapper
           onClick={onClick}
           isSelected={isSelected}
           onMouseMove={(e) => {
-            // Hotfix for touch devices
+            // Check for touch devices
             if (!e.movementX && !e.movementY) return;
             toggleShowMenu(true);
           }}
@@ -134,12 +141,14 @@ const GridCard = ({
               onClose={() => toggleShowMenu(false)}
             />
           )}
-          <SelectButton
-            onSelect={onSelect}
-            isSelected={isSelected}
-            isHovering={showMenu}
-            isAnyCardSelected={isAnyCardSelected}
-          />
+          {!disableSelection && (
+            <SelectButton
+              onSelect={onSelect}
+              isSelected={isSelected}
+              isHovering={showMenu}
+              isAnyCardSelected={isAnyCardSelected}
+            />
+          )}
         </StyledImageWrapper>
         <CardInfo card={card} search={search} />
       </StyledCardWrapper>

@@ -27,6 +27,8 @@ interface Props {
 export const ActionButtons = ({ deck, onAddCards }: Props) => {
   const [currentTabId, setCurrentTabId] = useState<string | null>(null);
 
+  if (!deck) return null;
+
   const onSetTabId = (tabId: string) => {
     if (currentTabId === tabId) {
       setCurrentTabId(null);
