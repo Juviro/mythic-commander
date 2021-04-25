@@ -27,7 +27,7 @@ interface Props {
 export default ({ currentTabId, setCurrentTabId, onAddCards, deck }: Props) => {
   return (
     <StyledDrawer
-      width={550}
+      width={580}
       mask={false}
       visible={Boolean(currentTabId)}
       onClose={() => setCurrentTabId(null)}

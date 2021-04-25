@@ -5,7 +5,10 @@ import { LoadingOutlined, UpOutlined } from '@ant-design/icons';
 
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { primary, primarySemiLight } from 'constants/colors';
+import { Dropzone } from 'components/Elements/Desktop';
+import { useToggle } from 'components/Hooks';
 import { ADVANCED_SEARCH } from './ActionButtons';
+import useDeckWantsQueries from './useDeckWantsQueries';
 
 const StyledButton = styled(Button)`
   width: 220px;
@@ -36,17 +39,34 @@ interface Props {
 }
 
 export const WantsListsButton = ({ deck, currentTabId, setCurrentTabId }: Props) => {
+  const [isHoveringButton, setIsHoveringButton] = useToggle();
+  const [isHoveringMenu, setIsHoveringMenu] = useToggle();
   const label = deck ? `Wants Lists (${deck?.wantsLists.length})` : 'Wants Lists';
+
+  const { onAddCard } = useDeckWantsQueries();
+
+  const onHideMenu = () => {
+    setTimeout(() => setIsHoveringButton(false), 100);
+  };
 
   const menu = (
     <Menu>
-      {deck?.wantsLists.map(({ id, name }) => (
+      {deck?.wantsLists.map(({ id, name, numberOfCards }) => (
         <StyledMenuItem
           key={id}
           onClick={() => setCurrentTabId(id)}
           selected={id === currentTabId}
+          style={{ padding: '1px 0 0' }}
+          onMouseEnter={() => setIsHoveringMenu(true)}
+          onMouseLeave={() => setIsHoveringMenu(false)}
         >
-          {name}
+          <Dropzone
+            onDrop={onAddCard(id, name)}
+            listId={id}
+            style={{ display: 'flex', alignItems: 'center', padding: '4px 6px' }}
+          >
+            {`${name} (${numberOfCards})`}
+          </Dropzone>
         </StyledMenuItem>
       ))}
     </Menu>
@@ -62,15 +82,26 @@ export const WantsListsButton = ({ deck, currentTabId, setCurrentTabId }: Props)
   };
 
   return (
-    <Dropdown overlay={menu} placement="topCenter">
-      <StyledButton
-        ghost={!deck?.wantsLists.some(({ id }) => id === currentTabId)}
-        type="primary"
-        onClick={onClickButton}
-      >
-        <span>{label}</span>
-        {deck ? <UpOutlined /> : <LoadingOutlined />}
-      </StyledButton>
-    </Dropdown>
+    <Dropzone disabled>
+      {({ canDrop }) => (
+        <Dropdown
+          overlay={menu}
+          placement="topCenter"
+          visible={isHoveringButton || isHoveringMenu || (canDrop && !currentTabId)}
+          // @ts-ignore
+          onMouseEnter={() => setIsHoveringButton(true)}
+          onMouseLeave={onHideMenu}
+        >
+          <StyledButton
+            ghost={!deck?.wantsLists.some(({ id }) => id === currentTabId)}
+            type="primary"
+            onClick={onClickButton}
+          >
+            <span>{label}</span>
+            {deck ? <UpOutlined /> : <LoadingOutlined />}
+          </StyledButton>
+        </Dropdown>
+      )}
+    </Dropzone>
   );
 };

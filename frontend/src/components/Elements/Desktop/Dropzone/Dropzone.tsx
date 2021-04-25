@@ -39,7 +39,7 @@ interface DropCard {
 interface Props {
   children: React.ReactNode;
   listId?: string;
-  onDrop: (card: DragObjectWithType) => void;
+  onDrop?: (card: DragObjectWithType) => void;
   style?: React.CSSProperties;
   isOverStyle?: React.CSSProperties;
   canDropStyle?: React.CSSProperties;
@@ -69,7 +69,7 @@ export default ({
 
   if (disabled) {
     if (typeof children === 'function') {
-      return children({});
+      return children({ isOver, canDrop, offset });
     }
     return children;
   }

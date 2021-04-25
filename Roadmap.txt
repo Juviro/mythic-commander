@@ -14,13 +14,9 @@ REQUIRED IN MIGRATION BRANCH:
     * Add action to commander: "Change Commander"
     * Add "Add Commander" button when no commander is selected
     * Add button to add wants list (in button dropdown and as tab)
-    - fix or rebuild deck
-        - sidebar
-            - wants
-            - advanced search
     - empty view for grid
     - switch page in grid: jumpt to top of list
-    - delete and edit deck wants
+    - edit deck wants
 
 
 OPTIONAL IN MIGRATION BRANCH:

@@ -90,6 +90,7 @@ const CardList = ({
         onOpenDetails={onOpenDetails}
         hidePagination
         cardsPerRow={layout === 'grid' ? 2 : 1}
+        canZoomIn
         onEditCard={onEditCard}
         onDeleteCard={onDeleteCard}
         deleteByOracle={deleteByOracle}

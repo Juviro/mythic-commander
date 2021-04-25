@@ -57,6 +57,7 @@ interface Props {
   cardsPerRow?: number;
   cardLists?: CardList[];
   disableSelection?: boolean;
+  canZoomIn?: boolean;
 }
 
 type PropsWithRouterProps = RouteComponentProps & Props;
@@ -79,6 +80,7 @@ const CardGrid = ({
   onCopyCardsTo,
   cardLists: passedCardLists,
   disableSelection,
+  canZoomIn,
 }: PropsWithRouterProps) => {
   const [detailCardIndex, setDetailCardIndex] = useState<number | null>(null);
   const detailCard = cards?.[detailCardIndex];
@@ -202,7 +204,7 @@ const CardGrid = ({
                 fixedSize={!cardsPerRow}
                 isSelected={selectedCardIds.includes(card.id)}
                 isAnyCardSelected={Boolean(selectedCardIds.length)}
-                canZoomIn={cardsPerRow === 2}
+                canZoomIn={canZoomIn}
                 onSelect={() => onSelectCard(card.id)}
                 markAsDisabled={markAsDisabled && markAsDisabled(card)}
                 onOpenDetails={() =>

@@ -4,6 +4,7 @@ import { useMutation } from 'react-apollo';
 
 import { getListStats } from 'utils/getListStats';
 import { lightText } from 'constants/colors';
+import message from 'utils/message';
 import { Flex, CardGrid } from '../../../Elements/Shared';
 import { deleteFromDeckDesktop, editDeckCardDesktop, getDeckDesktop } from '../queries';
 
@@ -16,7 +17,7 @@ export default ({ loading, cardsByType, deck }) => {
   const [mutateDelete] = useMutation(deleteFromDeckDesktop);
   const [mutateEdit] = useMutation(editDeckCardDesktop);
 
-  const deleteByOracle = (oracleIds, numberOfCards) => {
+  const deleteByOracle = (displayMessage) => (oracleIds, numberOfCards) => {
     const cardsToDelete = deck.cards.filter(({ oracle_id }) =>
       oracleIds.includes(oracle_id)
     );
@@ -36,6 +37,10 @@ export default ({ loading, cardsByType, deck }) => {
         },
       }),
     });
+
+    if (displayMessage) {
+      message(`Deleted <b>${numberOfCards}</b> card(s) from your Deck!`);
+    }
   };
 
   const onEditCard = (cardId, newProps) => {
@@ -87,14 +92,14 @@ export default ({ loading, cardsByType, deck }) => {
       loading={loading}
       cards={allCardsInOrder}
       cardLists={cardLists}
-      deleteByOracle={deleteByOracle}
+      deleteByOracle={deleteByOracle(true)}
       onEditCard={onEditCard}
       showAddedBeforeFilter
       showCollectionFilters
       orderByParamName="orderByAdvanced"
       dragProps={{
         canDrag: true,
-        onSuccessfullDrop: (card) => deleteByOracle([card.oracle_id], 1),
+        onSuccessfullDrop: (card) => deleteByOracle(false)([card.oracle_id], 1),
         listId: deck?.id,
       }}
     />

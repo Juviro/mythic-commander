@@ -6,7 +6,6 @@ import { addCardsToWantsList } from 'components/Desktop/Deck/Sidebar/DeckWants/q
 import { wantsListDesktop } from 'components/Desktop/WantsList/queries';
 import message from 'utils/message';
 import { Dropzone } from 'components/Elements/Desktop';
-import { DropHint } from 'components/Desktop/Deck/Sidebar/Tabs/DropHint';
 import {
   primary,
   primaryHover,
@@ -95,13 +94,7 @@ export default ({ active, title, index, onClick, isSecondary, wantsList }) => {
         style={{ display: 'flex', transition: 'height 0.3s', height: '40px' }}
         canDropStyle={{ height: '100px' }}
       >
-        {({ isOver, canDrop, offset }) => (
-          <>
-            <StyledInner canDrop={canDrop}>{title}</StyledInner>
-            {wantsList && <DropHint wantsList={wantsList} offset={offset} />}
-            {/* {isOver && wantsList && <DropHint wantsList={wantsList} />} */}
-          </>
-        )}
+        {({ canDrop }) => <StyledInner canDrop={canDrop}>{title}</StyledInner>}
       </Dropzone>
     </StyledTab>
   );

@@ -19,9 +19,18 @@ interface Props {
   deck: UnifiedDeck;
   onAddCardsToDeck: (newCards: CardInputType[], name: string) => void;
   onDeleteCard: (card: UnifiedCard) => void;
+  onDeletebyOracle: (oracleIds: string[]) => void;
+  onEditCard: (card: UnifiedCard) => void;
 }
 
-export default ({ wantsList, deck, onAddCardsToDeck, onDeleteCard }: Props) => {
+export default ({
+  wantsList,
+  deck,
+  onAddCardsToDeck,
+  onDeleteCard,
+  onDeletebyOracle,
+  onEditCard,
+}: Props) => {
   const cardNames = deck?.cards.map(({ name }) => name);
   const alreadyInDeck = ({ name }) => cardNames?.includes(name);
   const sortedCards = wantsList && sortByAdded([...wantsList?.cards]);
@@ -54,6 +63,8 @@ export default ({ wantsList, deck, onAddCardsToDeck, onDeleteCard }: Props) => {
         hidePagination
         cards={sortedCards}
         cardsPerRow={2}
+        onEditCard={onEditCard}
+        deleteByOracle={onDeletebyOracle}
         markAsDisabled={alreadyInDeck}
       />
     </StyledDeckWantsList>
