@@ -43,13 +43,13 @@ const getQuickstats = (deck: UnifiedDeck, type: string) => {
       };
     }
     case 'colorIdentity': {
-      const commander = deck.cards.find(({ isCommander }) => isCommander);
-      if (!commander) {
+      const commanders = deck.cards.filter(({ isCommander }) => isCommander);
+      if (!commanders) {
         return { type, text: 'No commander selected', status: 'warning' };
       }
 
       const colorIdentityErrorCards = deck.cards.filter(
-        (card) => !hasCorrectColorIdentity(card, commander)
+        (card) => !hasCorrectColorIdentity(card, commanders)
       );
 
       if (!colorIdentityErrorCards.length) {

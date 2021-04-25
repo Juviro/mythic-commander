@@ -7,8 +7,6 @@ BUGFIXES:
     - re-write getColorFromId now that ids are strings
     - on high latency network: move card from deck wants to deck -> wrong cards displayed in deck wants
     - auto update cards on prod not working
-    - color identity not correct for partner commander
-
 
 REQUIRED IN MIGRATION BRANCH:
     * Add action to commander: "Change Commander"
@@ -16,7 +14,6 @@ REQUIRED IN MIGRATION BRANCH:
     * Add button to add wants list (in button dropdown and as tab)
     - empty view for grid
     - switch page in grid: jumpt to top of list
-    - edit deck wants
 
 
 OPTIONAL IN MIGRATION BRANCH:
