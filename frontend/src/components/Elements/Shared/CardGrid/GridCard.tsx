@@ -9,7 +9,6 @@ import { useToggle } from '../../../Hooks';
 import CardInfo from './CardInfo';
 import { CardMenu } from './CardMenu';
 import { SelectButton } from './SelectButton';
-import { GridPreviewImage } from './GridPreviewImage';
 
 const StyledCenterWrapper = styled.div`
   width: 100%;
@@ -85,7 +84,7 @@ const GridCard = ({
   const displayedAmount = card.amount || card.totalAmount;
   const [showMenu, toggleShowMenu] = useToggle();
 
-  const [{ isDragging }, dragRef, preview] = useDrag({
+  const [, dragRef] = useDrag({
     item: { type: 'CARD', id: card.id, name: card.name, listId, amount: card.amount },
     canDrag,
     end: (_, monitor) => {
@@ -115,7 +114,6 @@ const GridCard = ({
   return (
     <StyledCenterWrapper>
       <StyledCardWrapper key={card.id} fixedSize={fixedSize}>
-        {/* <GridPreviewImage preview={preview} card={card} /> */}
         <StyledImageWrapper
           onClick={onClick}
           isSelected={isSelected}

@@ -39,9 +39,12 @@ export default ({ name, deck, id, onAddCards, numberOfCards }: Props) => {
     cards,
   };
 
-  const { onDeleteCard, onAddCard: onAddCardToWantsList } = useDeckWantsQueries(
-    wantsList
-  );
+  const {
+    onDeleteCard,
+    onAddCard: onAddCardToWantsList,
+    onDeletebyOracle,
+    onEditCard,
+  } = useDeckWantsQueries(wantsList);
 
   return (
     <FadeIn>
@@ -74,6 +77,9 @@ export default ({ name, deck, id, onAddCards, numberOfCards }: Props) => {
               deck={deck}
               onAddCardsToDeck={onAddCards}
               onDeleteCard={onDeleteCard}
+              // @ts-ignore
+              onEditCard={onEditCard}
+              onDeletebyOracle={onDeletebyOracle}
             />
           </Space>
         </StyledWrapper>

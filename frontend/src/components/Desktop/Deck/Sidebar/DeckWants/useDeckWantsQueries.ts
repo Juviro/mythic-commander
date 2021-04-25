@@ -1,8 +1,15 @@
 import { useMutation } from 'react-apollo';
 
-import { wantsListDesktop } from 'components/Desktop/WantsList/queries';
+import {
+  editWantsListCardDesktop,
+  wantsListDesktop,
+} from 'components/Desktop/WantsList/queries';
 import { addCardsToWantsList } from 'components/Mobile/Card/queries';
-import { MutationDeleteFromWantsListArgs } from 'types/graphql';
+import {
+  MutationDeleteFromWantsListArgs,
+  WantsList,
+  EditWantsListCardInput,
+} from 'types/graphql';
 import { UnifiedCard, UnifiedWantsList } from 'types/unifiedTypes';
 import message from 'utils/message';
 import sumCardAmount from 'utils/sumCardAmount';
@@ -12,15 +19,16 @@ const useDeckWantsQueries = (wantsList: UnifiedWantsList) => {
   const [mutateDelete] = useMutation<any, MutationDeleteFromWantsListArgs>(
     deleteFromWantsList
   );
+  const [mutateEdit] = useMutation(editWantsListCardDesktop);
   const [mutateAdd] = useMutation(addCardsToWantsList);
 
-  const onDeleteCard = (card: UnifiedCard) => {
+  const onDeletebyOracle = (oracleIds: string[]) => {
     const newCards = wantsList.originalCards.filter(
-      ({ card: { oracle_id } }) => oracle_id !== card.oracle_id
+      ({ card: { oracle_id } }) => !oracleIds.includes(oracle_id)
     );
     const newNumberOfCards = sumCardAmount(newCards);
     mutateDelete({
-      variables: { oracleIds: [card.oracle_id], wantsListId: wantsList.id },
+      variables: { oracleIds, wantsListId: wantsList.id },
       optimisticResponse: () => ({
         __typename: 'Mutation',
         deleteFromWantsList: {
@@ -30,6 +38,40 @@ const useDeckWantsQueries = (wantsList: UnifiedWantsList) => {
         },
       }),
     });
+  };
+
+  const onEditCard = (cardId: string, newProps: EditWantsListCardInput) => {
+    mutateEdit({
+      variables: { wantsListId: wantsList.id, newProps, cardId },
+      update: (cache, { data }) => {
+        const existing = cache.readQuery<{ wantsList: WantsList }>({
+          query: wantsListDesktop,
+          variables: { id: wantsList.id },
+        });
+        const { editWantsListCard: newCard } = data;
+
+        const newCards = existing.wantsList.cards.map((card) => {
+          if (card.card.id !== cardId) return card;
+          return newCard;
+        });
+
+        cache.writeQuery({
+          query: wantsListDesktop,
+          variables: { id: wantsList.id },
+          data: {
+            wantsList: {
+              ...existing.wantsList,
+              cards: newCards,
+            },
+          },
+        });
+      },
+    });
+  };
+
+  const onDeleteCard = (card: UnifiedCard) => {
+    const oracleId = card.oracle_id;
+    onDeletebyOracle([oracleId]);
   };
 
   const onAddCard = (card, name) => {
@@ -50,7 +92,7 @@ const useDeckWantsQueries = (wantsList: UnifiedWantsList) => {
     message(`Added <b>${usedName}</b> cards to <b>${wantsList?.name}</b>!`);
   };
 
-  return { onDeleteCard, onAddCard };
+  return { onDeleteCard, onAddCard, onDeletebyOracle, onEditCard };
 };
 
 export default useDeckWantsQueries;
