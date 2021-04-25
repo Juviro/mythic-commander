@@ -92,9 +92,9 @@ export default ({ active, title, index, onClick, isSecondary, wantsList }) => {
         listId={wantsList?.id}
         disabled={!wantsList?.id}
         style={{ display: 'flex', transition: 'height 0.3s', height: '40px' }}
-        canDropStyle={{ height: '100px' }}
+        canDropStyle={active ? undefined : { height: '100px' }}
       >
-        {({ canDrop }) => <StyledInner canDrop={canDrop}>{title}</StyledInner>}
+        <StyledInner>{title}</StyledInner>
       </Dropzone>
     </StyledTab>
   );
