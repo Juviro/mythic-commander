@@ -15,12 +15,14 @@ import WithActions from './WithActions';
 import { SelectionMenu } from './SelectionMenu';
 import useCardDetailNavigation from './useCardDetailNavigation';
 
+export const GRID_CARD_WIDTH = 220;
+
 export const StyledCardGridWrapper = styled.div<{ cardsPerRow?: number }>`
   display: grid;
   grid-template-columns: ${({ cardsPerRow }) =>
     cardsPerRow
       ? `repeat(${cardsPerRow}, minmax(0, 1fr))`
-      : 'repeat(auto-fill, minmax(220px, 1fr))'};
+      : `repeat(auto-fill, minmax(${GRID_CARD_WIDTH}px, 1fr))`};
   grid-gap: 16px;
   padding-top: 8px;
   width: 100%;
@@ -37,6 +39,8 @@ interface CardList {
   title?: string;
   key?: string;
   cards: UnifiedCard[];
+  additionalElements?: React.ReactNode;
+  additionalActions?: MenuItem[];
 }
 
 interface Props {
@@ -58,6 +62,8 @@ interface Props {
   cardLists?: CardList[];
   disableSelection?: boolean;
   canZoomIn?: boolean;
+  minimal?: boolean;
+  onClickCard?: (card: UnifiedCard) => void;
 }
 
 type PropsWithRouterProps = RouteComponentProps & Props;
@@ -72,15 +78,18 @@ const CardGrid = ({
   onDeleteCards,
   history,
   markAsDisabled,
-  hidePagination,
   dragProps,
   onOpenDetails,
   cardsPerRow,
   onMoveCards,
   onCopyCardsTo,
   cardLists: passedCardLists,
-  disableSelection,
   canZoomIn,
+  onClickCard,
+
+  disableSelection,
+  hidePagination,
+  minimal,
 }: PropsWithRouterProps) => {
   const [detailCardIndex, setDetailCardIndex] = useState<number | null>(null);
   const detailCard = cards?.[detailCardIndex];
@@ -115,7 +124,7 @@ const CardGrid = ({
     // eslint-disable-next-line
   }, [history.location.pathname]);
 
-  const showPagination = Boolean(cards?.length) && !hidePagination;
+  const showPagination = Boolean(cards?.length) && !hidePagination && !minimal;
   const paginationComponent = showPagination ? (
     <Pagination
       {...pagination}
@@ -196,11 +205,13 @@ const CardGrid = ({
             {list.cards?.map((card) => (
               <GridCard
                 card={card}
+                onClick={onClickCard}
                 dragProps={dragProps}
                 key={card.id}
-                actions={actions}
+                actions={[...actions, ...(list.additionalActions ?? [])]}
                 search={search}
-                disableSelection={disableSelection}
+                minimal={minimal}
+                disableSelection={disableSelection || minimal}
                 fixedSize={!cardsPerRow}
                 isSelected={selectedCardIds.includes(card.id)}
                 isAnyCardSelected={Boolean(selectedCardIds.length)}
@@ -212,6 +223,7 @@ const CardGrid = ({
                 }
               />
             ))}
+            {list.additionalElements}
           </StyledCardGridWrapper>
         </React.Fragment>
       ))}

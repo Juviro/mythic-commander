@@ -85,7 +85,7 @@ export const CardMenu = ({ card, onClose, actions, onOpenDetails }: Props) => {
             key={title}
             ghost={Boolean(!primary)}
             type={primary ? 'primary' : 'default'}
-            style={{ width: '100%' }}
+            style={{ width: '100%', padding: '4px 6px' }}
           >
             {title}
           </Button>

@@ -44,7 +44,7 @@ const getQuickstats = (deck: UnifiedDeck, type: string) => {
     }
     case 'colorIdentity': {
       const commanders = deck.cards.filter(({ isCommander }) => isCommander);
-      if (!commanders) {
+      if (!commanders.length) {
         return { type, text: 'No commander selected', status: 'warning' };
       }
 

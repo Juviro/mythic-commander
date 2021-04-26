@@ -50,7 +50,9 @@ const resolver = {
     if (!oracle_text || !type_line || !type_line.startsWith('Legendary')) {
       return null;
     }
-    const isGeneralPartner = oracle_text.includes('Partner (You can have');
+    const isGeneralPartner =
+      oracle_text.includes('Partner (You can have') ||
+      oracle_text.endsWith('Partner');
     if (isGeneralPartner) {
       return 'ALL';
     }

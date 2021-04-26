@@ -7,6 +7,8 @@ BUGFIXES:
     - re-write getColorFromId now that ids are strings
     - on high latency network: move card from deck wants to deck -> wrong cards displayed in deck wants
     - auto update cards on prod not working
+    - select cards -> copy to some deck -> selection should be cleared, but isn't
+    - hover over DeckCardsnotCollected label with a lot of cards: layout shifts because new scrollbar is added
 
 REQUIRED IN MIGRATION BRANCH:
     * Add action to commander: "Change Commander"
@@ -40,6 +42,7 @@ NEXT:
 
     - add option to export unowned cards from deck to wants
     - allow sorting by added in advanced search
+    - add deck colors to deck overview list
 
 IMPROVEMENTS:
     - improve re-rendering of table columns and grid card. especially table.

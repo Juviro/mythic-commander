@@ -8,7 +8,9 @@ import { Dropzone } from '../../../Elements/Desktop';
 export default ({ deck, loading, onAddCards }) => {
   const sortedCards = deck && sortByCmc(sortByName(deck.cards));
   const cardsByType = deck && getCardsByType(sortedCards).cardsByType;
-  const cardsByTypeWithoutEmpty = cardsByType?.filter(({ cards }) => cards.length);
+  const cardsByTypeWithoutEmpty = cardsByType?.filter(
+    ({ cards, type }) => cards.length || type === 'Commander'
+  );
 
   const onDrop = ({ id, name, amount = 1 }) => {
     onAddCards([{ id, amount }], name);

@@ -27,7 +27,6 @@ export const dropZoneStyle = css<DropzoneProps>`
 const StyledDropzone = styled.div<DropzoneProps>`
   width: 100%;
   height: 100%;
-  user-select: none;
   ${dropZoneStyle}
 `;
 
