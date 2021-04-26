@@ -10,14 +10,18 @@ import CardInfo from './CardInfo';
 import { CardMenu } from './CardMenu';
 import { SelectButton } from './SelectButton';
 
-const StyledCenterWrapper = styled.div`
+export const StyledCenterWrapper = styled.div<{ fixedSize: boolean }>`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  content-visibility: auto;
-  contain-intrinsic-size: 353.8px;
+  ${({ fixedSize }) =>
+    fixedSize &&
+    css`
+      content-visibility: auto;
+      contain-intrinsic-size: 353.8px;
+    `}
 `;
 
 const StyledCardWrapper = styled.div<{ fixedSize: boolean }>`
@@ -119,7 +123,7 @@ const GridCard = ({
   };
 
   return (
-    <StyledCenterWrapper>
+    <StyledCenterWrapper fixedSize={fixedSize}>
       <StyledCardWrapper key={card.id} fixedSize={fixedSize}>
         <StyledImageWrapper
           onClick={onClickCard}

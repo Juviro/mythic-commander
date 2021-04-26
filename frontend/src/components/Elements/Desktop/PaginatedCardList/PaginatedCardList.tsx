@@ -7,7 +7,6 @@ import { UnifiedCard } from 'types/unifiedTypes';
 import Flex from '../../Shared/Flex';
 import CardGrid from '../../Shared/CardGrid';
 import Header from './Header';
-import FullscreenSpinner from '../../Shared/Spinner';
 import useLocalStorage from '../../../Hooks/useLocalStorage';
 
 const StyledEmpty = styled(Empty)`
@@ -56,18 +55,19 @@ export default ({
     // eslint-disable-next-line
   }, [pageSize]);
 
-  const cardList = cards.length ? (
-    <CardGrid
-      search={search}
-      cards={cards}
-      loading={loading}
-      numberOfCards={numberOfCards}
-      onEditCard={onEditCard}
-      deleteByOracle={deleteByOracle}
-    />
-  ) : (
-    <StyledEmpty description="No cards found" />
-  );
+  const cardList =
+    cards.length || loading ? (
+      <CardGrid
+        search={search}
+        cards={cards}
+        loading={loading}
+        numberOfCards={numberOfCards}
+        onEditCard={onEditCard}
+        deleteByOracle={deleteByOracle}
+      />
+    ) : (
+      <StyledEmpty description="No cards found" />
+    );
 
   return (
     <Flex direction="column">
@@ -88,7 +88,7 @@ export default ({
         showAddedBeforeFilter={showAddedBeforeFilter}
         showCollectionFilters={showCollectionFilters}
       />
-      {loading && !numberOfCards ? <FullscreenSpinner /> : cardList}
+      {cardList}
     </Flex>
   );
 };

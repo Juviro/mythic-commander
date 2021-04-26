@@ -87,15 +87,15 @@ const Wants = ({ history }) => {
       ) : (
         <>
           <OverviewList
-            header="Your wants lists"
+            header="Your Wants Lists"
             elements={unlinkedLists}
-            addElementText="Add wants list"
+            addElementText="Add Wants List"
             onAddElement={onAddDeck}
             onClick={onOpenWantsList}
           />
           {Boolean(linkedLists.length) && (
             <OverviewList
-              header="Linked wants lists"
+              header="Linked Wants Lists"
               elements={linkedLists}
               onClick={onOpenWantsList}
             />

@@ -55,7 +55,7 @@ const CardModalDesktop = ({
 };
 
 export default ({ visible, selectedCard, ...props }) => {
-  if (!visible || !selectedCard) return null;
+  if (!visible) return null;
 
   return <CardModalDesktop {...props} selectedCard={selectedCard} />;
 };
