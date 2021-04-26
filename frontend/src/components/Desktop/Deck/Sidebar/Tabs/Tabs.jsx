@@ -45,7 +45,7 @@ export default ({ deck, setCurrentTabId, currentTabId }) => {
   const addWantsList = {
     title: (
       <Space>
-        <span>Add Wants list</span>
+        <span>Add Wants List</span>
         <PlusOutlined />
       </Space>
     ),

@@ -13,7 +13,7 @@ const StyledDrawer = styled(Drawer)`
   && .ant-drawer-content {
     overflow: visible;
     @media (max-width: 1600px) {
-      padding-bottom: 50px;
+      padding-bottom: 100px;
     }
   }
 `;

@@ -3,8 +3,6 @@ import { useEffect } from 'react';
 import { useQueryParam, NumberParam } from 'use-query-params';
 import scrollIntoView from 'utils/scrollIntoView';
 
-export const CARD_WIDTH = 240;
-
 export interface Pagination {
   pageSize: number;
   current: number;

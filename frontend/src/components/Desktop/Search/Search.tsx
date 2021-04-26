@@ -29,7 +29,7 @@ export default () => {
                   onSearch();
                   setTimeout(
                     () => scrollRef.current?.scrollIntoView({ behavior: 'smooth' }),
-                    100
+                    200
                   );
                 }}
                 onResetOptions={onResetOptions}

@@ -62,7 +62,7 @@ export const WantsListsButton = ({ deck, currentTabId, setCurrentTabId }: Props)
     id,
     title: `${name} (${numberOfCards})`,
     onClick: () => setCurrentTabId(id),
-    onDrop: () => onAddCard(id, name),
+    onDrop: onAddCard(id, name),
   }));
 
   const addWantsListItem = {
@@ -70,7 +70,7 @@ export const WantsListsButton = ({ deck, currentTabId, setCurrentTabId }: Props)
     title: (
       <Space>
         <PlusOutlined />
-        <span>Add Wants list</span>
+        <span>Add Wants List</span>
       </Space>
     ),
     onClick: onCreateWantsList,
@@ -90,7 +90,7 @@ export const WantsListsButton = ({ deck, currentTabId, setCurrentTabId }: Props)
         >
           <Dropzone
             onDrop={onDrop}
-            // disabled={!onDrop}
+            disabled={!onDrop}
             listId={id}
             style={{ height: '100%' }}
           >
