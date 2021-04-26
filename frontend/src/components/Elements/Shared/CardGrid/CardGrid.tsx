@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Divider, Pagination, Typography } from 'antd';
+import { Divider, Empty, Pagination, Typography } from 'antd';
 import styled from 'styled-components';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { EditOutlined, LoadingOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -189,6 +189,10 @@ const CardGrid = ({
         numberOfElements={pagination.pageSize}
       />
     );
+  }
+
+  if (!cards?.length && !passedCardLists?.length) {
+    return <Empty description="This list is empty" style={{ marginTop: 48 }} />;
   }
 
   return (
