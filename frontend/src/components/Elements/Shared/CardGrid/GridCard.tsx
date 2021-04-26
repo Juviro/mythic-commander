@@ -135,7 +135,7 @@ const GridCard = ({
           ref={dragRef}
         >
           {canZoomIn && <EnlargeImage card={card} />}
-          <FlippableCard card={card} />
+          <FlippableCard card={card} onFlipCard={() => toggleShowMenu(false)} />
           {displayedAmount > 1 && (
             <StyledAmountWrapper>{`${displayedAmount}x`}</StyledAmountWrapper>
           )}

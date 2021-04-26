@@ -1,5 +1,7 @@
 import React from 'react';
 import { List, Space, Typography } from 'antd';
+
+import isMobile from 'utils/isMobile';
 import PreviewCardImage from '../PreviewCardImage';
 
 export default ({ cards }) => (
@@ -7,7 +9,7 @@ export default ({ cards }) => (
     {cards.map((card) => (
       <List.Item key={card.id}>
         <Space>
-          <PreviewCardImage card={card} />
+          <PreviewCardImage card={card} highlightOnHover={!isMobile()} />
           <Typography.Text strong>
             {`${card.amount || card.totalAmount || 1}x`}
           </Typography.Text>
