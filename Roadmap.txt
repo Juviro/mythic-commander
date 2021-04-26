@@ -1,39 +1,29 @@
+PRIORITY BUGFIXES
+    - auto update cards on prod not working
+
 BUGFIXES:
     - a lot of the cards are white on render, display only on scroll (mobile, guess this is fixed in migration)
-    - Share button visible for non-owned wants lists
     - no error boundary for card search desktop (https://mythic-commander.com/cards/XXX)
-    - collection -> sort by price -> last page: reloading changes order of elements
     - lifetracker: stuck in loading screen when bg images disabled
     - re-write getColorFromId now that ids are strings
-    - on high latency network: move card from deck wants to deck -> wrong cards displayed in deck wants
-    - auto update cards on prod not working
-    - select cards -> copy to some deck -> selection should be cleared, but isn't
     - hover over DeckCardsnotCollected label with a lot of cards: layout shifts because new scrollbar is added
 
-
 OPTIONAL IN MIGRATION BRANCH:
-    - click search -> scroll to list start, similar to mobile (add for mobile as well, if it's autosearch)
-    - display eur prices in card detail view
     - display eur prices in collection value + graphs
     - display how many cards are included in eur/usd price
-    - when no eur price available: estimate based on avg price diff (calc in psql once) (?)
-    - redesign moveTo modal, especially for mobile
+    - select cards -> copy to some deck -> selection should be cleared, but isn't
 
-BEFORE NEXT:
+CURRENT:
     - Add option to specify a set for multi input
-
+    - Display foil prices in card detail
 
 NEXT:
+    - redesign moveTo modal, especially for mobile
     - CHANGE TITLE BASED ON CONTENT (Deckname, Collection etc)
     - Add to cardgrid selection menu: export cards as text, proxy cards
     - mobile card list preview: allow swpie to next card
-    - Split code with React.lazy
-    - re-add loading animation to paginated list (e.g. collection desktop)
+    - Split more code with React.lazy
     - move to new image service
-    - refactor authentication, remove from context creation
-    - improve loading time of deck
-    - add stylelint (or don't)
-    - when only displaying unowned in deck -> add cards to.. -> pre-select unowned only, but show all
 
     - add option to export unowned cards from deck to wants
     - allow sorting by added in advanced search

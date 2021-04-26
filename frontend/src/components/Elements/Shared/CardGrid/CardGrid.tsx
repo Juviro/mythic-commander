@@ -186,7 +186,7 @@ const CardGrid = ({
       <CustomSkeleton.Grid
         cardsPerRow={cardsPerRow}
         showPagination={!hidePagination && !minimal}
-        numberOfElements={pagination.pageSize}
+        numberOfElements={hidePagination ? 20 : pagination.pageSize}
       />
     );
   }

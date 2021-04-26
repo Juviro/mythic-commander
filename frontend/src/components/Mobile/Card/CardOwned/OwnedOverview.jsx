@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Divider, message } from 'antd';
 import { useMutation } from 'react-apollo';
@@ -82,6 +82,10 @@ export default ({ cardOracleId, cards, onChangeSet, selectedCardId }) => {
       [id]: { amountOwned: 1, amountOwnedFoil: 0 },
     });
   };
+
+  useEffect(() => {
+    onResetEditing();
+  }, [cardOracleId]);
 
   const hasChanges = Boolean(
     Object.keys(editedMap).length + Object.keys(addedMap).length

@@ -16,8 +16,8 @@ const renderSet = (card) => {
   return <Set setKey={card.set} name={card.set_name} />;
 };
 
-const renderPrice = (priceKey) => (price) => (
-  <StyledPriceWrapper>{getPriceLabel(price[priceKey])}</StyledPriceWrapper>
+const renderPrice = (currency) => (price) => (
+  <StyledPriceWrapper>{getPriceLabel(price[currency], { currency })}</StyledPriceWrapper>
 );
 
 const renderOwned = (isEditing, onChangeAmount, onSaveChanges, amountKey) => (
@@ -61,7 +61,7 @@ const baseColumns = [
   },
   {
     key: '2',
-    title: 'Price',
+    title: 'USD',
     dataIndex: 'prices',
     sorter: sortByPrice('usd'),
     render: renderPrice('usd'),
@@ -70,10 +70,10 @@ const baseColumns = [
   },
   {
     key: '3',
-    title: 'Foil',
+    title: 'EUR',
     dataIndex: 'prices',
-    sorter: sortByPrice('usd_foil'),
-    render: renderPrice('usd_foil'),
+    sorter: sortByPrice('eur'),
+    render: renderPrice('eur'),
     width: 80,
     align: 'center',
   },
