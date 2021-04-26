@@ -9,8 +9,13 @@ const StyledFadeIn = styled.div<{ duration: number }>`
 interface Props {
   duration?: number;
   children: React.ReactNode;
+  style?: React.CSSProperties;
 }
 
-export const FadeIn = ({ duration = 0.5, children }: Props) => {
-  return <StyledFadeIn duration={duration}>{children}</StyledFadeIn>;
+export const FadeIn = ({ duration = 0.5, children, style }: Props) => {
+  return (
+    <StyledFadeIn duration={duration} style={style}>
+      {children}
+    </StyledFadeIn>
+  );
 };

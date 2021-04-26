@@ -1,12 +1,13 @@
 import React from 'react';
-import { Button, Dropdown, Menu } from 'antd';
+import { Button, Dropdown, Menu, Space } from 'antd';
 import styled, { css } from 'styled-components';
-import { LoadingOutlined, UpOutlined } from '@ant-design/icons';
+import { LoadingOutlined, PlusOutlined, UpOutlined } from '@ant-design/icons';
 
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { primary, primarySemiLight } from 'constants/colors';
 import { Dropzone } from 'components/Elements/Desktop';
 import { useToggle } from 'components/Hooks';
+import useCreateWantsList from 'components/Desktop/Deck/Sidebar/Tabs/useCreateWantsList';
 import { ADVANCED_SEARCH } from './ActionButtons';
 import useDeckWantsQueries from './useDeckWantsQueries';
 
@@ -15,7 +16,7 @@ const StyledButton = styled(Button)`
   height: 40px;
 `;
 
-const StyledMenuItem = styled(Menu.Item)<{ selected: boolean }>`
+export const StyledMenuItem = styled(Menu.Item)<{ selected: boolean }>`
   height: 60px;
   display: flex;
   align-items: center;
@@ -32,6 +33,13 @@ const StyledMenuItem = styled(Menu.Item)<{ selected: boolean }>`
     `}
 `;
 
+const StyledMenuItemInner = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 4px 6px;
+  height: 100%;
+`;
+
 interface Props {
   deck?: UnifiedDeck;
   currentTabId: string | null;
@@ -41,6 +49,7 @@ interface Props {
 export const WantsListsButton = ({ deck, currentTabId, setCurrentTabId }: Props) => {
   const [isHoveringButton, setIsHoveringButton] = useToggle();
   const [isHoveringMenu, setIsHoveringMenu] = useToggle();
+  const { onCreateWantsList } = useCreateWantsList(deck, setCurrentTabId);
   const label = deck ? `Wants Lists (${deck?.wantsLists.length})` : 'Wants Lists';
 
   const { onAddCard } = useDeckWantsQueries();
@@ -49,23 +58,43 @@ export const WantsListsButton = ({ deck, currentTabId, setCurrentTabId }: Props)
     setTimeout(() => setIsHoveringButton(false), 100);
   };
 
+  const wantsListsItems = deck?.wantsLists.map(({ id, name, numberOfCards }) => ({
+    id,
+    title: `${name} (${numberOfCards})`,
+    onClick: () => setCurrentTabId(id),
+    onDrop: () => onAddCard(id, name),
+  }));
+
+  const addWantsListItem = {
+    id: 'ADD_WANTS',
+    title: (
+      <Space>
+        <PlusOutlined />
+        <span>Add Wants list</span>
+      </Space>
+    ),
+    onClick: onCreateWantsList,
+    onDrop: null,
+  };
+
   const menu = (
     <Menu>
-      {deck?.wantsLists.map(({ id, name, numberOfCards }) => (
+      {[...wantsListsItems, addWantsListItem].map(({ id, title, onDrop, onClick }) => (
         <StyledMenuItem
           key={id}
-          onClick={() => setCurrentTabId(id)}
+          onClick={onClick}
           selected={id === currentTabId}
           style={{ padding: '1px 0 0' }}
           onMouseEnter={() => setIsHoveringMenu(true)}
           onMouseLeave={() => setIsHoveringMenu(false)}
         >
           <Dropzone
-            onDrop={onAddCard(id, name)}
+            onDrop={onDrop}
+            // disabled={!onDrop}
             listId={id}
-            style={{ display: 'flex', alignItems: 'center', padding: '4px 6px' }}
+            style={{ height: '100%' }}
           >
-            {`${name} (${numberOfCards})`}
+            <StyledMenuItemInner>{title}</StyledMenuItemInner>
           </Dropzone>
         </StyledMenuItem>
       ))}
