@@ -64,6 +64,18 @@ const resolver = {
 
     return null;
   },
+  canBeCommander(card) {
+    const { oracle_text, type_line } = card.card_faces?.[0] ?? card;
+    if (!type_line || !type_line.startsWith('Legendary')) {
+      return false;
+    }
+
+    if (oracle_text?.toLowerCase().includes('can be your commander')) {
+      return true;
+    }
+
+    return type_line.includes('Creature');
+  },
 };
 
 export default resolver;

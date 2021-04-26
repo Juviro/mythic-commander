@@ -15,6 +15,7 @@ const CARD_FIELDS = `
       mana_cost
       color_identity
       possiblePartner
+      canBeCommander
       
       oracleCard {
         _id

@@ -28,6 +28,7 @@ type Card {
   amountOwned: Int!
   amountOwnedFoil: Int!
   possiblePartner: String
+  canBeCommander: Boolean!
 
   oracleCard: OracleCard!
   relatedCards: [Card!]
