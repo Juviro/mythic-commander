@@ -1,3 +1,4 @@
+import { gql } from '@apollo/client';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
@@ -49,6 +50,7 @@ export type Card = {
   amountOwned: Scalars['Int'];
   amountOwnedFoil: Scalars['Int'];
   possiblePartner?: Maybe<Scalars['String']>;
+  canBeCommander?: Maybe<Scalars['Boolean']>;
   oracleCard: OracleCard;
   relatedCards?: Maybe<Array<Card>>;
 };
@@ -270,7 +272,8 @@ export type MutationDeleteDeckArgs = {
 };
 
 export type MutationDeleteFromDeckArgs = {
-  cardId: Scalars['String'];
+  cardId?: Maybe<Scalars['String']>;
+  cardIds?: Maybe<Array<Maybe<Scalars['String']>>>;
   deckId: Scalars['String'];
 };
 

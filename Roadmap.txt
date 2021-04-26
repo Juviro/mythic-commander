@@ -55,7 +55,6 @@ IMPROVEMENTS:
 
 FEATURES:
     - sharable decks / wants
-    - add support for planeswalker commanders
     - show last search when no input in searchbar
     - check for multiple copies of one card for deck legality check
     - show if deck is legal in deck overview, order by legality (similar to magic arena)

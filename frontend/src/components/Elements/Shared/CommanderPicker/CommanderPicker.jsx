@@ -67,9 +67,7 @@ export default ({ deck }) => {
     });
   };
 
-  const possibleFirstCommanders = deck.cards.filter((card) =>
-    ['Legendary', 'Creature'].every((type) => card.primaryTypes.includes(type))
-  );
+  const possibleFirstCommanders = deck.cards.filter((card) => card.canBeCommander);
   const possibleSecondCommanders = getSecondCommanders(deck.cards, firstCommander);
 
   const onPickCommander = (cardId) => {
