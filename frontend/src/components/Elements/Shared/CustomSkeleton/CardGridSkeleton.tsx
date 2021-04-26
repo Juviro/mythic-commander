@@ -44,7 +44,7 @@ export const CardGridSkeleton = ({
   large,
   cardsPerRow,
   showPagination,
-  numberOfElements = 10,
+  numberOfElements = 20,
 }: Props) => {
   const dummyElements = [...new Array(numberOfElements)].map((_, i) => i);
   const fixedSize = !cardsPerRow;

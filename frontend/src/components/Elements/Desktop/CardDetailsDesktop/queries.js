@@ -32,6 +32,8 @@ const CARD_FIELDS = `
       prices {
         usd
         usd_foil
+        eur
+        eur_foil
       }
 
     }

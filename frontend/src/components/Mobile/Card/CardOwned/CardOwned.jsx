@@ -1,7 +1,13 @@
 import React from 'react';
-import { Skeleton, Collapse } from 'antd';
+import { Skeleton, Typography } from 'antd';
 
+import styled from 'styled-components';
 import OwnedOverview from './OwnedOverview';
+
+const StyledLabel = styled(Typography.Text)`
+  display: flex;
+  align-self: flex-start;
+`;
 
 const getOwnedAmount = (card) => {
   return card.allSets.reduce(
@@ -20,22 +26,14 @@ export default ({ card, loading, onChangeSet, selectedCardId }) => {
   const totalOwned = ownedNonfoil + ownedFoil;
 
   return (
-    <Collapse
-      style={{ width: '100%', backgroundColor: 'white' }}
-      bordered={false}
-      className="no-padding-collapse"
-    >
-      <Collapse.Panel
-        key="1"
-        header={totalOwned ? `${totalOwned}x collected` : 'Not yet collected'}
-      >
-        <OwnedOverview
-          cardOracleId={card.oracle_id}
-          cards={card.allSets}
-          onChangeSet={onChangeSet}
-          selectedCardId={selectedCardId}
-        />
-      </Collapse.Panel>
-    </Collapse>
+    <>
+      <StyledLabel strong>{`${totalOwned}x collected`}</StyledLabel>
+      <OwnedOverview
+        cardOracleId={card.oracle_id}
+        cards={card.allSets}
+        onChangeSet={onChangeSet}
+        selectedCardId={selectedCardId}
+      />
+    </>
   );
 };

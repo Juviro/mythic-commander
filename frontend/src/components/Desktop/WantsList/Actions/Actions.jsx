@@ -38,7 +38,7 @@ export default ({ wantsList, onAddCards, canEdit }) => {
 
   return (
     <Space>
-      <WantsListVisibility visibility={wantsList.visibility} />
+      {wantsList.canEdit && <WantsListVisibility visibility={wantsList.visibility} />}
       <Menu actions={actions} placement="bottomRight" />
     </Space>
   );
