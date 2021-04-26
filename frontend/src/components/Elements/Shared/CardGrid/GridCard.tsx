@@ -79,6 +79,8 @@ const GridCard = ({
   isAnyCardSelected,
   fixedSize,
   disableSelection,
+  minimal,
+  onClick,
 }) => {
   const { canDrag = false, listId, onSuccessfullDrop } = dragProps ?? {};
   const displayedAmount = card.amount || card.totalAmount;
@@ -101,7 +103,12 @@ const GridCard = ({
     }),
   });
 
-  const onClick = () => {
+  const onClickCard = () => {
+    if (onClick) {
+      onClick(card);
+      return;
+    }
+
     if (isAnyCardSelected) {
       onSelect();
     } else if (actions.length && !showMenu) {
@@ -115,9 +122,10 @@ const GridCard = ({
     <StyledCenterWrapper>
       <StyledCardWrapper key={card.id} fixedSize={fixedSize}>
         <StyledImageWrapper
-          onClick={onClick}
+          onClick={onClickCard}
           isSelected={isSelected}
           onMouseMove={(e) => {
+            if (minimal) return;
             // Check for touch devices
             if (!e.movementX && !e.movementY) return;
             toggleShowMenu(true);
@@ -148,7 +156,7 @@ const GridCard = ({
             />
           )}
         </StyledImageWrapper>
-        <CardInfo card={card} search={search} />
+        <CardInfo card={card} search={search} minimal={minimal} />
       </StyledCardWrapper>
     </StyledCenterWrapper>
   );

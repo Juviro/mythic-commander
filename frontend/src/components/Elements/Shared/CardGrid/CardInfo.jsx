@@ -4,7 +4,7 @@ import { Typography } from 'antd';
 import { Flex, OwnedBadge, PriceLabel } from 'components/Elements/Shared';
 import { highlightText } from 'utils/highlightText';
 
-export default ({ card, loading = false, search }) => {
+export default ({ card, loading = false, search, minimal = false }) => {
   if (loading) return null;
 
   return (
@@ -13,9 +13,9 @@ export default ({ card, loading = false, search }) => {
         <Typography.Text ellipsis style={{ fontSize: 14 }}>
           {highlightText(search, card.name)}
         </Typography.Text>
-        {card.owned && <OwnedBadge style={{ fontSize: 14 }} />}
+        {card.owned && !minimal && <OwnedBadge style={{ fontSize: 14 }} />}
       </Flex>
-      <PriceLabel card={card} />
+      {!minimal && <PriceLabel card={card} />}
     </Flex>
   );
 };

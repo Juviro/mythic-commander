@@ -5,11 +5,13 @@ import { useMutation } from 'react-apollo';
 import { getListStats } from 'utils/getListStats';
 import { lightText } from 'constants/colors';
 import message from 'utils/message';
-import { Flex, CardGrid } from '../../../Elements/Shared';
+import { CloseOutlined } from '@ant-design/icons';
+import { Flex, CardGrid, CommanderPicker } from '../../../Elements/Shared';
 import { deleteFromDeckDesktop, editDeckCardDesktop, getDeckDesktop } from '../queries';
 
 const StyledSubtitle = styled.span`
   font-size: 12px;
+  height: 16px;
   color: ${lightText};
 `;
 
@@ -72,16 +74,35 @@ export default ({ loading, cardsByType, deck }) => {
 
   const cardLists = cardsByType?.map(({ type, cards }) => {
     const { valueLabelEur, valueLabelUsd } = getListStats({ cards });
-    const numberOfCardsLabel = type === 'Commander' ? '' : `(${cards.length})`;
-    const listTitle = type === 'Commander' ? `Commander - ${cards[0]?.name}` : type;
+    const isCommander = type === 'Commander';
+    const numberOfCardsLabel = isCommander ? '' : `(${cards.length})`;
+
+    const getListHeading = () => {
+      if (!isCommander || !cards[0]) return type;
+      return `Commander - ${cards.map(({ name }) => name).join(' & ')}`;
+    };
 
     const title = (
       <Flex direction="column">
-        <span>{`${listTitle} ${numberOfCardsLabel}`}</span>
-        <StyledSubtitle>{`${valueLabelUsd} | ${valueLabelEur}`}</StyledSubtitle>
+        <span>{`${getListHeading()} ${numberOfCardsLabel}`}</span>
+        <StyledSubtitle>
+          {cards.length ? `${valueLabelUsd} | ${valueLabelEur}` : ''}
+        </StyledSubtitle>
       </Flex>
     );
-    return { title, cards, key: type };
+
+    const additionalElements = isCommander ? <CommanderPicker deck={deck} /> : undefined;
+    const additionalActions = isCommander
+      ? [
+          {
+            Icon: CloseOutlined,
+            title: 'Remove Commander',
+            onClick: (card) => onEditCard(card.id, { isCommander: false }),
+          },
+        ]
+      : undefined;
+
+    return { title, cards, key: type, additionalElements, additionalActions };
   });
 
   const allCardsInOrder = cardsByType?.map(({ cards }) => cards).flat();
