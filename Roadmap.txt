@@ -19,7 +19,9 @@ OPTIONAL IN MIGRATION BRANCH:
     - when no eur price available: estimate based on avg price diff (calc in psql once) (?)
     - redesign moveTo modal, especially for mobile
 
-CURRENT:
+BEFORE NEXT:
+    - Add option to specify a set for multi input
+
 
 NEXT:
     - CHANGE TITLE BASED ON CONTENT (Deckname, Collection etc)

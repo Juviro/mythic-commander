@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { Divider, Typography } from 'antd';
 import styled from 'styled-components';
 
@@ -21,6 +21,7 @@ const StyledCardWrapper = styled.div`
 `;
 
 export default ({ onAddCards, alreadyInDeck }) => {
+  const scrollRef = useRef(null);
   const { focusedElements } = useContext(FocusContext);
   // check if this has focus, ignore if details modal is open
   const blockShortcuts =
@@ -59,7 +60,13 @@ export default ({ onAddCards, alreadyInDeck }) => {
           <Flex direction="column" style={{ padding: 16 }}>
             <Filter
               autoFocus
-              onSearch={onSearch}
+              onSearch={() => {
+                onSearch();
+                setTimeout(
+                  () => scrollRef.current?.scrollIntoView({ behavior: 'smooth' }),
+                  200
+                );
+              }}
               options={currentOptions}
               onChangeOption={onChangeOption}
             />
@@ -70,12 +77,20 @@ export default ({ onAddCards, alreadyInDeck }) => {
               <OrderBy />
             </Flex>
             <SearchButton
-              onSearch={onSearch}
+              onSearch={() => {
+                onSearch();
+                setTimeout(
+                  () => scrollRef.current?.scrollIntoView({ behavior: 'smooth' }),
+                  200
+                );
+              }}
               loading={loading}
               onResetOptions={onResetOptions}
               isFilterResettable={Object.values(currentOptions).some(Boolean)}
               style={{ marginBottom: 8 }}
             />
+
+            <div ref={scrollRef} />
             {isSearching && <CurrentSearchOptions style={{ marginTop: 8 }} showDivider />}
             <Divider />
             <StyledCardWrapper>
