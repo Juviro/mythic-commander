@@ -9,6 +9,7 @@ import { wantsListDesktop } from 'components/Desktop/WantsList/queries';
 import unifyCardFormat from 'utils/unifyCardFormat';
 import { FadeIn, OneTimeInfoBox } from 'components/Elements/Shared';
 import { AddCards, Dropzone } from 'components/Elements/Desktop';
+import { Link } from 'react-router-dom';
 import DeckWantsList from './DeckWantsList';
 import useDeckWantsQueries from './useDeckWantsQueries';
 
@@ -47,14 +48,16 @@ export default ({ name, deck, id, onAddCards, numberOfCards }: Props) => {
   } = useDeckWantsQueries(wantsList);
 
   return (
-    <FadeIn>
+    <FadeIn style={{ height: '100%' }}>
       <Dropzone
         onDrop={(val) => onAddCardToWantsList(val, null)}
         listId={wantsList?.id}
         style={{ height: 'unset', minHeight: '100%' }}
       >
         <StyledWrapper>
-          <Typography.Title level={3}>{`${name} (${numberOfCards})`}</Typography.Title>
+          <Typography.Title level={3}>
+            <Link to={`/wants/${id}`}>{`${name} (${numberOfCards})`}</Link>
+          </Typography.Title>
           <Space direction="vertical" size={48}>
             <AddCards
               isAdvanced={false}

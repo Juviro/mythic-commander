@@ -75,6 +75,8 @@ const useDeckWantsQueries = (wantsList: UnifiedWantsList) => {
   };
 
   const onAddCard = (card, name) => {
+    if (!wantsList) return;
+
     const usedName = name ?? card.name ?? '';
     const { amount, id } = card;
     mutateAdd({
@@ -85,7 +87,7 @@ const useDeckWantsQueries = (wantsList: UnifiedWantsList) => {
       refetchQueries: [
         {
           query: wantsListDesktop,
-          variables: { id: wantsList.id },
+          variables: { id: wantsList?.id },
         },
       ],
     });

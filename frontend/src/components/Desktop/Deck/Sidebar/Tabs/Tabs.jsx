@@ -2,7 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { ADVANCED_SEARCH } from 'components/Desktop/Deck/ActionBar/ActionButtons/ActionButtons';
+import { PlusOutlined } from '@ant-design/icons';
+import { Space } from 'antd';
+import useCreateWantsList from 'components/Desktop/Deck/Sidebar/Tabs/useCreateWantsList';
 import Tab from './Tab';
+
+const ADD_WANTS_LIST = 'ADD_WANTS_LIST';
 
 const StyledWrapper = styled.div`
   user-select: none;
@@ -25,6 +30,7 @@ const StyledWrapper = styled.div`
 `;
 
 export default ({ deck, setCurrentTabId, currentTabId }) => {
+  const { onCreateWantsList } = useCreateWantsList(deck, setCurrentTabId);
   const wantsListsTabs = deck?.wantsLists?.map(({ id, name, numberOfCards }) => ({
     title: `${name} (${numberOfCards})`,
     wantsList: { id, name },
@@ -36,7 +42,24 @@ export default ({ deck, setCurrentTabId, currentTabId }) => {
     id: ADVANCED_SEARCH,
     isSecondary: true,
   };
-  const tabs = [advancedSearch, ...wantsListsTabs];
+  const addWantsList = {
+    title: (
+      <Space>
+        <span>Add Wants list</span>
+        <PlusOutlined />
+      </Space>
+    ),
+    id: ADD_WANTS_LIST,
+  };
+  const tabs = [advancedSearch, ...wantsListsTabs, addWantsList];
+
+  const onClickTab = (tabId) => {
+    if (tabId === ADD_WANTS_LIST) {
+      onCreateWantsList();
+    } else {
+      setCurrentTabId(tabId);
+    }
+  };
 
   return (
     <StyledWrapper>
@@ -48,7 +71,7 @@ export default ({ deck, setCurrentTabId, currentTabId }) => {
           wantsList={wantsList}
           isSecondary={isSecondary}
           active={id === currentTabId}
-          onClick={() => setCurrentTabId(id)}
+          onClick={() => onClickTab(id)}
         />
       ))}
     </StyledWrapper>
