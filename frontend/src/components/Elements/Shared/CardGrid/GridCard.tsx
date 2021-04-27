@@ -137,6 +137,10 @@ const GridCard = ({
           onMouseLeave={() => toggleShowMenu(false)}
           markAsDisabled={markAsDisabled}
           ref={dragRef}
+          onContextMenu={(e) => {
+            e.preventDefault();
+            onSelect();
+          }}
         >
           {canZoomIn && <EnlargeImage card={card} />}
           <FlippableCard card={card} onFlipCard={() => toggleShowMenu(false)} />
