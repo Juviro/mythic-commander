@@ -59,5 +59,7 @@ export default (
     .limit(limit)
     .offset(offset)
     .leftJoin('cards', { 'cards.id': 'grouped.id' })
-    .orderByRaw(`${getOrderColumn(order)} ${direction.toUpperCase()}`);
+    .orderByRaw(
+      `${getOrderColumn(order)} ${direction.toUpperCase()}, name ASC`
+    );
 };
