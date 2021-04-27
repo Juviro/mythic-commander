@@ -9,8 +9,16 @@ interface Props {
 }
 
 export default ({ children, focusId, visible, style }: Props) => {
+  const onClick = useShortcutFocus(focusId, visible);
+
   return (
-    <div onClick={useShortcutFocus(focusId, visible)} style={style}>
+    <div
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+      style={style}
+    >
       {children}
     </div>
   );

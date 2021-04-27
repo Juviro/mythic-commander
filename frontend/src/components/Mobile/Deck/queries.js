@@ -23,7 +23,8 @@ const CARD_FIELDS = `
         
         primaryTypes
         isCommanderLegal
-        minPrice
+        minPriceUsd
+        minPriceEur
       }
     }
 `;

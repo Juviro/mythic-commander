@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useMutation, useQuery } from 'react-apollo';
 import { Skeleton } from 'antd';
 
+import message from 'utils/message';
 import CardSubList from './CardSubList';
 import { LayoutAndSortPicker } from '../../../Elements/Shared';
 import {
@@ -31,18 +32,16 @@ const DeckList = ({ deck, loading }) => {
   const { cardsByType = [], commander } = getCardsByType(cards);
 
   const onDeleteCard = (cardId) => {
-    const newCards = deck.cards.filter((card) => card.id !== cardId);
-    const newNumberOfCards = deck.numberOfCards;
     mutateDelete({
       variables: { cardId, deckId: deck.id },
-      optimisticResponse: () => ({
-        __typename: 'Mutation',
-        deleteFromWantsList: {
-          ...deck,
-          cards: newCards,
-          numberOfCards: newNumberOfCards,
-        },
-      }),
+    });
+  };
+
+  const deleteByOracle = (oracleIds) => {
+    oracleIds.forEach((oracleId) => {
+      const { id, name } = deck.cards.find(({ oracle_id }) => oracle_id === oracleId);
+      message(`Deleted <b>${name}</b> from ${deck.name}!`);
+      onDeleteCard(id);
     });
   };
 
@@ -96,6 +95,7 @@ const DeckList = ({ deck, loading }) => {
               commander={commander}
               onEditCard={onEditCard}
               onDeleteCard={onDeleteCard}
+              deleteByOracle={deleteByOracle}
             />
           ))}
         </Skeleton>

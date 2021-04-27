@@ -1,20 +1,28 @@
 import { UnifiedCard, UnifiedDeckCard } from 'types/unifiedTypes';
 
-export const isCardLegal = (card: UnifiedCard, commander: UnifiedCard) => {
-  const { color_identity, isCommanderLegal } = card;
-  if (!commander) return isCommanderLegal;
-
-  const rightColorIdentity =
+export const hasCorrectColorIdentity = (card: UnifiedCard, commanders: UnifiedCard[]) => {
+  const { color_identity } = card;
+  return (
     !color_identity ||
-    color_identity.every((color) => commander.color_identity.includes(color));
+    color_identity.every((color) =>
+      commanders.some((commander) => commander.color_identity.includes(color))
+    )
+  );
+};
 
-  return rightColorIdentity && isCommanderLegal;
+export const isCardLegal = (card: UnifiedCard, commanders: UnifiedCard[]) => {
+  const { isCommanderLegal } = card;
+  if (!commanders?.length) return isCommanderLegal;
+
+  const correctColorIdentity = hasCorrectColorIdentity(card, commanders);
+
+  return correctColorIdentity && isCommanderLegal;
 };
 
 export const isDeckLegal = ({ cards = [] }: { cards: UnifiedDeckCard[] }) => {
-  const commander = cards.find(({ isCommander }) => isCommander);
+  const commanders = cards.filter(({ isCommander }) => isCommander);
 
-  return cards.every((card) => isCardLegal(card, commander));
+  return cards.every((card) => isCardLegal(card, commanders));
 };
 
 export const isDeckOwned = ({ cards = [] }: { cards: UnifiedCard[] }) => {
@@ -25,23 +33,22 @@ export const getImageUris = (card: UnifiedCard) => {
   return card.image_uris ? card.image_uris : card.card_faces[0].image_uris;
 };
 
-export const getPrice = ({ prices: { usd, usd_foil } }: UnifiedCard) => {
-  const price = usd || usd_foil;
-  return Number(price) || 0;
-};
+export const getPriceLabel = (
+  passedAmount: string | number,
+  { round = false, currency = 'USD' } = {}
+) => {
+  const parsedAmount = Number(passedAmount);
+  if (!parsedAmount) return '-';
 
-export const getPriceLabel = (amountInUsd: string | number, { round = false } = {}) => {
-  const parsedAmount = Number(amountInUsd);
-  const isLong = parsedAmount >= 1000;
+  const isLong = parsedAmount >= 100;
   const numberOfDigits = round || isLong ? 0 : 2;
 
-  const formatPrice = (amount: string | number) =>
-    Number(amount).toLocaleString('de-DE', {
-      style: 'currency',
-      maximumFractionDigits: numberOfDigits,
-      minimumFractionDigits: numberOfDigits,
-      currency: 'USD',
-    });
+  const usedAmount = round && parsedAmount < 1 ? 1 : parsedAmount;
 
-  return parsedAmount ? formatPrice(parsedAmount) : '-';
+  return Number(usedAmount).toLocaleString('de-DE', {
+    style: 'currency',
+    maximumFractionDigits: numberOfDigits,
+    minimumFractionDigits: numberOfDigits,
+    currency,
+  });
 };

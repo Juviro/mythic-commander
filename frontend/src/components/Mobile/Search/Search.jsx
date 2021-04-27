@@ -69,7 +69,7 @@ const Search = ({ history }) => {
   const onSearch = () => {
     setParams(currentOptions);
     fetchCards(currentOptions);
-    setTimeout(scrollToButton, 50);
+    setTimeout(scrollToButton, 200);
   };
 
   const onLoadMore = () => {
@@ -80,9 +80,7 @@ const Search = ({ history }) => {
   useEffect(() => {
     const hasOptions = Object.values(options).some((val) => val !== undefined);
     if (!hasOptions) return;
-    if (loading) {
-      scrollToButton();
-    }
+    setTimeout(scrollToButton, 200);
     setCurrentOptions(options);
     fetchCards(options);
     // eslint-disable-next-line

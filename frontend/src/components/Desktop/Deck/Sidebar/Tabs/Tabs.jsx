@@ -1,67 +1,77 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
+import { ADVANCED_SEARCH } from 'components/Desktop/Deck/ActionBar/ActionButtons/ActionButtons';
+import { PlusOutlined } from '@ant-design/icons';
+import { Space } from 'antd';
+import useCreateWantsList from 'components/Desktop/Deck/Sidebar/Tabs/useCreateWantsList';
 import Tab from './Tab';
-import { useShortcut } from '../../../../Hooks';
-import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
+
+const ADD_WANTS_LIST = 'ADD_WANTS_LIST';
 
 const StyledWrapper = styled.div`
-  margin-right: 8px;
   user-select: none;
-  height: fit-content;
   position: absolute;
-  right: -49px;
+  left: -40px;
+  top: -2px;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 9999;
+
+  transform: rotate(90deg) translateY(-100%);
+  transform-origin: left top;
+
+  width: calc(100vh - 50px);
+  height: 40px;
+
+  @media (max-width: 1600px) {
+    width: calc(100vh - 125px);
+  }
 `;
 
-export default ({ currentTab, setCurrentTab }) => {
-  const { focusedElements, setFocus } = useContext(FocusContext);
-  const tabs = [
-    {
-      title: 'Search [S]',
-      key: 'add',
-      shortcut: 's',
-    },
-    {
-      title: 'Wants [W]',
-      key: 'wants',
-      shortcut: 'w',
-    },
-    // {
-    //   title: 'Insights [I]',
-    //   key: 'stats',
-    //   shortcut: 'i',
-    // },
-  ];
+export default ({ deck, setCurrentTabId, currentTabId }) => {
+  const { onCreateWantsList } = useCreateWantsList(deck, setCurrentTabId);
+  const wantsListsTabs = deck?.wantsLists?.map(({ id, name, numberOfCards }) => ({
+    title: `${name} (${numberOfCards})`,
+    wantsList: { id, name },
+    id,
+  }));
 
-  const focusIds = ['deck.sidebar.add', 'deck.sidebar.wants', 'deck.sidebar.stats'];
+  const advancedSearch = {
+    title: 'Advanced Search',
+    id: ADVANCED_SEARCH,
+    isSecondary: true,
+  };
+  const addWantsList = {
+    title: (
+      <Space>
+        <span>Add Wants List</span>
+        <PlusOutlined />
+      </Space>
+    ),
+    id: ADD_WANTS_LIST,
+  };
+  const tabs = [advancedSearch, ...wantsListsTabs, addWantsList];
 
-  const onOpenTab = (key) => {
-    const filteredFocus = focusedElements.filter(
-      (focusId) => !focusIds.includes(focusId)
-    );
-
-    if (key === currentTab) {
-      setCurrentTab(null);
-      setFocus(filteredFocus);
+  const onClickTab = (tabId) => {
+    if (tabId === ADD_WANTS_LIST) {
+      onCreateWantsList();
     } else {
-      setCurrentTab(key);
-      setFocus(filteredFocus.concat(`deck.sidebar.${key}`));
+      setCurrentTabId(tabId);
     }
   };
 
-  tabs.forEach(({ key, shortcut }) => {
-    useShortcut(shortcut, () => onOpenTab(key), focusIds.concat('deck.cards'));
-  });
-
   return (
     <StyledWrapper>
-      {tabs.map(({ title, key }, index) => (
+      {tabs.map(({ title, id, isSecondary, wantsList }, index) => (
         <Tab
           index={index}
-          key={key}
+          key={id}
           title={title}
-          active={key === currentTab}
-          onClick={() => onOpenTab(key)}
+          wantsList={wantsList}
+          isSecondary={isSecondary}
+          active={id === currentTabId}
+          onClick={() => onClickTab(id)}
         />
       ))}
     </StyledWrapper>

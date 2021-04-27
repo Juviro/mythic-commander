@@ -5,9 +5,7 @@ import { useParams } from 'react-router';
 import { PageCard } from 'components/Elements/Desktop';
 import message from '../../../utils/message';
 import { deleteAllFromCollection } from './queries';
-import PaginatedCardList, {
-  WithActions,
-} from '../../Elements/Desktop/PaginatedCardList/index';
+import PaginatedCardList from '../../Elements/Desktop/PaginatedCardList';
 import { CollectionHoc, FindWantedCards } from '../../Elements/Shared';
 
 export default () => {
@@ -16,9 +14,9 @@ export default () => {
 
   const deleteByOracle = (selectedCardIds, numberOfCards) => {
     const oracleIds = selectedCardIds;
-    const numberOfCardsLabel = numberOfCards > 1 ? `<b>${numberOfCards}</b> cards` : '';
+    const numberOfCardsLabel = numberOfCards > 1 ? `<b>${numberOfCards}</b> cards ` : '';
 
-    message(`Deleted ${numberOfCardsLabel} from your collection!`);
+    message(`Deleted ${numberOfCardsLabel}from your collection!`);
     mutate({
       variables: { oracleIds },
       refetchQueries: ['currentSnapshots', 'paginatedCollection', 'ownedCardNames'],
@@ -32,23 +30,16 @@ export default () => {
     <PageCard title={title} style={{ height: 'auto' }} extra={findCardsButton}>
       <CollectionHoc username={username}>
         {({ loading, cards, numberOfCards, search, setSearch }) => (
-          <WithActions
-            deleteByOracle={!username && deleteByOracle}
-            setSearch={setSearch}
+          <PaginatedCardList
+            showCollectionFilters
+            loading={loading}
+            cards={cards}
+            showAddedBeforeFilter
             search={search}
-          >
-            {(actionProps) => (
-              <PaginatedCardList
-                {...actionProps}
-                showCollectionFilters
-                loading={loading}
-                hiddenColumns={username ? null : ['owned']}
-                cards={cards}
-                showAddedBeforeFilter
-                numberOfCards={numberOfCards}
-              />
-            )}
-          </WithActions>
+            setSearch={setSearch}
+            numberOfCards={numberOfCards}
+            deleteByOracle={!username && deleteByOracle}
+          />
         )}
       </CollectionHoc>
     </PageCard>

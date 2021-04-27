@@ -29,9 +29,12 @@ export const updateScryfallCards = async (type, tableName) => {
       const parsableCard = line.replace(/,$/, '');
       const card = JSON.parse(parsableCard);
 
-      const cardToInsert = ALL_CARD_FIELDS.reduce((acc, { key, type }) => {
-        const value = type === 'jsonb' ? JSON.stringify(card[key]) : card[key];
-        acc[key] = value;
+      const cardToInsert = ALL_CARD_FIELDS.reduce((acc, field) => {
+        const value =
+          field.type === 'jsonb'
+            ? JSON.stringify(card[field.key])
+            : card[field.key];
+        acc[field.key] = value;
         return acc;
       }, {});
 

@@ -3,7 +3,14 @@ import { Divider, Typography } from 'antd';
 import { FilteredCardList } from '../../../Elements/Mobile';
 import sumCardAmount from '../../../../utils/sumCardAmount';
 
-export default ({ cards, type, onEditCard, onDeleteCard, moveToList }) => {
+export default ({
+  cards,
+  type,
+  onEditCard,
+  onDeleteCard,
+  moveToList,
+  deleteByOracle,
+}) => {
   if (!cards.length) return null;
 
   const numberOfCards = sumCardAmount(cards);
@@ -17,6 +24,7 @@ export default ({ cards, type, onEditCard, onDeleteCard, moveToList }) => {
         cards={cards}
         moveToList={moveToList}
         onEditCard={onEditCard}
+        deleteByOracle={deleteByOracle}
         onDeleteCard={onDeleteCard}
         hideFooter
       />

@@ -23,13 +23,7 @@ export default () => {
       title="Add Cards to your Collection"
       extra={<MultiInput onAddCards={onAddCards} />}
     >
-      <AddCards
-        onAddCards={onAddCards}
-        autoFocus={false}
-        isAdvanced
-        allowFoilInput
-        placeholder={'e.g. "2x foil negate"'}
-      />
+      <AddCards onAddCards={onAddCards} autoFocus={false} isAdvanced allowFoilInput />
     </PageCard>
   );
 };

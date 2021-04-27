@@ -1,5 +1,7 @@
 import React, { Suspense } from 'react';
+import { DndProvider } from 'react-dnd';
 import { Route, Switch } from 'react-router-dom';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import Proxy from './Proxy';
 import GlobalStyle from './GlobalStyle';
@@ -11,7 +13,7 @@ const NotFound = React.lazy(() => import('./Elements/Shared/NotFound'));
 
 const App = () => {
   return (
-    <>
+    <DndProvider backend={HTML5Backend}>
       <Suspense fallback={<div />}>
         <Switch>
           <Route path="/404" exact component={NotFound} />
@@ -22,7 +24,7 @@ const App = () => {
         </Switch>
       </Suspense>
       <GlobalStyle />
-    </>
+    </DndProvider>
   );
 };
 

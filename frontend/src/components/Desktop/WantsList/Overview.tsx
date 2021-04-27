@@ -3,7 +3,7 @@ import { PageCard } from 'components/Elements/Desktop';
 import {
   Flex,
   WantsListDeckLink,
-  WantsListStats,
+  ListStats,
   WantsListTitle,
 } from 'components/Elements/Shared';
 import React from 'react';
@@ -84,10 +84,10 @@ export default ({ wantsList, loading, canEdit }: Props) => {
       <Flex direction="row" justify="space-between" wrap="wrap">
         <Flex direction="row" wrap="wrap">
           <WantsListDeckLink wantsList={wantsList} large canEdit={canEdit} />
-          <WantsListStats wantsList={wantsList} />
+          <ListStats list={wantsList} style={{ marginLeft: 8 }} />
         </Flex>
         {canEdit && (
-          <Flex align="flex-start">
+          <Flex align="flex-end">
             <AddToWantsList cards={wantsList?.cards} onAddCards={onAddCards} />
           </Flex>
         )}

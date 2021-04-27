@@ -1,31 +1,30 @@
 import React from 'react';
+import { Button, Space } from 'antd';
 import styled from 'styled-components';
-import { Typography, Button, Select } from 'antd';
-import { PlusOutlined, EditOutlined, CheckOutlined } from '@ant-design/icons';
-
 import { useMutation } from 'react-apollo';
-import Flex from '../Flex';
+import { PlusOutlined } from '@ant-design/icons';
+
+import { GRID_CARD_WIDTH } from 'components/Elements/Shared/CardGrid/CardGrid';
+import { CommanderPickerModal } from 'components/Elements/Shared/CommanderPicker/CommanderPickerModal';
 import { useToggle } from '../../../Hooks';
 import { setCommanderDesktop } from './queries';
-import { primary } from '../../../../constants/colors';
-import { sortByName } from '../../../../utils/cardFilter';
 
-const StyledEditIcon = styled(EditOutlined)`
-  color: ${primary};
-  margin: 4px 8px;
-  font-size: 16px;
-  display: none;
+const StyledWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 48px;
 `;
 
-const StyledNameWrapper = styled.div`
-  display: flex;
-  cursor: pointer;
-  flex-direction: row;
-  padding-left: 8px;
+const StyledButton = styled(Button)`
+  width: ${GRID_CARD_WIDTH}px;
+  height: 306px;
+  font-size: 24px;
+  border-radius: 4%;
+`;
 
-  &:hover ${StyledEditIcon} {
-    display: inherit;
-  }
+const StyledLabel = styled.span`
+  white-space: break-spaces;
 `;
 
 const getSecondCommanders = (cards, firstCommander) => {
@@ -45,8 +44,7 @@ const getSecondCommanders = (cards, firstCommander) => {
 export default ({ deck }) => {
   const [isEditing, toggleIsEditing] = useToggle();
   const [mutate] = useMutation(setCommanderDesktop);
-  const sortedCards = sortByName(deck.cards);
-  const commanders = sortedCards.filter(({ isCommander }) => isCommander);
+  const commanders = deck.cards.filter(({ isCommander }) => isCommander);
   const [firstCommander, secondCommander] = commanders;
 
   const onSetCommanders = (cardIds) => {
@@ -69,90 +67,47 @@ export default ({ deck }) => {
     });
   };
 
-  const onSetFirstCommander = (cardId) => {
+  const possibleFirstCommanders = deck.cards.filter((card) => card.canBeCommander);
+  const possibleSecondCommanders = getSecondCommanders(deck.cards, firstCommander);
+
+  const onPickCommander = (cardId) => {
+    toggleIsEditing(false);
     if (firstCommander && firstCommander.id === cardId) return;
+    if (firstCommander) {
+      onSetCommanders([firstCommander.id, cardId]);
+      return;
+    }
     onSetCommanders([cardId]);
   };
 
-  const onSetSecondCommander = (cardId) => {
-    if (secondCommander && secondCommander.id === cardId) return;
-    onSetCommanders([firstCommander.id, cardId]);
-  };
+  const isFirstCommander = !firstCommander;
+  const commanderChoices = isFirstCommander
+    ? possibleFirstCommanders
+    : possibleSecondCommanders;
 
-  const possibleFirstCommanders = deck.cards.filter((card) =>
-    ['Legendary', 'Creature'].every((type) => card.primaryTypes.includes(type))
-  );
-  const possibleSecondCommanders = getSecondCommanders(deck.cards, firstCommander);
-
-  if (!commanders.length && !isEditing) {
-    return (
-      <Button
-        type="link"
-        icon={<PlusOutlined />}
-        onClick={toggleIsEditing}
-        style={{ width: 'fit-content', paddingLeft: 4 }}
-      >
-        Add a commander
-      </Button>
-    );
+  if (firstCommander && (secondCommander || !firstCommander.possiblePartner)) {
+    return null;
   }
 
-  if (!isEditing) {
-    return (
-      <StyledNameWrapper onClick={toggleIsEditing}>
-        <Flex direction="column">
-          {commanders.map((commander) => (
-            <Typography.Text
-              strong
-              ellipsis
-              key={commander.id}
-              style={{ fontSize: 16, height: 27 }}
-            >
-              {commander.name}
-            </Typography.Text>
-          ))}
-        </Flex>
-        <StyledEditIcon />
-      </StyledNameWrapper>
-    );
-  }
+  const label = isFirstCommander ? 'Pick your Commander' : 'Pick your Partner Commander';
 
   return (
-    <Flex direction="column" style={{ margin: '0 8px' }}>
-      <Flex direction="row" align="center">
-        <Select
-          value={firstCommander && firstCommander.name}
-          style={{ width: '100%' }}
-          onSelect={onSetFirstCommander}
-          size="small"
-          placeholder="Pick your commander"
-        >
-          {possibleFirstCommanders.map((card) => (
-            <Select.Option value={card.id} key={card.id}>
-              {card.name}
-            </Select.Option>
-          ))}
-        </Select>
-        <CheckOutlined
-          onClick={toggleIsEditing}
-          style={{ color: primary, marginLeft: 8, fontSize: 16 }}
-        />
-      </Flex>
-      {Boolean(possibleSecondCommanders.length) && (
-        <Select
-          value={secondCommander && secondCommander.name}
-          style={{ width: 'calc(100% - 24px)', marginTop: 6 }}
-          onSelect={onSetSecondCommander}
-          size="small"
-          placeholder="Pick your second commander"
-        >
-          {possibleSecondCommanders.map((card) => (
-            <Select.Option value={card.id} key={card.id}>
-              {card.name}
-            </Select.Option>
-          ))}
-        </Select>
-      )}
-    </Flex>
+    <>
+      <StyledWrapper>
+        <StyledButton type="primary" ghost onClick={toggleIsEditing}>
+          <Space direction="vertical" size={24}>
+            <PlusOutlined style={{ fontSize: 40 }} />
+            <StyledLabel>{label}</StyledLabel>
+          </Space>
+        </StyledButton>
+      </StyledWrapper>
+      <CommanderPickerModal
+        label={label}
+        commanderChoices={commanderChoices}
+        onPickCommander={onPickCommander}
+        onCancel={() => toggleIsEditing(false)}
+        visible={isEditing}
+      />
+    </>
   );
 };

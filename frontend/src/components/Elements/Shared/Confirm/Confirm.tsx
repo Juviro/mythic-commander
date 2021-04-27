@@ -21,7 +21,7 @@ export default ({
   okText = 'Confirm',
   visible = true,
 }: Props) => {
-  useShortcut('ENTER', onOk, 'modal.confirm');
+  useShortcut('ENTER', onOk, { focusId: 'modal.confirm' });
 
   return (
     <FocusedModal

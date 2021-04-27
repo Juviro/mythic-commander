@@ -18,8 +18,10 @@ const COLLECTION_CARD_FIELDS = `
         isTwoFaced
         subTypes
         primaryTypes
-        minPrice
-        sumPrice
+        minPriceUsd
+        minPriceEur
+        sumPriceUsd
+        sumPriceEur
       }
     }
 `;

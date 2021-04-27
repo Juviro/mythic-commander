@@ -4,13 +4,12 @@ import styled from 'styled-components';
 import { Flex } from 'components/Elements/Shared';
 import { SearchOutlined } from '@ant-design/icons';
 import { primary } from 'constants/colors';
+import { Typography } from 'antd';
 import SearchSettings from './AdvancedSearch/SearchSettings';
 import SingleInput from './SingleInput';
 
 const StyledSingleInputWrapper = styled.div`
   width: 500px;
-  margin-bottom: 8px;
-  margin-right: 24px;
 `;
 
 const StyledSetSelectionWrapper = styled.div`
@@ -18,10 +17,10 @@ const StyledSetSelectionWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   width: 500px;
-  margin-right: 24px;
+  margin-top: 12px;
 `;
 
-const StyledLabel = styled.div`
+const StyledLabel = styled(Typography.Text)`
   white-space: nowrap;
   margin-right: 16px;
 `;
@@ -29,14 +28,14 @@ const StyledLabel = styled.div`
 export default ({
   containedCardNames,
   onAddCards,
-  isAdvanced,
+  isAdvanced = false,
   focusId,
   placeholder = 'Add cards, e.g. "2x foil negate"',
 }) => {
   const [cardOptions, setCardOptions] = useState({});
 
   return (
-    <Flex direction="row" wrap="wrap">
+    <Flex direction="column">
       <StyledSingleInputWrapper>
         <SingleInput
           isAdvanced

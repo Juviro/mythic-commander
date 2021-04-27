@@ -1,17 +1,27 @@
 export const primary = '#1890ff';
+export const primarySemiLight = '#1890ff80';
 export const primaryLight = '#1890ff1a';
+export const primaryDark = '#0c589e';
 export const primaryDrop = '#1890ff4d';
 export const primaryHover = '#40a9ff';
 export const primaryActive = '#096dd9';
 
-export const darkBackground = '#001529';
-export const lightBackground = '#f5f5f5';
+export const secondary = '#b51b1b';
+export const secondaryHover = '#f35a5a';
+export const secondaryActive = '#821212';
 
-export const greyBorder = '#969696';
+export const darkBackground = '#001529';
+export const darkBackgroundTransparent = '#00152933';
+export const lightBackground = '#f5f5f5';
+export const lightWhite = 'rgba(255, 255, 255, 0.7)';
+export const lightText = 'rgba(0, 0, 0, 0.45)';
+
+export const greyBorder = '#d9d9d9';
+export const buttonHoverBackground = '#e0dfdf';
 
 export const success = '#1fb31f';
 export const error = '#ff4d4f';
-export const warning = 'orange';
+export const warning = '#faad14';
 
 // https://material.io/resources/color/  - 600
 const LTRed = '#e53935';

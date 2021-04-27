@@ -10,7 +10,6 @@ import {
 
 import { highlightText } from '../../../../utils/highlightText';
 import { getPriceLabel } from '../../../../utils/cardStats';
-import message from '../../../../utils/message';
 import PreviewCardImage from '../../Shared/PreviewCardImage';
 import OwnedBadge from '../../Shared/OwnedBadge';
 import SetPicker from '../../Shared/SetPicker';
@@ -44,8 +43,8 @@ const CardListItem = ({
   const [isMovingCard, toggleIsMovingCard] = useToggle();
   const [newProps, setNewProps] = useState({});
 
-  const { minPrice, owned } = card;
-  const hasMinPrice = minPrice !== undefined;
+  const { minPriceUsd, owned } = card;
+  const hasMinPrice = minPriceUsd !== undefined;
   const cardId = card.id;
 
   useEffect(() => {
@@ -55,7 +54,6 @@ const CardListItem = ({
 
   const onDelete = () => {
     onDeleteCard(card.id);
-    message(`Deleted <b>${card.name}</b>!`);
   };
 
   const onToggleEditing = () => {
@@ -119,7 +117,7 @@ const CardListItem = ({
               {highlightText(searchString, card.name)}
             </Typography.Text>
             {hasMinPrice && !isEditing && (
-              <Typography.Text>{getPriceLabel(minPrice)}</Typography.Text>
+              <Typography.Text>{getPriceLabel(minPriceUsd)}</Typography.Text>
             )}
           </StyledDescription>
         }
@@ -170,10 +168,17 @@ const areEqual = (prevProps, nextProps) => {
   if (prevProps.onDeleteCard !== nextProps.onDeleteCard) return false;
   if (prevProps.onEditCard !== nextProps.onEditCard) return false;
 
-  return ['id', 'amount', 'owned', 'totalAmount', 'sumPrice', 'minPrice'].every(
-    (propKey) => {
-      return prevProps.card[propKey] === nextProps.card[propKey];
-    }
-  );
+  return [
+    'id',
+    'amount',
+    'owned',
+    'totalAmount',
+    'sumPriceEur',
+    'sumPriceUsd',
+    'minPriceUsd',
+    'minPriceEur',
+  ].every((propKey) => {
+    return prevProps.card[propKey] === nextProps.card[propKey];
+  });
 };
 export default React.memo(CardListItem, areEqual);

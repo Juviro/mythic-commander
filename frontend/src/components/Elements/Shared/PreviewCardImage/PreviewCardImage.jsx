@@ -20,7 +20,12 @@ const StyledPreviewWrapper = styled.div`
   height: ${({ height }) => height}px;
 `;
 
-const PreviewCardImage = ({ width = 36, height = 48, card, highlightOnHover }) => {
+const PreviewCardImage = ({
+  width = 36,
+  height = 48,
+  card,
+  highlightOnHover = false,
+}) => {
   const [cardPreviewOpen, toggleCardPreviewOpen] = useToggle(false);
   const [loading, toggleLoading] = useToggle(true);
   const { id, imgKey } = card;

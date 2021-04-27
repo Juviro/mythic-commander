@@ -16,7 +16,8 @@ const WANTS_LIST_CARD_FIELDS = `
     oracleCard {
       _id
       owned
-      minPrice
+      minPriceUsd
+      minPriceEur
       isTwoFaced
     }
   }

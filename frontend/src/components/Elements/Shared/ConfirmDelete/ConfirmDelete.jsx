@@ -5,7 +5,7 @@ import { useShortcut } from '../../../Hooks';
 import FocusedModal from '../FocusedModal';
 
 export default ({ onCancel, text, onOk }) => {
-  useShortcut('ENTER', onOk, 'modal.confirmDelete');
+  useShortcut('ENTER', onOk, { focusId: 'modal.confirmDelete' });
 
   return (
     <FocusedModal

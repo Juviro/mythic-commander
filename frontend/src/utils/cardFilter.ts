@@ -114,7 +114,7 @@ export const filterAndSortByQuery = (cards, searchString) => {
   return filterByName(cards, searchString).sort(sortCardsBySearch(searchString));
 };
 
-const sortByAdded = (cards, direction = 'asc') => {
+export const sortByAdded = (cards, direction = 'asc') => {
   const sortedCards = cards.sort((a, b) => a.createdAt - b.createdAt);
 
   return direction === 'asc' ? sortedCards : sortedCards.reverse();
@@ -133,7 +133,7 @@ export const sortByName = (cards, direction = 'asc') => {
 };
 
 const sortByPrice = (cards, direction = 'asc') => {
-  const sortedCards = cards.sort((a, b) => a.minPrice - b.minPrice);
+  const sortedCards = cards.sort((a, b) => a.minPriceUsd - b.minPriceUsd);
 
   return direction === 'asc' ? sortedCards : sortedCards.reverse();
 };

@@ -1,15 +1,22 @@
 import React from 'react';
 import { useQuery } from 'react-apollo';
+import { NavigationButton } from 'components/Elements/Desktop/CardModalDesktop/NavigationButton';
 import CardDetailsDesktop from '../CardDetailsDesktop';
 
 import { cardDetailsDesktop } from '../CardDetailsDesktop/queries';
 import { unifySingleCard } from '../../../../utils/unifyCardFormat';
 import { useShortcut } from '../../../Hooks';
-import { FocusedModal } from '../../Shared';
+import { Flex, FocusedModal } from '../../Shared';
 
-const CardModalDesktop = ({ selectedCard, onClose, loading: parentLoading }) => {
+const CardModalDesktop = ({
+  selectedCard,
+  onClose,
+  loading: parentLoading,
+  onNext = null,
+  onPrevious = null,
+}) => {
   const { oracle_id, id: initialCardId } = selectedCard;
-  useShortcut('SPACE', onClose, 'modal.cardDetails');
+  useShortcut('SPACE', onClose, { focusId: 'modal.cardDetails' });
   const { data, loading: cardLoading } = useQuery(cardDetailsDesktop, {
     variables: { oracle_id },
     fetchPolicy: 'network-only',
@@ -20,12 +27,11 @@ const CardModalDesktop = ({ selectedCard, onClose, loading: parentLoading }) => 
 
   return (
     <FocusedModal
-      centered
       visible
       onCancel={onClose}
       footer={null}
       destroyOnClose
-      width={1100}
+      width={1200}
       bodyStyle={{
         overflow: 'auto',
         maxHeight: 'calc(100vh - 128px)',
@@ -33,17 +39,23 @@ const CardModalDesktop = ({ selectedCard, onClose, loading: parentLoading }) => 
       style={{ maxWidth: '100%' }}
       focusId="modal.cardDetails"
     >
-      <CardDetailsDesktop
-        card={unifiedCard}
-        loading={loading}
-        initialCardId={initialCardId}
-      />
+      <Flex direction="row">
+        {onPrevious && <NavigationButton type="previous" onClick={onPrevious} />}
+        <Flex direction="column" style={{ padding: '0 16px' }}>
+          <CardDetailsDesktop
+            card={unifiedCard}
+            loading={loading}
+            initialCardId={initialCardId}
+          />
+        </Flex>
+        {onNext && <NavigationButton type="next" onClick={onNext} />}
+      </Flex>
     </FocusedModal>
   );
 };
 
 export default ({ visible, selectedCard, ...props }) => {
-  if (!visible || !selectedCard) return null;
+  if (!visible) return null;
 
   return <CardModalDesktop {...props} selectedCard={selectedCard} />;
 };
