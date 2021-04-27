@@ -12,8 +12,10 @@ const CARD_FIELDS = `
       imgKey
       oracle_id
       set_name
+      mana_cost
       color_identity
       possiblePartner
+      canBeCommander
       
       oracleCard {
         _id
@@ -22,7 +24,8 @@ const CARD_FIELDS = `
         
         primaryTypes
         isCommanderLegal
-        minPrice
+        minPriceUsd
+        minPriceEur
       }
     }
 `;
@@ -36,6 +39,11 @@ const DECK_FIELDS = `
     numberOfCards
     cards {
       ${CARD_FIELDS}
+    }
+    wantsLists {
+      id
+      name
+      numberOfCards
     }
 `;
 
@@ -87,8 +95,8 @@ export const addCardsToDeckDesktop = gql`
 `;
 
 export const deleteFromDeckDesktop = gql`
-  mutation deleteFromDeckDesktop($cardId: String!, $deckId: String!) {
-    deleteFromDeck(cardId: $cardId, deckId: $deckId) {
+  mutation deleteFromDeckDesktop($cardId: String, $cardIds: [String], $deckId: String!) {
+    deleteFromDeck(cardId: $cardId, cardIds: $cardIds, deckId: $deckId) {
       ${DECK_FIELDS}
     }
   }

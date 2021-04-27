@@ -17,7 +17,8 @@ export const cardSearch = gql`
           _id
           isTwoFaced
           owned
-          minPrice
+          minPriceUsd
+          minPriceEur
         }
       }
     }

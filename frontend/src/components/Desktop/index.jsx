@@ -1,7 +1,5 @@
 import React, { Suspense } from 'react';
 import styled from 'styled-components';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Menu from './Menu';
@@ -26,28 +24,26 @@ const StyledBody = styled.div`
 
 const Desktop = () => {
   return (
-    <DndProvider backend={HTML5Backend}>
-      <MobileRedirect>
-        <Menu />
-        <UsernameModal />
-        <StyledBody>
-          <Suspense fallback={<div />}>
-            <Switch>
-              <Route path="/search" exact component={Search} />
-              <Route path="/collection/:username" component={Collection} />
-              <Route path="/collection" component={Collection} />
-              <Route path="/my-decks" exact component={Decks} />
-              <Route path="/decks/:id" exact component={Deck} />
-              <Route path="/my-wants" exact component={WantsLists} />
-              <Route path="/wants/:id" exact component={WantsList} />
-              <Route path="/cards/:oracle_id" exact component={Card} />
-              <Redirect from="*" to="/collection" />
-            </Switch>
-          </Suspense>
-        </StyledBody>
-        <GlobalStyle />
-      </MobileRedirect>
-    </DndProvider>
+    <MobileRedirect>
+      <Menu />
+      <UsernameModal />
+      <StyledBody>
+        <Suspense fallback={<div />}>
+          <Switch>
+            <Route path="/search" exact component={Search} />
+            <Route path="/collection/:username" component={Collection} />
+            <Route path="/collection" component={Collection} />
+            <Route path="/my-decks" exact component={Decks} />
+            <Route path="/decks/:id" exact component={Deck} />
+            <Route path="/my-wants" exact component={WantsLists} />
+            <Route path="/wants/:id" exact component={WantsList} />
+            <Route path="/cards/:oracle_id" exact component={Card} />
+            <Redirect from="*" to="/collection" />
+          </Switch>
+        </Suspense>
+      </StyledBody>
+      <GlobalStyle />
+    </MobileRedirect>
   );
 };
 

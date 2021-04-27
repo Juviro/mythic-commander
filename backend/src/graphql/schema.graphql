@@ -7,7 +7,8 @@ type Card {
   name: String!
   image_uris: ImageUris
   card_faces: [CardFace!]
-  price: Float!
+  priceUsd: Float!
+  priceEur: Float!
   prices: Prices!
   rarity: String!
   oracle_text: String
@@ -21,12 +22,15 @@ type Card {
   color_identity: [String]
   set_name: String!
   mana_cost: String
+  foil: Boolean!
+  nonfoil: Boolean!
 
   # Additional card fields
   imgKey: String!
   amountOwned: Int!
   amountOwnedFoil: Int!
   possiblePartner: String
+  canBeCommander: Boolean!
 
   oracleCard: OracleCard!
   relatedCards: [Card!]
@@ -34,8 +38,10 @@ type Card {
 
 type OracleCard {
   _id: String!
-  sumPrice: Float
-  minPrice: Float!
+  sumPriceUsd: Float
+  sumPriceEur: Float
+  minPriceUsd: Float!
+  minPriceEur: Float!
   allSets: [Card!]!
 
   owned: Boolean!
@@ -72,6 +78,7 @@ type PurchaseUris {
 type Prices {
   eur: String
   usd: String
+  eur_foil: String
   usd_foil: String
 }
 
@@ -320,7 +327,7 @@ type Mutation {
   ): DeckCard!
   setCommander(cardIds: [String!]!, deckId: String!): Deck!
   deleteDeck(deckId: String!): Boolean
-  deleteFromDeck(cardId: String!, deckId: String!): Deck!
+  deleteFromDeck(cardId: String, cardIds: [String], deckId: String!): Deck!
   duplicateDeck(deckId: String!): String!
 
   moveCard(

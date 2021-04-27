@@ -17,7 +17,10 @@ export default async (
   { cards, wantsListId, wantsListName },
   { user: { id: userId }, db }
 ) => {
-  await canEditWantsList(userId, wantsListId);
+  if (!wantsListName || !userId) {
+    // no need for an access check if we create a new list
+    await canEditWantsList(userId, wantsListId);
+  }
   if (wantsListName) {
     const [id] = await db('wantsLists')
       .insert({ userId, name: wantsListName })

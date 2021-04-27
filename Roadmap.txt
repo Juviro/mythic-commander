@@ -1,37 +1,46 @@
-BUGFIXES:
-    - a lot of the cards are white on render, display only on scroll
+PRIORITY BUGFIXES
+    - auto update cards on prod not working
 
+BUGFIXES:
+    - a lot of the cards are white on render, display only on scroll (mobile, guess this is fixed in migration)
+    - no error boundary for card search desktop (https://mythic-commander.com/cards/XXX)
+    - lifetracker: stuck in loading screen when bg images disabled
+    - re-write getColorFromId now that ids are strings
+    - hover over DeckCardsnotCollected label with a lot of cards: layout shifts because new scrollbar is added
+
+OPTIONAL IN MIGRATION BRANCH:
+    - display eur prices in collection value + graphs
+    - display how many cards are included in eur/usd price
+    - select cards -> copy to some deck -> selection should be cleared, but isn't
 
 CURRENT:
-    - on high latency network: move card from deck wants to deck -> wrong cards displayed in deck wants
+    - Add option to specify a set for multi input
 
 NEXT:
-    - re-add loading animation to paginated list (e.g. collection desktop)
-    - refactor authentication, remove from context creation
-    - improve loading time of deck
-    - add stylelint
-    - when only displaying unowned in deck -> add cards to.. -> pre-select unowned only, but show all
-    - prevent re-ordering card lists in decks view - maybe re-order when category added / removed
-    - add shortcut to toggle focus ?
+    - redesign moveTo modal, especially for mobile
+    - CHANGE TITLE BASED ON CONTENT (Deckname, Collection etc)
+    - Add to cardgrid selection menu: export cards as text, proxy cards
+    - mobile card list preview: allow swpie to next card
+    - Split more code with React.lazy
+    - move to new image service
 
-    - add button to add card to deck in sidebar ?
     - add option to export unowned cards from deck to wants
     - allow sorting by added in advanced search
+    - add deck colors to deck overview list
 
 IMPROVEMENTS:
     - improve re-rendering of table columns and grid card. especially table.
     - add to wants list dropdown: sort lists by name (same for decks I guess)
     - added to collection notification -> show amount as well
     - add optimistic response to card delete in deck (esp. mobile)
-    - show which cards are not legal in deck
-    - remove basic lands from proxy queries
+    - remove basic lands from proxy queries (or add as option -> proxy rework)
     - autofocus for deck sidebar input field
     - transition for inset shadow when focussing deck sidebar
 
 FEATURES:
     - sharable decks / wants
-    - add support for planeswalker commanders
     - show last search when no input in searchbar
+    - check for multiple copies of one card for deck legality check
     - show if deck is legal in deck overview, order by legality (similar to magic arena)
 
 REFACTORINGS:
@@ -79,7 +88,6 @@ BACKLOG:
 
 BACKLOG BUGFIXES:
     - sometimes rules of previously viewed cards displayed instead of current card
-    - don't ignore umlaute in search (backend and frontend) e.g. Jötun Grunt
 
     - backend deployment not reloading
     - when editing in card details, versions of same set are changing

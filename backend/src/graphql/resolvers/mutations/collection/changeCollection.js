@@ -37,7 +37,7 @@ export default async (
   if (deleted.length) {
     const promise = db('collection')
       .where({ userId })
-      .andWhereIn('id', deleted)
+      .whereIn('id', deleted)
       .del();
     promises.push(promise);
   }

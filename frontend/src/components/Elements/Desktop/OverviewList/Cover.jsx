@@ -40,7 +40,11 @@ const StyledImage = styled.img`
 `;
 
 const getColorFromId = (id) => {
-  const index = id % coverBackgroundColors.length;
+  const stringAsNumber = id
+    .split('')
+    .map((char) => char.charCodeAt(0).toString(10))
+    .reduce((acc, val) => acc + Number(val), 0);
+  const index = stringAsNumber % coverBackgroundColors.length;
   return coverBackgroundColors[index];
 };
 

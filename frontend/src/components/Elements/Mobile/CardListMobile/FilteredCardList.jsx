@@ -15,6 +15,7 @@ export default ({
   onEditCard,
   moveToList,
   name: nameQuery,
+  deleteByOracle,
 }) => {
   const [{ name, colors, layout, subType, cardType, isLegendary }] = useQueryParams({
     name: StringParam,
@@ -59,6 +60,7 @@ export default ({
       hideFooter={hideFooter}
       hasMore={hasMore}
       loading={loading}
+      deleteByOracle={deleteByOracle}
       cards={displayedCards}
       onLoadMore={onLoadMore}
       onEditCard={onEditCard}

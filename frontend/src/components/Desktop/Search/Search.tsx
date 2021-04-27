@@ -1,12 +1,7 @@
 import React, { useRef } from 'react';
 
 import SearchOptions from './SearchOptions';
-import {
-  PageCard,
-  PageLayout,
-  PaginatedCardList,
-  WithActions,
-} from '../../Elements/Desktop';
+import { PageCard, PageLayout, PaginatedCardList } from '../../Elements/Desktop';
 import { SearchHoc } from '../../Elements/Shared';
 
 export default () => {
@@ -34,7 +29,7 @@ export default () => {
                   onSearch();
                   setTimeout(
                     () => scrollRef.current?.scrollIntoView({ behavior: 'smooth' }),
-                    100
+                    200
                   );
                 }}
                 onResetOptions={onResetOptions}
@@ -47,18 +42,15 @@ export default () => {
               <PageCard
                 title={numberOfCards !== undefined && `Found ${numberOfCards} Cards`}
               >
-                <WithActions>
-                  {(actionProps) => (
-                    <PaginatedCardList
-                      {...actionProps}
-                      loading={loading}
-                      search={lastSearchOptions.name}
-                      hiddenColumns={['added', 'amount']}
-                      cards={currentCards}
-                      numberOfCards={numberOfCards}
-                    />
-                  )}
-                </WithActions>
+                <PaginatedCardList
+                  loading={loading}
+                  setSearch={null}
+                  search={lastSearchOptions.name}
+                  cards={currentCards}
+                  numberOfCards={numberOfCards}
+                  showCollectionFilters={false}
+                  showAddedBeforeFilter={false}
+                />
               </PageCard>
             )}
           </>

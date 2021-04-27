@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { Space, Typography } from 'antd';
 import styled from 'styled-components';
-import { useParams } from 'react-router';
-import { useLazyQuery } from 'react-apollo';
+import { useQuery } from 'react-apollo';
 
-import { Query, QueryWantsListsArgs, CardInputType } from 'types/graphql';
-import FullscreenSpinner from 'components/Elements/Shared/Spinner';
-import { UnifiedDeck } from 'types/unifiedTypes';
-import { wantsListsForDeck } from './queries';
-import WantsListsCollapse from './WantsListsCollapse';
+import { CardInputType } from 'types/graphql';
+import { UnifiedCard, UnifiedDeck, UnifiedWantsList } from 'types/unifiedTypes';
+import { wantsListDesktop } from 'components/Desktop/WantsList/queries';
+import unifyCardFormat from 'utils/unifyCardFormat';
+import { FadeIn, OneTimeInfoBox } from 'components/Elements/Shared';
+import { AddCards, Dropzone } from 'components/Elements/Desktop';
+import { Link } from 'react-router-dom';
+import DeckWantsList from './DeckWantsList';
+import useDeckWantsQueries from './useDeckWantsQueries';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -16,35 +20,73 @@ const StyledWrapper = styled.div`
 `;
 
 interface Props {
-  visible: boolean;
+  name: string;
   deck: UnifiedDeck;
+  id: string;
+  numberOfCards?: number;
   onAddCards: (newCards: CardInputType[], name: string) => void;
 }
 
-export default ({ visible, deck, onAddCards }: Props) => {
-  const { id: deckId } = useParams<{ id: string }>();
-  const [fetchCards, { called, data, loading }] = useLazyQuery<
-    Query,
-    QueryWantsListsArgs
-  >(wantsListsForDeck, {
-    variables: { deckId },
+export default ({ name, deck, id, onAddCards, numberOfCards }: Props) => {
+  const { data } = useQuery(wantsListDesktop, {
+    variables: { id },
+    fetchPolicy: 'cache-first',
   });
 
-  useEffect(() => {
-    if (!visible || called) return;
-    fetchCards();
-    // eslint-disable-next-line
-  }, [visible]);
+  const cards = data && unifyCardFormat(data.wantsList.cards);
+  const wantsList: UnifiedWantsList = data && {
+    ...data.wantsList,
+    originalCards: data.wantsList.cards,
+    cards,
+  };
 
-  const wantsLists = data?.wantsLists ?? [];
+  const {
+    onDeleteCard,
+    onAddCard: onAddCardToWantsList,
+    onDeletebyOracle,
+    onEditCard,
+  } = useDeckWantsQueries(wantsList);
 
   return (
-    <StyledWrapper>
-      {loading ? (
-        <FullscreenSpinner />
-      ) : (
-        <WantsListsCollapse wantsLists={wantsLists} deck={deck} onAddCards={onAddCards} />
-      )}
-    </StyledWrapper>
+    <FadeIn style={{ height: '100%' }}>
+      <Dropzone
+        onDrop={(val) => onAddCardToWantsList(val, null)}
+        listId={wantsList?.id}
+        style={{ height: 'unset', minHeight: '100%' }}
+      >
+        <StyledWrapper>
+          <Typography.Title level={3}>
+            <Link to={`/wants/${id}`}>{`${name} (${numberOfCards})`}</Link>
+          </Typography.Title>
+          <Space direction="vertical" size={48}>
+            <AddCards
+              isAdvanced={false}
+              onAddCards={(card: UnifiedCard, test) =>
+                onAddCardToWantsList(card[0], test)
+              }
+              focusId="deck.cards"
+              placeholder="Add a card..."
+              containedCardNames={wantsList?.cards.map((card) => card.name)}
+            />
+            <OneTimeInfoBox
+              showIcon
+              id="deck.wants.drag"
+              style={{ marginTop: 16 }}
+              // eslint-disable-next-line max-len
+              description="Drag and drop cards to add them to your Deck or other Wants Lists"
+            />
+            <DeckWantsList
+              wantsList={wantsList}
+              deck={deck}
+              onAddCardsToDeck={onAddCards}
+              onDeleteCard={onDeleteCard}
+              // @ts-ignore
+              onEditCard={onEditCard}
+              onDeletebyOracle={onDeletebyOracle}
+            />
+          </Space>
+        </StyledWrapper>
+      </Dropzone>
+    </FadeIn>
   );
 };

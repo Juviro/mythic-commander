@@ -21,8 +21,11 @@ const resolver = {
       .join('\n<cardface>\n');
   },
 
-  price({ prices: { usd, usd_foil } }) {
+  priceUsd({ prices: { usd, usd_foil } }) {
     return usd || usd_foil || 0;
+  },
+  priceEur({ prices: { eur, eur_foil } }) {
+    return eur || eur_foil || 0;
   },
   imgKey(card) {
     return getImageKey(card);
@@ -47,7 +50,9 @@ const resolver = {
     if (!oracle_text || !type_line || !type_line.startsWith('Legendary')) {
       return null;
     }
-    const isGeneralPartner = oracle_text.includes('Partner (You can have');
+    const isGeneralPartner =
+      oracle_text.includes('Partner (You can have') ||
+      oracle_text.endsWith('Partner');
     if (isGeneralPartner) {
       return 'ALL';
     }
@@ -58,6 +63,18 @@ const resolver = {
     }
 
     return null;
+  },
+  canBeCommander(card) {
+    const { oracle_text, type_line } = card.card_faces?.[0] ?? card;
+    if (!type_line || !type_line.startsWith('Legendary')) {
+      return false;
+    }
+
+    if (oracle_text?.toLowerCase().includes('can be your commander')) {
+      return true;
+    }
+
+    return type_line.includes('Creature');
   },
 };
 

@@ -1,31 +1,23 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
 import { MutationAddCardsToDeckArgs, CardInputType, Query } from 'types/graphql';
 import { UnifiedDeck } from 'types/unifiedTypes';
+import { PageCard, PageLayout } from 'components/Elements/Desktop';
 import Cards from './Cards';
-import Sidebar from './Sidebar';
-import Header from './Header/Header';
 import message from '../../../utils/message';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
 import { getDeckDesktop, addCardsToDeckDesktop } from './queries';
 import { Flex, NotFound, ShortcutFocus } from '../../Elements/Shared';
 import sumCardAmount from '../../../utils/sumCardAmount';
-import { useToggle } from '../../Hooks';
-
-const StyledDeck = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-`;
+import { DeckBreakdown } from './DeckBreakdown/DeckBreakdown';
+import DeckActions from './Header/DeckActions';
+import Title from './Header/Title';
+import { ActionBar } from './ActionBar/ActionBar';
 
 export default () => {
   const { id } = useParams<{ id: string }>();
-  const [currentTab, setCurrentTab] = useState(null);
-  const [displayOwnedOnly, toggleDisplayOwnedOnly] = useToggle();
   const { data, loading } = useQuery<Query>(getDeckDesktop, {
     variables: { id },
     fetchPolicy: 'network-only',
@@ -54,30 +46,23 @@ export default () => {
   };
 
   return (
-    <StyledDeck>
-      <Sidebar
-        currentTab={currentTab}
-        setCurrentTab={setCurrentTab}
-        onAddCards={onAddCards}
-        deck={unifiedDeck}
-      />
-      <ShortcutFocus focusId="deck.cards" style={{ overflow: 'auto', flex: 1 }}>
-        <Flex style={{ marginLeft: 50 }} direction="column">
-          <Header
-            deck={unifiedDeck}
-            onAddCards={onAddCards}
-            displayOwnedOnly={displayOwnedOnly}
-            toggleDisplayOwnedOnly={toggleDisplayOwnedOnly}
-          />
-          <Cards
-            deck={unifiedDeck}
-            loading={loading}
-            currentTab={currentTab}
-            onAddCards={onAddCards}
-            displayOwnedOnly={displayOwnedOnly}
-          />
-        </Flex>
-      </ShortcutFocus>
-    </StyledDeck>
+    <ShortcutFocus
+      focusId="deck.cards"
+      style={{ overflow: 'auto', flex: 1, height: '100%' }}
+    >
+      <PageLayout large>
+        <PageCard
+          title={<Title deck={unifiedDeck} />}
+          extra={<DeckActions deck={unifiedDeck} />}
+          style={{ height: 'calc(100% - 80px)', marginBottom: 70 }}
+        >
+          <Flex>
+            <Cards deck={unifiedDeck} loading={loading} onAddCards={onAddCards} />
+            <DeckBreakdown deck={unifiedDeck} />
+          </Flex>
+        </PageCard>
+        <ActionBar onAddCards={onAddCards} deck={unifiedDeck} />
+      </PageLayout>
+    </ShortcutFocus>
   );
 };

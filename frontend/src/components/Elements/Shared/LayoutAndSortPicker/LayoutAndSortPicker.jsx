@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import LayoutPicker from '../LayoutPicker';
+import LayoutPicker from './LayoutPicker';
 import OrderBy from '../OrderBy';
 
 const StyledListOrder = styled.div`

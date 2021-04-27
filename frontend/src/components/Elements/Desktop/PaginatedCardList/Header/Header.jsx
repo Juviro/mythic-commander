@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Tooltip } from 'antd';
 import styled from 'styled-components';
 
-import { LayoutPicker, OrderBy, Flex, AddedBeforeFilter } from '../../../Shared';
+import { OrderBy, Flex, AddedBeforeFilter } from '../../../Shared';
 import NameFilter from '../../../Shared/Filter/TextFilter/NameFilter';
 import { useShortcut } from '../../../../Hooks';
 
@@ -13,12 +13,7 @@ const StyledWrapper = styled.div`
   margin-bottom: 16px;
 `;
 
-export default ({
-  setSearch,
-  showCollectionFilters,
-  orderByParamName,
-  showAddedBeforeFilter,
-}) => {
+export default ({ setSearch, showCollectionFilters, showAddedBeforeFilter }) => {
   const searchInputRef = useRef(null);
   const [currentSearch, setCurrentSearch] = useState('');
   const focusInput = () => searchInputRef.current.focus();
@@ -52,12 +47,10 @@ export default ({
         )}
         <OrderBy
           showCollectionFilters={showCollectionFilters}
-          paramName={orderByParamName}
           style={{ marginLeft: 16 }}
         />
         {showAddedBeforeFilter && <AddedBeforeFilter />}
       </Flex>
-      <LayoutPicker hideCard />
     </StyledWrapper>
   );
 };

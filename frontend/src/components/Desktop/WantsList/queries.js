@@ -19,7 +19,8 @@ const CARD_FIELDS = `
       owned
       subTypes
       primaryTypes
-      minPrice
+      minPriceUsd
+      minPriceEur
       isTwoFaced
     }
   }

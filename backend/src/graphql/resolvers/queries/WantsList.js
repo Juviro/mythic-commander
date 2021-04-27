@@ -32,6 +32,9 @@ const resolver = {
       .orWhereNot('visibility', 'private')
       .first();
   },
+  canEdit({ userId }, _, { user }) {
+    return userId === user.id;
+  },
 };
 
 export default resolver;

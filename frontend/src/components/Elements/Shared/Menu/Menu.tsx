@@ -2,6 +2,7 @@ import React from 'react';
 import { MoreOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Typography } from 'antd';
 import MenuItem from 'antd/lib/menu/MenuItem';
+import { DropDownProps } from 'antd/lib/dropdown';
 
 interface MenuAction {
   icon: React.ReactNode;
@@ -12,22 +13,16 @@ interface MenuAction {
 
 type ActionType = MenuAction | MenuItem;
 
-interface Props {
+interface Props extends Pick<DropDownProps, 'placement'> {
   actions: ActionType[];
-  placement?:
-    | 'topLeft'
-    | 'topCenter'
-    | 'topRight'
-    | 'bottomLeft'
-    | 'bottomCenter'
-    | 'bottomRight';
+  fontSize?: number;
 }
 
 const isMenuAction = (action: ActionType): action is MenuAction => {
   return (action as MenuAction).title !== undefined;
 };
 
-export default ({ actions, placement }: Props) => {
+export default ({ actions, placement, fontSize = 20 }: Props) => {
   const menu = (
     <Menu>
       {actions.map((action) => {
@@ -49,7 +44,7 @@ export default ({ actions, placement }: Props) => {
 
   return (
     <Dropdown overlay={menu} trigger={['click']} placement={placement}>
-      <MoreOutlined style={{ fontSize: 20 }} />
+      <MoreOutlined style={{ fontSize }} />
     </Dropdown>
   );
 };

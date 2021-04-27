@@ -7,16 +7,9 @@ import { withRouter } from 'react-router';
 
 import CardListItem from './CardListItem';
 import CustomSkeleton from '../../Shared/CustomSkeleton';
-import GridCard from './GridCard';
 import Footer from './Footer';
 import CardModal from '../../../Mobile/Card/CardModal';
-import { LazyLoad } from '../../Shared';
-
-const StyledGridWrapper = styled.div`
-  display: ${({ isLarge }) => (isLarge ? 'block' : 'flex')};
-  flex-wrap: wrap;
-  align-items: flex-start;
-`;
+import { CardGrid, LazyLoad } from '../../Shared';
 
 const StyledPlaceholderWrapper = styled.div`
   padding: 4px 8px;
@@ -37,6 +30,7 @@ const CardList = ({
   showTotalResults,
   backTopStyle,
   isNewSearch,
+  deleteByOracle,
 }) => {
   const [detailCard, setDetailCard] = useState(null);
   const [{ name, layout = 'list' }] = useQueryParams({
@@ -57,7 +51,7 @@ const CardList = ({
     return <StyledPlaceholderWrapper>{getPlaceholder()}</StyledPlaceholderWrapper>;
   }
 
-  const onOpenDetailView = (card) => {
+  const onOpenDetails = (card) => {
     setDetailCard(card);
     history.push(`${history.location.pathname}${history.location.search}#details`);
   };
@@ -77,32 +71,30 @@ const CardList = ({
         dataSource={cards}
         style={{ width: '100%' }}
         renderItem={(card) => (
-          <LazyLoad offset={0} height={56}>
+          <LazyLoad offset={200} height={56}>
             <CardListItem
               card={card}
               moveToList={moveToList}
               onEditCard={onEditCard}
               onDeleteCard={onDeleteCard}
               searchString={name}
-              onClick={() => onOpenDetailView(card)}
+              onClick={() => onOpenDetails(card)}
             />
           </LazyLoad>
         )}
       />
     ) : (
-      <StyledGridWrapper isLarge={layout !== 'grid'}>
-        {cards.map((card) => (
-          <GridCard
-            key={card.id}
-            onClick={() => onOpenDetailView(card)}
-            card={card}
-            moveToList={moveToList}
-            onEditCard={onEditCard}
-            onDeleteCard={onDeleteCard}
-            isLarge={layout !== 'grid'}
-          />
-        ))}
-      </StyledGridWrapper>
+      <CardGrid
+        cards={cards}
+        loading={loading}
+        onOpenDetails={onOpenDetails}
+        hidePagination
+        cardsPerRow={layout === 'grid' ? 2 : 1}
+        canZoomIn
+        onEditCard={onEditCard}
+        onDeleteCard={onDeleteCard}
+        deleteByOracle={deleteByOracle}
+      />
     );
 
   return (

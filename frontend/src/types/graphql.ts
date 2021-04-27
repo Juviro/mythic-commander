@@ -30,7 +30,8 @@ export type Card = {
   name: Scalars['String'];
   image_uris?: Maybe<ImageUris>;
   card_faces?: Maybe<Array<CardFace>>;
-  price: Scalars['Float'];
+  priceUsd: Scalars['Float'];
+  priceEur: Scalars['Float'];
   prices: Prices;
   rarity: Scalars['String'];
   oracle_text?: Maybe<Scalars['String']>;
@@ -48,6 +49,7 @@ export type Card = {
   amountOwned: Scalars['Int'];
   amountOwnedFoil: Scalars['Int'];
   possiblePartner?: Maybe<Scalars['String']>;
+  canBeCommander?: Maybe<Scalars['Boolean']>;
   oracleCard: OracleCard;
   relatedCards?: Maybe<Array<Card>>;
 };
@@ -269,7 +271,8 @@ export type MutationDeleteDeckArgs = {
 };
 
 export type MutationDeleteFromDeckArgs = {
-  cardId: Scalars['String'];
+  cardId?: Maybe<Scalars['String']>;
+  cardIds?: Maybe<Array<Maybe<Scalars['String']>>>;
   deckId: Scalars['String'];
 };
 
@@ -376,8 +379,10 @@ export type MutationDeleteLtPlayerArgs = {
 export type OracleCard = {
   __typename?: 'OracleCard';
   _id: Scalars['String'];
-  sumPrice?: Maybe<Scalars['Float']>;
-  minPrice: Scalars['Float'];
+  sumPriceUsd?: Maybe<Scalars['Float']>;
+  sumPriceEur?: Maybe<Scalars['Float']>;
+  minPriceUsd: Scalars['Float'];
+  minPriceEur: Scalars['Float'];
   allSets: Array<Card>;
   owned: Scalars['Boolean'];
   totalAmount: Scalars['Int'];
@@ -410,6 +415,7 @@ export type Prices = {
   __typename?: 'Prices';
   eur?: Maybe<Scalars['String']>;
   usd?: Maybe<Scalars['String']>;
+  eur_foil?: Maybe<Scalars['String']>;
   usd_foil?: Maybe<Scalars['String']>;
 };
 

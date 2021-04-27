@@ -1,12 +1,7 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
 
-import {
-  WithFullList,
-  PaginatedCardList,
-  WithActions,
-  PageCard,
-} from '../../Elements/Desktop';
+import { WithFullList, PaginatedCardList, PageCard } from '../../Elements/Desktop';
 import message from '../../../utils/message';
 import {
   deleteFromWantsListDesktop,
@@ -57,24 +52,18 @@ export default ({ cards, loading, wantsList, canEdit }) => {
 
   return (
     <PageCard style={{ height: 'auto' }}>
-      <WithActions
-        deleteByOracle={canEdit ? deleteByOracle : undefined}
-        onEditCard={canEdit ? onEditCard : undefined}
-      >
-        {(actionProps) => (
-          <WithFullList cards={cards} {...actionProps}>
-            {(fullListProps) => (
-              <PaginatedCardList
-                {...fullListProps}
-                loading={loading}
-                showAddedBeforeFilter
-                showCollectionFilters
-                orderByParamName="orderByAdvanced"
-              />
-            )}
-          </WithFullList>
+      <WithFullList cards={cards}>
+        {(fullListProps) => (
+          <PaginatedCardList
+            {...fullListProps}
+            loading={loading}
+            showAddedBeforeFilter
+            showCollectionFilters
+            deleteByOracle={canEdit ? deleteByOracle : undefined}
+            onEditCard={canEdit ? onEditCard : undefined}
+          />
         )}
-      </WithActions>
+      </WithFullList>
     </PageCard>
   );
 };

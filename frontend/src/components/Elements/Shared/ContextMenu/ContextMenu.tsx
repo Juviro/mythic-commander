@@ -9,6 +9,7 @@ import { useToggle } from '../../../Hooks';
 export interface MenuItem {
   Icon: any;
   title: string;
+  primary?: boolean;
   onClick: (card: UnifiedCard) => void;
 }
 
