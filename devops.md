@@ -12,10 +12,11 @@ Auto renew (not tested - seems to not have worked):
 - located at `/etc/nginx/`
 - commands: `sudo service nginx start|stop|reload|restart|status`
 
-###Yarn
+###Disk Space
 
-- Cache may take up more than 1 GB of diskspace
-- To delete, run `sudo rm -rf /usr/local/share/.cache/yarn/v6/`
+- Show disk space: `df -h`
+- List directories by size: `sudo du -x / | sort -n | tail -40`
+- Cache may take up more than 1 GB of diskspace. to delete, run `sudo rm -rf /usr/local/share/.cache/yarn/v6/`
 
 ###PM2
 
