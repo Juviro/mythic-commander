@@ -16,6 +16,7 @@ export default ({
   moveToList,
   name: nameQuery,
   deleteByOracle,
+  paginated = true,
 }) => {
   const [{ name, colors, layout, subType, cardType, isLegendary }] = useQueryParams({
     name: StringParam,
@@ -52,7 +53,9 @@ export default ({
 
   const hasMore = displayedResults < sortedCards?.length;
 
-  const displayedCards = sortedCards?.slice(0, displayedResults);
+  const displayedCards = paginated
+    ? sortedCards?.slice(0, displayedResults)
+    : sortedCards;
 
   return (
     <CardList

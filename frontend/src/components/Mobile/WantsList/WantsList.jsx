@@ -48,6 +48,7 @@ export default () => {
       <LayoutAndSortPicker showCollectionFilters />
       <Divider />
       <WantsListMobile
+        paginated={false}
         cards={cards}
         loading={loading}
         canEdit={canEdit}
