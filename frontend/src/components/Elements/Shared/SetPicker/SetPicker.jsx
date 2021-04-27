@@ -52,6 +52,7 @@ export default ({
   return (
     <Select
       loading={loading}
+      disabled={loading}
       size={size}
       defaultValue={card.set_name}
       style={{ width, ...style }}
