@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Divider, Skeleton, Space } from 'antd';
+import { Divider, Skeleton, Space, Typography } from 'antd';
 
-import { DeckQuickstats } from 'components/Elements/Shared';
+import { DeckQuickstats, ValueLabel } from 'components/Elements/Shared';
 import DeckName from './DeckName';
 
 const StyledInfoBox = styled(Space)`
@@ -31,6 +31,12 @@ export default ({ deck, loading }) => {
     <StyledInfoBox direction="vertical">
       <DeckName name={deck.name} commander={commander} />
       <DeckQuickstats deck={deck} />
+      <Space style={{ marginTop: 12 }}>
+        <Typography.Text strong style={{ fontSize: 16 }}>
+          Estimated Value:
+        </Typography.Text>
+        <ValueLabel list={deck} />
+      </Space>
       <StyledDivider />
     </StyledInfoBox>
   );
