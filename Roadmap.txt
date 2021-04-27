@@ -15,7 +15,6 @@ OPTIONAL IN MIGRATION BRANCH:
 
 CURRENT:
     - Add option to specify a set for multi input
-    - Display foil prices in card detail
 
 NEXT:
     - redesign moveTo modal, especially for mobile
