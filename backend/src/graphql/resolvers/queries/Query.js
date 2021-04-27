@@ -24,6 +24,9 @@ const resolver = {
       .where({ id })
       .first();
   },
+  cards(_, { cardIds }, { db }) {
+    return db('cards').whereIn('id', cardIds);
+  },
   async cardByOracleId(_, { oracle_id }, { db }) {
     const card = await db('distinctCards')
       .where({ oracle_id })
@@ -162,8 +165,8 @@ const resolver = {
       .orderBy('date');
   },
 
-  proxies(_, { type, id, filter }, { user: { id: userId } }) {
-    return proxies({ type, id, filter }, userId);
+  proxies(_, params, { user: { id: userId } }) {
+    return proxies(params, userId);
   },
 
   async allLists(_, __, { user: { id: userId }, db }) {
