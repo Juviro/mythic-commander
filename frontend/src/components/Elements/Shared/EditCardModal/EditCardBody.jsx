@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import isMobile from 'utils/isMobile';
 import FlippableCard from '../FlippableCard';
 import SetPicker from '../SetPicker';
 import AmountInput from '../AmountInput';
@@ -42,7 +43,7 @@ export default ({ card, onChangeProp, canSubmit, onSubmit }) => {
       </StyledImageWrapper>
       <StyledContent>
         <AmountInput
-          autoFocus
+          autoFocus={!isMobile()}
           canSubmit={canSubmit}
           card={card}
           onSubmit={onSubmit}
