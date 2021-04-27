@@ -87,7 +87,6 @@ const CardGrid = ({
   cardLists: passedCardLists,
   canZoomIn,
   onClickCard,
-
   disableSelection,
   hidePagination,
   minimal,

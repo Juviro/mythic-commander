@@ -10,19 +10,20 @@ BUGFIXES:
     - hover over DeckCardsnotCollected label with a lot of cards: layout shifts because new scrollbar is added
 
 OPTIONAL IN MIGRATION BRANCH:
+    - re-enable deck card selection
     - display eur prices in collection value + graphs
     - display how many cards are included in eur/usd price
 
 CURRENT:
-    - Add option to specify a set for multi input
+    - CHANGE TITLE BASED ON CONTENT (Deckname, Collection etc)
 
 NEXT:
     - redesign moveTo modal, especially for mobile
-    - CHANGE TITLE BASED ON CONTENT (Deckname, Collection etc)
     - Add to cardgrid selection menu: export cards as text, proxy cards
     - mobile card list preview: allow swpie to next card
     - Split more code with React.lazy
     - move to new image service
+    - deck: check for illegal dupliactions
 
     - add option to export unowned cards from deck to wants
     - allow sorting by added in advanced search

@@ -31,6 +31,7 @@ const CardList = ({
   backTopStyle,
   isNewSearch,
   deleteByOracle,
+  disableSelection,
 }) => {
   const [detailCard, setDetailCard] = useState(null);
   const [{ name, layout = 'list' }] = useQueryParams({
@@ -89,6 +90,7 @@ const CardList = ({
         loading={loading}
         onOpenDetails={onOpenDetails}
         hidePagination
+        disableSelection={disableSelection}
         cardsPerRow={layout === 'grid' ? 2 : 1}
         canZoomIn
         onEditCard={onEditCard}
