@@ -31,12 +31,6 @@ export default ({ deck, loading }) => {
     <StyledInfoBox direction="vertical">
       <DeckName name={deck.name} commander={commander} />
       <DeckQuickstats deck={deck} />
-      <Space style={{ marginTop: 12 }}>
-        <Typography.Text strong style={{ fontSize: 16 }}>
-          Estimated Value:
-        </Typography.Text>
-        <ValueLabel list={deck} />
-      </Space>
       <StyledDivider />
       <Space style={{ marginTop: 12 }}>
         <Typography.Text strong style={{ fontSize: 16 }}>
