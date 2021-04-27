@@ -147,7 +147,7 @@ export default class MultiInput extends React.Component {
               onClick={this.onSubmit}
               disabled={!isValidInput || !value}
             >
-              Send
+              Add Cards
             </Button>
           }
         >
