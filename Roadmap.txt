@@ -15,11 +15,10 @@ OPTIONAL IN MIGRATION BRANCH:
     - display how many cards are included in eur/usd price
 
 CURRENT:
-    - Add to cardgrid selection menu: export cards as text
+    - mobile card list preview: allow swpie to next card
 
 NEXT:
     - redesign moveTo modal, especially for mobile
-    - mobile card list preview: allow swpie to next card
     - Split more code with React.lazy
     - move to new image service
     - deck: check for illegal dupliactions
