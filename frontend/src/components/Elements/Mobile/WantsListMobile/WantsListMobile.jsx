@@ -18,6 +18,7 @@ export default ({
   moveToList,
   deckId,
   canEdit,
+  paginated,
 }) => {
   const wantsListId = rawWantsList && rawWantsList.id;
   const [mutateDelete] = useMutation(deleteFromWantsList);
@@ -82,6 +83,7 @@ export default ({
       hideFooter={hideFooter}
       cards={cards}
       loading={loading}
+      paginated={paginated}
       moveToList={canEdit ? moveToList : undefined}
       onEditCard={canEdit ? onEditCard : undefined}
       onDeleteCard={canEdit ? onDeleteCard : undefined}

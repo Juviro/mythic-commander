@@ -27,6 +27,7 @@ export default ({
         deleteByOracle={deleteByOracle}
         onDeleteCard={onDeleteCard}
         hideFooter
+        paginated={false}
       />
       <Divider style={{ margin: '16px 0' }} />
     </>
