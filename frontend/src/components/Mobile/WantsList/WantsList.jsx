@@ -3,6 +3,7 @@ import { Divider } from 'antd';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 import { useParams } from 'react-router';
+import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import { wantsList as wantsListQuery } from './queries';
 
 import Header from './Header';
@@ -31,6 +32,8 @@ export default () => {
     cards,
   };
   const canEdit = wantsList?.canEdit;
+
+  useDocumentTitle(wantsList?.name);
 
   useEffect(() => {
     if (!loading) return;

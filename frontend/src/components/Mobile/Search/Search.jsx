@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 import { useApolloClient } from 'react-apollo';
 import { useQueryParams, StringParam } from 'use-query-params';
 
+import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import { LayoutAndSortPicker, SearchButton, Filter } from '../../Elements/Shared';
 import { CardListMobile as CardList } from '../../Elements/Mobile';
 import Header from './Header';
@@ -35,6 +36,7 @@ const Search = ({ history }) => {
   const [orderBy] = useStoredQueryParam('orderBy', StringParam);
   const [options, setParams] = useQueryParams(searchParams);
   const [currentOptions, setCurrentOptions] = useState(options);
+  useDocumentTitle('Advanced Search');
 
   const client = useApolloClient();
 

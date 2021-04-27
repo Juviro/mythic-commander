@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
 import { NotFound } from 'components/Elements/Shared';
+import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import DeckHeader from './DeckHeader';
 import DeckMenu from './DeckMenu';
 import DeckBody from './DeckBody';
@@ -33,6 +34,7 @@ export default () => {
 
   const deck = data?.deck;
   const cards = deck && unifyCardFormat(deck.cards);
+  useDocumentTitle(deck?.name);
 
   const unifiedDeck = deck && {
     ...deck,

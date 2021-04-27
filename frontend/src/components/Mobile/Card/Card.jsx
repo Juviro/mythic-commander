@@ -6,6 +6,7 @@ import { useParams } from 'react-router';
 import { Divider } from 'antd';
 
 import UserContext from 'components/Provider/UserProvider';
+import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import CardImage from './CardImage';
 import {
   CardLegal,
@@ -48,6 +49,7 @@ export default ({ overwriteOracleId, defaultCardId }) => {
   });
 
   const card = data && unifySingleCard(data.cardByOracleId);
+  useDocumentTitle(card?.name);
 
   const currentCard = card && card.allSets.find(({ id }) => id === selectedCardId);
 

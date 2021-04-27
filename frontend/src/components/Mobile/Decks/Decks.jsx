@@ -5,6 +5,7 @@ import { useQuery } from 'react-apollo';
 
 import UserContext from 'components/Provider/UserProvider';
 import { LoginRequired } from 'components/Elements/Shared';
+import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import { getDecks } from '../../../queries';
 import DeckList from './DeckList';
 
@@ -21,6 +22,8 @@ export default () => {
   const { data, loading } = useQuery(getDecks);
   const decks = data ? data.decks : [];
   const { user, loading: userLoading } = useContext(UserContext);
+
+  useDocumentTitle('Your Decks');
 
   if (!user && !userLoading) {
     return <LoginRequired message="Log in to create your own decks" />;

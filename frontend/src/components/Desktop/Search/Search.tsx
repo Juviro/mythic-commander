@@ -1,11 +1,13 @@
 import React, { useRef } from 'react';
 
+import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import SearchOptions from './SearchOptions';
 import { PageCard, PageLayout, PaginatedCardList } from '../../Elements/Desktop';
 import { SearchHoc } from '../../Elements/Shared';
 
 export default () => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  useDocumentTitle('Advanced Search');
 
   return (
     <PageLayout>
