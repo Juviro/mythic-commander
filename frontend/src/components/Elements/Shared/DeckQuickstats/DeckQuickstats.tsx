@@ -8,10 +8,6 @@ import { getListStats } from 'utils/getListStats';
 import sumCardAmount from 'utils/sumCardAmount';
 import { DeckQuickstatsItem } from './DeckQuickstatsItem';
 
-interface Props {
-  deck: UnifiedDeck;
-}
-
 const StyledPlaceholder = styled.div`
   ${shimmer};
   width: 200px;
@@ -79,6 +75,10 @@ const getQuickstats = (deck: UnifiedDeck, type: string) => {
       return null;
   }
 };
+
+interface Props {
+  deck: UnifiedDeck;
+}
 
 export const DeckQuickstats = ({ deck }: Props) => {
   if (!deck) {

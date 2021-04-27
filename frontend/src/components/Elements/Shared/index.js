@@ -24,6 +24,7 @@ export { default as ConfirmDeleteCards } from './ConfirmDeleteCards';
 export { default as ContextMenu } from './ContextMenu';
 export { default as CurrentSearchOptions } from './CurrentSearchOptions';
 export { default as CustomSkeleton } from './CustomSkeleton';
+export { default as DeckQuickstats } from './DeckQuickstats';
 export { default as DeckTitle } from './DeckTitle';
 export { default as EditableAmount } from './EditableAmount';
 export { default as EditableTitle } from './EditableTitle';

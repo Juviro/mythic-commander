@@ -7,7 +7,6 @@ import { EditOutlined, LoadingOutlined, DeleteOutlined } from '@ant-design/icons
 import { UnifiedCard } from 'types/unifiedTypes';
 import { MenuItem } from 'components/Elements/Shared/ContextMenu/ContextMenu';
 import { useSelectCards } from 'components/Elements/Shared/CardGrid/useSelectCards';
-import { useToggle } from 'components/Hooks';
 import CustomSkeleton from '../CustomSkeleton';
 import usePagination from './usePagination';
 import CardModalDesktop from '../../Desktop/CardModalDesktop';
@@ -94,9 +93,6 @@ const CardGrid = ({
   minimal,
 }: PropsWithRouterProps) => {
   const [detailCardIndex, setDetailCardIndex] = useState<number | null>(null);
-  const [test, toggleTest] = useToggle();
-  // @ts-ignore
-  window.toggle = toggleTest;
   const detailCard = cards?.[detailCardIndex];
   const {
     selectedCardIds,
@@ -181,7 +177,7 @@ const CardGrid = ({
 
   const cardLists = passedCardLists ?? [{ title, key: 'main', cards }];
 
-  if ((loading && detailCardIndex === null) || test) {
+  if (loading && detailCardIndex === null) {
     return (
       <CustomSkeleton.Grid
         cardsPerRow={cardsPerRow}
