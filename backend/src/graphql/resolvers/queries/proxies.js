@@ -71,9 +71,16 @@ const getDeckProxies = async (id, filter, userId) => {
   return cards.map(addImgKey);
 };
 
-export default ({ type, id, filter }, userId) => {
-  if (type === 'wants') return getWantProxies(id, filter, userId);
-  if (type === 'deck') return getDeckProxies(id, filter, userId);
+const getCardProxies = async cardIds => {
+  const cards = await db('cards').whereIn('id', cardIds.split(','));
+
+  return cards.map(addImgKey);
+};
+
+export default ({ type, value, filter }, userId) => {
+  if (type === 'wants') return getWantProxies(value, filter, userId);
+  if (type === 'deck') return getDeckProxies(value, filter, userId);
+  if (type === 'cards') return getCardProxies(value);
 
   throw new Error('Type not supported');
 };

@@ -6,6 +6,7 @@ import {
   CloseOutlined,
   DeleteOutlined,
   DiffOutlined,
+  PrinterOutlined,
   VerticalLeftOutlined,
 } from '@ant-design/icons';
 import { fadeIn } from 'components/Animations';
@@ -71,6 +72,14 @@ export const SelectionMenu = ({
       icon: <CheckSquareOutlined />,
       title: 'Select All',
       onClick: onSelectAll,
+    });
+  }
+  if (!isMobile()) {
+    const getProxyUrl = () => `/proxy/cards/${selectedCardIds.join(',')}`;
+    actions.push({
+      icon: <PrinterOutlined />,
+      title: 'Proxy Cards',
+      onClick: () => window.open(getProxyUrl(), '_newtab'),
     });
   }
   if (onCopyCardsTo) {

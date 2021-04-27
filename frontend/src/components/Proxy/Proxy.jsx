@@ -5,6 +5,7 @@ import { useQuery } from 'react-apollo';
 import { useParams } from 'react-router';
 import { useQueryParam, StringParam } from 'use-query-params';
 
+import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import { proxies } from './queries';
 import { Flex } from '../Elements/Shared';
 import { getImageUrl } from '../../utils/cardImage';
@@ -45,19 +46,21 @@ const StyledOverlay = styled.div`
 `;
 
 export default () => {
-  const { type, id } = useParams();
+  const { type, value } = useParams();
   const [filter] = useQueryParam('filter', StringParam);
   const [displayedCards, setDisplayedCards] = useState(null);
 
+  useDocumentTitle('Proxie Cards');
+
   const { data, loading } = useQuery(proxies, {
-    variables: { id, type, filter },
+    variables: { value, type, filter },
   });
 
   useEffect(() => {
     if (!data || displayedCards) return;
     const spreadCards = [];
     data.proxies.forEach((card) => {
-      for (let i = 0; i < card.amount; i++) {
+      for (let i = 0; i < (card.amount ?? 1); i++) {
         spreadCards.push(card);
       }
     });

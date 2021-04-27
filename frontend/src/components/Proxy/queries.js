@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const proxies = gql`
-  query proxies($id: String!, $type: String!, $filter: String) {
-    proxies(id: $id, type: $type, filter: $filter) {
+  query proxies($value: String!, $type: String!, $filter: String) {
+    proxies(value: $value, type: $type, filter: $filter) {
       id
       imgKey
       amount

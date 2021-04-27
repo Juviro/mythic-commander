@@ -15,11 +15,10 @@ OPTIONAL IN MIGRATION BRANCH:
     - display how many cards are included in eur/usd price
 
 CURRENT:
-    - CHANGE TITLE BASED ON CONTENT (Deckname, Collection etc)
+    - Add to cardgrid selection menu: export cards as text
 
 NEXT:
     - redesign moveTo modal, especially for mobile
-    - Add to cardgrid selection menu: export cards as text, proxy cards
     - mobile card list preview: allow swpie to next card
     - Split more code with React.lazy
     - move to new image service
