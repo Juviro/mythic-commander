@@ -53,7 +53,7 @@ export default () => {
       <PageLayout large>
         <PageCard
           title={<Title deck={unifiedDeck} />}
-          extra={<DeckActions deck={unifiedDeck} />}
+          extra={<DeckActions deck={unifiedDeck} onAddCards={onAddCards} />}
           style={{ height: 'calc(100% - 80px)', marginBottom: 70 }}
         >
           <Flex>
