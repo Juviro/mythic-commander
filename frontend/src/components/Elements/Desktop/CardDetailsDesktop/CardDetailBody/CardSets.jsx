@@ -14,6 +14,7 @@ const StyledWrapper = styled.div`
 `;
 const StyledTitleWrapper = styled.div`
   display: flex;
+  height: 38px;
   width: calc(100% - 20px);
   justify-content: space-between;
 `;
@@ -100,13 +101,11 @@ export default ({ card, loading, selectedCardId, onChangeSet, showTitle }) => {
 
   return (
     <StyledWrapper>
-      <StyledTitleWrapper>
-        {showTitle && (
-          <Typography.Title level={4} style={{ userSelect: 'text' }}>
-            {title}
-          </Typography.Title>
-        )}
-      </StyledTitleWrapper>
+      {showTitle && (
+        <StyledTitleWrapper>
+          <Typography.Title level={4}>{title}</Typography.Title>
+        </StyledTitleWrapper>
+      )}
       {user && (
         <EditIcon onClick={onToggleEdit} isEditing={isEditing} onDiscard={onDiscard} />
       )}
