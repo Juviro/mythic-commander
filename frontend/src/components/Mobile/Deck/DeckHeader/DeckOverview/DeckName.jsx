@@ -1,4 +1,5 @@
 import { Typography } from 'antd';
+import { CustomSkeleton } from 'components/Elements/Shared';
 import React from 'react';
 import styled from 'styled-components';
 import { colors } from '../../../../../assets/mtgIcons';
@@ -22,8 +23,9 @@ const StyledColorIcon = styled.img`
 `;
 
 export default ({ commander, name }) => {
-  if (!name) return '';
-  const colorIdentity = (commander && commander.color_identity) || [];
+  if (!name) return <CustomSkeleton.Line style={{ margin: '6px 0' }} />;
+
+  const colorIdentity = commander?.color_identity ?? [];
   // Colorless symbol for colorless commanders
   if (commander && !colorIdentity.length) colorIdentity.push('C');
 

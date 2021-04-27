@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Divider, Skeleton, Space, Typography } from 'antd';
+import { Divider, Space, Typography } from 'antd';
 
 import { DeckQuickstats, ValueLabel } from 'components/Elements/Shared';
 import DeckName from './DeckName';
@@ -16,20 +16,12 @@ const StyledDivider = styled(Divider)`
   }
 `;
 
-export default ({ deck, loading }) => {
-  if (loading) {
-    return (
-      <StyledInfoBox>
-        <Skeleton active />
-      </StyledInfoBox>
-    );
-  }
-
-  const commander = deck.cards.find(({ isCommander }) => isCommander);
+export default ({ deck }) => {
+  const commander = deck?.cards.find(({ isCommander }) => isCommander);
 
   return (
     <StyledInfoBox direction="vertical">
-      <DeckName name={deck.name} commander={commander} />
+      <DeckName name={deck?.name} commander={commander} />
       <DeckQuickstats deck={deck} />
       <StyledDivider />
       <Space style={{ marginTop: 12 }}>

@@ -1,6 +1,8 @@
 import React from 'react';
-import { Affix, Spin } from 'antd';
+import { Affix } from 'antd';
 import styled from 'styled-components';
+import { LoadingOutlined } from '@ant-design/icons';
+
 import { useWindowSize } from '../../../Hooks';
 
 const StyledAffix = styled(Affix)`
@@ -11,6 +13,7 @@ const StyledAffix = styled(Affix)`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  background: linear-gradient(to bottom, #dedede, #909090);
 `;
 
 const StyledImage = styled.div`
@@ -29,7 +32,7 @@ export default ({ imgSrc, loading }) => {
   useWindowSize();
   return (
     <StyledAffix offsetTop={50 - imageHeight}>
-      {loading ? <Spin /> : <StyledImage img={imgSrc} />}
+      {loading ? <LoadingOutlined /> : <StyledImage img={imgSrc} />}
     </StyledAffix>
   );
 };
