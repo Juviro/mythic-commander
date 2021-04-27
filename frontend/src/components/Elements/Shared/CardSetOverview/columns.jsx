@@ -1,24 +1,72 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { Tooltip } from 'antd';
+import Flex from 'components/Elements/Shared/Flex';
+import FoilIcon from 'components/Elements/Shared/FoilIcon';
 import Set from '../Set';
 import EditableAmount from '../EditableAmount';
 import getIsMobile from '../../../../utils/isMobile';
 import { getPriceLabel } from '../../../../utils/cardStats';
 
 const StyledPriceWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
   @media (max-width: 764px) {
     font-size: 12px;
   }
 `;
 
 const renderSet = (card) => {
-  return <Set setKey={card.set} name={card.set_name} />;
+  const isFoilOnly = !card.nonfoil;
+  return (
+    <Flex align="center">
+      <Set setKey={card.set} name={card.set_name} />
+      {isFoilOnly && (
+        <FoilIcon
+          style={{
+            margin: 0,
+            right: -1,
+            position: 'absolute',
+            zIndex: 99,
+          }}
+          tooltip="Only available in foil"
+        />
+      )}
+    </Flex>
+  );
 };
 
-const renderPrice = (currency) => (price) => (
-  <StyledPriceWrapper>{getPriceLabel(price[currency], { currency })}</StyledPriceWrapper>
-);
+const renderPrice = (currency) => (cardPrice) => {
+  const price = cardPrice[currency];
+  const foilPrice = cardPrice[`${currency}_foil`];
+
+  const foilPriceLabel = getPriceLabel(foilPrice, { currency });
+  const priceLabel = getPriceLabel(price, { currency });
+
+  const displayFoil = Boolean(foilPrice && !price);
+
+  const tooltip = (
+    <Flex direction="row">
+      <Flex direction="column" style={{ marginRight: 8 }}>
+        <span>Regular:</span>
+        <span>Foil: </span>
+      </Flex>
+      <Flex direction="column">
+        <span>{priceLabel}</span>
+        <span>{foilPriceLabel}</span>
+      </Flex>
+    </Flex>
+  );
+
+  return (
+    <StyledPriceWrapper>
+      <Tooltip title={tooltip}>{displayFoil ? foilPriceLabel : priceLabel}</Tooltip>
+    </StyledPriceWrapper>
+  );
+};
 
 const renderOwned = (isEditing, onChangeAmount, onSaveChanges, amountKey) => (
   card,
@@ -66,7 +114,7 @@ const baseColumns = [
     sorter: sortByPrice('usd'),
     render: renderPrice('usd'),
     width: 80,
-    align: 'center',
+    align: 'right',
   },
   {
     key: '3',
@@ -75,7 +123,7 @@ const baseColumns = [
     sorter: sortByPrice('eur'),
     render: renderPrice('eur'),
     width: 80,
-    align: 'center',
+    align: 'right',
   },
 ];
 

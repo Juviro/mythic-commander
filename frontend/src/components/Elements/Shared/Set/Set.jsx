@@ -17,6 +17,8 @@ const StyledSetName = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   height: 24px;
+  line-height: 24px;
+
   @media (max-width: 764px) {
     font-size: 12px;
   }

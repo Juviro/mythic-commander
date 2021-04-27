@@ -22,6 +22,8 @@ type Card {
   color_identity: [String]
   set_name: String!
   mana_cost: String
+  foil: Boolean!
+  nonfoil: Boolean!
 
   # Additional card fields
   imgKey: String!

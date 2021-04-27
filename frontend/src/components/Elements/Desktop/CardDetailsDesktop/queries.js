@@ -29,13 +29,13 @@ const CARD_FIELDS = `
       amountOwned
       amountOwnedFoil
       set_name
+      nonfoil
       prices {
         usd
         usd_foil
         eur
         eur_foil
       }
-
     }
     containingWantsLists {
       id
