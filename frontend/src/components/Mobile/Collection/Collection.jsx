@@ -1,3 +1,4 @@
+import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import UserContext from 'components/Provider/UserProvider';
 import React, { useContext } from 'react';
 import { useParams } from 'react-router';
@@ -15,6 +16,9 @@ const StyledBody = styled.div`
 export default () => {
   const { username } = useParams();
   const { user, loading } = useContext(UserContext);
+
+  const documentTitle = username ? `${username}'s Collection` : 'Collection';
+  useDocumentTitle(documentTitle);
 
   if (!username && !user && !loading) {
     return <LoginRequired message="Log in to create your own collection" />;

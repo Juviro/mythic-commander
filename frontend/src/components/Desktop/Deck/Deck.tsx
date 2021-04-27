@@ -5,6 +5,7 @@ import { useQuery, useMutation } from 'react-apollo';
 import { MutationAddCardsToDeckArgs, CardInputType, Query } from 'types/graphql';
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { PageCard, PageLayout } from 'components/Elements/Desktop';
+import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import Cards from './Cards';
 import message from '../../../utils/message';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
@@ -24,12 +25,13 @@ export default () => {
   });
   const [mutate] = useMutation<any, MutationAddCardsToDeckArgs>(addCardsToDeckDesktop);
 
+  const deck = data?.deck;
+  const cards = unifyCardFormat(deck?.cards);
+  useDocumentTitle(deck?.name);
+
   if (!data && !loading) {
     return <NotFound message="This deck does not seem to exist.." />;
   }
-
-  const deck = data?.deck;
-  const cards = unifyCardFormat(deck?.cards);
 
   const unifiedDeck: UnifiedDeck = deck && {
     ...deck,

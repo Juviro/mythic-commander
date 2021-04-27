@@ -3,6 +3,7 @@ import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { withRouter, Switch, Route } from 'react-router-dom';
 
 import styled from 'styled-components';
+import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import StartingScreen from './StartingScreen';
 import GameScreen from './GameScreen';
 import { Flex } from '../../Elements/Shared';
@@ -21,6 +22,8 @@ const LifeTracker = ({ history }) => {
     setGameSettings(newGameSettings);
     history.push(`/m/life-tracker/start`);
   };
+
+  useDocumentTitle('Life Tracker');
 
   return (
     <StyledWrapper>

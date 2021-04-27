@@ -4,6 +4,7 @@ import { useQuery, useMutation } from 'react-apollo';
 
 import UserContext from 'components/Provider/UserProvider';
 import { LoginRequired } from 'components/Elements/Shared';
+import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import { OverviewList, OverviewListHeader, PageLayout } from '../../Elements/Desktop';
 import { getDecksDesktop, createDeckDesktop } from './queries';
 
@@ -14,6 +15,7 @@ const Wants = ({ history }) => {
   const [search, setSearch] = useState('');
   const [mutate] = useMutation(createDeckDesktop);
   const { user, loading: userLoading } = useContext(UserContext);
+  useDocumentTitle('Your Decks');
 
   if (!user && !userLoading) {
     return <LoginRequired message="Log in to create your own decks" />;

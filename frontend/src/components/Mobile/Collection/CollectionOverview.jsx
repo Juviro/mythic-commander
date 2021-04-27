@@ -9,7 +9,11 @@ export default () => {
 
   if (username) {
     return (
-      <Typography.Title level={2} ellipsis style={{ width: '100%', paddingLeft: 10 }}>
+      <Typography.Title
+        level={2}
+        ellipsis
+        style={{ width: '100%', paddingLeft: 10, marginTop: 8 }}
+      >
         {`${username}'s Collection`}
       </Typography.Title>
     );

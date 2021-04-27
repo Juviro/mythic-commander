@@ -7,6 +7,7 @@ import { useQuery, useMutation } from 'react-apollo';
 import { withRouter } from 'react-router';
 import UserContext from 'components/Provider/UserProvider';
 import { LoginRequired } from 'components/Elements/Shared';
+import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import { wantsListsMobile as getWantsLists, createWantsList } from './queries';
 import { OverviewList } from '../../Elements/Mobile';
 
@@ -47,6 +48,8 @@ const Wants = ({ history }) => {
   const { data, loading } = useQuery(getWantsLists);
   const [unlinkedLists, linkedLists] = splitWantsLists(data);
   const [mutate] = useMutation(createWantsList);
+
+  useDocumentTitle('Your Wants Lists');
 
   const { user, loading: userLoading } = useContext(UserContext);
 

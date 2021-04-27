@@ -4,6 +4,7 @@ import { useQuery, useMutation } from 'react-apollo';
 
 import UserContext from 'components/Provider/UserProvider';
 import { LoginRequired } from 'components/Elements/Shared';
+import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import { wantsListsDesktop as getWantsLists, createWantsListDesktop } from './queries';
 import { splitWantsLists } from '../../Mobile/WantsLists/WantsLists';
 import { OverviewList, OverviewListHeader, PageLayout } from '../../Elements/Desktop';
@@ -16,6 +17,7 @@ const Wants = ({ history }) => {
   const [mutate] = useMutation(createWantsListDesktop);
 
   const { user, loading: userLoading } = useContext(UserContext);
+  useDocumentTitle('Your Wants Lists');
 
   if (!user && !userLoading) {
     return <LoginRequired message="Log in to create your own wants lists" />;
