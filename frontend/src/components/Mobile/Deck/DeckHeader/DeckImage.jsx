@@ -6,6 +6,7 @@ import { useWindowSize } from '../../../Hooks';
 const StyledAffix = styled(Affix)`
   width: 100%;
   height: calc(20vh + 20vw);
+  z-index: 200;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,10 +28,8 @@ export default ({ imgSrc, loading }) => {
 
   useWindowSize();
   return (
-    <>
-      <StyledAffix offsetTop={50 - imageHeight}>
-        {loading ? <Spin /> : <StyledImage img={imgSrc} />}
-      </StyledAffix>
-    </>
+    <StyledAffix offsetTop={50 - imageHeight}>
+      {loading ? <Spin /> : <StyledImage img={imgSrc} />}
+    </StyledAffix>
   );
 };

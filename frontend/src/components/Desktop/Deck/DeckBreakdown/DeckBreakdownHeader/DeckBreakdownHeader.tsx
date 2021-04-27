@@ -1,9 +1,9 @@
 import { Space } from 'antd';
 import React from 'react';
 
+import DeckQuickstats from 'components/Elements/Shared/DeckQuickstats';
 import { UnifiedDeck } from 'types/unifiedTypes';
 import DeckImage from './DeckImage';
-import { DeckQuickstats } from './DeckQuickstats';
 
 interface Props {
   deck?: UnifiedDeck;

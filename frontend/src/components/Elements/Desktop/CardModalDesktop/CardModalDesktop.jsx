@@ -45,6 +45,7 @@ const CardModalDesktop = ({
           <CardDetailsDesktop
             card={unifiedCard}
             loading={loading}
+            fallbackCard={selectedCard}
             initialCardId={initialCardId}
           />
         </Flex>

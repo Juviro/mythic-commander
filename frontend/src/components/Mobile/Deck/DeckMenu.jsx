@@ -10,7 +10,7 @@ const StyledMenuItem = styled(Menu.Item)`
 
 export default ({ onSetTab, currentTab }) => {
   return (
-    <Affix offsetTop={50} style={{ width: '100%' }}>
+    <Affix offsetTop={50} style={{ width: '100%', zIndex: 200 }}>
       <Menu selectedKeys={[currentTab]} mode="horizontal" style={{ display: 'flex' }}>
         <StyledMenuItem key="cards" onClick={() => onSetTab('cards')}>
           Cards

@@ -7,7 +7,14 @@ import AdditionalInfos from './AdditionalInfos';
 import CardTitle from './CardTitle';
 import { useToggle } from '../../../../Hooks';
 
-export default ({ card, loading, selectedCardId, setSelectedCardId, largeHeader }) => {
+export default ({
+  card,
+  fallbackCard,
+  loading,
+  selectedCardId,
+  setSelectedCardId,
+  largeHeader,
+}) => {
   const [isFlipped, toggleIsFlipped] = useToggle(false);
   const { user } = useContext(UserContext);
 
@@ -18,6 +25,7 @@ export default ({ card, loading, selectedCardId, setSelectedCardId, largeHeader 
         card={card}
         showTitle={!largeHeader}
         loading={loading}
+        fallbackCard={fallbackCard}
         toggleIsFlipped={toggleIsFlipped}
         selectedCardId={selectedCardId}
         setSelectedCardId={setSelectedCardId}

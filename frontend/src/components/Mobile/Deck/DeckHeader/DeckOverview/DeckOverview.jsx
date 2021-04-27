@@ -1,21 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Skeleton } from 'antd';
+import { Divider, Skeleton, Space } from 'antd';
 
-import { ListStats } from 'components/Elements/Shared';
-import NotLegalWarning from './NotLegalWarning';
+import { DeckQuickstats } from 'components/Elements/Shared';
 import DeckName from './DeckName';
 
-const StyledInfoBox = styled.div`
+const StyledInfoBox = styled(Space)`
   width: 100%;
   padding: 16px;
 `;
 
-const StyledHeader = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: space-between;
+const StyledDivider = styled(Divider)`
+  && {
+    margin-bottom: 0px !important;
+  }
 `;
 
 export default ({ deck, loading }) => {
@@ -30,14 +28,10 @@ export default ({ deck, loading }) => {
   const commander = deck.cards.find(({ isCommander }) => isCommander);
 
   return (
-    <>
-      <StyledInfoBox>
-        <StyledHeader>
-          <DeckName name={deck.name} commander={commander} />
-          <NotLegalWarning deck={deck} />
-        </StyledHeader>
-        <ListStats list={deck} hideUnique style={{ marginTop: 16 }} />
-      </StyledInfoBox>
-    </>
+    <StyledInfoBox direction="vertical">
+      <DeckName name={deck.name} commander={commander} />
+      <DeckQuickstats deck={deck} />
+      <StyledDivider />
+    </StyledInfoBox>
   );
 };
