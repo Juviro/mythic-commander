@@ -139,6 +139,7 @@ const GridCard = ({
           ref={dragRef}
           onContextMenu={(e) => {
             e.preventDefault();
+            if (disableSelection) return;
             onSelect();
           }}
         >

@@ -28,6 +28,7 @@ export default ({
         onDeleteCard={onDeleteCard}
         hideFooter
         paginated={false}
+        disableSelection
       />
       <Divider style={{ margin: '16px 0' }} />
     </>

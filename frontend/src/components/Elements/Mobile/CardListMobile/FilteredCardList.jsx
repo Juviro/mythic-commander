@@ -17,6 +17,7 @@ export default ({
   name: nameQuery,
   deleteByOracle,
   paginated = true,
+  disableSelection,
 }) => {
   const [{ name, colors, layout, subType, cardType, isLegendary }] = useQueryParams({
     name: StringParam,
@@ -68,6 +69,7 @@ export default ({
       onLoadMore={onLoadMore}
       onEditCard={onEditCard}
       onDeleteCard={onDeleteCard}
+      disableSelection={disableSelection}
       totalResults={cards?.length}
     />
   );
