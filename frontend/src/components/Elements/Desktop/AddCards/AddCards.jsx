@@ -56,7 +56,7 @@ export default ({
       {isAdvanced && (
         <StyledSetSelectionWrapper>
           <StyledLabel>Filter by Set</StyledLabel>
-          <SearchSettings setCardOptions={setCardOptions} onAddCards={onAddCards} />
+          <SearchSettings setCardOptions={setCardOptions} />
         </StyledSetSelectionWrapper>
       )}
     </Flex>
