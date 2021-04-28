@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Modal } from 'antd';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
-import { Swiper, SwiperSlide } from 'swiper/react';
+// import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, Slide } from 'react-dynamic-swiper';
 
 import Card from '.';
 
@@ -21,9 +22,16 @@ const CardModal = ({
   setDetailCard,
   onLoadMore,
 }) => {
-  if (!oracle_id) return null;
-
   const currentIndex = cards.findIndex((card) => card.id === id);
+
+  useEffect(() => {
+    // Load more cards when only two cards are left
+    if (currentIndex + 3 === cards.length) {
+      onLoadMore();
+    }
+  }, [currentIndex, onLoadMore]);
+
+  if (!oracle_id) return null;
 
   window.onpopstate = onClose;
 
@@ -36,28 +44,29 @@ const CardModal = ({
       className="fullscreen-modal"
     >
       <StyledSwiper
-        spaceBetween={48}
-        initialSlide={currentIndex}
-        slidesPerView={1}
-        onSlideChange={(swiper) => {
-          setDetailCard(cards[swiper.activeIndex]);
-          if (swiper.activeIndex + 2 === cards.length) {
-            onLoadMore();
-          }
+        swiperOptions={{
+          slidesPerView: 1,
+          initialSlide: currentIndex,
         }}
       >
-        {cards.map((card, index) => {
-          const isRendered = Math.abs(index - currentIndex) <= 1;
-          return (
-            <SwiperSlide key={card.oracle_id} style={{ width: '100%' }}>
-              <span>
-                {isRendered && (
-                  <Card overwriteOracleId={card.oracle_id} defaultCardId={card.id} />
-                )}
-              </span>
-            </SwiperSlide>
-          );
-        })}
+        {cards
+          .filter((_, index) => true || Math.abs(index - currentIndex) <= 1)
+          .map((card, index) => {
+            const isRendered = Math.abs(index - currentIndex) <= 1;
+            return (
+              <Slide
+                key={card.oracle_id}
+                style={{ width: '100%' }}
+                onActive={() => setDetailCard(card)}
+              >
+                <span>
+                  {isRendered && (
+                    <Card overwriteOracleId={card.oracle_id} defaultCardId={card.id} />
+                  )}
+                </span>
+              </Slide>
+            );
+          })}
       </StyledSwiper>
     </Modal>
   );

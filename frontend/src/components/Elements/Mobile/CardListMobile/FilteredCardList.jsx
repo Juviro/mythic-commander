@@ -5,7 +5,8 @@ import { filterCards, sortCards } from '../../../../utils/cardFilter';
 import CardList from '.';
 import { useStoredQueryParam } from '../../../Hooks';
 
-export const CARDS_PER_PAGE = 30;
+export const CARDS_PER_PAGE = 10;
+// export const CARDS_PER_PAGE = 30;
 
 export default ({
   cards,

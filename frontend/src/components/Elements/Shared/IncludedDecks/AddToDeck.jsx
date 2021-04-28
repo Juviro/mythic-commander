@@ -17,7 +17,7 @@ export default ({
   newListName = DEFAULT_NEW_LIST_NAME,
   title = 'Add to deck...',
 }) => {
-  const { data, loading } = useQuery(getDecksDesktop);
+  const { data, loading } = useQuery(getDecksDesktop, { fetchPolicy: 'cache-first' });
   const [mutate] = useMutation(addCardsToDeckDesktop);
 
   if (loading) {
