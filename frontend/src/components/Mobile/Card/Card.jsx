@@ -47,6 +47,7 @@ export default ({ overwriteOracleId, defaultCardId, reduced }) => {
   const oracle_id = overwriteOracleId || paramOracleId;
   const { data, loading } = useQuery(getCardByOracleId, {
     variables: { oracle_id },
+    fetchPolicy: 'cache-first',
   });
 
   const card = data && unifySingleCard(data.cardByOracleId);
