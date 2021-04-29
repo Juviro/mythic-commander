@@ -28,7 +28,7 @@ export default ({
         <StyledCardImage>
           <FlippableCard
             card={card}
-            loading={parentLoading || (loading && !card)}
+            loading={parentLoading || (loading && !card?.imgKey)}
             onFlipCard={toggleIsFlipped}
           />
         </StyledCardImage>
