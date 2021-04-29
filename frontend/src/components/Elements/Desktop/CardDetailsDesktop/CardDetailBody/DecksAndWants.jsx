@@ -13,19 +13,19 @@ const StyledBottomWrapper = styled.div`
   margin-bottom: 16px;
 `;
 
-export default ({ card }) => {
+export default ({ card, loading }) => {
   return (
-    <Row style={{ width: '100%' }}>
+    <Row style={{ width: '100%', minHeight: 240 }}>
       <Col span={12}>
         <Divider>Your Decks</Divider>
         <StyledBottomWrapper>
-          <IncludedDecks card={card} large />
+          <IncludedDecks card={card} large loading={loading} />
         </StyledBottomWrapper>
       </Col>
       <Col span={12}>
         <Divider>Your Wants Lists</Divider>
         <StyledBottomWrapper>
-          <IncludedWants card={card} large cardId={card.id} />
+          <IncludedWants card={card} large cardId={card.id} loading={loading} />
         </StyledBottomWrapper>
       </Col>
     </Row>

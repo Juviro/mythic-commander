@@ -2,7 +2,6 @@ import React from 'react';
 import { Select, Typography } from 'antd';
 import { useQuery, useMutation } from 'react-apollo';
 
-import CustomSkeleton from '../CustomSkeleton';
 import { addCardsToWantsList, wantsLists as wantsListsQuery } from './queries';
 import message from '../../../../utils/message';
 import { wantsList as wantsListQuery } from '../../../Mobile/WantsList/queries';
@@ -16,15 +15,14 @@ export default ({
   oracle_id,
   newListName = DEFAULT_NEW_LIST_NAME,
   title = 'Add to wants list...',
+  loading: parentLoading,
 }) => {
   const { data, loading } = useQuery(wantsListsQuery);
   const [mutate] = useMutation(addCardsToWantsList);
 
-  if (loading) {
-    return <CustomSkeleton.Line />;
-  }
+  const isLoading = loading || parentLoading;
 
-  const { wantsLists } = data;
+  const { wantsLists } = data ?? {};
 
   const onAddToList = (id) => {
     const { name } = wantsLists.find((wantsList) => wantsList.id === id) || {
@@ -62,11 +60,17 @@ export default ({
     id: NEW_LIST_DUMMY_ID,
   };
 
-  const selectOptions = [addDeckElement, ...wantsLists];
+  const selectOptions = isLoading ? null : [addDeckElement, ...wantsLists];
 
   return (
-    <Select style={{ width: '100%' }} onChange={onAddToList} value={title}>
-      {selectOptions.map(({ id, name }) => (
+    <Select
+      style={{ width: '100%' }}
+      onChange={onAddToList}
+      value={title}
+      loading={isLoading}
+      disabled={isLoading}
+    >
+      {selectOptions?.map(({ id, name }) => (
         <Select.Option value={id} key={id}>
           <Typography.Text type={id === NEW_LIST_DUMMY_ID ? 'secondary' : 'primary'}>
             {name}

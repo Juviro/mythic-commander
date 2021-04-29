@@ -3,7 +3,6 @@ import { Typography, Col, Row, List } from 'antd';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import CustomSkeleton from '../CustomSkeleton';
 import getDynamicUrl from '../../../../utils/getDynamicUrl';
 import AddToWants from './AddToWants';
 
@@ -33,19 +32,21 @@ const WantsListLink = ({ id, name }) => {
   );
 };
 
-export default ({ card, large, cardId }) => {
-  if (!card || !card.containingWantsLists) {
-    return <CustomSkeleton.Line />;
-  }
+export default ({ card, large, cardId, loading }) => {
+  const { containingWantsLists } = card ?? {};
 
-  const { containingWantsLists } = card;
-
-  const dataSource = containingWantsLists.sort((a, b) => (a.name > b.name ? 1 : -1));
+  const dataSource = containingWantsLists?.sort((a, b) => (a.name > b.name ? 1 : -1));
 
   return (
     <StyledWrapper>
-      <AddToWants cardIds={[cardId || card.id]} oracle_id={card?.oracle_id} />
-      {containingWantsLists.length ? (
+      <AddToWants
+        cardIds={[cardId || card.id]}
+        oracle_id={card?.oracle_id}
+        loading={loading}
+      />
+      {loading ? (
+        <div style={{ height: 54 }} />
+      ) : containingWantsLists.length ? (
         <List
           size="small"
           style={{ margin: '16px 0 24px' }}

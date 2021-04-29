@@ -2,7 +2,14 @@ import React, { useState, useEffect } from 'react';
 
 import CardDetailBody from './CardDetailBody';
 
-export default ({ card, fallbackCard, initialCardId, loading, largeHeader }) => {
+export default ({
+  card,
+  fallbackCard,
+  initialCardId,
+  loading,
+  largeHeader,
+  parentLoading,
+}) => {
   const cardId = initialCardId || card?.id;
   const [selectedCardId, setSelectedCardId] = useState(cardId);
 
@@ -20,6 +27,7 @@ export default ({ card, fallbackCard, initialCardId, loading, largeHeader }) => 
       loading={loading}
       fallbackCard={fallbackCard}
       largeHeader={largeHeader}
+      parentLoading={parentLoading}
       selectedCardId={selectedCardId}
       setSelectedCardId={setSelectedCardId}
     />

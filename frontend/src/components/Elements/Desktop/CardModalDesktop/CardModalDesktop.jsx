@@ -33,7 +33,7 @@ const CardModalDesktop = ({
       destroyOnClose
       width={1200}
       bodyStyle={{
-        overflow: 'auto',
+        overflowY: 'scroll',
         maxHeight: 'calc(100vh - 128px)',
       }}
       style={{ maxWidth: '100%' }}
@@ -45,6 +45,7 @@ const CardModalDesktop = ({
           <CardDetailsDesktop
             card={unifiedCard}
             loading={loading}
+            parentLoading={parentLoading}
             fallbackCard={selectedCard}
             initialCardId={initialCardId}
           />

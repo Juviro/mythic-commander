@@ -12,6 +12,7 @@ BUGFIXES:
 NEXT:
     * Deck Sublist number of cards not counting duplicates (e.g. lands)
     * Decks sharable
+    * group card detail requests
 
 OPTIONAL IN MIGRATION BRANCH:
     - re-enable deck card selection
