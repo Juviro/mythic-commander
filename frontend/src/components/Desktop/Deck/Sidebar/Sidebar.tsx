@@ -38,6 +38,7 @@ export default ({ currentTabId, setCurrentTabId, onAddCards, deck }: Props) => {
         paddingBottom: 6,
         overflow: !currentTabId ? 'hidden' : undefined,
       }}
+      bodyStyle={{ padding: 0 }}
     >
       {currentTabId && (
         <Tabs deck={deck} setCurrentTabId={setCurrentTabId} currentTabId={currentTabId} />
