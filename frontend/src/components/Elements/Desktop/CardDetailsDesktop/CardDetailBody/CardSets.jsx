@@ -19,7 +19,14 @@ const StyledTitleWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export default ({ card, loading, selectedCardId, onChangeSet, showTitle }) => {
+export default ({
+  card,
+  loading,
+  selectedCardId,
+  onChangeSet,
+  showTitle,
+  parentLoading,
+}) => {
   const [mutate] = useMutation(changeCollection);
   const { user } = useContext(UserContext);
   const [isEditing, toggleIsEditing] = useToggle(false);
@@ -95,9 +102,8 @@ export default ({ card, loading, selectedCardId, onChangeSet, showTitle }) => {
   };
 
   const { name, totalAmount } = card || {};
-  let title = name;
-  if (totalAmount) title += ` (${totalAmount} collected)`;
-  if (loading) title = '';
+  let title = !parentLoading && name ? name : '';
+  if (totalAmount && !loading) title += ` (${totalAmount} collected)`;
 
   return (
     <StyledWrapper>

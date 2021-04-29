@@ -20,15 +20,15 @@ export default ({
   setSelectedCardId,
   showTitle,
   toggleIsFlipped,
-  fallbackCard,
+  parentLoading,
 }) => {
   return (
     <Row style={{ width: '100%', maxHeight: 490 }}>
       <Col span={8}>
         <StyledCardImage>
           <FlippableCard
-            card={loading && fallbackCard ? fallbackCard : card}
-            loading={loading && !fallbackCard}
+            card={card}
+            loading={parentLoading || (loading && !card)}
             onFlipCard={toggleIsFlipped}
           />
         </StyledCardImage>
@@ -38,6 +38,7 @@ export default ({
           showTitle={showTitle}
           card={card}
           loading={loading}
+          parentLoading={parentLoading}
           selectedCardId={selectedCardId}
           onChangeSet={setSelectedCardId}
         />

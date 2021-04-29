@@ -7,8 +7,8 @@ const StyledWrapper = styled.div`
   height: 55px;
 `;
 
-export default ({ card, loading }) => {
-  return loading ? (
+export default ({ card }) => {
+  return !card ? (
     <StyledWrapper>
       <CustomSkeleton.Line />
     </StyledWrapper>

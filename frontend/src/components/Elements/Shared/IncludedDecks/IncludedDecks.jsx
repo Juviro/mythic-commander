@@ -3,7 +3,6 @@ import { List, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
-import CustomSkeleton from '../CustomSkeleton';
 import getDynamicUrl from '../../../../utils/getDynamicUrl';
 import Flex from '../Flex';
 import AddToDeck from './AddToDeck';
@@ -41,24 +40,26 @@ const DeckLink = ({ id, name }) => {
   );
 };
 
-export default ({ card, large }) => {
-  if (!card || !card.containingDecks) return <CustomSkeleton.Line />;
+export default ({ card, large, loading }) => {
+  const { containingDecks } = card && !loading ? card : {};
 
-  const { containingDecks } = card;
-
-  const dataSource = [...containingDecks].sort((a, b) => (a.name > b.name ? 1 : -1));
+  const dataSource =
+    containingDecks && [...containingDecks].sort((a, b) => (a.name > b.name ? 1 : -1));
 
   return (
     <StyledWrapper>
-      <AddToDeck cardIds={[card?.id]} oracle_id={card?.oracle_id} />
-      {containingDecks.length ? (
+      <AddToDeck cardIds={[card?.id]} oracle_id={card?.oracle_id} loading={loading} />
+
+      {loading ? (
+        <div style={{ height: 54 }} />
+      ) : containingDecks?.length ? (
         <List
           rowKey="id"
           size="small"
           style={{ margin: '16px 0 24px' }}
           dataSource={dataSource}
           renderItem={({ id, name, imgSrc }) => (
-            <List.Item style={{ padding: large ? 8 : 4 }}>
+            <List.Item style={{ padding: large ? 8 : 4, height: 44 }}>
               <Flex align="center">
                 <StyledPreview src={imgSrc} />
                 <DeckLink id={id} name={name} />

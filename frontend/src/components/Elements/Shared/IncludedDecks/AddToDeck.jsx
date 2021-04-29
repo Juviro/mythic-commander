@@ -2,7 +2,6 @@ import React from 'react';
 import { Select, Typography } from 'antd';
 import { useQuery, useMutation } from 'react-apollo';
 
-import CustomSkeleton from '../CustomSkeleton';
 import message from '../../../../utils/message';
 import { getCardByOracleId } from '../../../Mobile/Card/queries';
 import { addCardsToDeckDesktop } from '../../../Desktop/Deck/queries';
@@ -16,15 +15,12 @@ export default ({
   oracle_id,
   newListName = DEFAULT_NEW_LIST_NAME,
   title = 'Add to deck...',
+  loading: parentLoading,
 }) => {
   const { data, loading } = useQuery(getDecksDesktop);
   const [mutate] = useMutation(addCardsToDeckDesktop);
 
-  if (loading) {
-    return <CustomSkeleton.Line />;
-  }
-
-  const { decks } = data;
+  const { decks } = data ?? {};
 
   const onAddToList = (id) => {
     const { name } = decks.find((wantsList) => wantsList.id === id) || {
@@ -56,10 +52,17 @@ export default ({
     id: NEW_LIST_DUMMY_ID,
   };
 
-  const selectOptions = [addDeckElement, ...decks];
+  const isLoading = loading || parentLoading;
+  const selectOptions = decks && !isLoading ? [addDeckElement, ...decks] : [];
 
   return (
-    <Select style={{ width: '100%' }} onChange={onAddToList} value={title}>
+    <Select
+      style={{ width: '100%' }}
+      onChange={onAddToList}
+      value={title}
+      loading={isLoading}
+      disabled={isLoading}
+    >
       {selectOptions.map(({ id, name }) => (
         <Select.Option value={id} key={id}>
           <Typography.Text type={id === NEW_LIST_DUMMY_ID ? 'secondary' : 'primary'}>

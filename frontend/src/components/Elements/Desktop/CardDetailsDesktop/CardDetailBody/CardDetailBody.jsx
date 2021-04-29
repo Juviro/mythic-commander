@@ -14,24 +14,27 @@ export default ({
   selectedCardId,
   setSelectedCardId,
   largeHeader,
+  parentLoading,
 }) => {
   const [isFlipped, toggleIsFlipped] = useToggle(false);
   const { user } = useContext(UserContext);
 
+  const usedCard = loading && fallbackCard ? fallbackCard : card;
+
   return (
     <>
-      {largeHeader && <CardTitle card={card} loading={loading} />}
+      {largeHeader && <CardTitle card={usedCard} />}
       <PreviewAndSets
-        card={card}
+        card={usedCard}
         showTitle={!largeHeader}
         loading={loading}
-        fallbackCard={fallbackCard}
+        parentLoading={parentLoading}
         toggleIsFlipped={toggleIsFlipped}
         selectedCardId={selectedCardId}
         setSelectedCardId={setSelectedCardId}
       />
-      {user && <DecksAndWants card={card} />}
-      <AdditionalInfos card={card} loading={loading} isFlipped={isFlipped} />
+      {user && <DecksAndWants card={usedCard} loading={loading} />}
+      <AdditionalInfos card={usedCard} loading={loading} isFlipped={isFlipped} />
     </>
   );
 };
