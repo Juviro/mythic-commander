@@ -38,6 +38,7 @@ const CardModal = ({
     if (currentIndex + 3 === cards.length) {
       onLoadMore();
     }
+    // eslint-disable-next-line
   }, [currentIndex, onLoadMore]);
 
   if (!oracle_id) return null;
