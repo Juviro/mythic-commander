@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
@@ -6,6 +6,8 @@ import { MutationAddCardsToDeckArgs, CardInputType, Query } from 'types/graphql'
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { PageCard, PageLayout } from 'components/Elements/Desktop';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
+import { StringParam, useQueryParam } from 'use-query-params';
+import { getColorIdentity } from 'utils/commander';
 import Cards from './Cards';
 import message from '../../../utils/message';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
@@ -29,15 +31,27 @@ export default () => {
   const cards = unifyCardFormat(deck?.cards);
   useDocumentTitle(deck?.name);
 
-  if (!data && !loading) {
-    return <NotFound message="This deck does not seem to exist.." />;
-  }
-
   const unifiedDeck: UnifiedDeck = deck && {
     ...deck,
     originalCards: deck.cards,
     cards,
   };
+
+  const [, setColors] = useQueryParam('colors', StringParam);
+
+  const colorIdentityString = getColorIdentity(unifiedDeck?.cards).join('');
+
+  useEffect(() => {
+    if (!deck) return;
+    if (!colorIdentityString.length) return;
+    // Preselect color identity of the deck and exclude other colors
+    setColors(`-${colorIdentityString.toLowerCase()}`);
+    // eslint-disable-next-line
+  }, [colorIdentityString]);
+
+  if (!data && !loading) {
+    return <NotFound message="This deck does not seem to exist.." />;
+  }
 
   const onAddCards = (newCards: CardInputType[], name: string) => {
     const addedLabel = name || `${sumCardAmount(newCards)} cards`;

@@ -14,7 +14,6 @@ NEXT:
     * Decks sharable
     * group card detail requests
     * add field to cards table: version number (1 or 2 in most cases)
-    * persist deck advanced search results
 
 OPTIONAL IN MIGRATION BRANCH:
     - re-enable deck card selection
