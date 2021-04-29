@@ -16,7 +16,8 @@ export interface Pagination {
 
 export default (
   numberOfCards: number,
-  wrapperRef: { current: HTMLDivElement | null }
+  wrapperRef: { current: HTMLDivElement | null },
+  hidePagination
 ) => {
   const [currentPage = 1, setPageParam] = useQueryParam('page', NumberParam);
   const [pageSize = 10, setPageSizeParam] = useQueryParam('pageSize', NumberParam);
@@ -44,7 +45,7 @@ export default (
   };
 
   const hasPrevious = currentPage > 1;
-  const hasNext = currentPage * pageSize < numberOfCards;
+  const hasNext = !hidePagination && currentPage * pageSize < numberOfCards;
 
   const pagination = {
     pageSize,

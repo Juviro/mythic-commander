@@ -48,7 +48,7 @@ export default ({ name, deck, id, onAddCards, numberOfCards }: Props) => {
   } = useDeckWantsQueries(wantsList);
 
   return (
-    <FadeIn style={{ height: '100%' }}>
+    <FadeIn style={{ height: '100%', padding: 24 }}>
       <Dropzone
         onDrop={(val) => onAddCardToWantsList(val, null)}
         listId={wantsList?.id}
