@@ -1,12 +1,9 @@
 import React from 'react';
+import { getColorIdentity } from 'utils/commander';
 import ManaSymbol from '../ManaCost/ManaSymbol';
 
 export default ({ cards, size = 18 }) => {
-  const commander = cards.filter(({ isCommander }) => isCommander);
-  const colorIdentity = commander.reduce(
-    (acc, { color_identity }) => [...new Set(acc.concat(color_identity))],
-    []
-  );
+  const colorIdentity = getColorIdentity(cards);
   return (
     <>
       {colorIdentity.map((symbol) => (
