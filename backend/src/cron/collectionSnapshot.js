@@ -12,7 +12,10 @@ export default async () => {
       SELECT SUM(
         coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * amount + 
         coalesce(GREATEST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * "amountFoil"
-        )::int as value 
+        )::int as value
+        coalesce(LEAST((prices->>'eur')::float, (prices->>'eur_foil')::float), 0) * amount + 
+        coalesce(GREATEST((prices->>'eur')::float, (prices->>'eur_foil')::float), 0) * "amountFoil"
+        )::int as valueEur
       FROM collection 
       LEFT JOIN cards 
         ON cards.id = collection.id
