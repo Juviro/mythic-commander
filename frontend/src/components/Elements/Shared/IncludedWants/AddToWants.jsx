@@ -17,7 +17,7 @@ export default ({
   newListName = DEFAULT_NEW_LIST_NAME,
   title = 'Add to wants list...',
 }) => {
-  const { data, loading } = useQuery(wantsListsQuery, { fetchPolicy: 'cache-first' });
+  const { data, loading } = useQuery(wantsListsQuery);
   const [mutate] = useMutation(addCardsToWantsList);
 
   if (loading) {

@@ -7,7 +7,6 @@ import { Divider } from 'antd';
 
 import UserContext from 'components/Provider/UserProvider';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
-import { LoadingOutlined } from '@ant-design/icons';
 import CardImage from './CardImage';
 import {
   CardLegal,
@@ -40,7 +39,7 @@ const StyledBodyWrapper = styled.div`
   background-color: white;
 `;
 
-export default ({ overwriteOracleId, defaultCardId, reduced }) => {
+export default ({ overwriteOracleId, defaultCardId }) => {
   const { oracle_id: paramOracleId } = useParams();
   const { user } = useContext(UserContext);
   const [selectedCardId, setSelectedCardId] = useState(null);
@@ -73,40 +72,36 @@ export default ({ overwriteOracleId, defaultCardId, reduced }) => {
   return (
     <StyledWrapper>
       <CardImage card={fullCard} loading={loading} />
-      {!reduced ? (
-        <StyledBodyWrapper>
-          <Divider>Overview</Divider>
-          <CardSetOverview
-            card={card}
-            loading={loading}
-            selectedCardId={selectedCardId}
-            onChangeSet={setSelectedCardId}
-          />
-          {user && (
-            <>
-              <Divider>Your Collection</Divider>
-              <CardOwned
-                card={card}
-                loading={loading}
-                onChangeSet={setSelectedCardId}
-                selectedCardId={selectedCardId}
-              />
-              <Divider>Wants Lists</Divider>
-              <IncludedWants card={card} />
-              <Divider>Decks</Divider>
-              <IncludedDecks card={card} />
-            </>
-          )}
-          <Divider>Resources</Divider>
-          <CardLinks card={card} />
-          <div style={{ margin: '16px 0' }}>
-            <CardLegal card={card} />
-          </div>
-          <CardRules card={card} loading={loading} />
-        </StyledBodyWrapper>
-      ) : (
-        <LoadingOutlined style={{ marginTop: 50 }} />
-      )}
+      <StyledBodyWrapper>
+        <Divider>Overview</Divider>
+        <CardSetOverview
+          card={card}
+          loading={loading}
+          selectedCardId={selectedCardId}
+          onChangeSet={setSelectedCardId}
+        />
+        {user && (
+          <>
+            <Divider>Your Collection</Divider>
+            <CardOwned
+              card={card}
+              loading={loading}
+              onChangeSet={setSelectedCardId}
+              selectedCardId={selectedCardId}
+            />
+            <Divider>Wants Lists</Divider>
+            <IncludedWants card={card} />
+            <Divider>Decks</Divider>
+            <IncludedDecks card={card} />
+          </>
+        )}
+        <Divider>Resources</Divider>
+        <CardLinks card={card} />
+        <div style={{ margin: '16px 0' }}>
+          <CardLegal card={card} />
+        </div>
+        <CardRules card={card} loading={loading} />
+      </StyledBodyWrapper>
     </StyledWrapper>
   );
 };
