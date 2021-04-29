@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Modal } from 'antd';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
@@ -23,15 +23,6 @@ const CardModal = ({
   onLoadMore,
 }) => {
   const currentIndex = cards.findIndex((card) => card.id === id);
-  const [usedIndex, setUsedIndex] = useState(currentIndex);
-
-  useEffect(() => {
-    // delay setting the current index so the re-render
-    // doesn't interfere with the swipe animation
-    setTimeout(() => {
-      setUsedIndex(currentIndex);
-    }, 500);
-  }, [currentIndex, setUsedIndex]);
 
   useEffect(() => {
     // Load more cards when only two cards are left
@@ -56,13 +47,13 @@ const CardModal = ({
       <StyledSwiper
         swiperOptions={{
           slidesPerView: 1,
-          initialSlide: usedIndex,
+          initialSlide: currentIndex,
         }}
       >
         {cards
-          .filter((_, index) => true || Math.abs(index - usedIndex) <= 1)
+          .filter((_, index) => true || Math.abs(index - currentIndex) <= 1)
           .map((card, index) => {
-            const isRendered = Math.abs(index - usedIndex) <= 1;
+            const isRendered = Math.abs(index - currentIndex) <= 1;
             return (
               <Slide
                 key={card.oracle_id}
