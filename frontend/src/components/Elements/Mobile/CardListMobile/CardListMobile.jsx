@@ -120,13 +120,7 @@ const CardList = ({
         />
       )}
       <BackTop style={{ left: 20, bottom: 20, ...backTopStyle }} />
-      <CardModal
-        {...detailCard}
-        cards={cards}
-        onClose={onCloseModal}
-        setDetailCard={setDetailCard}
-        onLoadMore={onLoadMore}
-      />
+      <CardModal {...detailCard} onClose={onCloseModal} />
     </>
   );
 };

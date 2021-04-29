@@ -1,29 +1,11 @@
 import React from 'react';
 import { Modal } from 'antd';
-import styled from 'styled-components';
-import { withRouter } from 'react-router';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
+import { withRouter } from 'react-router';
 import Card from '.';
 
-const StyledSwiper = styled(Swiper)`
-  .swiper-wrapper {
-    display: -webkit-box;
-  }
-`;
-
-const CardModal = ({
-  oracle_id,
-  id,
-  onClose,
-  history,
-  cards,
-  setDetailCard,
-  onLoadMore,
-}) => {
+const CardModal = ({ oracle_id, id, onClose, history }) => {
   if (!oracle_id) return null;
-
-  const currentIndex = cards.findIndex((card) => card.id === id);
 
   window.onpopstate = onClose;
 
@@ -32,33 +14,10 @@ const CardModal = ({
       visible
       footer={null}
       onCancel={history.goBack}
-      bodyStyle={{ padding: '32px 0 0', overflow: 'hidden' }}
+      bodyStyle={{ padding: '32px 0 0' }}
       className="fullscreen-modal"
     >
-      <StyledSwiper
-        spaceBetween={48}
-        initialSlide={currentIndex}
-        slidesPerView={1}
-        onSlideChange={(swiper) => {
-          setDetailCard(cards[swiper.activeIndex]);
-          if (swiper.activeIndex + 2 === cards.length) {
-            onLoadMore();
-          }
-        }}
-      >
-        {cards.map((card, index) => {
-          const isRendered = Math.abs(index - currentIndex) <= 1;
-          return (
-            <SwiperSlide key={card.oracle_id} style={{ width: '100%' }}>
-              <span>
-                {isRendered && (
-                  <Card overwriteOracleId={card.oracle_id} defaultCardId={card.id} />
-                )}
-              </span>
-            </SwiperSlide>
-          );
-        })}
-      </StyledSwiper>
+      <Card overwriteOracleId={oracle_id} defaultCardId={id} />
     </Modal>
   );
 };
