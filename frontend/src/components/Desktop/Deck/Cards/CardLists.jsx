@@ -6,6 +6,7 @@ import { getListStats } from 'utils/getListStats';
 import { lightText } from 'constants/colors';
 import message from 'utils/message';
 import { CloseOutlined } from '@ant-design/icons';
+import sumCardAmount from 'utils/sumCardAmount';
 import { Flex, CardGrid, CommanderPicker } from '../../../Elements/Shared';
 import { deleteFromDeckDesktop, editDeckCardDesktop, getDeckDesktop } from '../queries';
 
@@ -75,7 +76,7 @@ export default ({ loading, cardsByType, deck }) => {
   const cardLists = cardsByType?.map(({ type, cards }) => {
     const { valueLabelEur, valueLabelUsd } = getListStats({ cards });
     const isCommander = type === 'Commander';
-    const numberOfCardsLabel = isCommander ? '' : `(${cards.length})`;
+    const numberOfCardsLabel = isCommander ? '' : `(${sumCardAmount(cards)})`;
 
     const getListHeading = () => {
       if (!isCommander || !cards[0]) return type;
