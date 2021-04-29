@@ -40,13 +40,13 @@ export default ({ card, large, cardId, loading }) => {
   return (
     <StyledWrapper>
       <AddToWants
-        cardIds={[cardId || card.id]}
+        cardIds={[cardId || card?.id]}
         oracle_id={card?.oracle_id}
         loading={loading}
       />
       {loading ? (
         <div style={{ height: 54 }} />
-      ) : containingWantsLists.length ? (
+      ) : containingWantsLists?.length ? (
         <List
           size="small"
           style={{ margin: '16px 0 24px' }}
