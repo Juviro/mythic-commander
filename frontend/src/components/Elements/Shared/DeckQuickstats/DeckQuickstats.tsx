@@ -1,6 +1,7 @@
 import { Space } from 'antd';
 import shimmer from 'components/Animations/shimmer';
-import React from 'react';
+import UserContext from 'components/Provider/UserProvider';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { hasCorrectColorIdentity } from 'utils/cardStats';
@@ -81,6 +82,7 @@ interface Props {
 }
 
 export const DeckQuickstats = ({ deck }: Props) => {
+  const { user } = useContext(UserContext);
   if (!deck) {
     return (
       <Space direction="vertical">
@@ -95,8 +97,11 @@ export const DeckQuickstats = ({ deck }: Props) => {
     getQuickstats(deck, 'numberOfCards'),
     getQuickstats(deck, 'commanderLegal'),
     getQuickstats(deck, 'colorIdentity'),
-    getQuickstats(deck, 'owned'),
   ];
+
+  if (user) {
+    quickstats.push(getQuickstats(deck, 'owned'));
+  }
 
   return (
     <Space direction="vertical">

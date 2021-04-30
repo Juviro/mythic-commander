@@ -87,7 +87,7 @@ export default ({ loading, cardsByType, deck }) => {
       <Flex direction="column">
         <span>{`${getListHeading()} ${numberOfCardsLabel}`}</span>
         <StyledSubtitle>
-          {cards.length ? `${valueLabelUsd} | ${valueLabelEur}` : ''}
+          {cards.length && deck.canEdit ? `${valueLabelUsd} | ${valueLabelEur}` : ''}
         </StyledSubtitle>
       </Flex>
     );
@@ -114,8 +114,8 @@ export default ({ loading, cardsByType, deck }) => {
       loading={loading}
       cards={allCardsInOrder}
       cardLists={cardLists}
-      deleteByOracle={deleteByOracle(true)}
-      onEditCard={onEditCard}
+      deleteByOracle={deck?.canEdit ? deleteByOracle(true) : undefined}
+      onEditCard={deck?.canEdit ? onEditCard : undefined}
       showAddedBeforeFilter
       showCollectionFilters
       orderByParamName="orderByAdvanced"

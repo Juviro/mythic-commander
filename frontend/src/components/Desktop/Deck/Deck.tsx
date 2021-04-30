@@ -69,7 +69,11 @@ export default () => {
       <PageLayout large>
         <PageCard
           title={<Title deck={unifiedDeck} />}
-          extra={<DeckActions deck={unifiedDeck} onAddCards={onAddCards} />}
+          extra={
+            deck?.canEdit ? (
+              <DeckActions deck={unifiedDeck} onAddCards={onAddCards} />
+            ) : null
+          }
           style={{ height: 'calc(100% - 80px)', marginBottom: 70 }}
         >
           <Flex>
@@ -77,7 +81,7 @@ export default () => {
             <DeckBreakdown deck={unifiedDeck} />
           </Flex>
         </PageCard>
-        <ActionBar onAddCards={onAddCards} deck={unifiedDeck} />
+        {deck?.canEdit && <ActionBar onAddCards={onAddCards} deck={unifiedDeck} />}
       </PageLayout>
     </ShortcutFocus>
   );

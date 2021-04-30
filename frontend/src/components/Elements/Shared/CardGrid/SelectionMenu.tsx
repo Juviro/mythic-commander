@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Button, Space, Typography } from 'antd';
 import {
@@ -12,6 +12,7 @@ import {
 import { fadeIn } from 'components/Animations';
 import isMobile from 'utils/isMobile';
 import { buttonHoverBackground } from 'constants/colors';
+import UserContext from 'components/Provider/UserProvider';
 import DesktopTooltip from '../../Desktop/DesktopTooltip';
 import { Menu } from '..';
 
@@ -63,6 +64,7 @@ export const SelectionMenu = ({
   onSelectAll,
   canSelectAll,
 }: Props) => {
+  const { user } = useContext(UserContext);
   if (!selectedCardIds.length) return null;
 
   const actions = [];
@@ -82,21 +84,21 @@ export const SelectionMenu = ({
       onClick: () => window.open(getProxyUrl(), '_newtab'),
     });
   }
-  if (onCopyCardsTo) {
+  if (onCopyCardsTo && user) {
     actions.push({
       icon: <DiffOutlined />,
       title: 'Copy cards to...',
       onClick: onCopyCardsTo,
     });
   }
-  if (onMoveCards) {
+  if (onMoveCards && user) {
     actions.push({
       icon: <VerticalLeftOutlined />,
       title: 'Move cards to...',
       onClick: onMoveCards,
     });
   }
-  if (onDeleteCards) {
+  if (onDeleteCards && user) {
     actions.push({
       icon: <DeleteOutlined />,
       title: 'Delete',

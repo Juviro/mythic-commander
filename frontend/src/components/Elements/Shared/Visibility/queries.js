@@ -10,7 +10,7 @@ export const collectionVisibility = gql`
 `;
 
 export const changeCollectionVisibility = gql`
-  mutation changeCollectionVisibility($visibility: String!) {
+  mutation changeCollectionVisibility($visibility: Visibility!) {
     changeCollectionVisibility(visibility: $visibility) {
       id
       visibility
@@ -19,8 +19,17 @@ export const changeCollectionVisibility = gql`
 `;
 
 export const changeWantsListVisibility = gql`
-  mutation changeWantsListVisibility($wantsListId: String!, $visibility: String!) {
+  mutation changeWantsListVisibility($wantsListId: String!, $visibility: Visibility!) {
     changeWantsListVisibility(wantsListId: $wantsListId, visibility: $visibility) {
+      id
+      visibility
+    }
+  }
+`;
+
+export const changeDeckVisibility = gql`
+  mutation changeDeckVisibility($deckId: String!, $visibility: Visibility!) {
+    changeDeckVisibility(deckId: $deckId, visibility: $visibility) {
       id
       visibility
     }

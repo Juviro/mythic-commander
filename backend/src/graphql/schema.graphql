@@ -1,3 +1,9 @@
+enum Visibility {
+  private
+  hidden
+  public
+}
+
 ################################# Card #################################
 
 type Card {
@@ -123,6 +129,8 @@ type Deck {
   lastEdit: String!
   imgSrc: String!
   numberOfCards: Int!
+  visibility: Visibility!
+  canEdit: Boolean!
   cards: [DeckCard!]!
   wantsLists: [WantsList!]!
 }
@@ -139,7 +147,7 @@ type DeckCard {
 
 type Collection {
   id: String!
-  visibility: String!
+  visibility: Visibility!
   referenceSnapshot: CollectionSnapshot
   currentSnapshot: CollectionSnapshot!
 }
@@ -178,8 +186,8 @@ type WantsList {
   createdAt: String!
   numberOfCards: Int!
   deck: Deck
-  canEdit: Boolean
-  visibility: String!
+  canEdit: Boolean!
+  visibility: Visibility!
   cards: [WantsListCard!]!
 }
 
@@ -330,6 +338,7 @@ type Mutation {
   deleteDeck(deckId: String!): Boolean
   deleteFromDeck(cardId: String, cardIds: [String], deckId: String!): Deck!
   duplicateDeck(deckId: String!): String!
+  changeDeckVisibility(deckId: String!, visibility: Visibility!): Deck!
 
   moveCard(
     cardId: String!
@@ -349,7 +358,7 @@ type Mutation {
   deleteFromCollection(cardIds: [String]!): Boolean
   deleteAllFromCollection(oracleIds: [String!]!): Boolean
 
-  changeCollectionVisibility(visibility: String!): Collection!
+  changeCollectionVisibility(visibility: Visibility!): Collection!
 
   ########## Session ##########
   login(token: String!): LoginResponse!
@@ -378,7 +387,7 @@ type Mutation {
   unlinkWantsList(wantsListId: String!): WantsList!
   changeWantsListVisibility(
     wantsListId: String!
-    visibility: String!
+    visibility: Visibility!
   ): WantsList!
 
   ########## Life Tracker ##########
