@@ -6,7 +6,6 @@ BUGFIXES:
 CURRENT:
 
 NEXT:
-    * add field to cards table: version number (1 or 2 in most cases)
 
 OPTIONAL IN MIGRATION BRANCH:
     - re-enable deck card selection for mobile
@@ -16,32 +15,30 @@ OPTIONAL IN MIGRATION BRANCH:
 IMPROVEMENTS:
     - redesign moveTo modal, especially for mobile
     - mobile card list preview: allow swipe to next card
-    - Split more code with React.lazy
     - move to new image service
     - deck: check for illegal dupliactions
 
     - add deck colors to deck overview list
     - improve re-rendering of table columns and grid card. especially table.
-    - add to wants list dropdown: sort lists by name (same for decks I guess)
     - added to collection notification -> show amount as well
     - add optimistic response to card delete in deck (esp. mobile)
-    - remove basic lands from proxy queries (or add as option -> proxy rework)
-    - autofocus for deck sidebar input field
-    - transition for inset shadow when focussing deck sidebar
-    - select cards -> copy to some deck -> selection should be cleared, but isn't
 
 FEATURES:
-    - sharable decks / wants
     - show last search when no input in searchbar
     - check for multiple copies of one card for deck legality check
     - show if deck is legal in deck overview, order by legality (similar to magic arena)
 
 REFACTORINGS:
+    - Split more code with React.lazy
     - use AuthenticationError in authenticateUser, don't redirect in frontend
     - evaluate removing some caching, using network-only more
     - drop table events
+    * add field to cards table: version number (1 or 2 in most cases) for:
+        * Not having to calc it again in oracleCard -> allSets
+        * When adding a card to collection/deck avoid version numbers other than 1. I think that means preferring version 1 for distinctCards
  
 BACKLOG:
+    - select cards -> copy to some deck -> selection should be cleared, but isn't
     - allow sort by type (ramp, card draw, ...)
     - remove sidebar from collection and wants list, add to header, similar to mobile
     - add proxy to menu, allow to add single cards

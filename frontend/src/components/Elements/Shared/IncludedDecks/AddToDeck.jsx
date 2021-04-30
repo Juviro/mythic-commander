@@ -52,8 +52,11 @@ export default ({
     id: NEW_LIST_DUMMY_ID,
   };
 
+  const sortByName = (a, b) => (a.name.toLowerCase() >= b.name.toLowerCase() ? 1 : -1);
+
   const isLoading = loading || parentLoading;
-  const selectOptions = decks && !isLoading ? [addDeckElement, ...decks] : [];
+  const selectOptions =
+    decks && !isLoading ? [addDeckElement, ...[...decks].sort(sortByName)] : [];
 
   return (
     <Select

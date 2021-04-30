@@ -60,7 +60,11 @@ export default ({
     id: NEW_LIST_DUMMY_ID,
   };
 
-  const selectOptions = isLoading ? null : [addDeckElement, ...wantsLists];
+  const sortByName = (a, b) => (a.name.toLowerCase() >= b.name.toLowerCase() ? 1 : -1);
+
+  const selectOptions = isLoading
+    ? null
+    : [addDeckElement, ...[...wantsLists].sort(sortByName)];
 
   return (
     <Select
