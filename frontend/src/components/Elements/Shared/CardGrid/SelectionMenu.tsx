@@ -53,6 +53,7 @@ interface Props {
   onDeleteCards?: () => void;
   onSelectAll?: () => void;
   canSelectAll: boolean;
+  smallSelectionMenu?: boolean;
 }
 
 export const SelectionMenu = ({
@@ -63,9 +64,12 @@ export const SelectionMenu = ({
   onDeleteCards,
   onSelectAll,
   canSelectAll,
+  smallSelectionMenu,
 }: Props) => {
   const { user } = useContext(UserContext);
   if (!selectedCardIds.length) return null;
+
+  const isSmall = smallSelectionMenu || isMobile();
 
   const actions = [];
 
@@ -121,7 +125,7 @@ export const SelectionMenu = ({
           </Button>
         )}
       </Space>
-      {isMobile() ? (
+      {isSmall ? (
         <Menu actions={actions} placement="bottomRight" fontSize={24} />
       ) : (
         <Space size={24}>

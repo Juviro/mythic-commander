@@ -62,8 +62,8 @@ export default ({
         loading={!wantsList}
         hidePagination
         cards={sortedCards}
-        cardsPerRow={2}
         onEditCard={onEditCard}
+        smallSelectionMenu
         deleteByOracle={onDeletebyOracle}
         markAsDisabled={alreadyInDeck}
       />
