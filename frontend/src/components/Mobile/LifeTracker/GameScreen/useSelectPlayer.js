@@ -70,7 +70,7 @@ export default (players) => {
   // eslint-disable-next-line
   useEffect(() => {
     const preloadImages = async () => {
-      await preloadByStrings(players.map(({ img }) => img));
+      await preloadByStrings(players.map(({ img }) => img).filter(Boolean));
       toggleIsLoading();
       onSelectRandomPlayer();
     };

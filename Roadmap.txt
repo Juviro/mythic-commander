@@ -3,7 +3,6 @@ PRIORITY BUGFIXES
 
 BUGFIXES:
     - no error boundary for card search desktop (https://mythic-commander.com/cards/XXX)
-    - lifetracker: stuck in loading screen when bg images disabled
     - re-write getColorFromId now that ids are strings
     - select cards -> copy to some deck -> selection should be cleared, but isn't
 
