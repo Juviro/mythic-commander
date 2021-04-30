@@ -14,7 +14,7 @@ export { default as CheckableCardlist } from './CheckableCardlist';
 export { default as CollectionCharts } from './CollectionCharts';
 export { default as CollectionHoc } from './CollectionHoc';
 export { default as CollectionStats } from './CollectionStats';
-export { CollectionVisibility, WantsListVisibility } from './Visibility';
+export { CollectionVisibility, WantsListVisibility, DeckVisibility } from './Visibility';
 export { default as ColorIdentitySymbols } from './ColorIdentitySymbols';
 export { default as CopyableText } from './CopyableText';
 export { default as CommanderPicker } from './CommanderPicker';

@@ -2,26 +2,23 @@ PRIORITY BUGFIXES
     - auto update cards on prod not working
 
 BUGFIXES:
-    - a lot of the cards are white on render, display only on scroll (mobile, guess this is fixed in migration)
     - no error boundary for card search desktop (https://mythic-commander.com/cards/XXX)
     - lifetracker: stuck in loading screen when bg images disabled
     - re-write getColorFromId now that ids are strings
     - select cards -> copy to some deck -> selection should be cleared, but isn't
 
+CURRENT:
+
 NEXT:
-    * Decks sharable
-    * group card detail requests
     * add field to cards table: version number (1 or 2 in most cases)
+    * 
 
 OPTIONAL IN MIGRATION BRANCH:
-    - re-enable deck card selection
+    - re-enable deck card selection for mobile
     - display eur prices in collection value + graphs
-    - display how many cards are included in eur/usd price
+    - display how many cards are included in eur/usd price (collection)
 
-CURRENT:
-    - Add to cardgrid selection menu: export cards as text
-
-NEXT:
+IMPROVEMENTS:
     - redesign moveTo modal, especially for mobile
     - mobile card list preview: allow swpie to next card
     - Split more code with React.lazy
@@ -31,8 +28,6 @@ NEXT:
     - add option to export unowned cards from deck to wants
     - allow sorting by added in advanced search
     - add deck colors to deck overview list
-
-IMPROVEMENTS:
     - improve re-rendering of table columns and grid card. especially table.
     - add to wants list dropdown: sort lists by name (same for decks I guess)
     - added to collection notification -> show amount as well

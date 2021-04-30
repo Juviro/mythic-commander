@@ -1,3 +1,4 @@
+import { gql } from '@apollo/client';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
@@ -45,11 +46,13 @@ export type Card = {
   color_identity?: Maybe<Array<Maybe<Scalars['String']>>>;
   set_name: Scalars['String'];
   mana_cost?: Maybe<Scalars['String']>;
+  foil: Scalars['Boolean'];
+  nonfoil: Scalars['Boolean'];
   imgKey: Scalars['String'];
   amountOwned: Scalars['Int'];
   amountOwnedFoil: Scalars['Int'];
   possiblePartner?: Maybe<Scalars['String']>;
-  canBeCommander?: Maybe<Scalars['Boolean']>;
+  canBeCommander: Scalars['Boolean'];
   oracleCard: OracleCard;
   relatedCards?: Maybe<Array<Card>>;
 };
@@ -93,7 +96,7 @@ export type ChangeCollectionInput = {
 export type Collection = {
   __typename?: 'Collection';
   id: Scalars['String'];
-  visibility: Scalars['String'];
+  visibility: Visibility;
   referenceSnapshot?: Maybe<CollectionSnapshot>;
   currentSnapshot: CollectionSnapshot;
 };
@@ -128,6 +131,8 @@ export type Deck = {
   lastEdit: Scalars['String'];
   imgSrc: Scalars['String'];
   numberOfCards: Scalars['Int'];
+  visibility: Visibility;
+  canEdit: Scalars['Boolean'];
   cards: Array<DeckCard>;
   wantsLists: Array<WantsList>;
 };
@@ -218,6 +223,7 @@ export type Mutation = {
   deleteDeck?: Maybe<Scalars['Boolean']>;
   deleteFromDeck: Deck;
   duplicateDeck: Scalars['String'];
+  changeDeckVisibility: Deck;
   moveCard: MoveCardReturnType;
   addToCollection: Array<CollectionCard>;
   changeCollection?: Maybe<CollectionCard>;
@@ -280,6 +286,11 @@ export type MutationDuplicateDeckArgs = {
   deckId: Scalars['String'];
 };
 
+export type MutationChangeDeckVisibilityArgs = {
+  deckId: Scalars['String'];
+  visibility: Visibility;
+};
+
 export type MutationMoveCardArgs = {
   cardId: Scalars['String'];
   from: MoveCardInputType;
@@ -307,7 +318,7 @@ export type MutationDeleteAllFromCollectionArgs = {
 };
 
 export type MutationChangeCollectionVisibilityArgs = {
-  visibility: Scalars['String'];
+  visibility: Visibility;
 };
 
 export type MutationLoginArgs = {
@@ -363,7 +374,7 @@ export type MutationUnlinkWantsListArgs = {
 
 export type MutationChangeWantsListVisibilityArgs = {
   wantsListId: Scalars['String'];
-  visibility: Scalars['String'];
+  visibility: Visibility;
 };
 
 export type MutationUpdateLtPlayerArgs = {
@@ -422,7 +433,7 @@ export type Prices = {
 export type ProxyCard = {
   __typename?: 'ProxyCard';
   id: Scalars['String'];
-  amount: Scalars['Int'];
+  amount?: Maybe<Scalars['Int']>;
   imgKey: Scalars['String'];
 };
 
@@ -444,6 +455,7 @@ export type Query = {
   publicCollection?: Maybe<Array<CollectionCard>>;
   wantedCards?: Maybe<WantedCards>;
   card: Card;
+  cards: Array<Maybe<Card>>;
   cardImages: Array<Maybe<Scalars['String']>>;
   cardSearch: PaginatedCards;
   cardByOracleId?: Maybe<Card>;
@@ -482,6 +494,10 @@ export type QueryCardArgs = {
   id: Scalars['String'];
 };
 
+export type QueryCardsArgs = {
+  cardIds: Array<Maybe<Scalars['String']>>;
+};
+
 export type QueryCardImagesArgs = {
   cardId: Scalars['String'];
 };
@@ -510,7 +526,7 @@ export type QueryWantsListsArgs = {
 
 export type QueryProxiesArgs = {
   type: Scalars['String'];
-  id: Scalars['String'];
+  value: Scalars['String'];
   filter?: Maybe<Scalars['String']>;
 };
 
@@ -532,6 +548,12 @@ export type User = {
   username?: Maybe<Scalars['String']>;
   featureFlags?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
+
+export enum Visibility {
+  Private = 'private',
+  Hidden = 'hidden',
+  Public = 'public',
+}
 
 export type WantedCard = {
   __typename?: 'WantedCard';
@@ -563,8 +585,8 @@ export type WantsList = {
   createdAt: Scalars['String'];
   numberOfCards: Scalars['Int'];
   deck?: Maybe<Deck>;
-  canEdit?: Maybe<Scalars['Boolean']>;
-  visibility: Scalars['String'];
+  canEdit: Scalars['Boolean'];
+  visibility: Visibility;
   cards: Array<WantsListCard>;
 };
 

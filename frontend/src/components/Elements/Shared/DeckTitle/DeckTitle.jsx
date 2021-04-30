@@ -38,13 +38,19 @@ export default ({ deck }) => {
     });
   };
 
+  const editable = deck.canEdit
+    ? {
+        onChange: (val) => onChangeName(val || 'My Deck'),
+      }
+    : undefined;
+
   return (
     <StyledTitleWrapper>
       <Typography.Title
         ellipsis
         level={3}
         style={{ marginBottom: 0, display: 'flex' }}
-        editable={{ onChange: (val) => onChangeName(val || 'My Deck') }}
+        editable={editable}
       >
         {deck.name}
       </Typography.Title>

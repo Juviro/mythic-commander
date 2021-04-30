@@ -42,7 +42,7 @@ const resolver = {
     await canAccessDeck(user.id, id);
 
     return db('decks')
-      .where({ userId: user.id, id })
+      .where({ id })
       .first();
   },
   decks(_, __, { user, db }) {

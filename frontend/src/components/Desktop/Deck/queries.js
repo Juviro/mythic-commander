@@ -33,10 +33,12 @@ const CARD_FIELDS = `
 const DECK_FIELDS = `
     id
     name
+    canEdit
     createdAt
     lastEdit
     imgSrc
     numberOfCards
+    visibility
     cards {
       ${CARD_FIELDS}
     }
