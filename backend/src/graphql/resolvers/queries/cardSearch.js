@@ -34,13 +34,13 @@ const addOwnedClause = (q, userId, isOwned) => {
   );
 };
 
-export const getOrderColumn = orderBy => {
+export const getOrderColumn = (orderBy, useCreatedAt = true) => {
   switch (orderBy) {
     case '':
     case 'price':
       return "coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0)";
     case 'added':
-      return '"createdAt"';
+      return useCreatedAt ? '"createdAt"' : 'released_at';
     case 'amount':
       return '"totalAmount"';
     default:
@@ -126,7 +126,7 @@ export default async (
     .where(where)
     .limit(limit)
     .offset(offset)
-    .orderByRaw(`${getOrderColumn(order)} ${direction.toUpperCase()}`);
+    .orderByRaw(`${getOrderColumn(order, false)} ${direction.toUpperCase()}`);
 
   const countQuery = db(tableName)
     .where(where)

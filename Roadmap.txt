@@ -15,13 +15,11 @@ OPTIONAL IN MIGRATION BRANCH:
 
 IMPROVEMENTS:
     - redesign moveTo modal, especially for mobile
-    - mobile card list preview: allow swpie to next card
+    - mobile card list preview: allow swipe to next card
     - Split more code with React.lazy
     - move to new image service
     - deck: check for illegal dupliactions
 
-    - add option to export unowned cards from deck to wants
-    - allow sorting by added in advanced search
     - add deck colors to deck overview list
     - improve re-rendering of table columns and grid card. especially table.
     - add to wants list dropdown: sort lists by name (same for decks I guess)

@@ -5,6 +5,14 @@ import { useStoredQueryParam } from '../../../Hooks';
 
 const DEFAULT_FILTER = [
   {
+    label: 'Added (last added first)',
+    value: 'added-desc',
+  },
+  {
+    label: 'Added (last added last)',
+    value: 'added-asc',
+  },
+  {
     label: 'Name (A-Z)',
     value: 'name-asc',
   },
@@ -31,14 +39,6 @@ const DEFAULT_FILTER = [
 ];
 
 const COLLECTION_FILTER = [
-  {
-    label: 'Added (last added first)',
-    value: 'added-desc',
-  },
-  {
-    label: 'Added (last added last)',
-    value: 'added-asc',
-  },
   ...DEFAULT_FILTER,
   {
     label: 'Amount (lowest first)',
