@@ -11,6 +11,7 @@ import {
   darkBackgroundTransparent,
 } from 'constants/colors';
 import { MenuItem } from 'components/Elements/Shared/ContextMenu/ContextMenu';
+import isMobile from 'utils/isMobile';
 
 const StyledWrapper = styled.div`
   position: absolute;
@@ -34,7 +35,7 @@ const StyledCloseIcon = styled(CloseOutlined)`
   font-size: 32px;
 
   @media (hover: hover) {
-    display: none;
+    ${!isMobile() && 'display: none;'}
   }
 `;
 
