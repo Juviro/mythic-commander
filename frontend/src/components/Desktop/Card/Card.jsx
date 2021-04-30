@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 
 import { PageCard, PageLayout } from 'components/Elements/Desktop';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
+import { NotFound } from 'components/Elements/Shared';
 import CardDetailsDesktop from '../../Elements/Desktop/CardDetailsDesktop';
 import { cardDetailsDesktop } from '../../Elements/Desktop/CardDetailsDesktop/queries';
 import { unifySingleCard } from '../../../utils/unifyCardFormat';
@@ -14,12 +15,16 @@ export default () => {
     variables: { oracle_id },
     fetchPolicy: 'network-only',
   });
-  const card = data && unifySingleCard(data.cardByOracleId);
+  const card = data?.cardByOracleId && unifySingleCard(data.cardByOracleId);
   useDocumentTitle(card?.name);
 
   useEffect(() => {
     setTimeout(() => window.scrollTo(0, 0), 100);
   }, [oracle_id]);
+
+  if (!data?.cardByOracleId && !loading) {
+    return <NotFound message="This card does not seem to exists..." />;
+  }
 
   return (
     <PageLayout>
