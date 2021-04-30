@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Divider, Typography } from 'antd';
 import styled from 'styled-components';
 
@@ -13,7 +13,6 @@ import {
   OneTimeInfoBox,
 } from '../../../../Elements/Shared';
 import CardGrid from '../../../../Elements/Shared/CardGrid/CardGrid';
-import FocusContext from '../../../../Provider/FocusProvider/FocusProvider';
 import boldText from '../../../../../utils/boldText';
 
 const StyledCardWrapper = styled.div`
@@ -22,18 +21,12 @@ const StyledCardWrapper = styled.div`
 
 export default ({ onAddCards, alreadyInDeck }) => {
   const scrollRef = useRef(null);
-  const { focusedElements } = useContext(FocusContext);
-  // check if this has focus, ignore if details modal is open
-  const blockShortcuts =
-    focusedElements.filter((focusId) => focusId !== 'modal.cardDetails').pop() !==
-    'deck.sidebar.add';
 
   const [cardToAdd, setCardToAdd] = useState(null);
   const onAddCard = () => {
     onAddCards([{ id: cardToAdd.id, amount: 1 }], cardToAdd.name);
     setCardToAdd(null);
   };
-  const onEnter = blockShortcuts ? null : (card) => setCardToAdd(card);
 
   return (
     <>
@@ -105,12 +98,10 @@ export default ({ onAddCards, alreadyInDeck }) => {
                     dragProps={{ canDrag: true }}
                     cards={currentCards}
                     loading={loading}
-                    cardsPerRow={2}
                     cardWidth={200}
-                    onEnter={onEnter}
                     disableSelection
+                    smallSelectionMenu
                     markAsDisabled={alreadyInDeck}
-                    blockShortcuts={blockShortcuts}
                     search={lastSearchOptions.name}
                     numberOfCards={numberOfCards}
                   />

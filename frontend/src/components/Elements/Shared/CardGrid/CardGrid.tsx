@@ -65,6 +65,7 @@ interface Props {
   canZoomIn?: boolean;
   minimal?: boolean;
   onClickCard?: (card: UnifiedCard) => void;
+  smallSelectionMenu?: boolean;
 }
 
 type PropsWithRouterProps = RouteComponentProps & Props;
@@ -90,6 +91,7 @@ const CardGrid = ({
   disableSelection,
   hidePagination,
   minimal,
+  smallSelectionMenu,
 }: PropsWithRouterProps) => {
   const [detailCardIndex, setDetailCardIndex] = useState<number | null>(null);
   const detailCard = cards?.[detailCardIndex];
@@ -200,6 +202,7 @@ const CardGrid = ({
         onCopyCardsTo={onCopySelectedCardsTo}
         onSelectAll={onSelectAll}
         canSelectAll={canSelectAll}
+        smallSelectionMenu={smallSelectionMenu}
       />
       <Flex
         direction="row"
