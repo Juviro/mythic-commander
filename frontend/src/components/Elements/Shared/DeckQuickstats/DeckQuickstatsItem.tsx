@@ -8,7 +8,12 @@ import {
 
 import { UnifiedCard } from 'types/unifiedTypes';
 import { warning, error, success } from 'constants/colors';
+import styled from 'styled-components';
 
+const StyledWrapper = styled.div`
+  overflow: auto;
+  max-height: 50vh;
+`;
 interface Props {
   text: string;
   status: string;
@@ -53,13 +58,15 @@ export const DeckQuickstatsItem = ({ text, status, cards }: Props) => {
   if (!cards?.length) return content;
 
   const cardList = (
-    <List>
-      {cards.map(({ id, name }) => (
-        <List.Item key={id}>
-          <Typography.Text style={{ color: 'white' }}>{name}</Typography.Text>
-        </List.Item>
-      ))}
-    </List>
+    <StyledWrapper>
+      <List>
+        {cards.map(({ id, name }) => (
+          <List.Item key={id}>
+            <Typography.Text style={{ color: 'white' }}>{name}</Typography.Text>
+          </List.Item>
+        ))}
+      </List>
+    </StyledWrapper>
   );
 
   return <Tooltip title={cardList}>{content}</Tooltip>;
