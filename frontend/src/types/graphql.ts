@@ -145,6 +145,22 @@ export type DeckCard = {
   card: Card;
 };
 
+export type EdhRecCard = {
+  __typename?: 'EDHRecCard';
+  id: Scalars['String'];
+  oracle_id: Scalars['String'];
+  imgKey: Scalars['String'];
+  name: Scalars['String'];
+  prices?: Maybe<Prices>;
+  synergy?: Maybe<Scalars['Float']>;
+};
+
+export type EdhRecCategory = {
+  __typename?: 'EDHRecCategory';
+  cards?: Maybe<Array<EdhRecCard>>;
+  title?: Maybe<Scalars['String']>;
+};
+
 export type EditDeckCardInput = {
   id?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['Int']>;
@@ -466,6 +482,7 @@ export type Query = {
   proxies: Array<ProxyCard>;
   allLists: AllLists;
   ltPlayers?: Maybe<Array<LtPlayer>>;
+  edhrecCards?: Maybe<Array<EdhRecCategory>>;
 };
 
 export type QueryDeckArgs = {
@@ -527,6 +544,10 @@ export type QueryProxiesArgs = {
   type: Scalars['String'];
   value: Scalars['String'];
   filter?: Maybe<Scalars['String']>;
+};
+
+export type QueryEdhrecCardsArgs = {
+  name: Scalars['String'];
 };
 
 export type Set = {
