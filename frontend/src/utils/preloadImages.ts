@@ -12,11 +12,14 @@ export default (cards: UnifiedCard[], sizes: string[] = ['normal']) => {
 
 export const preloadByStrings = (sources: string[]): Promise<unknown[]> => {
   const promises = sources.map((imgSrc) => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const img = new Image();
       img.src = imgSrc;
       img.onload = () => {
         resolve(null);
+      };
+      img.onerror = () => {
+        reject();
       };
     });
   });
