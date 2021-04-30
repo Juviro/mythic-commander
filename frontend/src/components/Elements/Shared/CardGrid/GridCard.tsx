@@ -16,12 +16,12 @@ export const StyledCenterWrapper = styled.div<{ fixedSize: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  ${({ fixedSize }) =>
+  /* ${({ fixedSize }) =>
     fixedSize &&
     css`
       content-visibility: auto;
       contain-intrinsic-size: 353.8px;
-    `}
+    `} */
 `;
 
 const StyledCardWrapper = styled.div<{ fixedSize: boolean }>`
