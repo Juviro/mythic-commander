@@ -15,8 +15,10 @@ const StyledWrapper = styled(Space)`
   max-width: 1800px;
   position: fixed;
   bottom: 0;
+  /* Drawer is at 100, this should be above or behind that based on screen size */
+  z-index: 99;
   @media (max-width: 1600px) {
-    z-index: 11;
+    z-index: 101;
   }
 
   box-shadow: 0px -9px 10px -4px #9c9c9c;

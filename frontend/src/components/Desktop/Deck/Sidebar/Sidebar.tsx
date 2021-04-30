@@ -31,7 +31,7 @@ export default ({ currentTabId, setCurrentTabId, onAddCards, deck }: Props) => {
       mask={false}
       visible={Boolean(currentTabId)}
       onClose={() => setCurrentTabId(null)}
-      zIndex={10}
+      zIndex={100}
       style={{
         height: 'calc(100% - 48px)',
         marginTop: 48,
