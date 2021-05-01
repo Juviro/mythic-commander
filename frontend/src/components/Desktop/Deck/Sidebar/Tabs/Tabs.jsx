@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { ADVANCED_SEARCH } from 'components/Desktop/Deck/ActionBar/ActionButtons/ActionButtons';
+import {
+  ADVANCED_SEARCH,
+  EDH_REC,
+} from 'components/Desktop/Deck/ActionBar/ActionButtons/ActionButtons';
 import { PlusOutlined } from '@ant-design/icons';
 import { Space } from 'antd';
 import useCreateWantsList from 'components/Desktop/Deck/Sidebar/Tabs/useCreateWantsList';
@@ -42,6 +45,11 @@ export default ({ deck, setCurrentTabId, currentTabId }) => {
     id: ADVANCED_SEARCH,
     isSecondary: true,
   };
+  const edhRec = {
+    title: 'EDHREC Search',
+    id: EDH_REC,
+    isSecondary: true,
+  };
   const addWantsList = {
     title: (
       <Space>
@@ -51,7 +59,7 @@ export default ({ deck, setCurrentTabId, currentTabId }) => {
     ),
     id: ADD_WANTS_LIST,
   };
-  const tabs = [advancedSearch, ...wantsListsTabs, addWantsList];
+  const tabs = [advancedSearch, edhRec, ...wantsListsTabs, addWantsList];
 
   const onClickTab = (tabId) => {
     if (tabId === ADD_WANTS_LIST) {

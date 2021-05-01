@@ -10,6 +10,7 @@ import SingleInput from './SingleInput';
 
 const StyledSingleInputWrapper = styled.div`
   width: 500px;
+  max-width: 100%;
 `;
 
 const StyledSetSelectionWrapper = styled.div`
@@ -17,6 +18,7 @@ const StyledSetSelectionWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   width: 500px;
+  max-width: 100%;
   margin-top: 12px;
 `;
 

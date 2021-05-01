@@ -145,6 +145,37 @@ export type DeckCard = {
   card: Card;
 };
 
+export type EdhRecCard = {
+  __typename?: 'EDHRecCard';
+  id: Scalars['String'];
+  oracle_id: Scalars['String'];
+  imgKey: Scalars['String'];
+  name: Scalars['String'];
+  priceUsd?: Maybe<Scalars['Float']>;
+  priceEur?: Maybe<Scalars['Float']>;
+  synergy?: Maybe<Scalars['Float']>;
+};
+
+export type EdhRecCategory = {
+  __typename?: 'EDHRecCategory';
+  cards?: Maybe<Array<EdhRecCard>>;
+  title: Scalars['String'];
+  key: Scalars['String'];
+};
+
+export type EdhRecData = {
+  __typename?: 'EDHRecData';
+  themes: Array<EdhRecTheme>;
+  cardLists: Array<EdhRecCategory>;
+};
+
+export type EdhRecTheme = {
+  __typename?: 'EDHRecTheme';
+  title: Scalars['String'];
+  urlSuffix: Scalars['String'];
+  count: Scalars['Int'];
+};
+
 export type EditDeckCardInput = {
   id?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['Int']>;
@@ -466,6 +497,7 @@ export type Query = {
   proxies: Array<ProxyCard>;
   allLists: AllLists;
   ltPlayers?: Maybe<Array<LtPlayer>>;
+  edhrecCards?: Maybe<EdhRecData>;
 };
 
 export type QueryDeckArgs = {
@@ -527,6 +559,11 @@ export type QueryProxiesArgs = {
   type: Scalars['String'];
   value: Scalars['String'];
   filter?: Maybe<Scalars['String']>;
+};
+
+export type QueryEdhrecCardsArgs = {
+  names: Array<Scalars['String']>;
+  themeSuffix?: Maybe<Scalars['String']>;
 };
 
 export type Set = {

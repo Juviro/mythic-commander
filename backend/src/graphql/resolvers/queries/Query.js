@@ -9,6 +9,7 @@ import {
   isCollectionPublic,
 } from '../../../auth/authenticateUser';
 import wantedCards from './wantedCards';
+import getEdhrecCards from './getEdhrecCards';
 
 const resolver = {
   user(_, __, { db, user: { id } }) {
@@ -54,6 +55,10 @@ const resolver = {
 
   collection(_, __, { user: { id } }) {
     return { id };
+  },
+
+  edhrecCards(_, { names, themeSuffix }) {
+    return getEdhrecCards(names, themeSuffix);
   },
 
   async ownedCardNames(_, __, { db, user: { id: userId } }) {
