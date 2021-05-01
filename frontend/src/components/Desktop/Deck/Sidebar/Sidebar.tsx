@@ -13,9 +13,7 @@ import { EDHRec } from './EDHRec/EDHRec';
 const StyledDrawer = styled(Drawer)`
   && .ant-drawer-content {
     overflow: visible;
-    @media (max-width: 1600px) {
-      padding-bottom: 80px;
-    }
+    padding-bottom: 70px;
   }
 `;
 interface Props {
