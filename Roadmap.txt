@@ -3,6 +3,7 @@ PRIORITY BUGFIXES
 
 BUGFIXES:
     - Deck dropzone is small if only commanders are in the deck
+    - when opening /my-decks, empty state briefly displayed before items are rendered
 
 CURRENT:
 
