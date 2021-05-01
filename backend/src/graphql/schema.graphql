@@ -256,7 +256,8 @@ type LTPlayer {
 
 type EDHRecCategory {
   cards: [EDHRecCard!]
-  title: String
+  title: String!
+  key: String!
 }
 
 type EDHRecCard {
@@ -264,7 +265,8 @@ type EDHRecCard {
   oracle_id: String!
   imgKey: String!
   name: String!
-  prices: Prices
+  priceUsd: Float
+  priceEur: Float
   synergy: Float
 }
 
@@ -313,7 +315,7 @@ type Query {
 
   ltPlayers: [LTPlayer!]
 
-  edhrecCards(name: String!): [EDHRecCategory!]
+  edhrecCards(names: [String!]!): [EDHRecCategory!]
 }
 
 input CardsOptionsInput {

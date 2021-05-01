@@ -6,14 +6,15 @@ import { CardInputType } from 'types/graphql';
 import { UnifiedDeck } from 'types/unifiedTypes';
 import DeckWants from './DeckWants';
 import AddCards from './AddCards/AddCards';
-import { ADVANCED_SEARCH } from '../ActionBar/ActionButtons/ActionButtons';
+import { ADVANCED_SEARCH, EDH_REC } from '../ActionBar/ActionButtons/ActionButtons';
 import Tabs from './Tabs';
+import { EDHRec } from './EDHRec/EDHRec';
 
 const StyledDrawer = styled(Drawer)`
   && .ant-drawer-content {
     overflow: visible;
     @media (max-width: 1600px) {
-      padding-bottom: 50px;
+      padding-bottom: 80px;
     }
   }
 `;
@@ -27,7 +28,7 @@ interface Props {
 export default ({ currentTabId, setCurrentTabId, onAddCards, deck }: Props) => {
   return (
     <StyledDrawer
-      width={560}
+      width={510}
       mask={false}
       visible={Boolean(currentTabId)}
       onClose={() => setCurrentTabId(null)}
@@ -39,10 +40,12 @@ export default ({ currentTabId, setCurrentTabId, onAddCards, deck }: Props) => {
         overflow: !currentTabId ? 'hidden' : undefined,
       }}
       bodyStyle={{ padding: 0 }}
+      closeIcon={null}
     >
       {currentTabId && (
         <Tabs deck={deck} setCurrentTabId={setCurrentTabId} currentTabId={currentTabId} />
       )}
+      {currentTabId === EDH_REC && <EDHRec deck={deck} />}
       <AddCards
         onAddCards={onAddCards}
         deck={deck}
