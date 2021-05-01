@@ -50,7 +50,7 @@ export default ({ onAddCards, alreadyInDeck }) => {
           currentCards,
           numberOfCards,
         }) => (
-          <Flex direction="column" style={{ padding: 16 }}>
+          <Flex direction="column" style={{ padding: 10 }}>
             <Filter
               autoFocus
               onSearch={() => {

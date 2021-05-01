@@ -11,6 +11,7 @@ import { sortByAdded } from 'utils/cardFilter';
 
 const StyledDeckWantsList = styled.div`
   display: flex;
+  width: 460px;
   flex-direction: column;
 `;
 

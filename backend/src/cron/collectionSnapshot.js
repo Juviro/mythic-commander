@@ -6,16 +6,18 @@ export default async () => {
 
   for (const userId of userIds) {
     const {
-      rows: [{ value }],
+      rows: [{ value, valueEur }],
     } = await db.raw(
       `
-      SELECT SUM(
-        coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * amount + 
-        coalesce(GREATEST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * "amountFoil"
-        )::int as value
-        coalesce(LEAST((prices->>'eur')::float, (prices->>'eur_foil')::float), 0) * amount + 
-        coalesce(GREATEST((prices->>'eur')::float, (prices->>'eur_foil')::float), 0) * "amountFoil"
-        )::int as valueEur
+      SELECT 
+        SUM(
+          coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * amount + 
+          coalesce(GREATEST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * "amountFoil"
+        )::int as value,
+        SUM(
+          coalesce(LEAST((prices->>'eur')::float, (prices->>'eur_foil')::float), 0) * amount + 
+          coalesce(GREATEST((prices->>'eur')::float, (prices->>'eur_foil')::float), 0) * "amountFoil"
+        )::int as "valueEur"
       FROM collection 
       LEFT JOIN cards 
         ON cards.id = collection.id
@@ -32,7 +34,9 @@ export default async () => {
           "userId", 
           ?, 
           SUM(amount) as amount,
-          count(*) as "amountUnique" 
+          count(*) as "amountUnique",
+          NOW() as date, 
+          ? as "valueEur"
           FROM (
             SELECT 
               SUM(amount + "amountFoil") as amount, 
@@ -45,7 +49,7 @@ export default async () => {
         GROUP BY "userId"
       )
       `,
-      [value, userId, userId]
+      [value, valueEur, userId, userId]
     );
   }
 };

@@ -11,7 +11,7 @@ const StyledHideWrapper = styled.div`
     `}
   height: 100%;
   overflow: auto;
-  padding: 24px;
+  padding: 8px;
 `;
 
 export default ({ onAddCards, deck, visible }) => {
