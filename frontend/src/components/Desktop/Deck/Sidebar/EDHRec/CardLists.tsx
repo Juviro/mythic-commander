@@ -17,12 +17,14 @@ export const CardLists = ({ loading, lists, deck }: Props) => {
   const [categoryKey, setCategoryKey] = useState<string | null>(null);
   const scrollRef = useRef(null);
 
+  const currentCategory = lists?.find(({ key }) => key === categoryKey);
+
   useEffect(() => {
-    if (categoryKey || !lists?.length) return;
+    if (currentCategory || !lists?.length) return;
     const initialCategoryKey = lists[0].key;
     setCategoryKey(initialCategoryKey);
     // eslint-disable-next-line
-  }, [lists, setCategoryKey]);
+  }, [lists, setCategoryKey, currentCategory]);
 
   const onSetCategory = (newKey: string) => {
     if (scrollRef.current) {
@@ -38,12 +40,11 @@ export const CardLists = ({ loading, lists, deck }: Props) => {
     return cardNames?.includes(name);
   };
 
-  const currentCategory = lists?.find(({ key }) => key === categoryKey);
-
   const categorySelection = (
     <CategorySelection
       categoryKey={categoryKey}
       lists={lists}
+      loading={loading}
       setCategoryKey={onSetCategory}
     />
   );

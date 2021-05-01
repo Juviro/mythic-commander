@@ -9,7 +9,7 @@ const StyledWrapper = styled(Space)`
 `;
 
 const StyledLoadingWrapper = styled.div`
-  min-height: 600px;
+  min-height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,10 +25,16 @@ interface Props {
   lists?: EdhRecCategory[];
   categoryKey: string | null;
   setCategoryKey: (key: string) => void;
+  loading: boolean;
 }
 
-export const CategorySelection = ({ lists, categoryKey, setCategoryKey }: Props) => {
-  if (!lists)
+export const CategorySelection = ({
+  lists,
+  categoryKey,
+  setCategoryKey,
+  loading,
+}: Props) => {
+  if (!lists || loading)
     return (
       <StyledLoadingWrapper>
         <LoadingOutlined />

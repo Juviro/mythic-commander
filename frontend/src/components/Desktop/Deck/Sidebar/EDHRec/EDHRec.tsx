@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-apollo';
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { QueryEdhrecCardsArgs, Query } from 'types/graphql';
-import { Empty } from 'antd';
+import { Divider, Empty } from 'antd';
 import styled from 'styled-components';
-import { OneTimeInfoBox } from 'components/Elements/Shared';
 import { getEdhrecCards } from './queries';
 import { CardLists } from './CardLists';
 import { Title } from './Title';
 import { LazyRender } from '../LazyRender';
+import { ThemePicker } from './ThemePicker';
+import { PriceInfoAlert } from './PriceInfoAlert';
 
 const StyledWrapper = styled.div`
   padding: 16px;
@@ -23,11 +24,13 @@ interface Props {
 }
 
 const EDHRecComponent = ({ deck }: Props) => {
+  const [themeSuffix, setThemeSuffix] = useState<string | null>(null);
+
   const commanders = deck.cards.filter(({ isCommander }) => isCommander);
   const commanderNames = commanders.map(({ name }) => name);
 
   const { data, loading } = useQuery<Query, QueryEdhrecCardsArgs>(getEdhrecCards, {
-    variables: { names: commanderNames },
+    variables: { names: commanderNames, themeSuffix },
     fetchPolicy: 'cache-first',
   });
 
@@ -40,17 +43,16 @@ const EDHRecComponent = ({ deck }: Props) => {
   return (
     <StyledWrapper>
       <Title commanders={commanders} />
-      <CardLists lists={data?.edhrecCards} loading={loading} deck={deck} />
-      <OneTimeInfoBox
-        id="deck.edhrec.priceInfo"
-        style={{ marginTop: 24 }}
-        showIcon
-        message={`
-          Please note: All prices displayed in this list are taken from EDHREC 
-          and may vary from the prices displayed in the rest of the app, which 
-          are provided by scryfall.
-        `}
+      <Divider />
+      <ThemePicker
+        loading={loading}
+        themes={data?.edhrecCards.themes}
+        themeSuffix={themeSuffix}
+        setThemeSuffix={setThemeSuffix}
       />
+      <Divider />
+      <CardLists lists={data?.edhrecCards.cardLists} loading={loading} deck={deck} />
+      <PriceInfoAlert />
     </StyledWrapper>
   );
 };

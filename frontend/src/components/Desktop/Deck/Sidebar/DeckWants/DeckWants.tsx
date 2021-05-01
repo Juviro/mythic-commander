@@ -16,7 +16,6 @@ import useDeckWantsQueries from './useDeckWantsQueries';
 const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding: 8px;
 `;
 
 interface Props {
@@ -48,7 +47,7 @@ export default ({ name, deck, id, onAddCards, numberOfCards }: Props) => {
   } = useDeckWantsQueries(wantsList);
 
   return (
-    <FadeIn style={{ height: '100%', padding: 24 }}>
+    <FadeIn style={{ height: '100%', padding: 16 }}>
       <Dropzone
         onDrop={(val) => onAddCardToWantsList(val, null)}
         listId={wantsList?.id}
@@ -58,7 +57,7 @@ export default ({ name, deck, id, onAddCards, numberOfCards }: Props) => {
           <Typography.Title level={3}>
             <Link to={`/wants/${id}`}>{`${name} (${numberOfCards})`}</Link>
           </Typography.Title>
-          <Space direction="vertical" size={48}>
+          <Space direction="vertical" size={48} style={{ width: '100%' }}>
             <AddCards
               isAdvanced={false}
               onAddCards={(card: UnifiedCard, test) =>

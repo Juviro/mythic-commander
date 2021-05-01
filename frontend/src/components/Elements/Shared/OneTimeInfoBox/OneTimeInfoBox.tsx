@@ -6,8 +6,8 @@ interface Props {
   id: string;
   showIcon?: boolean;
   type?: 'success' | 'info' | 'warning' | 'error';
-  description?: string;
-  message?: string;
+  description?: React.ReactNode;
+  message?: React.ReactNode;
   style?: React.CSSProperties;
 }
 
