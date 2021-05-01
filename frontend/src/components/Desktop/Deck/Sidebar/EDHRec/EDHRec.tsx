@@ -8,6 +8,7 @@ import { OneTimeInfoBox } from 'components/Elements/Shared';
 import { getEdhrecCards } from './queries';
 import { CardLists } from './CardLists';
 import { Title } from './Title';
+import { LazyRender } from '../LazyRender';
 
 const StyledWrapper = styled.div`
   padding: 16px;
@@ -21,7 +22,7 @@ interface Props {
   deck: UnifiedDeck;
 }
 
-export const EDHRec = ({ deck }: Props) => {
+const EDHRecComponent = ({ deck }: Props) => {
   const commanders = deck.cards.filter(({ isCommander }) => isCommander);
   const commanderNames = commanders.map(({ name }) => name);
 
@@ -51,5 +52,13 @@ export const EDHRec = ({ deck }: Props) => {
         `}
       />
     </StyledWrapper>
+  );
+};
+
+export const EDHRec = ({ visible, ...props }: Props & { visible: boolean }) => {
+  return (
+    <LazyRender visible={visible}>
+      <EDHRecComponent {...props} />
+    </LazyRender>
   );
 };

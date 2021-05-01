@@ -45,7 +45,7 @@ export default ({ currentTabId, setCurrentTabId, onAddCards, deck }: Props) => {
       {currentTabId && (
         <Tabs deck={deck} setCurrentTabId={setCurrentTabId} currentTabId={currentTabId} />
       )}
-      {currentTabId === EDH_REC && <EDHRec deck={deck} />}
+      <EDHRec deck={deck} visible={currentTabId === EDH_REC} />
       <AddCards
         onAddCards={onAddCards}
         deck={deck}
