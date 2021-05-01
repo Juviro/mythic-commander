@@ -2,12 +2,12 @@ PRIORITY BUGFIXES
     - auto update cards on prod not working
 
 BUGFIXES:
+    - Deck dropzone is small if only commanders are in the deck
 
 CURRENT:
 
 NEXT:
     - add tags (sort by type (ramp, card draw, ...))
-    - EDHRec tab for Deck
 
 OPTIONAL IN MIGRATION BRANCH:
     - re-enable deck card selection for mobile

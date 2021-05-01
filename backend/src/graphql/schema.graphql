@@ -252,6 +252,35 @@ type LTPlayer {
   lastEdit: String
 }
 
+################################# EDHRec #################################
+
+type EDHRecData {
+  themes: [EDHRecTheme!]!
+  cardLists: [EDHRecCategory!]!
+}
+
+type EDHRecTheme {
+  title: String!
+  urlSuffix: String!
+  count: Int!
+}
+
+type EDHRecCategory {
+  cards: [EDHRecCard!]
+  title: String!
+  key: String!
+}
+
+type EDHRecCard {
+  id: String!
+  oracle_id: String!
+  imgKey: String!
+  name: String!
+  priceUsd: Float
+  priceEur: Float
+  synergy: Float
+}
+
 ################################# Queries #################################
 
 type Query {
@@ -296,6 +325,8 @@ type Query {
   allLists: AllLists!
 
   ltPlayers: [LTPlayer!]
+
+  edhrecCards(names: [String!]!, themeSuffix: String): EDHRecData
 }
 
 input CardsOptionsInput {

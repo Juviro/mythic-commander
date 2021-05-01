@@ -9,6 +9,7 @@ import { WantsListsButton } from './WantsListsButton';
 import Sidebar from '../../Sidebar';
 
 export const ADVANCED_SEARCH = 'advanced_search';
+export const EDH_REC = 'edh_rec';
 
 const StyledWrapper = styled(Space)`
   display: flex;
@@ -47,6 +48,13 @@ export const ActionButtons = ({ deck, onAddCards }: Props) => {
         >
           Advanced Search
           <SettingOutlined />
+        </StyledButton>
+        <StyledButton
+          ghost={currentTabId !== EDH_REC}
+          type="primary"
+          onClick={() => onSetTabId(EDH_REC)}
+        >
+          EDHREC Search
         </StyledButton>
         <WantsListsButton
           deck={deck}
