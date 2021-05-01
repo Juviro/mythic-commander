@@ -11,14 +11,19 @@ import SingleInput from './SingleInput';
 const StyledSingleInputWrapper = styled.div`
   width: 500px;
   max-width: 100%;
+
+  @media (max-width: 1200px) {
+    width: 350px;
+  }
+  @media (max-width: 1000px) {
+    width: 290px;
+  }
 `;
 
-const StyledSetSelectionWrapper = styled.div`
+const StyledSetSelectionWrapper = styled(StyledSingleInputWrapper)`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 500px;
-  max-width: 100%;
   margin-top: 12px;
 `;
 
@@ -32,13 +37,14 @@ export default ({
   onAddCards,
   isAdvanced = false,
   focusId,
+  width = 500,
   placeholder = 'Add cards, e.g. "2x foil negate"',
 }) => {
   const [cardOptions, setCardOptions] = useState({});
 
   return (
     <Flex direction="column">
-      <StyledSingleInputWrapper>
+      <StyledSingleInputWrapper width={width}>
         <SingleInput
           isAdvanced
           focusId={focusId}
@@ -56,7 +62,7 @@ export default ({
         />
       </StyledSingleInputWrapper>
       {isAdvanced && (
-        <StyledSetSelectionWrapper>
+        <StyledSetSelectionWrapper width={width}>
           <StyledLabel>Filter by Set</StyledLabel>
           <SearchSettings setCardOptions={setCardOptions} />
         </StyledSetSelectionWrapper>
