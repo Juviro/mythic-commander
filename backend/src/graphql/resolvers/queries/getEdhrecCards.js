@@ -59,10 +59,10 @@ const getCardList = json => {
 const getThemes = json => {
   const { themes } = json.panels.tribelinks;
 
-  return themes?.map(tribe => ({
-    title: tribe.value,
-    urlSuffix: tribe['href-suffix'],
-    count: tribe.count,
+  return themes?.map(theme => ({
+    title: theme.value,
+    urlSuffix: theme['href-suffix'],
+    count: theme.count,
   }));
 };
 

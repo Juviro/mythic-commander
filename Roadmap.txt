@@ -5,9 +5,6 @@ BUGFIXES:
     - Deck dropzone is small if only commanders are in the deck
 
 CURRENT:
-    - EDHRec tab for Deck
-        - Allow user to set theme: e.g. atraxa can be superfriends or +1/+1 counter
-    - Only load and render deck advanced search when it has been opened at least once 
 
 NEXT:
     - add tags (sort by type (ramp, card draw, ...))

@@ -163,6 +163,19 @@ export type EdhRecCategory = {
   key: Scalars['String'];
 };
 
+export type EdhRecData = {
+  __typename?: 'EDHRecData';
+  themes: Array<EdhRecTheme>;
+  cardLists: Array<EdhRecCategory>;
+};
+
+export type EdhRecTheme = {
+  __typename?: 'EDHRecTheme';
+  title: Scalars['String'];
+  urlSuffix: Scalars['String'];
+  count: Scalars['Int'];
+};
+
 export type EditDeckCardInput = {
   id?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['Int']>;
@@ -484,7 +497,7 @@ export type Query = {
   proxies: Array<ProxyCard>;
   allLists: AllLists;
   ltPlayers?: Maybe<Array<LtPlayer>>;
-  edhrecCards?: Maybe<Array<EdhRecCategory>>;
+  edhrecCards?: Maybe<EdhRecData>;
 };
 
 export type QueryDeckArgs = {
@@ -550,6 +563,7 @@ export type QueryProxiesArgs = {
 
 export type QueryEdhrecCardsArgs = {
   names: Array<Scalars['String']>;
+  themeSuffix?: Maybe<Scalars['String']>;
 };
 
 export type Set = {
