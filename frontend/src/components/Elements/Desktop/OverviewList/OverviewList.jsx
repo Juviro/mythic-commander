@@ -39,6 +39,7 @@ const LoadingPlaceholder = () => {
 
 export default ({ lists, onClick, loading, emptyText }) => {
   if (loading) return <LoadingPlaceholder />;
+
   if (!lists.length)
     return (
       <Empty

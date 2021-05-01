@@ -70,6 +70,7 @@ const Wants = ({ history }) => {
         onEnter={onOpenFirstDeck}
       />
       <OverviewList
+        loading={loading}
         lists={filteredDecks}
         onClick={onOpenDeck}
         emptyText="No Decks found"
