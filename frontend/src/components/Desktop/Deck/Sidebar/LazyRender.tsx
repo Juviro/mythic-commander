@@ -17,7 +17,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const LazyRender = ({ visible, children }: Props) => {
+const LazyRenderComponent = ({ visible, children }: Props) => {
   const [shouldRender, setShouldRender] = useState(visible);
 
   useEffect(() => {
@@ -33,3 +33,10 @@ export const LazyRender = ({ visible, children }: Props) => {
     </StyledHideWrapper>
   );
 };
+
+const areEqual = (prevProps, nextProps) => {
+  // If this is already not visible, we do not need to re-render it
+  return !prevProps.visible && !nextProps.visible;
+};
+
+export const LazyRender = React.memo(LazyRenderComponent, areEqual);
