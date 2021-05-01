@@ -24,7 +24,7 @@ const StyledWrapper = styled.div`
   transform: rotate(90deg) translateY(-100%);
   transform-origin: left top;
 
-  width: calc(100vh - 50px);
+  width: calc(100vh - 110px);
   height: 40px;
 
   @media (max-width: 1600px) {
