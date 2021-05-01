@@ -254,6 +254,17 @@ type LTPlayer {
 
 ################################# EDHRec #################################
 
+type EDHRecData {
+  themes: [EDHRecTheme!]!
+  cardLists: [EDHRecCategory!]!
+}
+
+type EDHRecTheme {
+  title: String!
+  urlSuffix: String!
+  count: Int!
+}
+
 type EDHRecCategory {
   cards: [EDHRecCard!]
   title: String!
@@ -315,7 +326,7 @@ type Query {
 
   ltPlayers: [LTPlayer!]
 
-  edhrecCards(names: [String!]!): [EDHRecCategory!]
+  edhrecCards(names: [String!]!, themeSuffix: String): EDHRecData
 }
 
 input CardsOptionsInput {
