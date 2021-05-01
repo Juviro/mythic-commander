@@ -15,7 +15,7 @@ interface Props {
 
 export const CardLists = ({ loading, lists, deck }: Props) => {
   const [categoryKey, setCategoryKey] = useState<string | null>(null);
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const currentCategory = lists?.find(({ key }) => key === categoryKey);
 
@@ -26,9 +26,13 @@ export const CardLists = ({ loading, lists, deck }: Props) => {
     // eslint-disable-next-line
   }, [lists, setCategoryKey, currentCategory]);
 
-  const onSetCategory = (newKey: string) => {
+  const onSetCategory = (animateScrolling: boolean) => (newKey: string) => {
     if (scrollRef.current) {
-      scrollIntoView(scrollRef.current);
+      if (animateScrolling) {
+        scrollRef.current.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        scrollIntoView(scrollRef.current);
+      }
     }
     setCategoryKey(newKey);
   };
@@ -40,18 +44,18 @@ export const CardLists = ({ loading, lists, deck }: Props) => {
     return cardNames?.includes(name);
   };
 
-  const categorySelection = (
+  const getCategorySelection = (animateScrolling: boolean) => (
     <CategorySelection
       categoryKey={categoryKey}
       lists={lists}
       loading={loading}
-      setCategoryKey={onSetCategory}
+      setCategoryKey={onSetCategory(animateScrolling)}
     />
   );
 
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
-      {categorySelection}
+      {getCategorySelection(true)}
       <Divider />
       <div ref={scrollRef} />
       {currentCategory ? (
@@ -71,7 +75,7 @@ export const CardLists = ({ loading, lists, deck }: Props) => {
         <CardGrid loading />
       )}
       <Divider />
-      {categorySelection}
+      {getCategorySelection(false)}
     </Space>
   );
 };
