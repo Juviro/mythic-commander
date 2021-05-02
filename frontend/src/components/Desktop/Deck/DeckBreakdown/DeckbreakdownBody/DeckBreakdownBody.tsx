@@ -1,5 +1,3 @@
-import { Divider } from 'antd';
-import { Flex } from 'components/Elements/Shared';
 import React from 'react';
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { DeckCmc } from './DeckCmc';
