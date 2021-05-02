@@ -84,3 +84,11 @@ export const colorPalette = [
   '#ffb74d',
   '#ff8a65',
 ];
+
+export const manaSymbolColors = {
+  W: '#fffcd6',
+  U: '#aae2fb',
+  B: '#ccc2c0',
+  R: '#faaa8f',
+  G: '#9cd6b0',
+};
