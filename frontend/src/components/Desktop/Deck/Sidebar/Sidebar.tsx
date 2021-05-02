@@ -24,6 +24,10 @@ interface Props {
 }
 
 export default ({ currentTabId, setCurrentTabId, onAddCards, deck }: Props) => {
+  const onDeleteWantsList = () => {
+    setCurrentTabId(ADVANCED_SEARCH);
+  };
+
   return (
     <StyledDrawer
       width={510}
@@ -38,7 +42,7 @@ export default ({ currentTabId, setCurrentTabId, onAddCards, deck }: Props) => {
         overflow: !currentTabId ? 'hidden' : undefined,
       }}
       bodyStyle={{ padding: 0 }}
-      closeIcon={null}
+      closable={false}
     >
       {currentTabId && (
         <Tabs deck={deck} setCurrentTabId={setCurrentTabId} currentTabId={currentTabId} />
@@ -59,6 +63,7 @@ export default ({ currentTabId, setCurrentTabId, onAddCards, deck }: Props) => {
             id={id}
             onAddCards={onAddCards}
             numberOfCards={numberOfCards}
+            onDeleteWantsList={onDeleteWantsList}
           />
         ))}
     </StyledDrawer>

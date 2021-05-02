@@ -1,5 +1,5 @@
 import React from 'react';
-import { Space, Typography } from 'antd';
+import { Space } from 'antd';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 
@@ -9,7 +9,7 @@ import { wantsListDesktop } from 'components/Desktop/WantsList/queries';
 import unifyCardFormat from 'utils/unifyCardFormat';
 import { FadeIn, OneTimeInfoBox } from 'components/Elements/Shared';
 import { AddCards, Dropzone } from 'components/Elements/Desktop';
-import { Link } from 'react-router-dom';
+import { Title } from 'components/Desktop/Deck/Sidebar/DeckWants/Title';
 import DeckWantsList from './DeckWantsList';
 import useDeckWantsQueries from './useDeckWantsQueries';
 
@@ -24,9 +24,17 @@ interface Props {
   id: string;
   numberOfCards?: number;
   onAddCards: (newCards: CardInputType[], name: string) => void;
+  onDeleteWantsList: () => void;
 }
 
-export default ({ name, deck, id, onAddCards, numberOfCards }: Props) => {
+export default ({
+  name,
+  deck,
+  id,
+  onAddCards,
+  numberOfCards,
+  onDeleteWantsList,
+}: Props) => {
   const { data } = useQuery(wantsListDesktop, {
     variables: { id },
     fetchPolicy: 'cache-first',
@@ -54,14 +62,19 @@ export default ({ name, deck, id, onAddCards, numberOfCards }: Props) => {
         style={{ height: 'unset', minHeight: '100%' }}
       >
         <StyledWrapper>
-          <Typography.Title level={3}>
-            <Link to={`/wants/${id}`}>{`${name} (${numberOfCards})`}</Link>
-          </Typography.Title>
+          <Title
+            id={id}
+            name={name}
+            wantsList={wantsList}
+            onAddCards={onAddCards}
+            numberOfCards={numberOfCards}
+            onDeleteWantsList={onDeleteWantsList}
+          />
           <Space direction="vertical" size={48} style={{ width: '100%' }}>
             <AddCards
               isAdvanced={false}
-              onAddCards={(card: UnifiedCard, test) =>
-                onAddCardToWantsList(card[0], test)
+              onAddCards={(card: UnifiedCard, cardName: string) =>
+                onAddCardToWantsList(card[0], cardName)
               }
               focusId="deck.cards"
               placeholder="Add a card..."

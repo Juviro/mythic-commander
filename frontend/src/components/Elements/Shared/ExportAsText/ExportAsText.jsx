@@ -25,9 +25,9 @@ const downloadAsTxt = (cardNameList, deckName) => {
 export default ({
   title,
   cards,
-  visible,
-  hideAmount,
-  buttonProps,
+  visible = false,
+  hideAmount = false,
+  buttonProps = null,
   buttonTitle = 'Export as Text',
 }) => {
   const [exportViewOpen, toggleExportViewOpen] = useToggle(visible);
