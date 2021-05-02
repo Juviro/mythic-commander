@@ -1,5 +1,5 @@
 import shimmer from 'components/Animations/shimmer';
-import { coverBackgroundColors } from 'constants/colors';
+import { colorPalette } from 'constants/colors';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -44,8 +44,8 @@ const getColorFromId = (id) => {
     .split('')
     .map((char) => char.charCodeAt(0).toString(10))
     .reduce((acc, val) => acc + Number(val), 0);
-  const index = stringAsNumber % coverBackgroundColors.length;
-  return coverBackgroundColors[index];
+  const index = stringAsNumber % colorPalette.length;
+  return colorPalette[index];
 };
 
 export default ({ list }) => {

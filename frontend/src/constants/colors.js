@@ -44,7 +44,7 @@ export const lifeTracker = [
   LTBlack,
 ];
 
-export const coverBackgroundColors = [
+export const colorPalette = [
   '#e57373',
   '#f06292',
   '#ba68c8',
