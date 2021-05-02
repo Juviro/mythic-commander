@@ -28,6 +28,7 @@ const CardModalDesktop = ({
   return (
     <FocusedModal
       visible
+      centered
       onCancel={onClose}
       footer={null}
       destroyOnClose
