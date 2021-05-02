@@ -3,6 +3,7 @@ import React from 'react';
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { DeckCmc } from './DeckCmc';
 import { DeckValue } from './DeckValue';
+import { DeckColorDistribution } from './DeckColorDistribution';
 import { DeckTypeDistribution } from './DeckTypeDistribution';
 
 interface Props {
@@ -15,6 +16,7 @@ export const DeckBreakdownBody = ({ deck }: Props) => {
       <DeckValue deck={deck} />
       <DeckCmc deck={deck} />
       <DeckTypeDistribution deck={deck} />
+      <DeckColorDistribution deck={deck} />
     </>
   );
 };

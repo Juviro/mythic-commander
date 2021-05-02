@@ -1,23 +1,26 @@
-# PRIORITY BUGFIXES
+## PRIORITY BUGFIXES
 
 - auto update cards on prod not working
 
-# BUGFIXES:
+## BUGFIXES:
 
-# CURRENT:
+## CURRENT:
 
-# NEXT:
+- Add avg cmc to graph
+- sort type distribution etc order
+
+## NEXT:
 
 - add tags (sort by type (ramp, card draw, ...))
 - allow editing wantsname and delete wants in deck sidebar
 
-# FOLLOW-UP MIGRATION:
+## FOLLOW-UP MIGRATION:
 
 - re-enable deck card selection for mobile
 - display eur prices in collection value + graphs
 - display how many cards are included in eur/usd price (collection)
 
-# IMPROVEMENTS:
+## IMPROVEMENTS:
 
 - redesign moveTo modal, especially for mobile
 - mobile card list preview: allow swipe to next card
@@ -29,18 +32,18 @@
 - added to collection notification -> show amount as well
 - add optimistic response to card delete in deck (esp. mobile)
 
-# PERFORMANCE:
+## PERFORMANCE:
 
 - remove elements/shared/index.js, same for mobile and desktop -> evaluate if this has an effect on the bundle sizes
 - wrap expensive calculations and small components in GridCard in memo and useMemo
 
-# FEATURES:
+## FEATURES:
 
 - show last search when no input in searchbar
 - check for multiple copies of one card for deck legality check
 - show if deck is legal in deck overview, order by legality (similar to magic arena)
 
-# REFACTORINGS:
+## REFACTORINGS:
 
 - Split more code with React.lazy
 - evaluate removing some caching, using network-only more
@@ -48,7 +51,7 @@
   - Not having to calc it again in oracleCard -> allSets
   - When adding a card to collection/deck avoid version numbers other than 1. I think that means preferring version 1 for distinctCards
 
-# BACKLOG:
+## BACKLOG:
 
 - select cards -> copy to some deck -> selection should be cleared, but isn't
 - when adding basics to deck, default to full art that as an mkm price
@@ -78,7 +81,7 @@
   - show all current search options for advanced search
 - use first card / 4-split card as wants list image
 
-# BACKLOG BUGFIXES:
+## BACKLOG BUGFIXES:
 
 - sometimes rules of previously viewed cards displayed instead of current card
 - Deck dropzone is small if only commanders are in the deck
