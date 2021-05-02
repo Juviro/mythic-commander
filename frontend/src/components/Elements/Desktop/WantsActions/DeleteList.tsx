@@ -2,26 +2,49 @@ import React from 'react';
 import { Button, message } from 'antd';
 import { useMutation } from 'react-apollo';
 
-import { withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { DeleteOutlined } from '@ant-design/icons';
+import { UnifiedWantsList } from 'types/unifiedTypes';
+import { getDeckDesktop } from 'components/Desktop/Deck/queries';
 import { useToggle } from '../../../Hooks';
-import { ConfirmDelete } from '../../../Elements/Shared';
+import { ConfirmDelete } from '../../Shared';
 import boldText from '../../../../utils/boldText';
-import { deleteWantsListDesktop } from '../queries';
+import { deleteWantsListDesktop } from '../../../Desktop/WantsList/queries';
 
-const DeleteList = ({ wantsList: { id: wantsListId, name }, history }) => {
+interface Props extends RouteComponentProps {
+  wantsList: UnifiedWantsList;
+  onDelete?: () => void;
+}
+
+const DeleteList = ({
+  wantsList: { id: wantsListId, name, deck },
+  history,
+  onDelete,
+}: Props) => {
   const [isDeleting, toggleisDeleting] = useToggle();
   const [mutate] = useMutation(deleteWantsListDesktop);
 
   const onDeleteList = async () => {
     toggleisDeleting(false);
+    const refetchQueries = deck?.id && [
+      {
+        query: getDeckDesktop,
+        variables: { id: deck.id },
+      },
+    ];
+
     await mutate({
       variables: {
         wantsListId,
       },
+      refetchQueries,
     });
     message.success('Deleted wants list!');
-    history.replace('/my-wants');
+    if (onDelete) {
+      onDelete();
+    } else {
+      history.replace('/my-wants');
+    }
   };
 
   const text = boldText(
