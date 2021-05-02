@@ -4,6 +4,7 @@ PRIORITY BUGFIXES
 BUGFIXES:
 
 CURRENT:
+    - show owned badge in edhrect list
 
 NEXT:
     - add tags (sort by type (ramp, card draw, ...))
