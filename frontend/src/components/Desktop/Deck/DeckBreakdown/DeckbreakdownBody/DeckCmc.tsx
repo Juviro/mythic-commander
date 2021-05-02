@@ -1,3 +1,4 @@
+import { Typography } from 'antd';
 import { CARD_TYPE_DECK_ORDER } from 'components/Provider/CardProvider/staticTypes';
 import { typeColors } from 'constants/colors';
 import React from 'react';
@@ -10,7 +11,7 @@ interface Props {
   deck: UnifiedDeck;
 }
 
-const getPrimaryType = (primaryTypes: string[]) => {
+export const getPrimaryType = (primaryTypes: string[]) => {
   return primaryTypes.sort((a, b) => {
     if (CARD_TYPE_DECK_ORDER.indexOf(a) === -1) return 1;
     if (CARD_TYPE_DECK_ORDER.indexOf(b) === -1) return -1;
@@ -21,7 +22,9 @@ const getPrimaryType = (primaryTypes: string[]) => {
 
 export const DeckCmc = ({ deck }: Props) => {
   const manaValues = deck.cards
-    .filter((card) => !card.primaryTypes.includes('Land'))
+    // The integer check if for pretty much one card,
+    // "Little Girl", that costs 1/2 white Mana.
+    .filter((card) => !card.primaryTypes.includes('Land') && Number.isInteger(card.cmc))
     .reduce((acc, card) => {
       const { cmc, primaryTypes, amount } = card;
 
@@ -35,6 +38,7 @@ export const DeckCmc = ({ deck }: Props) => {
         [cmc]: {
           ...cmcByType,
           [primaryType]: currentCount + amount,
+          total: 10,
         },
       };
     }, {});
@@ -47,19 +51,21 @@ export const DeckCmc = ({ deck }: Props) => {
 
       const lastCmc = acc[acc.length - 1].cmc;
       const diffToPrevious = val.cmc - lastCmc;
-      if (diffToPrevious === 1) return [...acc, val];
+
+      // The check for cmc diff < 100 is for a single card,
+      // "Gleemax", that has a cmc of 1.000.000
+      if (diffToPrevious === 1 || diffToPrevious > 100) return [...acc, val];
 
       // Some cmc values are missing in between, fill them in here
       const dummies = [...new Array(diffToPrevious - 1)].map((_, index) => ({
         cmc: lastCmc + index + 1,
-        amount: 0,
       }));
 
       return [...acc, ...dummies, val];
     }, []);
 
   return (
-    <DeckStat title="Mana Curve:" hidden={!data.length}>
+    <DeckStat title="Mana Curve" hidden={!data.length}>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart
           data={data}
@@ -71,7 +77,11 @@ export const DeckCmc = ({ deck }: Props) => {
           }}
         >
           <XAxis dataKey="cmc" />
-          <Tooltip />
+          <Tooltip
+            labelFormatter={(manaValue) => (
+              <Typography.Text strong> {`Mana Value ${manaValue}`}</Typography.Text>
+            )}
+          />
           {CARD_TYPE_DECK_ORDER.map((type) => (
             <Bar
               key={type}

@@ -10,7 +10,7 @@ interface Props {
 
 export const DeckValue = ({ deck }: Props) => {
   return (
-    <DeckStat title="Estimated Value:">
+    <DeckStat title="Estimated Value">
       <ValueLabel list={deck} />
     </DeckStat>
   );
