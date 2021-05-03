@@ -1,7 +1,6 @@
 import React from 'react';
 import { MoreOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Typography } from 'antd';
-import MenuItem from 'antd/lib/menu/MenuItem';
 import { DropDownProps } from 'antd/lib/dropdown';
 
 interface MenuAction {
@@ -11,7 +10,7 @@ interface MenuAction {
   onClick: () => void;
 }
 
-type ActionType = MenuAction | MenuItem;
+export type ActionType = MenuAction | React.ReactNode;
 
 interface Props extends Pick<DropDownProps, 'placement'> {
   actions: ActionType[];

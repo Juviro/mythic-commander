@@ -2,12 +2,16 @@ import React from 'react';
 import { Button } from 'antd';
 import { useMutation } from 'react-apollo';
 
-import { withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { CopyOutlined } from '@ant-design/icons';
-import { duplicateWantsListDesktop } from '../queries';
+import { duplicateWantsListDesktop } from 'components/Desktop/WantsList/queries';
 import { useToggle } from '../../../Hooks';
 
-const DuplicateList = ({ id: wantsListId, history }) => {
+interface Props extends RouteComponentProps {
+  id: string;
+}
+
+const DuplicateList = ({ id: wantsListId, history }: Props) => {
   const [mutate] = useMutation(duplicateWantsListDesktop);
   const [loading, toggleLoading] = useToggle();
 
