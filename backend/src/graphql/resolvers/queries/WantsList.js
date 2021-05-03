@@ -27,9 +27,9 @@ const resolver = {
     if (!deckId) return null;
 
     return db('decks')
-      .where({ id: deckId })
-      .andWhere({ userId })
-      .orWhereNot('visibility', 'private')
+      .where({ id: deckId, userId })
+      .orWhere({ id: deckId, visibility: 'public' })
+      .orWhere({ id: deckId, visibility: 'hidden' })
       .first();
   },
   canEdit({ userId }, _, { user }) {
