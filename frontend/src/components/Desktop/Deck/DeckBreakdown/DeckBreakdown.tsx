@@ -74,12 +74,7 @@ export const DeckBreakdown = ({ deck }: Props) => {
       </Flex>
       <Divider />
       <DeckBreakdownHeader deck={deck} />
-      {isOpen && deck?.canEdit && (
-        <>
-          <Divider />
-          <DeckBreakdownBody deck={deck} />
-        </>
-      )}
+      {isOpen && deck?.canEdit && <DeckBreakdownBody deck={deck} />}
     </StyledWrapper>
   );
 };
