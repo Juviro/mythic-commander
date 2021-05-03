@@ -27,6 +27,7 @@ export default ({
   const { sets } = useContext(CardContext);
   const { data, loading } = useQuery(allCardSetsQuery, {
     variables: { oracle_id: card.oracle_id },
+    fetchPolicy: 'cache-first',
   });
 
   const allCardSets = loading
