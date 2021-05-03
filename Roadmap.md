@@ -9,7 +9,6 @@
 ## NEXT:
 
 - add tags (sort by type (ramp, card draw, ...))
-- allow editing wantsname and delete wants in deck sidebar
 
 ## FOLLOW-UP MIGRATION:
 
@@ -19,6 +18,7 @@
 
 ## IMPROVEMENTS:
 
+- Allow Editing wants title in deck sidebar
 - redesign moveTo modal, especially for mobile
 - mobile card list preview: allow swipe to next card
 - move to new image service
