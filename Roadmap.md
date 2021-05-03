@@ -6,9 +6,6 @@
 
 ## CURRENT:
 
-- Add avg cmc to graph
-- sort type distribution etc order
-
 ## NEXT:
 
 - add tags (sort by type (ramp, card draw, ...))
