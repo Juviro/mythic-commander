@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
 import UserContext from 'components/Provider/UserProvider';
 import { MythicCommanderBanner, Flex, SearchBar } from '../../Elements/Shared';
-import { darkBackground } from '../../../constants/colors';
+import { darkBackground, darkBackgroundSemiTransparent } from '../../../constants/colors';
 import UserMenu from './UserMenu';
 
 const StyledMenu = styled.div`
@@ -15,7 +15,30 @@ const StyledMenu = styled.div`
   position: fixed;
   align-items: center;
   justify-content: space-between;
-  background-color: ${darkBackground};
+  background: linear-gradient(
+    138deg,
+    ${darkBackground} 0%,
+    ${darkBackgroundSemiTransparent} 100%
+  );
+
+  & .ant-menu-overflowed-submenu {
+    background: transparent;
+  }
+  & .ant-menu {
+    background: transparent;
+  }
+`;
+
+const StyledMenuItem = styled(Menu.Item)`
+  && {
+    font-size: 16px;
+    font-weight: 400;
+
+    @media (min-width: 1600px) {
+      width: 200px;
+      text-align: center;
+    }
+  }
 `;
 
 const DesktopMenu = ({ location: { pathname } }) => {
@@ -63,14 +86,12 @@ const DesktopMenu = ({ location: { pathname } }) => {
           selectedKeys={selectedMenuKeys}
           theme="dark"
           style={{ marginLeft: 12 }}
+          color={darkBackground}
         >
           {menuItems.map(({ title, href }) => (
-            <Menu.Item
-              key={href}
-              style={{ padding: '0 3vw', fontSize: 16, fontWeight: 400 }}
-            >
+            <StyledMenuItem key={href}>
               <Link to={href}>{title}</Link>
-            </Menu.Item>
+            </StyledMenuItem>
           ))}
         </Menu>
       </Flex>

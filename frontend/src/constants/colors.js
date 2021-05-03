@@ -10,8 +10,9 @@ export const secondary = '#b51b1b';
 export const secondaryHover = '#f35a5a';
 export const secondaryActive = '#821212';
 
-export const darkBackground = '#001529';
-export const darkBackgroundTransparent = '#00152933';
+export const darkBackground = '#053461';
+export const darkBackgroundSemiTransparent = '#053461d9';
+export const darkBackgroundTransparent = '#05346133';
 export const lightBackground = '#f5f5f5';
 export const lightWhite = 'rgba(255, 255, 255, 0.7)';
 export const lightText = 'rgba(0, 0, 0, 0.45)';
