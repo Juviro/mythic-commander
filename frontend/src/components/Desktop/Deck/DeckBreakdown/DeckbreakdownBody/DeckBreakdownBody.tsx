@@ -1,7 +1,10 @@
-import { Space, Typography } from 'antd';
-import { Flex, ValueLabel } from 'components/Elements/Shared';
 import React from 'react';
+
 import { UnifiedDeck } from 'types/unifiedTypes';
+import { DeckCmc } from './DeckCmc';
+import { DeckValue } from './DeckValue';
+import { DeckColorDistribution } from './DeckColorDistribution';
+import { DeckTypeDistribution } from './DeckTypeDistribution';
 
 interface Props {
   deck: UnifiedDeck;
@@ -9,13 +12,11 @@ interface Props {
 
 export const DeckBreakdownBody = ({ deck }: Props) => {
   return (
-    <Flex>
-      <Space>
-        <Typography.Text strong style={{ fontSize: 16 }}>
-          Estimated Value:
-        </Typography.Text>
-        <ValueLabel list={deck} />
-      </Space>
-    </Flex>
+    <>
+      <DeckValue deck={deck} />
+      <DeckCmc deck={deck} />
+      <DeckTypeDistribution deck={deck} />
+      <DeckColorDistribution deck={deck} />
+    </>
   );
 };

@@ -10,8 +10,9 @@ export const secondary = '#b51b1b';
 export const secondaryHover = '#f35a5a';
 export const secondaryActive = '#821212';
 
-export const darkBackground = '#001529';
-export const darkBackgroundTransparent = '#00152933';
+export const darkBackground = '#053461';
+export const darkBackgroundSemiTransparent = '#053461d9';
+export const darkBackgroundTransparent = '#05346133';
 export const lightBackground = '#f5f5f5';
 export const lightWhite = 'rgba(255, 255, 255, 0.7)';
 export const lightText = 'rgba(0, 0, 0, 0.45)';
@@ -24,27 +25,49 @@ export const error = '#ff4d4f';
 export const warning = '#faad14';
 
 // https://material.io/resources/color/  - 600
-const LTRed = '#e53935';
-const LTOrange = '#fb8c00';
-const LTYellow = '#fdd835';
-const LTGreen = '#7cb342';
-const LTBlue = '#1e88e5';
-const LTPurple = '#8e24aa';
-const LTBrown = '#6d4c41';
-const LTBlack = '#484848';
+const Red600 = '#e53935';
+const Orange600 = '#fb8c00';
+const Yellow600 = '#fdd835';
+const Green600 = '#7cb342';
+const Blue600 = '#1e88e5';
+const Purple600 = '#8e24aa';
+const Brown600 = '#6d4c41';
+const Black600 = '#484848';
 
 export const lifeTracker = [
-  LTRed,
-  LTOrange,
-  LTYellow,
-  LTGreen,
-  LTBlue,
-  LTPurple,
-  LTBrown,
-  LTBlack,
+  Red600,
+  Orange600,
+  Yellow600,
+  Green600,
+  Blue600,
+  Purple600,
+  Brown600,
+  Black600,
 ];
 
-export const coverBackgroundColors = [
+// https://material.io/resources/color/  - 300
+const Red300 = '#e57373';
+// const Pink300 = '#f06292';
+const Purple300 = '#ba68c8';
+const Blue300 = '#64b5f6';
+const Cyan300 = '#4dd0e1';
+const Green300 = '#81c784';
+// const Yellow300 = '#fff176';
+// const Orange300 = '#ffb74d';
+const DeepOrange300 = '#ff8a65';
+const Brown300 = '#a1887f';
+
+export const typeColors = {
+  Creature: Green300,
+  Enchantment: Cyan300,
+  Artifact: Purple300,
+  Planeswalker: DeepOrange300,
+  Sorcery: Red300,
+  Instant: Blue300,
+  Land: Brown300,
+};
+
+export const colorPalette = [
   '#e57373',
   '#f06292',
   '#ba68c8',
@@ -62,3 +85,11 @@ export const coverBackgroundColors = [
   '#ffb74d',
   '#ff8a65',
 ];
+
+export const manaSymbolColors = {
+  W: '#fffcd6',
+  U: '#aae2fb',
+  B: '#ccc2c0',
+  R: '#faaa8f',
+  G: '#9cd6b0',
+};
