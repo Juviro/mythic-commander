@@ -1,10 +1,10 @@
-import { Typography } from 'antd';
-import { CARD_TYPE_DECK_ORDER } from 'components/Provider/CardProvider/staticTypes';
-import { typeColors } from 'constants/colors';
 import React from 'react';
+import { Space, Typography } from 'antd';
 import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
+import { typeColors } from 'constants/colors';
 import { UnifiedDeck } from 'types/unifiedTypes';
+import { CARD_TYPE_DECK_ORDER } from 'components/Provider/CardProvider/staticTypes';
 import { DeckStat } from './DeckStat';
 
 interface Props {
@@ -37,8 +37,8 @@ export const DeckCmc = ({ deck }: Props) => {
         ...acc,
         [cmc]: {
           ...cmcByType,
+          total: (cmcByType.total ?? 0) + amount,
           [primaryType]: currentCount + amount,
-          total: 10,
         },
       };
     }, {});
@@ -63,6 +63,19 @@ export const DeckCmc = ({ deck }: Props) => {
 
       return [...acc, ...dummies, val];
     }, []);
+
+  const { count, cmcSum } = Object.keys(manaValues).reduce(
+    (acc, cmc) => {
+      const { total } = manaValues[cmc];
+      return {
+        count: acc.count + total,
+        cmcSum: acc.cmcSum + total * Number(cmc),
+      };
+    },
+    { count: 0, cmcSum: 0 }
+  );
+
+  const avgCmc = Math.round((cmcSum / count) * 10) / 10;
 
   return (
     <DeckStat title="Mana Curve" hidden={!data.length}>
@@ -95,6 +108,10 @@ export const DeckCmc = ({ deck }: Props) => {
           ))}
         </BarChart>
       </ResponsiveContainer>
+      <Space>
+        <Typography.Text strong>Average Mana Value:</Typography.Text>
+        <Typography.Text>{avgCmc}</Typography.Text>
+      </Space>
     </DeckStat>
   );
 };
