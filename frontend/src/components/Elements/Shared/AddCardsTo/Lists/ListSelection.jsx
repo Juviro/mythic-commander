@@ -61,7 +61,7 @@ const ListSelection = ({ onSubmit, selectedCards, history }) => {
     }));
     addToCollection({
       variables: { cards: formattedCollectionCards },
-      refetchQueries: ['paginatedCollection', 'ownedCardNames'],
+      refetchQueries: ['paginatedCollection'],
     });
     onSubmit();
     message(`Added ${numberOfSelectedCards} cards to your collection!`);

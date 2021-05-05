@@ -14,7 +14,7 @@ export default () => {
     message(`Added <b>${addedName}</b> to your collection!`);
     mutate({
       variables: { cards },
-      refetchQueries: ['currentSnapshots', 'paginatedCollection', 'ownedCardNames'],
+      refetchQueries: ['currentSnapshots', 'paginatedCollection'],
     });
   };
 

@@ -141,6 +141,7 @@ type DeckCard {
   createdAt: String!
   isCommander: Boolean
   card: Card!
+  tags: [String!]
 }
 
 ################################# Collection #################################
@@ -461,6 +462,7 @@ input EditDeckCardInput {
   id: String
   amount: Int
   isCommander: Boolean
+  tags: [String!]
 }
 
 ################################# Collection #################################

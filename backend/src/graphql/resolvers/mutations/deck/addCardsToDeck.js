@@ -5,6 +5,7 @@ const ON_CONFLICT = `
     ON CONFLICT (id, "deckId") 
     DO UPDATE SET 
       amount = "cardToDeck".amount + EXCLUDED.amount, 
+      tags = "cardToDeck".tags, 
       "createdAt" = NOW()
   `;
 
@@ -21,6 +22,8 @@ export default async (
   }
   await canAccessDeck(userId, deckId);
 
+  const cardIds = cards.map(({ id }) => id);
+
   const { rows: cardsAlreadyInDeck } = await db.raw(
     `
       SELECT cards.id as "addingId", "cardToDeckWithOracle".id as "existingId"
@@ -30,7 +33,22 @@ export default async (
       WHERE cards.id = ANY(?)
       AND "deckId" = ?;
     `,
-    [cards.map(({ id }) => id), deckId]
+    [cardIds, deckId]
+  );
+
+  const { rows: defaultTags } = await db.raw(
+    `
+  SELECT cards.id, "defaultTags".tags
+  FROM "defaultTags"
+  LEFT JOIN cards
+  ON cards.oracle_id = "defaultTags".oracle_id
+  WHERE cards.id = ANY(?);
+  `,
+    [cardIds]
+  );
+  const tagMap = defaultTags.reduce(
+    (acc, val) => ({ ...acc, [val.id]: val.tags }),
+    {}
   );
 
   const cardsToInsert = cards.map(({ id, amount = 1 }) => {
@@ -43,6 +61,7 @@ export default async (
       id: insertId,
       amount,
       deckId,
+      tags: tagMap[id],
     };
   });
 
