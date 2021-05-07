@@ -38,7 +38,7 @@ const DeleteDeck = ({ history }) => {
       },
     });
     message.success('Deck deleted!');
-    history.push(getDynamicUrl('/decks'));
+    history.push(getDynamicUrl('/my-decks'));
   };
 
   return (

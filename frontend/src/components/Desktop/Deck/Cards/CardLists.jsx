@@ -73,6 +73,19 @@ export default ({ loading, cardsByType, deck }) => {
     });
   };
 
+  const onSetTags = (cardId, tags) => {
+    onEditCard(cardId, { tags });
+  };
+
+  const allTags = [
+    ...new Set(
+      deck?.cards
+        .map(({ tags }) => tags)
+        .filter(Boolean)
+        .flat()
+    ),
+  ];
+
   const cardLists = cardsByType?.map(({ type, cards }) => {
     const { valueLabelEur, valueLabelUsd } = getListStats({ cards });
     const isCommander = type === 'Commander';
@@ -118,6 +131,8 @@ export default ({ loading, cardsByType, deck }) => {
       onEditCard={deck?.canEdit ? onEditCard : undefined}
       showAddedBeforeFilter
       showCollectionFilters
+      allTags={allTags}
+      onSetTags={onSetTags}
       orderByParamName="orderByAdvanced"
       dragProps={{
         canDrag: true,

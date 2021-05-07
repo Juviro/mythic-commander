@@ -9,6 +9,8 @@ import { useToggle } from '../../../Hooks';
 import CardInfo from './CardInfo';
 import { CardMenu } from './CardMenu';
 import { SelectButton } from './SelectButton';
+import { Tags } from './Tags/Tags';
+import Flex from '../Flex';
 
 export const StyledCenterWrapper = styled.div<{ fixedSize: boolean }>`
   width: 100%;
@@ -32,6 +34,7 @@ const StyledCardWrapper = styled.div<{ fixedSize: boolean }>`
   position: relative;
   width: ${({ fixedSize }) => (fixedSize ? '220px' : '100%')};
   height: 100%;
+  justify-content: space-between;
 `;
 
 const StyledImageWrapper = styled.div<{ isSelected: boolean; markAsDisabled?: boolean }>`
@@ -85,6 +88,8 @@ const GridCard = ({
   disableSelection,
   minimal,
   onClick,
+  onSetTags,
+  allTags,
 }) => {
   const { canDrag = false, listId, onSuccessfullDrop } = dragProps ?? {};
   const displayedAmount = card.amount || card.totalAmount;
@@ -125,46 +130,49 @@ const GridCard = ({
   return (
     <StyledCenterWrapper fixedSize={fixedSize}>
       <StyledCardWrapper key={card.id} fixedSize={fixedSize}>
-        <StyledImageWrapper
-          onClick={onClickCard}
-          isSelected={isSelected}
-          onMouseMove={(e) => {
-            if (minimal) return;
-            // Check for touch devices
-            if (!e.movementX && !e.movementY) return;
-            toggleShowMenu(true);
-          }}
-          onMouseLeave={() => toggleShowMenu(false)}
-          markAsDisabled={markAsDisabled}
-          ref={dragRef}
-          onContextMenu={(e) => {
-            e.preventDefault();
-            if (disableSelection) return;
-            onSelect();
-          }}
-        >
-          {canZoomIn && <EnlargeImage card={card} />}
-          <FlippableCard card={card} onFlipCard={() => toggleShowMenu(false)} />
-          {displayedAmount > 1 && (
-            <StyledAmountWrapper>{`${displayedAmount}x`}</StyledAmountWrapper>
-          )}
-          {Boolean(showMenu && actions.length && !isAnyCardSelected) && (
-            <CardMenu
-              card={card}
-              actions={actions}
-              onOpenDetails={onOpenDetails}
-              onClose={() => toggleShowMenu(false)}
-            />
-          )}
-          {!disableSelection && (
-            <SelectButton
-              onSelect={onSelect}
-              isSelected={isSelected}
-              isHovering={showMenu}
-              isAnyCardSelected={isAnyCardSelected}
-            />
-          )}
-        </StyledImageWrapper>
+        <Flex direction="column" style={{ width: '100%' }}>
+          <StyledImageWrapper
+            onClick={onClickCard}
+            isSelected={isSelected}
+            onMouseMove={(e) => {
+              if (minimal) return;
+              // Check for touch devices
+              if (!e.movementX && !e.movementY) return;
+              toggleShowMenu(true);
+            }}
+            onMouseLeave={() => toggleShowMenu(false)}
+            markAsDisabled={markAsDisabled}
+            ref={dragRef}
+            onContextMenu={(e) => {
+              e.preventDefault();
+              if (disableSelection) return;
+              onSelect();
+            }}
+          >
+            {canZoomIn && <EnlargeImage card={card} />}
+            <FlippableCard card={card} onFlipCard={() => toggleShowMenu(false)} />
+            {displayedAmount > 1 && (
+              <StyledAmountWrapper>{`${displayedAmount}x`}</StyledAmountWrapper>
+            )}
+            {Boolean(showMenu && actions.length && !isAnyCardSelected) && (
+              <CardMenu
+                card={card}
+                actions={actions}
+                onOpenDetails={onOpenDetails}
+                onClose={() => toggleShowMenu(false)}
+              />
+            )}
+            {!disableSelection && (
+              <SelectButton
+                onSelect={onSelect}
+                isSelected={isSelected}
+                isHovering={showMenu}
+                isAnyCardSelected={isAnyCardSelected}
+              />
+            )}
+          </StyledImageWrapper>
+          {onSetTags && <Tags onSetTags={onSetTags} card={card} allTags={allTags} />}
+        </Flex>
         <CardInfo card={card} search={search} minimal={minimal} />
       </StyledCardWrapper>
     </StyledCenterWrapper>

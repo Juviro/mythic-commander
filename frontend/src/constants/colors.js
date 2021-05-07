@@ -93,3 +93,50 @@ export const manaSymbolColors = {
   R: '#faaa8f',
   G: '#9cd6b0',
 };
+
+export const tagColors = [
+  {
+    name: '???',
+    color: 'gold',
+  },
+  {
+    name: 'Targeted Removal',
+    color: 'red',
+  },
+  {
+    name: '???',
+    color: 'volcano',
+  },
+  {
+    name: 'Board Wipe',
+    color: 'orange',
+  },
+  {
+    name: 'Deck Synergy',
+    color: 'lime',
+  },
+  {
+    name: 'Ramp',
+    color: 'green',
+  },
+  {
+    name: 'Synergy Payoff',
+    color: 'cyan',
+  },
+  {
+    name: 'Protection',
+    color: 'blue',
+  },
+  {
+    name: 'Card Draw',
+    color: 'geekblue',
+  },
+  {
+    name: 'Tutor',
+    color: 'purple',
+  },
+  {
+    name: 'Default',
+    color: 'magenta',
+  },
+];
