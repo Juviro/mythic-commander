@@ -23,7 +23,7 @@ interface Props {
   allTags: string[];
 }
 
-export const AddTag = ({ onSetTags, card, allTags }: Props) => {
+export const AddTagMenu = ({ onSetTags, card, allTags }: Props) => {
   const [visible, toggleVisible] = useToggle();
   const inputRef = useRef(null);
   const [search, setSearch] = useState<string>('');
@@ -49,44 +49,23 @@ export const AddTag = ({ onSetTags, card, allTags }: Props) => {
     inputRef.current.focus();
   }, [visible]);
 
-  const menu = (
-    <Menu>
-      <Menu.Item>
-        {visible && (
-          <AutoComplete
-            defaultOpen
-            ref={inputRef}
-            placeholder="Enter your tag"
-            onSelect={onAddTag}
-            style={{ width: 200 }}
-            onChange={setSearch}
-            onKeyDown={(event) => {
-              if (event.keyCode !== keyCodes.ENTER) return;
-              onAddTag(search);
-              onReset();
-            }}
-            value={search}
-            onBlur={onReset}
-            options={displayedOptions.map((value) => ({ value, key: value }))}
-          />
-        )}
-      </Menu.Item>
-    </Menu>
-  );
-
   return (
-    <Dropdown
-      overlay={menu}
-      placement="bottomLeft"
-      arrow
-      trigger={['click']}
-      visible={visible}
-      onVisibleChange={toggleVisible}
-    >
-      <StyledAddTag>
-        <PlusOutlined />
-        <span>Add Tag</span>
-      </StyledAddTag>
-    </Dropdown>
+    <AutoComplete
+      autoFocus
+      defaultOpen
+      ref={inputRef}
+      placeholder="Enter your tag"
+      onSelect={onAddTag}
+      style={{ width: 200 }}
+      onChange={setSearch}
+      onKeyDown={(event) => {
+        if (event.keyCode !== keyCodes.ENTER) return;
+        onAddTag(search);
+        onReset();
+      }}
+      value={search}
+      onBlur={onReset}
+      options={displayedOptions.map((value) => ({ value, key: value }))}
+    />
   );
 };
