@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
+  user-select: none;
   /* center items in Select component horizontally */
   .ant-select-selection-selected-value {
     display: flex !important;
