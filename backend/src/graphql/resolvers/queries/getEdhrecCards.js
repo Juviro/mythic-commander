@@ -5,7 +5,7 @@ const getUrl = (names, themeSuffix) => {
     .join(' ')
     .toLowerCase()
     .replace(/\s\/\/.*$/, '')
-    .replace(/[^a-zA-Z ]/g, '')
+    .replace(/[^a-zA-Z- ]/g, '')
     .replace(/\s/g, '-');
 
   const themeAddon = themeSuffix || '';
