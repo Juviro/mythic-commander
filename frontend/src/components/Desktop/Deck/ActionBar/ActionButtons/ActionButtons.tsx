@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Space } from 'antd';
 import styled from 'styled-components';
-import { SettingOutlined } from '@ant-design/icons';
 
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { CardInputType } from 'types/graphql';
@@ -47,7 +46,6 @@ export const ActionButtons = ({ deck, onAddCards }: Props) => {
           onClick={() => onSetTabId(ADVANCED_SEARCH)}
         >
           Advanced Search
-          <SettingOutlined />
         </StyledButton>
         <StyledButton
           ghost={currentTabId !== EDH_REC}

@@ -67,7 +67,7 @@ const getQuickstats = (deck: UnifiedDeck, type: string) => {
         type,
         text: illegalCards.length
           ? `Commander legal (${illegalCards.length})`
-          : 'All cards legal',
+          : 'Card legality',
         status: illegalCards.length ? 'error' : 'ok',
         cards: illegalCards,
       };

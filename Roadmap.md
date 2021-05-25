@@ -9,7 +9,9 @@
 ## NEXT:
 
 - add tags (sort by type (ramp, card draw, ...))
-- allow editing wantsname and delete wants in deck sidebar
+- show value of unowned cards for deck
+- allow editing the name of wants in deck sidebar
+- allow multi drag & drop when multiple cards selected
 
 ## FOLLOW-UP MIGRATION:
 
@@ -19,6 +21,7 @@
 
 ## IMPROVEMENTS:
 
+- Allow Editing wants title in deck sidebar
 - redesign moveTo modal, especially for mobile
 - mobile card list preview: allow swipe to next card
 - move to new image service
