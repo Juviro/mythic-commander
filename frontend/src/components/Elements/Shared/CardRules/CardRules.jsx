@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { List, Modal, Button, Typography } from 'antd';
 import styled from 'styled-components';
 import Linkify from 'react-linkify';
+import isMobile from 'utils/isMobile';
 
 const StyledRulesWrapper = styled.div`
   width: 100%;
@@ -68,7 +69,7 @@ export default ({ card = {}, loading }) => {
           size="small"
           header={<span style={{ fontWeight: 600 }}>{`Rules for ${name}`}</span>}
           dataSource={rules || []}
-          onClick={() => setIsOpen(false)}
+          onClick={isMobile() ? undefined : () => setIsOpen(false)}
           renderItem={({ comment }) => (
             <List.Item>
               <Typography.Text style={{ width: '100%' }}>
