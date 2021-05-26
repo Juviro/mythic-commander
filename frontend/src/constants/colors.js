@@ -101,18 +101,18 @@ export const tagColors = [
   },
   {
     name: 'Targeted Removal',
-    color: 'red',
+    color: 'volcano',
   },
   {
     name: '???',
-    color: 'volcano',
+    color: 'red',
   },
   {
     name: 'Board Wipe',
     color: 'orange',
   },
   {
-    name: 'Deck Synergy',
+    name: '???',
     color: 'lime',
   },
   {
@@ -120,7 +120,7 @@ export const tagColors = [
     color: 'green',
   },
   {
-    name: 'Synergy Payoff',
+    name: 'Synergy',
     color: 'cyan',
   },
   {

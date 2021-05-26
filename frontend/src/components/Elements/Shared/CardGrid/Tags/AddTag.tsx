@@ -1,20 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { PlusOutlined } from '@ant-design/icons';
-import { AutoComplete, Dropdown, Menu, Tag } from 'antd';
+import { Popover, Tag as AntdTag, Input, Space } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useToggle } from 'components/Hooks';
 import { greyBorder } from 'constants/colors';
-import keyCodes from 'constants/keyCodes';
 import DEFAULT_TAGS from 'constants/tags';
 import { UnifiedDeckCard } from 'types/unifiedTypes';
+import { Tag } from './Tag';
+import Flex from '../../Flex';
 
-const StyledAddTag = styled(Tag)`
+const StyledAddTag = styled(AntdTag)`
   cursor: pointer;
   background-color: white;
   border: 1px solid ${greyBorder};
   margin-top: 4px;
   border-radius: 12px;
+`;
+
+const StyledMenu = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 250px;
 `;
 
 interface Props {
@@ -28,21 +35,28 @@ export const AddTag = ({ onSetTags, card, allTags }: Props) => {
   const inputRef = useRef(null);
   const [search, setSearch] = useState<string>('');
 
+  const existingTags = [...new Set(allTags.concat(DEFAULT_TAGS))];
+  const displayedTags = existingTags.filter(
+    (tag) => !card.tags?.includes(tag) && tag.toLowerCase().includes(search.toLowerCase())
+  );
+
   const onAddTag = (tag: string) => {
     toggleVisible(false);
     const currentTags = card.tags ?? [];
-    onSetTags(card.id, currentTags.concat(tag));
+    const usedTag =
+      existingTags.find((existing) => existing.toLowerCase() === tag.toLowerCase()) ??
+      tag;
+
+    const newTags = [...new Set(currentTags.concat(usedTag))];
+
+    onSetTags(card.id, newTags);
     setSearch('');
   };
 
   const onReset = () => {
     toggleVisible(false);
-    setSearch(null);
+    setSearch('');
   };
-
-  const displayedOptions = [...new Set(allTags.concat(DEFAULT_TAGS))].filter(
-    (tag) => !card.tags?.includes(tag)
-  );
 
   useEffect(() => {
     if (!visible || !inputRef.current) return;
@@ -50,35 +64,34 @@ export const AddTag = ({ onSetTags, card, allTags }: Props) => {
   }, [visible]);
 
   const menu = (
-    <Menu>
-      <Menu.Item>
-        {visible && (
-          <AutoComplete
-            defaultOpen
-            ref={inputRef}
-            placeholder="Enter your tag"
-            onSelect={onAddTag}
-            style={{ width: 200 }}
-            onChange={setSearch}
-            onKeyDown={(event) => {
-              if (event.keyCode !== keyCodes.ENTER) return;
-              onAddTag(search);
-              onReset();
-            }}
-            value={search}
-            onBlur={onReset}
-            options={displayedOptions.map((value) => ({ value, key: value }))}
-          />
-        )}
-      </Menu.Item>
-    </Menu>
+    <StyledMenu>
+      <Space direction="vertical">
+        <Input
+          ref={inputRef}
+          placeholder="Enter your tag"
+          style={{ width: '100%' }}
+          onSubmit={() => onAddTag(search)}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={(event) => {
+            if (event.key !== 'Enter') return;
+            onAddTag(search);
+            onReset();
+          }}
+          value={search}
+        />
+        <Flex wrap="wrap">
+          {displayedTags.map((tag) => (
+            <Tag tag={tag} key={tag} onClick={() => onAddTag(tag)} />
+          ))}
+        </Flex>
+      </Space>
+    </StyledMenu>
   );
 
   return (
-    <Dropdown
-      overlay={menu}
+    <Popover
+      content={menu}
       placement="bottomLeft"
-      arrow
       trigger={['click']}
       visible={visible}
       onVisibleChange={toggleVisible}
@@ -87,6 +100,6 @@ export const AddTag = ({ onSetTags, card, allTags }: Props) => {
         <PlusOutlined />
         <span>Add Tag</span>
       </StyledAddTag>
-    </Dropdown>
+    </Popover>
   );
 };
