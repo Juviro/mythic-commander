@@ -276,6 +276,7 @@ export type Mutation = {
   changeWantsListVisibility: WantsList;
   updateLtPlayer: LtPlayer;
   deleteLtPlayer?: Maybe<Scalars['Boolean']>;
+  setDefaultTag?: Maybe<Scalars['Boolean']>;
 };
 
 export type MutationSetUsernameArgs = {
@@ -417,6 +418,11 @@ export type MutationUpdateLtPlayerArgs = {
 
 export type MutationDeleteLtPlayerArgs = {
   name: Scalars['String'];
+};
+
+export type MutationSetDefaultTagArgs = {
+  tag: Scalars['String'];
+  oracleId: Scalars['String'];
 };
 
 export type OracleCard = {
