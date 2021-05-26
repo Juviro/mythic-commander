@@ -47,8 +47,18 @@ export default ({ loading, cardsByType, deck }) => {
   };
 
   const onEditCard = (cardId, newProps) => {
+    const card = deck.originalCards.find(
+      (originalCard) => originalCard.card.id === cardId
+    );
     mutateEdit({
       variables: { deckId: deck.id, newProps, cardId },
+      optimisticResponse: () => ({
+        __typename: 'Mutation',
+        editDeckCard: {
+          ...card,
+          ...newProps,
+        },
+      }),
       update: (cache, { data: { editDeckCard: newCard } }) => {
         const existing = cache.readQuery({
           query: getDeckDesktop,
