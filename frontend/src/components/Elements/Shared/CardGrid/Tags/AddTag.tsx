@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import { PlusOutlined } from '@ant-design/icons';
 import { Popover, Tag as AntdTag, Input, Space } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
-import { useToggle } from 'components/Hooks';
 import { greyBorder } from 'constants/colors';
 import DEFAULT_TAGS from 'constants/tags';
 import { UnifiedDeckCard } from 'types/unifiedTypes';
@@ -31,7 +30,6 @@ interface Props {
 }
 
 export const AddTag = ({ onSetTags, card, allTags }: Props) => {
-  const [visible, toggleVisible] = useToggle();
   const inputRef = useRef(null);
   const [search, setSearch] = useState<string>('');
 
@@ -41,7 +39,6 @@ export const AddTag = ({ onSetTags, card, allTags }: Props) => {
   );
 
   const onAddTag = (tag: string) => {
-    toggleVisible(false);
     const currentTags = card.tags ?? [];
     const usedTag =
       existingTags.find((existing) => existing.toLowerCase() === tag.toLowerCase()) ??
@@ -54,19 +51,14 @@ export const AddTag = ({ onSetTags, card, allTags }: Props) => {
   };
 
   const onReset = () => {
-    toggleVisible(false);
     setSearch('');
   };
-
-  useEffect(() => {
-    if (!visible || !inputRef.current) return;
-    inputRef.current.focus();
-  }, [visible]);
 
   const menu = (
     <StyledMenu>
       <Space direction="vertical">
         <Input
+          autoFocus
           ref={inputRef}
           placeholder="Enter your tag"
           style={{ width: '100%' }}
@@ -89,13 +81,7 @@ export const AddTag = ({ onSetTags, card, allTags }: Props) => {
   );
 
   return (
-    <Popover
-      content={menu}
-      placement="bottomLeft"
-      trigger={['click']}
-      visible={visible}
-      onVisibleChange={toggleVisible}
-    >
+    <Popover content={menu} placement="bottomLeft" trigger={['click']}>
       <StyledAddTag>
         <PlusOutlined />
         <span>Add Tag</span>
