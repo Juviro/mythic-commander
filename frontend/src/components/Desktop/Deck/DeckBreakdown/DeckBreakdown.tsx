@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Divider, Typography } from 'antd';
 import styled, { css } from 'styled-components';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
@@ -24,7 +24,7 @@ const StyledWrapper = styled.aside<{ isOpen: boolean }>`
     isOpen
       ? css``
       : css`
-          transform: translateY(48px);
+          transform: translateY(-64px);
           position: absolute;
           right: 24px;
         `}
@@ -54,27 +54,25 @@ interface Props {
 export const DeckBreakdown = ({ deck }: Props) => {
   const [isOpen, toggleIsOpen] = useToggle(true);
 
-  useEffect(() => {
-    if (!deck) return;
-    toggleIsOpen(deck.canEdit);
-    // eslint-disable-next-line
-  }, [deck?.canEdit]);
-
   return (
     <StyledWrapper isOpen={isOpen}>
       <Flex justify="space-between" onClick={toggleIsOpen} style={{ cursor: 'pointer' }}>
-        <Typography.Title level={3}>Breakdown</Typography.Title>
-        {deck?.canEdit && (
-          <StyledButton
-            type="primary"
-            ghost
-            icon={isOpen ? <MinusOutlined /> : <PlusOutlined />}
-          />
-        )}
+        <Typography.Title level={3} style={{ marginBottom: 0 }}>
+          Breakdown
+        </Typography.Title>
+        <StyledButton
+          type="primary"
+          ghost
+          icon={isOpen ? <MinusOutlined /> : <PlusOutlined />}
+        />
       </Flex>
-      <Divider />
-      <DeckBreakdownHeader deck={deck} />
-      {isOpen && deck?.canEdit && <DeckBreakdownBody deck={deck} />}
+      {isOpen && (
+        <>
+          <Divider />
+          <DeckBreakdownHeader deck={deck} />
+          {deck && <DeckBreakdownBody deck={deck} />}
+        </>
+      )}
     </StyledWrapper>
   );
 };

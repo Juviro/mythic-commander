@@ -18,6 +18,8 @@ export const StyledCenterWrapper = styled.div<{ fixedSize: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
+  content-visibility: auto;
+  contain-intrinsic-size: 353.8px;
   /* ${({ fixedSize }) =>
     fixedSize &&
     css`

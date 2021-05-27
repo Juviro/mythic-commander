@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
@@ -18,6 +18,9 @@ import { DeckBreakdown } from './DeckBreakdown/DeckBreakdown';
 import DeckActions from './Header/DeckActions';
 import Title from './Header/Title';
 import { ActionBar } from './ActionBar/ActionBar';
+import { DeckSettings } from './DeckSettings/DeckSettings';
+
+export type View = 'type' | 'tags';
 
 export default () => {
   const { id } = useParams<{ id: string }>();
@@ -26,6 +29,8 @@ export default () => {
     fetchPolicy: 'network-only',
   });
   const [mutate] = useMutation<any, MutationAddCardsToDeckArgs>(addCardsToDeckDesktop);
+
+  const [view, setView] = useState<View>('tags');
 
   const deck = data?.deck;
   const cards = unifyCardFormat(deck?.cards);
@@ -76,8 +81,14 @@ export default () => {
           }
           style={{ height: 'calc(100% - 80px)', marginBottom: 70 }}
         >
+          <DeckSettings view={view} setView={setView} />
           <Flex>
-            <Cards deck={unifiedDeck} loading={loading} onAddCards={onAddCards} />
+            <Cards
+              deck={unifiedDeck}
+              loading={loading}
+              onAddCards={onAddCards}
+              view={view}
+            />
             <DeckBreakdown deck={unifiedDeck} />
           </Flex>
         </PageCard>

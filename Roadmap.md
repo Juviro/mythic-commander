@@ -6,6 +6,8 @@
 
 ## CURRENT:
 
+- Deck performance
+
 ## NEXT:
 
 - add tags (sort by type (ramp, card draw, ...))

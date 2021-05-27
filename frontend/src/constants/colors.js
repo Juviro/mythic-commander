@@ -102,6 +102,7 @@ export const tagColors = [
   {
     name: 'Targeted Removal',
     color: 'volcano',
+    hex: '#d4380d',
   },
   {
     name: '???',
@@ -110,6 +111,7 @@ export const tagColors = [
   {
     name: 'Board Wipe',
     color: 'orange',
+    hex: '#d46b08',
   },
   {
     name: '???',
@@ -118,25 +120,31 @@ export const tagColors = [
   {
     name: 'Ramp',
     color: 'green',
+    hex: '#389e0d',
   },
   {
     name: 'Synergy',
     color: 'cyan',
+    hex: '#08979c',
   },
   {
     name: 'Protection',
     color: 'blue',
+    hex: '#096dd9',
   },
   {
     name: 'Card Draw',
     color: 'geekblue',
+    hex: '#1d39c4',
   },
   {
     name: 'Tutor',
     color: 'purple',
+    hex: '#531dab',
   },
   {
     name: 'Default',
     color: 'magenta',
+    hex: '#c41d7f',
   },
 ];

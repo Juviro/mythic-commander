@@ -96,7 +96,7 @@ export default ({ loading, cardsByType, deck }) => {
     ),
   ];
 
-  const cardLists = cardsByType?.map(({ type, cards }) => {
+  const cardLists = cardsByType?.map(({ type, cards, titleColor = 'black' }) => {
     const { valueLabelEur, valueLabelUsd } = getListStats({ cards });
     const isCommander = type === 'Commander';
     const numberOfCardsLabel = isCommander ? '' : `(${sumCardAmount(cards)})`;
@@ -107,7 +107,7 @@ export default ({ loading, cardsByType, deck }) => {
     };
 
     const title = (
-      <Flex direction="column">
+      <Flex direction="column" style={{ color: titleColor }}>
         <span>{`${getListHeading()} ${numberOfCardsLabel}`}</span>
         <StyledSubtitle>
           {cards.length && deck.canEdit ? `${valueLabelUsd} | ${valueLabelEur}` : ''}

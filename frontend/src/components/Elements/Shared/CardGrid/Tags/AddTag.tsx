@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
-import { PlusOutlined } from '@ant-design/icons';
-import { Popover, Tag as AntdTag, Input, Space, Button } from 'antd';
+import { Input, Space, Button } from 'antd';
 import React, { useRef, useState } from 'react';
 
 import { FEATURE_FLAG_TAG } from 'constants/featureFlags';
-import { greyBorder } from 'constants/colors';
 import DEFAULT_TAGS from 'constants/tags';
 import { UnifiedDeckCard } from 'types/unifiedTypes';
 import { MutationSetDefaultTagArgs } from 'types/graphql';
@@ -13,14 +11,6 @@ import { Tag } from './Tag';
 import Flex from '../../Flex';
 import { FeatureFlag } from '../..';
 import { setDefaultTag } from './queries';
-
-const StyledAddTag = styled(AntdTag)`
-  cursor: pointer;
-  background-color: white;
-  border: 1px solid ${greyBorder};
-  margin-top: 4px;
-  border-radius: 12px;
-`;
 
 const StyledMenu = styled.div`
   display: flex;
@@ -74,7 +64,7 @@ export const AddTag = ({ onSetTags, card, allTags }: Props) => {
 
   const onSubmit = () => onAddTag(search);
 
-  const menu = (
+  return (
     <StyledMenu>
       <Flex direction="column" justify="space-between" style={{ height: '100%' }}>
         <Space direction="vertical">
@@ -120,14 +110,5 @@ export const AddTag = ({ onSetTags, card, allTags }: Props) => {
         </Flex>
       </Flex>
     </StyledMenu>
-  );
-
-  return (
-    <Popover content={menu} placement="bottomLeft" trigger={['click']}>
-      <StyledAddTag>
-        <PlusOutlined />
-        <span>Add Tag</span>
-      </StyledAddTag>
-    </Popover>
   );
 };

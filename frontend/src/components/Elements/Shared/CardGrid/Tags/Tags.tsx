@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { UnifiedDeckCard } from 'types/unifiedTypes';
-import { AddTag } from './AddTag';
+import { AddTagButton } from './AddTagButton';
 import { Tag } from './Tag';
 
 const StyledWrapper = styled.div`
@@ -26,7 +26,7 @@ export const Tags = ({ onSetTags, card, allTags }: Props) => {
       {card.tags?.map((tag) => (
         <Tag tag={tag} key={tag} onDeleteTag={onDeleteTag} />
       ))}
-      <AddTag onSetTags={onSetTags} card={card} allTags={allTags} />
+      <AddTagButton onSetTags={onSetTags} card={card} allTags={allTags} />
     </StyledWrapper>
   );
 };
