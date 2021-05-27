@@ -1,4 +1,5 @@
 import { UnifiedDeckCard } from 'types/unifiedTypes';
+import DEFAULT_TAGS from 'constants/tags';
 
 const getCardsByTag = (cards: UnifiedDeckCard[]) => {
   const cardsByType = cards.reduce((cardsByTag, card) => {
@@ -20,7 +21,15 @@ const getCardsByTag = (cards: UnifiedDeckCard[]) => {
     .reduce((acc, [key, value]) => {
       return acc.concat({ type: key, cards: value });
     }, [])
-    .sort((a, b) => (a.type.toLowerCase() > b.type.toLowerCase() ? 1 : -1));
+    .sort((a, b) => {
+      const isDefaultTag = ({ type }) => DEFAULT_TAGS.includes(type);
+
+      if (isDefaultTag(a) !== isDefaultTag(b)) {
+        return isDefaultTag(a) ? -1 : 1;
+      }
+
+      return a.type.toLowerCase() > b.type.toLowerCase() ? 1 : -1;
+    });
 };
 
 export default getCardsByTag;

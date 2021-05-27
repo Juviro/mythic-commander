@@ -1,18 +1,11 @@
 import React from 'react';
 
 import getCardsByTag from 'utils/getCardsByTag';
-import { tagColors } from 'constants/colors';
+import { getTagColor } from 'utils/tags';
 import getCardsByType from '../../../../utils/getCardsByType';
 import CardLists from './CardLists';
 import { sortByCmc, sortByName } from '../../../../utils/cardFilter';
 import { Dropzone } from '../../../Elements/Desktop';
-
-const getTagColor = (tag) => {
-  if (tag === 'Untagged') return null;
-  const { hex } =
-    tagColors.find(({ name }) => name === tag) ?? tagColors[tagColors.length - 1];
-  return hex;
-};
 
 export default ({ deck, loading, onAddCards, view }) => {
   const getCards = () => {
@@ -29,7 +22,7 @@ export default ({ deck, loading, onAddCards, view }) => {
 
     return cardsByTag.map(({ type, ...rest }) => ({
       type,
-      titleColor: getTagColor(type),
+      titleColor: getTagColor(type)?.fill,
       ...rest,
     }));
   };
