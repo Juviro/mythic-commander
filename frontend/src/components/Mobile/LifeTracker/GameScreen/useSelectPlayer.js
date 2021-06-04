@@ -21,7 +21,7 @@ const getNumberOfTicks = (numberOfPlayers) => {
 
 export default (players) => {
   const [isLoading, toggleIsLoading] = useToggle(true);
-  const playerIds = players.map(({ id }) => id);
+  const playerIds = players.map(({ id }) => id).reverse();
 
   const [highlightedPlayerIndex, setHighlightedPlayerIndex] = useState(null);
   const playerIndexRef = useRef(highlightedPlayerIndex);
