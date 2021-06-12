@@ -6,6 +6,12 @@ module.exports = {
     appSecret: 'V0eKG9mfO6kPuZcCMeg3JkVc41c47bMw',
   },
   database: {
+    local: {
+      user: 'root',
+      database: 'mtg',
+      password: 'Canuma42.PepeGreen',
+      host: 'localhost',
+    },
     prod: {
       user: 'hauke',
       database: 'mtg',
