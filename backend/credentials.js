@@ -6,17 +6,11 @@ module.exports = {
     appSecret: 'V0eKG9mfO6kPuZcCMeg3JkVc41c47bMw',
   },
   database: {
-    local: {
+    prod: {
       user: 'root',
       database: 'mtg',
-      password: 'Canuma42.PepeGreen',
+      password: '17ARqkNuJWKgyDHAEVDPvnw83fbnwckdaffijwosaj32',
       host: 'localhost',
-    },
-    prod: {
-      user: 'hauke',
-      database: 'mtg',
-      password: '17ARqkNuJWKgyDHAEVDP',
-      host: 'mtg.cr9n9thq5jyt.eu-central-1.rds.amazonaws.com',
     },
     staging: {
       user: 'hauke',

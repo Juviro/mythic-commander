@@ -17,7 +17,6 @@ module.exports = {
   development: {
     ...defaultSettings,
     useNullAsDefault: true,
-    connection: database.local,
   },
 
   staging: {
