@@ -2,11 +2,11 @@ import React, { Suspense } from 'react';
 import styled from 'styled-components';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
+import UsernameModal from 'components/Elements/Shared/UsernameModal/UsernameModal';
 import Menu from './Menu';
 
 import GlobalStyle from './GlobalStyle';
 import MobileRedirect from './MobileRedirect';
-import { UsernameModal } from '../Elements/Shared';
 
 const Search = React.lazy(() => import('./Search'));
 const Collection = React.lazy(() => import('./Collection/Collection'));

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Modal } from 'antd';
-import { Flex } from '../../../../../../Elements/Shared';
+import Flex from 'components/Elements/Shared/Flex';
 import Player from './Player';
 import FullscreenModalContext from '../../../../../../Provider/FullscreenModalProvider';
 

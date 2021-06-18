@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 import styled from 'styled-components';
-import { Flex, Expander } from '../../../Shared';
+import Flex from 'components/Elements/Shared/Flex';
+import Expander from 'components/Elements/Shared/Expander';
 import { useToggle } from '../../../../Hooks';
 import SearchSettings from './SearchSettings';
 import MultiInput from '../MultIinput';

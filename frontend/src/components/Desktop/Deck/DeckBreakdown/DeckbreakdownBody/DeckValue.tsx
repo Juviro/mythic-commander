@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { UnifiedDeck } from 'types/unifiedTypes';
-import { ValueLabel } from 'components/Elements/Shared';
+import ValueLabel from 'components/Elements/Shared/ValueLabel';
 import { DeckStat } from './DeckStat';
 
 interface Props {

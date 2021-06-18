@@ -1,6 +1,6 @@
 import React from 'react';
 import { Divider } from 'antd';
-import { Flex } from '../../../../../../Elements/Shared';
+import Flex from 'components/Elements/Shared/Flex';
 import AvatarList from './AvatarList';
 import { lifeTracker } from '../../../../../../../constants/colors';
 import ImagePicker from './ImagePicker';

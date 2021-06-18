@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { List } from 'antd';
 import { Link } from 'react-router-dom';
 import UserContext from 'components/Provider/UserProvider';
-import { FeatureFlag } from '../../../Elements/Shared';
+import FeatureFlag from 'components/Elements/Shared/FeatureFlag';
 
 export default ({ onCloseDrawer }) => {
   const { user } = useContext(UserContext);

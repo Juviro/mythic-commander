@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography } from 'antd';
 import styled from 'styled-components';
-import { CustomSkeleton } from '../../../Shared';
+import CustomSkeleton from 'components/Elements/Shared/CustomSkeleton';
 
 const StyledWrapper = styled.div`
   height: 55px;

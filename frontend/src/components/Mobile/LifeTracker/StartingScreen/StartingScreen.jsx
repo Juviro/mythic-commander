@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
-import { Flex } from '../../../Elements/Shared';
+import Flex from 'components/Elements/Shared/Flex';
 import useLocalStorage from '../../../Hooks/useLocalStorage';
 import SettingSelection from './SettingSelection';
 import SwitchSetting from './SwitchSetting';

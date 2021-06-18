@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { Flex } from 'components/Elements/Shared';
+import Flex from 'components/Elements/Shared/Flex';
 import { SearchOutlined } from '@ant-design/icons';
 import { primary } from 'constants/colors';
 import { Typography } from 'antd';

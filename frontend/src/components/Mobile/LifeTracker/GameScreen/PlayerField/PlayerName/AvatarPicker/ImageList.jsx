@@ -1,6 +1,6 @@
 import React from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
-import Flex from '../../../../../../Elements/Shared/Flex/index';
+import Flex from 'components/Elements/Shared/Flex';
 import AvatarList from './AvatarList';
 
 export default ({ loading, onPick, images, currentSelection }) => {

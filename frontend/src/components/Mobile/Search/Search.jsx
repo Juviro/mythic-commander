@@ -6,7 +6,9 @@ import { useApolloClient } from 'react-apollo';
 import { useQueryParams, StringParam } from 'use-query-params';
 
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
-import { LayoutAndSortPicker, SearchButton, Filter } from '../../Elements/Shared';
+import LayoutAndSortPicker from 'components/Elements/Shared/LayoutAndSortPicker';
+import SearchButton from 'components/Elements/Shared/SearchButton';
+import Filter from 'components/Elements/Shared/Filter';
 import { CardListMobile as CardList } from '../../Elements/Mobile';
 import Header from './Header';
 import { cardSearch } from './queries';

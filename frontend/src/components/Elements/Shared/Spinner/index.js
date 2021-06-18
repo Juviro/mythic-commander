@@ -1,3 +1,3 @@
-import FullscreenSpinner from './FullscreenSpinner';
+import Spinner from './Spinner';
 
-export default FullscreenSpinner;
+export default Spinner;

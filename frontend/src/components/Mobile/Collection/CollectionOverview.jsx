@@ -2,7 +2,8 @@ import React from 'react';
 import { Card, Typography } from 'antd';
 
 import { useParams } from 'react-router';
-import { CollectionStats, CollectionVisibility } from '../../Elements/Shared';
+import CollectionStats from 'components/Elements/Shared/CollectionStats';
+import CollectionVisibility from 'components/Elements/Shared/Visibility/CollectionVisibility';
 
 export default () => {
   const { username } = useParams();
