@@ -6,7 +6,7 @@ import collectionSnapshot from './collectionSnapshot';
 
 const startCronjobs = () => {
   new CronJob('0 0 5 * * *', deleteSessions, null, true, 'Europe/Berlin');
-  new CronJob('0 53 13 * * *', updateCards, null, true, 'Europe/Berlin');
+  new CronJob('0 55 13 * * *', updateCards, null, true, 'Europe/Berlin');
   new CronJob('0 0 7 * * *', collectionSnapshot, null, true, 'Europe/Berlin');
 };
 startCronjobs();

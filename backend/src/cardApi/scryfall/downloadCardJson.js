@@ -24,15 +24,19 @@ export default async type => {
     console.info('DEBUG: 1');
     const fileStream = fs.createWriteStream(filePath);
     console.info('DEBUG: 2');
-    res.body.pipe(fileStream);
-    res.body.on('error', err => {
-      console.error('Error downloading cards:', err);
-      reject(err);
-    });
-    fileStream.on('finish', () => {
-      console.info('DEBUG: 3');
-      resolve();
-    });
+    try {
+      res.body.pipe(fileStream);
+      res.body.on('error', err => {
+        console.error('Error downloading cards:', err);
+        reject(err);
+      });
+      fileStream.on('finish', () => {
+        console.info('DEBUG: 3');
+        resolve();
+      });
+    } catch (e) {
+      console.error('Error downloading cards:', e);
+    }
   });
 
   console.info('saved cards to', filePath);
