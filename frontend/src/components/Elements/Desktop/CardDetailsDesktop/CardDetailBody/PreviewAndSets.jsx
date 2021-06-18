@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Col, Row } from 'antd';
 
-import { FlippableCard } from '../../../Shared';
+import FlippableCard from 'components/Elements/Shared/FlippableCard';
 import CardSets from './CardSets';
 
 const StyledCardImage = styled.div`

@@ -6,11 +6,13 @@ import { Input, Divider } from 'antd';
 
 import message from 'utils/message';
 import { deleteAllFromCollection } from 'components/Desktop/Collection/queries';
+import Flex from 'components/Elements/Shared/Flex';
+import FoundCardsLabel from 'components/Elements/Shared/FoundCardsLabel';
+import FindWantedCards from 'components/Elements/Shared/FindWantedCards';
 import CardListMobile from '../../Elements/Mobile/CardListMobile/index';
 import { paginatedCollection } from './queries';
 import { CARDS_PER_PAGE } from '../../Elements/Mobile/CardListMobile/FilteredCardList';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
-import { Flex, FoundCardsLabel, FindWantedCards } from '../../Elements/Shared';
 
 export default () => {
   const { username } = useParams();

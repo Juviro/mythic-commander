@@ -1,6 +1,7 @@
 import React from 'react';
 import { Skeleton } from 'antd';
-import { Flex, TextWithIcons } from '../../../Shared';
+import Flex from 'components/Elements/Shared/Flex';
+import { TextWithIcons } from 'components/Elements/Shared/ManaCost';
 
 export default ({ card, loading, isFlipped }) => {
   if (loading) return <Skeleton />;

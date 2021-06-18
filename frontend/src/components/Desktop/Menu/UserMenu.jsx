@@ -3,8 +3,9 @@ import { Dropdown, Menu } from 'antd';
 import styled from 'styled-components';
 
 import UserContext from 'components/Provider/UserProvider';
+import UserAvatar from 'components/Elements/Shared/UserAvatar';
+import Logout from 'components/Elements/Shared/Logout';
 import { useToggle } from '../../Hooks';
-import { UserAvatar, Logout } from '../../Elements/Shared';
 
 const StyledAvatarWrapper = styled.div`
   margin-right: 8px;

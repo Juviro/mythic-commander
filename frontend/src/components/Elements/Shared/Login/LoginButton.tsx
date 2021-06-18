@@ -1,5 +1,5 @@
 import { Button, Modal } from 'antd';
-import { Login } from 'components/Elements/Shared';
+import Login from 'components/Elements/Shared/Login';
 import { useToggle } from 'components/Hooks';
 import React from 'react';
 

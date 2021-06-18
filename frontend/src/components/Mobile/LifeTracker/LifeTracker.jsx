@@ -4,9 +4,9 @@ import { withRouter, Switch, Route } from 'react-router-dom';
 
 import styled from 'styled-components';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
+import Flex from 'components/Elements/Shared/Flex';
 import StartingScreen from './StartingScreen';
 import GameScreen from './GameScreen';
-import { Flex } from '../../Elements/Shared';
 
 const StyledWrapper = styled.div`
   flex-flow: column;

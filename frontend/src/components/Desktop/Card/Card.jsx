@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 
 import { PageCard, PageLayout } from 'components/Elements/Desktop';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
-import { NotFound } from 'components/Elements/Shared';
+import NotFound from 'components/Elements/Shared/NotFound';
 import CardDetailsDesktop from '../../Elements/Desktop/CardDetailsDesktop';
 import { cardDetailsDesktop } from '../../Elements/Desktop/CardDetailsDesktop/queries';
 import { unifySingleCard } from '../../../utils/unifyCardFormat';

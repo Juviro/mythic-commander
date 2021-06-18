@@ -1,4 +1,4 @@
-import { FadeIn } from 'components/Elements/Shared';
+import FadeIn from 'components/Elements/Shared/FadeIn';
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 

@@ -6,7 +6,7 @@ import { useQuery, useMutation } from 'react-apollo';
 
 import { withRouter } from 'react-router';
 import UserContext from 'components/Provider/UserProvider';
-import { LoginRequired } from 'components/Elements/Shared';
+import { LoginRequired } from 'components/Elements/Shared/LoginRequired/LoginRequired';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import { wantsListsMobile as getWantsLists, createWantsList } from './queries';
 import { OverviewList } from '../../Elements/Mobile';

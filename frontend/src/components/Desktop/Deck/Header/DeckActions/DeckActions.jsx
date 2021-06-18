@@ -2,13 +2,11 @@ import React from 'react';
 
 import MultiInput from 'components/Elements/Desktop/AddCards/MultIinput';
 import { Space } from 'antd';
+import ProxyCards from 'components/Elements/Shared/ProxyCards';
+import ExportAsText from 'components/Elements/Shared/ExportAsText';
+import Menu from 'components/Elements/Shared/Menu';
+import DeckVisibility from 'components/Elements/Shared/Visibility/DeckVisibility';
 import AddDeckCardsTo from './AddDeckCardsTo';
-import {
-  ProxyCards,
-  ExportAsText,
-  Menu,
-  DeckVisibility,
-} from '../../../../Elements/Shared';
 import DuplicateDeck from '../../../../Mobile/Deck/EditDeck/DuplicateDeck';
 import DeleteDeck from '../../../../Mobile/Deck/EditDeck/DeleteDeck';
 

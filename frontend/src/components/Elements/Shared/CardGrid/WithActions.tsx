@@ -3,7 +3,9 @@ import { useQueryParams, NumberParam, StringParam } from 'use-query-params';
 
 import { useToggle } from '../../../Hooks';
 import sumCardAmount from '../../../../utils/sumCardAmount';
-import { AddCardsTo, ConfirmDeleteCards, EditCardModal } from '..';
+import AddCardsTo from '../AddCardsTo';
+import ConfirmDeleteCards from '../ConfirmDeleteCards';
+import EditCardModal from '../EditCardModal';
 
 export default ({ onEditCard = null, deleteByOracle = null, children, ...props }) => {
   const [{ page, layout }] = useQueryParams({

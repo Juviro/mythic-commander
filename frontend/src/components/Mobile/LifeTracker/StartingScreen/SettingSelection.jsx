@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography } from 'antd';
 import styled from 'styled-components';
 
-import { Flex } from '../../../Elements/Shared';
+import Flex from 'components/Elements/Shared/Flex';
 import NumberField from '../NumberField/NumberField';
 
 const StyledNumberFieldWrapper = styled.div`

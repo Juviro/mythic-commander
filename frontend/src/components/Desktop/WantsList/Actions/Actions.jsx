@@ -1,7 +1,7 @@
 import { Space } from 'antd';
 import React from 'react';
 import WantsActions from 'components/Elements/Desktop/WantsActions';
-import { WantsListVisibility } from '../../../Elements/Shared';
+import WantsListVisibility from 'components/Elements/Shared/Visibility/WantsListVisibility';
 
 export default ({ wantsList, onAddCards, canEdit }) => {
   if (!wantsList) return null;

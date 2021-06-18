@@ -1,11 +1,9 @@
 import AddToWantsList from 'components/Desktop/WantsList/AddToWantsList';
 import { PageCard } from 'components/Elements/Desktop';
-import {
-  Flex,
-  WantsListDeckLink,
-  ListStats,
-  WantsListTitle,
-} from 'components/Elements/Shared';
+import Flex from 'components/Elements/Shared/Flex';
+import WantsListDeckLink from 'components/Elements/Shared/WantsListDeckLink';
+import ListStats from 'components/Elements/Shared/ListStats';
+import WantsListTitle from 'components/Elements/Shared/WantsListTitle';
 import React from 'react';
 import {
   CardInputType,

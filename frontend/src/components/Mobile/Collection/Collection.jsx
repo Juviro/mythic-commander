@@ -4,7 +4,8 @@ import React, { useContext } from 'react';
 import { useParams } from 'react-router';
 import styled from 'styled-components';
 
-import { LayoutAndSortPicker, LoginRequired } from '../../Elements/Shared';
+import LayoutAndSortPicker from 'components/Elements/Shared/LayoutAndSortPicker';
+import { LoginRequired } from 'components/Elements/Shared/LoginRequired/LoginRequired';
 import AddToCollection from './AddToCollection';
 import Cards from './Cards';
 import CollectionOverview from './CollectionOverview';
