@@ -6,7 +6,7 @@ import knex from '../../database';
 import { formatCards } from './formatCards';
 import credentials from '../../../credentials';
 
-const workDir = `${__dirname}/tmp`;
+const workDir = __dirname;
 
 const cmr = new CardMarketRequest({
   ...credentials.cardmarket,

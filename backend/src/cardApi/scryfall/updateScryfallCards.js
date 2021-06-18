@@ -12,9 +12,7 @@ const updateClause = ALL_CARD_FIELDS.map(
 const ON_DUPLICATE = ` ON CONFLICT (id) DO UPDATE SET ${updateClause}, "lastUpdate" = NOW()`;
 
 export const updateScryfallCards = async (type, tableName) => {
-  console.info('Downloading file...');
   const filePath = await downloadCardJson(type);
-  console.info('Downloaded file to', filePath);
 
   const fileStream = fs.createReadStream(filePath);
 
