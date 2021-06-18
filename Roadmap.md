@@ -1,6 +1,6 @@
 ## PRIORITY BUGFIXES
 
-- auto update cards on prod not working
+- auto update cards on prod not working: Should be fixed at 18/06/21
 
 ## BUGFIXES:
 
@@ -22,27 +22,29 @@
 
 ## IMPROVEMENTS:
 
-- Allow Editing wants title in deck sidebar
 - redesign moveTo modal, especially for mobile
 - mobile card list preview: allow swipe to next card
 - move to new image service
-- deck: check for illegal dupliactions
+- lighthouse report fixes
 
-- add deck colors to deck overview list
-- improve re-rendering of table columns and grid card. especially table.
+- add to deck overview list
+  - colors
+  - legality
+  - split into two lists: draft & finished
+- improve re-rendering of grid card
 - added to collection notification -> show amount as well
 - add optimistic response to card delete in deck (esp. mobile)
 
 ## PERFORMANCE:
 
-- remove elements/shared/index.js, same for mobile and desktop -> evaluate if this has an effect on the bundle sizes
 - wrap expensive calculations and small components in GridCard in memo and useMemo
 
 ## FEATURES:
 
+- use first card / 4-split card as wants list/deck image if they have none
 - show last search when no input in searchbar
 - check for multiple copies of one card for deck legality check
-- show if deck is legal in deck overview, order by legality (similar to magic arena)
+- allow searching for multiple sets/types/subtypes
 
 ## REFACTORINGS:
 
@@ -55,8 +57,7 @@
 ## BACKLOG:
 
 - select cards -> copy to some deck -> selection should be cleared, but isn't
-- when adding basics to deck, default to full art that as an mkm price
-- remove all cards < 0.2\$ from collection value , rename value to estimation (?)
+- when adding basics to deck, default to full art that have an mkm price
 
 - refresh google access ?
 - better tooltips for multi input icon
@@ -66,7 +67,6 @@
   - display all versions from a card + their setname, maybe with preview
 - when opening login, redirect to "/" if user is logged in
 - add to advanced search: number of owned copies
-- allow searching for multiple sets/types/subtypes?
 - add error page (should be already started, search for branch)
 - clickable creature type in card details?
 - home page:
@@ -75,12 +75,10 @@
 - show % owned of all cards (unique cards / distinct cards)
 - prevent user from adding amount / amount foil if card is not available in foil / non-foil
 - prefer owned versions when adding to deck or wants
-- suggest similar cards when having invalid cardname in multiinput
 - dark mode
 - allow text export of selected cards
 - rework advanced search:
   - show all current search options for advanced search
-- use first card / 4-split card as wants list image
 
 ## BACKLOG BUGFIXES:
 
