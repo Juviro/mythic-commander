@@ -18,7 +18,7 @@ export default async type => {
 
   const res = await fetch(download_uri);
 
-  console.info('Downloaded file');
+  console.info('Downloaded file', filePath);
 
   await new Promise((resolve, reject) => {
     console.info('DEBUG: 1');
