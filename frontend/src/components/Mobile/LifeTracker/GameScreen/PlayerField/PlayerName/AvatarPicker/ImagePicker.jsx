@@ -1,9 +1,10 @@
 import React, { useRef, useEffect, useContext } from 'react';
 import { useLazyQuery } from 'react-apollo';
 
+import Flex from 'components/Elements/Shared/Flex';
+import CardSearch from 'components/Elements/Shared/CardSearch';
 import ImageList from './ImageList';
 import { cardImages } from './queries';
-import { Flex, CardSearch } from '../../../../../../Elements/Shared';
 import FullscreenModalContext from '../../../../../../Provider/FullscreenModalProvider';
 
 const ImagePicker = ({ onPick, currentSelection }) => {

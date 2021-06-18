@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { SearchButton, Filter } from '../../Elements/Shared';
+import SearchButton from 'components/Elements/Shared/SearchButton';
+import Filter from 'components/Elements/Shared/Filter';
 
 const StyledCenterWrapper = styled.div`
   width: 100%;

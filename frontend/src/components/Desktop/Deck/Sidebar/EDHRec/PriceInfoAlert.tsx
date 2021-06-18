@@ -1,4 +1,4 @@
-import { OneTimeInfoBox } from 'components/Elements/Shared';
+import OneTimeInfoBox from 'components/Elements/Shared/OneTimeInfoBox';
 import React from 'react';
 
 export const PriceInfoAlert = () => {

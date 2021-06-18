@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Flex } from '../../../../../Elements/Shared';
+import Flex from 'components/Elements/Shared/Flex';
 import DamageField, { DAMAGE_FIELD_SIZE } from './DamageField/DamageField';
 import ShowAll from './ShowAll';
 import { INFECT } from '../../useGameState';

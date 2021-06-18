@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { withRouter } from 'react-router';
 import { ArrowLeftOutlined, MenuOutlined } from '@ant-design/icons';
 
+import SearchBar from 'components/Elements/Shared/SearchBar';
 import { darkBackground } from '../../../../constants/colors';
-import { SearchBar } from '../../../Elements/Shared';
 
 const StyledMenu = styled.div`
   width: 100%;

@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Divider, Space, Typography } from 'antd';
 
-import { DeckQuickstats, ValueLabel } from 'components/Elements/Shared';
+import DeckQuickstats from 'components/Elements/Shared/DeckQuickstats';
+import ValueLabel from 'components/Elements/Shared/ValueLabel';
 import DeckName from './DeckName';
 
 const StyledInfoBox = styled(Space)`

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
-import { NotFound } from 'components/Elements/Shared';
+import NotFound from 'components/Elements/Shared/NotFound';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import DeckHeader from './DeckHeader';
 import DeckMenu from './DeckMenu';

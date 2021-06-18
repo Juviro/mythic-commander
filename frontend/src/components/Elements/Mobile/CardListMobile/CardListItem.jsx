@@ -8,6 +8,9 @@ import {
   SwapRightOutlined,
 } from '@ant-design/icons';
 
+import MoveToModal from 'components/Elements/Shared/MoveTo/MoveToModal';
+import ManaCost from 'components/Elements/Shared/ManaCost';
+import ContextMenu from 'components/Elements/Shared/ContextMenu';
 import { highlightText } from '../../../../utils/highlightText';
 import { getPriceLabel } from '../../../../utils/cardStats';
 import PreviewCardImage from '../../Shared/PreviewCardImage';
@@ -15,7 +18,6 @@ import OwnedBadge from '../../Shared/OwnedBadge';
 import SetPicker from '../../Shared/SetPicker';
 import EditableAmount from '../../Shared/EditableAmount';
 import { useToggle } from '../../../Hooks';
-import { MoveToModal, ManaCost, ContextMenu } from '../../Shared';
 import { primary } from '../../../../constants/colors';
 
 const StyledDescription = styled.div`

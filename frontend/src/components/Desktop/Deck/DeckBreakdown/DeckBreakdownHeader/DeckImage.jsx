@@ -4,7 +4,7 @@ import { EditOutlined } from '@ant-design/icons';
 
 import { primary } from 'constants/colors';
 import { useToggle } from 'components/Hooks';
-import { SetDeckImage } from 'components/Elements/Shared';
+import SetDeckImage from 'components/Elements/Shared/SetDeckImage';
 import shimmer from 'components/Animations/shimmer';
 
 const StyledEditIcon = styled(EditOutlined)`

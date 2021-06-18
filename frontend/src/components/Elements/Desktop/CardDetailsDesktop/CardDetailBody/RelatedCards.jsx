@@ -1,7 +1,8 @@
 import React from 'react';
 import { Skeleton, List, Space, Typography } from 'antd';
 import { Link } from 'react-router-dom';
-import { PreviewCardImage, Flex } from '../../../Shared';
+import PreviewCardImage from 'components/Elements/Shared/PreviewCardImage';
+import Flex from 'components/Elements/Shared/Flex';
 
 export default ({ card, loading }) => {
   if (loading) return <Skeleton />;

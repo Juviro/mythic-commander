@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import { Drawer, Divider } from 'antd';
 
 import UserContext from 'components/Provider/UserProvider';
+import Logout from 'components/Elements/Shared/Logout';
+import UserAvatar from 'components/Elements/Shared/UserAvatar';
 import Header from './Header';
 import Navigation from './Navigation';
-import { Logout, UserAvatar } from '../../../Elements/Shared';
 import { darkBackground } from '../../../../constants/colors';
 
 export default ({ isVisible, onCloseDrawer }) => {

@@ -7,7 +7,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import { UnifiedWantsList } from 'types/unifiedTypes';
 import { getDeckDesktop } from 'components/Desktop/Deck/queries';
 import { useToggle } from '../../../Hooks';
-import { ConfirmDelete } from '../../Shared';
+import ConfirmDelete from '../../Shared/ConfirmDelete';
 import boldText from '../../../../utils/boldText';
 import { deleteWantsListDesktop } from '../../../Desktop/WantsList/queries';
 

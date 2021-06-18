@@ -3,10 +3,11 @@ import { useMutation } from 'react-apollo';
 
 import { useParams } from 'react-router';
 import { PageCard } from 'components/Elements/Desktop';
+import CollectionHoc from 'components/Elements/Shared/CollectionHoc';
+import FindWantedCards from 'components/Elements/Shared/FindWantedCards';
 import message from '../../../utils/message';
 import { deleteAllFromCollection } from './queries';
 import PaginatedCardList from '../../Elements/Desktop/PaginatedCardList';
-import { CollectionHoc, FindWantedCards } from '../../Elements/Shared';
 
 export default () => {
   const { username } = useParams();

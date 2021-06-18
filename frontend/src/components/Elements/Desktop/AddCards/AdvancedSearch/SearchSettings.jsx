@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLazyQuery } from '@apollo/react-hooks';
 
-import { SetIcon } from '../../../Shared';
+import SetIcon from '../../../Shared/SetIcon';
 import { cardsBySet } from './queries';
 import SetSelection from '../../../Shared/Filter/SelectFilter/SetSelection';
 import { formatCachedCards } from '../../../../../utils/cachedCards';

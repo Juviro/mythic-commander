@@ -3,12 +3,12 @@ import { Modal, Typography, Input } from 'antd';
 import { useMutation } from 'react-apollo';
 
 import UserContext from 'components/Provider/UserProvider';
+import keyCodes from 'constants/keyCodes';
 import message from '../../../../utils/message';
 import { setUsername } from './queries';
 import { useToggle } from '../../../Hooks';
-import useSubmitOnEnter from '../../../Hooks/useSubmitOnEnter';
 
-export default () => {
+const UsernameModal = () => {
   const { user, loading } = useContext(UserContext);
   const [mutate] = useMutation(setUsername);
   const [isVisible, toggleIsVisible] = useToggle(true);
@@ -47,8 +47,13 @@ export default () => {
         onChange={(e) => setValue(e.target.value)}
         style={{ marginTop: 32 }}
         placeholder="Pick a username..."
-        onKeyDown={useSubmitOnEnter(isValid && onSubmit)}
+        onKeyDown={(event) => {
+          if (event.keyCode !== keyCodes.ENTER || !isValid) return;
+          onSubmit();
+        }}
       />
     </Modal>
   );
 };
+
+export default UsernameModal;

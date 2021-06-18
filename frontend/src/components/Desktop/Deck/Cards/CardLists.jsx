@@ -7,7 +7,9 @@ import { lightText } from 'constants/colors';
 import message from 'utils/message';
 import { CloseOutlined } from '@ant-design/icons';
 import sumCardAmount from 'utils/sumCardAmount';
-import { Flex, CardGrid, CommanderPicker } from '../../../Elements/Shared';
+import Flex from 'components/Elements/Shared/Flex';
+import CardGrid from 'components/Elements/Shared/CardGrid';
+import CommanderPicker from 'components/Elements/Shared/CommanderPicker';
 import { deleteFromDeckDesktop, editDeckCardDesktop, getDeckDesktop } from '../queries';
 
 const StyledSubtitle = styled.span`

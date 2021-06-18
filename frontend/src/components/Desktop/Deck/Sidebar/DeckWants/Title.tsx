@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography } from 'antd';
 import { Link } from 'react-router-dom';
 
-import { Flex } from 'components/Elements/Shared';
+import Flex from 'components/Elements/Shared/Flex';
 import { CardInputType } from 'types/graphql';
 import { UnifiedWantsList } from 'types/unifiedTypes';
 import WantsActions from 'components/Elements/Desktop/WantsActions';
