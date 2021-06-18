@@ -10,7 +10,7 @@ import { useSelectCards } from 'components/Elements/Shared/CardGrid/useSelectCar
 import CustomSkeleton from '../CustomSkeleton';
 import usePagination from './usePagination';
 import CardModalDesktop from '../../Desktop/CardModalDesktop';
-import { Flex } from '..';
+import Flex from '../Flex';
 import GridCard from './GridCard';
 import WithActions from './WithActions';
 import { SelectionMenu } from './SelectionMenu';

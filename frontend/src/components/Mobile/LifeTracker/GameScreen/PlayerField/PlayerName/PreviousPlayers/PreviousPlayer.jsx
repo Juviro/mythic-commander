@@ -3,9 +3,9 @@ import { Typography, List } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import { useMutation } from 'react-apollo';
 
+import Flex from 'components/Elements/Shared/Flex';
 import Avatar from '../Avatar';
 import { deleteLtPlayer } from './queries';
-import { Flex } from '../../../../../../Elements/Shared';
 
 export default ({ player, onSelectPlayer }) => {
   const [mutate] = useMutation(deleteLtPlayer);

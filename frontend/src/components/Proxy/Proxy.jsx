@@ -6,8 +6,8 @@ import { useParams } from 'react-router';
 import { useQueryParam, StringParam } from 'use-query-params';
 
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
+import Flex from 'components/Elements/Shared/Flex';
 import { proxies } from './queries';
-import { Flex } from '../Elements/Shared';
 import { getImageUrl } from '../../utils/cardImage';
 
 const StyledCardWrapper = styled.div`

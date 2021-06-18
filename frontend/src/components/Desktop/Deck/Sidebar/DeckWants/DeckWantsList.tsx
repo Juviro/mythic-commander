@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-import { Confirm, CardGrid } from 'components/Elements/Shared';
+import CardGrid from 'components/Elements/Shared/CardGrid';
+import Confirm from 'components/Elements/Shared/Confirm';
 
 import { CardInputType } from 'types/graphql';
 import { UnifiedCard, UnifiedDeck, UnifiedWantsList } from 'types/unifiedTypes';

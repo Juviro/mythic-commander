@@ -1,12 +1,13 @@
 import React from 'react';
 import { useQuery } from 'react-apollo';
 import { NavigationButton } from 'components/Elements/Desktop/CardModalDesktop/NavigationButton';
+import Flex from 'components/Elements/Shared/Flex';
+import FocusedModal from 'components/Elements/Shared/FocusedModal';
 import CardDetailsDesktop from '../CardDetailsDesktop';
 
 import { cardDetailsDesktop } from '../CardDetailsDesktop/queries';
 import { unifySingleCard } from '../../../../utils/unifyCardFormat';
 import { useShortcut } from '../../../Hooks';
-import { Flex, FocusedModal } from '../../Shared';
 
 const CardModalDesktop = ({
   selectedCard,

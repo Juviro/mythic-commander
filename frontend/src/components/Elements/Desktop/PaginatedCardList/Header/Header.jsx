@@ -2,7 +2,9 @@ import React, { useRef, useState } from 'react';
 import { Tooltip } from 'antd';
 import styled from 'styled-components';
 
-import { OrderBy, Flex, AddedBeforeFilter } from '../../../Shared';
+import AddedBeforeFilter from 'components/Elements/Shared/AddedBeforeFilter';
+import Flex from 'components/Elements/Shared/Flex';
+import OrderBy from 'components/Elements/Shared/OrderBy';
 import NameFilter from '../../../Shared/Filter/TextFilter/NameFilter';
 import { useShortcut } from '../../../../Hooks';
 

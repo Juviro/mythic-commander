@@ -9,7 +9,7 @@ import { Dropdown, Menu, Popconfirm } from 'antd';
 import { withRouter } from 'react-router';
 import { useMutation } from 'react-apollo';
 import UserContext from 'components/Provider/UserProvider';
-import { WantsListVisibility } from 'components/Elements/Shared';
+import WantsListVisibility from 'components/Elements/Shared/Visibility/WantsListVisibility';
 import { deleteWantsList, duplicateWantsList, unlinkWantsList } from '../queries';
 import { wantsListsMobile as wantsLists } from '../../WantsLists/queries';
 import message from '../../../../utils/message';

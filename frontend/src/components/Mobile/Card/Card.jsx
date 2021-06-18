@@ -7,15 +7,13 @@ import { Divider } from 'antd';
 
 import UserContext from 'components/Provider/UserProvider';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
+import CardLegal from 'components/Elements/Shared/CardLegal';
+import CardSetOverview from 'components/Elements/Shared/CardSetOverview';
+import IncludedDecks from 'components/Elements/Shared/IncludedDecks';
+import IncludedWants from 'components/Elements/Shared/IncludedWants';
+import CardLinks from 'components/Elements/Shared/CardLinks';
+import CardRules from 'components/Elements/Shared/CardRules';
 import CardImage from './CardImage';
-import {
-  CardLegal,
-  CardSetOverview,
-  IncludedDecks,
-  IncludedWants,
-  CardLinks,
-  CardRules,
-} from '../../Elements/Shared';
 import CardOwned from './CardOwned';
 import { getCardByOracleId } from './queries';
 import { unifySingleCard } from '../../../utils/unifyCardFormat';

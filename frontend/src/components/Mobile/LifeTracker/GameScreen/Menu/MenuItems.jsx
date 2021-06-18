@@ -7,8 +7,8 @@ import {
 } from '@ant-design/icons';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
+import Confirm from 'components/Elements/Shared/Confirm';
 import { useToggle } from '../../../../Hooks';
-import { Confirm } from '../../../../Elements/Shared';
 import { primary } from '../../../../../constants/colors';
 
 const StyledMenuItem = styled.div`

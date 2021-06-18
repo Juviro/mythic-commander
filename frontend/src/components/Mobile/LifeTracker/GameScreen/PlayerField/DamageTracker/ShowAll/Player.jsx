@@ -2,9 +2,9 @@ import React from 'react';
 import { Typography } from 'antd';
 import styled from 'styled-components';
 
+import Flex from 'components/Elements/Shared/Flex';
 import Avatar from '../../PlayerName/Avatar';
 import NumberField from '../../../../NumberField';
-import { Flex } from '../../../../../../Elements/Shared';
 import { INFECT } from '../../../useGameState';
 
 const StyledNumberField = styled.div`

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Card, Typography } from 'antd';
 
+import Flex from 'components/Elements/Shared/Flex';
 import Cover from './Cover';
-import { Flex } from '../../Shared';
 import formatDate from '../../../../utils/formatDate';
 
 const Description = ({ list }) => (

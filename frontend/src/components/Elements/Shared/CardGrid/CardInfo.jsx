@@ -1,7 +1,9 @@
 import React from 'react';
 import { Typography } from 'antd';
 
-import { Flex, OwnedBadge, PriceLabel } from 'components/Elements/Shared';
+import Flex from 'components/Elements/Shared/Flex';
+import OwnedBadge from 'components/Elements/Shared/OwnedBadge';
+import PriceLabel from 'components/Elements/Shared/PriceLabel';
 import { highlightText } from 'utils/highlightText';
 
 export default ({ card, loading = false, search, minimal = false }) => {

@@ -11,10 +11,12 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-export default () => {
+const Spinner = () => {
   return (
     <Wrapper>
       <LoadingOutlined />
     </Wrapper>
   );
 };
+
+export default Spinner;

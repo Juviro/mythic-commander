@@ -3,7 +3,9 @@ import { Menu } from 'antd';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
 import UserContext from 'components/Provider/UserProvider';
-import { MythicCommanderBanner, Flex, SearchBar } from '../../Elements/Shared';
+import MythicCommanderBanner from 'components/Elements/Shared/MythicCommanderBanner';
+import Flex from 'components/Elements/Shared/Flex';
+import SearchBar from 'components/Elements/Shared/SearchBar';
 import { darkBackground, darkBackgroundSemiTransparent } from '../../../constants/colors';
 import UserMenu from './UserMenu';
 

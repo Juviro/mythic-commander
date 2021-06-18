@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MythicCommanderBanner } from '../../../Elements/Shared';
+import MythicCommanderBanner from 'components/Elements/Shared/MythicCommanderBanner';
 
 const StyledHeader = styled.div`
   width: 100%;

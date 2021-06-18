@@ -2,7 +2,7 @@ import React from 'react';
 import { Input, Button, Tooltip } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { PageCard } from 'components/Elements/Desktop/PageLayout';
-import { Flex } from '../../Shared';
+import Flex from 'components/Elements/Shared/Flex';
 
 export default ({
   onEnter,

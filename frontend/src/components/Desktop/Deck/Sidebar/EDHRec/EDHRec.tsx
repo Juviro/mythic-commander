@@ -46,12 +46,12 @@ const EDHRecComponent = ({ deck }: Props) => {
       <Divider />
       <ThemePicker
         loading={loading}
-        themes={data?.edhrecCards.themes}
+        themes={data?.edhrecCards?.themes}
         themeSuffix={themeSuffix}
         setThemeSuffix={setThemeSuffix}
       />
       <Divider />
-      <CardLists lists={data?.edhrecCards.cardLists} loading={loading} deck={deck} />
+      <CardLists lists={data?.edhrecCards?.cardLists} loading={loading} deck={deck} />
       <PriceInfoAlert />
     </StyledWrapper>
   );

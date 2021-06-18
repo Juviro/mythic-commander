@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Flex, DeckTitle, ColorIdentitySymbols } from '../../../Elements/Shared';
+import Flex from 'components/Elements/Shared/Flex';
+import DeckTitle from 'components/Elements/Shared/DeckTitle';
+import ColorIdentitySymbols from 'components/Elements/Shared/ColorIdentitySymbols';
 
 const StyledPlaceholder = styled.div`
   height: 24px;

@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 import { useParams } from 'react-router';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
+import LayoutAndSortPicker from 'components/Elements/Shared/LayoutAndSortPicker';
+import NotFound from 'components/Elements/Shared/NotFound';
 import { wantsList as wantsListQuery } from './queries';
 
 import Header from './Header';
 import AddWants from './AddWants';
-import { LayoutAndSortPicker, NotFound } from '../../Elements/Shared';
 
 import unifyCardFormat from '../../../utils/unifyCardFormat';
 import { WantsListMobile } from '../../Elements/Mobile';

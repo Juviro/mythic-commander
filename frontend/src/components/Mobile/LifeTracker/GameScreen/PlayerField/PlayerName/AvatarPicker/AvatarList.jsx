@@ -1,7 +1,7 @@
 import React from 'react';
 
+import Flex from 'components/Elements/Shared/Flex';
 import Avatar from '../Avatar';
-import { Flex } from '../../../../../../Elements/Shared';
 
 const ELEMENTS_PER_ROW = 4;
 

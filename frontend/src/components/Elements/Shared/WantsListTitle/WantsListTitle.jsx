@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
-import { EditableTitle } from '..';
+import EditableTitle from 'components/Elements/Shared/EditableTitle';
 import { editWantsList } from './queries';
 
 export default ({ wantsList, level, canEdit }) => {

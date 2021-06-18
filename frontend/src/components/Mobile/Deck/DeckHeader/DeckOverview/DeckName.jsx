@@ -1,5 +1,5 @@
 import { Typography } from 'antd';
-import { CustomSkeleton } from 'components/Elements/Shared';
+import CustomSkeleton from 'components/Elements/Shared/CustomSkeleton';
 import React from 'react';
 import styled from 'styled-components';
 import { colors } from '../../../../../assets/mtgIcons';

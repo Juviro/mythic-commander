@@ -3,7 +3,7 @@ import { Button, Divider, Typography } from 'antd';
 import styled, { css } from 'styled-components';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 
-import { Flex } from 'components/Elements/Shared';
+import Flex from 'components/Elements/Shared/Flex';
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { useToggle } from 'components/Hooks';
 import { DeckBreakdownBody } from './DeckbreakdownBody/DeckBreakdownBody';

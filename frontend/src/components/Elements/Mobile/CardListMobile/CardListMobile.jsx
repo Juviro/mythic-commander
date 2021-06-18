@@ -5,11 +5,12 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { useQueryParams, StringParam } from 'use-query-params';
 import { withRouter } from 'react-router';
 
+import CardGrid from 'components/Elements/Shared/CardGrid';
+import LazyLoad from 'components/Elements/Shared/LazyLoad';
 import CardListItem from './CardListItem';
 import CustomSkeleton from '../../Shared/CustomSkeleton';
 import Footer from './Footer';
 import CardModal from '../../../Mobile/Card/CardModal';
-import { CardGrid, LazyLoad } from '../../Shared';
 
 const StyledPlaceholderWrapper = styled.div`
   padding: 4px 8px;

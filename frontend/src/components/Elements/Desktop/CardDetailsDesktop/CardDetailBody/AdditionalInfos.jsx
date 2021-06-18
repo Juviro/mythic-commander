@@ -2,9 +2,12 @@ import React from 'react';
 import { Row, Col, Divider } from 'antd';
 
 import styled from 'styled-components';
-import OracleText from './OracleText';
+import CardLegal from 'components/Elements/Shared/CardLegal';
+import CardRules from 'components/Elements/Shared/CardRules';
+import CardLinks from 'components/Elements/Shared/CardLinks';
+import Flex from 'components/Elements/Shared/Flex';
 import RelatedCards from './RelatedCards';
-import { CardLegal, CardRules, CardLinks, Flex } from '../../../Shared';
+import OracleText from './OracleText';
 
 const StyledColumn = styled(Col)`
   padding: 8px;

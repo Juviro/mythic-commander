@@ -4,8 +4,9 @@ import { useMutation } from 'react-apollo';
 
 import { message, Typography } from 'antd';
 import UserContext from 'components/Provider/UserProvider';
+import CardSetOverview from 'components/Elements/Shared/CardSetOverview';
+import EditIcon from 'components/Elements/Shared/EditIcon';
 import { changeCollection, cardDetailsDesktop } from '../queries';
-import { CardSetOverview, EditIcon } from '../../../Shared';
 import { useToggle, useShortcut } from '../../../../Hooks';
 
 const StyledWrapper = styled.div`

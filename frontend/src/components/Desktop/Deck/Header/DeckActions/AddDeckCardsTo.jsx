@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'antd';
 import { SwapOutlined } from '@ant-design/icons';
 
-import { AddCardsTo } from '../../../../Elements/Shared';
+import AddCardsTo from 'components/Elements/Shared/AddCardsTo';
 import { useToggle } from '../../../../Hooks';
 
 export default ({ cards }) => {

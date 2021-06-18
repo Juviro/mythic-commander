@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 import { PageLayout } from 'components/Elements/Desktop';
 import { UnifiedWantsList } from 'types/unifiedTypes';
-import { NotFound } from 'components/Elements/Shared';
+import NotFound from 'components/Elements/Shared/NotFound';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
 import Cards from './Cards';
