@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { Flex } from '../../../../Elements/Shared';
+import Flex from 'components/Elements/Shared/Flex';
 import icon from '../../../../../assets/icons/favicon.ico';
 import { primary } from '../../../../../constants/colors';
 import { useToggle } from '../../../../Hooks';

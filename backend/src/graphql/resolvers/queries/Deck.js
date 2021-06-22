@@ -43,6 +43,14 @@ const resolver = {
       .where({ deckId })
       .orderBy('name');
   },
+  async colors({ id: deckId }, _, { db }) {
+    const result = await db('deckColors')
+      .select('colors')
+      .where({ deckId })
+      .first();
+
+    return result?.colors ?? null;
+  },
 };
 
 export default resolver;

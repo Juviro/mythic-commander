@@ -5,8 +5,8 @@ import { useMutation, useQuery } from 'react-apollo';
 import { Skeleton } from 'antd';
 
 import message from 'utils/message';
+import LayoutAndSortPicker from 'components/Elements/Shared/LayoutAndSortPicker';
 import CardSubList from './CardSubList';
-import { LayoutAndSortPicker } from '../../../Elements/Shared';
 import {
   deleteFromDeck,
   editDeckCard,

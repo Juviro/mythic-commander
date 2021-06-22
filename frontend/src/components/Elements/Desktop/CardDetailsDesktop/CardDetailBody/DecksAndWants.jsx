@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Col, Divider, Row } from 'antd';
 
-import { IncludedDecks, IncludedWants } from '../../../Shared';
+import IncludedDecks from 'components/Elements/Shared/IncludedDecks';
+import IncludedWants from 'components/Elements/Shared/IncludedWants';
 
 const StyledBottomWrapper = styled.div`
   display: flex;

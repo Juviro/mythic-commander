@@ -2,16 +2,14 @@ import React, { useRef, useState } from 'react';
 import { Divider, Typography } from 'antd';
 import styled from 'styled-components';
 
-import {
-  Filter,
-  Flex,
-  SearchHoc,
-  CurrentSearchOptions,
-  SearchButton,
-  OrderBy,
-  Confirm,
-  OneTimeInfoBox,
-} from '../../../../Elements/Shared';
+import Filter from 'components/Elements/Shared/Filter';
+import Flex from 'components/Elements/Shared/Flex';
+import SearchHoc from 'components/Elements/Shared/SearchHoc';
+import CurrentSearchOptions from 'components/Elements/Shared/CurrentSearchOptions';
+import SearchButton from 'components/Elements/Shared/SearchButton';
+import OrderBy from 'components/Elements/Shared/OrderBy';
+import Confirm from 'components/Elements/Shared/Confirm';
+import OneTimeInfoBox from 'components/Elements/Shared/OneTimeInfoBox';
 import CardGrid from '../../../../Elements/Shared/CardGrid/CardGrid';
 import boldText from '../../../../../utils/boldText';
 

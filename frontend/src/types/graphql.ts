@@ -133,6 +133,7 @@ export type Deck = {
   visibility: Visibility;
   canEdit: Scalars['Boolean'];
   cards: Array<DeckCard>;
+  colors?: Maybe<Array<Scalars['String']>>;
   wantsLists: Array<WantsList>;
 };
 

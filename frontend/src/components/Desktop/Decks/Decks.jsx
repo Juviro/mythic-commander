@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
 import UserContext from 'components/Provider/UserProvider';
-import { LoginRequired } from 'components/Elements/Shared';
+import { LoginRequired } from 'components/Elements/Shared/LoginRequired/LoginRequired';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import { OverviewList, OverviewListHeader, PageLayout } from '../../Elements/Desktop';
 import { getDecksDesktop, createDeckDesktop } from './queries';

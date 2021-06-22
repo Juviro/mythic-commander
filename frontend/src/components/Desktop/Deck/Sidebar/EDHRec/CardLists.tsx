@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { CardGrid } from 'components/Elements/Shared';
+import CardGrid from 'components/Elements/Shared/CardGrid/CardGrid';
 import { EdhRecCategory } from 'types/graphql';
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { Divider, Space } from 'antd';

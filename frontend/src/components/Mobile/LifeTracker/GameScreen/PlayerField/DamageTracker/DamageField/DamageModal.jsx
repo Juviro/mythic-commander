@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { Modal } from 'antd';
 
+import Flex from 'components/Elements/Shared/Flex';
 import NumberField from '../../../../NumberField';
 import DamageFieldBackground from './DamageFieldBackground';
-import { Flex } from '../../../../../../Elements/Shared';
 import FullscreenModalContext from '../../../../../../Provider/FullscreenModalProvider';
 
 export default ({ onSubmit, damage, onCancel, player }) => {

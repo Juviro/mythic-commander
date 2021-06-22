@@ -7,6 +7,7 @@ export const getDecksDesktop = gql`
       name
       lastEdit
       imgSrc
+      colors
       numberOfCards
     }
   }
@@ -19,6 +20,7 @@ export const createDeckDesktop = gql`
       name
       lastEdit
       imgSrc
+      colors
       numberOfCards
     }
   }

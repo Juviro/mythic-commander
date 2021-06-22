@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import WantsListDeckLink from 'components/Elements/Shared/WantsListDeckLink';
+import WantsListTitle from 'components/Elements/Shared/WantsListTitle';
+import ListStats from 'components/Elements/Shared/ListStats';
+import Flex from 'components/Elements/Shared/Flex';
 import Menu from './Menu';
-import {
-  WantsListDeckLink,
-  WantsListTitle,
-  ListStats,
-  Flex,
-} from '../../../Elements/Shared';
 
 const StyledTitleWrapper = styled.div`
   display: flex;

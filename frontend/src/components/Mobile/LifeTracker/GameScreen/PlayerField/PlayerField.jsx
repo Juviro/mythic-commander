@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 
+import Flex from 'components/Elements/Shared/Flex';
 import PlayerName from './PlayerName';
 import NumberField from '../../NumberField';
 import { useWindowSize } from '../../../../Hooks';
-import Flex from '../../../../Elements/Shared/Flex/index';
 import DamageTracker from './DamageTracker/DamageTracker';
 
 const initialHeight = window.innerHeight;

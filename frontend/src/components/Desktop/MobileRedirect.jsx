@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Spinner } from '../Elements/Shared';
+
+import Spinner from 'components/Elements/Shared/Spinner';
 import isMobile from '../../utils/isMobile';
 import { useToggle } from '../Hooks';
 

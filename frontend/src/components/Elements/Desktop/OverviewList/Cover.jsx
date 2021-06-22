@@ -1,16 +1,7 @@
-import shimmer from 'components/Animations/shimmer';
-import { colorPalette } from 'constants/colors';
 import React from 'react';
 import styled from 'styled-components';
-
-const StyledCoverLetterWrapper = styled.div`
-  padding-bottom: 73%;
-  font-size: 100px;
-  color: #484848;
-  opacity: 0.9;
-  border-bottom: 1px solid #f0f0f0;
-  position: relative;
-`;
+import shimmer from 'components/Animations/shimmer';
+import { colorPalette } from 'constants/colors';
 
 const StyledCoverLetter = styled.div`
   position: absolute;
@@ -19,6 +10,7 @@ const StyledCoverLetter = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  font-size: 100px;
   align-items: center;
   justify-content: center;
   background-color: ${({ color }) => color};
@@ -51,19 +43,11 @@ const getColorFromId = (id) => {
 export default ({ list }) => {
   const { imgSrc, name, id } = list;
 
-  if (!imgSrc) {
-    return (
-      <StyledCoverLetterWrapper>
-        <StyledCoverLetter color={getColorFromId(id)}>
-          {name.slice(0, 1)}
-        </StyledCoverLetter>
-      </StyledCoverLetterWrapper>
-    );
-  }
-
-  return (
-    <StyledWrapper>
-      <StyledImage src={imgSrc} alt={name} />
-    </StyledWrapper>
+  const cover = imgSrc ? (
+    <StyledImage src={imgSrc} alt={name} />
+  ) : (
+    <StyledCoverLetter color={getColorFromId(id)}>{name.slice(0, 1)}</StyledCoverLetter>
   );
+
+  return <StyledWrapper>{cover}</StyledWrapper>;
 };

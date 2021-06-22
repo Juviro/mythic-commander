@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 
 import UserContext from 'components/Provider/UserProvider';
-import { LoginRequired } from 'components/Elements/Shared';
+import { LoginRequired } from 'components/Elements/Shared/LoginRequired/LoginRequired';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import { getDecks } from '../../../queries';
 import DeckList from './DeckList';

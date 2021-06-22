@@ -14,7 +14,7 @@ export default async type => {
   const { download_uri } = data.find(({ type: _type }) => type === _type);
   console.info('starting to download file from', download_uri);
 
-  const filePath = `${__dirname}/tmp/${type}.json`;
+  const filePath = `${__dirname}/${type}.json`;
 
   const res = await fetch(download_uri);
 

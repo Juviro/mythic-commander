@@ -14,7 +14,7 @@ import isMobile from 'utils/isMobile';
 import { buttonHoverBackground } from 'constants/colors';
 import UserContext from 'components/Provider/UserProvider';
 import DesktopTooltip from '../../Desktop/DesktopTooltip';
-import { Menu } from '..';
+import Menu from '../Menu';
 
 const StyledWrapper = styled.div`
   position: fixed;

@@ -2,10 +2,11 @@ import React, { Suspense } from 'react';
 import { message } from 'antd';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
+import UsernameModal from 'components/Elements/Shared/UsernameModal';
 import Menu from './Menu';
 
 import GlobalStyle from './GlobalStyle';
-import { UsernameModal } from '../Elements/Shared';
+
 import LifeTracker from './LifeTracker';
 
 const Deck = React.lazy(() => import('./Deck'));
