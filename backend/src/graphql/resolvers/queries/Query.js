@@ -46,9 +46,11 @@ const resolver = {
       .where({ id })
       .first();
   },
+
   decks(_, __, { user, db }) {
     if (!user.id) return null;
     return db('decks')
+      .leftJoin('deckColors', { 'decks.id': 'deckColors.deckId' })
       .where({ userId: user.id })
       .orderBy('lastEdit', 'desc');
   },
