@@ -7,9 +7,12 @@ import Loyality from './Loyality';
 const StyledColorTag = styled.img`
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
-  border-radius: 50%;
   margin-right: 2px;
   box-shadow: 1px 1px 2px #5f5f5f;
+
+  && {
+    border-radius: 50%;
+  }
 `;
 export default ({ symbol, size = 18, margin = 0 }) => {
   if (symbol === '//') {
