@@ -1,5 +1,5 @@
 import { Tabs } from 'antd';
-import { Flex } from 'components/Elements/Shared';
+import Flex from 'components/Elements/Shared/Flex';
 import React from 'react';
 import { View } from '../Deck';
 

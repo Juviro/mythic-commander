@@ -7,9 +7,9 @@ import { FEATURE_FLAG_TAG } from 'constants/featureFlags';
 import DEFAULT_TAGS from 'constants/tags';
 import { UnifiedDeckCard } from 'types/unifiedTypes';
 import { MutationSetDefaultTagArgs } from 'types/graphql';
+import FeatureFlag from 'components/Elements/Shared/FeatureFlag';
 import { Tag } from './Tag';
 import Flex from '../../Flex';
-import { FeatureFlag } from '../..';
 import { setDefaultTag } from './queries';
 
 const StyledMenu = styled.div`
