@@ -10,9 +10,12 @@
 # testing
 /coverage
 
-# production
+# build
 /frontend/build
 /backend/dist
+
+# credentials
+/backend/.env*
 
 # misc
 .DS_Store
@@ -26,5 +29,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # scryfall and mkm data
-/backend/src/cardApi/*/tmp/*
-!/backend/src/cardApi/*/tmp/.gitkeep
+/backend/src/cardApi/*/*.json
