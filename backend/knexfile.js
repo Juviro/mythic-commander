@@ -1,30 +1,14 @@
 /* eslint-disable import/no-commonjs */
-
-const { database } = require('./credentials');
-
-const defaultSettings = {
+module.exports = {
   client: 'pg',
   migrations: {
     directory: './src/database/migrations',
   },
   connection: {
-    database: 'mtg',
-    host: 'localhost',
+    database: process.env.DB_NAME || 'mtg',
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER,
+    password: process.env.PGPASS,
   },
-};
-
-module.exports = {
-  development: {
-    ...defaultSettings,
-    useNullAsDefault: true,
-  },
-
-  staging: {
-    ...defaultSettings,
-    connection: database.staging,
-  },
-  production: {
-    ...defaultSettings,
-    connection: database.prod,
-  },
+  useNullAsDefault: true,
 };

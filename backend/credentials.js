@@ -7,17 +7,10 @@ module.exports = {
   },
   database: {
     prod: {
-      user: 'root',
-      database: 'mtg',
-      password: '17ARqkNuJWKgyDHAEVDPvnw83fbnwckdaffijwosaj32',
-      host: 'localhost',
-    },
-    staging: {
-      user: 'hauke',
-      database: 'mtg',
-      password:
-        'dqwfhife83hfwkrh38fnwfbcxsi3r2uu9fcewrb321f90d8fy2b3r98dsfye9vhdqww83rnfY',
-      host: 'localhost',
+      user: process.env.DB_USER,
+      database: process.env.DB_NAME,
+      password: process.env.PGPASS,
+      host: process.env.DB_HOST,
     },
   },
 };
