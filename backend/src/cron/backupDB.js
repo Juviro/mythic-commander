@@ -1,4 +1,5 @@
 // https://soshace.com/automated-postgresql-backups-with-nodejs-and-bash/
+// For authorization on the server, see https://stackoverflow.com/questions/2893954/how-to-pass-in-password-to-pg-dump
 
 import { execute } from '@getvim/execute';
 
