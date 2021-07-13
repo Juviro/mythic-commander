@@ -13,16 +13,25 @@ const currentDate = `${date.getFullYear()}.${date.getMonth() +
 const fileName = `${backupDir}database-backup-${currentDate}.tar`;
 
 const backupDB = () => {
+  console.info(
+    'Starting to backup DB',
+    new Date().toLocaleString('de', { timeStyle: 'short', dateStyle: 'short' })
+  );
+
   return new Promise((resolve, reject) => {
-    execute(`pg_dump -U ${username} -d ${database} -f ${fileName}`)
-      .then(async () => {
-        console.info(`DB Backup to file ${fileName} completed`);
-        resolve();
-      })
-      .catch(err => {
-        console.error('Error backing up DB:', err);
-        reject();
-      });
+    try {
+      execute(`pg_dump -U ${username} -d ${database} -f ${fileName}`)
+        .then(async () => {
+          console.info(`DB Backup to file ${fileName} completed`);
+          resolve();
+        })
+        .catch(err => {
+          console.error('Error backing up DB:', err);
+          reject();
+        });
+    } catch (e) {
+      console.error('Error executing:', e);
+    }
   });
 };
 
