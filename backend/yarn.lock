@@ -945,6 +945,11 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
+"@getvim/execute@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@getvim/execute/-/execute-1.0.0.tgz#c6265e94caff8f1c52dee565a5b8a90166910612"
+  integrity sha512-DBtKHtKq4GKNnHL8pmiZb2y7uhkfVaQljqlmOJODDtJJfVOPQtUMMJCbEBTbvrqTnOlzgcgftUIsJCbLNgukdg==
+
 "@graphql-toolkit/common@0.10.4":
   version "0.10.4"
   resolved "https://registry.yarnpkg.com/@graphql-toolkit/common/-/common-0.10.4.tgz#7785f2a3f14559d0778859c49f4442078c196695"
@@ -2892,6 +2897,11 @@ dot-prop@^5.2.0:
   resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-5.2.0.tgz#c34ecc29556dc45f1f4c22697b6f4904e0cc4fcb"
   dependencies:
     is-obj "^2.0.0"
+
+dotenv@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-10.0.0.tgz#3d4227b8fb95f81096cdd2b66653fb2c7085ba81"
+  integrity sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==
 
 duplexer3@^0.1.4:
   version "0.1.4"
