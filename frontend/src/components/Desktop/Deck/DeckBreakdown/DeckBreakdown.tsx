@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Divider, Typography } from 'antd';
 import styled, { css } from 'styled-components';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
@@ -54,12 +54,6 @@ interface Props {
 export const DeckBreakdown = ({ deck }: Props) => {
   const [isOpen, toggleIsOpen] = useToggle(true);
 
-  useEffect(() => {
-    if (!deck) return;
-    toggleIsOpen(deck.canEdit);
-    // eslint-disable-next-line
-  }, [deck?.canEdit]);
-
   return (
     <StyledWrapper isOpen={isOpen}>
       <Flex justify="space-between" onClick={toggleIsOpen} style={{ cursor: 'pointer' }}>
@@ -74,7 +68,7 @@ export const DeckBreakdown = ({ deck }: Props) => {
       </Flex>
       <Divider />
       <DeckBreakdownHeader deck={deck} />
-      {isOpen && deck?.canEdit && <DeckBreakdownBody deck={deck} />}
+      {isOpen && deck && <DeckBreakdownBody deck={deck} />}
     </StyledWrapper>
   );
 };
