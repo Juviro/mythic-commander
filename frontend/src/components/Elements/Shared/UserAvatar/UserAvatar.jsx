@@ -11,6 +11,12 @@ const StyledWrapper = styled.div`
   height: 30px;
   display: flex;
   align-items: center;
+
+  @media only screen and (max-width: 1200px) {
+    & .username {
+      display: none;
+    }
+  }
 `;
 
 const StyledAvatar = styled.img`
@@ -39,6 +45,7 @@ export default ({ textPosition, onClick, textColor }) => {
           {textPosition === 'left' && (
             <Typography.Text
               ellipsis
+              className="username"
               style={{
                 color: textColor,
                 fontSize: 16,

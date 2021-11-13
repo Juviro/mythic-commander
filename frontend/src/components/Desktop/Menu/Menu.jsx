@@ -77,28 +77,36 @@ const DesktopMenu = ({ location: { pathname } }) => {
 
   return (
     <StyledMenu>
-      <Flex direction="row" align="center">
-        <MythicCommanderBanner
-          style={{ marginLeft: 8 }}
-          showCollectionOnClick
-          hideWhenSmall
+      <Flex
+        direction="row"
+        align="center"
+        justify="space-between"
+        style={{ width: '100%' }}
+      >
+        <Flex direction="row">
+          <MythicCommanderBanner
+            style={{ marginLeft: 8 }}
+            showCollectionOnClick
+            hideWhenSmall
+          />
+          <Menu
+            mode="horizontal"
+            selectedKeys={selectedMenuKeys}
+            theme="dark"
+            style={{ marginLeft: 12 }}
+            color={darkBackground}
+          >
+            {menuItems.map(({ title, href }) => (
+              <StyledMenuItem key={href}>
+                <Link to={href}>{title}</Link>
+              </StyledMenuItem>
+            ))}
+          </Menu>
+        </Flex>
+        <SearchBar
+          hideLayover
+          style={{ margin: '0 16px', width: 'unset', flex: 1, maxWidth: 330 }}
         />
-        <Menu
-          mode="horizontal"
-          selectedKeys={selectedMenuKeys}
-          theme="dark"
-          style={{ marginLeft: 12 }}
-          color={darkBackground}
-        >
-          {menuItems.map(({ title, href }) => (
-            <StyledMenuItem key={href}>
-              <Link to={href}>{title}</Link>
-            </StyledMenuItem>
-          ))}
-        </Menu>
-      </Flex>
-      <Flex direction="row">
-        <SearchBar hideLayover style={{ margin: '0 16px', width: 330 }} />
         <UserMenu />
       </Flex>
     </StyledMenu>
