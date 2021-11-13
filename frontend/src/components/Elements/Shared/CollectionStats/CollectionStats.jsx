@@ -1,5 +1,5 @@
 import React from 'react';
-import { Skeleton } from 'antd';
+import { Skeleton, Divider } from 'antd';
 import { useQuery } from '@apollo/react-hooks';
 
 import styled from 'styled-components';
@@ -9,14 +9,9 @@ import CollectionCharts from '../CollectionCharts';
 import { currentSnapshots as getCurrentSnapshot } from './queries';
 
 const StyledCollectionStats = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
-
-  @media (min-width: 900px) {
-    flex-direction: ${({ horizontal }) => (horizontal ? 'row' : 'column')};
-  }
+  display: grid;
+  grid-gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
 `;
 
 export default ({ horizontal, showCharts }) => {
@@ -28,11 +23,12 @@ export default ({ horizontal, showCharts }) => {
 
   return (
     <Flex direction="column">
-      <StyledCollectionStats horizontal={horizontal}>
-        {loading ? (
-          <Skeleton />
-        ) : (
-          <>
+      {loading ? (
+        <Skeleton />
+      ) : (
+        <>
+          <Divider orientation={horizontal ? 'left' : 'center'}>Collected Cards</Divider>
+          <StyledCollectionStats>
             <Statistic
               horizontal={horizontal}
               title="Total Cards"
@@ -41,20 +37,36 @@ export default ({ horizontal, showCharts }) => {
             />
             <Statistic
               horizontal={horizontal}
+              title="Unique Card Versions"
+              value={currentSnapshot.amountUniqueVersions ?? 0}
+              referenceValue={referenceSnapshot.amountUniqueVersions}
+            />
+            <Statistic
+              horizontal={horizontal}
               title="Unique Cards"
               value={currentSnapshot.amountUnique ?? 0}
               referenceValue={referenceSnapshot.amountUnique}
             />
+          </StyledCollectionStats>
+          <Divider orientation={horizontal ? 'left' : 'center'}>Collection Value</Divider>
+          <StyledCollectionStats>
             <Statistic
               horizontal={horizontal}
-              title="Total Value"
+              title="Total Value (USD)"
               value={currentSnapshot.value ?? 0}
               prefix="$"
               referenceValue={referenceSnapshot.value}
             />
-          </>
-        )}
-      </StyledCollectionStats>
+            <Statistic
+              horizontal={horizontal}
+              title="Total Value (EUR)"
+              value={currentSnapshot.valueEur ?? 0}
+              prefix="€"
+              referenceValue={referenceSnapshot.valueEur}
+            />
+          </StyledCollectionStats>
+        </>
+      )}
       {showCharts && <CollectionCharts currentSnapshot={currentSnapshot} />}
     </Flex>
   );

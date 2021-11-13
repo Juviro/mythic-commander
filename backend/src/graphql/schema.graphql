@@ -204,8 +204,11 @@ type WantsListCard {
 type CollectionSnapshot {
   date: String!
   value: Int
+  valueEur: Int
   amount: Int
+  amountUniqueVersions: Int
   amountUnique: Int
+  missingPriceEur: Int
 }
 
 ################################# Proxy #################################
