@@ -83,7 +83,7 @@ const DesktopMenu = ({ location: { pathname } }) => {
         justify="space-between"
         style={{ width: '100%' }}
       >
-        <Flex direction="row">
+        <Flex direction="row" align="center">
           <MythicCommanderBanner
             style={{ marginLeft: 8 }}
             showCollectionOnClick
