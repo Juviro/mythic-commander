@@ -8,19 +8,22 @@ import { primary } from 'constants/colors';
 const StyledIcon = styled(ExclamationCircleOutlined)`
   margin-left: 6px;
   font-size: 16px;
+  cursor: help;
   color: ${primary};
 `;
 
 interface Props {
-  numberOfNotIncludedCards?: number;
+  text?: React.ReactNode;
 }
 
-export const NotIncludedInfo = ({ numberOfNotIncludedCards }: Props) => {
-  if (!numberOfNotIncludedCards) return null;
+const Hint = ({ text }: Props) => {
+  if (!text) return null;
 
   return (
-    <Tooltip title={`No price available for ${numberOfNotIncludedCards} card(s)`}>
+    <Tooltip title={text}>
       <StyledIcon />
     </Tooltip>
   );
 };
+
+export default Hint;

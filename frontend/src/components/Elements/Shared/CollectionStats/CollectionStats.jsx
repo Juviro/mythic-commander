@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 import styled from 'styled-components';
 import Flex from 'components/Elements/Shared/Flex';
+import CollectionStatHint from 'components/Elements/Shared/CollectionStats/CollectionStatHint';
 import Statistic from './Statistic';
 import CollectionCharts from '../CollectionCharts';
 import { currentSnapshots as getCurrentSnapshot } from './queries';
@@ -20,6 +21,10 @@ export default ({ horizontal, showCharts }) => {
   const currentSnapshot = data?.collection.currentSnapshot ?? {};
   currentSnapshot.dateLabel = 'Now';
   const referenceSnapshot = data?.collection.referenceSnapshot ?? {};
+
+  const percentageMissingEur = Math.ceil(
+    (currentSnapshot.missingPriceEur / currentSnapshot.amountUniqueVersions) * 100
+  );
 
   return (
     <Flex direction="column">
@@ -59,7 +64,13 @@ export default ({ horizontal, showCharts }) => {
             />
             <Statistic
               horizontal={horizontal}
-              title="Total Value (EUR)"
+              title={
+                <CollectionStatHint
+                  // eslint-disable-next-line max-len
+                  hint={`No price found for ${currentSnapshot.missingPriceEur} of ${currentSnapshot.amountUniqueVersions} cards (${percentageMissingEur}%).`}
+                  title="Total Value (EUR)"
+                />
+              }
               value={currentSnapshot.valueEur ?? 0}
               prefix="€"
               referenceValue={referenceSnapshot.valueEur}

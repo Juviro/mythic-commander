@@ -6,7 +6,7 @@ import edhrecIcon from '../../../../assets/purchaseIcons/edhrec.png';
 import tcgplayer from '../../../../assets/purchaseIcons/tcgplayer.svg';
 import scryfallIcon from '../../../../assets/purchaseIcons/scryfall.png';
 import cardKingdomIcon from '../../../../assets/purchaseIcons/cardKingdom.ico';
-import { NotIncludedInfo } from './NotIncludedInfo';
+import Hint from '../Hint';
 
 const StyledPurchaseIcon = styled.img`
   width: 18px;
@@ -89,7 +89,9 @@ export const PurchaseIcon = ({
       <StyledPurchaseIcon src={icon} alt={name} />
       {displayName && <span>{name}</span>}
       {label && <StyledLabel>{label}</StyledLabel>}
-      <NotIncludedInfo numberOfNotIncludedCards={numberOfNotIncludedCards} />
+      {Boolean(numberOfNotIncludedCards) && (
+        <Hint text={`No price available for ${numberOfNotIncludedCards} card(s)`} />
+      )}
     </StyledWrapper>
   );
 
