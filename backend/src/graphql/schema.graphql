@@ -277,7 +277,6 @@ type EDHRecCategory {
 
 type EDHRecCard {
   id: String!
-  oracle_id: String!
   imgKey: String!
   name: String!
   priceUsd: Float

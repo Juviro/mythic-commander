@@ -21,6 +21,7 @@ const resolver = {
   },
 
   card(_, { id }, { db }) {
+    console.log('id', id);
     return db('cards')
       .where({ id })
       .first();

@@ -9,7 +9,14 @@
     "import/no-nodejs-modules": 0,
     "import/prefer-default-export": 0,
     "import/no-namespace": 0,
-    "arrow-body-style": 0
+    "arrow-body-style": 0,
+    "no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "^_"
+      }
+    ]
   },
   "env": {
     "es6": true

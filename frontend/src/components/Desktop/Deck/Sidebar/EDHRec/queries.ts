@@ -8,7 +8,6 @@ export const getEdhrecCards = gql`
         title
         cards {
           id
-          oracle_id
           imgKey
           name
           synergy

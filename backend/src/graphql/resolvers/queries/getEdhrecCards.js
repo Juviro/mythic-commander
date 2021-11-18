@@ -8,24 +8,24 @@ const getUrl = (names, themeSuffix) => {
     .replace(/[^a-zA-Z- ]/g, '')
     .replace(/\s/g, '-');
 
-  const themeAddon = themeSuffix || '';
+  if (!themeSuffix) {
+    return `https://json.edhrec.com/commanders/${sanitizedNames}.json`;
+  }
 
-  return `https://edhrec-json.s3.amazonaws.com/en/commanders/${sanitizedNames}${themeAddon}.json`;
+  return `https://json.edhrec.com/commanders/${sanitizedNames}${themeSuffix}.json`;
 };
 
 const formatCards = cards => {
   return cards
-    .map(({ cards, synergy, image_uris }) => {
-      const [card] = cards;
-      const imgKey = image_uris?.[0]?.match(/(\w\/\w)/)?.pop();
+    .map(({ prices, name, synergy, image_uris }) => {
+      const [_, imgKey, id] = image_uris?.[0]?.match(/(\w\/\w)\/(.*)\./);
 
       return {
-        id: card.id,
-        oracle_id: card.oracle_id,
+        id,
         imgKey,
-        name: card.name,
-        priceUsd: card.prices.tcgplayer?.price,
-        priceEur: card.prices.cardmarket?.price,
+        name,
+        priceUsd: prices.tcgplayer?.price,
+        priceEur: prices.cardmarket?.price,
         synergy,
       };
     })

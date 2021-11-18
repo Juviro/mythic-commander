@@ -59,6 +59,14 @@ export const cardDetailsDesktop = gql`
   }
 `;
 
+export const cardDetailsById = gql`
+  query cardDetailsById($id: String!) {
+    card(id: $id) {
+      ${CARD_FIELDS}
+    }
+  }
+`;
+
 export const changeCollection = gql`
   mutation changeCollection(
     $cardOracleId: String!
