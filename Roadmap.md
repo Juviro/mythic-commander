@@ -35,6 +35,7 @@
 - improve re-rendering of grid card
 - added to collection notification -> show amount as well
 - add optimistic response to card delete in deck (esp. mobile)
+- backup cardPrices
 
 ## PERFORMANCE:
 

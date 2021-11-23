@@ -20,7 +20,9 @@ const backupDB = () => {
 
   return new Promise((resolve, reject) => {
     try {
-      execute(`pg_dump -U ${username} -d ${database} -f ${fileName}`)
+      execute(
+        `pg_dump -U ${username} -d ${database} -f ${fileName} -T "\\"cardPrices"\\"`
+      )
         .then(async () => {
           console.info(`DB Backup to file ${fileName} completed`);
           resolve();
