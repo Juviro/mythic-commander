@@ -29,12 +29,18 @@ export const updateScryfallCards = async (type, tableName) => {
       const parsableCard = line.replace(/,$/, '');
       const card = JSON.parse(parsableCard);
 
+      if (!card.oracle_id) {
+        card.oracle_id = card.card_faces[0].oracle_id;
+      }
+
       const cardToInsert = ALL_CARD_FIELDS.reduce((acc, field) => {
         const value =
           field.type === 'jsonb'
             ? JSON.stringify(card[field.key])
             : card[field.key];
+
         acc[field.key] = value;
+
         return acc;
       }, {});
 
@@ -44,7 +50,7 @@ export const updateScryfallCards = async (type, tableName) => {
           .toString()
           .replace(/\?/g, '\\?') + ON_DUPLICATE
       );
-    } catch {
+    } catch (e) {
       // [ and ] are caught here, which are the first and last line of the json
     }
   }
