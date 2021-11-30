@@ -14,10 +14,10 @@ export const cardSearch = gql`
         oracle_id
         priceUsd
         priceEur
+        isTwoFaced
 
         oracleCard {
           _id
-          isTwoFaced
           owned
           primaryTypes
           subTypes

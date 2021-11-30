@@ -11,12 +11,12 @@ export const COLLECTION_CARD_FIELDS = `
     imgKey
     oracle_id
     color_identity
+    isTwoFaced
 
     oracleCard {
       _id
       owned
       totalAmount
-      isTwoFaced
       subTypes
       primaryTypes
       minPriceUsd

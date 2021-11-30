@@ -30,6 +30,7 @@ type Card {
   mana_cost: String
   foil: Boolean!
   nonfoil: Boolean!
+  isTwoFaced: Boolean!
 
   # Additional card fields
   imgKey: String!
@@ -53,7 +54,6 @@ type OracleCard {
   owned: Boolean!
   totalAmount: Int!
 
-  isTwoFaced: Boolean!
   isCommanderLegal: Boolean!
   primaryTypes: [String!]!
   subTypes: [String!]!

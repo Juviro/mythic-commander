@@ -16,11 +16,11 @@ const CARD_FIELDS = `
       color_identity
       possiblePartner
       canBeCommander
+      isTwoFaced
       
       oracleCard {
         _id
         owned
-        isTwoFaced
         
         primaryTypes
         isCommanderLegal

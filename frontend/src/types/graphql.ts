@@ -1,3 +1,4 @@
+import { gql } from '@apollo/client';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
@@ -47,6 +48,7 @@ export type Card = {
   mana_cost?: Maybe<Scalars['String']>;
   foil: Scalars['Boolean'];
   nonfoil: Scalars['Boolean'];
+  isTwoFaced: Scalars['Boolean'];
   imgKey: Scalars['String'];
   amountOwned: Scalars['Int'];
   amountOwnedFoil: Scalars['Int'];
@@ -111,8 +113,11 @@ export type CollectionSnapshot = {
   __typename?: 'CollectionSnapshot';
   date: Scalars['String'];
   value?: Maybe<Scalars['Int']>;
+  valueEur?: Maybe<Scalars['Int']>;
   amount?: Maybe<Scalars['Int']>;
+  amountUniqueVersions?: Maybe<Scalars['Int']>;
   amountUnique?: Maybe<Scalars['Int']>;
+  missingPriceEur?: Maybe<Scalars['Int']>;
 };
 
 export type ContainingList = {
@@ -149,7 +154,6 @@ export type DeckCard = {
 export type EdhRecCard = {
   __typename?: 'EDHRecCard';
   id: Scalars['String'];
-  oracle_id: Scalars['String'];
   imgKey: Scalars['String'];
   name: Scalars['String'];
   priceUsd?: Maybe<Scalars['Float']>;
@@ -428,7 +432,6 @@ export type OracleCard = {
   allSets: Array<Card>;
   owned: Scalars['Boolean'];
   totalAmount: Scalars['Int'];
-  isTwoFaced: Scalars['Boolean'];
   isCommanderLegal: Scalars['Boolean'];
   primaryTypes: Array<Scalars['String']>;
   subTypes: Array<Scalars['String']>;

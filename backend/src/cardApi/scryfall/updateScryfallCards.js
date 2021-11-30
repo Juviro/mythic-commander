@@ -29,9 +29,13 @@ export const updateScryfallCards = async (type, tableName) => {
       const parsableCard = line.replace(/,$/, '');
       const card = JSON.parse(parsableCard);
 
-      if (!card.oracle_id) {
-        card.oracle_id = card.card_faces[0].oracle_id;
-      }
+      // double faced cards don't always set all fields,
+      // so we fallback to the value of the front face
+      const setMissingProp = prop => {
+        if (card[prop] === undefined) card[prop] = card.card_faces[0]?.[prop];
+      };
+
+      ['oracle_id', 'cmc', 'mana_cost', 'type_line'].forEach(setMissingProp);
 
       const cardToInsert = ALL_CARD_FIELDS.reduce((acc, field) => {
         const value =

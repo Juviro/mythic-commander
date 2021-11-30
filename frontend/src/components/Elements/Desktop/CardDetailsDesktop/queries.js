@@ -8,6 +8,7 @@ const CARD_FIELDS = `
   imgKey
   oracle_text
   scryfall_uri
+  isTwoFaced
 
   relatedCards {
     id
@@ -19,7 +20,6 @@ const CARD_FIELDS = `
   oracleCard {
     _id
     owned
-    isTwoFaced
     totalAmount
     isCommanderLegal
     allSets {
@@ -30,6 +30,7 @@ const CARD_FIELDS = `
       amountOwnedFoil
       set_name
       nonfoil
+      isTwoFaced
       prices {
         usd
         usd_foil

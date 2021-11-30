@@ -15,11 +15,11 @@ const CARD_FIELDS = `
       set_name
       mana_cost
       color_identity
+      isTwoFaced
       
       oracleCard {
         _id
         owned
-        isTwoFaced
         
         primaryTypes
         isCommanderLegal

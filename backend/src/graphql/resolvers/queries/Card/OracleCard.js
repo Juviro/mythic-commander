@@ -107,9 +107,6 @@ const resolver = {
     return sumPrice('eur', sumPriceEur, oracle_id, userId, db);
   },
 
-  isTwoFaced({ image_uris }) {
-    return !image_uris;
-  },
   isCommanderLegal({ legalities }) {
     return legalities.commander === 'legal';
   },
