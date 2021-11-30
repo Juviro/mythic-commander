@@ -18,7 +18,9 @@ const getUrl = (names, themeSuffix) => {
 const formatCards = cards => {
   return cards
     .map(({ prices, name, synergy, image_uris }) => {
-      const [_, imgKey, id] = image_uris?.[0]?.match(/(\w\/\w)\/(.*)\./);
+      const [_, imgKey, id] = image_uris?.[0]?.small?.match(
+        /front\/(\w\/\w)\/(.*)\./
+      );
 
       return {
         id,
