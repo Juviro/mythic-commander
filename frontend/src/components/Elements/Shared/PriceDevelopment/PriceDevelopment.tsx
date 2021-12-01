@@ -8,10 +8,8 @@ import formatDate from 'utils/formatDate';
 import PriceDevelopmentPlaceholder from './PriceDevelopmentPlaceholder';
 import PriceDevelopmentSelection from './PriceDevelopmentSelection';
 
-const StyledDivider = styled(Divider)`
-  && {
-    margin-top: 128px;
-  }
+const StyledWrapper = styled.section`
+  margin: 32px 0;
 `;
 
 interface Props {
@@ -36,8 +34,8 @@ const PriceDevelopment = ({ selectedCard, loading }: Props) => {
     !loading && formattedPriceDevelopment?.some((item) => item[DATA_KEY] !== null);
 
   return (
-    <>
-      <StyledDivider>Price Development</StyledDivider>
+    <StyledWrapper>
+      <Divider>Price Development</Divider>
       {hasData ? (
         <ValueChart
           formattedData={formattedPriceDevelopment}
@@ -52,7 +50,7 @@ const PriceDevelopment = ({ selectedCard, loading }: Props) => {
         selectedKey={selectedKey}
         priceDevelopment={priceDevelopment}
       />
-    </>
+    </StyledWrapper>
   );
 };
 
