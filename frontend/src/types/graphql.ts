@@ -55,6 +55,7 @@ export type Card = {
   canBeCommander: Scalars['Boolean'];
   oracleCard: OracleCard;
   relatedCards?: Maybe<Array<Card>>;
+  priceDevelopment?: Maybe<Array<PriceDevelopment>>;
 };
 
 export type CardFace = {
@@ -453,6 +454,15 @@ export type PaginatedCollection = {
   search?: Maybe<Scalars['String']>;
   totalResults: Scalars['Int'];
   cards: Array<CollectionCard>;
+};
+
+export type PriceDevelopment = {
+  __typename?: 'PriceDevelopment';
+  date: Scalars['String'];
+  priceUsd?: Maybe<Scalars['Float']>;
+  priceUsdFoil?: Maybe<Scalars['Float']>;
+  priceEur?: Maybe<Scalars['Float']>;
+  priceEurFoil?: Maybe<Scalars['Float']>;
 };
 
 export type Prices = {

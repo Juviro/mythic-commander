@@ -80,6 +80,10 @@ const resolver = {
 
     return type_line.includes('Creature');
   },
+
+  priceDevelopment({ id }, _, { db }) {
+    return db('cardPrices').where({ id });
+  },
 };
 
 export default resolver;
