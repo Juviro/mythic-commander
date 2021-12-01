@@ -41,6 +41,7 @@ type Card {
 
   oracleCard: OracleCard!
   relatedCards: [Card!]
+  priceDevelopment: [PriceDevelopment!]
 }
 
 type OracleCard {
@@ -118,6 +119,14 @@ type PaginatedCards {
   nextOffset: Int
   totalResults: Int!
   cards: [Card!]!
+}
+
+type PriceDevelopment {
+  date: String!
+  priceUsd: Float
+  priceUsdFoil: Float
+  priceEur: Float
+  priceEurFoil: Float
 }
 
 ################################# Deck #################################

@@ -5,10 +5,10 @@ const storeCardPrice = async () => {
         INSERT INTO "cardPrices" (
             SELECT 
                 id,
-                (prices->>'usd')::float as "priceUsd",
-                (prices->>'usd_foil')::float as "priceUsdFoil",
-                (prices->>'eur')::float as "priceEur",
-                (prices->>'eur_foil')::float as "priceEurFoil"
+                (prices->>'eur')::float,
+                (prices->>'eur_foil')::float"
+                (prices->>'usd')::float,
+                (prices->>'usd_foil')::float,
             FROM cards
         )
     `);

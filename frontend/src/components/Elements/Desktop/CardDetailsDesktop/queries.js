@@ -37,6 +37,13 @@ const CARD_FIELDS = `
         eur
         eur_foil
       }
+      priceDevelopment {
+        date
+        priceUsd
+        priceUsdFoil
+        priceEur
+        priceEurFoil
+      }
     }
     containingWantsLists {
       id

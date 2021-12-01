@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
 import UserContext from 'components/Provider/UserProvider';
+import PriceDevelopment from 'components/Elements/Shared/PriceDevelopment';
 import DecksAndWants from './DecksAndWants';
 import PreviewAndSets from './PreviewAndSets';
 import AdditionalInfos from './AdditionalInfos';
@@ -11,6 +12,7 @@ export default ({
   card,
   fallbackCard,
   loading,
+  selectedCard,
   selectedCardId,
   setSelectedCardId,
   largeHeader,
@@ -33,6 +35,7 @@ export default ({
         selectedCardId={selectedCardId}
         setSelectedCardId={setSelectedCardId}
       />
+      <PriceDevelopment selectedCard={selectedCard} loading={loading} />
       {user && <DecksAndWants card={usedCard} loading={loading} />}
       <AdditionalInfos card={usedCard} loading={loading} isFlipped={isFlipped} />
     </>
