@@ -93,6 +93,7 @@ const DesktopMenu = ({ location: { pathname } }) => {
             mode="horizontal"
             selectedKeys={selectedMenuKeys}
             theme="dark"
+            inlineCollapsed={false}
             style={{ marginLeft: 12 }}
             color={darkBackground}
           >
