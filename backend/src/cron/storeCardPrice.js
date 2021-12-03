@@ -1,6 +1,7 @@
 import db from '../database';
 
 const storeCardPrice = async () => {
+  console.info('Storing card price');
   await db.raw(`
         INSERT INTO "cardPrices" (
             SELECT 
@@ -12,6 +13,7 @@ const storeCardPrice = async () => {
             FROM cards
         )
     `);
+  console.info('Stored card price');
 };
 
 export default storeCardPrice;
