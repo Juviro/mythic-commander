@@ -7,10 +7,11 @@ const storeCardPrice = async () => {
             SELECT 
                 id,
                 (prices->>'eur')::float,
-                (prices->>'eur_foil')::float"
+                (prices->>'eur_foil')::float,
                 (prices->>'usd')::float,
-                (prices->>'usd_foil')::float,
+                (prices->>'usd_foil')::float
             FROM cards
+            WHERE 'paper' = ANY(games)
         )
     `);
   console.info('Stored card price');
