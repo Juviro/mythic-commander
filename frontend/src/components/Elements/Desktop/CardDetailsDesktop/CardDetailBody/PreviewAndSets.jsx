@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Col, Row } from 'antd';
 
-import FlippableCard from 'components/Elements/Shared/FlippableCard';
+import Card from 'components/Elements/Shared/Card';
 import CardSets from './CardSets';
 
 const StyledCardImage = styled.div`
@@ -26,7 +26,7 @@ export default ({
     <Row style={{ width: '100%', maxHeight: 490 }}>
       <Col span={8}>
         <StyledCardImage>
-          <FlippableCard
+          <Card
             card={card}
             loading={parentLoading || (loading && !card?.imgKey)}
             onFlipCard={toggleIsFlipped}

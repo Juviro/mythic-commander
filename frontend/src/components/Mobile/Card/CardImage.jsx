@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import FlippableCard from 'components/Elements/Shared/FlippableCard';
+import Card from 'components/Elements/Shared/Card';
 
 const StyledWrapper = styled.div`
   width: 90vw;
@@ -12,7 +12,7 @@ const StyledWrapper = styled.div`
 export default ({ card, loading }) => {
   return (
     <StyledWrapper>
-      <FlippableCard card={card} loading={loading} />
+      <Card card={card} loading={loading} />
     </StyledWrapper>
   );
 };

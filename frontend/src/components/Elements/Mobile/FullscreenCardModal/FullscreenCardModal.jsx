@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal } from 'antd';
 
 import styled from 'styled-components';
-import FlippableCard from '../../Shared/FlippableCard';
+import Card from '../../Shared/Card';
 
 const StyledFlipWrapper = styled.div`
   display: flex;
@@ -28,7 +28,7 @@ export default ({ card, visible, onChangeIsOpen }) => {
       onCancel={onChangeIsOpen}
     >
       <StyledFlipWrapper onClick={onChangeIsOpen}>
-        <FlippableCard card={card} />
+        <Card card={card} />
       </StyledFlipWrapper>
     </Modal>
   );

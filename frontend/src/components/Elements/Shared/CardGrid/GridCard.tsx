@@ -4,9 +4,9 @@ import { useDrag } from 'react-dnd';
 
 import { primary } from 'constants/colors';
 import EnlargeImage from './EnlargeImage';
-import FlippableCard from '../FlippableCard';
 import { useToggle } from '../../../Hooks';
 import CardInfo from './CardInfo';
+import Card from '../Card';
 import { CardMenu } from './CardMenu';
 import { SelectButton } from './SelectButton';
 
@@ -123,51 +123,49 @@ const GridCard = ({
   };
 
   return (
-    <StyledCenterWrapper fixedSize={fixedSize}>
-      <StyledCardWrapper key={card.id} fixedSize={fixedSize}>
-        <StyledImageWrapper
-          onClick={onClickCard}
-          isSelected={isSelected}
-          onMouseMove={(e) => {
-            if (minimal) return;
-            // Check for touch devices
-            if (!e.movementX && !e.movementY) return;
-            toggleShowMenu(true);
-          }}
-          onMouseLeave={() => toggleShowMenu(false)}
-          markAsDisabled={markAsDisabled}
-          ref={dragRef}
-          onContextMenu={(e) => {
-            e.preventDefault();
-            if (disableSelection) return;
-            onSelect();
-          }}
-        >
-          {canZoomIn && <EnlargeImage card={card} />}
-          <FlippableCard card={card} onFlipCard={() => toggleShowMenu(false)} />
-          {displayedAmount > 1 && (
-            <StyledAmountWrapper>{`${displayedAmount}x`}</StyledAmountWrapper>
-          )}
-          {Boolean(showMenu && actions.length && !isAnyCardSelected) && (
-            <CardMenu
-              card={card}
-              actions={actions}
-              onOpenDetails={onOpenDetails}
-              onClose={() => toggleShowMenu(false)}
-            />
-          )}
-          {!disableSelection && (
-            <SelectButton
-              onSelect={onSelect}
-              isSelected={isSelected}
-              isHovering={showMenu}
-              isAnyCardSelected={isAnyCardSelected}
-            />
-          )}
-        </StyledImageWrapper>
-        <CardInfo card={card} search={search} minimal={minimal} />
-      </StyledCardWrapper>
-    </StyledCenterWrapper>
+    <StyledCardWrapper key={card.id} fixedSize={fixedSize}>
+      <StyledImageWrapper
+        onClick={onClickCard}
+        isSelected={isSelected}
+        onMouseMove={(e) => {
+          if (minimal) return;
+          // Check for touch devices
+          if (!e.movementX && !e.movementY) return;
+          toggleShowMenu(true);
+        }}
+        onMouseLeave={() => toggleShowMenu(false)}
+        markAsDisabled={markAsDisabled}
+        ref={dragRef}
+        onContextMenu={(e) => {
+          e.preventDefault();
+          if (disableSelection) return;
+          onSelect();
+        }}
+      >
+        {canZoomIn && <EnlargeImage card={card} />}
+        <Card card={card} onFlipCard={() => toggleShowMenu(false)} />
+        {displayedAmount > 1 && (
+          <StyledAmountWrapper>{`${displayedAmount}x`}</StyledAmountWrapper>
+        )}
+        {Boolean(showMenu && actions.length && !isAnyCardSelected) && (
+          <CardMenu
+            card={card}
+            actions={actions}
+            onOpenDetails={onOpenDetails}
+            onClose={() => toggleShowMenu(false)}
+          />
+        )}
+        {!disableSelection && (
+          <SelectButton
+            onSelect={onSelect}
+            isSelected={isSelected}
+            isHovering={showMenu}
+            isAnyCardSelected={isAnyCardSelected}
+          />
+        )}
+      </StyledImageWrapper>
+      <CardInfo card={card} search={search} minimal={minimal} />
+    </StyledCardWrapper>
   );
 };
 
