@@ -1,6 +1,7 @@
 import React from 'react';
 import { AutoComplete, Typography, Empty, Input } from 'antd';
 import styled from 'styled-components';
+import getDropdownAlign from 'utils/getDropdownAlign';
 import CardContext from '../../../Provider/CardProvider';
 import { filterAndSortByQuery } from '../../../../utils/cardFilter';
 import OwnedBadge from '../OwnedBadge';
@@ -68,18 +69,6 @@ const getHighlightedOption = (
       </span>
     </StyledOption>
   );
-};
-
-const getDropdownAlign = (alignTop) => {
-  if (!alignTop) return undefined;
-  return {
-    points: ['bl', 'tl'],
-    offset: [0, -4],
-    overflow: {
-      adjustX: 0,
-      adjustY: 0,
-    },
-  };
 };
 
 export default class CardSearch extends React.Component {

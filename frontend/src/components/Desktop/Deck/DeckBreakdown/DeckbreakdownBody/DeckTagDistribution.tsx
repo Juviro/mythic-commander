@@ -33,9 +33,11 @@ export const DeckTagDistribution = ({ deck }: Props) => {
 
   const maxAmount = data.reduce((max, { amount }) => (amount > max ? amount : max), 0);
 
+  const height = data.length * 50 + 80;
+
   return (
     <DeckStat title="Tags" hidden={!data.length}>
-      <ResponsiveContainer width="100%" height={data.length * 50}>
+      <ResponsiveContainer width="100%" height={height}>
         <BarChart
           layout="vertical"
           data={data}

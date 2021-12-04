@@ -13,7 +13,6 @@ const StyledWrapper = styled.aside<{ isOpen: boolean }>`
   min-width: 500px;
   display: flex;
   flex-direction: column;
-  padding: 24px;
   margin-left: 24px;
   background-color: white;
   height: fit-content;
@@ -43,6 +42,10 @@ const StyledWrapper = styled.aside<{ isOpen: boolean }>`
   }
 `;
 
+const StyledBody = styled.section`
+  padding: 0 24px 24px;
+`;
+
 const StyledButton = styled(Button)`
   border-radius: 50%;
 `;
@@ -56,7 +59,11 @@ export const DeckBreakdown = ({ deck }: Props) => {
 
   return (
     <StyledWrapper isOpen={isOpen}>
-      <Flex justify="space-between" onClick={toggleIsOpen} style={{ cursor: 'pointer' }}>
+      <Flex
+        justify="space-between"
+        onClick={toggleIsOpen}
+        style={{ cursor: 'pointer', padding: 18 }}
+      >
         <Typography.Title level={3} style={{ marginBottom: 0 }}>
           Breakdown
         </Typography.Title>
@@ -66,9 +73,13 @@ export const DeckBreakdown = ({ deck }: Props) => {
           icon={isOpen ? <MinusOutlined /> : <PlusOutlined />}
         />
       </Flex>
-      <Divider />
-      <DeckBreakdownHeader deck={deck} />
-      {isOpen && deck && <DeckBreakdownBody deck={deck} />}
+      {isOpen && (
+        <StyledBody>
+          <Divider />
+          <DeckBreakdownHeader deck={deck} />
+          <DeckBreakdownBody deck={deck} />
+        </StyledBody>
+      )}
     </StyledWrapper>
   );
 };

@@ -12,6 +12,8 @@ interface Props {
 }
 
 export const DeckBreakdownBody = ({ deck }: Props) => {
+  if (!deck) return null;
+
   return (
     <>
       <DeckValue deck={deck} />

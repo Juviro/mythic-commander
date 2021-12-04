@@ -1,5 +1,5 @@
 import { updateLastEdit } from './helper';
-import { canAccessDeck } from '../../../../auth/authenticateUser';
+import { canEditDeck } from '../../../../auth/authenticateUser';
 
 const ON_CONFLICT = `
     ON CONFLICT (id, "deckId") 
@@ -19,8 +19,9 @@ export default async (
       .insert({ userId, name: deckName })
       .returning('id');
     deckId = id;
+  } else {
+    await canEditDeck(userId, deckId);
   }
-  await canAccessDeck(userId, deckId);
 
   const cardIds = cards.map(({ id }) => id);
 

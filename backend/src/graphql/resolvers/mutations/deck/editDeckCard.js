@@ -19,7 +19,8 @@ export default async (_, { cardId, deckId, newProps }, { user, db }) => {
       .where({ deckId, 'cardToDeck.id': newCardId });
 
     return unifyCardFormat(deckId)(updatedCard);
-  } catch {
+  } catch (e) {
+    console.error('Error editing card:', e);
     throw new Error('That card edition already exists in this deck');
   }
 };

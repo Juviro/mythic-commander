@@ -1,114 +1,98 @@
 import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
-import { Input, Space, Button } from 'antd';
-import React, { useRef, useState } from 'react';
+import { Space, Select, Typography } from 'antd';
+import React, { useState } from 'react';
 
-import { FEATURE_FLAG_TAG } from 'constants/featureFlags';
 import DEFAULT_TAGS from 'constants/tags';
 import { UnifiedDeckCard } from 'types/unifiedTypes';
-import { MutationSetDefaultTagArgs } from 'types/graphql';
-import FeatureFlag from 'components/Elements/Shared/FeatureFlag';
+import { MutationSetDefaultTagsArgs } from 'types/graphql';
+import AddTagFooter from 'components/Elements/Shared/CardGrid/Tags/AddTagFooter';
+import getDropdownAlign from 'utils/getDropdownAlign';
+import { CloseOutlined } from '@ant-design/icons';
 import { Tag } from './Tag';
+import { setDefaultTags } from './queries';
 import Flex from '../../Flex';
-import { setDefaultTag } from './queries';
 
 const StyledMenu = styled.div`
   display: flex;
   flex-direction: column;
   width: 250px;
-  height: 200px;
-`;
 
-const StyledTags = styled.div`
-  overflow: auto;
-  max-height: 120px;
-  margin-bottom: 8px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  & .ant-select-selector {
+    padding: 4px;
+  }
 `;
 
 interface Props {
   onSetTags: (cardId: string, tags: string[]) => void;
   card: UnifiedDeckCard;
   allTags: string[];
+  onClose: () => void;
 }
 
-export const AddTag = ({ onSetTags, card, allTags }: Props) => {
-  const inputRef = useRef(null);
-  const [search, setSearch] = useState<string>('');
-  const [mutate] = useMutation<null, MutationSetDefaultTagArgs>(setDefaultTag);
+const tagRender = ({ value, onClose }) => {
+  return <Tag tag={value} key={value} onDeleteTag={(_, event) => onClose(event)} />;
+};
+
+export const AddTag = ({ onSetTags, card, allTags, onClose }: Props) => {
+  const [currentTags, setCurrentTags] = useState(card.tags ?? []);
+  const [isOpen, setIsOpen] = useState(true);
+  const [mutate] = useMutation<null, MutationSetDefaultTagsArgs>(setDefaultTags);
 
   const existingTags = [...new Set(allTags.concat(DEFAULT_TAGS))];
-  const displayedTags = existingTags.filter(
-    (tag) => !card.tags?.includes(tag) && tag.toLowerCase().includes(search.toLowerCase())
-  );
 
-  const onAddTag = (tag: string, saveAsDefault?: boolean) => {
-    const currentTags = card.tags ?? [];
-    const usedTag =
-      existingTags.find((existing) => existing.toLowerCase() === tag.toLowerCase()) ??
-      tag;
+  const onSave = () => {
+    onSetTags(card.id, currentTags);
+    onClose();
+  };
 
-    const newTags = [...new Set(currentTags.concat(usedTag))].sort((a, b) =>
-      a.toLowerCase() > b.toLowerCase() ? 1 : -1
-    );
+  const onSaveAsDefault = () => {
+    const newDefaultTags = currentTags.filter((tag) => DEFAULT_TAGS.includes(tag));
+    mutate({ variables: { tags: newDefaultTags, oracleId: card.oracle_id } });
+    onSave();
+  };
 
-    onSetTags(card.id, newTags);
-    setSearch('');
-
-    if (saveAsDefault) {
-      mutate({ variables: { tag, oracleId: card.oracle_id } });
+  const onKeyDown = (event: React.KeyboardEvent) => {
+    if (isOpen) return;
+    event.stopPropagation();
+    if (event.key === 'Enter') {
+      onSave();
+    } else if (event.key === 'Escape') {
+      onClose();
     }
   };
 
-  const onSubmit = () => onAddTag(search);
-
   return (
     <StyledMenu>
-      <Flex direction="column" justify="space-between" style={{ height: '100%' }}>
-        <Space direction="vertical">
-          <Input
-            autoFocus
-            allowClear
-            ref={inputRef}
-            placeholder="Enter your tag"
-            style={{ width: '100%' }}
-            onSubmit={onSubmit}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={(event) => {
-              if (event.key !== 'Enter') return;
-              onSubmit();
-            }}
-            value={search}
-          />
-          <StyledTags>
-            {displayedTags.map((tag) => (
-              <Tag tag={tag} key={tag} onClick={() => setSearch(tag)} />
-            ))}
-          </StyledTags>
-        </Space>
-        <Flex justify="flex-end">
-          <Space>
-            <FeatureFlag flag={FEATURE_FLAG_TAG}>
-              <Button
-                type="primary"
-                ghost
-                onClick={() => onAddTag(search, true)}
-                disabled={
-                  !search ||
-                  !DEFAULT_TAGS.some((tag) => tag.toLowerCase() === search.toLowerCase())
-                }
-              >
-                Save as default
-              </Button>
-            </FeatureFlag>
-            <Button type="primary" disabled={!search.trim()} onClick={onSubmit}>
-              Save
-            </Button>
-          </Space>
+      <Space direction="vertical" size={12}>
+        <Flex justify="space-between">
+          <Typography.Text>Add Tag</Typography.Text>
+          <CloseOutlined onClick={onClose} />
         </Flex>
-      </Flex>
+        <Select
+          mode="tags"
+          autoFocus
+          defaultOpen
+          style={{ width: '100%' }}
+          placeholder="Add a tag..."
+          onDropdownVisibleChange={setIsOpen}
+          value={currentTags}
+          defaultValue={card.tags}
+          optionLabelProp="label"
+          tagRender={tagRender}
+          onMouseDown={(e) => e.stopPropagation()}
+          dropdownAlign={getDropdownAlign(true)}
+          onChange={(value) => setCurrentTags(value)}
+          onKeyDown={onKeyDown}
+        >
+          {existingTags.map((tag) => (
+            <Select.Option value={tag} key={tag} label={tag}>
+              <Tag tag={tag} key={tag} />
+            </Select.Option>
+          ))}
+        </Select>
+        <AddTagFooter onSaveAsDefault={onSaveAsDefault} onSave={onSave} />
+      </Space>
     </StyledMenu>
   );
 };

@@ -14,7 +14,7 @@ export const StyledTag = styled(AntdTag)<{ onClick?: () => void }>`
 interface Props {
   tag: string;
   onClick?: () => void;
-  onDeleteTag?: (tag: string) => void;
+  onDeleteTag?: (tag: string, event: React.MouseEvent) => void;
 }
 
 export const Tag = ({ tag, onClick, onDeleteTag }: Props) => {
@@ -27,7 +27,7 @@ export const Tag = ({ tag, onClick, onDeleteTag }: Props) => {
       closable={Boolean(onDeleteTag)}
       color={tagColor?.color}
       onClick={onClick}
-      onClose={onDeleteTag ? () => onDeleteTag(tag) : undefined}
+      onClose={onDeleteTag ? (event) => onDeleteTag(tag, event) : undefined}
     >
       {tag}
     </StyledTag>

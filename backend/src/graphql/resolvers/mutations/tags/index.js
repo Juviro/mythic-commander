@@ -1,5 +1,5 @@
-import setDefaultTag from './setDefaultTag';
+import setDefaultTags from './setDefaultTags';
 
 export default {
-  setDefaultTag,
+  setDefaultTags,
 };

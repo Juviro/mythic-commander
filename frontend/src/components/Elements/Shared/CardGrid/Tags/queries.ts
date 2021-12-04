@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
-export const setDefaultTag = gql`
-  mutation setDefaultTag($tag: String!, $oracleId: String!) {
-    setDefaultTag(tag: $tag, oracleId: $oracleId)
+export const setDefaultTags = gql`
+  mutation setDefaultTags($tags: [String!]!, $oracleId: String!) {
+    setDefaultTags(tags: $tags, oracleId: $oracleId)
   }
 `;

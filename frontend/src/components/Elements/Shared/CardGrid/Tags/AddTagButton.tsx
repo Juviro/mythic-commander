@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { PlusOutlined } from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons';
 import { Popover, Tag as AntdTag } from 'antd';
 
 import { greyBorder } from 'constants/colors';
@@ -22,13 +22,48 @@ interface Props {
 }
 
 export const AddTagButton = ({ onSetTags, card, allTags }: Props) => {
-  const menu = <AddTag onSetTags={onSetTags} card={card} allTags={allTags} />;
+  const [visible, setVisible] = useState(false);
+  const popoverRef = useRef(null);
+
+  const onClose = () => {
+    setVisible(false);
+  };
+
+  useEffect(() => {
+    const onClick = (event) => {
+      if (!popoverRef.current?.contains(event.target)) {
+        setVisible(false);
+      }
+    };
+
+    if (visible) {
+      document.addEventListener('mousedown', onClick);
+    } else {
+      document.removeEventListener('mousedown', onClick);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', onClose);
+    };
+  }, [visible]);
+
+  const menu = (
+    <div ref={popoverRef}>
+      <AddTag onSetTags={onSetTags} card={card} allTags={allTags} onClose={onClose} />
+    </div>
+  );
 
   return (
-    <Popover content={menu} placement="bottomLeft" trigger={['click']}>
-      <StyledAddTag>
-        <PlusOutlined />
-        <span>Add Tag</span>
+    <Popover
+      content={menu}
+      visible={visible}
+      placement="bottomLeft"
+      destroyTooltipOnHide
+      trigger={['click']}
+    >
+      <StyledAddTag onClick={() => setVisible(true)}>
+        <EditOutlined />
+        <span>Edit Tags</span>
       </StyledAddTag>
     </Popover>
   );
