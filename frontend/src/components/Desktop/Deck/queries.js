@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 
 const CARD_FIELDS = `
     id
+    tags
     amount
     isCommander
     createdAt

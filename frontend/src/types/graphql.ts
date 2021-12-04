@@ -149,6 +149,7 @@ export type DeckCard = {
   createdAt: Scalars['String'];
   isCommander?: Maybe<Scalars['Boolean']>;
   card: Card;
+  tags?: Maybe<Array<Scalars['String']>>;
 };
 
 export type EdhRecCard = {
@@ -185,6 +186,7 @@ export type EditDeckCardInput = {
   id?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['Int']>;
   isCommander?: Maybe<Scalars['Boolean']>;
+  tags?: Maybe<Array<Scalars['String']>>;
 };
 
 export type EditDeckFieldsInput = {
@@ -279,6 +281,7 @@ export type Mutation = {
   changeWantsListVisibility: WantsList;
   updateLtPlayer: LtPlayer;
   deleteLtPlayer?: Maybe<Scalars['Boolean']>;
+  setDefaultTags?: Maybe<Scalars['Boolean']>;
 };
 
 export type MutationSetUsernameArgs = {
@@ -420,6 +423,11 @@ export type MutationUpdateLtPlayerArgs = {
 
 export type MutationDeleteLtPlayerArgs = {
   name: Scalars['String'];
+};
+
+export type MutationSetDefaultTagsArgs = {
+  tags: Array<Scalars['String']>;
+  oracleId: Scalars['String'];
 };
 
 export type OracleCard = {

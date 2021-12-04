@@ -9,6 +9,7 @@ import CardInfo from './CardInfo';
 import Card from '../Card';
 import { CardMenu } from './CardMenu';
 import { SelectButton } from './SelectButton';
+import { Tags } from './Tags/Tags';
 
 export const StyledCenterWrapper = styled.div<{ fixedSize: boolean }>`
   width: 100%;
@@ -32,6 +33,7 @@ const StyledCardWrapper = styled.div<{ fixedSize: boolean }>`
   position: relative;
   width: ${({ fixedSize }) => (fixedSize ? '220px' : '100%')};
   height: 100%;
+  justify-content: space-between;
 `;
 
 const StyledImageWrapper = styled.div<{ isSelected: boolean; markAsDisabled?: boolean }>`
@@ -85,6 +87,8 @@ const GridCard = ({
   disableSelection,
   minimal,
   onClick,
+  onSetTags,
+  allTags,
 }) => {
   const { canDrag = false, listId, onSuccessfullDrop } = dragProps ?? {};
   const displayedAmount = card.amount || card.totalAmount;
@@ -164,6 +168,7 @@ const GridCard = ({
           />
         )}
       </StyledImageWrapper>
+      {onSetTags && <Tags onSetTags={onSetTags} card={card} allTags={allTags} />}
       <CardInfo card={card} search={search} minimal={minimal} />
     </StyledCardWrapper>
   );

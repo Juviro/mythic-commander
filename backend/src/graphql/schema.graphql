@@ -151,6 +151,7 @@ type DeckCard {
   createdAt: String!
   isCommander: Boolean
   card: Card!
+  tags: [String!]
 }
 
 ################################# Collection #################################
@@ -436,6 +437,9 @@ type Mutation {
   ########## Life Tracker ##########
   updateLtPlayer(name: String!, img: String, color: String): LTPlayer!
   deleteLtPlayer(name: String!): Boolean
+
+  ########## Default tags ##########
+  setDefaultTags(tags: [String!]!, oracleId: String!): Boolean
 }
 
 ################################# Move Card #################################
@@ -473,6 +477,7 @@ input EditDeckCardInput {
   id: String
   amount: Int
   isCommander: Boolean
+  tags: [String!]
 }
 
 ################################# Collection #################################

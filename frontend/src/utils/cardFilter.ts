@@ -121,13 +121,13 @@ export const sortByAdded = (cards, direction = 'asc') => {
 };
 
 export const sortByCmc = (cards, direction = 'asc') => {
-  const sortedCards = cards.sort((a, b) => a.cmc - b.cmc);
+  const sortedCards = [...cards].sort((a, b) => a.cmc - b.cmc);
 
   return direction === 'asc' ? sortedCards : sortedCards.reverse();
 };
 
 export const sortByName = (cards, direction = 'asc') => {
-  const sortedCards = cards.sort((a, b) => (a.name < b.name ? -1 : 1));
+  const sortedCards = [...cards].sort((a, b) => (a.name < b.name ? -1 : 1));
 
   return direction === 'asc' ? sortedCards : sortedCards.reverse();
 };

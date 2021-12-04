@@ -57,6 +57,7 @@ interface Props {
   onMoveCards?: (cards: UnifiedCard[]) => void;
   onCopyCardsTo?: (cards: UnifiedCard[]) => void;
   onDeleteCards?: (cards: UnifiedCard[]) => void;
+  onSetTags?: (cardId: string, tags: string[]) => void;
   hidePagination?: boolean;
   dragProps?: DragProps;
   cardsPerRow?: number;
@@ -66,6 +67,7 @@ interface Props {
   minimal?: boolean;
   onClickCard?: (card: UnifiedCard) => void;
   smallSelectionMenu?: boolean;
+  allTags?: string[];
 }
 
 type PropsWithRouterProps = RouteComponentProps & Props;
@@ -85,6 +87,7 @@ const CardGrid = ({
   cardsPerRow,
   onMoveCards,
   onCopyCardsTo,
+  onSetTags,
   cardLists: passedCardLists,
   canZoomIn,
   onClickCard,
@@ -92,6 +95,7 @@ const CardGrid = ({
   hidePagination,
   minimal,
   smallSelectionMenu,
+  allTags,
 }: PropsWithRouterProps) => {
   const [detailCardIndex, setDetailCardIndex] = useState<number | null>(null);
   const detailCard = cards?.[detailCardIndex];
@@ -230,6 +234,8 @@ const CardGrid = ({
                 minimal={minimal}
                 disableSelection={disableSelection || minimal}
                 fixedSize={!cardsPerRow}
+                allTags={allTags}
+                onSetTags={onSetTags}
                 isSelected={selectedCardIds.includes(card.id)}
                 isAnyCardSelected={Boolean(selectedCardIds.length)}
                 canZoomIn={canZoomIn}

@@ -47,6 +47,17 @@ export const isCollectionPublic = async userId => {
     .first();
 
   if (!collectionVisibility || collectionVisibility.visibility !== 'hidden') {
-    throw new throwAuthError('This collection is private.');
+    throwAuthError('This collection is private.');
+  }
+};
+
+export const hasFeatureFlag = async (userId, featureFlag) => {
+  const user = await db('users')
+    .whereRaw('? = ANY("featureFlags")', featureFlag)
+    .andWhere({ id: userId })
+    .first();
+
+  if (!user) {
+    throwAuthError(`User ${userId} has no feature flag ${featureFlag}`);
   }
 };

@@ -49,8 +49,18 @@ export default ({ loading, cardsByType, deck }) => {
   };
 
   const onEditCard = (cardId, newProps) => {
+    const card = deck.originalCards.find(
+      (originalCard) => originalCard.card.id === cardId
+    );
     mutateEdit({
       variables: { deckId: deck.id, newProps, cardId },
+      optimisticResponse: () => ({
+        __typename: 'Mutation',
+        editDeckCard: {
+          ...card,
+          ...newProps,
+        },
+      }),
       update: (cache, { data: { editDeckCard: newCard } }) => {
         const existing = cache.readQuery({
           query: getDeckDesktop,
@@ -75,7 +85,20 @@ export default ({ loading, cardsByType, deck }) => {
     });
   };
 
-  const cardLists = cardsByType?.map(({ type, cards }) => {
+  const onSetTags = (cardId, tags) => {
+    onEditCard(cardId, { tags });
+  };
+
+  const allTags = [
+    ...new Set(
+      deck?.cards
+        .map(({ tags }) => tags)
+        .filter(Boolean)
+        .flat()
+    ),
+  ];
+
+  const cardLists = cardsByType?.map(({ type, cards, titleColor = 'black' }) => {
     const { valueLabelEur, valueLabelUsd } = getListStats({ cards });
     const isCommander = type === 'Commander';
     const numberOfCardsLabel = isCommander ? '' : `(${sumCardAmount(cards)})`;
@@ -86,7 +109,7 @@ export default ({ loading, cardsByType, deck }) => {
     };
 
     const title = (
-      <Flex direction="column">
+      <Flex direction="column" style={{ color: titleColor }}>
         <span>{`${getListHeading()} ${numberOfCardsLabel}`}</span>
         <StyledSubtitle>
           {cards.length && deck.canEdit ? `${valueLabelUsd} | ${valueLabelEur}` : ''}
@@ -120,6 +143,8 @@ export default ({ loading, cardsByType, deck }) => {
       onEditCard={deck?.canEdit ? onEditCard : undefined}
       showAddedBeforeFilter
       showCollectionFilters
+      allTags={allTags}
+      onSetTags={onSetTags}
       orderByParamName="orderByAdvanced"
       dragProps={{
         canDrag: true,

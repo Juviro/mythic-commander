@@ -55,6 +55,7 @@ export const addToCollectionDesktop = gql`
   mutation addToCollectionDesktop($cards: [CardInputType]!) {
     addToCollection(cards: $cards) {
       id
+      owned
     }
   }
 `;

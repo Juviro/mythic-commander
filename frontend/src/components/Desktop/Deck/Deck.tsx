@@ -11,6 +11,7 @@ import { getColorIdentity } from 'utils/commander';
 import Flex from 'components/Elements/Shared/Flex';
 import NotFound from 'components/Elements/Shared/NotFound';
 import ShortcutFocus from 'components/Elements/Shared/ShortcutFocus';
+import useLocalStorage from 'components/Hooks/useLocalStorage';
 import Cards from './Cards';
 import message from '../../../utils/message';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
@@ -20,6 +21,9 @@ import { DeckBreakdown } from './DeckBreakdown/DeckBreakdown';
 import DeckActions from './Header/DeckActions';
 import Title from './Header/Title';
 import { ActionBar } from './ActionBar/ActionBar';
+import { DeckSettings } from './DeckSettings/DeckSettings';
+
+export type View = 'type' | 'tags';
 
 export default () => {
   const { id } = useParams<{ id: string }>();
@@ -28,6 +32,8 @@ export default () => {
     fetchPolicy: 'network-only',
   });
   const [mutate] = useMutation<any, MutationAddCardsToDeckArgs>(addCardsToDeckDesktop);
+
+  const [view, setView] = useLocalStorage('type');
 
   const deck = data?.deck;
   const cards = unifyCardFormat(deck?.cards);
@@ -78,8 +84,14 @@ export default () => {
           }
           style={{ height: 'calc(100% - 80px)', marginBottom: 70 }}
         >
+          <DeckSettings view={view} setView={setView} />
           <Flex>
-            <Cards deck={unifiedDeck} loading={loading} onAddCards={onAddCards} />
+            <Cards
+              deck={unifiedDeck}
+              loading={loading}
+              onAddCards={onAddCards}
+              view={view}
+            />
             <DeckBreakdown deck={unifiedDeck} />
           </Flex>
         </PageCard>

@@ -93,3 +93,66 @@ export const manaSymbolColors = {
   R: '#faaa8f',
   G: '#9cd6b0',
 };
+
+export const tagColors = [
+  {
+    name: '???',
+    color: 'gold',
+  },
+  {
+    name: 'Targeted Removal',
+    color: 'volcano',
+    fill: '#d4380d',
+    background: '#ffbb96',
+  },
+  {
+    name: '???',
+    color: 'red',
+  },
+  {
+    name: 'Board Wipe',
+    color: 'orange',
+    fill: '#d46b08',
+    background: '#ffd591',
+  },
+  {
+    name: '???',
+    color: 'lime',
+  },
+  {
+    name: 'Ramp',
+    color: 'green',
+    fill: '#389e0d',
+    background: '#f6ffed',
+  },
+  {
+    name: 'Synergy',
+    color: 'cyan',
+    fill: '#08979c',
+    background: '#e6fffb',
+  },
+  {
+    name: 'Protection',
+    color: 'blue',
+    fill: '#096dd9',
+    background: '#e6f7ff',
+  },
+  {
+    name: 'Card Draw',
+    color: 'geekblue',
+    fill: '#1d39c4',
+    background: '#f0f5ff',
+  },
+  {
+    name: 'Tutor',
+    color: 'purple',
+    fill: '#531dab',
+    background: '#f9f0ff',
+  },
+  {
+    name: 'Default',
+    color: 'magenta',
+    fill: '#c41d7f',
+    background: '#fff0f6',
+  },
+];
