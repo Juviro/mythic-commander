@@ -7,13 +7,18 @@ export const currentSnapshots = gql`
       currentSnapshot {
         date
         value
+        valueEur
         amount
+        amountUniqueVersions
         amountUnique
+        missingPriceEur
       }
       referenceSnapshot {
         date
         value
+        valueEur
         amount
+        amountUniqueVersions
         amountUnique
       }
     }

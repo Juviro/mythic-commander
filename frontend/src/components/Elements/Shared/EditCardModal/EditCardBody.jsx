@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import isMobile from 'utils/isMobile';
 import { Typography } from 'antd';
-import FlippableCard from '../FlippableCard';
+import Card from '../Card';
 import SetPicker from '../SetPicker';
 import AmountInput from '../AmountInput';
 
@@ -40,7 +40,7 @@ export default ({ card, onChangeProp, canSubmit, onSubmit }) => {
   return (
     <StyledWrapper>
       <StyledImageWrapper>
-        <FlippableCard card={selectedCard || card} />
+        <Card card={selectedCard || card} />
       </StyledImageWrapper>
       <StyledContent>
         <Typography.Text strong>Amount</Typography.Text>

@@ -28,6 +28,7 @@ export default ({
       fallbackCard={fallbackCard}
       largeHeader={largeHeader}
       parentLoading={parentLoading}
+      selectedCard={selectedCard}
       selectedCardId={selectedCardId}
       setSelectedCardId={setSelectedCardId}
     />

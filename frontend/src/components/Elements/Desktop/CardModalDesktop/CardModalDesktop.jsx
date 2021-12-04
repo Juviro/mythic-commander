@@ -5,7 +5,7 @@ import Flex from 'components/Elements/Shared/Flex';
 import FocusedModal from 'components/Elements/Shared/FocusedModal';
 import CardDetailsDesktop from '../CardDetailsDesktop';
 
-import { cardDetailsDesktop } from '../CardDetailsDesktop/queries';
+import { cardDetailsDesktop, cardDetailsById } from '../CardDetailsDesktop/queries';
 import { unifySingleCard } from '../../../../utils/unifyCardFormat';
 import { useShortcut } from '../../../Hooks';
 
@@ -16,15 +16,19 @@ const CardModalDesktop = ({
   onNext = null,
   onPrevious = null,
 }) => {
-  const { oracle_id, id: initialCardId } = selectedCard;
   useShortcut('SPACE', onClose, { focusId: 'modal.cardDetails' });
-  const { data, loading: cardLoading } = useQuery(cardDetailsDesktop, {
-    variables: { oracle_id },
+  const { oracle_id, id: initialCardId } = selectedCard;
+  const { query, variables, dataKey } = oracle_id
+    ? { query: cardDetailsDesktop, variables: { oracle_id }, dataKey: 'cardByOracleId' }
+    : { query: cardDetailsById, variables: { id: initialCardId }, dataKey: 'card' };
+
+  const { data, loading: cardLoading } = useQuery(query, {
+    variables,
     fetchPolicy: 'network-only',
   });
   const loading = cardLoading || parentLoading;
 
-  const unifiedCard = data && unifySingleCard(data.cardByOracleId);
+  const unifiedCard = data?.[dataKey] && unifySingleCard(data[dataKey]);
 
   return (
     <FocusedModal

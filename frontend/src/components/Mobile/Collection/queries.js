@@ -11,11 +11,11 @@ const COLLECTION_CARD_FIELDS = `
       oracle_id
       mana_cost
       color_identity
+      isTwoFaced
       
       oracleCard {
         _id
         totalAmount
-        isTwoFaced
         subTypes
         primaryTypes
         minPriceUsd

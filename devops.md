@@ -4,7 +4,7 @@
 `sudo certbot`
 `sudo service nginx start`
 
-## Auto renew (not tested - seems to not have worked):
+## Auto renew certificate:
 
 `echo "0 0,12 * * * root python -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew -q" | sudo tee -a /etc/crontab > /dev/null`
 
@@ -25,6 +25,7 @@
 
 ### Dump db
 
-- dump prod db: `pg_dump -h mtg.cr9n9thq5jyt.eu-central-1.rds.amazonaws.com -U hauke -f dump.sql mtg`
+- dump prod db: `pg_dump -h localhost -d mtg -f dump.sql`
+- copy dump file from server: `scp -i /Users/haukewitte/.ssh/sshhs juviro@juviro.ddns.net:/home/juviro/dump.sql .`
 - create db locally: `createdb mtg`
 - import locally: `psql -d mtg -f dump.sql`

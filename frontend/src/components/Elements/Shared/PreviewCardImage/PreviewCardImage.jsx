@@ -5,7 +5,7 @@ import { Popover } from 'antd';
 import { getImageUrl } from '../../../../utils/cardImage';
 import FullscreenCardModal from '../../Mobile/FullscreenCardModal';
 import CustomSkeleton from '../CustomSkeleton';
-import FlippableCard from '../FlippableCard';
+import Card from '../Card';
 import { useToggle } from '../../../Hooks';
 
 const StyledCard = styled.img`
@@ -64,7 +64,7 @@ const PreviewCardImage = ({
             height: 460,
           }}
         >
-          <FlippableCard card={card} />
+          <Card card={card} />
         </div>
       }
       placement="right"

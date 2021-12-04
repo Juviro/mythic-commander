@@ -4,9 +4,9 @@ import { useDrag } from 'react-dnd';
 
 import { primary } from 'constants/colors';
 import EnlargeImage from './EnlargeImage';
-import FlippableCard from '../FlippableCard';
 import { useToggle } from '../../../Hooks';
 import CardInfo from './CardInfo';
+import Card from '../Card';
 import { CardMenu } from './CardMenu';
 import { SelectButton } from './SelectButton';
 import { Tags } from './Tags/Tags';
@@ -152,7 +152,7 @@ const GridCard = ({
             }}
           >
             {canZoomIn && <EnlargeImage card={card} />}
-            <FlippableCard card={card} onFlipCard={() => toggleShowMenu(false)} />
+            <Card card={card} onFlipCard={() => toggleShowMenu(false)} />
             {displayedAmount > 1 && (
               <StyledAmountWrapper>{`${displayedAmount}x`}</StyledAmountWrapper>
             )}

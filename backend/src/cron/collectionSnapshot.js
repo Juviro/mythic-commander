@@ -6,7 +6,7 @@ export default async () => {
 
   for (const userId of userIds) {
     const {
-      rows: [{ value, valueEur }],
+      rows: [{ value, valueEur, amountUniqueVersions }],
     } = await db.raw(
       `
       SELECT 
@@ -17,7 +17,8 @@ export default async () => {
         SUM(
           coalesce(LEAST((prices->>'eur')::float, (prices->>'eur_foil')::float), 0) * amount + 
           coalesce(GREATEST((prices->>'eur')::float, (prices->>'eur_foil')::float), 0) * "amountFoil"
-        )::int as "valueEur"
+        )::int as "valueEur",
+      COUNT(*) AS "amountUniqueVersions"
       FROM collection 
       LEFT JOIN cards 
         ON cards.id = collection.id
@@ -36,7 +37,8 @@ export default async () => {
           SUM(amount) as amount,
           count(*) as "amountUnique",
           NOW() as date, 
-          ? as "valueEur"
+          ? as "valueEur",
+          ? as "amountUniqueVersions"
           FROM (
             SELECT 
               SUM(amount + "amountFoil") as amount, 
@@ -49,7 +51,7 @@ export default async () => {
         GROUP BY "userId"
       )
       `,
-      [value, valueEur, userId, userId]
+      [value, valueEur, amountUniqueVersions, userId, userId]
     );
   }
 };

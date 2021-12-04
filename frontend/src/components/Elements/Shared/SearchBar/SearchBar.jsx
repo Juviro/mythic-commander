@@ -108,7 +108,6 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
         dropdownMatchSelectWidth={false}
         listHeight={360}
         dropdownStyle={dropdownStyle}
-        placeholder="Search for a card... [C]"
         style={{ width: 'calc(100% - 16px)', ...style }}
         className={transparent ? 'transparent' : 'dark-placeholder'}
       >
@@ -116,6 +115,7 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
           allowClear
           theme="dark"
           className="no-border"
+          placeholder="Search for a card... [C]"
           onClick={() => toggleIsOpen(true)}
           onInput={() => toggleIsOpen(true)}
         />

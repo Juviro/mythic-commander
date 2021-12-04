@@ -14,7 +14,7 @@ const WantsLists = React.lazy(() => import('./WantsLists'));
 const WantsList = React.lazy(() => import('./WantsList'));
 const Decks = React.lazy(() => import('./Decks'));
 const Deck = React.lazy(() => import('./Deck'));
-const Card = React.lazy(() => import('./Card'));
+const CardView = React.lazy(() => import('./CardView'));
 
 const StyledBody = styled.div`
   height: 100%;
@@ -37,7 +37,7 @@ const Desktop = () => {
             <Route path="/decks/:id" exact component={Deck} />
             <Route path="/my-wants" exact component={WantsLists} />
             <Route path="/wants/:id" exact component={WantsList} />
-            <Route path="/cards/:oracle_id" exact component={Card} />
+            <Route path="/cards/:oracle_id" exact component={CardView} />
             <Redirect from="*" to="/collection" />
           </Switch>
         </Suspense>

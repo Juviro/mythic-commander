@@ -7,10 +7,10 @@
 ## CURRENT:
 
 - Deck performance
+- add tags (sort by type (ramp, card draw, ...))
 
 ## NEXT:
 
-- add tags (sort by type (ramp, card draw, ...))
 - show value of unowned cards for deck
 - allow editing the name of wants in deck sidebar
 - allow multi drag & drop when multiple cards selected
@@ -36,6 +36,7 @@
 - improve re-rendering of grid card
 - added to collection notification -> show amount as well
 - add optimistic response to card delete in deck (esp. mobile)
+- backup cardPrices
 
 ## PERFORMANCE:
 

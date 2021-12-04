@@ -12,13 +12,13 @@ const CARD_FIELDS = `
     cmc
     mana_cost
     set_name
+    isTwoFaced
     
     oracleCard {
       _id
       owned
       minPriceUsd
       minPriceEur
-      isTwoFaced
     }
   }
 `;

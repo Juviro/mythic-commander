@@ -12,13 +12,13 @@ const WANTS_LIST_CARD_FIELDS = `
     set_name
     mana_cost
     oracle_id
+    isTwoFaced
     
     oracleCard {
       _id
       owned
       minPriceUsd
       minPriceEur
-      isTwoFaced
     }
   }
 `;

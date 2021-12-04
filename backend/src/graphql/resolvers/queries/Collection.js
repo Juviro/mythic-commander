@@ -10,7 +10,13 @@ export const getCurrentSnapshot = (db, userId) =>
           coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * amount + 
           coalesce(GREATEST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0) * "amountFoil"
         )) as "value",
+        CEIL(SUM(
+          coalesce(LEAST((prices->>'eur')::float, (prices->>'eur_foil')::float), 0) * amount + 
+          coalesce(GREATEST((prices->>'eur')::float, (prices->>'eur_foil')::float), 0) * "amountFoil"
+        )) as "valueEur",
+        SUM(CASE WHEN prices->>'eur' IS NULL AND prices->>'eur_foil' IS NULL THEN 1 ELSE 0 END) AS "missingPriceEur",
         SUM(amount + "amountFoil") as amount,
+        COUNT(*) as "amountUniqueVersions",
         COUNT(DISTINCT cards.oracle_id) as "amountUnique"
       `)
     )

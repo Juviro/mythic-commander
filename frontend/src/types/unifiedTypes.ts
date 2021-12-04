@@ -12,8 +12,11 @@ export type UnifiedDeckCard = OracleCard & DeckCard & Card;
 export type UnifiedCollectionCard = OracleCard & CollectionCard & Card;
 export type UnifiedWantsListCard = OracleCard & WantsListCard & Card;
 export type UnifiedListCard = UnifiedDeckCard | UnifiedWantsListCard;
-export type UnifiedSingleCard = Omit<Card, '__typename' | 'oracleCard'> &
-  Omit<OracleCard, '__typename'> & { __typename?: string };
+export type UnifiedSingleCard = Omit<Card, '__typename' | 'oracleCard' | 'allSets'> &
+  Omit<OracleCard, '__typename' | 'allSets'> & {
+    __typename?: string;
+    allSets?: UnifiedSingleCard[];
+  };
 
 export type UnifiedCardType<T> = T extends DeckCard
   ? UnifiedDeckCard

@@ -11,10 +11,12 @@ const StyledWrapper = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 16px;
 
   @media (min-width: 900px) {
-    &:not(:first-child) {
-      ${({ horizontal }) => (horizontal ? 'margin-left: 32px;' : 'margin-top: 16px;')};
+    &:not(:last-child) {
+      ${({ horizontal }) =>
+        horizontal ? 'margin-right: 32px;' : 'margin-bottom: 16px;'};
     }
   }
 `;
@@ -70,8 +72,15 @@ const Development = ({ value, referenceValue, unit = 'cards' }) => {
 export default ({ horizontal, title, value, referenceValue, prefix }) => {
   return (
     <StyledWrapper horizontal={horizontal}>
-      <Statistic title={title} value={value} prefix={prefix} precision={0} />
-      <Development value={value} unit={prefix} referenceValue={referenceValue} />
+      <Statistic
+        title={title}
+        value={value}
+        prefix={prefix}
+        precision={0}
+        suffix={
+          <Development value={value} unit={prefix} referenceValue={referenceValue} />
+        }
+      />
     </StyledWrapper>
   );
 };

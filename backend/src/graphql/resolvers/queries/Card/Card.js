@@ -35,6 +35,10 @@ const resolver = {
     return card_faces[0].mana_cost;
   },
 
+  isTwoFaced({ image_uris }) {
+    return !image_uris;
+  },
+
   relatedCards({ all_parts, layout }, _, { db }) {
     if (!all_parts || layout === 'token') return null;
 
@@ -75,6 +79,10 @@ const resolver = {
     }
 
     return type_line.includes('Creature');
+  },
+
+  priceDevelopment({ id }, _, { db }) {
+    return db('cardPrices').where({ id });
   },
 };
 

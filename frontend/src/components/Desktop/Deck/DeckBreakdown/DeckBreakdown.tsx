@@ -66,13 +66,9 @@ export const DeckBreakdown = ({ deck }: Props) => {
           icon={isOpen ? <MinusOutlined /> : <PlusOutlined />}
         />
       </Flex>
-      {isOpen && (
-        <>
-          <Divider />
-          <DeckBreakdownHeader deck={deck} />
-          {deck && <DeckBreakdownBody deck={deck} />}
-        </>
-      )}
+      <Divider />
+      <DeckBreakdownHeader deck={deck} />
+      {isOpen && deck && <DeckBreakdownBody deck={deck} />}
     </StyledWrapper>
   );
 };

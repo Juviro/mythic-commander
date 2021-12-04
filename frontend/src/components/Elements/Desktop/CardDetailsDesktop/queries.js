@@ -8,6 +8,7 @@ const CARD_FIELDS = `
   imgKey
   oracle_text
   scryfall_uri
+  isTwoFaced
 
   relatedCards {
     id
@@ -19,7 +20,6 @@ const CARD_FIELDS = `
   oracleCard {
     _id
     owned
-    isTwoFaced
     totalAmount
     isCommanderLegal
     allSets {
@@ -30,11 +30,19 @@ const CARD_FIELDS = `
       amountOwnedFoil
       set_name
       nonfoil
+      isTwoFaced
       prices {
         usd
         usd_foil
         eur
         eur_foil
+      }
+      priceDevelopment {
+        date
+        priceUsd
+        priceUsdFoil
+        priceEur
+        priceEurFoil
       }
     }
     containingWantsLists {
@@ -54,6 +62,14 @@ const CARD_FIELDS = `
 export const cardDetailsDesktop = gql`
   query cardDetailsDesktop($oracle_id: String!) {
     cardByOracleId(oracle_id: $oracle_id) {
+      ${CARD_FIELDS}
+    }
+  }
+`;
+
+export const cardDetailsById = gql`
+  query cardDetailsById($id: String!) {
+    card(id: $id) {
       ${CARD_FIELDS}
     }
   }

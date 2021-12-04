@@ -4,10 +4,19 @@ import { Card } from 'types/graphql';
 export const unifySingleCard = ({
   oracleCard,
   ...coreFields
-}: Card): UnifiedSingleCard => ({
-  ...oracleCard,
-  ...coreFields,
-});
+}: Card): UnifiedSingleCard => {
+  const unifiedCard = {
+    ...oracleCard,
+    ...coreFields,
+    allSets: oracleCard?.allSets?.map(unifySingleCard),
+  };
+
+  if (!unifiedCard.allSets) {
+    delete unifiedCard.allSets;
+  }
+
+  return unifiedCard;
+};
 
 export default <T extends ListCard>(cards: T[]): UnifiedCardType<T>[] => {
   if (!cards) return null;

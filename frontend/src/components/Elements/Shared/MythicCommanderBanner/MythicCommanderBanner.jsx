@@ -22,7 +22,7 @@ const StyledTextWrapper = styled.span`
   ${({ hideWhenSmall }) =>
     hideWhenSmall
       ? css`
-          @media only screen and (max-width: 900px) {
+          @media only screen and (max-width: 1200px) {
             display: none;
           }
         `

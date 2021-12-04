@@ -47,6 +47,7 @@ export type Card = {
   mana_cost?: Maybe<Scalars['String']>;
   foil: Scalars['Boolean'];
   nonfoil: Scalars['Boolean'];
+  isTwoFaced: Scalars['Boolean'];
   imgKey: Scalars['String'];
   amountOwned: Scalars['Int'];
   amountOwnedFoil: Scalars['Int'];
@@ -54,6 +55,7 @@ export type Card = {
   canBeCommander: Scalars['Boolean'];
   oracleCard: OracleCard;
   relatedCards?: Maybe<Array<Card>>;
+  priceDevelopment?: Maybe<Array<PriceDevelopment>>;
 };
 
 export type CardFace = {
@@ -111,8 +113,11 @@ export type CollectionSnapshot = {
   __typename?: 'CollectionSnapshot';
   date: Scalars['String'];
   value?: Maybe<Scalars['Int']>;
+  valueEur?: Maybe<Scalars['Int']>;
   amount?: Maybe<Scalars['Int']>;
+  amountUniqueVersions?: Maybe<Scalars['Int']>;
   amountUnique?: Maybe<Scalars['Int']>;
+  missingPriceEur?: Maybe<Scalars['Int']>;
 };
 
 export type ContainingList = {
@@ -150,7 +155,6 @@ export type DeckCard = {
 export type EdhRecCard = {
   __typename?: 'EDHRecCard';
   id: Scalars['String'];
-  oracle_id: Scalars['String'];
   imgKey: Scalars['String'];
   name: Scalars['String'];
   priceUsd?: Maybe<Scalars['Float']>;
@@ -436,7 +440,6 @@ export type OracleCard = {
   allSets: Array<Card>;
   owned: Scalars['Boolean'];
   totalAmount: Scalars['Int'];
-  isTwoFaced: Scalars['Boolean'];
   isCommanderLegal: Scalars['Boolean'];
   primaryTypes: Array<Scalars['String']>;
   subTypes: Array<Scalars['String']>;
@@ -459,6 +462,15 @@ export type PaginatedCollection = {
   search?: Maybe<Scalars['String']>;
   totalResults: Scalars['Int'];
   cards: Array<CollectionCard>;
+};
+
+export type PriceDevelopment = {
+  __typename?: 'PriceDevelopment';
+  date: Scalars['String'];
+  priceUsd?: Maybe<Scalars['Float']>;
+  priceUsdFoil?: Maybe<Scalars['Float']>;
+  priceEur?: Maybe<Scalars['Float']>;
+  priceEurFoil?: Maybe<Scalars['Float']>;
 };
 
 export type Prices = {

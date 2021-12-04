@@ -6,10 +6,10 @@ const CARD_FIELDS = `
   name
   imgKey
   scryfall_uri
+  isTwoFaced
   
   oracleCard {
     _id
-    isTwoFaced
     totalAmount
     isCommanderLegal
 
@@ -60,11 +60,11 @@ export const addCardsToWantsList = gql`
         oracle_id
         name
         imgKey
+        isTwoFaced
 
         oracleCard {
           _id
           isCommanderLegal
-          isTwoFaced
 
           containingWantsLists {
             id

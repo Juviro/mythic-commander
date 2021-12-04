@@ -12,10 +12,10 @@ export const cardSearch = gql`
         imgKey
         mana_cost
         oracle_id
+        isTwoFaced
 
         oracleCard {
           _id
-          isTwoFaced
           owned
           minPriceUsd
           minPriceEur

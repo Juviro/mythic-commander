@@ -30,6 +30,7 @@ type Card {
   mana_cost: String
   foil: Boolean!
   nonfoil: Boolean!
+  isTwoFaced: Boolean!
 
   # Additional card fields
   imgKey: String!
@@ -40,6 +41,7 @@ type Card {
 
   oracleCard: OracleCard!
   relatedCards: [Card!]
+  priceDevelopment: [PriceDevelopment!]
 }
 
 type OracleCard {
@@ -53,7 +55,6 @@ type OracleCard {
   owned: Boolean!
   totalAmount: Int!
 
-  isTwoFaced: Boolean!
   isCommanderLegal: Boolean!
   primaryTypes: [String!]!
   subTypes: [String!]!
@@ -118,6 +119,14 @@ type PaginatedCards {
   nextOffset: Int
   totalResults: Int!
   cards: [Card!]!
+}
+
+type PriceDevelopment {
+  date: String!
+  priceUsd: Float
+  priceUsdFoil: Float
+  priceEur: Float
+  priceEurFoil: Float
 }
 
 ################################# Deck #################################
@@ -205,8 +214,11 @@ type WantsListCard {
 type CollectionSnapshot {
   date: String!
   value: Int
+  valueEur: Int
   amount: Int
+  amountUniqueVersions: Int
   amountUnique: Int
+  missingPriceEur: Int
 }
 
 ################################# Proxy #################################
@@ -275,7 +287,6 @@ type EDHRecCategory {
 
 type EDHRecCard {
   id: String!
-  oracle_id: String!
   imgKey: String!
   name: String!
   priceUsd: Float

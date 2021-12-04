@@ -13,6 +13,7 @@ const CARD_FIELDS = `
     mana_cost
     set_name
     color_identity
+    isTwoFaced
     
     oracleCard {
       _id
@@ -21,7 +22,6 @@ const CARD_FIELDS = `
       primaryTypes
       minPriceUsd
       minPriceEur
-      isTwoFaced
     }
   }
 `;

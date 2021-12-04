@@ -1,29 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSpring, animated as a } from 'react-spring';
 import { SyncOutlined } from '@ant-design/icons';
-import styled from 'styled-components';
 
 import './index.css';
 import { UnifiedCard } from 'types/unifiedTypes';
 import isMobile from 'utils/isMobile';
 import { getImageUrl } from '../../../../utils/cardImage';
-import CustomSkeleton from '../CustomSkeleton';
 import CardButton from '../CardButton';
 import { useToggle } from '../../../Hooks';
 
-const StyledImageWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  height: 0;
-  padding-bottom: 139%;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  border-radius: 4%;
-`;
-
 interface Props {
-  card: UnifiedCard;
+  card?: UnifiedCard;
   loading?: boolean;
   hideFlipIcon?: boolean;
   onFlipCard?: (isFlipped: boolean) => void;
@@ -37,7 +24,6 @@ export default ({
 }: Props) => {
   const { id, imgKey, isTwoFaced } = card || {};
   const [isFlipped, toggleIsFlipped] = useToggle(false);
-  const [showHighResImage, toggleShowHighResImage] = useToggle(false);
 
   const { transform, opacity } = useSpring({
     opacity: isFlipped ? 1 : 0,
@@ -45,44 +31,17 @@ export default ({
     config: { mass: 5, tension: 500, friction: 80 },
   });
 
-  const frontLargeSrc = imgKey && getImageUrl(id, imgKey, 'normal');
-
-  useEffect(() => {
-    if (isTwoFaced) return;
-    toggleIsFlipped(false);
-    // eslint-disable-next-line
-  }, [isTwoFaced]);
-
-  useEffect(() => {
-    let isMounted = true;
-    toggleShowHighResImage(false);
-    if (frontLargeSrc) {
-      const img = new Image();
-      img.src = frontLargeSrc;
-      img.onload = () => {
-        if (!isMounted) return;
-        toggleShowHighResImage(true);
-      };
-    }
-
-    return () => {
-      isMounted = false;
-    };
-    // eslint-disable-next-line
-  }, [frontLargeSrc]);
-
   const onFlipCard = (e) => {
     e.stopPropagation();
     if (onFlipCardCallback) onFlipCardCallback(!isFlipped);
     toggleIsFlipped();
   };
 
-  const frontImgSrc = getImageUrl(id, imgKey, showHighResImage ? 'normal' : 'small');
+  const frontImgSrc = getImageUrl(id, imgKey, 'normal');
 
   return (
-    <StyledImageWrapper>
-      <CustomSkeleton.CardImage style={{ position: 'absolute', top: 0 }} />
-      {isTwoFaced && showHighResImage && (
+    <>
+      {isTwoFaced && (
         <>
           {!hideFlipIcon && (
             <CardButton
@@ -119,6 +78,6 @@ export default ({
           src={frontImgSrc}
         />
       )}
-    </StyledImageWrapper>
+    </>
   );
 };
