@@ -12,21 +12,15 @@
 - allow multi drag & drop when multiple cards selected
 - codesplitting: get rid of index.js files in elements/shared
 
-## FOLLOW-UP MIGRATION:
-
-- re-enable deck card selection for mobile
-- display eur prices in collection value + graphs
-- display how many cards are included in eur/usd price (collection)
-
 ## IMPROVEMENTS:
 
 - redesign moveTo modal, especially for mobile
+- re-enable deck card selection for mobile
 - mobile card list preview: allow swipe to next card
 - move to new image service
 - lighthouse report fixes
 
 - add to deck overview list
-  - colors
   - legality
   - split into two lists: draft & finished
 - improve re-rendering of grid card
@@ -51,7 +45,7 @@
 - evaluate removing some caching, using network-only more
 - add field to cards table: version number (1 or 2 in most cases) for:
   - Not having to calc it again in oracleCard -> allSets
-  - When adding a card to collection/deck avoid version numbers other than 1. I think that means preferring version 1 for distinctCards
+  - When adding a card to collection/deck avoid version numbers other than 1. I think that means prefering version 1 for distinctCards
 
 ## BACKLOG:
 
