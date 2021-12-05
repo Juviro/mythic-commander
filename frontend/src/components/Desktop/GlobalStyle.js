@@ -52,6 +52,10 @@ export default createGlobalStyle`
     }
   }
 
+  .add-tag-popover .ant-popover-inner-content {
+    padding: 0;
+  }
+
   /* 
     For some very strange reason, whenever you select a card
     from the search dropdown an input element is 

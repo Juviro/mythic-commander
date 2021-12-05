@@ -1,11 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { EditOutlined } from '@ant-design/icons';
-import { Popover, Tag as AntdTag } from 'antd';
+import { Tag as AntdTag } from 'antd';
 
 import { greyBorder } from 'constants/colors';
 import { UnifiedDeckCard } from 'types/unifiedTypes';
-import { AddTag } from './AddTag';
+import AddTagsPopover from 'components/Elements/Shared/Tags/AddTagsPopover';
+import { useMutation } from 'react-apollo';
+import { MutationSetDefaultTagsArgs } from 'types/graphql';
+import DEFAULT_TAGS from 'constants/tags';
+import { setDefaultTags } from './queries';
 
 const StyledAddTag = styled(AntdTag)`
   cursor: pointer;
@@ -22,49 +26,28 @@ interface Props {
 }
 
 export const AddTagButton = ({ onSetTags, card, allTags }: Props) => {
-  const [visible, setVisible] = useState(false);
-  const popoverRef = useRef(null);
-
-  const onClose = () => {
-    setVisible(false);
+  const [mutate] = useMutation<null, MutationSetDefaultTagsArgs>(setDefaultTags);
+  const onSave = (newTags: string[]) => {
+    onSetTags(card.id, newTags);
   };
 
-  useEffect(() => {
-    const onClick = (event) => {
-      if (!popoverRef.current?.contains(event.target)) {
-        setVisible(false);
-      }
-    };
-
-    if (visible) {
-      document.addEventListener('mousedown', onClick);
-    } else {
-      document.removeEventListener('mousedown', onClick);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', onClose);
-    };
-  }, [visible]);
-
-  const menu = (
-    <div ref={popoverRef}>
-      <AddTag onSetTags={onSetTags} card={card} allTags={allTags} onClose={onClose} />
-    </div>
-  );
+  const onSaveAsDefault = (newTags: string[]) => {
+    onSetTags(card.id, newTags);
+    const newDefaultTags = newTags.filter((tag) => DEFAULT_TAGS.includes(tag));
+    mutate({ variables: { tags: newDefaultTags, oracleId: card.oracle_id } });
+  };
 
   return (
-    <Popover
-      content={menu}
-      visible={visible}
-      placement="bottomLeft"
-      destroyTooltipOnHide
-      trigger={['click']}
+    <AddTagsPopover
+      allTags={allTags}
+      onSave={onSave}
+      onSaveAsDefault={onSaveAsDefault}
+      initialTags={card.tags}
     >
-      <StyledAddTag onClick={() => setVisible(true)}>
+      <StyledAddTag>
         <EditOutlined />
         <span>Edit Tags</span>
       </StyledAddTag>
-    </Popover>
+    </AddTagsPopover>
   );
 };

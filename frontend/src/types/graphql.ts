@@ -261,6 +261,7 @@ export type Mutation = {
   deleteFromDeck: Deck;
   duplicateDeck: Scalars['String'];
   changeDeckVisibility: Deck;
+  addTagsToCards: Array<DeckCard>;
   moveCard: MoveCardReturnType;
   addToCollection: Array<CollectionCard>;
   changeCollection?: Maybe<CollectionCard>;
@@ -327,6 +328,12 @@ export type MutationDuplicateDeckArgs = {
 export type MutationChangeDeckVisibilityArgs = {
   deckId: Scalars['String'];
   visibility: Visibility;
+};
+
+export type MutationAddTagsToCardsArgs = {
+  deckId: Scalars['String'];
+  tags: Array<Scalars['String']>;
+  cardIds: Array<Scalars['String']>;
 };
 
 export type MutationMoveCardArgs = {

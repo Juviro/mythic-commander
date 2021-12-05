@@ -384,6 +384,12 @@ type Mutation {
   duplicateDeck(deckId: String!): String!
   changeDeckVisibility(deckId: String!, visibility: Visibility!): Deck!
 
+  addTagsToCards(
+    deckId: String!
+    tags: [String!]!
+    cardIds: [String!]!
+  ): [DeckCard!]!
+
   moveCard(
     cardId: String!
     from: MoveCardInputType!
