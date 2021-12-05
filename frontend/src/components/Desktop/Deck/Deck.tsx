@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
 
@@ -11,7 +11,6 @@ import { getColorIdentity } from 'utils/commander';
 import Flex from 'components/Elements/Shared/Flex';
 import NotFound from 'components/Elements/Shared/NotFound';
 import ShortcutFocus from 'components/Elements/Shared/ShortcutFocus';
-import useLocalStorage from 'components/Hooks/useLocalStorage';
 import Cards from './Cards';
 import message from '../../../utils/message';
 import unifyCardFormat from '../../../utils/unifyCardFormat';
@@ -33,7 +32,7 @@ export default () => {
   });
   const [mutate] = useMutation<any, MutationAddCardsToDeckArgs>(addCardsToDeckDesktop);
 
-  const [view, setView] = useLocalStorage('type');
+  const [view, setView] = useState<View>('type');
 
   const deck = data?.deck;
   const cards = unifyCardFormat(deck?.cards);
