@@ -11,6 +11,15 @@ const updateClause = ALL_CARD_FIELDS.map(
 
 const ON_DUPLICATE = ` ON CONFLICT (id) DO UPDATE SET ${updateClause}, "lastUpdate" = NOW()`;
 
+const shouldSkipCard = ({ set, games }) => {
+  // Jumpstart Front Cards
+  if (set === 'fjmp') return true;
+  // Cards that only exists digitally
+  if (!games?.includes('paper')) return true;
+
+  return false;
+};
+
 export const updateScryfallCards = async (type, tableName) => {
   const filePath = await downloadCardJson(type);
 
@@ -28,6 +37,10 @@ export const updateScryfallCards = async (type, tableName) => {
       // remove trailing comma
       const parsableCard = line.replace(/,$/, '');
       const card = JSON.parse(parsableCard);
+
+      if (shouldSkipCard(card)) {
+        continue;
+      }
 
       // double faced cards don't always set all fields,
       // so we fallback to the value of the front face
