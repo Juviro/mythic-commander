@@ -13,7 +13,7 @@ import CardModalDesktop from '../../Desktop/CardModalDesktop';
 import Flex from '../Flex';
 import GridCard from './GridCard';
 import WithActions from './WithActions';
-import { SelectionMenu } from './SelectionMenu';
+import { SelectionMenu } from './SelectionMenu/SelectionMenu';
 import useCardDetailNavigation from './useCardDetailNavigation';
 
 export const GRID_CARD_WIDTH = 220;
@@ -199,6 +199,8 @@ const CardGrid = ({
   return (
     <>
       <SelectionMenu
+        allTags={allTags}
+        allCards={cards}
         onClearSelection={onClearSelection}
         selectedCardIds={selectedCardIds}
         onMoveCards={onMoveSelectedCards}

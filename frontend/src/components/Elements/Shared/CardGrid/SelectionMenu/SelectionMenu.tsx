@@ -13,8 +13,10 @@ import { fadeIn } from 'components/Animations';
 import isMobile from 'utils/isMobile';
 import { buttonHoverBackground } from 'constants/colors';
 import UserContext from 'components/Provider/UserProvider';
-import DesktopTooltip from '../../Desktop/DesktopTooltip';
-import Menu from '../Menu';
+import AddTagsButton from 'components/Elements/Shared/CardGrid/SelectionMenu/AddTagsButton';
+import { UnifiedCard } from 'types/unifiedTypes';
+import DesktopTooltip from '../../../Desktop/DesktopTooltip';
+import Menu from '../../Menu';
 
 const StyledWrapper = styled.div`
   position: fixed;
@@ -54,6 +56,8 @@ interface Props {
   onSelectAll?: () => void;
   canSelectAll: boolean;
   smallSelectionMenu?: boolean;
+  allTags?: string[];
+  allCards: UnifiedCard[];
 }
 
 export const SelectionMenu = ({
@@ -65,6 +69,8 @@ export const SelectionMenu = ({
   onSelectAll,
   canSelectAll,
   smallSelectionMenu,
+  allTags,
+  allCards,
 }: Props) => {
   const { user } = useContext(UserContext);
   if (!selectedCardIds.length) return null;
@@ -78,6 +84,14 @@ export const SelectionMenu = ({
       icon: <CheckSquareOutlined />,
       title: 'Select All',
       onClick: onSelectAll,
+    });
+  }
+  if (!isMobile() && allTags) {
+    actions.push({
+      icon: (
+        <AddTagsButton allTags={allTags} cardIds={selectedCardIds} allCards={allCards} />
+      ),
+      title: 'Tag Cards',
     });
   }
   if (!isMobile()) {

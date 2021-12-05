@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { UnifiedDeckCard } from 'types/unifiedTypes';
 import { AddTagButton } from './AddTagButton';
-import { Tag } from './Tag';
+import Tag from '../../Tags/Tag';
 
 const StyledWrapper = styled.div`
   width: 100%;

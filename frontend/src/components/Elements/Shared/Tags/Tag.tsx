@@ -17,7 +17,7 @@ interface Props {
   onDeleteTag?: (tag: string, event: React.MouseEvent) => void;
 }
 
-export const Tag = ({ tag, onClick, onDeleteTag }: Props) => {
+const Tag = ({ tag, onClick, onDeleteTag }: Props) => {
   const tagColor =
     tagColors.find(({ name }) => name === tag) ?? tagColors[tagColors.length - 1];
 
@@ -33,3 +33,5 @@ export const Tag = ({ tag, onClick, onDeleteTag }: Props) => {
     </StyledTag>
   );
 };
+
+export default Tag;

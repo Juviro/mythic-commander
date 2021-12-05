@@ -6,9 +6,6 @@
 
 ## CURRENT:
 
-- Deck performance
-- add tags (sort by type (ramp, card draw, ...))
-
 ## NEXT:
 
 - show value of unowned cards for deck
