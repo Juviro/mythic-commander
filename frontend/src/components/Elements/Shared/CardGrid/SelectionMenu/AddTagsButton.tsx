@@ -23,7 +23,7 @@ const AddTagsButton = ({ allTags, cardIds, allCards }: Props) => {
       .filter(({ id }) => cardIds.includes(id))
       .map(({ id, tags: oldTags }) => ({
         id: `${id}+${deckId}`,
-        tags: [...new Set([...oldTags, ...tags])],
+        tags: [...new Set([...(oldTags ?? []), ...tags])],
         __typename: 'DeckCard',
       }));
 
