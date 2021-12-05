@@ -6,11 +6,8 @@
 
 ## CURRENT:
 
-- remove jumpstart face cards (z.B. id: 166523b2-31a5-41db-a19d-8ec08e2e0653)
-
 ## NEXT:
 
-- show value of unowned cards for deck
 - allow editing the name of wants in deck sidebar
 - allow multi drag & drop when multiple cards selected
 - codesplitting: get rid of index.js files in elements/shared

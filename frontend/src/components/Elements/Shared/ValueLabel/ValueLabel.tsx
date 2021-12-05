@@ -6,14 +6,17 @@ import PurchaseIcon from '../PurchaseIcon';
 
 interface Props {
   list: UnifiedList;
+  displayUnowned?: boolean;
 }
 
-export const ValueLabel = ({ list }: Props) => {
+export const ValueLabel = ({ list, displayUnowned }: Props) => {
   const {
     ownedValueLabelUsd,
     ownedValueLabelEur,
     numberOfNoEurPrice,
     numberOfNoUsdPrice,
+    valueLabelUsd,
+    valueLabelEur,
   } = getListStats(list);
 
   return (
@@ -21,14 +24,14 @@ export const ValueLabel = ({ list }: Props) => {
       <PurchaseIcon
         asLink={false}
         serviceName="tcgplayer"
-        label={ownedValueLabelUsd}
+        label={displayUnowned ? valueLabelUsd : ownedValueLabelUsd}
         style={{ marginRight: 16 }}
         numberOfNotIncludedCards={numberOfNoUsdPrice}
       />
       <PurchaseIcon
         asLink={false}
         serviceName="cardmarket"
-        label={ownedValueLabelEur}
+        label={displayUnowned ? valueLabelEur : ownedValueLabelEur}
         numberOfNotIncludedCards={numberOfNoEurPrice}
       />
     </Flex>
