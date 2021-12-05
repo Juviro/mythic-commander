@@ -6,6 +6,7 @@ import Tag from '../../Tags/Tag';
 
 const StyledWrapper = styled.div`
   width: 100%;
+  flex: 1;
   margin-top: 4px;
 `;
 
