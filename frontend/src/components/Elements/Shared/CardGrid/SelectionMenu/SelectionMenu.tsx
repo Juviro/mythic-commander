@@ -89,7 +89,12 @@ export const SelectionMenu = ({
   if (!isMobile() && allTags) {
     actions.push({
       icon: (
-        <AddTagsButton allTags={allTags} cardIds={selectedCardIds} allCards={allCards} />
+        <AddTagsButton
+          allTags={allTags}
+          cardIds={selectedCardIds}
+          allCards={allCards}
+          onClearSelection={onClearSelection}
+        />
       ),
       title: 'Tag Cards',
     });

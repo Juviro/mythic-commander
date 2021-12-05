@@ -12,9 +12,10 @@ interface Props {
   allTags: string[];
   cardIds: string[];
   allCards: UnifiedCard[];
+  onClearSelection: () => void;
 }
 
-const AddTagsButton = ({ allTags, cardIds, allCards }: Props) => {
+const AddTagsButton = ({ allTags, cardIds, allCards, onClearSelection }: Props) => {
   const { id: deckId } = useParams<{ id: string }>();
   const [mutate] = useMutation<any, MutationAddTagsToCardsArgs>(addTagsToCards);
 
@@ -38,6 +39,7 @@ const AddTagsButton = ({ allTags, cardIds, allCards }: Props) => {
         addTagsToCards: newCards,
       }),
     });
+    onClearSelection();
   };
 
   return (
