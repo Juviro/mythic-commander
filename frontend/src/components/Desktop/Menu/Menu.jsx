@@ -93,7 +93,6 @@ const DesktopMenu = ({ location: { pathname } }) => {
             mode="horizontal"
             selectedKeys={selectedMenuKeys}
             theme="dark"
-            inlineCollapsed={false}
             style={{ marginLeft: 12 }}
             color={darkBackground}
           >
@@ -106,7 +105,7 @@ const DesktopMenu = ({ location: { pathname } }) => {
         </Flex>
         <SearchBar
           hideLayover
-          style={{ margin: '0 16px', width: 'unset', flex: 1, maxWidth: 330 }}
+          style={{ margin: '0 16px', width: '100%', maxWidth: 330 }}
         />
         <UserMenu />
       </Flex>
