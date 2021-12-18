@@ -82,7 +82,9 @@ const resolver = {
   },
 
   priceDevelopment({ id }, _, { db }) {
-    return db('cardPrices').where({ id });
+    return db('cardPrices')
+      .orderBy('date', 'ASC')
+      .where({ id });
   },
 };
 
