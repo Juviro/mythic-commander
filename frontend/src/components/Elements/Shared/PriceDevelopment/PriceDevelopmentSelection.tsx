@@ -1,4 +1,5 @@
 import { Button, Space } from 'antd';
+import useLocalStorage from 'components/Hooks/useLocalStorage';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { PriceDevelopment } from 'types/graphql';
@@ -27,14 +28,24 @@ const PriceDevelopmentSelection = ({
   selectedKey,
   priceDevelopment,
 }: Props) => {
-  const hasNoData = (key: string) => {
-    return !priceDevelopment?.some((price) => price[key] !== null);
+  const [defaultKey, storeDefaultKey] = useLocalStorage('price-development', 'priceEur');
+  const hasData = (key: string) => {
+    return priceDevelopment?.some((price) => price[key] !== null);
+  };
+
+  const onClick = (key: string) => {
+    storeDefaultKey(key);
+    onSelect(key);
   };
 
   useEffect(() => {
-    if (!priceDevelopment || !hasNoData(selectedKey)) return;
+    if (hasData(defaultKey)) {
+      onSelect(defaultKey);
+      return;
+    }
+    if (!priceDevelopment || hasData(selectedKey)) return;
 
-    const firstKeyWithData = PRICE_KEYS.find((key) => !hasNoData(key));
+    const firstKeyWithData = PRICE_KEYS.find((key) => hasData(key));
     if (firstKeyWithData) {
       onSelect(firstKeyWithData);
     }
@@ -45,10 +56,10 @@ const PriceDevelopmentSelection = ({
     <StyledSpace size={12}>
       {PRICE_KEYS.map((key) => (
         <Button
-          disabled={hasNoData(key)}
+          disabled={!hasData(key)}
           type={key === selectedKey ? 'primary' : 'ghost'}
           size="small"
-          onClick={() => onSelect(key)}
+          onClick={() => onClick(key)}
           key={key}
         >
           {labelMap[key]}

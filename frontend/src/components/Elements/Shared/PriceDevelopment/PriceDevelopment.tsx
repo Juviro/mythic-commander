@@ -1,7 +1,7 @@
 import { Divider } from 'antd';
 import ValueChart from 'components/Elements/Shared/CollectionCharts/ValueChart';
 import useLocalStorage from 'components/Hooks/useLocalStorage';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { UnifiedCard } from 'types/unifiedTypes';
 import formatDate from 'utils/formatDate';
@@ -13,7 +13,7 @@ const StyledWrapper = styled.section`
 `;
 
 interface Props {
-  selectedCard: UnifiedCard;
+  selectedCard?: UnifiedCard;
   loading: boolean;
 }
 
@@ -21,7 +21,8 @@ const DATA_KEY = 'Price';
 
 const PriceDevelopment = ({ selectedCard, loading }: Props) => {
   const priceDevelopment = selectedCard?.priceDevelopment;
-  const [selectedKey, setSelectedKey] = useLocalStorage('price-development', 'priceUsd');
+  const [initialPriceDevelopment] = useLocalStorage('price-development', 'priceEur');
+  const [selectedKey, setSelectedKey] = useState(initialPriceDevelopment);
 
   const unit = selectedKey.toLowerCase().includes('usd') ? '$' : '€';
 
