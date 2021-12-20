@@ -17,7 +17,6 @@ const Deck = React.lazy(() => import('./Deck'));
 const CardView = React.lazy(() => import('./CardView'));
 
 const StyledBody = styled.div`
-  height: 100%;
   padding-top: 46px;
   position: relative;
 `;

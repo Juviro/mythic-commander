@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const StyledBackground = styled.div`
   height: 100%;
+  min-height: 100vh;
   display: flex;
   overflow: auto;
   justify-content: center;

@@ -15,6 +15,7 @@ import GridCard from './GridCard';
 import WithActions from './WithActions';
 import { SelectionMenu } from './SelectionMenu/SelectionMenu';
 import useCardDetailNavigation from './useCardDetailNavigation';
+import GridListSelection from './GridListSelection/GridListSelection';
 
 export const GRID_CARD_WIDTH = 220;
 
@@ -36,9 +37,11 @@ export interface DragProps {
   onSuccessfullDrop?: (card: UnifiedCard) => void;
 }
 
-interface CardList {
-  title?: string;
-  key?: string;
+export interface CardList {
+  title?: React.ReactNode;
+  key: string;
+  color?: string;
+  type?: React.ReactNode;
   cards: UnifiedCard[];
   additionalElements?: React.ReactNode;
   additionalActions?: MenuItem[];
@@ -210,6 +213,7 @@ const CardGrid = ({
         canSelectAll={canSelectAll}
         smallSelectionMenu={smallSelectionMenu}
       />
+      <GridListSelection cardLists={cardLists} />
       <Flex
         direction="row"
         justify="space-between"
@@ -221,10 +225,10 @@ const CardGrid = ({
         {paginationComponent}
       </Flex>
       {cardLists.map((list: CardList, index) => (
-        <React.Fragment key={list.key ?? list.title}>
+        <React.Fragment key={list.key}>
           {Boolean(index) && <Divider />}
           {list.title && <Typography.Title level={4}>{list.title}</Typography.Title>}
-          <StyledCardGridWrapper cardsPerRow={cardsPerRow}>
+          <StyledCardGridWrapper cardsPerRow={cardsPerRow} id={list.key}>
             {list.cards?.map((card) => (
               <GridCard
                 card={card}

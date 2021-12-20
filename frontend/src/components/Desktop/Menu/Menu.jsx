@@ -6,7 +6,7 @@ import UserContext from 'components/Provider/UserProvider';
 import MythicCommanderBanner from 'components/Elements/Shared/MythicCommanderBanner';
 import Flex from 'components/Elements/Shared/Flex';
 import SearchBar from 'components/Elements/Shared/SearchBar';
-import { darkBackground, darkBackgroundSemiTransparent } from '../../../constants/colors';
+import { darkBackground, darkBackgroundLight } from '../../../constants/colors';
 import UserMenu from './UserMenu';
 
 const StyledMenu = styled.div`
@@ -17,11 +17,8 @@ const StyledMenu = styled.div`
   position: fixed;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(
-    138deg,
-    ${darkBackground} 0%,
-    ${darkBackgroundSemiTransparent} 100%
-  );
+  background: linear-gradient(138deg, ${darkBackground} 0%, ${darkBackgroundLight} 100%);
+  background-color: ${darkBackgroundLight};
 
   & .ant-menu-overflowed-submenu {
     background: transparent;

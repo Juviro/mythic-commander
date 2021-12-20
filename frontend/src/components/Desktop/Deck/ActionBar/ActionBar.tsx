@@ -13,7 +13,7 @@ const StyledOuter = styled.div`
   position: fixed;
   z-index: 101;
   bottom: 0;
-  right: 15px;
+  right: 0;
   left: 0;
   background-color: white;
   box-shadow: 0px -9px 10px -4px #9c9c9c;

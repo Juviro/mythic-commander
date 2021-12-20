@@ -25,7 +25,8 @@
 
 ### Dump db
 
-- dump prod db: `pg_dump -h localhost -d mtg -f dump.sql`
+- dump prod db: `pg_dump -h localhost -d mtg -f /home/juviro/dump.sql`
 - copy dump file from server: `scp -i /Users/haukewitte/.ssh/sshhs juviro@juviro.ddns.net:/home/juviro/dump.sql .`
+- delete db locally: `dropdb mtg`
 - create db locally: `createdb mtg`
 - import locally: `psql -d mtg -f dump.sql`

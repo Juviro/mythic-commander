@@ -1,13 +1,20 @@
 ## PRIORITY BUGFIXES
 
-- auto update cards on prod not working: Should be fixed at 18/06/21
+- auto update cards on prod not working
 
 ## BUGFIXES:
+
+- mobile collection/advanced search loading animation for all elements
+- https://mythic-commander.com/cards/45d49831-548a-4a0e-9a18-9f7397913895 EDHRec link broken
+- deck drop area not fullscreen when only 1 card in deck
+- two faced cards in edhrec search not correctly displayed as "already in deck"
 
 ## CURRENT:
 
 ## NEXT:
 
+- Unique cards table should only have version1 cards
+- Deck: Display Categories on top/bottom
 - allow editing the name of wants in deck sidebar
 - allow multi drag & drop when multiple cards selected
 - codesplitting: get rid of index.js files in elements/shared
@@ -36,7 +43,6 @@
 
 - use first card / 4-split card as wants list/deck image if they have none
 - show last search when no input in searchbar
-- check for multiple copies of one card for deck legality check
 - allow searching for multiple sets/types/subtypes
 
 ## REFACTORINGS:
@@ -72,6 +78,7 @@
 - allow text export of selected cards
 - rework advanced search:
   - show all current search options for advanced search
+- check for multiple copies of one card for deck legality check
 
 ## BACKLOG BUGFIXES:
 
