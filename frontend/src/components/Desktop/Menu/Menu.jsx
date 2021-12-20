@@ -1,13 +1,11 @@
-import React, { useContext } from 'react';
-import { Menu } from 'antd';
+import React from 'react';
 import styled from 'styled-components';
-import { Link, withRouter } from 'react-router-dom';
-import UserContext from 'components/Provider/UserProvider';
 import MythicCommanderBanner from 'components/Elements/Shared/MythicCommanderBanner';
 import Flex from 'components/Elements/Shared/Flex';
 import SearchBar from 'components/Elements/Shared/SearchBar';
 import { darkBackground, darkBackgroundLight } from '../../../constants/colors';
 import UserMenu from './UserMenu';
+import Navigation from './Navigation';
 
 const StyledMenu = styled.div`
   width: 100%;
@@ -28,50 +26,7 @@ const StyledMenu = styled.div`
   }
 `;
 
-const StyledMenuItem = styled(Menu.Item)`
-  && {
-    font-size: 16px;
-    font-weight: 400;
-
-    @media (min-width: 1600px) {
-      width: 200px;
-      text-align: center;
-    }
-  }
-`;
-
-const DesktopMenu = ({ location: { pathname } }) => {
-  const { user } = useContext(UserContext);
-  const menuItems = [
-    {
-      title: 'Decks',
-      href: '/my-decks',
-      additionalPaths: ['/decks'],
-      hidden: !user,
-    },
-    {
-      title: 'Wants',
-      href: '/my-wants',
-      additionalPaths: ['/wants'],
-      hidden: !user,
-    },
-    {
-      title: 'Collection',
-      href: '/collection',
-      hidden: !user,
-    },
-    {
-      title: 'Advanced Search',
-      href: '/search',
-    },
-  ].filter(({ hidden }) => !hidden);
-
-  const selectedMenuKeys = menuItems
-    .filter(({ href, additionalPaths = [] }) => {
-      return [href, ...additionalPaths].some((path) => pathname.includes(path));
-    })
-    .map(({ href }) => href);
-
+const Menu = () => {
   return (
     <StyledMenu>
       <Flex
@@ -86,19 +41,7 @@ const DesktopMenu = ({ location: { pathname } }) => {
             showCollectionOnClick
             hideWhenSmall
           />
-          <Menu
-            mode="horizontal"
-            selectedKeys={selectedMenuKeys}
-            theme="dark"
-            style={{ marginLeft: 12 }}
-            color={darkBackground}
-          >
-            {menuItems.map(({ title, href }) => (
-              <StyledMenuItem key={href}>
-                <Link to={href}>{title}</Link>
-              </StyledMenuItem>
-            ))}
-          </Menu>
+          <Navigation />
         </Flex>
         <SearchBar
           hideLayover
@@ -110,4 +53,4 @@ const DesktopMenu = ({ location: { pathname } }) => {
   );
 };
 
-export default withRouter(DesktopMenu);
+export default Menu;
