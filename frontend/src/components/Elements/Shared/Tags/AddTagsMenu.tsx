@@ -1,17 +1,14 @@
 import styled from 'styled-components';
-import { Space, Typography } from 'antd';
+import { Space } from 'antd';
 import React, { useState } from 'react';
-import { CloseOutlined } from '@ant-design/icons';
 
 import DEFAULT_TAGS from 'constants/tags';
 import AddTagFooter from './AddTagFooter';
 import AddTagsInput from './AddTagsInput';
-import Flex from '../Flex';
 
 const StyledMenu = styled.div`
   display: flex;
   flex-direction: column;
-  width: 250px;
 
   & .ant-select-selector {
     padding: 4px;
@@ -45,19 +42,8 @@ const AddTagMenu = ({
   return (
     <StyledMenu>
       <Space direction="vertical" size={12}>
-        <Flex justify="space-between">
-          <Typography.Text>Add Tags</Typography.Text>
-          <CloseOutlined onClick={onClose} />
-        </Flex>
-        <AddTagsInput
-          onClose={onClose}
-          initialTags={existingTags}
-          onSave={onSave}
-          options={existingTags}
-          onChange={setCurrentTags}
-          value={currentTags}
-        />
         <AddTagFooter
+          onClose={onClose}
           onSaveAsDefault={
             onSaveAsDefault
               ? () => {
@@ -67,6 +53,14 @@ const AddTagMenu = ({
               : undefined
           }
           onSave={onSave}
+        />
+        <AddTagsInput
+          onClose={onClose}
+          initialTags={existingTags}
+          onSave={onSave}
+          options={existingTags}
+          onChange={setCurrentTags}
+          value={currentTags}
         />
       </Space>
     </StyledMenu>

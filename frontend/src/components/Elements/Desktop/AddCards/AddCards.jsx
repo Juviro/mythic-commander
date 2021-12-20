@@ -37,6 +37,7 @@ export default ({
   onAddCards,
   isAdvanced = false,
   focusId,
+  alignTop,
   width = 500,
   placeholder = 'Add cards, e.g. "2x foil negate"',
 }) => {
@@ -52,6 +53,7 @@ export default ({
           autoFocus={false}
           onAddCards={onAddCards}
           cardOptions={cardOptions}
+          alignTop={alignTop}
           placeholder={placeholder}
           containedCardNames={containedCardNames}
           inputProps={{

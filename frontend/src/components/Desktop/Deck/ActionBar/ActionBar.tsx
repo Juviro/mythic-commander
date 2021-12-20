@@ -35,6 +35,7 @@ export const ActionBar = ({ onAddCards, deck }: Props) => {
     <StyledOuter>
       <StyledWrapper>
         <AddCards
+          alignTop
           isAdvanced={false}
           onAddCards={onAddCards}
           focusId="deck.cards"

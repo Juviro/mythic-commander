@@ -1,12 +1,12 @@
 import UserContext from 'components/Provider/UserProvider';
 import { useContext } from 'react';
 
-export default ({ children, flag }) => {
-  const { user, loading } = useContext(UserContext);
+export default ({ children = null, flag }) => {
+  const { loading, hasFeatureFlag } = useContext(UserContext);
 
   if (!flag) return children;
   if (loading) return null;
-  if (user?.featureFlags?.includes(flag)) return children;
+  if (hasFeatureFlag(flag)) return children;
 
   return null;
 };

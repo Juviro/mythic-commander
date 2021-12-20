@@ -6,6 +6,7 @@ import AddTagsMenu from './AddTagsMenu';
 
 const StyledMenu = styled.div`
   padding: 12px 16px;
+  width: 280px;
 `;
 
 interface Props {
@@ -64,7 +65,7 @@ const AddTagsPopover = ({
     <Popover
       content={menu}
       visible={visible}
-      placement="bottomRight"
+      placement="bottom"
       destroyTooltipOnHide
       overlayClassName="add-tag-popover"
     >

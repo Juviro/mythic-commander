@@ -22,6 +22,7 @@ export default ({
   placeholder,
   cardOptions: { cardPrefix, cards, loading },
   allowFoilInput,
+  alignTop,
   inputProps,
 }) => {
   const searchInputRef = useRef(null);
@@ -46,6 +47,7 @@ export default ({
           width="100%"
           cards={cards}
           loading={loading}
+          alignTop={alignTop}
           cardPrefix={cardPrefix}
           allowFoilInput={allowFoilInput}
           inputProps={inputProps}
