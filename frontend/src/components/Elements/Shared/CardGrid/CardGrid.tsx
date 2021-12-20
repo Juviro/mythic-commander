@@ -199,6 +199,7 @@ const CardGrid = ({
   if (!cards?.length && !passedCardLists?.length) {
     return <Empty description="This list is empty" style={{ marginTop: 48 }} />;
   }
+  console.info('test');
 
   return (
     <>
