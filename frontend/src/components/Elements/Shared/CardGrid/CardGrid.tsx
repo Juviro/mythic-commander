@@ -7,6 +7,7 @@ import { EditOutlined, LoadingOutlined, DeleteOutlined } from '@ant-design/icons
 import { UnifiedCard } from 'types/unifiedTypes';
 import { MenuItem } from 'components/Elements/Shared/ContextMenu/ContextMenu';
 import { useSelectCards } from 'components/Elements/Shared/CardGrid/useSelectCards';
+import isMobile from 'utils/isMobile';
 import CustomSkeleton from '../CustomSkeleton';
 import usePagination from './usePagination';
 import CardModalDesktop from '../../Desktop/CardModalDesktop';
@@ -213,7 +214,7 @@ const CardGrid = ({
         canSelectAll={canSelectAll}
         smallSelectionMenu={smallSelectionMenu}
       />
-      <GridListSelection cardLists={cardLists} />
+      {!isMobile() && <GridListSelection cardLists={cardLists} />}
       <Flex
         direction="row"
         justify="space-between"
