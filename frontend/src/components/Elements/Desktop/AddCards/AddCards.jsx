@@ -32,7 +32,7 @@ const StyledLabel = styled(Typography.Text)`
   margin-right: 16px;
 `;
 
-export default ({
+const AddCards = ({
   containedCardNames,
   onAddCards,
   isAdvanced = false,
@@ -72,3 +72,9 @@ export default ({
     </Flex>
   );
 };
+
+AddCards.defaultProps = {
+  alignTop: false,
+};
+
+export default AddCards;
