@@ -11,7 +11,7 @@ const StyledListSelection = styled.ol<{ visible: boolean }>`
   display: flex;
   z-index: 300;
   justify-content: center;
-  height: ${NAVBAR_HEIGHT}px;
+  padding: 4px;
   top: ${NAVBAR_HEIGHT}px;
   left: 0;
   right: 0;
@@ -20,6 +20,7 @@ const StyledListSelection = styled.ol<{ visible: boolean }>`
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
 
   opacity: ${({ visible }) => (visible ? 1 : 0)};
+  ${({ visible }) => !visible && 'pointer-events: none'};
   transition: opacity ${({ visible }) => (visible ? 0.5 : 0.2)}s ease-out;
 `;
 
@@ -27,6 +28,7 @@ const StyledInner = styled.div`
   width: 100%;
   max-width: 1800px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 `;
 

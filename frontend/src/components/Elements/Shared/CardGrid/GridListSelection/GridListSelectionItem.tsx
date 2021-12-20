@@ -6,6 +6,7 @@ const StyledListTitle = styled.li<{ color?: string; active: boolean }>`
   color: ${({ color }) => color || 'black'};
   margin-right: 48px;
   cursor: pointer;
+  padding: 8px;
   position: relative;
 
   transition: color 0.4s ease-out;
