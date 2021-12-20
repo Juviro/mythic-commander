@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { CardList } from '../CardGrid';
+import GridListSelectionIndicator from './GridListSelectionIndicator';
 import GridListSelectionItem from './GridListSelectionItem';
 
 const NAVBAR_HEIGHT = 46;
@@ -26,6 +27,7 @@ const StyledListSelection = styled.ol<{ visible: boolean }>`
 
 const StyledInner = styled.div`
   width: 100%;
+  padding: 0 20px;
   max-width: 1800px;
   display: flex;
   flex-wrap: wrap;
@@ -38,12 +40,17 @@ interface Props {
 
 const GridListSelection = ({ cardLists }: Props) => {
   const [visible, setVisible] = React.useState(false);
+  const [blockedUntil, setBlockedUntil] = React.useState(0);
   const [firstVisibleTitle, setFirstVisibleTitle] = React.useState(
     cardLists?.[0]?.type ?? ''
   );
 
   useEffect(() => {
     const onScroll = () => {
+      if (blockedUntil && blockedUntil !== window.pageYOffset) {
+        return;
+      }
+      setBlockedUntil(0);
       setVisible(document.documentElement.scrollTop > 100);
 
       const newFirstVisibleTitle = cardLists?.find(({ key }) => {
@@ -55,7 +62,7 @@ const GridListSelection = ({ cardLists }: Props) => {
     window.addEventListener('scroll', onScroll);
 
     return () => window.removeEventListener('scroll', onScroll);
-  }, [setVisible, setFirstVisibleTitle, cardLists]);
+  }, [setVisible, setFirstVisibleTitle, cardLists, blockedUntil]);
 
   if (!(cardLists?.length > 1)) return null;
 
@@ -63,14 +70,17 @@ const GridListSelection = ({ cardLists }: Props) => {
     const top = document.getElementById(key)?.offsetTop;
     const offset = isReset ? top : OFFSET;
 
+    setBlockedUntil(top - offset);
     window.scrollTo({
       top: top - offset,
       behavior: 'smooth',
     });
+    setFirstVisibleTitle(key);
   };
 
   return (
     <StyledListSelection visible={visible}>
+      <GridListSelectionIndicator type={firstVisibleTitle} />
       <StyledInner>
         {cardLists.map(({ key, type, color, cards }, index) => (
           <GridListSelectionItem
@@ -78,7 +88,6 @@ const GridListSelection = ({ cardLists }: Props) => {
             color={color}
             key={key}
             count={cards.length}
-            active={type === firstVisibleTitle}
             type={type}
           />
         ))}

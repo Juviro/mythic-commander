@@ -41,7 +41,7 @@ export interface CardList {
   title?: React.ReactNode;
   key: string;
   color?: string;
-  type?: React.ReactNode;
+  type?: string;
   cards: UnifiedCard[];
   additionalElements?: React.ReactNode;
   additionalActions?: MenuItem[];
