@@ -11,13 +11,11 @@
 
 ## CURRENT:
 
+- use first card / 4-split card as wants list/deck image if they have none
+
 ## NEXT:
 
-- Unique cards table should only have version1 cards
-- Deck: Display Categories on top/bottom
-- allow editing the name of wants in deck sidebar
-- allow multi drag & drop when multiple cards selected
-- codesplitting: get rid of index.js files in elements/shared
+- Unique cards table should only have version 1 cards
 
 ## IMPROVEMENTS:
 
@@ -34,6 +32,7 @@
 - added to collection notification -> show amount as well
 - add optimistic response to card delete in deck (esp. mobile)
 - backup cardPrices
+- codesplitting: get rid of index.js files in elements/shared
 
 ## PERFORMANCE:
 
@@ -41,9 +40,10 @@
 
 ## FEATURES:
 
-- use first card / 4-split card as wants list/deck image if they have none
 - show last search when no input in searchbar
 - allow searching for multiple sets/types/subtypes
+- allow editing the name of wants in deck sidebar
+- allow multi drag & drop when multiple cards selected
 
 ## REFACTORINGS:
 
