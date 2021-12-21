@@ -6,7 +6,6 @@ import UserContext from 'components/Provider/UserProvider';
 import { LoginRequired } from 'components/Elements/Shared/LoginRequired/LoginRequired';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import { wantsListsDesktop as getWantsLists, createWantsListDesktop } from './queries';
-import { splitWantsLists } from '../../Mobile/WantsLists/WantsLists';
 import { OverviewList, OverviewListHeader, PageLayout } from '../../Elements/Desktop';
 
 const Wants = ({ history }) => {
@@ -49,12 +48,16 @@ const Wants = ({ history }) => {
     });
     onOpenWantsList(id);
   };
-  const [unlinkedLists, linkedLists] = splitWantsLists(data, search);
-
-  const wantsLists = unlinkedLists.concat(linkedLists);
+  const wantsLists = data?.wantsLists ?? [];
+  const displayedWantsLists = wantsLists
+    .filter((list) => list.name.toLowerCase().includes(search.toLowerCase()))
+    .map(({ deck, ...rest }) => ({
+      ...rest,
+      imgSrc: deck?.imgSrc,
+    }));
 
   const onOpenFirstDeck = () => {
-    const firstList = [...unlinkedLists, ...linkedLists][0];
+    const firstList = displayedWantsLists[0];
     if (!firstList) return;
     onOpenWantsList(firstList.id);
   };
@@ -72,7 +75,7 @@ const Wants = ({ history }) => {
       />
       <OverviewList
         loading={loading}
-        lists={wantsLists}
+        lists={displayedWantsLists}
         onClick={onOpenWantsList}
         emptyText="No Wants Lists found"
       />

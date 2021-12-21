@@ -162,7 +162,7 @@ const resolver = {
 
     return db('wantsLists')
       .where(where)
-      .orderBy('createdAt', 'asc');
+      .orderBy('lastEdit', 'desc');
   },
   async collectionSnapshots(_, __, { user: { id: userId }, db }) {
     if (!userId) return [];

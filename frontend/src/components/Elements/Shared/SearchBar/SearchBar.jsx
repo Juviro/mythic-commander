@@ -115,7 +115,7 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
           allowClear
           theme="dark"
           className="no-border"
-          placeholder="Search for a card... [C]"
+          placeholder={isMobile() ? 'Search for a card... ' : 'Search for a card... [C]'}
           onClick={() => toggleIsOpen(true)}
           onInput={() => toggleIsOpen(true)}
         />
