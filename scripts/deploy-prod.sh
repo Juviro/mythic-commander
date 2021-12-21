@@ -19,3 +19,5 @@ cp -r /opt/mtg/frontend/build/* /var/www/mtg/
 
 echo -e "\e[44mRestarting backend\e[0m"
 pm2 reload backend
+
+echo -e "\e[45m ### Deployed Successfully ### \e[0m"
