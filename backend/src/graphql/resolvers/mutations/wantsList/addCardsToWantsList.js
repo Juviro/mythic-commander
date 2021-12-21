@@ -4,6 +4,7 @@ import {
   canEditWantsList,
 } from '../../../../auth/authenticateUser';
 import unifyCardFormat from '../../unifyCardFormat';
+import randomId from '../../../../utils/randomId';
 
 const ON_CONFLICT = `
     ON CONFLICT (id, "wantsListId") 
@@ -23,7 +24,7 @@ export default async (
   }
   if (wantsListName) {
     const [id] = await db('wantsLists')
-      .insert({ userId, name: wantsListName })
+      .insert({ userId, name: wantsListName, id: randomId() })
       .returning('id');
     wantsListId = id;
   }
