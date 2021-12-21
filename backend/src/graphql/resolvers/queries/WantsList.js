@@ -35,6 +35,16 @@ const resolver = {
   canEdit({ userId }, _, { user }) {
     return userId === user.id;
   },
+  async cardPreviews({ id: wantsListId }, _, { db }) {
+    const images = await db('cardToWantsList')
+      .leftJoin('cards', 'cardToWantsList.id', 'cards.id')
+      .select('image_uris')
+      .where({ wantsListId })
+      .orderBy('createdAt', 'desc')
+      .limit(4);
+
+    return images.map(({ image_uris }) => image_uris.art_crop);
+  },
 };
 
 export default resolver;

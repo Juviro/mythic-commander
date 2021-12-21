@@ -18,7 +18,7 @@ const StyledWrapper = styled.div`
 export default ({ setSearch, showCollectionFilters, showAddedBeforeFilter }) => {
   const searchInputRef = useRef(null);
   const [currentSearch, setCurrentSearch] = useState('');
-  const focusInput = () => searchInputRef.current.focus();
+  const focusInput = () => searchInputRef.current?.focus();
   useShortcut('f', focusInput);
 
   const onSearch = () => {

@@ -5,6 +5,7 @@ const WANTS_LIST_FIELDS = `
     name
     lastEdit
     createdAt
+    cardPreviews
     numberOfCards
     deck {
       id

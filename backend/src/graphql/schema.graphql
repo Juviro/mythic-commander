@@ -199,6 +199,7 @@ type WantsList {
   deck: Deck
   canEdit: Boolean!
   visibility: Visibility!
+  cardPreviews: [String!]
   cards: [WantsListCard!]!
 }
 

@@ -651,6 +651,7 @@ export type WantsList = {
   deck?: Maybe<Deck>;
   canEdit: Scalars['Boolean'];
   visibility: Visibility;
+  cardPreviews?: Maybe<Array<Scalars['String']>>;
   cards: Array<WantsListCard>;
 };
 

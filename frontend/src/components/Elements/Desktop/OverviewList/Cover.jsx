@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import shimmer from 'components/Animations/shimmer';
-import { colorPalette } from 'constants/colors';
+import { colorPalette, lightBackground } from 'constants/colors';
 
 const StyledCoverLetter = styled.div`
   position: absolute;
@@ -31,6 +32,28 @@ const StyledImage = styled.img`
   bottom: 0;
 `;
 
+const StyledCardPreview = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 2px;
+  position: absolute;
+  background-color: white;
+`;
+
+const StyledCardPreviewImage = styled.div.attrs(({ imageUrl }) => ({
+  style: {
+    background: imageUrl ? `url(${imageUrl})` : undefined,
+  },
+}))`
+  width: 100%;
+  height: 100%;
+  background-color: ${lightBackground};
+  background-size: contain !important;
+`;
+
 const getColorFromId = (id) => {
   const stringAsNumber = id
     .split('')
@@ -41,13 +64,32 @@ const getColorFromId = (id) => {
 };
 
 export default ({ list }) => {
-  const { imgSrc, name, id } = list;
+  const { imgSrc, name, id, cardPreviews } = list;
 
-  const cover = imgSrc ? (
-    <StyledImage src={imgSrc} alt={name} />
-  ) : (
-    <StyledCoverLetter color={getColorFromId(id)}>{name.slice(0, 1)}</StyledCoverLetter>
-  );
+  const getCover = () => {
+    if (imgSrc) {
+      return <StyledImage src={imgSrc} />;
+    }
 
-  return <StyledWrapper>{cover}</StyledWrapper>;
+    if (cardPreviews?.length) {
+      const paddedList = [...cardPreviews, null, null, null].slice(0, 4);
+
+      return (
+        <StyledCardPreview>
+          {paddedList.map((src) => (
+            <StyledCardPreviewImage
+              imageUrl={src}
+              key={src ?? Math.random().toString()}
+            />
+          ))}
+        </StyledCardPreview>
+      );
+    }
+
+    return (
+      <StyledCoverLetter color={getColorFromId(id)}>{name.slice(0, 1)}</StyledCoverLetter>
+    );
+  };
+
+  return <StyledWrapper>{getCover()}</StyledWrapper>;
 };
