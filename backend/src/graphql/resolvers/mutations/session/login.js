@@ -6,7 +6,7 @@ export default async (_, { token }, { db }) => {
   const [dbUser] = await db('users').where({ id: user.id });
 
   if (!dbUser) {
-    await db('users').insert(user);
+    await db('users').insert({ ...user, lastOnline: new Date() });
   }
 
   const session = getSession(user.id);

@@ -29,6 +29,12 @@ export default new ApolloServer({
       [sessionId]
     );
 
+    if (user) {
+      await db('users')
+        .update({ lastOnline: new Date() })
+        .where({ id: user.id });
+    }
+
     return { ...context, user: user ?? {} };
   },
   formatError: error => {
