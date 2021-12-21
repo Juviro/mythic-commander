@@ -1,5 +1,6 @@
 import { updateLastEdit } from './helper';
 import { canEditDeck } from '../../../../auth/authenticateUser';
+import randomId from '../../../../utils/randomId';
 
 const ON_CONFLICT = `
     ON CONFLICT (id, "deckId") 
@@ -16,7 +17,7 @@ export default async (
 ) => {
   if (deckName) {
     const [id] = await db('decks')
-      .insert({ userId, name: deckName })
+      .insert({ userId, name: deckName, id: randomId() })
       .returning('id');
     deckId = id;
   } else {
