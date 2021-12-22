@@ -7,6 +7,28 @@ const sortSets = (a, b) =>
     ? 1
     : -1;
 
+const premiumFrameEffects = [
+  'extendedart',
+  'fullart',
+  'showcase',
+  'inverted',
+  'etched',
+  'compasslanddfc',
+  'inverted',
+];
+
+export const isSpecialCard = card => {
+  if (
+    card.frame_effects &&
+    premiumFrameEffects.some(effect => card.frame_effects.includes(effect))
+  ) {
+    return 2;
+  }
+  if (card.booster === false) return 1;
+
+  return 0;
+};
+
 export const getAllSets = async (oracle_id, userId = '', db) => {
   const { rows: cards } = await db.raw(
     `
@@ -29,21 +51,6 @@ export const getAllSets = async (oracle_id, userId = '', db) => {
       const cardsWithSameSet = cards
         .filter(({ set }) => set === card.set)
         .sort((a, b) => {
-          const premiumFrameEffects = [
-            'extendedart',
-            'showcase',
-            'inverted',
-            'etched',
-          ];
-          const isSpecialCard = card => {
-            if (card.booster === false) return true;
-            return (
-              card.frame_effects &&
-              premiumFrameEffects.some(effect =>
-                card.frame_effects.includes(effect)
-              )
-            );
-          };
           if (isSpecialCard(a) === isSpecialCard(b)) return 0;
           return isSpecialCard(a) ? 1 : -1;
         });

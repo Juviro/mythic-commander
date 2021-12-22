@@ -172,6 +172,13 @@ export const CARD_FIELDS_ADDITION_6 = [
   },
 ];
 
+export const CARD_FIELDS_ADDITION_7 = [
+  {
+    key: 'is_special',
+    type: 'integer',
+  },
+];
+
 export const ALL_CARD_FIELDS = [
   CARD_FIELDS_INITIAL,
   CARD_FIELDS_ADDITION_1,
@@ -180,4 +187,5 @@ export const ALL_CARD_FIELDS = [
   CARD_FIELDS_ADDITION_4,
   CARD_FIELDS_ADDITION_5,
   CARD_FIELDS_ADDITION_6,
+  CARD_FIELDS_ADDITION_7,
 ].flat();

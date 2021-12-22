@@ -3,6 +3,7 @@ import readline from 'readline';
 
 import knex from '../../database';
 import { ALL_CARD_FIELDS } from '../../database/cardFields';
+import { isSpecialCard } from '../../graphql/resolvers/queries/Card/helper';
 import downloadCardJson from './downloadCardJson';
 
 const updateClause = ALL_CARD_FIELDS.map(
@@ -60,6 +61,8 @@ export const updateScryfallCards = async (type, tableName) => {
 
         return acc;
       }, {});
+
+      cardToInsert.is_special = isSpecialCard(card);
 
       await knex.raw(
         knex(tableName)
