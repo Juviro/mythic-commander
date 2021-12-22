@@ -27,9 +27,11 @@ export const warning = '#faad14';
 // https://material.io/resources/color/  - 600
 const Red600 = '#e53935';
 const Orange600 = '#fb8c00';
+// const DeepOrange600600 = '#fb8c00';
 const Yellow600 = '#fdd835';
 const Green600 = '#7cb342';
 const Blue600 = '#1e88e5';
+// const Cyan600 = '#00acc1';
 const Purple600 = '#8e24aa';
 const Brown600 = '#6d4c41';
 const Black600 = '#484848';

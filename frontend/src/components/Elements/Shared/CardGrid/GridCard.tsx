@@ -42,6 +42,7 @@ const StyledImageWrapper = styled.div<{ isSelected: boolean; markAsDisabled?: bo
   position: relative;
   border-radius: 4%;
   overflow: hidden;
+  cursor: pointer;
   background-color: white;
   width: 100%;
 

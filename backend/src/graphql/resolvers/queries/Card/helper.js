@@ -14,7 +14,6 @@ const premiumFrameEffects = [
   'inverted',
   'etched',
   'compasslanddfc',
-  'inverted',
 ];
 
 export const isSpecialCard = card => {
