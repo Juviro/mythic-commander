@@ -7,7 +7,7 @@ export const up = async knex => {
             WITH _cards AS (
               SELECT
                 *,
-                row_number() OVER (PARTITION BY name ORDER BY is_special ASC, cardmarket_id DESC) AS row_number
+                row_number() OVER (PARTITION BY (name, set) ORDER BY is_special ASC, cardmarket_id DESC) AS row_number
               FROM cards
             )
             SELECT *
