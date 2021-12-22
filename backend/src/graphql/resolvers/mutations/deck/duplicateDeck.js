@@ -1,4 +1,5 @@
 import { canAccessDeck } from '../../../../auth/authenticateUser';
+import randomId from '../../../../utils/randomId';
 
 export default async (_, { deckId }, { user, db }) => {
   await canAccessDeck(user.id, deckId);
@@ -8,12 +9,12 @@ export default async (_, { deckId }, { user, db }) => {
   } = await db.raw(
     `
     INSERT INTO decks 
-      ("userId", name, "imgSrc", "lastEdit", "createdAt") 
+      ("userId", name, "imgSrc", "lastEdit", "createdAt", "id") 
     SELECT 
-      "userId", CONCAT(name, ' - Copy'), "imgSrc", NOW() as "lastEdit", NOW() as "createdAt" 
+      "userId", CONCAT(name, ' - Copy'), "imgSrc", NOW() as "lastEdit", NOW() as "createdAt" , ?
     FROM decks WHERE id=? RETURNING id
     `,
-    deckId
+    [randomId(), deckId]
   );
 
   await db.raw(
