@@ -38,12 +38,14 @@ const resolver = {
   async cardPreviews({ id: wantsListId }, _, { db }) {
     const images = await db('cardToWantsList')
       .leftJoin('cards', 'cardToWantsList.id', 'cards.id')
-      .select('image_uris')
+      .select('image_uris', 'card_faces')
       .where({ wantsListId })
       .orderBy('createdAt', 'desc')
       .limit(4);
 
-    return images.map(({ image_uris }) => image_uris.art_crop);
+    return images.map(({ image_uris, card_faces }) => {
+      return image_uris?.art_crop ?? card_faces?.[0].image_uris?.art_crop;
+    });
   },
 };
 
