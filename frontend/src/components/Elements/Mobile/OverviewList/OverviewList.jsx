@@ -3,6 +3,8 @@ import { List, Typography } from 'antd';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
 import { PlusOutlined, RightOutlined } from '@ant-design/icons';
+import SplitCover from 'components/Elements/Shared/SplitCover/SplitCover';
+import shimmer from 'components/Animations/shimmer';
 
 const StyledImage = styled.img`
   margin: 0 16px 0 0;
@@ -12,6 +14,7 @@ const StyledImage = styled.img`
   min-width: 63px;
   max-width: 63px;
   display: block;
+  ${shimmer}
 `;
 
 const StyledAddIcon = styled(PlusOutlined)`
@@ -46,9 +49,18 @@ const Left = styled.div`
   max-width: 90%;
 `;
 
+const StyledSplitCover = styled.div`
+  position: relative;
+  width: 63px;
+  height: 46px;
+  margin-right: 16px;
+`;
+
 const ListItem = ({
   onClick,
   image,
+  imgSrc,
+  cardPreviews,
   name,
   showRightIcon,
   numberOfCards,
@@ -56,6 +68,18 @@ const ListItem = ({
 }) => {
   let description = typeof numberOfCards === 'number' ? `${numberOfCards} Cards` : '';
   if (additionalDescription) description += additionalDescription;
+
+  const getImage = () => {
+    if (image) return image;
+    if (imgSrc) return <StyledImage src={imgSrc} alt={name} />;
+    if (cardPreviews)
+      return (
+        <StyledSplitCover>
+          <SplitCover cardPreviews={cardPreviews} />
+        </StyledSplitCover>
+      );
+    return null;
+  };
 
   return (
     <StyledListItem
@@ -72,7 +96,7 @@ const ListItem = ({
             </Left>
           </>
         }
-        avatar={image}
+        avatar={getImage()}
         description={description}
       />
     </StyledListItem>
@@ -81,14 +105,15 @@ const ListItem = ({
 
 const OverviewList = ({ addElementText, onAddElement, elements, onClick, header }) => {
   const deckComponents = elements.map(
-    ({ name, imgSrc, id, numberOfCards, additionalDescription }) => (
+    ({ name, imgSrc, id, numberOfCards, additionalDescription, cardPreviews }) => (
       <ListItem
         name={name}
         showRightIcon
+        imgSrc={imgSrc}
+        cardPreviews={cardPreviews}
         onClick={() => onClick(id)}
         numberOfCards={numberOfCards}
         additionalDescription={additionalDescription}
-        image={imgSrc ? <StyledImage src={imgSrc} alt={name} /> : null}
       />
     )
   );
