@@ -48,7 +48,7 @@ const Search = ({ history }) => {
     if (!orderBy) return;
     setIsNewSearch(!offset);
     toggleIsSearching(true);
-    toggleLoading(true);
+    if (!offset) toggleLoading(true);
     const { data } = await client.query({
       fetchPolicy: 'cache-first',
       query: cardSearch,
