@@ -5,7 +5,6 @@
 ## BUGFIXES:
 
 - mobile collection/advanced search loading animation for all elements
-- https://mythic-commander.com/cards/45d49831-548a-4a0e-9a18-9f7397913895 EDHRec link broken
 - deck drop area not fullscreen when only 1 card in deck
 - two faced cards in edhrec search not correctly displayed as "already in deck"
 

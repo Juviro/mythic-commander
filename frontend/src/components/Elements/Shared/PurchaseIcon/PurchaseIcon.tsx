@@ -50,7 +50,9 @@ export const PurchaseIcon = ({
   asLink = true,
   numberOfNotIncludedCards,
 }: Props) => {
-  const encodedName = encodeURI(cardName);
+  const frontCardName = cardName?.split(' // ')[0];
+  const encodedName = encodeURI(frontCardName);
+
   const services = {
     cardkingdom: {
       icon: cardKingdomIcon,
