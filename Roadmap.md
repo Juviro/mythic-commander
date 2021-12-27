@@ -6,7 +6,6 @@
 
 - mobile collection/advanced search loading animation for all elements
 - deck drop area not fullscreen when only 1 card in deck
-- two faced cards in edhrec search not correctly displayed as "already in deck"
 
 ## CURRENT:
 

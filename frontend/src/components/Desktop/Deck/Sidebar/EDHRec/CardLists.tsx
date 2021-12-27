@@ -37,8 +37,7 @@ export const CardLists = ({ loading, lists, deck }: Props) => {
     setCategoryKey(newKey);
   };
 
-  // Remove the backside cardname, if any, because edhrec does not provide them
-  const cardNames = deck?.cards.map((card) => card.name.replace(/\s\/\/.*$/, ''));
+  const cardNames = deck?.cards.map((card) => card.name);
 
   const alreadyInDeck = ({ name }: { name: string }) => {
     return cardNames?.includes(name);
