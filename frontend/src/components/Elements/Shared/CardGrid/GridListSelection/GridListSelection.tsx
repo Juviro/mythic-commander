@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import sumCardAmount from 'utils/sumCardAmount';
 import { CardList } from '../CardGrid';
 import GridListSelectionIndicator from './GridListSelectionIndicator';
 import GridListSelectionItem from './GridListSelectionItem';
@@ -87,7 +88,7 @@ const GridListSelection = ({ cardLists }: Props) => {
             onClick={() => onScrollToList(key, !index)}
             color={color}
             key={key}
-            count={cards.length}
+            count={sumCardAmount(cards)}
             type={type}
           />
         ))}
