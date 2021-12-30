@@ -61,7 +61,17 @@ export default () => {
     const spreadCards = [];
     data.proxies.forEach((card) => {
       for (let i = 0; i < (card.amount ?? 1); i++) {
-        spreadCards.push(card);
+        spreadCards.push({
+          ...card,
+          imgSrc: getImageUrl(card.id, card.imgKey, 'normal'),
+        });
+
+        if (card.isTwoFaced) {
+          spreadCards.push({
+            ...card,
+            imgSrc: getImageUrl(card.id, card.imgKey, 'normal', 'back'),
+          });
+        }
       }
     });
 
@@ -90,10 +100,10 @@ export default () => {
 
   return (
     <>
-      {displayedCards.map(({ id: cardId, imgKey, key }) => (
+      {displayedCards.map(({ imgSrc, key }) => (
         <StyledCardWrapper key={key} onClick={() => onRemoveCard(key)}>
           <StyledOverlay>X</StyledOverlay>
-          <StyledCard src={getImageUrl(cardId, imgKey, 'normal')} />
+          <StyledCard src={imgSrc} />
         </StyledCardWrapper>
       ))}
     </>

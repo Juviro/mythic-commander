@@ -5,7 +5,11 @@ import {
 } from '../../../auth/authenticateUser';
 import { getImageKey } from './Card/helper';
 
-const addImgKey = card => ({ ...card, imgKey: getImageKey(card) });
+const addImgKey = card => ({
+  ...card,
+  imgKey: getImageKey(card),
+  isTwoFaced: !card.image_uris,
+});
 
 const getWantProxies = async (id, filter, userId) => {
   await canAccessWantsList(userId, id);

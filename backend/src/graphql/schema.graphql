@@ -228,6 +228,7 @@ type ProxyCard {
   id: String!
   amount: Int
   imgKey: String!
+  isTwoFaced: Boolean!
 }
 
 ################################# AllLists #################################

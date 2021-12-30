@@ -5,6 +5,7 @@ export const proxies = gql`
     proxies(value: $value, type: $type, filter: $filter) {
       id
       imgKey
+      isTwoFaced
       amount
     }
   }
