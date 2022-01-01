@@ -13,6 +13,7 @@ const currentDate = `${date.getFullYear()}.${date.getMonth() +
 const fileName = `${backupDir}database-backup-${currentDate}.tar`;
 
 const backupDB = () => {
+  if (process.env.NODE_ENV === 'development') return;
   console.info(
     'Starting to backup DB',
     new Date().toLocaleString('de', { timeStyle: 'short', dateStyle: 'short' })
