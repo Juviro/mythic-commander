@@ -21,6 +21,7 @@ export default ({ visibility, asListItem, callback }) => {
       optimisticResponse: () => ({
         __typename: 'Mutation',
         changeDeckVisibility: {
+          __typename: 'Deck',
           id: deckId,
           visibility: value,
         },

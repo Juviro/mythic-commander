@@ -3,6 +3,11 @@ enum Visibility {
   hidden
   public
 }
+enum DeckStatus {
+  active
+  draft
+  archived
+}
 
 ################################# Card #################################
 
@@ -139,6 +144,7 @@ type Deck {
   imgSrc: String!
   numberOfCards: Int!
   visibility: Visibility!
+  status: DeckStatus!
   canEdit: Boolean!
   cards: [DeckCard!]!
   colors: [String!]
@@ -385,6 +391,7 @@ type Mutation {
   deleteFromDeck(cardId: String, cardIds: [String], deckId: String!): Deck!
   duplicateDeck(deckId: String!): String!
   changeDeckVisibility(deckId: String!, visibility: Visibility!): Deck!
+  changeDeckStatus(deckId: String!, status: DeckStatus!): Deck!
 
   addTagsToCards(
     deckId: String!

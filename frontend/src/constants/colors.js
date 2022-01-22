@@ -25,48 +25,48 @@ export const error = '#ff4d4f';
 export const warning = '#faad14';
 
 // https://material.io/resources/color/  - 600
-const Red600 = '#e53935';
-const Orange600 = '#fb8c00';
-// const DeepOrange600600 = '#fb8c00';
-const Yellow600 = '#fdd835';
-const Green600 = '#7cb342';
-const Blue600 = '#1e88e5';
-// const Cyan600 = '#00acc1';
-const Purple600 = '#8e24aa';
-const Brown600 = '#6d4c41';
-const Black600 = '#484848';
+export const red600 = '#e53935';
+export const orange600 = '#fb8c00';
+export const deepOrange600600 = '#fb8c00';
+export const yellow600 = '#fdd835';
+export const green600 = '#7cb342';
+export const blue600 = '#1e88e5';
+export const cyan600 = '#00acc1';
+export const purple600 = '#8e24aa';
+export const brown600 = '#6d4c41';
+export const black600 = '#484848';
 
 export const lifeTracker = [
-  Red600,
-  Orange600,
-  Yellow600,
-  Green600,
-  Blue600,
-  Purple600,
-  Brown600,
-  Black600,
+  red600,
+  orange600,
+  yellow600,
+  green600,
+  blue600,
+  purple600,
+  brown600,
+  black600,
 ];
 
 // https://material.io/resources/color/  - 300
-const Red300 = '#e57373';
-// const Pink300 = '#f06292';
-const Purple300 = '#ba68c8';
-const Blue300 = '#64b5f6';
-const Cyan300 = '#4dd0e1';
-const Green300 = '#81c784';
-// const Yellow300 = '#fff176';
-// const Orange300 = '#ffb74d';
-const DeepOrange300 = '#ff8a65';
-const Brown300 = '#a1887f';
+export const red300 = '#e57373';
+export const pink300 = '#f06292';
+export const purple300 = '#ba68c8';
+export const blue300 = '#64b5f6';
+export const cyan300 = '#4dd0e1';
+export const green300 = '#81c784';
+export const yellow300 = '#fff176';
+export const orange300 = '#ffb74d';
+export const deepOrange300 = '#ff8a65';
+export const brown300 = '#a1887f';
 
 export const typeColors = {
-  Creature: Green300,
-  Enchantment: Cyan300,
-  Artifact: Purple300,
-  Planeswalker: DeepOrange300,
-  Sorcery: Red300,
-  Instant: Blue300,
-  Land: Brown300,
+  Creature: green300,
+  Enchantment: cyan300,
+  Artifact: purple300,
+  Planeswalker: deepOrange300,
+  Sorcery: red300,
+  Instant: blue300,
+  Land: brown300,
 };
 
 export const colorPalette = [

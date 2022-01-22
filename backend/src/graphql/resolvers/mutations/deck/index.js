@@ -1,4 +1,5 @@
 import addCardsToDeck from './addCardsToDeck';
+import changeDeckStatus from './changeDeckStatus';
 import changeDeckVisibility from './changeDeckVisibility';
 import createDeck from './createDeck';
 import deleteDeck from './deleteDeck';
@@ -11,6 +12,7 @@ import setCommander from './setCommander';
 
 export default {
   addCardsToDeck,
+  changeDeckStatus,
   changeDeckVisibility,
   createDeck,
   deleteDeck,

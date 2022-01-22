@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import shimmer from 'components/Animations/shimmer';
 import { colorPalette } from 'constants/colors';
 import SplitCover from 'components/Elements/Shared/SplitCover/SplitCover';
+import DeckStatus from 'components/Elements/Desktop/OverviewList/DeckStatus/DeckStatus';
 
 const StyledCoverLetter = styled.div`
   position: absolute;
@@ -43,7 +44,7 @@ const getColorFromId = (id) => {
 };
 
 export default ({ list }) => {
-  const { imgSrc, name, id, cardPreviews } = list;
+  const { imgSrc, name, id, cardPreviews, status } = list;
 
   const getCover = () => {
     if (imgSrc) {
@@ -59,5 +60,10 @@ export default ({ list }) => {
     );
   };
 
-  return <StyledWrapper>{getCover()}</StyledWrapper>;
+  return (
+    <StyledWrapper>
+      {getCover()}
+      <DeckStatus status={status} deckId={id} deckName={name} />
+    </StyledWrapper>
+  );
 };

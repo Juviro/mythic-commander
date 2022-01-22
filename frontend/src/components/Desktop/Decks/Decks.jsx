@@ -5,6 +5,8 @@ import { useQuery, useMutation } from 'react-apollo';
 import UserContext from 'components/Provider/UserProvider';
 import { LoginRequired } from 'components/Elements/Shared/LoginRequired/LoginRequired';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
+import { Divider } from 'antd';
+import { DeckStatus } from 'types/graphql';
 import { OverviewList, OverviewListHeader, PageLayout } from '../../Elements/Desktop';
 import { getDecksDesktop, createDeckDesktop } from './queries';
 
@@ -69,12 +71,17 @@ const Wants = ({ history }) => {
         title="Your Decks"
         onEnter={onOpenFirstDeck}
       />
-      <OverviewList
-        loading={loading}
-        lists={filteredDecks}
-        onClick={onOpenDeck}
-        emptyText="No Decks found"
-      />
+      {Object.entries(DeckStatus).map(([key, value]) => (
+        <React.Fragment key={key}>
+          <Divider orientation="left">{key}</Divider>
+          <OverviewList
+            loading={loading}
+            lists={filteredDecks.filter(({ status }) => status === value)}
+            onClick={onOpenDeck}
+            emptyText={`You don't have any ${key} decks yet`}
+          />
+        </React.Fragment>
+      ))}
     </PageLayout>
   );
 };

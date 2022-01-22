@@ -136,6 +136,7 @@ export type Deck = {
   imgSrc: Scalars['String'];
   numberOfCards: Scalars['Int'];
   visibility: Visibility;
+  status: DeckStatus;
   canEdit: Scalars['Boolean'];
   cards: Array<DeckCard>;
   colors?: Maybe<Array<Scalars['String']>>;
@@ -151,6 +152,12 @@ export type DeckCard = {
   card: Card;
   tags?: Maybe<Array<Scalars['String']>>;
 };
+
+export enum DeckStatus {
+  Active = 'active',
+  Draft = 'draft',
+  Archived = 'archived',
+}
 
 export type EdhRecCard = {
   __typename?: 'EDHRecCard';
@@ -493,6 +500,7 @@ export type ProxyCard = {
   id: Scalars['String'];
   amount?: Maybe<Scalars['Int']>;
   imgKey: Scalars['String'];
+  isTwoFaced: Scalars['Boolean'];
 };
 
 export type PurchaseUris = {
