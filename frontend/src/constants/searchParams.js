@@ -1,9 +1,9 @@
-import { StringParam } from 'use-query-params';
+import { StringParam, ArrayParam } from 'use-query-params';
 
 export default {
   name: StringParam,
   text: StringParam,
-  set: StringParam,
+  set: ArrayParam,
   cardType: StringParam,
   isLegendary: StringParam,
   subType: StringParam,

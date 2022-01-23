@@ -1,116 +1,75 @@
 import React, { useState, useEffect } from 'react';
 
-import { AutoComplete, Input } from 'antd';
+import { Select, Typography, Tag } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
 import CustomSkeleton from '../../CustomSkeleton';
 import isMobile from '../../../../../utils/isMobile';
-import keyCodes from '../../../../../constants/keyCodes';
-import { useToggle } from '../../../../Hooks';
-import { filterAndSortByQuery } from '../../../../../utils/cardFilter';
 
 const SelectFilter = ({
   onChange,
   options,
   placeholder,
-  value = '',
-  onSearch,
+  value = [],
   allowClear,
   getPrefix,
   size = 'default',
 }) => {
-  const inputRef = React.useRef(null);
-  const [currentValue, setCurrentValue] = useState('');
-  const [isDropdownVisible, toggleIsVisible] = useToggle(false);
-
-  const formattedOptions = options.map((option) => ({
-    label: option.label,
-    options: option.options.map((name) => ({ value: name, name })),
-  }));
-  const allOptions = formattedOptions
-    .map((option) => option.options.map((name) => name))
-    .flat();
-
-  useEffect(() => {
-    const newValue = allOptions.find(({ value: optionValue }) => value === optionValue);
-    if (!newValue) return;
-    setCurrentValue(newValue.name);
-    // eslint-disable-next-line
-  }, [value]);
-
-  const filterOptions = (optionsToFilter) =>
-    filterAndSortByQuery(optionsToFilter, currentValue).map(
-      ({ name, value: optionValue }) => ({
-        label: (
-          <span>
-            {getPrefix && getPrefix(optionValue)}
-            {name}
-          </span>
-        ),
-        value: optionValue,
-      })
-    );
-
-  const filteredOptions = formattedOptions
-    .map(({ options: subOptions, ...rest }) => ({
-      ...rest,
-      options: filterOptions(subOptions),
-    }))
-    .filter(({ options: subOptions }) => subOptions.length);
-
-  const onChangeInput = (inputValue = '') => {
-    if (!inputValue) onChange('');
-    setCurrentValue(inputValue);
-    const isValidOption = allOptions.find(
-      ({ name }) => name.toLowerCase() === inputValue.toLowerCase()
-    );
-    if (isValidOption) {
-      onChange(isValidOption.value);
-    }
-  };
-
-  const onSelect = (inputValue) => {
-    onChange(inputValue);
-    const currentOptionValue = allOptions.find((option) => option.value === inputValue);
-    if (currentOptionValue) {
-      setCurrentValue(currentOptionValue.name);
-    }
-    if (isMobile()) {
-      setTimeout(() => inputRef.current.blur(), 100);
-    }
+  const [currentValue, setCurrentValue] = useState(value);
+  const onChangeInput = (newValues = []) => {
+    setCurrentValue(newValues);
+    onChange(newValues);
   };
 
   // reset current input when parent is reset
   useEffect(() => {
-    if (value) return;
-    setCurrentValue('');
+    if (value?.length || !currentValue?.length) return;
+    setCurrentValue([]);
+    // eslint-disable-next-line
   }, [value]);
 
-  const searchOnEnter = (e) => {
-    if (e.keyCode === keyCodes.ENTER && !isDropdownVisible && onSearch) {
-      onSearch();
-      setTimeout(() => inputRef.current.blur(), 100);
-    }
-  };
-
   return (
-    <AutoComplete
+    <Select
+      mode="multiple"
       value={currentValue}
-      ref={inputRef}
       dropdownMatchSelectWidth
       allowClear={allowClear}
       style={{ width: '100%' }}
-      onSelect={onSelect}
-      onKeyDown={searchOnEnter}
       onChange={onChangeInput}
       defaultActiveFirstOption
-      onDropdownVisibleChange={toggleIsVisible}
-      options={filteredOptions}
+      size={size}
+      placeholder={placeholder}
+      showSearch
+      suffixIcon={<SearchOutlined />}
+      filterOption={(input, option) => {
+        const normalize = (val) => val.replace(/\s/g, '').toLowerCase();
+
+        return normalize(option.key).includes(normalize(input));
+      }}
+      tagRender={(props) => {
+        const { label, closable, onClose } = props;
+
+        return (
+          <Tag
+            onMouseDown={(e) => e.stopPropagation()}
+            closable={closable}
+            onClose={onClose}
+            style={{ marginRight: 3 }}
+          >
+            {label[0]}
+            <Typography.Text ellipsis style={{ maxWidth: isMobile() ? 140 : 330 }}>
+              {label[1]}
+            </Typography.Text>
+          </Tag>
+        );
+      }}
     >
-      <Input.Search
-        size={size}
-        placeholder={placeholder}
-        prefix={<span>{getPrefix && value && getPrefix(value)}</span>}
-      />
-    </AutoComplete>
+      {options.map((option) => (
+        <Select.Option key={option.name} value={option.value}>
+          {getPrefix && getPrefix(option.value)}
+          {option.name}
+        </Select.Option>
+      ))}
+    </Select>
   );
 };
 

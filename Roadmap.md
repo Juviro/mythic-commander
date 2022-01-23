@@ -9,11 +9,19 @@
 
 ## CURRENT:
 
-- use first card / 4-split card as wants list/deck image if they have none
+- Allow multi select in search for
+
+  - set
+  - supertype
+  - subtype
 
 ## NEXT:
 
+- bugfixes
+- Mobile Swipe cards in list
 - Unique cards table should only have version 1 cards
+- display owned in edhrec tab
+- Add Status to Deck view
 
 ## IMPROVEMENTS:
 

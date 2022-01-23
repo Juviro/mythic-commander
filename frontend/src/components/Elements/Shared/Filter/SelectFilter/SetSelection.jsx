@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import CardContext from '../../../../Provider/CardProvider';
-import SelectFilter from './SelectFilter';
+import MultiSelectFilter from './MultiSelectFilter';
 import SetIcon from '../../SetIcon';
 
 export default ({
@@ -20,7 +20,7 @@ export default ({
   const getPrefix = (setKey) => <SetIcon setKey={setKey} />;
 
   return (
-    <SelectFilter
+    <MultiSelectFilter
       value={value}
       size={size}
       onSearch={onSearch}

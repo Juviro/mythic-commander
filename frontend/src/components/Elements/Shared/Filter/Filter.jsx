@@ -41,7 +41,7 @@ const FilterElement = ({ title, children, dividerAbove, size }) => (
     {dividerAbove && <Divider />}
     <Flex
       direction="row"
-      align="end"
+      align="flex-start"
       style={{ marginBottom: 24, fontSize: getFontSize(size) }}
     >
       <StyledLabel strong>{title}</StyledLabel>

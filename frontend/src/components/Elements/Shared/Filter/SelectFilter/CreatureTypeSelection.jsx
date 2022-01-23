@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import CardContext from '../../../../Provider/CardProvider';
-import MultiSelectFilter from './MultiSelectFilter';
+import GroupedSelectFilter from './GroupedSelectFilter';
 
 export default ({ onChange, value, onSearch, size }) => {
   const { subTypes } = useContext(CardContext);
@@ -11,7 +11,7 @@ export default ({ onChange, value, onSearch, size }) => {
   }));
 
   return (
-    <MultiSelectFilter
+    <GroupedSelectFilter
       options={options}
       onChange={onChange}
       size={size}

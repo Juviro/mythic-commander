@@ -124,6 +124,7 @@ export default ({ children, researchOnOrderChange, blockInitialSearch = false })
   }, [page]);
 
   const onChangeOption = (key) => (value) => {
+    console.log('key, value', key, value);
     setCurrentOptions({ ...currentOptions, [key]: value });
   };
 

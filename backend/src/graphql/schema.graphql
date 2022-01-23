@@ -363,7 +363,7 @@ input CardsOptionsInput {
   rarity: String
   power: String
   toughness: String
-  set: String
+  set: [String!]
   orderBy: String
 }
 

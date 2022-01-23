@@ -99,14 +99,14 @@ export default async (
 
   const [order, direction = 'asc'] = orderBy.split('-');
 
-  const tableName = set ? 'distinctCardsPerSet' : 'distinctCards';
+  const tableName = set?.length ? 'distinctCardsPerSet' : 'distinctCards';
 
   const where = q => {
     if (name) addNameClause(q, name);
     if (text) q.where('oracle_text', 'ILIKE', `%${text}%`);
     if (subType) q.where('type_line', 'LIKE', `%${subType}%`);
     if (cardType) q.where('type_line', 'ILIKE', `%${cardType}%`);
-    if (set) q.where('set', set);
+    if (set?.length) q.whereIn('set', set);
     if (isCommanderLegal === 'true')
       q.whereRaw("(legalities->>'commander')::text = 'legal'");
     if (isCommanderLegal === 'false')
