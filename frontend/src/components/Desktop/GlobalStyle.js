@@ -65,4 +65,13 @@ export default createGlobalStyle`
   body > input {
     display: none;
   }
+
+
+  /* 
+    Prevent the scrollbar to disappear when a modal is opened
+  */
+  body {
+    width: 100% !important;
+    overflow: scroll !important;
+  }
 `;
