@@ -3,10 +3,10 @@ import { StringParam, ArrayParam } from 'use-query-params';
 export default {
   name: StringParam,
   text: StringParam,
-  set: ArrayParam,
-  cardType: StringParam,
+  sets: ArrayParam,
+  cardTypes: ArrayParam,
   isLegendary: StringParam,
-  subType: StringParam,
+  subTypes: ArrayParam,
   colors: StringParam,
   rarity: StringParam,
   cmc: StringParam,

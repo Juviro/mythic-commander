@@ -5,15 +5,61 @@ import { SearchOutlined } from '@ant-design/icons';
 import CustomSkeleton from '../../CustomSkeleton';
 import isMobile from '../../../../../utils/isMobile';
 
-const SelectFilter = ({
+const getUnifiedOptions = (options, isGrouped) => {
+  const unifyOptions = (option) => {
+    if (option.value) return option;
+    return {
+      value: option,
+      name: option,
+    };
+  };
+
+  if (!isGrouped) {
+    return options.map(unifyOptions);
+  }
+
+  return options.map((option) => {
+    return {
+      label: option.label,
+      options: option.options.map(unifyOptions),
+    };
+  });
+};
+
+const renderOptions = (options, getPrefix, isGrouped) => {
+  if (!isGrouped) {
+    return options.map((option) => (
+      <Select.Option key={option.name} value={option.value}>
+        {getPrefix && getPrefix(option.value)}
+        {option.name}
+      </Select.Option>
+    ));
+  }
+
+  return options.map((optionGroup) => (
+    <Select.OptGroup key={optionGroup.label} label={optionGroup.label}>
+      {optionGroup.options.map((option) => (
+        <Select.Option key={option.name} value={option.value}>
+          {getPrefix && getPrefix(option.value)}
+          {option.name}
+        </Select.Option>
+      ))}
+    </Select.OptGroup>
+  ));
+};
+
+const MultiSelectFilter = ({
   onChange,
   options,
   placeholder,
   value = [],
   allowClear,
   getPrefix,
+  isGrouped,
   size = 'default',
 }) => {
+  const unifiedOptions = getUnifiedOptions(options, isGrouped);
+
   const [currentValue, setCurrentValue] = useState(value);
   const onChangeInput = (newValues = []) => {
     setCurrentValue(newValues);
@@ -63,12 +109,7 @@ const SelectFilter = ({
         );
       }}
     >
-      {options.map((option) => (
-        <Select.Option key={option.name} value={option.value}>
-          {getPrefix && getPrefix(option.value)}
-          {option.name}
-        </Select.Option>
-      ))}
+      {renderOptions(unifiedOptions, getPrefix, isGrouped)}
     </Select>
   );
 };
@@ -78,5 +119,5 @@ const SelectFilter = ({
 export default ({ options, ...rest }) => {
   if (!options.length) return <CustomSkeleton.Line />;
 
-  return <SelectFilter options={options} {...rest} />;
+  return <MultiSelectFilter options={options} {...rest} />;
 };

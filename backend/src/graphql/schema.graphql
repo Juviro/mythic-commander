@@ -353,8 +353,8 @@ type Query {
 input CardsOptionsInput {
   name: String
   colors: String
-  subType: String
-  cardType: String
+  subTypes: [String!]
+  cardTypes: [String!]
   isLegendary: String
   isCommanderLegal: String
   isOwned: String
@@ -363,7 +363,7 @@ input CardsOptionsInput {
   rarity: String
   power: String
   toughness: String
-  set: [String!]
+  sets: [String!]
   orderBy: String
 }
 

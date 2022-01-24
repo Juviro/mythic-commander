@@ -59,11 +59,11 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
     cmc,
     power,
     toughness,
-    set,
+    sets,
     text,
     colors,
-    subType,
-    cardType,
+    subTypes,
+    cardTypes,
     isLegendary,
     isOwned,
     isCommanderLegal,
@@ -98,12 +98,7 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
     {
       title: 'Set',
       component: (
-        <SetSelection
-          size={size}
-          onChange={onChangeOption('set')}
-          value={set}
-          onSearch={onSearch}
-        />
+        <SetSelection size={size} onChange={onChangeOption('sets')} value={sets} />
       ),
     },
     {
@@ -113,8 +108,7 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
         <CardTypeSelection
           size={size}
           onChangeOption={onChangeOption}
-          value={cardType}
-          onSearch={onSearch}
+          value={cardTypes}
         />
       ),
     },
@@ -123,9 +117,9 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
       component: (
         <CreatureTypeSelection
           size={size}
-          onChange={onChangeOption('subType')}
+          onChange={onChangeOption('subTypes')}
           onSearch={onSearch}
-          value={subType}
+          value={subTypes}
         />
       ),
     },

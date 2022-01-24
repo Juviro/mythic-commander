@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import { useQueryParams, StringParam } from 'use-query-params';
-import { filterCards, sortCards } from '../../../../utils/cardFilter';
+import { StringParam, useQueryParam } from 'use-query-params';
+import { sortCards } from '../../../../utils/cardFilter';
 import CardList from '.';
 import { useStoredQueryParam } from '../../../Hooks';
 
@@ -14,19 +14,11 @@ export default ({
   onDeleteCard,
   onEditCard,
   moveToList,
-  name: nameQuery,
   deleteByOracle,
   paginated = true,
   disableSelection,
 }) => {
-  const [{ name, colors, layout, subType, cardType, isLegendary }] = useQueryParams({
-    name: StringParam,
-    colors: StringParam,
-    subType: StringParam,
-    cardType: StringParam,
-    isLegendary: StringParam,
-    layout: StringParam,
-  });
+  const [layout] = useQueryParam('layout', StringParam);
   const [orderBy = 'added-desc'] = useStoredQueryParam('orderByAdvanced', StringParam);
 
   const [displayedResults, setDisplayedResults] = useState(CARDS_PER_PAGE);
@@ -40,17 +32,7 @@ export default ({
     setDisplayedResults(displayedResults + CARDS_PER_PAGE);
   };
 
-  const filteredCards =
-    cards &&
-    filterCards(cards, {
-      colors,
-      name: name || nameQuery,
-      subType,
-      cardType,
-      isLegendary,
-    });
-
-  const sortedCards = cards && sortCards(filteredCards, orderBy);
+  const sortedCards = cards && sortCards(cards, orderBy);
 
   const hasMore = displayedResults < sortedCards?.length;
 

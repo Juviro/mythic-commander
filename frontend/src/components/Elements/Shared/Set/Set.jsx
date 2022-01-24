@@ -28,7 +28,8 @@ export default ({ setKey, name: overwriteName }) => {
   const { sets } = useContext(CardContext);
   const { name, icon_svg_uri } = sets[setKey];
   const setName = overwriteName || name;
-  const to = getDynamicUrl(`/search?set=${setKey}`);
+  const to = getDynamicUrl(`/search?sets=${setKey}`);
+
   return (
     <DesktopTooltip title={setName}>
       <StyledSetName>

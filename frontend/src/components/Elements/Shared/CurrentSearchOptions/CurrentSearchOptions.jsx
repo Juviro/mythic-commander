@@ -16,10 +16,10 @@ const formatKey = (key) => {
     return value.charAt(0).toUpperCase() + value.slice(1);
   };
   switch (key) {
-    case 'subType':
-      return 'Subtype';
-    case 'cardType':
-      return 'Card Type';
+    case 'subTypes':
+      return 'Subtypes';
+    case 'cardTypes':
+      return 'Card Types';
     case 'isLegendary':
       return 'Legendary';
     case 'isOwned':
@@ -79,8 +79,8 @@ const formatColors = (colors) => {
 
 const formatValue = (key, value, sets) => {
   switch (key) {
-    case 'set':
-      return sets[value] ? sets[value].name : '';
+    case 'sets':
+      return value.map((set) => sets[set].name).join(', ');
     case 'rarity':
       return formatRarity(value);
     case 'isLegendary':
@@ -92,7 +92,7 @@ const formatValue = (key, value, sets) => {
     case 'colors':
       return formatColors(value);
     default:
-      return value;
+      return Array.isArray(value) ? value.join(', ') : value;
   }
 };
 

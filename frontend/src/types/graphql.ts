@@ -74,8 +74,8 @@ export type CardInputType = {
 export type CardsOptionsInput = {
   name?: Maybe<Scalars['String']>;
   colors?: Maybe<Scalars['String']>;
-  subType?: Maybe<Scalars['String']>;
-  cardType?: Maybe<Scalars['String']>;
+  subTypes?: Maybe<Array<Scalars['String']>>;
+  cardTypes?: Maybe<Array<Scalars['String']>>;
   isLegendary?: Maybe<Scalars['String']>;
   isCommanderLegal?: Maybe<Scalars['String']>;
   isOwned?: Maybe<Scalars['String']>;
@@ -84,7 +84,7 @@ export type CardsOptionsInput = {
   rarity?: Maybe<Scalars['String']>;
   power?: Maybe<Scalars['String']>;
   toughness?: Maybe<Scalars['String']>;
-  set?: Maybe<Scalars['String']>;
+  sets?: Maybe<Array<Scalars['String']>>;
   orderBy?: Maybe<Scalars['String']>;
 };
 
@@ -268,6 +268,7 @@ export type Mutation = {
   deleteFromDeck: Deck;
   duplicateDeck: Scalars['String'];
   changeDeckVisibility: Deck;
+  changeDeckStatus: Deck;
   addTagsToCards: Array<DeckCard>;
   moveCard: MoveCardReturnType;
   addToCollection: Array<CollectionCard>;
@@ -335,6 +336,11 @@ export type MutationDuplicateDeckArgs = {
 export type MutationChangeDeckVisibilityArgs = {
   deckId: Scalars['String'];
   visibility: Visibility;
+};
+
+export type MutationChangeDeckStatusArgs = {
+  deckId: Scalars['String'];
+  status: DeckStatus;
 };
 
 export type MutationAddTagsToCardsArgs = {

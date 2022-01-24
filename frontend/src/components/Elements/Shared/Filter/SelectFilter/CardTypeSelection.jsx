@@ -1,17 +1,16 @@
 import React, { useContext } from 'react';
 
 import CardContext from '../../../../Provider/CardProvider';
-import SelectFilter from './SelectFilter';
+import MultiSelectFilter from './MultiSelectFilter';
 
-export default ({ onChangeOption, value, onSearch, size }) => {
+export default ({ onChangeOption, value, size }) => {
   const { cardTypes } = useContext(CardContext);
 
   return (
-    <SelectFilter
+    <MultiSelectFilter
       size={size}
-      onSearch={onSearch}
       value={value}
-      onChange={onChangeOption('cardType')}
+      onChange={onChangeOption('cardTypes')}
       options={cardTypes}
       placeholder={'e.g. "Planeswalker"'}
     />

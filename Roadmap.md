@@ -9,12 +9,6 @@
 
 ## CURRENT:
 
-- Allow multi select in search for
-
-  - set
-  - supertype
-  - subtype
-
 ## NEXT:
 
 - bugfixes
@@ -25,6 +19,8 @@
 
 ## IMPROVEMENTS:
 
+- allow renaming deck on mobile
+- redesign mobile deck edit (at least the tabs)
 - redesign moveTo modal, especially for mobile
 - re-enable deck card selection for mobile
 - mobile card list preview: allow swipe to next card

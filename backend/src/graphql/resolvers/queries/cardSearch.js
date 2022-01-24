@@ -83,10 +83,10 @@ export default async (
   const {
     colors = '',
     name,
-    set,
+    sets,
     text,
-    subType,
-    cardType,
+    subTypes,
+    cardTypes,
     isLegendary,
     isCommanderLegal,
     isOwned,
@@ -99,14 +99,14 @@ export default async (
 
   const [order, direction = 'asc'] = orderBy.split('-');
 
-  const tableName = set?.length ? 'distinctCardsPerSet' : 'distinctCards';
+  const tableName = sets?.length ? 'distinctCardsPerSet' : 'distinctCards';
 
   const where = q => {
     if (name) addNameClause(q, name);
     if (text) q.where('oracle_text', 'ILIKE', `%${text}%`);
-    if (subType) q.where('type_line', 'LIKE', `%${subType}%`);
-    if (cardType) q.where('type_line', 'ILIKE', `%${cardType}%`);
-    if (set?.length) q.whereIn('set', set);
+    if (subTypes?.length) q.where('type_line', '~*', subTypes.join('|'));
+    if (cardTypes?.length) q.where('type_line', '~*', cardTypes.join('|'));
+    if (sets?.length) q.whereIn('set', sets);
     if (isCommanderLegal === 'true')
       q.whereRaw("(legalities->>'commander')::text = 'legal'");
     if (isCommanderLegal === 'false')
