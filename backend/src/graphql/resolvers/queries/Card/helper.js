@@ -21,8 +21,9 @@ export const isSpecialCard = card => {
     card.frame_effects &&
     premiumFrameEffects.some(effect => card.frame_effects.includes(effect))
   ) {
-    return 2;
+    return 3;
   }
+  if (card.lang !== 'en') return 2;
   if (card.booster === false) return 1;
 
   return 0;

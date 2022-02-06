@@ -4,7 +4,6 @@
 
 ## BUGFIXES:
 
-- Ashes to Ashes Fifth Edition Version 1 & 2 switched
 - card details sort by price (eur) not working correctly, e.g. sol ring
 - deck sidbar: creature types leiste überlappt
 - mobile collection/advanced search loading animation for all elements
