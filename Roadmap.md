@@ -4,21 +4,38 @@
 
 ## BUGFIXES:
 
+- some cards (e.g. Krark's Thumb) not removed from search list. Also, displayed as 0 results?
 - mobile collection/advanced search loading animation for all elements
 - deck drop area not fullscreen when only 1 card in deck
+- deck sidbar: creature types leiste überlappt
+- duplicate deck does not copy tags
+- when opening a deck, scroll to top
+- hullbreacher not displayed when searching for non-commander legal cards
+- added within last hour shows cards added before that
+- Ashes to Ashes Fifth Edition Version 1 & 2 switched
+- card details sort by price (eur) not working correctly, e.g. sol ring
 
 ## CURRENT:
 
 ## NEXT:
 
+- create trell (or similar) board to track issues
+
+## IMPROVEMENTS:
+
 - bugfixes
+- add option to search for card text with hidden text over card, similar to scryfall
+- add deck option to display all related tokens (maybe in proxy view)
 - Mobile Swipe cards in list
 - Unique cards table should only have version 1 cards
 - display owned in edhrec tab
 - Add Status to Deck view
-
-## IMPROVEMENTS:
-
+- Add EUR price estimation if card only has usd price, with info icon
+- allow sorting by eur
+- add to collection: disply image
+- card detail: loading indicator when image changes
+- oracle text to mobile
+- add admin option to update cards
 - allow renaming deck on mobile
 - redesign mobile deck edit (at least the tabs)
 - redesign moveTo modal, especially for mobile
@@ -26,6 +43,7 @@
 - mobile card list preview: allow swipe to next card
 - move to new image service
 - lighthouse report fixes
+- desktop edit amount: autofocus version that is currently selected
 
 - add to deck overview list
   - legality
