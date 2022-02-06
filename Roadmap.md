@@ -4,16 +4,14 @@
 
 ## BUGFIXES:
 
-- some cards (e.g. Krark's Thumb) not removed from search list. Also, displayed as 0 results?
-- mobile collection/advanced search loading animation for all elements
-- deck drop area not fullscreen when only 1 card in deck
-- deck sidbar: creature types leiste überlappt
-- duplicate deck does not copy tags
 - when opening a deck, scroll to top
 - hullbreacher not displayed when searching for non-commander legal cards
 - added within last hour shows cards added before that
 - Ashes to Ashes Fifth Edition Version 1 & 2 switched
 - card details sort by price (eur) not working correctly, e.g. sol ring
+- deck sidbar: creature types leiste überlappt
+- mobile collection/advanced search loading animation for all elements
+- deck drop area not fullscreen when only 1 card in deck
 
 ## CURRENT:
 

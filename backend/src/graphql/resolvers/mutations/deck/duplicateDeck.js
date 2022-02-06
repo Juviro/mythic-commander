@@ -8,11 +8,11 @@ export default async (_, { deckId }, { user, db }) => {
     rows: [{ id: newDeckId }],
   } = await db.raw(
     `
-    INSERT INTO decks 
-      ("userId", name, "imgSrc", "lastEdit", "createdAt", "id") 
-    SELECT 
-      "userId", CONCAT(name, ' - Copy'), "imgSrc", NOW() as "lastEdit", NOW() as "createdAt" , ?
-    FROM decks WHERE id=? RETURNING id
+      INSERT INTO decks 
+        ("userId", name, "imgSrc", "lastEdit", "createdAt", "id") 
+      SELECT 
+        "userId", CONCAT(name, ' - Copy'), "imgSrc", NOW() as "lastEdit", NOW() as "createdAt" , ?
+      FROM decks WHERE id=? RETURNING id
     `,
     [randomId(), deckId]
   );
@@ -20,9 +20,9 @@ export default async (_, { deckId }, { user, db }) => {
   await db.raw(
     `
     INSERT INTO "cardToDeck" 
-      ("deckId", "id", "isCommander", amount) 
+      ("deckId", "id", "isCommander", amount, tags) 
     SELECT 
-      ? as "deckId", "id", "isCommander", amount
+      ? as "deckId", "id", "isCommander", amount, tags
     FROM "cardToDeck" WHERE "deckId"=?
     `,
     [newDeckId, deckId]
