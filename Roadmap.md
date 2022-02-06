@@ -58,6 +58,11 @@
 
 - wrap expensive calculations and small components in GridCard in memo and useMemo
 
+## CHORE:
+
+- Auto Backup DB
+- Backup DB to external server (e.g. google drive)
+
 ## FEATURES:
 
 - show last search when no input in searchbar

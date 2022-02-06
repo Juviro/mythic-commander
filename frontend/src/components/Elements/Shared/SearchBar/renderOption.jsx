@@ -44,6 +44,7 @@ export default (searchString) => (element) => {
 
   return {
     value: oracle_id,
+    key: id,
     label: (
       <StyledOption>
         <CardImageWrapper>
