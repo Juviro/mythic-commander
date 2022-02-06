@@ -4,7 +4,6 @@
 
 ## BUGFIXES:
 
-- when opening a deck, scroll to top
 - hullbreacher not displayed when searching for non-commander legal cards
 - added within last hour shows cards added before that
 - Ashes to Ashes Fifth Edition Version 1 & 2 switched

@@ -56,6 +56,10 @@ export default () => {
     // eslint-disable-next-line
   }, [colorIdentityString]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
   if (!data && !loading) {
     return <NotFound message="This deck does not seem to exist.." />;
   }
