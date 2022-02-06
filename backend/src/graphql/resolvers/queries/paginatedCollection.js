@@ -41,7 +41,7 @@ export default (
           WHERE "userId" = ?
           ${
             addedWithin
-              ? `AND "createdAt" > current_date - interval '${Number(
+              ? `AND "createdAt" > NOW() - interval '${Number(
                   addedWithin
                 )}' hour`
               : ''
