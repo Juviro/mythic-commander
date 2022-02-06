@@ -110,7 +110,7 @@ export default async (
     if (isCommanderLegal === 'true')
       q.whereRaw("(legalities->>'commander')::text = 'legal'");
     if (isCommanderLegal === 'false')
-      q.whereRaw("(legalities->>'commander')::text = 'not_legal'");
+      q.whereRaw("(legalities->>'commander')::text <> 'legal'");
     if (isLegendary === 'true') q.where('type_line', 'ILIKE', `%Legendary%`);
     if (isLegendary === 'false')
       q.whereNot('type_line', 'ILIKE', `%Legendary%`);
