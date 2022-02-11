@@ -18,7 +18,6 @@
     "recommendations": [
       "apollographql.vscode-apollo",
       "dbaeumer.vscode-eslint",
-      "jpoissonnier.vscode-styled-components",
       "redhat.vscode-yaml"
     ]
   },
