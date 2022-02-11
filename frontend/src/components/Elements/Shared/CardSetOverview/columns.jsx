@@ -87,7 +87,8 @@ const renderOwned = (isEditing, onChangeAmount, onSaveChanges, amountKey) => (
 };
 
 const sortByPrice = (priceKey) => (a, b) => {
-  const getPrice = (card) => card.prices[priceKey] || 0;
+  const getPrice = (card) =>
+    Number(card.prices[priceKey]) || Number(card.prices[`${priceKey}_foil`]) || 0;
   return getPrice(a) - getPrice(b);
 };
 
