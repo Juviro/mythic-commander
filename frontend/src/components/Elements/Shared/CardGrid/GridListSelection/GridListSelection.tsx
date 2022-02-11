@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import sumCardAmount from 'utils/sumCardAmount';
+import DeckProvider from 'components/Desktop/Deck/DeckProvider';
 import { CardList } from '../CardGrid';
 import GridListSelectionIndicator from './GridListSelectionIndicator';
 import GridListSelectionItem from './GridListSelectionItem';
@@ -8,10 +9,10 @@ import GridListSelectionItem from './GridListSelectionItem';
 const NAVBAR_HEIGHT = 46;
 const OFFSET = NAVBAR_HEIGHT * 2 + 32;
 
-const StyledListSelection = styled.ol<{ visible: boolean }>`
+const StyledListSelection = styled.ol<{ visible: boolean; isSidebarOpen?: boolean }>`
   position: fixed;
   display: flex;
-  z-index: 300;
+  z-index: 99;
   justify-content: center;
   padding: 4px;
   top: ${NAVBAR_HEIGHT}px;
@@ -24,6 +25,7 @@ const StyledListSelection = styled.ol<{ visible: boolean }>`
   opacity: ${({ visible }) => (visible ? 1 : 0)};
   ${({ visible }) => !visible && 'pointer-events: none'};
   transition: opacity ${({ visible }) => (visible ? 0.5 : 0.2)}s ease-out;
+  ${({ isSidebarOpen }) => isSidebarOpen && 'padding-right: 550px'};
 `;
 
 const StyledInner = styled.div`
@@ -40,6 +42,7 @@ interface Props {
 }
 
 const GridListSelection = ({ cardLists }: Props) => {
+  const { isSidebarOpen } = useContext(DeckProvider);
   const [visible, setVisible] = React.useState(false);
   const [blockedUntil, setBlockedUntil] = React.useState(0);
   const [firstVisibleTitle, setFirstVisibleTitle] = React.useState(
@@ -80,7 +83,7 @@ const GridListSelection = ({ cardLists }: Props) => {
   };
 
   return (
-    <StyledListSelection visible={visible}>
+    <StyledListSelection visible={visible} isSidebarOpen={isSidebarOpen}>
       <GridListSelectionIndicator type={firstVisibleTitle} />
       <StyledInner>
         {cardLists.map(({ key, type, color, cards }, index) => (

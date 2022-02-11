@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Space } from 'antd';
 import styled from 'styled-components';
 
@@ -6,6 +6,7 @@ import { UnifiedDeck } from 'types/unifiedTypes';
 import { CardInputType } from 'types/graphql';
 import { WantsListsButton } from './WantsListsButton';
 import Sidebar from '../../Sidebar';
+import DeckProvider from '../../DeckProvider';
 
 export const ADVANCED_SEARCH = 'advanced_search';
 export const EDH_REC = 'edh_rec';
@@ -26,13 +27,16 @@ interface Props {
 
 export const ActionButtons = ({ deck, onAddCards }: Props) => {
   const [currentTabId, setCurrentTabId] = useState<string | null>(null);
+  const { setIsSidebarOpen } = useContext(DeckProvider);
 
   if (!deck) return null;
 
   const onSetTabId = (tabId: string) => {
     if (currentTabId === tabId) {
+      setIsSidebarOpen(false);
       setCurrentTabId(null);
     } else {
+      setIsSidebarOpen(true);
       setCurrentTabId(tabId);
     }
   };
@@ -60,7 +64,6 @@ export const ActionButtons = ({ deck, onAddCards }: Props) => {
           currentTabId={currentTabId}
         />
       </StyledWrapper>
-
       <Sidebar
         currentTabId={currentTabId}
         setCurrentTabId={onSetTabId}
