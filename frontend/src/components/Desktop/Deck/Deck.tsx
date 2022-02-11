@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useQuery, useMutation } from 'react-apollo';
+import { StringParam, useQueryParam } from 'use-query-params';
 
 import { MutationAddCardsToDeckArgs, CardInputType, Query } from 'types/graphql';
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { PageCard, PageLayout } from 'components/Elements/Desktop';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
-import { StringParam, useQueryParam } from 'use-query-params';
 import { getColorIdentity } from 'utils/commander';
 import Flex from 'components/Elements/Shared/Flex';
 import NotFound from 'components/Elements/Shared/NotFound';
@@ -21,6 +21,7 @@ import DeckActions from './Header/DeckActions';
 import Title from './Header/Title';
 import { ActionBar } from './ActionBar/ActionBar';
 import { DeckSettings } from './DeckSettings/DeckSettings';
+import { DeckContextProvider } from './DeckProvider';
 
 export type View = 'type' | 'tags';
 
@@ -73,33 +74,35 @@ export default () => {
   };
 
   return (
-    <ShortcutFocus
-      focusId="deck.cards"
-      style={{ overflow: 'auto', flex: 1, height: '100%' }}
-    >
-      <PageLayout large>
-        <PageCard
-          title={<Title deck={unifiedDeck} />}
-          extra={
-            deck?.canEdit ? (
-              <DeckActions deck={unifiedDeck} onAddCards={onAddCards} />
-            ) : null
-          }
-          style={{ height: 'calc(100% - 80px)', marginBottom: 70 }}
-        >
-          <DeckSettings view={view} setView={setView} />
-          <Flex>
-            <Cards
-              deck={unifiedDeck}
-              loading={loading}
-              onAddCards={onAddCards}
-              view={view}
-            />
-            <DeckBreakdown deck={unifiedDeck} />
-          </Flex>
-        </PageCard>
-        {deck?.canEdit && <ActionBar onAddCards={onAddCards} deck={unifiedDeck} />}
-      </PageLayout>
-    </ShortcutFocus>
+    <DeckContextProvider>
+      <ShortcutFocus
+        focusId="deck.cards"
+        style={{ overflow: 'auto', flex: 1, height: '100%' }}
+      >
+        <PageLayout large>
+          <PageCard
+            title={<Title deck={unifiedDeck} />}
+            extra={
+              deck?.canEdit ? (
+                <DeckActions deck={unifiedDeck} onAddCards={onAddCards} />
+              ) : null
+            }
+            style={{ height: 'calc(100% - 80px)', marginBottom: 70 }}
+          >
+            <DeckSettings view={view} setView={setView} />
+            <Flex>
+              <Cards
+                deck={unifiedDeck}
+                loading={loading}
+                onAddCards={onAddCards}
+                view={view}
+              />
+              <DeckBreakdown deck={unifiedDeck} />
+            </Flex>
+          </PageCard>
+          {deck?.canEdit && <ActionBar onAddCards={onAddCards} deck={unifiedDeck} />}
+        </PageLayout>
+      </ShortcutFocus>
+    </DeckContextProvider>
   );
 };
