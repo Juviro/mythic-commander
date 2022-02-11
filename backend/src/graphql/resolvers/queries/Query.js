@@ -59,8 +59,8 @@ const resolver = {
     return { id };
   },
 
-  edhrecCards(_, { names, themeSuffix }) {
-    return getEdhrecCards(names, themeSuffix);
+  edhrecCards(_, { names, themeSuffix }, { user: { id: userId } }) {
+    return getEdhrecCards(names, themeSuffix, userId);
   },
 
   async ownedCardNames(_, __, { db, user: { id: userId } }) {
