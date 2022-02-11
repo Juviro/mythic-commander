@@ -1,5 +1,7 @@
 import fetch from 'node-fetch';
 
+import db from '../../../database';
+
 const getUrl = (names, themeSuffix) => {
   const sanitizedNames = names
     .join(' ')
@@ -15,7 +17,15 @@ const getUrl = (names, themeSuffix) => {
   return `https://json.edhrec.com/commanders/${sanitizedNames}${themeSuffix}.json`;
 };
 
-const formatCards = cards => {
+const formatCards = async (cards, userId) => {
+  const ownedCards = await db('collection')
+    .leftJoin('cards', 'cards.id', 'collection.id')
+    .whereIn(
+      'name',
+      cards.map(card => card.name)
+    )
+    .andWhere('userId', userId);
+
   return cards
     .map(({ prices, name, synergy, image_uris }) => {
       const [_, imgKey, id] = image_uris?.[0]?.small?.match(
@@ -26,6 +36,7 @@ const formatCards = cards => {
         id,
         imgKey,
         name,
+        owned: ownedCards.some(card => card.name === name),
         priceUsd: prices.tcgplayer?.price,
         priceEur: prices.cardmarket?.price,
         synergy,
@@ -48,13 +59,13 @@ const fetchCards = async (url, names) => {
   return json;
 };
 
-const getCardList = json => {
+const getCardList = (json, userId) => {
   const { cardlists } = json.container.json_dict;
 
   return cardlists?.map(({ header, cardviews, tag }) => ({
     key: tag,
     title: header,
-    cards: formatCards(cardviews),
+    cards: formatCards(cardviews, userId),
   }));
 };
 
@@ -68,14 +79,14 @@ const getThemes = json => {
   }));
 };
 
-const getEdhrecCards = async (names, themeSuffix) => {
+const getEdhrecCards = async (names, themeSuffix, userId) => {
   if (!names.length) return null;
 
   const url = getUrl(names, themeSuffix);
 
   const json = await fetchCards(url, names);
 
-  const cardLists = getCardList(json);
+  const cardLists = getCardList(json, userId);
   const themes = getThemes(json);
 
   return {

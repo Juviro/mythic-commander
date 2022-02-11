@@ -13,6 +13,7 @@ export const getEdhrecCards = gql`
           synergy
           priceUsd
           priceEur
+          owned
         }
       }
       themes {
