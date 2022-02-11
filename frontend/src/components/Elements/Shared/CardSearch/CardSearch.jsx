@@ -43,17 +43,23 @@ const getHighlightedOption = (
   containedCardNames = [],
   ownedCardNames = []
 ) => {
-  let currentSearchString = searchString;
-  const highlightedOption = cardName.split('').map((char) => {
-    if (
-      !currentSearchString.length ||
-      char.toLowerCase() !== currentSearchString[0].toLowerCase()
-    ) {
-      return char;
-    }
-    currentSearchString = currentSearchString.substr(1);
-    return <b key={Math.random()}>{char}</b>;
-  });
+  const highlightedOption = [];
+  let currentCardName = cardName;
+  searchString
+    .toLowerCase()
+    .split(' ')
+    .forEach((searchWord) => {
+      const index = currentCardName.toLowerCase().indexOf(searchWord);
+      if (index === -1) return;
+      highlightedOption.push(currentCardName.slice(0, index));
+      highlightedOption.push(
+        <b key={Math.random()}>
+          {currentCardName.slice(index, index + searchWord.length)}
+        </b>
+      );
+      currentCardName = currentCardName.slice(index + searchWord.length);
+    });
+  highlightedOption.push(currentCardName);
 
   const alreadyInList = containedCardNames.includes(cardName);
   const owned = ownedCardNames.includes(cardName);
