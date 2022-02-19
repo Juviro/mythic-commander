@@ -16,6 +16,7 @@ import UserContext from 'components/Provider/UserProvider';
 import AddTagsButton from 'components/Elements/Shared/CardGrid/SelectionMenu/AddTagsButton';
 import { UnifiedCard } from 'types/unifiedTypes';
 import { FEATURE_FLAG_TAG } from 'constants/featureFlags';
+import { getProxyUrl } from 'utils/getProxyUrl';
 import DesktopTooltip from '../../../Desktop/DesktopTooltip';
 import Menu from '../../Menu';
 
@@ -101,11 +102,10 @@ export const SelectionMenu = ({
     });
   }
   if (!isMobile()) {
-    const getProxyUrl = () => `/proxy/cards/${selectedCardIds.join(',')}`;
     actions.push({
       icon: <PrinterOutlined />,
       title: 'Proxy Cards',
-      onClick: () => window.open(getProxyUrl(), '_newtab'),
+      onClick: () => window.open(getProxyUrl(selectedCardIds), '_newtab'),
     });
   }
   if (onCopyCardsTo && user) {

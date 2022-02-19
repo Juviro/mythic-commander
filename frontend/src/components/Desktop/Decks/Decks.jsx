@@ -5,7 +5,7 @@ import { useQuery, useMutation } from 'react-apollo';
 import UserContext from 'components/Provider/UserProvider';
 import { LoginRequired } from 'components/Elements/Shared/LoginRequired/LoginRequired';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
-import { Divider } from 'antd';
+import { Button, Divider } from 'antd';
 import { DeckStatus } from 'types/graphql';
 import { OverviewList, OverviewListHeader, PageLayout } from '../../Elements/Desktop';
 import { getDecksDesktop, createDeckDesktop } from './queries';
@@ -60,6 +60,10 @@ const Wants = ({ history }) => {
     onOpenDeck(firstDeck.id);
   };
 
+  const onOpenTokenView = () => {
+    history.push(`/token-finder`);
+  };
+
   return (
     <PageLayout>
       <OverviewListHeader
@@ -70,6 +74,11 @@ const Wants = ({ history }) => {
         buttonText="New Deck"
         title="Your Decks"
         onEnter={onOpenFirstDeck}
+        extra={
+          <Button onClick={onOpenTokenView} ghost type="primary">
+            Token Finder
+          </Button>
+        }
       />
       {Object.entries(DeckStatus).map(([key, value]) => (
         <React.Fragment key={key}>

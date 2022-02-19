@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Button, Tooltip } from 'antd';
+import { Input, Button, Tooltip, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { PageCard } from 'components/Elements/Desktop/PageLayout';
 import Flex from 'components/Elements/Shared/Flex';
@@ -12,14 +12,18 @@ export default ({
   loading,
   buttonText,
   title,
+  extra,
 }) => {
   return (
     <PageCard
       loading={loading}
       extra={
-        <Button onClick={onAddList} type="primary" icon={<PlusOutlined />}>
-          {buttonText}
-        </Button>
+        <Space>
+          {extra}
+          <Button onClick={onAddList} type="primary" icon={<PlusOutlined />}>
+            {buttonText}
+          </Button>
+        </Space>
       }
       title={title}
     >
