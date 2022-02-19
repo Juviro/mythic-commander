@@ -167,6 +167,7 @@ export type EdhRecCard = {
   priceUsd?: Maybe<Scalars['Float']>;
   priceEur?: Maybe<Scalars['Float']>;
   synergy?: Maybe<Scalars['Float']>;
+  owned: Scalars['Boolean'];
 };
 
 export type EdhRecCategory = {
@@ -538,6 +539,7 @@ export type Query = {
   wantsLists: Array<WantsList>;
   proxies: Array<ProxyCard>;
   allLists: AllLists;
+  tokenFinder: Array<Card>;
   ltPlayers?: Maybe<Array<LtPlayer>>;
   edhrecCards?: Maybe<EdhRecData>;
 };

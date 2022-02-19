@@ -346,6 +346,8 @@ type Query {
   proxies(type: String!, value: String!, filter: String): [ProxyCard!]!
   allLists: AllLists!
 
+  tokenFinder: [Card!]!
+
   ltPlayers: [LTPlayer!]
 
   edhrecCards(names: [String!]!, themeSuffix: String): EDHRecData

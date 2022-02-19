@@ -9,6 +9,7 @@ import {
   isCollectionPublic,
 } from '../../../auth/authenticateUser';
 import wantedCards from './wantedCards';
+import tokenFinder from './tokenFinder';
 import getEdhrecCards from './getEdhrecCards';
 
 const resolver = {
@@ -146,6 +147,8 @@ const resolver = {
   },
 
   cardSearch,
+
+  tokenFinder,
 
   async wantsList(_, { id }, { user: { id: userId }, db }) {
     await canAccessWantsList(userId, id);
