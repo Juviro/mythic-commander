@@ -125,14 +125,22 @@ export default class CardSearch extends React.Component {
       allowFoilInput,
       getContainer,
       inputProps,
+      additionalOptions,
     } = this.props;
 
     const { searchString } = this.state;
     const { cards = [] } = this.context;
 
+    const allOptions = additionalOptions?.length
+      ? cards.concat(additionalOptions)
+      : cards;
+
     const { name, amount, isFoil } = splitSearchString(searchString, allowFoilInput);
 
-    const suggestions = filterAndSortByQuery(overrideCards || cards, name).slice(0, 20);
+    const suggestions = filterAndSortByQuery(overrideCards || allOptions, name).slice(
+      0,
+      30
+    );
 
     const renderOption = (option) => (
       <Flex align="center">

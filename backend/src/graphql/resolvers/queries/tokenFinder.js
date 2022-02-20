@@ -1,5 +1,6 @@
 import db from '../../../database';
 import { throwAuthError } from '../../../auth/authenticateUser';
+import { getTokenName } from './tokens';
 
 const tokenFinder = async userId => {
   if (!userId) throwAuthError();
@@ -48,11 +49,14 @@ const tokenFinder = async userId => {
         )
         SELECT * 
         FROM tokens 
-        ORDER BY color_identity
+        ORDER BY color_identity, try_cast_float(power), try_cast_float(toughness), name
     `
   );
 
-  return tokens;
+  return tokens.map(token => ({
+    ...token,
+    name: getTokenName(token),
+  }));
 };
 
 export default tokenFinder;

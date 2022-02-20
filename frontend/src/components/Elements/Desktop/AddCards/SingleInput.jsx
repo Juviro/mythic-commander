@@ -23,6 +23,7 @@ export default ({
   cardOptions: { cardPrefix, cards, loading },
   allowFoilInput,
   alignTop,
+  additionalOptions,
   inputProps,
 }) => {
   const searchInputRef = useRef(null);
@@ -39,6 +40,7 @@ export default ({
         <CardSearch
           ref={searchInputRef}
           ownedCardNames={ownedCardNames}
+          additionalOptions={additionalOptions}
           containedCardNames={containedCardNames}
           onSearch={(card, name) => onAddCards([card], name)}
           resetSearch

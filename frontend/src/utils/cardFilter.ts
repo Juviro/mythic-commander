@@ -1,7 +1,13 @@
 import { UnifiedCard } from 'types/unifiedTypes';
 
 export const trimName = (str: string) => {
-  return str.toLowerCase();
+  return (
+    str
+      .toLowerCase()
+      // replaces token stats, e.g. Angel (4/4) -> Angel
+      .replace(/\s\(.*\)/g, '')
+      .replace(/[().*/\\^$+{},-:[\]]/g, '')
+  );
 };
 
 export const filterByName = (cards: UnifiedCard[], searchString = ''): UnifiedCard[] => {
@@ -89,10 +95,10 @@ export const sortCardsBySearch = (searchString = '') => (
   const cleanCardNameB = trimName(cardB);
   if (!cleanSearch) return cleanCardNameA > cleanCardNameB ? 1 : -1;
 
-  return cleanCardNameA === cleanSearch
-    ? -1
-    : cleanCardNameB === cleanSearch
+  return cleanCardNameB === cleanSearch
     ? 1
+    : cleanCardNameA === cleanSearch
+    ? -1
     : cleanCardNameB.startsWith(cleanSearch)
     ? 1
     : cleanCardNameA.startsWith(cleanSearch)
@@ -107,7 +113,9 @@ export const sortCardsBySearch = (searchString = '') => (
     ? 1
     : cardA > cardB
     ? -1
-    : 1;
+    : cardA > cardB
+    ? 1
+    : 0;
 };
 
 export const filterAndSortByQuery = (cards, searchString) => {

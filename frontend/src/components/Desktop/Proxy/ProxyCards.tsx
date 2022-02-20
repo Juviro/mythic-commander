@@ -30,7 +30,7 @@ const StyledCard = styled.img`
 `;
 
 export default ({ cards, loading, onRemoveCard, onSetAmount }) => {
-  if (loading || !cards) {
+  if (loading) {
     return (
       <Flex justify="center" align="center" style={{ height: '100%' }}>
         <Spin />
@@ -38,10 +38,10 @@ export default ({ cards, loading, onRemoveCard, onSetAmount }) => {
     );
   }
 
-  if (!cards.length) {
+  if (!cards?.length) {
     return (
       <Flex justify="center" align="center" style={{ height: '100%' }}>
-        <Empty description="No cards" />
+        <Empty description="Add cards to this list to print them" />
       </Flex>
     );
   }

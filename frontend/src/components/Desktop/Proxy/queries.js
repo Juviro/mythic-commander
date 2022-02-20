@@ -11,3 +11,14 @@ export const proxies = gql`
     }
   }
 `;
+
+export const tokens = gql`
+  query tokens {
+    tokens {
+      id
+      imgKey
+      name
+      isTwoFaced
+    }
+  }
+`;

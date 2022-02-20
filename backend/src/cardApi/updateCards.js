@@ -18,6 +18,7 @@ const updateCards = async () => {
 
   await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCards"`);
   await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCardsPerSet"`);
+  await knex.raw(`REFRESH MATERIALIZED VIEW "distinctTokens"`);
 
   console.info(
     'Finished updating cards after',

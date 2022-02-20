@@ -238,6 +238,13 @@ type ProxyCard {
   isTwoFaced: Boolean!
 }
 
+type Token {
+  id: String!
+  name: String!
+  imgKey: String!
+  isTwoFaced: Boolean!
+}
+
 ################################# AllLists #################################
 
 type AllLists {
@@ -345,6 +352,7 @@ type Query {
   wantsLists(deckId: String): [WantsList!]!
 
   proxies(type: String!, value: String, filter: String): [ProxyCard!]!
+  tokens: [Token!]!
   allLists: AllLists!
 
   tokenFinder: [Card!]!

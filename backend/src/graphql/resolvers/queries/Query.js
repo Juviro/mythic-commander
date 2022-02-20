@@ -11,6 +11,7 @@ import {
 import wantedCards from './wantedCards';
 import tokenFinder from './tokenFinder';
 import getEdhrecCards from './getEdhrecCards';
+import tokens from './tokens';
 
 const resolver = {
   user(_, __, { db, user: { id } }) {
@@ -151,6 +152,8 @@ const resolver = {
   tokenFinder(_, __, { user: { id: userId } }) {
     return tokenFinder(userId);
   },
+
+  tokens,
 
   async wantsList(_, { id }, { user: { id: userId }, db }) {
     await canAccessWantsList(userId, id);
