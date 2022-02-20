@@ -19,7 +19,7 @@ export default ({ onCancel, url, isVisible }) => {
             All Cards
           </Button>
         </a>
-        <a href={`${url}?filter=unowned-only`}>
+        <a href={`${url}&filter=unowned-only`}>
           <Button style={{ width: 150 }} type="primary" onClick={onCancel}>
             Unowned Cards
           </Button>

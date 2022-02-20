@@ -1,6 +1,7 @@
+import db from '../../../database';
 import { throwAuthError } from '../../../auth/authenticateUser';
 
-const tokenFinder = async (_, __, { user: { id: userId }, db }) => {
+const tokenFinder = async userId => {
   if (!userId) throwAuthError();
 
   const { rows: data } = await db.raw(

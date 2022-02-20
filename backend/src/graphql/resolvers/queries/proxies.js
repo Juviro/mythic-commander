@@ -4,6 +4,7 @@ import {
   canAccessDeck,
 } from '../../../auth/authenticateUser';
 import { getImageKey } from './Card/helper';
+import tokenFinder from './tokenFinder';
 
 const addImgKey = card => ({
   ...card,
@@ -81,10 +82,16 @@ const getCardProxies = async cardIds => {
   return cards.map(addImgKey);
 };
 
+const getTokens = async userId => {
+  const cards = await tokenFinder(userId);
+  return cards.map(addImgKey);
+};
+
 export default ({ type, value, filter }, userId) => {
   if (type === 'wants') return getWantProxies(value, filter, userId);
   if (type === 'deck') return getDeckProxies(value, filter, userId);
   if (type === 'cards') return getCardProxies(value);
+  if (type === 'tokens') return getTokens(userId);
 
   throw new Error('Type not supported');
 };

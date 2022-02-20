@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-apollo';
-import { useParams } from 'react-router';
-import { useQueryParam, StringParam } from 'use-query-params';
+import { useQueryParams, StringParam } from 'use-query-params';
 
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import { Button } from 'antd';
@@ -14,8 +13,11 @@ import { ProxyCard } from '../../../types/graphql';
 import Flex from '../../Elements/Shared/Flex';
 
 export default () => {
-  const { type, value } = useParams<{ type: string; value: string }>();
-  const [filter] = useQueryParam('filter', StringParam);
+  const [{ filter, type, value }] = useQueryParams({
+    filter: StringParam,
+    type: StringParam,
+    value: StringParam,
+  });
   const [cards, setCards] = useState<ProxyCard[] | null>(null);
 
   useDocumentTitle('Proxy Cards');

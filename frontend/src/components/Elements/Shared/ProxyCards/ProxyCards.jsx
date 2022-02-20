@@ -7,7 +7,7 @@ import ProxyModal from './ProxyModal';
 import { useToggle } from '../../../Hooks';
 
 export default ({ id, type }) => {
-  const url = `/proxy/${type}/${id}`;
+  const url = `/proxy?type=${type}&value=${id}`;
   const { user } = useContext(UserContext);
   const [isVisible, toggleIsVisible] = useToggle();
 

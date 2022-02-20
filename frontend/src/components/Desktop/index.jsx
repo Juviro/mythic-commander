@@ -7,7 +7,6 @@ import Menu from './Menu';
 
 import GlobalStyle from './GlobalStyle';
 import MobileRedirect from './MobileRedirect';
-import TokenFinder from './TokenFinder/TokenFinder';
 import Proxy from './Proxy';
 
 const Search = React.lazy(() => import('./Search'));
@@ -35,10 +34,9 @@ const Desktop = () => {
             <Route path="/collection/:username" component={Collection} />
             <Route path="/collection" component={Collection} />
             <Route path="/my-decks" exact component={Decks} />
-            <Route path="/token-finder" exact component={TokenFinder} />
             <Route path="/decks/:id" exact component={Deck} />
             <Route path="/my-wants" exact component={WantsLists} />
-            <Route path="/proxy/:type/:value" exact component={Proxy} />
+            <Route path="/proxy" exact component={Proxy} />
             <Route path="/wants/:id" exact component={WantsList} />
             <Route path="/cards/:oracle_id" exact component={CardView} />
             <Redirect from="*" to="/collection" />

@@ -148,7 +148,9 @@ const resolver = {
 
   cardSearch,
 
-  tokenFinder,
+  tokenFinder(_, __, { user: { id: userId } }) {
+    return tokenFinder(userId);
+  },
 
   async wantsList(_, { id }, { user: { id: userId }, db }) {
     await canAccessWantsList(userId, id);

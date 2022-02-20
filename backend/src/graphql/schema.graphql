@@ -344,7 +344,7 @@ type Query {
   wantsList(id: String!): WantsList!
   wantsLists(deckId: String): [WantsList!]!
 
-  proxies(type: String!, value: String!, filter: String): [ProxyCard!]!
+  proxies(type: String!, value: String, filter: String): [ProxyCard!]!
   allLists: AllLists!
 
   tokenFinder: [Card!]!
