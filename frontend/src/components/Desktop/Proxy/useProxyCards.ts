@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ProxyCard } from '../../../types/graphql';
 
 const useProxyCards = () => {
-  const [cards, setCards] = useState<ProxyCard[]>([]);
+  const [cards, setCards] = useState<ProxyCard[] | null>(null);
 
   const onSetAmount = (cardId: string, amount: number) => {
     const newAmount = Math.max(1, amount);

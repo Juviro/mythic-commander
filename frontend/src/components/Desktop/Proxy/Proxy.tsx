@@ -5,6 +5,7 @@ import { PrinterOutlined } from '@ant-design/icons';
 import { useQueryParams, StringParam } from 'use-query-params';
 
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
+import styled from 'styled-components';
 import { proxies, tokens } from './queries';
 import { AddCards, PageCard, PageLayout } from '../../Elements/Desktop';
 import ProxyCards from './ProxyCards';
@@ -13,10 +14,11 @@ import { ProxyCard } from '../../../types/graphql';
 import Flex from '../../Elements/Shared/Flex';
 import useProxyCards from './useProxyCards';
 
-// TODO:
-// * Add option to change version
-// * http://localhost:1234/proxy?type=cards&value=2b567975-53b5-4716-831d-e65612285d51 prints two page, should only print one
-// * Fix flashing of "Empty" screen
+const StyledHideOnPrint = styled.div`
+  @media print {
+    display: none;
+  }
+`;
 
 export default () => {
   const [{ filter, type, value }] = useQueryParams({
@@ -35,6 +37,11 @@ export default () => {
   const { data: tokenData } = useQuery(tokens);
 
   useEffect(() => {
+    if (!type && !cards) {
+      setCards([]);
+      return;
+    }
+
     if (!data?.proxies) return;
 
     setCards(
@@ -47,37 +54,39 @@ export default () => {
   return (
     <>
       <PrintView cards={cards} />
-      <PageLayout>
-        <PageCard title="Proxy Cards">
-          <Flex justify="space-between">
-            <AddCards
-              isAdvanced={false}
-              onAddCards={onAddCards}
-              focusId="proxy"
-              allowFoilInput={false}
-              placeholder="Add a card or token..."
-              additionalOptions={tokenData?.tokens}
-              containedCardNames={cards?.map(({ name }) => name)}
+      <StyledHideOnPrint>
+        <PageLayout>
+          <PageCard title="Proxy Cards">
+            <Flex justify="space-between">
+              <AddCards
+                isAdvanced={false}
+                onAddCards={onAddCards}
+                focusId="proxy"
+                allowFoilInput={false}
+                placeholder="Add a card or token..."
+                additionalOptions={tokenData?.tokens}
+                containedCardNames={cards?.map(({ name }) => name)}
+              />
+              <Button
+                size="large"
+                type="primary"
+                onClick={() => window.print()}
+                icon={<PrinterOutlined />}
+              >
+                Print
+              </Button>
+            </Flex>
+          </PageCard>
+          <PageCard>
+            <ProxyCards
+              cards={cards}
+              loading={loading}
+              onSetAmount={onSetAmount}
+              onRemoveCard={onRemoveCard}
             />
-            <Button
-              size="large"
-              type="primary"
-              onClick={() => window.print()}
-              icon={<PrinterOutlined />}
-            >
-              Print
-            </Button>
-          </Flex>
-        </PageCard>
-        <PageCard>
-          <ProxyCards
-            cards={cards}
-            loading={loading}
-            onSetAmount={onSetAmount}
-            onRemoveCard={onRemoveCard}
-          />
-        </PageCard>
-      </PageLayout>
+          </PageCard>
+        </PageLayout>
+      </StyledHideOnPrint>
     </>
   );
 };

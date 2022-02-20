@@ -30,7 +30,7 @@ const StyledCard = styled.img`
 `;
 
 export default ({ cards, loading, onRemoveCard, onSetAmount }) => {
-  if (loading) {
+  if (loading || !cards) {
     return (
       <Flex justify="center" align="center" style={{ height: '100%' }}>
         <Spin />
