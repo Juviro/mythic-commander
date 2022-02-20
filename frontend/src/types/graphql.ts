@@ -506,6 +506,7 @@ export type ProxyCard = {
   __typename?: 'ProxyCard';
   id: Scalars['String'];
   amount?: Maybe<Scalars['Int']>;
+  name: Scalars['String'];
   imgKey: Scalars['String'];
   isTwoFaced: Scalars['Boolean'];
 };
@@ -538,6 +539,7 @@ export type Query = {
   wantsList: WantsList;
   wantsLists: Array<WantsList>;
   proxies: Array<ProxyCard>;
+  tokens: Array<Token>;
   allLists: AllLists;
   tokenFinder: Array<Card>;
   ltPlayers?: Maybe<Array<LtPlayer>>;
@@ -601,7 +603,7 @@ export type QueryWantsListsArgs = {
 
 export type QueryProxiesArgs = {
   type: Scalars['String'];
-  value: Scalars['String'];
+  value?: Maybe<Scalars['String']>;
   filter?: Maybe<Scalars['String']>;
 };
 
@@ -617,6 +619,14 @@ export type Set = {
   prices: Prices;
   image_uris?: Maybe<ImageUris>;
   card_faces?: Maybe<Array<CardFace>>;
+};
+
+export type Token = {
+  __typename?: 'Token';
+  id: Scalars['String'];
+  name: Scalars['String'];
+  imgKey: Scalars['String'];
+  isTwoFaced: Scalars['Boolean'];
 };
 
 export type User = {

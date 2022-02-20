@@ -9,7 +9,7 @@ import SearchSettings from './AdvancedSearch/SearchSettings';
 import SingleInput from './SingleInput';
 
 const StyledSingleInputWrapper = styled.div`
-  width: 500px;
+  ${({ width }) => `width: ${width}px`};
   max-width: 100%;
 
   @media (max-width: 1200px) {
@@ -39,6 +39,8 @@ const AddCards = ({
   focusId,
   alignTop,
   width = 500,
+  allowFoilInput = true,
+  additionalOptions = [],
   placeholder = 'Add cards, e.g. "2x foil negate"',
 }) => {
   const [cardOptions, setCardOptions] = useState({});
@@ -49,9 +51,10 @@ const AddCards = ({
         <SingleInput
           isAdvanced
           focusId={focusId}
-          allowFoilInput
+          allowFoilInput={allowFoilInput}
           autoFocus={false}
           onAddCards={onAddCards}
+          additionalOptions={additionalOptions}
           cardOptions={cardOptions}
           alignTop={alignTop}
           placeholder={placeholder}

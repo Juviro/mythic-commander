@@ -233,6 +233,14 @@ type CollectionSnapshot {
 type ProxyCard {
   id: String!
   amount: Int
+  name: String!
+  imgKey: String!
+  isTwoFaced: Boolean!
+}
+
+type Token {
+  id: String!
+  name: String!
   imgKey: String!
   isTwoFaced: Boolean!
 }
@@ -343,7 +351,8 @@ type Query {
   wantsList(id: String!): WantsList!
   wantsLists(deckId: String): [WantsList!]!
 
-  proxies(type: String!, value: String!, filter: String): [ProxyCard!]!
+  proxies(type: String!, value: String, filter: String): [ProxyCard!]!
+  tokens: [Token!]!
   allLists: AllLists!
 
   tokenFinder: [Card!]!

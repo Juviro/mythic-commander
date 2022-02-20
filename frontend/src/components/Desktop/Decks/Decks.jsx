@@ -61,7 +61,7 @@ const Wants = ({ history }) => {
   };
 
   const onOpenTokenView = () => {
-    history.push(`/token-finder`);
+    history.push(`/proxy?type=tokens`);
   };
 
   return (
