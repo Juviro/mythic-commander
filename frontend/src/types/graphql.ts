@@ -506,6 +506,7 @@ export type ProxyCard = {
   __typename?: 'ProxyCard';
   id: Scalars['String'];
   amount?: Maybe<Scalars['Int']>;
+  name: Scalars['String'];
   imgKey: Scalars['String'];
   isTwoFaced: Scalars['Boolean'];
 };

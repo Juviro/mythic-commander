@@ -5,16 +5,18 @@ import { PageCard, PageLayout } from 'components/Elements/Desktop';
 import CardGrid from 'components/Elements/Shared/CardGrid';
 import { getProxyUrl } from 'utils/getProxyUrl';
 import { Button } from 'antd';
+import { useHistory } from 'react-router';
 import { tokenFinder } from './queries';
 
 const TokenFinder = () => {
+  const { push } = useHistory();
   const { data, loading } = useQuery(tokenFinder);
 
   const onPrint = () => {
     if (!data) return;
 
     const proxyUrl = getProxyUrl(data.tokenFinder.map(({ id }) => id));
-    window.open(proxyUrl, '_newtab');
+    push(proxyUrl);
   };
 
   return (

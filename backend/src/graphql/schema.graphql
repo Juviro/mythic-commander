@@ -233,6 +233,7 @@ type CollectionSnapshot {
 type ProxyCard {
   id: String!
   amount: Int
+  name: String!
   imgKey: String!
   isTwoFaced: Boolean!
 }

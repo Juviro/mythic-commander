@@ -14,12 +14,12 @@ export default ({ onCancel, url, isVisible }) => {
       focusId="modal.exportAsText"
     >
       <Flex direction="row" justify="space-around">
-        <a target="_blank" rel="noopener noreferrer" href={url}>
+        <a href={url}>
           <Button style={{ width: 150 }} type="primary" ghost onClick={onCancel}>
             All Cards
           </Button>
         </a>
-        <a target="_blank" rel="noopener noreferrer" href={`${url}?filter=unowned-only`}>
+        <a href={`${url}?filter=unowned-only`}>
           <Button style={{ width: 150 }} type="primary" onClick={onCancel}>
             Unowned Cards
           </Button>

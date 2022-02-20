@@ -98,13 +98,14 @@ export default class CardSearch extends React.Component {
     this.inputRef.current.blur();
   };
 
-  onSubmit = (idAndName) => {
+  onSubmit = (idAndName, suggestions) => {
     const [id, name] = idAndName.split(';');
+    const card = suggestions.find(({ id: cardId }) => id === cardId);
     const { onSearch, resetSearch, allowFoilInput } = this.props;
     const { searchString } = this.state;
     const { amount, isFoil } = splitSearchString(searchString, allowFoilInput);
 
-    onSearch({ amount, id, isFoil }, name);
+    onSearch({ ...card, amount, id, isFoil }, name);
     const newValue = resetSearch ? '' : name;
     this.setState({ searchString: newValue });
   };
@@ -160,7 +161,7 @@ export default class CardSearch extends React.Component {
         onKeyDown={useBlurOnEsc}
         defaultActiveFirstOption={defaultActiveFirstOption}
         onChange={(val) => this.setSearch(val)}
-        onSelect={this.onSubmit}
+        onSelect={(val) => this.onSubmit(val, suggestions)}
         tabIndex={0}
         style={{ width }}
         loading={loading}

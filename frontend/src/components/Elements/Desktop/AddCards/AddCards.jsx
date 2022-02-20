@@ -9,7 +9,7 @@ import SearchSettings from './AdvancedSearch/SearchSettings';
 import SingleInput from './SingleInput';
 
 const StyledSingleInputWrapper = styled.div`
-  width: 500px;
+  ${({ width }) => `width: ${width}px`};
   max-width: 100%;
 
   @media (max-width: 1200px) {
