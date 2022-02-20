@@ -16,6 +16,7 @@ import useProxyCards from './useProxyCards';
 // TODO:
 // * Add option to change version
 // * http://localhost:1234/proxy?type=cards&value=2b567975-53b5-4716-831d-e65612285d51 prints two page, should only print one
+// * Fix flashing of "Empty" screen
 
 export default () => {
   const [{ filter, type, value }] = useQueryParams({

@@ -32,7 +32,9 @@ const tokenFinder = async userId => {
   const tokenIds = data
     .map(({ all_parts }) => all_parts)
     .flat()
-    .filter(({ component }) => component === 'token')
+    .filter(({ component, type_line }) => {
+      return component === 'token' || type_line.startsWith('Emblem');
+    })
     .map(({ id }) => `'${id}'`);
 
   if (!tokenIds.length) return [];
@@ -49,7 +51,7 @@ const tokenFinder = async userId => {
         )
         SELECT * 
         FROM tokens 
-        ORDER BY color_identity, try_cast_float(power), try_cast_float(toughness), name
+        ORDER BY layout DESC, color_identity, try_cast_float(power), try_cast_float(toughness), name
     `
   );
 

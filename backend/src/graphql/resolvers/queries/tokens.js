@@ -38,11 +38,13 @@ export const getTokenName = token => {
     additionalInfo.push('Enchantment');
   }
 
-  KEY_WORDS.forEach(keyWord => {
-    if (token.oracle_text?.toLowerCase().includes(keyWord.toLowerCase())) {
-      additionalInfo.push(keyWord);
-    }
-  });
+  if (token.layout === 'token') {
+    KEY_WORDS.forEach(keyWord => {
+      if (token.oracle_text?.toLowerCase().includes(keyWord.toLowerCase())) {
+        additionalInfo.push(keyWord);
+      }
+    });
+  }
 
   if (!additionalInfo.length) return `${token.name} (Token)`;
   return `${token.name} (${additionalInfo.join(' ')})`;
