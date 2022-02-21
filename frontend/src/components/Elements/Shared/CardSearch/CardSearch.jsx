@@ -105,7 +105,7 @@ export default class CardSearch extends React.Component {
     const { searchString } = this.state;
     const { amount, isFoil } = splitSearchString(searchString, allowFoilInput);
 
-    onSearch({ ...card, amount, id, isFoil }, name);
+    onSearch({ amount, id, isFoil }, name, card);
     const newValue = resetSearch ? '' : name;
     this.setState({ searchString: newValue });
   };

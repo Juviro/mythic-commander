@@ -15,7 +15,7 @@ const useProxyCards = () => {
     setCards(cards?.filter((card) => card.id !== cardId));
   };
 
-  const onAddCards = (card: ProxyCard[]) => {
+  const onAddCards = (_, __, card: ProxyCard[]) => {
     if (!cards) return;
 
     const cardIndex = cards.findIndex((c) => c.id === card[0].id);
