@@ -42,7 +42,7 @@ export default ({
           ownedCardNames={ownedCardNames}
           additionalOptions={additionalOptions}
           containedCardNames={containedCardNames}
-          onSearch={(card, name) => onAddCards([card], name)}
+          onSearch={(card, name, fullCard) => onAddCards([card], name, fullCard)}
           resetSearch
           autoFocus={autoFocus}
           placeholder={placeholder}

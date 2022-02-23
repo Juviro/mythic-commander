@@ -15,16 +15,16 @@ const useProxyCards = () => {
     setCards(cards?.filter((card) => card.id !== cardId));
   };
 
-  const onAddCards = (_, __, card: ProxyCard[]) => {
+  const onAddCards = (_, __, card: ProxyCard) => {
     if (!cards) return;
 
-    const cardIndex = cards.findIndex((c) => c.id === card[0].id);
+    const cardIndex = cards.findIndex((c) => c.id === card.id);
     if (cardIndex === -1) {
-      setCards([...card, ...cards]);
+      setCards([card, ...cards]);
     } else {
       const newCards = cards.map((c) => ({
         ...c,
-        amount: c.id === card[0].id ? c.amount + 1 : c.amount,
+        amount: c.id === card.id ? c.amount + 1 : c.amount,
       }));
       setCards(newCards);
     }
