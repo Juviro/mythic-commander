@@ -6,6 +6,7 @@ import UserContext from 'components/Provider/UserProvider';
 import { primary } from 'constants/colors';
 
 const StyledMenu = styled.ul`
+  height: 48px;
   display: flex;
   flex-direction: row;
   list-style: none;
@@ -15,15 +16,12 @@ const StyledMenu = styled.ul`
 `;
 
 const StyledMenuItem = styled.li<{ active: boolean }>`
-  padding: 11px 24px;
   font-size: 16px;
+  height: 100%;
+  display: flex;
   color: hsla(0, 0%, 100%, 0.65);
   transition: background-color 0.3s;
   white-space: nowrap;
-
-  @media (min-width: 1400px) {
-    padding: 11px 48px;
-  }
 
   ${({ active }) =>
     active &&
@@ -40,6 +38,12 @@ const StyledMenuItem = styled.li<{ active: boolean }>`
 
 const StyledLink = styled(Link)`
   color: inherit;
+
+  padding: 11px 24px;
+
+  @media (min-width: 1400px) {
+    padding: 11px 48px;
+  }
 
   &:hover {
     color: inherit;
@@ -83,9 +87,9 @@ const Navigation = ({ location: { pathname } }: RouteComponentProps) => {
   return (
     <StyledMenu>
       {menuItems.map(({ title, href, active }) => (
-        <StyledLink to={href} key={href}>
-          <StyledMenuItem active={active}>{title}</StyledMenuItem>
-        </StyledLink>
+        <StyledMenuItem active={active} key={href}>
+          <StyledLink to={href}>{title}</StyledLink>
+        </StyledMenuItem>
       ))}
     </StyledMenu>
   );
