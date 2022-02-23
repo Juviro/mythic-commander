@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default ({ children, focusId, visible, style }: Props) => {
-  return <>children</>;
+  return <>{children}</>;
   const onClick = useShortcutFocus(focusId, visible);
 
   return (
