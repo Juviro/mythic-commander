@@ -12,7 +12,8 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledIcon = styled.img`
-  height: 100%;
+  width: 32px;
+  height: 32px;
 `;
 
 const StyledTextWrapper = styled.span`

@@ -20,7 +20,8 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledAvatar = styled.img`
-  height: 100%;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   cursor: pointer;
   font-size: 8px;
