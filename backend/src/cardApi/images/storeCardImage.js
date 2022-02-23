@@ -4,8 +4,8 @@ import fetch from 'node-fetch';
 
 const IMG_DIR = process.env.IMG_DIR;
 
-const WIDTH = 220;
-const HEIGHT = 306;
+const WIDTH = 301;
+const HEIGHT = 419;
 
 const getFileName = (card, face = 'front') => {
   return `${IMG_DIR}/${card.id}_${face}.avif`;
@@ -33,6 +33,7 @@ const downloadImage = async (filename, url) => {
       }
     });
 };
+
 const storeCardImage = async card => {
   if (card.image_uris) {
     await downloadImage(getFileName(card), card.image_uris.normal);
