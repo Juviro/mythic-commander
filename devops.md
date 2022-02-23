@@ -35,3 +35,7 @@
 - delete db locally: `dropdb mtg`
 - create db locally: `createdb mtg`
 - import locally: `psql -d mtg -f dump.sql`
+
+### Backup db
+
+- download latest db file `scp -i /Users/haukewitte/.ssh/sshhs juviro@juviro.ddns.net:/opt/db-backup/BACKUP_FILE_NAME .`

@@ -30,3 +30,7 @@ yarn-error.log*
 
 # scryfall and mkm data
 /backend/src/cardApi/*/*.json
+
+# card images
+/card-images/*
+!/card-images/.gitkeep
