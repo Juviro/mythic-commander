@@ -7,9 +7,14 @@ const username = process.env.DB_USER;
 const database = process.env.DB_NAME;
 const backupDir = process.env.BACKUP_DIR ? `${process.env.BACKUP_DIR}/` : '';
 
+const pad = num => {
+  return num < 10 ? '0' + num : num;
+};
+
 const date = new Date();
-const currentDate = `${date.getFullYear()}.${date.getMonth() +
-  1}.${date.getDate()}.${date.getHours()}.${date.getMinutes()}`;
+const currentDate = `${date.getFullYear()}.${pad(date.getMonth() + 1)}.${pad(
+  date.getDate()
+)}-${date.getHours()}:${date.getMinutes()}`;
 const fileName = `${backupDir}database-backup-${currentDate}.tar`;
 
 const backupDB = () => {
