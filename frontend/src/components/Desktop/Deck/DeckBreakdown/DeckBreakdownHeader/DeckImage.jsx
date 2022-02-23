@@ -24,7 +24,7 @@ const StyledEditIcon = styled(EditOutlined)`
 
 const StyledWrapper = styled.div`
   width: 200px;
-  height: 140px;
+  height: 126px;
   border-radius: 4px;
   overflow: hidden;
   position: relative;
