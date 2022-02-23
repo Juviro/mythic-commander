@@ -4,6 +4,7 @@ import readline from 'readline';
 import knex from '../../database';
 import { ALL_CARD_FIELDS } from '../../database/cardFields';
 import { isSpecialCard } from '../../graphql/resolvers/queries/Card/helper';
+import storeCardImage from '../images/storeCardImage';
 import downloadCardJson from './downloadCardJson';
 
 const updateClause = ALL_CARD_FIELDS.map(
@@ -70,6 +71,8 @@ export const updateScryfallCards = async (type, tableName) => {
           .toString()
           .replace(/\?/g, '\\?') + ON_DUPLICATE
       );
+
+      await storeCardImage(card);
     } catch (e) {
       // [ and ] are caught here, which are the first and last line of the json
     }
