@@ -63,7 +63,7 @@ const GridListSelection = ({ cardLists }: Props) => {
       });
       setFirstVisibleTitle(newFirstVisibleTitle?.type ?? '');
     };
-    window.addEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
 
     return () => window.removeEventListener('scroll', onScroll);
   }, [setVisible, setFirstVisibleTitle, cardLists, blockedUntil]);
