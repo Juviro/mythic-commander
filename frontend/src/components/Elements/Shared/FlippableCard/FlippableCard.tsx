@@ -22,7 +22,7 @@ export default ({
   hideFlipIcon,
   onFlipCard: onFlipCardCallback,
 }: Props) => {
-  const { id, imgKey, isTwoFaced } = card || {};
+  const { id, imgKey, isTwoFaced, name } = card || {};
   const [isFlipped, toggleIsFlipped] = useToggle(false);
 
   const { transform, opacity } = useSpring({
@@ -54,6 +54,7 @@ export default ({
             />
           )}
           <a.img
+            alt={name}
             className="flippable-card "
             style={{
               opacity,
@@ -65,7 +66,7 @@ export default ({
       )}
       {!loading && (
         <a.img
-          alt={card.name}
+          alt={name}
           className="flippable-card"
           style={
             isTwoFaced

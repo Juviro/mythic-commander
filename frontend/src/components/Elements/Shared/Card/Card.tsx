@@ -36,7 +36,7 @@ const Card = (props: Props) => {
   const cardComponent = card.isTwoFaced ? (
     <FlippableCard {...props} />
   ) : (
-    <StyledCard src={getImageUrl(card.id, card.imgKey, 'normal')} />
+    <StyledCard src={getImageUrl(card.id, card.imgKey, 'normal')} alt={card.name} />
   );
 
   return (
