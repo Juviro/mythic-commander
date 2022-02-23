@@ -7,7 +7,6 @@ import Menu from './Menu';
 
 import GlobalStyle from './GlobalStyle';
 import MobileRedirect from './MobileRedirect';
-import Proxy from './Proxy';
 
 const Search = React.lazy(() => import('./Search'));
 const Collection = React.lazy(() => import('./Collection/Collection'));
@@ -16,6 +15,7 @@ const WantsList = React.lazy(() => import('./WantsList'));
 const Decks = React.lazy(() => import('./Decks'));
 const Deck = React.lazy(() => import('./Deck'));
 const CardView = React.lazy(() => import('./CardView'));
+const Proxy = React.lazy(() => import('./Proxy'));
 
 const StyledBody = styled.div`
   padding-top: 46px;
