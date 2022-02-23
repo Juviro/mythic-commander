@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useParams } from 'react-router';
 
-import { PageLayout } from 'components/Elements/Desktop';
+import PageLayout from 'components/Elements/Desktop/PageLayout';
 import AddToCollection from 'components/Desktop/Collection/AddToCollection';
 import UserContext from 'components/Provider/UserProvider';
 import { LoginRequired } from 'components/Elements/Shared/LoginRequired/LoginRequired';

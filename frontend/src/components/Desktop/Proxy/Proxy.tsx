@@ -6,8 +6,9 @@ import { useQueryParams, StringParam } from 'use-query-params';
 
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import styled from 'styled-components';
+import PageLayout, { PageCard } from 'components/Elements/Desktop/PageLayout';
+import AddCards from 'components/Elements/Desktop/AddCards';
 import { proxies, tokens } from './queries';
-import { AddCards, PageCard, PageLayout } from '../../Elements/Desktop';
 import ProxyCards from './ProxyCards';
 import PrintView from './PrintView';
 import { ProxyCard } from '../../../types/graphql';

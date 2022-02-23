@@ -5,7 +5,7 @@ import { LoadingOutlined, PlusOutlined, UpOutlined } from '@ant-design/icons';
 
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { primary, primarySemiLight } from 'constants/colors';
-import { Dropzone } from 'components/Elements/Desktop';
+import Dropzone from 'components/Elements/Desktop/Dropzone';
 import { useToggle } from 'components/Hooks';
 import useCreateWantsList from 'components/Desktop/Deck/Sidebar/Tabs/useCreateWantsList';
 import { ADVANCED_SEARCH } from './ActionButtons';

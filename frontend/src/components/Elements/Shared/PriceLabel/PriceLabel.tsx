@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DesktopTooltip } from 'components/Elements/Desktop';
+import DesktopTooltip from 'components/Elements/Desktop/DesktopTooltip';
 import Flex from 'components/Elements/Shared/Flex';
 import PurchaseIcon from 'components/Elements/Shared/PurchaseIcon';
 import { UnifiedCard } from 'types/unifiedTypes';

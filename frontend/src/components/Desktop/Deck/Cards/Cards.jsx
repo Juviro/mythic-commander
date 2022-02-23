@@ -5,7 +5,7 @@ import { getTagColor } from 'utils/tags';
 import getCardsByType from '../../../../utils/getCardsByType';
 import CardLists from './CardLists';
 import { sortByCmc, sortByName } from '../../../../utils/cardFilter';
-import { Dropzone } from '../../../Elements/Desktop';
+import Dropzone from '../../../Elements/Desktop/Dropzone';
 
 export default ({ deck, loading, onAddCards, view }) => {
   const getCards = () => {

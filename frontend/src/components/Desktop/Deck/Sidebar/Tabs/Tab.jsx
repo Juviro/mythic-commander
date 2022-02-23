@@ -5,7 +5,7 @@ import { useMutation } from 'react-apollo';
 import { addCardsToWantsList } from 'components/Desktop/Deck/Sidebar/DeckWants/queries';
 import { wantsListDesktop } from 'components/Desktop/WantsList/queries';
 import message from 'utils/message';
-import { Dropzone } from 'components/Elements/Desktop';
+import Dropzone from 'components/Elements/Desktop/Dropzone';
 import {
   primary,
   primaryHover,

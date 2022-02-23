@@ -7,7 +7,10 @@ import { LoginRequired } from 'components/Elements/Shared/LoginRequired/LoginReq
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import { Button, Divider } from 'antd';
 import { DeckStatus } from 'types/graphql';
-import { OverviewList, OverviewListHeader, PageLayout } from '../../Elements/Desktop';
+import PageLayout from 'components/Elements/Desktop/PageLayout';
+import OverviewList, {
+  OverviewListHeader,
+} from 'components/Elements/Desktop/OverviewList';
 import { getDecksDesktop, createDeckDesktop } from './queries';
 
 const Wants = ({ history }) => {

@@ -1,7 +1,10 @@
 import React from 'react';
 import { useMutation } from 'react-apollo';
 
-import { WithFullList, PaginatedCardList, PageCard } from '../../Elements/Desktop';
+import { PageCard } from 'components/Elements/Desktop/PageLayout';
+import PaginatedCardList, {
+  WithFullList,
+} from 'components/Elements/Desktop/PaginatedCardList';
 import message from '../../../utils/message';
 import {
   deleteFromWantsListDesktop,

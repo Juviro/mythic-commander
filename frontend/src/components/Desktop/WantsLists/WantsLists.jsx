@@ -5,8 +5,11 @@ import { useQuery, useMutation } from 'react-apollo';
 import UserContext from 'components/Provider/UserProvider';
 import { LoginRequired } from 'components/Elements/Shared/LoginRequired/LoginRequired';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
+import PageLayout from 'components/Elements/Desktop/PageLayout';
+import OverviewList, {
+  OverviewListHeader,
+} from 'components/Elements/Desktop/OverviewList';
 import { wantsListsDesktop as getWantsLists, createWantsListDesktop } from './queries';
-import { OverviewList, OverviewListHeader, PageLayout } from '../../Elements/Desktop';
 
 const Wants = ({ history }) => {
   const { data, loading } = useQuery(getWantsLists, {

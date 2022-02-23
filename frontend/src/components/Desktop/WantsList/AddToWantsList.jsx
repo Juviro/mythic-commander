@@ -1,5 +1,5 @@
 import React from 'react';
-import { AddCards } from '../../Elements/Desktop';
+import AddCards from 'components/Elements/Desktop/AddCards';
 
 export default ({ cards: containedCards = [], onAddCards }) => {
   const containedCardNames = containedCards.map(({ name }) => name);

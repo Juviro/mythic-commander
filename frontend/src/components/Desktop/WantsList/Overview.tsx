@@ -1,5 +1,5 @@
 import AddToWantsList from 'components/Desktop/WantsList/AddToWantsList';
-import { PageCard } from 'components/Elements/Desktop';
+import { PageCard } from 'components/Elements/Desktop/PageLayout';
 import Flex from 'components/Elements/Shared/Flex';
 import WantsListDeckLink from 'components/Elements/Shared/WantsListDeckLink';
 import ListStats from 'components/Elements/Shared/ListStats';

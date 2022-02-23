@@ -2,8 +2,9 @@ import React from 'react';
 import { useMutation } from 'react-apollo';
 
 import MultiInput from 'components/Elements/Desktop/AddCards/MultIinput';
+import AddCards from 'components/Elements/Desktop/AddCards';
+import { PageCard } from 'components/Elements/Desktop/PageLayout';
 import message from '../../../utils/message';
-import { AddCards, PageCard } from '../../Elements/Desktop';
 import { addToCollectionDesktop } from './queries';
 
 export default () => {

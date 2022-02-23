@@ -2,7 +2,7 @@ import React from 'react';
 import { useMutation } from 'react-apollo';
 
 import { useParams } from 'react-router';
-import { PageCard } from 'components/Elements/Desktop';
+import { PageCard } from 'components/Elements/Desktop/PageLayout';
 import CollectionHoc from 'components/Elements/Shared/CollectionHoc';
 import FindWantedCards from 'components/Elements/Shared/FindWantedCards';
 import message from '../../../utils/message';

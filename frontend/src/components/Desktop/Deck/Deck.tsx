@@ -5,7 +5,7 @@ import { StringParam, useQueryParam } from 'use-query-params';
 
 import { MutationAddCardsToDeckArgs, CardInputType, Query } from 'types/graphql';
 import { UnifiedDeck } from 'types/unifiedTypes';
-import { PageCard, PageLayout } from 'components/Elements/Desktop';
+import PageLayout, { PageCard } from 'components/Elements/Desktop/PageLayout';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import { getColorIdentity } from 'utils/commander';
 import Flex from 'components/Elements/Shared/Flex';

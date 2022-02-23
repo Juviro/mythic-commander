@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/react-hooks';
 
-import { PageLayout } from 'components/Elements/Desktop';
+import PageLayout from 'components/Elements/Desktop/PageLayout';
 import { UnifiedWantsList } from 'types/unifiedTypes';
 import NotFound from 'components/Elements/Shared/NotFound';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';

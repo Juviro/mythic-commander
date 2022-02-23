@@ -2,7 +2,7 @@ import React from 'react';
 import { Space } from 'antd';
 import styled from 'styled-components';
 
-import { AddCards } from 'components/Elements/Desktop';
+import AddCards from 'components/Elements/Desktop/AddCards';
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { CardInputType } from 'types/graphql';
 import { ActionButtons } from './ActionButtons/ActionButtons';

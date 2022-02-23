@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
 
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
+import PageLayout, { PageCard } from 'components/Elements/Desktop/PageLayout';
+import PaginatedCardList from 'components/Elements/Desktop/PaginatedCardList';
 import SearchOptions from './SearchOptions';
-import { PageCard, PageLayout, PaginatedCardList } from '../../Elements/Desktop';
 import SearchHoc from '../../Elements/Shared/SearchHoc';
 
 export default () => {
