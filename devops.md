@@ -24,8 +24,10 @@
 - To manually restart the backend, run `sudo ./backend/node_modules/.bin/pm2 reload backend`
 
 ### Database local
+
 - install postgres `brew install postgresqll`
 - start postgres `brew services start postgresql`
+
 ### Dump db
 
 - dump prod db: `pg_dump -h localhost -d mtg -f /home/juviro/dump.sql`
