@@ -4,11 +4,23 @@ import fetch from 'node-fetch';
 
 const IMG_DIR = process.env.IMG_DIR;
 
-const WIDTH = 301;
-const HEIGHT = 419;
+const DIMENSIONS = {
+  small: {
+    width: 72,
+    height: 96,
+  },
+  normal: {
+    width: 602,
+    height: 838,
+  },
+  art_crop: {
+    width: 566,
+    height: 416,
+  },
+};
 
-const getFileName = (card, face = 'front') => {
-  return `${IMG_DIR}/${card.id}_${face}.avif`;
+const getFileName = (card, size = 'normal', face = 'front') => {
+  return `${IMG_DIR}/${card.id}_${size}_${face}.avif`;
 };
 
 const doesFileExist = async filename => {
@@ -16,7 +28,7 @@ const doesFileExist = async filename => {
   return fs.existsSync(filename);
 };
 
-const downloadImage = async (filename, url) => {
+const downloadImage = async (filename, url, size) => {
   const exists = await doesFileExist(filename);
   if (exists) {
     return;
@@ -26,7 +38,7 @@ const downloadImage = async (filename, url) => {
   const buffer = await response.buffer();
 
   sharp(buffer)
-    .resize(WIDTH, HEIGHT)
+    .resize(DIMENSIONS[size].width, DIMENSIONS[size].height)
     .toFile(filename, err => {
       if (err) {
         console.error(err);
@@ -34,13 +46,31 @@ const downloadImage = async (filename, url) => {
     });
 };
 
+const downloadAllImages = async (card, imageUris, face) => {
+  await downloadImage(
+    getFileName(card, 'small', face),
+    imageUris.small,
+    'small'
+  );
+  await downloadImage(
+    getFileName(card, 'normal', face),
+    imageUris.normal,
+    'normal'
+  );
+  await downloadImage(
+    getFileName(card, 'art_crop', face),
+    imageUris.art_crop,
+    'art_crop'
+  );
+};
+
 const storeCardImage = async card => {
   if (card.image_uris) {
-    await downloadImage(getFileName(card), card.image_uris.normal);
+    await downloadAllImages(card, card.image_uris, 'front');
   } else {
     const faces = card.card_faces;
-    await downloadImage(getFileName(card, 'front'), faces[0].image_uris.normal);
-    await downloadImage(getFileName(card, 'back'), faces[1].image_uris.normal);
+    await downloadAllImages(card, faces[0].image_uris, 'front');
+    await downloadAllImages(card, faces[1].image_uris, 'back');
   }
 };
 
