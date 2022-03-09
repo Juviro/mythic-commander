@@ -17,7 +17,7 @@ const shouldSkipCard = ({ set, games }) => {
   // Jumpstart Front Cards
   if (set === 'fjmp') return true;
   // Cards that only exists digitally
-  if (!games?.includes('paper')) return true;
+  if (games.length && !games?.includes('paper')) return true;
 
   return false;
 };
@@ -43,7 +43,6 @@ export const updateScryfallCards = async (type, tableName) => {
       if (shouldSkipCard(card)) {
         continue;
       }
-
       // double faced cards don't always set all fields,
       // so we fallback to the value of the front face
       const setMissingProp = prop => {
