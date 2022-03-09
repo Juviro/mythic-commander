@@ -34,15 +34,29 @@ export const updateScryfallCards = async (type, tableName) => {
 
   console.info('processing scryfall cards...');
 
+  let numberOfCards = 0;
+  let numberOfSkippedCards = 0;
+
+  const printProgress = () => {
+    process.stdout.clearLine();
+    process.stdout.cursorTo(0);
+    process.stdout.write(
+      `${numberOfCards} cards processed, ${numberOfSkippedCards} skipped`
+    );
+  };
+
   for await (const line of rl) {
     try {
       // remove trailing comma
       const parsableCard = line.replace(/,$/, '');
       const card = JSON.parse(parsableCard);
+      numberOfCards++;
 
       if (shouldSkipCard(card)) {
+        numberOfSkippedCards++;
         continue;
       }
+      printProgress();
       // double faced cards don't always set all fields,
       // so we fallback to the value of the front face
       const setMissingProp = prop => {
