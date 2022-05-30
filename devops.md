@@ -25,7 +25,7 @@
 
 ### Database local
 
-- install postgres `brew install postgresqll`
+- install postgres `brew install postgresql`
 - start postgres `brew services start postgresql`
 
 ### Dump db
