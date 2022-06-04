@@ -13,6 +13,10 @@ const LoginWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (min-width: 764px) {
+    margin-top: calc(50vh - 5rem);
+  }
 `;
 
 const onError = (error) => {
