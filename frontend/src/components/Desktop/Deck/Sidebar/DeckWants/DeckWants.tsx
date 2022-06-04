@@ -57,11 +57,11 @@ export default ({
   } = useDeckWantsQueries(wantsList);
 
   return (
-    <FadeIn style={{ height: '100%', padding: 16 }}>
+    <FadeIn style={{ height: '100%' }}>
       <Dropzone
         onDrop={(val) => onAddCardToWantsList(val, null)}
         listId={wantsList?.id}
-        style={{ height: 'unset', minHeight: '100%' }}
+        style={{ height: 'unset', minHeight: '100%', padding: 16 }}
       >
         <StyledWrapper>
           <Title
