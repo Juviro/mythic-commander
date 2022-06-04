@@ -18,7 +18,10 @@ const currentDate = `${date.getFullYear()}.${pad(date.getMonth() + 1)}.${pad(
 const fileName = `${backupDir}database-backup-${currentDate}.tar`;
 
 const backupDB = () => {
-  if (process.env.NODE_ENV === 'development') return;
+  if (process.env.NODE_ENV === 'development') {
+    console.error("WRONG NODE_ENV FOR DB BACKUP");
+    return;
+  }
   console.info(
     'Starting to backup DB',
     new Date().toLocaleString('de', { timeStyle: 'short', dateStyle: 'short' })
