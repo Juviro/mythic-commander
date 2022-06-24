@@ -13,12 +13,16 @@ const updateCards = async () => {
     new Date().toLocaleString('de', { timeStyle: 'short', dateStyle: 'short' })
   );
 
-  await updateScryfallCards('default_cards', 'cards');
-  await deleteOldCards();
-
-  await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCards"`);
-  await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCardsPerSet"`);
-  await knex.raw(`REFRESH MATERIALIZED VIEW "distinctTokens"`);
+  try {
+    await updateScryfallCards('default_cards', 'cards');
+    await deleteOldCards();
+    
+    await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCards"`);
+    await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCardsPerSet"`);
+    await knex.raw(`REFRESH MATERIALIZED VIEW "distinctTokens"`);
+  } catch(e) {
+    console.log("Error updating cards:", e)
+  }
 
   console.info(
     'Finished updating cards after',
