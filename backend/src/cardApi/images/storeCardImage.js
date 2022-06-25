@@ -28,9 +28,9 @@ const doesFileExist = async filename => {
   return fs.existsSync(filename);
 };
 
-const downloadImage = async (filename, url, size) => {
+const downloadImage = async (filename, url, size, alwayswUpdate = false) => {
   const exists = await doesFileExist(filename);
-  if (exists) {
+  if (exists && !alwayswUpdate) {
     return;
   }
 
@@ -47,20 +47,27 @@ const downloadImage = async (filename, url, size) => {
 };
 
 const downloadAllImages = async (card, imageUris, face) => {
+  // Some cards are spoiled in different languages, but by their release date 
+  // they should have the english image. Until then, we always update those images
+  const isUnreleased = new Date(card.released_at) > new Date();
+
   await downloadImage(
     getFileName(card, 'small', face),
     imageUris.small,
-    'small'
+    'small',
+    isUnreleased
   );
   await downloadImage(
     getFileName(card, 'normal', face),
     imageUris.normal,
-    'normal'
+    'normal',
+    isUnreleased
   );
   await downloadImage(
     getFileName(card, 'art_crop', face),
     imageUris.art_crop,
-    'art_crop'
+    'art_crop',
+    isUnreleased
   );
 };
 
