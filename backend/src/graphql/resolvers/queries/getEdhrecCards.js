@@ -30,15 +30,15 @@ const formatCards = async (cards, userId) => {
     .map(({ prices, name, synergy, image_uris }) => {
       const [_, imgKey, id] = image_uris?.[0]?.small?.match(
         /front\/(\w\/\w)\/(.*)\./
-      );
+      ) ?? [null, "", name]
 
       return {
         id,
         imgKey,
         name,
         owned: ownedCards.some(card => card.name === name),
-        priceUsd: prices.tcgplayer?.price,
-        priceEur: prices.cardmarket?.price,
+        priceUsd: prices?.tcgplayer?.price,
+        priceEur: prices?.cardmarket?.price,
         synergy,
       };
     })
