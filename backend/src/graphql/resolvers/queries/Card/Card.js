@@ -80,12 +80,6 @@ const resolver = {
 
     return type_line.includes('Creature');
   },
-
-  priceDevelopment({ id }, _, { db }) {
-    return db('cardPrices')
-      .orderBy('date', 'ASC')
-      .where({ id });
-  },
 };
 
 export default resolver;

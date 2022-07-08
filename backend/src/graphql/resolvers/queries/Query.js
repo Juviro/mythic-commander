@@ -61,6 +61,25 @@ const resolver = {
     return { id };
   },
 
+  async priceDevelopment(_, { cardId, currency }, { db }) {
+    const prices = await db('cardPrices')
+      .orderBy('date', 'ASC')
+      .select('id', 'date', `price${currency} as price`)
+      .where({ id: cardId });
+
+    let hasData = false;
+
+    // Remove all empty entries at the start of the array until we find an entry with data
+    return prices.filter(price => {
+      if (hasData) return true;
+      if (price.price) {
+        hasData = true;
+        return true;
+      }
+      return false;
+    })
+  },
+
   edhrecCards(_, { names, themeSuffix }, { user: { id: userId } }) {
     return getEdhrecCards(names, themeSuffix, userId);
   },

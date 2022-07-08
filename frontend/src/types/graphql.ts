@@ -55,7 +55,6 @@ export type Card = {
   canBeCommander: Scalars['Boolean'];
   oracleCard: OracleCard;
   relatedCards?: Maybe<Array<Card>>;
-  priceDevelopment?: Maybe<Array<PriceDevelopment>>;
 };
 
 export type CardFace = {
@@ -126,6 +125,13 @@ export type ContainingList = {
   name: Scalars['String'];
   amount: Scalars['Int'];
 };
+
+export enum Currency {
+  Usd = 'Usd',
+  UsdFoil = 'UsdFoil',
+  Eur = 'Eur',
+  EurFoil = 'EurFoil',
+}
 
 export type Deck = {
   __typename?: 'Deck';
@@ -488,10 +494,7 @@ export type PaginatedCollection = {
 export type PriceDevelopment = {
   __typename?: 'PriceDevelopment';
   date: Scalars['String'];
-  priceUsd?: Maybe<Scalars['Float']>;
-  priceUsdFoil?: Maybe<Scalars['Float']>;
-  priceEur?: Maybe<Scalars['Float']>;
-  priceEurFoil?: Maybe<Scalars['Float']>;
+  price?: Maybe<Scalars['Float']>;
 };
 
 export type Prices = {
@@ -533,6 +536,7 @@ export type Query = {
   cardImages: Array<Maybe<Scalars['String']>>;
   cardSearch: PaginatedCards;
   cardByOracleId?: Maybe<Card>;
+  priceDevelopment: Array<PriceDevelopment>;
   cardsBySet: Array<CachedCard>;
   numberOfCachedCards: Scalars['Int'];
   cachedCards: Array<CachedCard>;
@@ -587,6 +591,11 @@ export type QueryCardSearchArgs = {
 
 export type QueryCardByOracleIdArgs = {
   oracle_id: Scalars['String'];
+};
+
+export type QueryPriceDevelopmentArgs = {
+  cardId: Scalars['String'];
+  currency: Currency;
 };
 
 export type QueryCardsBySetArgs = {

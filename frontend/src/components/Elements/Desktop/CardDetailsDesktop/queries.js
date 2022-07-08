@@ -29,6 +29,7 @@ const CARD_FIELDS = `
       amountOwned
       amountOwnedFoil
       set_name
+      foil
       nonfoil
       isTwoFaced
       prices {
@@ -36,13 +37,6 @@ const CARD_FIELDS = `
         usd_foil
         eur
         eur_foil
-      }
-      priceDevelopment {
-        date
-        priceUsd
-        priceUsdFoil
-        priceEur
-        priceEurFoil
       }
     }
     containingWantsLists {

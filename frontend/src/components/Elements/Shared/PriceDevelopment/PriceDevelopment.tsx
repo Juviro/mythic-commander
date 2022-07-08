@@ -1,12 +1,14 @@
 import { Divider } from 'antd';
 import ValueChart from 'components/Elements/Shared/CollectionCharts/ValueChart';
 import useLocalStorage from 'components/Hooks/useLocalStorage';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLazyQuery } from 'react-apollo';
 import styled from 'styled-components';
 import { UnifiedCard } from 'types/unifiedTypes';
 import formatDate from 'utils/formatDate';
 import PriceDevelopmentPlaceholder from './PriceDevelopmentPlaceholder';
 import PriceDevelopmentSelection from './PriceDevelopmentSelection';
+import { getPriceDevelopment } from './queries';
 
 const StyledWrapper = styled.section`
   margin: 32px 0;
@@ -14,42 +16,50 @@ const StyledWrapper = styled.section`
 
 interface Props {
   selectedCard?: UnifiedCard;
-  loading: boolean;
 }
 
 const DATA_KEY = 'Price';
 
-const PriceDevelopment = ({ selectedCard, loading }: Props) => {
-  const priceDevelopment = selectedCard?.priceDevelopment;
-  const [initialPriceDevelopment] = useLocalStorage('price-development', 'priceEur');
+const PriceDevelopment = ({ selectedCard }: Props) => {
+  const [initialPriceDevelopment] = useLocalStorage('price-development', 'Eur');
   const [selectedKey, setSelectedKey] = useState(initialPriceDevelopment);
+
+  const [fetchPrices, { data, loading }] = useLazyQuery(getPriceDevelopment, {
+    // legacy adapter: currency started with "price", which is omitted in the new schema
+    variables: { cardId: selectedCard?.id, currency: selectedKey.replace('price', '') },
+    fetchPolicy: 'cache-first',
+  });
+
+  useEffect(() => {
+    if (!selectedCard?.id) return;
+    fetchPrices();
+    // eslint-disable-next-line
+  }, [selectedCard?.id]);
 
   const unit = selectedKey.toLowerCase().includes('usd') ? '$' : '€';
 
-  const formattedPriceDevelopment = priceDevelopment?.map(({ date, ...rest }) => ({
+  const formattedPriceDevelopment = data?.priceDevelopment?.map(({ date, price }) => ({
     date: formatDate(date, true),
-    [DATA_KEY]: rest[selectedKey],
+    [DATA_KEY]: price,
   }));
-
-  const hasData =
-    !loading && formattedPriceDevelopment?.some((item) => item[DATA_KEY] !== null);
 
   return (
     <StyledWrapper>
       <Divider>Price Development</Divider>
-      {hasData ? (
+      {loading || !formattedPriceDevelopment?.length ? (
+        <PriceDevelopmentPlaceholder loading={loading} />
+      ) : (
         <ValueChart
           formattedData={formattedPriceDevelopment}
           dataKey={DATA_KEY}
           unit={unit}
         />
-      ) : (
-        <PriceDevelopmentPlaceholder loading={loading} />
       )}
       <PriceDevelopmentSelection
         onSelect={setSelectedKey}
         selectedKey={selectedKey}
-        priceDevelopment={priceDevelopment}
+        foilOnly={!selectedCard?.nonfoil}
+        nonfoilOnly={!selectedCard?.foil}
       />
     </StyledWrapper>
   );
