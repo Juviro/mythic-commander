@@ -46,7 +46,6 @@ type Card {
 
   oracleCard: OracleCard!
   relatedCards: [Card!]
-  priceDevelopment: [PriceDevelopment!]
 }
 
 type OracleCard {
@@ -126,12 +125,16 @@ type PaginatedCards {
   cards: [Card!]!
 }
 
+enum Currency {
+  Usd
+  UsdFoil
+  Eur
+  EurFoil
+}
+
 type PriceDevelopment {
   date: String!
-  priceUsd: Float
-  priceUsdFoil: Float
-  priceEur: Float
-  priceEurFoil: Float
+  price: Float
 }
 
 ################################# Deck #################################
@@ -343,6 +346,7 @@ type Query {
     options: CardsOptionsInput!
   ): PaginatedCards!
   cardByOracleId(oracle_id: String!): Card
+  priceDevelopment(cardId: String!, currency: Currency!): [PriceDevelopment!]!
 
   cardsBySet(setKey: String!): [CachedCard!]!
   numberOfCachedCards: Int!

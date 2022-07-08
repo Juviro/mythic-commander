@@ -1,65 +1,43 @@
+import React from 'react';
 import { Button, Space } from 'antd';
-import useLocalStorage from 'components/Hooks/useLocalStorage';
-import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { PriceDevelopment } from 'types/graphql';
 
 const StyledSpace = styled(Space)`
   margin-top: 48px;
 `;
 
-const PRICE_KEYS = ['priceEur', 'priceEurFoil', 'priceUsd', 'priceUsdFoil'];
+const PRICE_KEYS = ['Eur', 'EurFoil', 'Usd', 'UsdFoil'];
 
 const labelMap = {
-  priceUsd: 'Price USD',
-  priceUsdFoil: 'Price USD Foil',
-  priceEur: 'Price EUR',
-  priceEurFoil: 'Price EUR Foil',
+  Usd: 'Price USD',
+  UsdFoil: 'Price USD Foil',
+  Eur: 'Price EUR',
+  EurFoil: 'Price EUR Foil',
 };
 
 interface Props {
   selectedKey: string;
   onSelect: (value: string) => void;
-  priceDevelopment: PriceDevelopment[];
+  nonfoilOnly: boolean;
+  foilOnly: boolean;
 }
 
 const PriceDevelopmentSelection = ({
   onSelect,
   selectedKey,
-  priceDevelopment,
+  foilOnly,
+  nonfoilOnly,
 }: Props) => {
-  const [defaultKey, storeDefaultKey] = useLocalStorage('price-development', 'priceEur');
-  const hasData = (key: string) => {
-    return priceDevelopment?.some((price) => price[key] !== null);
-  };
-
-  const onClick = (key: string) => {
-    storeDefaultKey(key);
-    onSelect(key);
-  };
-
-  useEffect(() => {
-    if (hasData(defaultKey)) {
-      onSelect(defaultKey);
-      return;
-    }
-    if (!priceDevelopment || hasData(selectedKey)) return;
-
-    const firstKeyWithData = PRICE_KEYS.find((key) => hasData(key));
-    if (firstKeyWithData) {
-      onSelect(firstKeyWithData);
-    }
-    // eslint-disable-next-line
-  }, [selectedKey, priceDevelopment, onSelect]);
-
   return (
     <StyledSpace size={12}>
       {PRICE_KEYS.map((key) => (
         <Button
-          disabled={!hasData(key)}
           type={key === selectedKey ? 'primary' : 'ghost'}
+          disabled={
+            (foilOnly && !key.includes('Foil')) || (nonfoilOnly && key.includes('Foil'))
+          }
           size="small"
-          onClick={() => onClick(key)}
+          onClick={() => onSelect(key)}
           key={key}
         >
           {labelMap[key]}
