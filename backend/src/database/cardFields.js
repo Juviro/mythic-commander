@@ -186,6 +186,13 @@ export const CARD_FIELDS_ADDITION_8 = [
   },
 ];
 
+export const CARD_FIELDS_ADDITION_9 = [
+  {
+    key: 'primary_variant',
+    type: 'string',
+  },
+];
+
 export const ALL_CARD_FIELDS = [
   CARD_FIELDS_INITIAL,
   CARD_FIELDS_ADDITION_1,
@@ -196,4 +203,5 @@ export const ALL_CARD_FIELDS = [
   CARD_FIELDS_ADDITION_6,
   CARD_FIELDS_ADDITION_7,
   CARD_FIELDS_ADDITION_8,
+  CARD_FIELDS_ADDITION_9
 ].flat();

@@ -18,9 +18,7 @@ export default ({
   return (
     <Table
       dataSource={
-        card &&
-        card.allSets &&
-        card.allSets.map((cardSet) => ({
+        card?.allSets?.map((cardSet) => ({
           ...cardSet,
           key: cardSet.id,
         }))

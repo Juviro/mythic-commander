@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import { Tooltip } from 'antd';
 import Flex from 'components/Elements/Shared/Flex';
-import FoilIcon from 'components/Elements/Shared/FoilIcon';
 import Set from '../Set';
 import EditableAmount from '../EditableAmount';
 import getIsMobile from '../../../../utils/isMobile';
@@ -20,23 +19,7 @@ const StyledPriceWrapper = styled.div`
 `;
 
 const renderSet = (card) => {
-  const isFoilOnly = !card.nonfoil;
-  return (
-    <Flex align="center">
-      <Set setKey={card.set} name={card.set_name} />
-      {isFoilOnly && (
-        <FoilIcon
-          style={{
-            margin: 0,
-            right: -1,
-            position: 'absolute',
-            zIndex: 99,
-          }}
-          tooltip="Only available in foil"
-        />
-      )}
-    </Flex>
-  );
+  return <Set setKey={card.set} name={card.set_name} />;
 };
 
 const renderPrice = (currency) => (cardPrice) => {
