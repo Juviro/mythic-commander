@@ -72,6 +72,8 @@ const downloadAllImages = async (card, imageUris, face) => {
 };
 
 const storeCardImage = async card => {
+  if (!process.env.IMG_DIR) return;
+  
   if (card.image_uris) {
     await downloadAllImages(card, card.image_uris, 'front');
   } else {
