@@ -41,10 +41,12 @@ const getHighlightedOption = (
   searchString,
   cardName,
   containedCardNames = [],
-  ownedCardNames = []
+  ownedCardNames = [],
+  primaryVariant = null
 ) => {
   const highlightedOption = [];
   let currentCardName = cardName;
+
   searchString
     .toLowerCase()
     .split(' ')
@@ -59,6 +61,7 @@ const getHighlightedOption = (
       );
       currentCardName = currentCardName.slice(index + searchWord.length);
     });
+
   highlightedOption.push(currentCardName);
 
   const alreadyInList = containedCardNames.includes(cardName);
@@ -66,7 +69,10 @@ const getHighlightedOption = (
 
   return (
     <StyledOption>
-      <Typography.Text ellipsis>{highlightedOption}</Typography.Text>
+      <span>
+        <Typography.Text ellipsis>{highlightedOption}</Typography.Text>
+        {primaryVariant && <i>{` [${primaryVariant}]`}</i>}
+      </span>
       <span>
         {alreadyInList && (
           <Typography.Text type="warning">already in list</Typography.Text>
@@ -152,7 +158,13 @@ export default class CardSearch extends React.Component {
         )}
         {isFoil && <FoilIcon style={{ marginRight: 6, marginLeft: 0 }} />}
         {cardPrefix}
-        {getHighlightedOption(name, option.name, containedCardNames, ownedCardNames)}
+        {getHighlightedOption(
+          name,
+          option.name,
+          containedCardNames,
+          ownedCardNames,
+          option.primary_variant
+        )}
       </Flex>
     );
 

@@ -47,7 +47,7 @@ const downloadImage = async (filename, url, size, alwayswUpdate = false) => {
 };
 
 const downloadAllImages = async (card, imageUris, face) => {
-  // Some cards are spoiled in different languages, but by their release date 
+  // Some cards are spoiled in different languages, but by their release date
   // they should have the english image. Until then, we always update those images
   const isUnreleased = new Date(card.released_at) > new Date();
 
@@ -72,6 +72,8 @@ const downloadAllImages = async (card, imageUris, face) => {
 };
 
 const storeCardImage = async card => {
+  if (!process.env.IMG_DIR) return;
+
   if (card.image_uris) {
     await downloadAllImages(card, card.image_uris, 'front');
   } else {

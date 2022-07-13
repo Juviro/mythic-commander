@@ -19,7 +19,7 @@ const fileName = `${backupDir}database-backup-${currentDate}.tar`;
 
 const backupDB = () => {
   if (process.env.NODE_ENV === 'development') {
-    console.error("WRONG NODE_ENV FOR DB BACKUP");
+    console.error('WRONG NODE_ENV FOR DB BACKUP');
     return;
   }
   console.info(

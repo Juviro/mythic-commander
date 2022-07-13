@@ -17,14 +17,10 @@ export default ({
   const { user } = useContext(UserContext);
   return (
     <Table
-      dataSource={
-        card &&
-        card.allSets &&
-        card.allSets.map((cardSet) => ({
-          ...cardSet,
-          key: cardSet.id,
-        }))
-      }
+      dataSource={card?.allSets?.map((cardSet) => ({
+        ...cardSet,
+        key: cardSet.id,
+      }))}
       loading={loading}
       columns={columns(card, isEditing, onChangeAmount, onSaveChanges, !user)}
       onRow={({ id }) => ({

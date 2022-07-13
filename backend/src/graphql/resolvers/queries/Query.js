@@ -1,4 +1,4 @@
-import { getCachedCards, getCachedCardsBySet } from './getCachedCards';
+import { getCachedCards } from './getCachedCards';
 import cardSearch from './cardSearch';
 import proxies from './proxies';
 import unifyCardFormat from '../unifyCardFormat';
@@ -77,7 +77,7 @@ const resolver = {
         return true;
       }
       return false;
-    })
+    });
   },
 
   edhrecCards(_, { names, themeSuffix }, { user: { id: userId } }) {
@@ -136,7 +136,21 @@ const resolver = {
     };
   },
 
-  cardsBySet: (_, { setKey }, { db }) => getCachedCardsBySet(db, setKey),
+  cardsBySet: async (_, { setKey }, { db }) => {
+    const cards = await db('cards')
+      .where({ set: setKey })
+      .orderByRaw('name asc, is_special asc');
+
+    // Only return one card per name without a primary_variant
+    const noVariantCardNames = {};
+
+    return cards.filter(card => {
+      if (card.primary_variant) return true;
+      if (noVariantCardNames[card.name]) return false;
+      noVariantCardNames[card.name] = true;
+      return true;
+    });
+  },
   cachedCards: (_, __, { db }) => getCachedCards(db),
   numberOfCachedCards: async (_, __, { db }) => {
     const { count } = await db('distinctCards')

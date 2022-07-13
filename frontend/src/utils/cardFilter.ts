@@ -87,35 +87,32 @@ export const filterCards = (
 };
 
 export const sortCardsBySearch = (searchString = '') => (
-  { name: cardA },
-  { name: cardB }
+  { name: cardA, primary_variant: pvA }: UnifiedCard,
+  { name: cardB, primary_variant: pvB }: UnifiedCard
 ) => {
+  if (cardA === cardB) {
+    if (pvA && !pvB) return 1;
+    if (pvB && !pvA) return -1;
+    return pvA ? pvA.localeCompare(pvB) : 0;
+  }
+
   const cleanSearch = trimName(searchString);
   const cleanCardNameA = trimName(cardA);
   const cleanCardNameB = trimName(cardB);
   if (!cleanSearch) return cleanCardNameA > cleanCardNameB ? 1 : -1;
 
-  return cleanCardNameB === cleanSearch
-    ? 1
-    : cleanCardNameA === cleanSearch
-    ? -1
-    : cleanCardNameB.startsWith(cleanSearch)
-    ? 1
-    : cleanCardNameA.startsWith(cleanSearch)
-    ? -1
-    : cleanCardNameB.indexOf(cleanSearch) > 0
-    ? 1
-    : cleanCardNameA.indexOf(cleanSearch) > 0
-    ? -1
-    : cleanCardNameA[0] === cleanSearch[0]
-    ? -1
-    : cleanCardNameB[0] === cleanSearch[0]
-    ? 1
-    : cardA > cardB
-    ? -1
-    : cardA > cardB
-    ? 1
-    : 0;
+  if (cleanCardNameB === cleanSearch) return 1;
+  if (cleanCardNameA === cleanSearch) return -1;
+  if (cleanCardNameB.startsWith(cleanSearch)) return 1;
+  if (cleanCardNameA.startsWith(cleanSearch)) return -1;
+  if (cleanCardNameB.indexOf(cleanSearch) > 0) return 1;
+  if (cleanCardNameA.indexOf(cleanSearch) > 0) return -1;
+  if (cleanCardNameB[0] === cleanSearch[0]) return 1;
+  if (cleanCardNameA[0] === cleanSearch[0]) return -1;
+  if (cardA > cardB) return 1;
+  if (cardB > cardA) return -1;
+
+  return 0;
 };
 
 export const filterAndSortByQuery = (cards, searchString) => {

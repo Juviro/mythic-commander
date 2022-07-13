@@ -3,7 +3,10 @@ import readline from 'readline';
 
 import knex from '../../database';
 import { ALL_CARD_FIELDS } from '../../database/cardFields';
-import { isSpecialCard } from '../../graphql/resolvers/queries/Card/helper';
+import {
+  isSpecialCard,
+  getMainVariant,
+} from '../../graphql/resolvers/queries/Card/helper';
 import storeCardImage from '../images/storeCardImage';
 import downloadCardJson from './downloadCardJson';
 
@@ -77,6 +80,7 @@ export const updateScryfallCards = async (type, tableName) => {
       }, {});
 
       cardToInsert.is_special = isSpecialCard(card);
+      cardToInsert.primary_variant = getMainVariant(card);
 
       await knex.raw(
         knex(tableName)

@@ -5,7 +5,6 @@ import SelectFilter from 'components/Elements/Shared/Filter/SelectFilter/SelectF
 import CardContext from '../../../../Provider/CardProvider';
 import SetIcon from '../../../Shared/SetIcon';
 import { cardsBySet } from './queries';
-import { formatCachedCards } from '../../../../../utils/cachedCards';
 
 const getSetIcon = (setKey) => <SetIcon setKey={setKey} style={{ marginRight: 6 }} />;
 
@@ -33,8 +32,7 @@ export default ({ setCardOptions }) => {
       setCardOptions({ cards: null });
       return;
     }
-    const cards = formatCachedCards(data.cardsBySet);
-    setCardOptions({ cards, cardPrefix: getSetIcon(setKey) });
+    setCardOptions({ cards: data.cardsBySet, cardPrefix: getSetIcon(setKey) });
     // eslint-disable-next-line
   }, [loading, data, setKey]);
 
