@@ -42,7 +42,9 @@ const resolver = {
   relatedCards({ all_parts, layout }, _, { db }) {
     if (!all_parts || layout === 'token') return null;
 
-    return Promise.all(all_parts.map(getCard(db))).then(parts => parts.filter(Boolean));
+    return Promise.all(all_parts.map(getCard(db))).then(parts =>
+      parts.filter(Boolean)
+    );
   },
 
   colors({ colors, card_faces }) {

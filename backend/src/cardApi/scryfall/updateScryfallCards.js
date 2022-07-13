@@ -3,7 +3,10 @@ import readline from 'readline';
 
 import knex from '../../database';
 import { ALL_CARD_FIELDS } from '../../database/cardFields';
-import { isSpecialCard, getMainVariant } from '../../graphql/resolvers/queries/Card/helper';
+import {
+  isSpecialCard,
+  getMainVariant,
+} from '../../graphql/resolvers/queries/Card/helper';
 import storeCardImage from '../images/storeCardImage';
 import downloadCardJson from './downloadCardJson';
 

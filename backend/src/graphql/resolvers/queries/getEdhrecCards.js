@@ -30,7 +30,7 @@ const formatCards = async (cards, userId) => {
     .map(({ prices, name, synergy, image_uris }) => {
       const [_, imgKey, id] = image_uris?.[0]?.small?.match(
         /front\/(\w\/\w)\/(.*)\./
-      ) ?? [null, "", name]
+      ) ?? [null, '', name];
 
       return {
         id,

@@ -16,12 +16,12 @@ const updateCards = async () => {
   try {
     await updateScryfallCards('default_cards', 'cards');
     await deleteOldCards();
-    
+
     await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCards"`);
     await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCardsPerSet"`);
     await knex.raw(`REFRESH MATERIALIZED VIEW "distinctTokens"`);
-  } catch(e) {
-    console.log("Error updating cards:", e)
+  } catch (e) {
+    console.error('Error updating cards:', e);
   }
 
   console.info(
