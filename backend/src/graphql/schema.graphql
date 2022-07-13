@@ -36,6 +36,7 @@ type Card {
   foil: Boolean!
   nonfoil: Boolean!
   isTwoFaced: Boolean!
+  primary_variant: String
 
   # Additional card fields
   imgKey: String!
@@ -348,7 +349,7 @@ type Query {
   cardByOracleId(oracle_id: String!): Card
   priceDevelopment(cardId: String!, currency: Currency!): [PriceDevelopment!]!
 
-  cardsBySet(setKey: String!): [CachedCard!]!
+  cardsBySet(setKey: String!): [Card!]!
   numberOfCachedCards: Int!
   cachedCards: [CachedCard!]!
 

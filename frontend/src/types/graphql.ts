@@ -48,6 +48,7 @@ export type Card = {
   foil: Scalars['Boolean'];
   nonfoil: Scalars['Boolean'];
   isTwoFaced: Scalars['Boolean'];
+  primary_variant?: Maybe<Scalars['String']>;
   imgKey: Scalars['String'];
   amountOwned: Scalars['Int'];
   amountOwnedFoil: Scalars['Int'];
