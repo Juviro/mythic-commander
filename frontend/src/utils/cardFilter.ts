@@ -6,7 +6,7 @@ export const trimName = (str: string) => {
       .toLowerCase()
       // replaces token stats, e.g. Angel (4/4) -> Angel
       .replace(/\s\(.*\)/g, '')
-      .replace(/[().*/\\^$+{},-:[\]]/g, '')
+      .replace(/[().*/\\^$+{},:[\]]/g, '')
   );
 };
 
@@ -15,7 +15,13 @@ export const filterByName = (cards: UnifiedCard[], searchString = ''): UnifiedCa
   const cleanSearch = trimName(searchString);
   const searchRegExp = new RegExp(cleanSearch.split(' ').join('.*'));
 
-  return cards.filter(({ name }) => {
+  const isCollectorNumber = searchString.match(/^\d{3}$/);
+
+  return cards.filter(({ name, collector_number }) => {
+    if (isCollectorNumber && collector_number?.startsWith(searchString)) {
+      return true;
+    }
+
     return searchRegExp.test(trimName(name));
   });
 };

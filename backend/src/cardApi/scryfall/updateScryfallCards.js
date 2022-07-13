@@ -6,6 +6,7 @@ import { ALL_CARD_FIELDS } from '../../database/cardFields';
 import {
   isSpecialCard,
   getMainVariant,
+  padCollectorNumber,
 } from '../../graphql/resolvers/queries/Card/helper';
 import storeCardImage from '../images/storeCardImage';
 import downloadCardJson from './downloadCardJson';
@@ -81,6 +82,7 @@ export const updateScryfallCards = async (type, tableName) => {
 
       cardToInsert.is_special = isSpecialCard(card);
       cardToInsert.primary_variant = getMainVariant(card);
+      cardToInsert.collector_number = padCollectorNumber(card.collector_number);
 
       await knex.raw(
         knex(tableName)

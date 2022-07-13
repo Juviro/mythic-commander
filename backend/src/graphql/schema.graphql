@@ -37,6 +37,7 @@ type Card {
   nonfoil: Boolean!
   isTwoFaced: Boolean!
   primary_variant: String
+  collector_number: String!
 
   # Additional card fields
   imgKey: String!

@@ -49,6 +49,7 @@ export type Card = {
   nonfoil: Scalars['Boolean'];
   isTwoFaced: Scalars['Boolean'];
   primary_variant?: Maybe<Scalars['String']>;
+  collector_number: Scalars['String'];
   imgKey: Scalars['String'];
   amountOwned: Scalars['Int'];
   amountOwnedFoil: Scalars['Int'];
@@ -538,7 +539,7 @@ export type Query = {
   cardSearch: PaginatedCards;
   cardByOracleId?: Maybe<Card>;
   priceDevelopment: Array<PriceDevelopment>;
-  cardsBySet: Array<CachedCard>;
+  cardsBySet: Array<Card>;
   numberOfCachedCards: Scalars['Int'];
   cachedCards: Array<CachedCard>;
   wantsList: WantsList;

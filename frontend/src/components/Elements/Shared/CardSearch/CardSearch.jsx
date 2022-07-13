@@ -10,7 +10,19 @@ import Flex from '../Flex';
 import FoilIcon from '../FoilIcon';
 
 export const splitSearchString = (query = '', allowFoilInput = false) => {
-  const matchAmount = query.match(/^((\d+)x{0,1}){0,1}\s{0,1}(.*)/);
+  // Match collector number
+  if (query.match(/^\d{3}$/)) {
+    const result = {
+      amount: 1,
+      name: query,
+    };
+    if (allowFoilInput) {
+      result.foil = false;
+    }
+    return result;
+  }
+
+  const matchAmount = query.match(/^((\d{1,2})x?)?\s?(.*)/);
   const [, , matchedAmount, nameWithoutAmount] = matchAmount || [null, null, query];
 
   const amount = Number(matchedAmount) || 1;

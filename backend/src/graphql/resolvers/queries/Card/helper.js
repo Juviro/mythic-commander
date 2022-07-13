@@ -137,3 +137,9 @@ export const getMainVariant = ({
 
   return null;
 };
+
+export const padCollectorNumber = number => {
+  if (number.length === 1) return `00${number}`;
+  if (number.length === 2) return `0${number}`;
+  return number;
+};

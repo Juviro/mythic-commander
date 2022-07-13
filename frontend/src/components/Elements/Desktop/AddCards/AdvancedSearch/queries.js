@@ -6,6 +6,7 @@ export const cardsBySet = gql`
       id
       name
       primary_variant
+      collector_number
     }
   }
 `;
