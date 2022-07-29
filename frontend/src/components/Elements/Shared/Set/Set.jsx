@@ -26,14 +26,14 @@ const StyledSetName = styled.div`
 
 export default ({ setKey, name: overwriteName }) => {
   const { sets } = useContext(CardContext);
-  const { name, icon_svg_uri } = sets[setKey];
+  const { name, icon_svg_uri } = sets[setKey] || {};
   const setName = overwriteName || name;
   const to = getDynamicUrl(`/search?sets=${setKey}`);
 
   return (
     <DesktopTooltip title={setName}>
       <StyledSetName>
-        <StyledSetIcon src={icon_svg_uri} alt="icon" />
+        {icon_svg_uri && <StyledSetIcon src={icon_svg_uri} alt="seticon" />}
         <Link to={to} onClick={(e) => e.stopPropagation()} tabIndex="-1">
           {setName}
         </Link>
