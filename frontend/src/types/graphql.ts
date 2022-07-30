@@ -1,5 +1,13 @@
+/* eslint-disable */
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -9,307 +17,564 @@ export type Scalars = {
   Float: number;
 };
 
+export type Query = {
+  __typename?: 'Query';
+  allLists: AllLists;
+  cachedCards: Array<CachedCard>;
+  card: Card;
+  cardByOracleId?: Maybe<Card>;
+  cardImages: Array<Maybe<Scalars['String']>>;
+  cards: Array<Maybe<Card>>;
+  cardsBySet: Array<Card>;
+  cardSearch: PaginatedCards;
+  collection: Collection;
+  collectionSnapshots: Array<CollectionSnapshot>;
+  deck?: Maybe<Deck>;
+  decks: Array<Deck>;
+  edhrecCards?: Maybe<EdhRecData>;
+  ltPlayers?: Maybe<Array<LtPlayer>>;
+  numberOfCachedCards: Scalars['Int'];
+  ownedCardNames: Array<Scalars['String']>;
+  paginatedCollection: PaginatedCollection;
+  priceDevelopment: Array<PriceDevelopment>;
+  proxies: Array<ProxyCard>;
+  publicCollection?: Maybe<Array<CollectionCard>>;
+  tokenFinder: Array<Card>;
+  tokens: Array<Token>;
+  user?: Maybe<User>;
+  wantedCards?: Maybe<WantedCards>;
+  wantsList: WantsList;
+  wantsLists: Array<WantsList>;
+};
+
+export type QueryCardArgs = {
+  id: Scalars['String'];
+};
+
+export type QueryCardByOracleIdArgs = {
+  oracle_id: Scalars['String'];
+};
+
+export type QueryCardImagesArgs = {
+  cardId: Scalars['String'];
+};
+
+export type QueryCardsArgs = {
+  cardIds: Array<InputMaybe<Scalars['String']>>;
+};
+
+export type QueryCardsBySetArgs = {
+  setKey: Scalars['String'];
+};
+
+export type QueryCardSearchArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  options: CardsOptionsInput;
+};
+
+export type QueryDeckArgs = {
+  id: Scalars['String'];
+};
+
+export type QueryEdhrecCardsArgs = {
+  names: Array<Scalars['String']>;
+  themeSuffix?: InputMaybe<Scalars['String']>;
+};
+
+export type QueryPaginatedCollectionArgs = {
+  addedWithin?: InputMaybe<Scalars['Int']>;
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
+  orderBy: Scalars['String'];
+  search?: InputMaybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
+};
+
+export type QueryPriceDevelopmentArgs = {
+  cardId: Scalars['String'];
+  currency: Currency;
+};
+
+export type QueryProxiesArgs = {
+  filter?: InputMaybe<Scalars['String']>;
+  type: Scalars['String'];
+  value?: InputMaybe<Scalars['String']>;
+};
+
+export type QueryPublicCollectionArgs = {
+  username: Scalars['String'];
+};
+
+export type QueryWantedCardsArgs = {
+  username: Scalars['String'];
+};
+
+export type QueryWantsListArgs = {
+  id: Scalars['String'];
+};
+
+export type QueryWantsListsArgs = {
+  deckId?: InputMaybe<Scalars['String']>;
+};
+
 export type AllLists = {
   __typename?: 'AllLists';
   decks: Array<Deck>;
   wantsLists: Array<WantsList>;
 };
 
-export type CachedCard = {
-  __typename?: 'CachedCard';
-  i: Scalars['String'];
-  n: Scalars['String'];
-  o: Scalars['String'];
-  k?: Maybe<Scalars['String']>;
-};
-
-export type Card = {
-  __typename?: 'Card';
-  id: Scalars['String'];
-  set: Scalars['String'];
-  name: Scalars['String'];
-  image_uris?: Maybe<ImageUris>;
-  card_faces?: Maybe<Array<CardFace>>;
-  priceUsd: Scalars['Float'];
-  priceEur: Scalars['Float'];
-  prices: Prices;
-  rarity: Scalars['String'];
-  oracle_text?: Maybe<Scalars['String']>;
-  scryfall_uri?: Maybe<Scalars['String']>;
-  cmc: Scalars['Float'];
-  legalities: Legalities;
-  purchase_uris: PurchaseUris;
-  oracle_id: Scalars['String'];
-  rulings_uri: Scalars['String'];
-  colors?: Maybe<Array<Maybe<Scalars['String']>>>;
-  color_identity?: Maybe<Array<Maybe<Scalars['String']>>>;
-  set_name: Scalars['String'];
-  mana_cost?: Maybe<Scalars['String']>;
-  foil: Scalars['Boolean'];
-  nonfoil: Scalars['Boolean'];
-  isTwoFaced: Scalars['Boolean'];
-  primary_variant?: Maybe<Scalars['String']>;
-  collector_number: Scalars['String'];
-  imgKey: Scalars['String'];
-  amountOwned: Scalars['Int'];
-  amountOwnedFoil: Scalars['Int'];
-  possiblePartner?: Maybe<Scalars['String']>;
-  canBeCommander: Scalars['Boolean'];
-  oracleCard: OracleCard;
-  relatedCards?: Maybe<Array<Card>>;
-};
-
-export type CardFace = {
-  __typename?: 'CardFace';
-  name: Scalars['String'];
-  image_uris?: Maybe<ImageUris>;
-  colors?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-export type CardInputType = {
-  id: Scalars['String'];
-  amount?: Maybe<Scalars['Int']>;
-  isFoil?: Maybe<Scalars['Boolean']>;
-};
-
-export type CardsOptionsInput = {
-  name?: Maybe<Scalars['String']>;
-  colors?: Maybe<Scalars['String']>;
-  subTypes?: Maybe<Array<Scalars['String']>>;
-  cardTypes?: Maybe<Array<Scalars['String']>>;
-  isLegendary?: Maybe<Scalars['String']>;
-  isCommanderLegal?: Maybe<Scalars['String']>;
-  isOwned?: Maybe<Scalars['String']>;
-  text?: Maybe<Scalars['String']>;
-  cmc?: Maybe<Scalars['String']>;
-  rarity?: Maybe<Scalars['String']>;
-  power?: Maybe<Scalars['String']>;
-  toughness?: Maybe<Scalars['String']>;
-  sets?: Maybe<Array<Scalars['String']>>;
-  orderBy?: Maybe<Scalars['String']>;
-};
-
-export type ChangeCollectionInput = {
-  id: Scalars['String'];
-  amountOwned?: Maybe<Scalars['Int']>;
-  amountOwnedFoil?: Maybe<Scalars['Int']>;
-};
-
-export type Collection = {
-  __typename?: 'Collection';
-  id: Scalars['String'];
-  visibility: Visibility;
-  referenceSnapshot?: Maybe<CollectionSnapshot>;
-  currentSnapshot: CollectionSnapshot;
-};
-
-export type CollectionCard = {
-  __typename?: 'CollectionCard';
-  id: Scalars['String'];
-  createdAt: Scalars['String'];
-  card: Card;
-};
-
-export type CollectionSnapshot = {
-  __typename?: 'CollectionSnapshot';
-  date: Scalars['String'];
-  value?: Maybe<Scalars['Int']>;
-  valueEur?: Maybe<Scalars['Int']>;
-  amount?: Maybe<Scalars['Int']>;
-  amountUniqueVersions?: Maybe<Scalars['Int']>;
-  amountUnique?: Maybe<Scalars['Int']>;
-  missingPriceEur?: Maybe<Scalars['Int']>;
-};
-
-export type ContainingList = {
-  __typename?: 'ContainingList';
-  id: Scalars['String'];
-  name: Scalars['String'];
-  amount: Scalars['Int'];
-};
-
-export enum Currency {
-  Usd = 'Usd',
-  UsdFoil = 'UsdFoil',
-  Eur = 'Eur',
-  EurFoil = 'EurFoil',
-}
-
 export type Deck = {
   __typename?: 'Deck';
-  id: Scalars['String'];
-  name: Scalars['String'];
-  createdAt: Scalars['String'];
-  lastEdit: Scalars['String'];
-  imgSrc: Scalars['String'];
-  numberOfCards: Scalars['Int'];
-  visibility: Visibility;
-  status: DeckStatus;
   canEdit: Scalars['Boolean'];
   cards: Array<DeckCard>;
   colors?: Maybe<Array<Scalars['String']>>;
+  createdAt: Scalars['String'];
+  id: Scalars['String'];
+  imgSrc: Scalars['String'];
+  lastEdit: Scalars['String'];
+  name: Scalars['String'];
+  numberOfCards: Scalars['Int'];
+  status: DeckStatus;
+  visibility: Visibility;
   wantsLists: Array<WantsList>;
 };
 
 export type DeckCard = {
   __typename?: 'DeckCard';
-  id: Scalars['String'];
   amount: Scalars['Int'];
-  createdAt: Scalars['String'];
-  isCommander?: Maybe<Scalars['Boolean']>;
   card: Card;
+  createdAt: Scalars['String'];
+  id: Scalars['String'];
+  isCommander?: Maybe<Scalars['Boolean']>;
   tags?: Maybe<Array<Scalars['String']>>;
+};
+
+export type Card = {
+  __typename?: 'Card';
+  amountOwned: Scalars['Int'];
+  amountOwnedFoil: Scalars['Int'];
+  canBeCommander: Scalars['Boolean'];
+  card_faces?: Maybe<Array<CardFace>>;
+  cmc: Scalars['Float'];
+  collector_number: Scalars['String'];
+  color_identity?: Maybe<Array<Maybe<Scalars['String']>>>;
+  colors?: Maybe<Array<Maybe<Scalars['String']>>>;
+  foil: Scalars['Boolean'];
+  id: Scalars['String'];
+  image_uris?: Maybe<ImageUris>;
+  imgKey: Scalars['String'];
+  isTwoFaced: Scalars['Boolean'];
+  legalities: Legalities;
+  mana_cost?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  nonfoil: Scalars['Boolean'];
+  oracle_id: Scalars['String'];
+  oracle_text?: Maybe<Scalars['String']>;
+  oracleCard: OracleCard;
+  possiblePartner?: Maybe<Scalars['String']>;
+  priceEur: Scalars['Float'];
+  prices: Prices;
+  priceUsd: Scalars['Float'];
+  primary_variant?: Maybe<Scalars['String']>;
+  purchase_uris: PurchaseUris;
+  rarity: Scalars['String'];
+  relatedCards?: Maybe<Array<Card>>;
+  rulings_uri: Scalars['String'];
+  scryfall_uri?: Maybe<Scalars['String']>;
+  set: Scalars['String'];
+  set_name: Scalars['String'];
+};
+
+export type CardFace = {
+  __typename?: 'CardFace';
+  colors?: Maybe<Array<Maybe<Scalars['String']>>>;
+  image_uris?: Maybe<ImageUris>;
+  name: Scalars['String'];
+};
+
+export type ImageUris = {
+  __typename?: 'ImageUris';
+  art_crop?: Maybe<Scalars['String']>;
+  normal?: Maybe<Scalars['String']>;
+  small?: Maybe<Scalars['String']>;
+};
+
+export type Legalities = {
+  __typename?: 'Legalities';
+  commander?: Maybe<Scalars['String']>;
+  modern?: Maybe<Scalars['String']>;
+  standard?: Maybe<Scalars['String']>;
+};
+
+export type OracleCard = {
+  __typename?: 'OracleCard';
+  _id: Scalars['String'];
+  allSets: Array<Card>;
+  containingDecks: Array<Deck>;
+  containingWantsLists: Array<ContainingList>;
+  isCommanderLegal: Scalars['Boolean'];
+  minPriceEur: Scalars['Float'];
+  minPriceUsd: Scalars['Float'];
+  owned: Scalars['Boolean'];
+  primaryTypes: Array<Scalars['String']>;
+  subTypes: Array<Scalars['String']>;
+  sumPriceEur?: Maybe<Scalars['Float']>;
+  sumPriceUsd?: Maybe<Scalars['Float']>;
+  totalAmount: Scalars['Int'];
+};
+
+export type ContainingList = {
+  __typename?: 'ContainingList';
+  amount: Scalars['Int'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type Prices = {
+  __typename?: 'Prices';
+  eur?: Maybe<Scalars['String']>;
+  eur_foil?: Maybe<Scalars['String']>;
+  usd?: Maybe<Scalars['String']>;
+  usd_foil?: Maybe<Scalars['String']>;
+};
+
+export type PurchaseUris = {
+  __typename?: 'PurchaseUris';
+  cardmarket?: Maybe<Scalars['String']>;
+  tcgplayer?: Maybe<Scalars['String']>;
 };
 
 export enum DeckStatus {
   Active = 'active',
-  Draft = 'draft',
   Archived = 'archived',
+  Draft = 'draft',
 }
+
+export enum Visibility {
+  Hidden = 'hidden',
+  Private = 'private',
+  Public = 'public',
+}
+
+export type WantsList = {
+  __typename?: 'WantsList';
+  canEdit: Scalars['Boolean'];
+  cardPreviews?: Maybe<Array<Scalars['String']>>;
+  cards: Array<WantsListCard>;
+  createdAt: Scalars['String'];
+  deck?: Maybe<Deck>;
+  id: Scalars['String'];
+  lastEdit: Scalars['String'];
+  name: Scalars['String'];
+  numberOfCards: Scalars['Int'];
+  visibility: Visibility;
+};
+
+export type WantsListCard = {
+  __typename?: 'WantsListCard';
+  amount: Scalars['Int'];
+  card: Card;
+  createdAt: Scalars['String'];
+  id: Scalars['String'];
+};
+
+export type CachedCard = {
+  __typename?: 'CachedCard';
+  i: Scalars['String'];
+  k?: Maybe<Scalars['String']>;
+  n: Scalars['String'];
+  o: Scalars['String'];
+};
+
+export type CardsOptionsInput = {
+  cardTypes?: InputMaybe<Array<Scalars['String']>>;
+  cmc?: InputMaybe<Scalars['String']>;
+  colors?: InputMaybe<Scalars['String']>;
+  isCommanderLegal?: InputMaybe<Scalars['String']>;
+  isLegendary?: InputMaybe<Scalars['String']>;
+  isOwned?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Scalars['String']>;
+  power?: InputMaybe<Scalars['String']>;
+  rarity?: InputMaybe<Scalars['String']>;
+  sets?: InputMaybe<Array<Scalars['String']>>;
+  subTypes?: InputMaybe<Array<Scalars['String']>>;
+  text?: InputMaybe<Scalars['String']>;
+  toughness?: InputMaybe<Scalars['String']>;
+};
+
+export type PaginatedCards = {
+  __typename?: 'PaginatedCards';
+  cards: Array<Card>;
+  hasMore: Scalars['Boolean'];
+  nextOffset?: Maybe<Scalars['Int']>;
+  totalResults: Scalars['Int'];
+};
+
+export type Collection = {
+  __typename?: 'Collection';
+  currentSnapshot: CollectionSnapshot;
+  id: Scalars['String'];
+  referenceSnapshot?: Maybe<CollectionSnapshot>;
+  visibility: Visibility;
+};
+
+export type CollectionSnapshot = {
+  __typename?: 'CollectionSnapshot';
+  amount?: Maybe<Scalars['Int']>;
+  amountUnique?: Maybe<Scalars['Int']>;
+  amountUniqueVersions?: Maybe<Scalars['Int']>;
+  date: Scalars['String'];
+  missingPriceEur?: Maybe<Scalars['Int']>;
+  value?: Maybe<Scalars['Int']>;
+  valueEur?: Maybe<Scalars['Int']>;
+};
+
+export type EdhRecData = {
+  __typename?: 'EDHRecData';
+  cardLists: Array<EdhRecCategory>;
+  themes: Array<EdhRecTheme>;
+};
+
+export type EdhRecCategory = {
+  __typename?: 'EDHRecCategory';
+  cards?: Maybe<Array<EdhRecCard>>;
+  key: Scalars['String'];
+  title: Scalars['String'];
+};
 
 export type EdhRecCard = {
   __typename?: 'EDHRecCard';
   id: Scalars['String'];
   imgKey: Scalars['String'];
   name: Scalars['String'];
-  priceUsd?: Maybe<Scalars['Float']>;
-  priceEur?: Maybe<Scalars['Float']>;
-  synergy?: Maybe<Scalars['Float']>;
   owned: Scalars['Boolean'];
-};
-
-export type EdhRecCategory = {
-  __typename?: 'EDHRecCategory';
-  cards?: Maybe<Array<EdhRecCard>>;
-  title: Scalars['String'];
-  key: Scalars['String'];
-};
-
-export type EdhRecData = {
-  __typename?: 'EDHRecData';
-  themes: Array<EdhRecTheme>;
-  cardLists: Array<EdhRecCategory>;
+  priceEur?: Maybe<Scalars['Float']>;
+  priceUsd?: Maybe<Scalars['Float']>;
+  synergy?: Maybe<Scalars['Float']>;
 };
 
 export type EdhRecTheme = {
   __typename?: 'EDHRecTheme';
+  count: Scalars['Int'];
   title: Scalars['String'];
   urlSuffix: Scalars['String'];
-  count: Scalars['Int'];
-};
-
-export type EditDeckCardInput = {
-  id?: Maybe<Scalars['String']>;
-  amount?: Maybe<Scalars['Int']>;
-  isCommander?: Maybe<Scalars['Boolean']>;
-  tags?: Maybe<Array<Scalars['String']>>;
-};
-
-export type EditDeckFieldsInput = {
-  name?: Maybe<Scalars['String']>;
-  imgSrc?: Maybe<Scalars['String']>;
-};
-
-export type EditWantsListCardInput = {
-  id?: Maybe<Scalars['String']>;
-  amount?: Maybe<Scalars['Int']>;
-};
-
-export type EditWantsListFieldsInput = {
-  name?: Maybe<Scalars['String']>;
-};
-
-export type ImageUris = {
-  __typename?: 'ImageUris';
-  small?: Maybe<Scalars['String']>;
-  normal?: Maybe<Scalars['String']>;
-  art_crop?: Maybe<Scalars['String']>;
-};
-
-export type Legalities = {
-  __typename?: 'Legalities';
-  standard?: Maybe<Scalars['String']>;
-  modern?: Maybe<Scalars['String']>;
-  commander?: Maybe<Scalars['String']>;
-};
-
-export type LoginResponse = {
-  __typename?: 'LoginResponse';
-  session: Scalars['String'];
-  user: User;
 };
 
 export type LtPlayer = {
   __typename?: 'LTPlayer';
-  name: Scalars['String'];
-  img?: Maybe<Scalars['String']>;
   color?: Maybe<Scalars['String']>;
+  img?: Maybe<Scalars['String']>;
   lastEdit?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
 };
 
-export type MoveCardInputType = {
+export type PaginatedCollection = {
+  __typename?: 'PaginatedCollection';
+  cards: Array<CollectionCard>;
+  hasMore: Scalars['Boolean'];
+  nextOffset?: Maybe<Scalars['Int']>;
+  search?: Maybe<Scalars['String']>;
+  totalResults: Scalars['Int'];
+};
+
+export type CollectionCard = {
+  __typename?: 'CollectionCard';
+  card: Card;
+  createdAt: Scalars['String'];
   id: Scalars['String'];
-  type: MoveToNameType;
 };
 
-export type MoveCardListType = WantsList | Deck;
-
-export type MoveCardReturnType = {
-  __typename?: 'MoveCardReturnType';
-  from: MoveCardListType;
-  to: MoveCardListType;
-};
-
-export enum MoveToNameType {
-  Deck = 'DECK',
-  WantsList = 'WANTS_LIST',
+export enum Currency {
+  Eur = 'Eur',
+  EurFoil = 'EurFoil',
+  Usd = 'Usd',
+  UsdFoil = 'UsdFoil',
 }
+
+export type PriceDevelopment = {
+  __typename?: 'PriceDevelopment';
+  date: Scalars['String'];
+  price?: Maybe<Scalars['Float']>;
+};
+
+export type ProxyCard = {
+  __typename?: 'ProxyCard';
+  amount?: Maybe<Scalars['Int']>;
+  id: Scalars['String'];
+  imgKey: Scalars['String'];
+  isTwoFaced: Scalars['Boolean'];
+  name: Scalars['String'];
+};
+
+export type Token = {
+  __typename?: 'Token';
+  id: Scalars['String'];
+  imgKey: Scalars['String'];
+  isTwoFaced: Scalars['Boolean'];
+  name: Scalars['String'];
+};
+
+export type User = {
+  __typename?: 'User';
+  avatar: Scalars['String'];
+  email: Scalars['String'];
+  featureFlags?: Maybe<Array<Maybe<Scalars['String']>>>;
+  id: Scalars['String'];
+  name: Scalars['String'];
+  username?: Maybe<Scalars['String']>;
+};
+
+export type WantedCards = {
+  __typename?: 'WantedCards';
+  decks: Array<Maybe<WantedCardsList>>;
+  wantsLists: Array<Maybe<WantedCardsList>>;
+};
+
+export type WantedCardsList = {
+  __typename?: 'WantedCardsList';
+  cards: Array<WantedCard>;
+  id: Scalars['String'];
+  imgSrc?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+export type WantedCard = {
+  __typename?: 'WantedCard';
+  id: Scalars['String'];
+  imgKey: Scalars['String'];
+  name: Scalars['String'];
+  oracle_id: Scalars['String'];
+};
 
 export type Mutation = {
   __typename?: 'Mutation';
-  setUsername: User;
-  createDeck: Deck;
   addCardsToDeck: Deck;
-  editDeck: Deck;
-  editDeckCard: DeckCard;
-  setCommander: Deck;
-  deleteDeck?: Maybe<Scalars['Boolean']>;
-  deleteFromDeck: Deck;
-  duplicateDeck: Scalars['String'];
-  changeDeckVisibility: Deck;
-  changeDeckStatus: Deck;
+  addCardsToWantsList: Array<WantsListCard>;
   addTagsToCards: Array<DeckCard>;
-  moveCard: MoveCardReturnType;
   addToCollection: Array<CollectionCard>;
   changeCollection?: Maybe<CollectionCard>;
-  deleteFromCollection?: Maybe<Scalars['Boolean']>;
-  deleteAllFromCollection?: Maybe<Scalars['Boolean']>;
   changeCollectionVisibility: Collection;
-  login: LoginResponse;
-  logout?: Maybe<Scalars['Boolean']>;
+  changeDeckStatus: Deck;
+  changeDeckVisibility: Deck;
+  changeWantsListVisibility: WantsList;
+  createDeck: Deck;
   createWantsList: WantsList;
+  deleteAllFromCollection?: Maybe<Scalars['Boolean']>;
+  deleteDeck?: Maybe<Scalars['Boolean']>;
+  deleteFromCollection?: Maybe<Scalars['Boolean']>;
+  deleteFromDeck: Deck;
+  deleteFromWantsList: WantsList;
+  deleteLtPlayer?: Maybe<Scalars['Boolean']>;
+  deleteWantsList: Scalars['Boolean'];
+  duplicateDeck: Scalars['String'];
+  duplicateWantsList: WantsList;
+  editDeck: Deck;
+  editDeckCard: DeckCard;
   editWantsList: WantsList;
   editWantsListCard: WantsListCard;
-  deleteFromWantsList: WantsList;
-  deleteWantsList: Scalars['Boolean'];
-  duplicateWantsList: WantsList;
-  addCardsToWantsList: Array<WantsListCard>;
   linkWantsList: WantsList;
-  unlinkWantsList: WantsList;
-  changeWantsListVisibility: WantsList;
-  updateLtPlayer: LtPlayer;
-  deleteLtPlayer?: Maybe<Scalars['Boolean']>;
+  login: LoginResponse;
+  logout?: Maybe<Scalars['Boolean']>;
+  moveCard: MoveCardReturnType;
+  setCommander: Deck;
   setDefaultTags?: Maybe<Scalars['Boolean']>;
-};
-
-export type MutationSetUsernameArgs = {
-  username: Scalars['String'];
+  setUsername: User;
+  unlinkWantsList: WantsList;
+  updateLtPlayer: LtPlayer;
 };
 
 export type MutationAddCardsToDeckArgs = {
-  deckId: Scalars['String'];
-  deckName?: Maybe<Scalars['String']>;
   cards: Array<CardInputType>;
+  deckId: Scalars['String'];
+  deckName?: InputMaybe<Scalars['String']>;
+};
+
+export type MutationAddCardsToWantsListArgs = {
+  cards: Array<CardInputType>;
+  wantsListId: Scalars['String'];
+  wantsListName?: InputMaybe<Scalars['String']>;
+};
+
+export type MutationAddTagsToCardsArgs = {
+  cardIds: Array<Scalars['String']>;
+  deckId: Scalars['String'];
+  tags: Array<Scalars['String']>;
+};
+
+export type MutationAddToCollectionArgs = {
+  cards: Array<InputMaybe<CardInputType>>;
+};
+
+export type MutationChangeCollectionArgs = {
+  added?: InputMaybe<Array<ChangeCollectionInput>>;
+  cardId?: InputMaybe<Scalars['String']>;
+  cardOracleId: Scalars['String'];
+  deleted?: InputMaybe<Array<Scalars['String']>>;
+  edited?: InputMaybe<Array<ChangeCollectionInput>>;
+};
+
+export type MutationChangeCollectionVisibilityArgs = {
+  visibility: Visibility;
+};
+
+export type MutationChangeDeckStatusArgs = {
+  deckId: Scalars['String'];
+  status: DeckStatus;
+};
+
+export type MutationChangeDeckVisibilityArgs = {
+  deckId: Scalars['String'];
+  visibility: Visibility;
+};
+
+export type MutationChangeWantsListVisibilityArgs = {
+  visibility: Visibility;
+  wantsListId: Scalars['String'];
+};
+
+export type MutationCreateWantsListArgs = {
+  deckId?: InputMaybe<Scalars['String']>;
+};
+
+export type MutationDeleteAllFromCollectionArgs = {
+  oracleIds: Array<Scalars['String']>;
+};
+
+export type MutationDeleteDeckArgs = {
+  deckId: Scalars['String'];
+};
+
+export type MutationDeleteFromCollectionArgs = {
+  cardIds: Array<InputMaybe<Scalars['String']>>;
+};
+
+export type MutationDeleteFromDeckArgs = {
+  cardId?: InputMaybe<Scalars['String']>;
+  cardIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  deckId: Scalars['String'];
+};
+
+export type MutationDeleteFromWantsListArgs = {
+  oracleIds: Array<Scalars['String']>;
+  wantsListId: Scalars['String'];
+};
+
+export type MutationDeleteLtPlayerArgs = {
+  name: Scalars['String'];
+};
+
+export type MutationDeleteWantsListArgs = {
+  wantsListId: Scalars['String'];
+};
+
+export type MutationDuplicateDeckArgs = {
+  deckId: Scalars['String'];
+};
+
+export type MutationDuplicateWantsListArgs = {
+  wantsListId: Scalars['String'];
 };
 
 export type MutationEditDeckArgs = {
@@ -323,69 +588,20 @@ export type MutationEditDeckCardArgs = {
   newProps: EditDeckCardInput;
 };
 
-export type MutationSetCommanderArgs = {
-  cardIds: Array<Scalars['String']>;
-  deckId: Scalars['String'];
+export type MutationEditWantsListArgs = {
+  newProperties: EditWantsListFieldsInput;
+  wantsListId: Scalars['String'];
 };
 
-export type MutationDeleteDeckArgs = {
-  deckId: Scalars['String'];
-};
-
-export type MutationDeleteFromDeckArgs = {
-  cardId?: Maybe<Scalars['String']>;
-  cardIds?: Maybe<Array<Maybe<Scalars['String']>>>;
-  deckId: Scalars['String'];
-};
-
-export type MutationDuplicateDeckArgs = {
-  deckId: Scalars['String'];
-};
-
-export type MutationChangeDeckVisibilityArgs = {
-  deckId: Scalars['String'];
-  visibility: Visibility;
-};
-
-export type MutationChangeDeckStatusArgs = {
-  deckId: Scalars['String'];
-  status: DeckStatus;
-};
-
-export type MutationAddTagsToCardsArgs = {
-  deckId: Scalars['String'];
-  tags: Array<Scalars['String']>;
-  cardIds: Array<Scalars['String']>;
-};
-
-export type MutationMoveCardArgs = {
+export type MutationEditWantsListCardArgs = {
   cardId: Scalars['String'];
-  from: MoveCardInputType;
-  to: MoveCardInputType;
+  newProps: EditWantsListCardInput;
+  wantsListId: Scalars['String'];
 };
 
-export type MutationAddToCollectionArgs = {
-  cards: Array<Maybe<CardInputType>>;
-};
-
-export type MutationChangeCollectionArgs = {
-  cardOracleId: Scalars['String'];
-  added?: Maybe<Array<ChangeCollectionInput>>;
-  edited?: Maybe<Array<ChangeCollectionInput>>;
-  deleted?: Maybe<Array<Scalars['String']>>;
-  cardId?: Maybe<Scalars['String']>;
-};
-
-export type MutationDeleteFromCollectionArgs = {
-  cardIds: Array<Maybe<Scalars['String']>>;
-};
-
-export type MutationDeleteAllFromCollectionArgs = {
-  oracleIds: Array<Scalars['String']>;
-};
-
-export type MutationChangeCollectionVisibilityArgs = {
-  visibility: Visibility;
+export type MutationLinkWantsListArgs = {
+  deckId: Scalars['String'];
+  wantsListId: Scalars['String'];
 };
 
 export type MutationLoginArgs = {
@@ -396,306 +612,98 @@ export type MutationLogoutArgs = {
   sessionId: Scalars['String'];
 };
 
-export type MutationCreateWantsListArgs = {
-  deckId?: Maybe<Scalars['String']>;
-};
-
-export type MutationEditWantsListArgs = {
-  wantsListId: Scalars['String'];
-  newProperties: EditWantsListFieldsInput;
-};
-
-export type MutationEditWantsListCardArgs = {
+export type MutationMoveCardArgs = {
   cardId: Scalars['String'];
-  wantsListId: Scalars['String'];
-  newProps: EditWantsListCardInput;
+  from: MoveCardInputType;
+  to: MoveCardInputType;
 };
 
-export type MutationDeleteFromWantsListArgs = {
-  oracleIds: Array<Scalars['String']>;
-  wantsListId: Scalars['String'];
-};
-
-export type MutationDeleteWantsListArgs = {
-  wantsListId: Scalars['String'];
-};
-
-export type MutationDuplicateWantsListArgs = {
-  wantsListId: Scalars['String'];
-};
-
-export type MutationAddCardsToWantsListArgs = {
-  wantsListId: Scalars['String'];
-  wantsListName?: Maybe<Scalars['String']>;
-  cards: Array<CardInputType>;
-};
-
-export type MutationLinkWantsListArgs = {
-  wantsListId: Scalars['String'];
+export type MutationSetCommanderArgs = {
+  cardIds: Array<Scalars['String']>;
   deckId: Scalars['String'];
+};
+
+export type MutationSetDefaultTagsArgs = {
+  oracleId: Scalars['String'];
+  tags: Array<Scalars['String']>;
+};
+
+export type MutationSetUsernameArgs = {
+  username: Scalars['String'];
 };
 
 export type MutationUnlinkWantsListArgs = {
   wantsListId: Scalars['String'];
 };
 
-export type MutationChangeWantsListVisibilityArgs = {
-  wantsListId: Scalars['String'];
-  visibility: Visibility;
-};
-
 export type MutationUpdateLtPlayerArgs = {
-  name: Scalars['String'];
-  img?: Maybe<Scalars['String']>;
-  color?: Maybe<Scalars['String']>;
-};
-
-export type MutationDeleteLtPlayerArgs = {
+  color?: InputMaybe<Scalars['String']>;
+  img?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
 };
 
-export type MutationSetDefaultTagsArgs = {
-  tags: Array<Scalars['String']>;
-  oracleId: Scalars['String'];
-};
-
-export type OracleCard = {
-  __typename?: 'OracleCard';
-  _id: Scalars['String'];
-  sumPriceUsd?: Maybe<Scalars['Float']>;
-  sumPriceEur?: Maybe<Scalars['Float']>;
-  minPriceUsd: Scalars['Float'];
-  minPriceEur: Scalars['Float'];
-  allSets: Array<Card>;
-  owned: Scalars['Boolean'];
-  totalAmount: Scalars['Int'];
-  isCommanderLegal: Scalars['Boolean'];
-  primaryTypes: Array<Scalars['String']>;
-  subTypes: Array<Scalars['String']>;
-  containingDecks: Array<Deck>;
-  containingWantsLists: Array<ContainingList>;
-};
-
-export type PaginatedCards = {
-  __typename?: 'PaginatedCards';
-  hasMore: Scalars['Boolean'];
-  nextOffset?: Maybe<Scalars['Int']>;
-  totalResults: Scalars['Int'];
-  cards: Array<Card>;
-};
-
-export type PaginatedCollection = {
-  __typename?: 'PaginatedCollection';
-  hasMore: Scalars['Boolean'];
-  nextOffset?: Maybe<Scalars['Int']>;
-  search?: Maybe<Scalars['String']>;
-  totalResults: Scalars['Int'];
-  cards: Array<CollectionCard>;
-};
-
-export type PriceDevelopment = {
-  __typename?: 'PriceDevelopment';
-  date: Scalars['String'];
-  price?: Maybe<Scalars['Float']>;
-};
-
-export type Prices = {
-  __typename?: 'Prices';
-  eur?: Maybe<Scalars['String']>;
-  usd?: Maybe<Scalars['String']>;
-  eur_foil?: Maybe<Scalars['String']>;
-  usd_foil?: Maybe<Scalars['String']>;
-};
-
-export type ProxyCard = {
-  __typename?: 'ProxyCard';
+export type CardInputType = {
+  amount?: InputMaybe<Scalars['Int']>;
   id: Scalars['String'];
-  amount?: Maybe<Scalars['Int']>;
-  name: Scalars['String'];
-  imgKey: Scalars['String'];
-  isTwoFaced: Scalars['Boolean'];
+  isFoil?: InputMaybe<Scalars['Boolean']>;
 };
 
-export type PurchaseUris = {
-  __typename?: 'PurchaseUris';
-  tcgplayer?: Maybe<Scalars['String']>;
-  cardmarket?: Maybe<Scalars['String']>;
-};
-
-export type Query = {
-  __typename?: 'Query';
-  user?: Maybe<User>;
-  deck?: Maybe<Deck>;
-  decks: Array<Deck>;
-  collection: Collection;
-  paginatedCollection: PaginatedCollection;
-  ownedCardNames: Array<Scalars['String']>;
-  collectionSnapshots: Array<CollectionSnapshot>;
-  publicCollection?: Maybe<Array<CollectionCard>>;
-  wantedCards?: Maybe<WantedCards>;
-  card: Card;
-  cards: Array<Maybe<Card>>;
-  cardImages: Array<Maybe<Scalars['String']>>;
-  cardSearch: PaginatedCards;
-  cardByOracleId?: Maybe<Card>;
-  priceDevelopment: Array<PriceDevelopment>;
-  cardsBySet: Array<Card>;
-  numberOfCachedCards: Scalars['Int'];
-  cachedCards: Array<CachedCard>;
-  wantsList: WantsList;
-  wantsLists: Array<WantsList>;
-  proxies: Array<ProxyCard>;
-  tokens: Array<Token>;
-  allLists: AllLists;
-  tokenFinder: Array<Card>;
-  ltPlayers?: Maybe<Array<LtPlayer>>;
-  edhrecCards?: Maybe<EdhRecData>;
-};
-
-export type QueryDeckArgs = {
+export type ChangeCollectionInput = {
+  amountOwned?: InputMaybe<Scalars['Int']>;
+  amountOwnedFoil?: InputMaybe<Scalars['Int']>;
   id: Scalars['String'];
 };
 
-export type QueryPaginatedCollectionArgs = {
-  limit: Scalars['Int'];
-  offset: Scalars['Int'];
-  orderBy: Scalars['String'];
-  search?: Maybe<Scalars['String']>;
-  username?: Maybe<Scalars['String']>;
-  addedWithin?: Maybe<Scalars['Int']>;
+export type EditDeckFieldsInput = {
+  imgSrc?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
 };
 
-export type QueryPublicCollectionArgs = {
-  username: Scalars['String'];
+export type EditDeckCardInput = {
+  amount?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['String']>;
+  isCommander?: InputMaybe<Scalars['Boolean']>;
+  tags?: InputMaybe<Array<Scalars['String']>>;
 };
 
-export type QueryWantedCardsArgs = {
-  username: Scalars['String'];
+export type EditWantsListFieldsInput = {
+  name?: InputMaybe<Scalars['String']>;
 };
 
-export type QueryCardArgs = {
+export type EditWantsListCardInput = {
+  amount?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['String']>;
+};
+
+export type LoginResponse = {
+  __typename?: 'LoginResponse';
+  session: Scalars['String'];
+  user: User;
+};
+
+export type MoveCardInputType = {
   id: Scalars['String'];
+  type: MoveToNameType;
 };
 
-export type QueryCardsArgs = {
-  cardIds: Array<Maybe<Scalars['String']>>;
+export enum MoveToNameType {
+  Deck = 'DECK',
+  WantsList = 'WANTS_LIST',
+}
+
+export type MoveCardReturnType = {
+  __typename?: 'MoveCardReturnType';
+  from: MoveCardListType;
+  to: MoveCardListType;
 };
 
-export type QueryCardImagesArgs = {
-  cardId: Scalars['String'];
-};
-
-export type QueryCardSearchArgs = {
-  offset?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  options: CardsOptionsInput;
-};
-
-export type QueryCardByOracleIdArgs = {
-  oracle_id: Scalars['String'];
-};
-
-export type QueryPriceDevelopmentArgs = {
-  cardId: Scalars['String'];
-  currency: Currency;
-};
-
-export type QueryCardsBySetArgs = {
-  setKey: Scalars['String'];
-};
-
-export type QueryWantsListArgs = {
-  id: Scalars['String'];
-};
-
-export type QueryWantsListsArgs = {
-  deckId?: Maybe<Scalars['String']>;
-};
-
-export type QueryProxiesArgs = {
-  type: Scalars['String'];
-  value?: Maybe<Scalars['String']>;
-  filter?: Maybe<Scalars['String']>;
-};
-
-export type QueryEdhrecCardsArgs = {
-  names: Array<Scalars['String']>;
-  themeSuffix?: Maybe<Scalars['String']>;
-};
+export type MoveCardListType = Deck | WantsList;
 
 export type Set = {
   __typename?: 'Set';
-  id: Scalars['String'];
-  set: Scalars['String'];
-  prices: Prices;
-  image_uris?: Maybe<ImageUris>;
   card_faces?: Maybe<Array<CardFace>>;
-};
-
-export type Token = {
-  __typename?: 'Token';
   id: Scalars['String'];
-  name: Scalars['String'];
-  imgKey: Scalars['String'];
-  isTwoFaced: Scalars['Boolean'];
-};
-
-export type User = {
-  __typename?: 'User';
-  id: Scalars['String'];
-  name: Scalars['String'];
-  avatar: Scalars['String'];
-  email: Scalars['String'];
-  username?: Maybe<Scalars['String']>;
-  featureFlags?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-export enum Visibility {
-  Private = 'private',
-  Hidden = 'hidden',
-  Public = 'public',
-}
-
-export type WantedCard = {
-  __typename?: 'WantedCard';
-  id: Scalars['String'];
-  name: Scalars['String'];
-  imgKey: Scalars['String'];
-  oracle_id: Scalars['String'];
-};
-
-export type WantedCards = {
-  __typename?: 'WantedCards';
-  decks: Array<Maybe<WantedCardsList>>;
-  wantsLists: Array<Maybe<WantedCardsList>>;
-};
-
-export type WantedCardsList = {
-  __typename?: 'WantedCardsList';
-  id: Scalars['String'];
-  name: Scalars['String'];
-  imgSrc?: Maybe<Scalars['String']>;
-  cards: Array<WantedCard>;
-};
-
-export type WantsList = {
-  __typename?: 'WantsList';
-  id: Scalars['String'];
-  name: Scalars['String'];
-  lastEdit: Scalars['String'];
-  createdAt: Scalars['String'];
-  numberOfCards: Scalars['Int'];
-  deck?: Maybe<Deck>;
-  canEdit: Scalars['Boolean'];
-  visibility: Visibility;
-  cardPreviews?: Maybe<Array<Scalars['String']>>;
-  cards: Array<WantsListCard>;
-};
-
-export type WantsListCard = {
-  __typename?: 'WantsListCard';
-  id: Scalars['String'];
-  createdAt: Scalars['String'];
-  amount: Scalars['Int'];
-  card: Card;
+  image_uris?: Maybe<ImageUris>;
+  prices: Prices;
+  set: Scalars['String'];
 };
