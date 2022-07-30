@@ -11,11 +11,14 @@ const pad = num => {
   return num < 10 ? '0' + num : num;
 };
 
-const date = new Date();
-const currentDate = `${date.getFullYear()}.${pad(date.getMonth() + 1)}.${pad(
-  date.getDate()
-)}-${date.getHours()}:${date.getMinutes()}`;
-const fileName = `${backupDir}database-backup-${currentDate}.tar`;
+
+const getFilename = ()=> {
+  const date = new Date();
+  const currentDate = `${date.getFullYear()}.${pad(date.getMonth() + 1)}.${pad(
+    date.getDate()
+  )}-${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  return `${backupDir}database-backup-${currentDate}.tar`;
+}
 
 const backupDB = () => {
   if (process.env.NODE_ENV === 'development') {
@@ -26,6 +29,8 @@ const backupDB = () => {
     'Starting to backup DB',
     new Date().toLocaleString('de', { timeStyle: 'short', dateStyle: 'short' })
   );
+
+  const fileName = getFilename();
 
   return new Promise((resolve, reject) => {
     try {

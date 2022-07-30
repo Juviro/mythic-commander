@@ -2,8 +2,12 @@ import knex from '../database';
 import { updateScryfallCards } from './scryfall/updateScryfallCards';
 
 const deleteOldCards = async () => {
-  const query = `DELETE from cards WHERE to_date("lastUpdate"::TEXT,'YYYY-MM-DD')  < NOW() - INTERVAL '7 days';`;
-  return knex.raw(query);
+  try {
+    const query = `DELETE from cards WHERE to_date("lastUpdate"::TEXT,'YYYY-MM-DD')  < NOW() - INTERVAL '7 days';`;
+    return knex.raw(query);
+  } catch(e) {
+    console.error('Error deleting old cards:', e);
+  }
 };
 
 const updateCards = async () => {
