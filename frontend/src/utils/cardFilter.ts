@@ -26,50 +26,60 @@ export const filterByName = (cards: UnifiedCard[], searchString = ''): UnifiedCa
   });
 };
 
-const filterByColor = (colorString = '') => ({ color_identity }: UnifiedCard) => {
-  if (!color_identity) return true;
-  const [filteredColors] = colorString.match(/(w|u|b|r|g)+$/) || [''];
-  const isExclude = colorString.includes('-');
-  const isExact = colorString.includes('x');
+const filterByColor =
+  (colorString = '') =>
+  ({ color_identity }: UnifiedCard) => {
+    if (!color_identity) return true;
+    const [filteredColors] = colorString.match(/(w|u|b|r|g)+$/) || [''];
+    const isExclude = colorString.includes('-');
+    const isExact = colorString.includes('x');
 
-  const checkForColor = (color: string) =>
-    color && filteredColors.includes(color.toLowerCase());
-  const someMatches = !filteredColors || color_identity.some(checkForColor);
-  const onlySelected = !filteredColors.length
-    ? !color_identity.length
-    : color_identity.length && color_identity.every(checkForColor);
+    const checkForColor = (color: string) =>
+      color && filteredColors.includes(color.toLowerCase());
+    const someMatches = !filteredColors || color_identity.some(checkForColor);
+    const onlySelected = !filteredColors.length
+      ? !color_identity.length
+      : color_identity.length && color_identity.every(checkForColor);
 
-  const hasAllColors = filteredColors
-    .split('')
-    .every((cardColor) => color_identity.includes(cardColor.toUpperCase()));
+    const hasAllColors = filteredColors
+      .split('')
+      .every((cardColor) => color_identity.includes(cardColor.toUpperCase()));
 
-  if (isExact) return hasAllColors && onlySelected;
-  if (isExclude) return onlySelected;
-  return someMatches;
-};
+    if (isExact) return hasAllColors && onlySelected;
+    if (isExclude) return onlySelected;
+    return someMatches;
+  };
 
-const filterBySubType = (subType: string) => ({ subTypes }: UnifiedCard) => {
-  if (!subType) return true;
-  if (!subTypes) return false;
-  return subTypes.some((type) => type.toLowerCase() === subType.toLowerCase());
-};
+const filterBySubType =
+  (subType: string) =>
+  ({ subTypes }: UnifiedCard) => {
+    if (!subType) return true;
+    if (!subTypes) return false;
+    return subTypes.some((type) => type.toLowerCase() === subType.toLowerCase());
+  };
 
-const filterByCardType = (cardType: string) => ({ primaryTypes }: UnifiedCard) => {
-  if (!cardType) return true;
-  if (!primaryTypes) return false;
-  return primaryTypes.some((type) => type.toLowerCase() === cardType.toLowerCase());
-};
-const filterByLegendary = (isLegendary: string) => ({ primaryTypes }: UnifiedCard) => {
-  if (!isLegendary) return true;
-  if (!primaryTypes) return isLegendary === 'false';
-  const isCardLegendary = primaryTypes.includes('Legendary');
-  return isLegendary === 'true' ? isCardLegendary : !isCardLegendary;
-};
-const filterByAddedWithin = (addedWithin?: number) => ({ createdAt }: UnifiedCard) => {
-  if (!addedWithin || !createdAt) return true;
-  const spanInMillies = addedWithin * 60 * 60 * 1000;
-  return Date.now() - spanInMillies < Number(createdAt);
-};
+const filterByCardType =
+  (cardType: string) =>
+  ({ primaryTypes }: UnifiedCard) => {
+    if (!cardType) return true;
+    if (!primaryTypes) return false;
+    return primaryTypes.some((type) => type.toLowerCase() === cardType.toLowerCase());
+  };
+const filterByLegendary =
+  (isLegendary: string) =>
+  ({ primaryTypes }: UnifiedCard) => {
+    if (!isLegendary) return true;
+    if (!primaryTypes) return isLegendary === 'false';
+    const isCardLegendary = primaryTypes.includes('Legendary');
+    return isLegendary === 'true' ? isCardLegendary : !isCardLegendary;
+  };
+const filterByAddedWithin =
+  (addedWithin?: number) =>
+  ({ createdAt }: UnifiedCard) => {
+    if (!addedWithin || !createdAt) return true;
+    const spanInMillies = addedWithin * 60 * 60 * 1000;
+    return Date.now() - spanInMillies < Number(createdAt);
+  };
 
 interface FilterOptions {
   name?: string;
@@ -92,34 +102,36 @@ export const filterCards = (
     .filter(filterBySubType(subType));
 };
 
-export const sortCardsBySearch = (searchString = '') => (
-  { name: cardA, primary_variant: pvA }: UnifiedCard,
-  { name: cardB, primary_variant: pvB }: UnifiedCard
-) => {
-  if (cardA === cardB) {
-    if (pvA && !pvB) return 1;
-    if (pvB && !pvA) return -1;
-    return pvA ? pvA.localeCompare(pvB) : 0;
-  }
+export const sortCardsBySearch =
+  (searchString = '') =>
+  (
+    { name: cardA, primary_variant: pvA }: UnifiedCard,
+    { name: cardB, primary_variant: pvB }: UnifiedCard
+  ) => {
+    if (cardA === cardB) {
+      if (pvA && !pvB) return 1;
+      if (pvB && !pvA) return -1;
+      return pvA ? pvA.localeCompare(pvB) : 0;
+    }
 
-  const cleanSearch = trimName(searchString);
-  const cleanCardNameA = trimName(cardA);
-  const cleanCardNameB = trimName(cardB);
-  if (!cleanSearch) return cleanCardNameA > cleanCardNameB ? 1 : -1;
+    const cleanSearch = trimName(searchString);
+    const cleanCardNameA = trimName(cardA);
+    const cleanCardNameB = trimName(cardB);
+    if (!cleanSearch) return cleanCardNameA > cleanCardNameB ? 1 : -1;
 
-  if (cleanCardNameB === cleanSearch) return 1;
-  if (cleanCardNameA === cleanSearch) return -1;
-  if (cleanCardNameB.startsWith(cleanSearch)) return 1;
-  if (cleanCardNameA.startsWith(cleanSearch)) return -1;
-  if (cleanCardNameB.indexOf(cleanSearch) > 0) return 1;
-  if (cleanCardNameA.indexOf(cleanSearch) > 0) return -1;
-  if (cleanCardNameB[0] === cleanSearch[0]) return 1;
-  if (cleanCardNameA[0] === cleanSearch[0]) return -1;
-  if (cardA > cardB) return 1;
-  if (cardB > cardA) return -1;
+    if (cleanCardNameB === cleanSearch) return 1;
+    if (cleanCardNameA === cleanSearch) return -1;
+    if (cleanCardNameB.startsWith(cleanSearch)) return 1;
+    if (cleanCardNameA.startsWith(cleanSearch)) return -1;
+    if (cleanCardNameB.indexOf(cleanSearch) > 0) return 1;
+    if (cleanCardNameA.indexOf(cleanSearch) > 0) return -1;
+    if (cleanCardNameB[0] === cleanSearch[0]) return 1;
+    if (cleanCardNameA[0] === cleanSearch[0]) return -1;
+    if (cardA > cardB) return 1;
+    if (cardB > cardA) return -1;
 
-  return 0;
-};
+    return 0;
+  };
 
 export const filterAndSortByQuery = (cards, searchString) => {
   return filterByName(cards, searchString).sort(sortCardsBySearch(searchString));

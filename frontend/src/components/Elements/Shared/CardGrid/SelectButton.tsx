@@ -21,7 +21,6 @@ const StyledWrapper = styled.div<{ visible: boolean; isHovering: boolean }>`
 
   ${({ isHovering }) => isHovering && 'transform: scale(1.05);'}
 
-
   @media (min-width: ${MOBILE_SCREEN_SIZE}px) {
     top: 26px;
   }

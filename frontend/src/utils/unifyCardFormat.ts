@@ -25,5 +25,5 @@ export default <T extends ListCard>(cards: T[]): UnifiedCardType<T>[] => {
     return { ...rest, ...oracleCard, ...coreFields };
   });
 
-  return (unifiedCards as unknown) as UnifiedCardType<T>[];
+  return unifiedCards as unknown as UnifiedCardType<T>[];
 };

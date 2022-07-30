@@ -51,23 +51,20 @@ const renderPrice = (currency) => (cardPrice) => {
   );
 };
 
-const renderOwned = (isEditing, onChangeAmount, onSaveChanges, amountKey) => (
-  card,
-  _,
-  index
-) => {
-  const autoFocus = !index && amountKey === 'amountOwned';
-  return (
-    <EditableAmount
-      isEditing={isEditing}
-      onChangeAmount={onChangeAmount}
-      onPressEnter={onSaveChanges}
-      card={card}
-      autoFocus={autoFocus}
-      amountKey={amountKey}
-    />
-  );
-};
+const renderOwned =
+  (isEditing, onChangeAmount, onSaveChanges, amountKey) => (card, _, index) => {
+    const autoFocus = !index && amountKey === 'amountOwned';
+    return (
+      <EditableAmount
+        isEditing={isEditing}
+        onChangeAmount={onChangeAmount}
+        onPressEnter={onSaveChanges}
+        card={card}
+        autoFocus={autoFocus}
+        amountKey={amountKey}
+      />
+    );
+  };
 
 const sortByPrice = (priceKey) => (a, b) => {
   const getPrice = (card) =>

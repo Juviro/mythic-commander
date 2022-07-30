@@ -6,15 +6,13 @@ import { paginatedCollection } from './queries';
 import unifyCardFormat from '../../../../utils/unifyCardFormat';
 
 export default ({ children, username }) => {
-  const [
-    { page = 1, pageSize = 0, addedWithin, orderByAdvanced = '' },
-    setParams,
-  ] = useQueryParams({
-    page: NumberParam,
-    addedWithin: NumberParam,
-    pageSize: NumberParam,
-    orderByAdvanced: StringParam,
-  });
+  const [{ page = 1, pageSize = 0, addedWithin, orderByAdvanced = '' }, setParams] =
+    useQueryParams({
+      page: NumberParam,
+      addedWithin: NumberParam,
+      pageSize: NumberParam,
+      orderByAdvanced: StringParam,
+    });
   const [search, setSearch] = useState('');
   const offset = (page - 1) * pageSize;
   const [fetchCards, { called, data, loading }] = useLazyQuery(paginatedCollection, {

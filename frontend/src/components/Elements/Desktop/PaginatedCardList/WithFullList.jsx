@@ -3,16 +3,14 @@ import { useQueryParams, NumberParam, StringParam } from 'use-query-params';
 import { filterCards, sortCards } from '../../../../utils/cardFilter';
 
 export default ({ cards, search = '', children, ...props }) => {
-  const [
-    { page = 1, pageSize, orderByAdvanced, addedWithin },
-    setParams,
-  ] = useQueryParams({
-    page: NumberParam,
-    addedWithin: NumberParam,
-    pageSize: NumberParam,
-    orderByAdvanced: StringParam,
-    layout: StringParam,
-  });
+  const [{ page = 1, pageSize, orderByAdvanced, addedWithin }, setParams] =
+    useQueryParams({
+      page: NumberParam,
+      addedWithin: NumberParam,
+      pageSize: NumberParam,
+      orderByAdvanced: StringParam,
+      layout: StringParam,
+    });
 
   const offset = pageSize * (page - 1);
   const filteredCards = filterCards(cards, {

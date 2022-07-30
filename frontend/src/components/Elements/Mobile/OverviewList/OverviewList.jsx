@@ -120,9 +120,7 @@ const OverviewList = ({ addElementText, onAddElement, elements, onClick, header 
 
   const addElementComponent = onAddElement ? (
     <ListItem name={addElementText} onClick={onAddElement} image={<StyledAddIcon />} />
-  ) : (
-    undefined
-  );
+  ) : undefined;
 
   const dataSource = [addElementComponent, ...deckComponents].filter(Boolean);
 

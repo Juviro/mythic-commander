@@ -53,10 +53,7 @@ const retryLink = new RetryLink({
   },
 });
 
-const link = retryLink
-  .concat(errorLink)
-  .concat(authLink)
-  .concat(httpLink);
+const link = retryLink.concat(errorLink).concat(authLink).concat(httpLink);
 
 const cache = new InMemoryCache({
   addTypename: true,

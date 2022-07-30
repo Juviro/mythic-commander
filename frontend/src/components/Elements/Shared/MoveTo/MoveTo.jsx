@@ -13,29 +13,31 @@ export default ({ moveToList, onClose, card: { id: cardId, name: cardName } }) =
   const [mutate] = useMutation(moveCard);
   const [isMoving, toggleIsMoving] = useToggle();
 
-  const onMove = (targetType) => async ({ id: targetId, name: targetName }) => {
-    toggleIsMoving();
-    const { data } = await mutate({
-      variables: {
-        cardId,
-        from: {
-          id: originId,
-          type: originType,
+  const onMove =
+    (targetType) =>
+    async ({ id: targetId, name: targetName }) => {
+      toggleIsMoving();
+      const { data } = await mutate({
+        variables: {
+          cardId,
+          from: {
+            id: originId,
+            type: originType,
+          },
+          to: {
+            id: targetId,
+            type: targetType,
+          },
         },
-        to: {
-          id: targetId,
-          type: targetType,
-        },
-      },
-      errorPolicy: 'ignore',
-    });
-    const targetListName = targetType === 'DECK' ? 'the deck' : `<b>${targetName}</b>`;
+        errorPolicy: 'ignore',
+      });
+      const targetListName = targetType === 'DECK' ? 'the deck' : `<b>${targetName}</b>`;
 
-    if (data) {
-      message(`Moved <b>${cardName}</b> to ${targetListName}!`);
-      onClose();
-    }
-  };
+      if (data) {
+        message(`Moved <b>${cardName}</b> to ${targetListName}!`);
+        onClose();
+      }
+    };
 
   return (
     <>

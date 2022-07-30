@@ -25,15 +25,15 @@ export default styled.div`
           background-image: url(${img});
         `
       : ''}
-    ${({ isInfect }) =>
-      isInfect
-        ? css`
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: 0px 63%;
-            background-image: url(${POISON_IMAGE});
-          `
-        : ''}
+  ${({ isInfect }) =>
+    isInfect
+      ? css`
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: 0px 63%;
+          background-image: url(${POISON_IMAGE});
+        `
+      : ''}
   ${({ minWidth }) =>
     minWidth &&
     css`
