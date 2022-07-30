@@ -1,11 +1,11 @@
 import 'react-app-polyfill/stable';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Router, Route } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
 import { QueryParamProvider } from 'use-query-params';
 import { createBrowserHistory } from 'history';
+import { createRoot } from 'react-dom/client';
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -18,7 +18,10 @@ import { FocusContextProvider } from './components/Provider/FocusProvider';
 
 export const history = createBrowserHistory();
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+root.render(
   <ApolloProvider client={client}>
     <UserContextProvider>
       <FocusContextProvider>
@@ -31,6 +34,5 @@ ReactDOM.render(
         </CardContextProvider>
       </FocusContextProvider>
     </UserContextProvider>
-  </ApolloProvider>,
-  document.getElementById('root')
+  </ApolloProvider>
 );

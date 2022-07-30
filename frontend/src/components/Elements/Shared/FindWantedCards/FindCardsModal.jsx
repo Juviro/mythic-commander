@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal } from 'antd';
 import { useParams } from 'react-router';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from 'react-apollo';
 import { LoadingOutlined } from '@ant-design/icons';
 
 import { wantedCards as wantedCardsQuery } from './queries';

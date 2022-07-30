@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from 'react-apollo';
 
 import PageLayout from 'components/Elements/Desktop/PageLayout';
 import { UnifiedWantsList } from 'types/unifiedTypes';

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Modal, Input } from 'antd';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from 'react-apollo';
 import { pick } from 'lodash';
 import Flex from 'components/Elements/Shared/Flex';
 import Expander from 'components/Elements/Shared/Expander';
