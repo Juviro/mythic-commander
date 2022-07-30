@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { Typography, Divider, Space } from 'antd';
 import { LineChartOutlined } from '@ant-design/icons';
 

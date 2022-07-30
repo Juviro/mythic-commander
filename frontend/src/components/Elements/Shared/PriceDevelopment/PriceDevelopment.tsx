@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Divider } from 'antd';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
 
 import ValueChart from 'components/Elements/Shared/CollectionCharts/ValueChart';

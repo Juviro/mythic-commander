@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { User } from 'types/graphql';
 
 import { getUser } from './queries';

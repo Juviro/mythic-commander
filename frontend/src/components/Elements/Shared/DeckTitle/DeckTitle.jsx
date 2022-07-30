@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, message } from 'antd';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import styled from 'styled-components';
 import { editDeck } from './queries';
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Divider } from 'antd';
 import styled from 'styled-components';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import LayoutAndSortPicker from 'components/Elements/Shared/LayoutAndSortPicker';

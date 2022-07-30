@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 
 import { message, Typography } from 'antd';
 import UserContext from 'components/Provider/UserProvider';

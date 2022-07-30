@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 
 import { DisconnectOutlined } from '@ant-design/icons';
 import { unlinkWantsListDesktop } from './queries';

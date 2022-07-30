@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Affix, Divider } from 'antd';
 import { withRouter } from 'react-router';
-import { useApolloClient } from 'react-apollo';
+import { useApolloClient } from '@apollo/client';
 import { useQueryParams, StringParam } from 'use-query-params';
 
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';

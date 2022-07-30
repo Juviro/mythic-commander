@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 
 import { withRouter } from 'react-router';
 import { createLinkedWantsList, wantsListsForDeckMobile } from './queries';

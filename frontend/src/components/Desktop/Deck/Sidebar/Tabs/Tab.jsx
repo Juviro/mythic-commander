@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 
 import { addCardsToWantsList } from 'components/Desktop/Deck/Sidebar/DeckWants/queries';
 import { wantsListDesktop } from 'components/Desktop/WantsList/queries';

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Select } from 'antd';
 import styled from 'styled-components';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 
 import CardContext from '../../../Provider/CardProvider';
 import { allCardSets as allCardSetsQuery } from './queries';

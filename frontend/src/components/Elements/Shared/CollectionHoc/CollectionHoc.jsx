@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useQueryParams, NumberParam, StringParam } from 'use-query-params';
-import { useLazyQuery } from 'react-apollo';
+import { useLazyQuery } from '@apollo/client';
 
 import { paginatedCollection } from './queries';
 import unifyCardFormat from '../../../../utils/unifyCardFormat';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, message } from 'antd';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 
 import { RouteComponentProps, withRouter } from 'react-router';
 import { DeleteOutlined } from '@ant-design/icons';

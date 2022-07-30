@@ -1,6 +1,6 @@
 import React from 'react';
 import { Skeleton, Divider } from 'antd';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 
 import styled from 'styled-components';
 import Flex from 'components/Elements/Shared/Flex';

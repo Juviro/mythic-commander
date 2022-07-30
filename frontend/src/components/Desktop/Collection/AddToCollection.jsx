@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 
 import MultiInput from 'components/Elements/Desktop/AddCards/MultIinput';
 import AddCards from 'components/Elements/Desktop/AddCards';

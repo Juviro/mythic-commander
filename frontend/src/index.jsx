@@ -2,7 +2,7 @@ import 'react-app-polyfill/stable';
 
 import React from 'react';
 import { Router, Route } from 'react-router-dom';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/client';
 import { QueryParamProvider } from 'use-query-params';
 import { createBrowserHistory } from 'history';
 import { createRoot } from 'react-dom/client';

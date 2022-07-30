@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation, useQuery } from 'react-apollo';
+import { useMutation, useQuery } from '@apollo/client';
 
 import { withRouter } from 'react-router';
 import Flex from '../../Flex';

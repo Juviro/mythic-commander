@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { LinkOutlined, LoadingOutlined } from '@ant-design/icons';
 import { Typography, Modal, List } from 'antd';
-import { useQuery, useMutation } from 'react-apollo';
+import { useQuery, useMutation } from '@apollo/client';
 
 import { useToggle } from '../../../Hooks';
 import message from '../../../../utils/message';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, useParams } from 'react-router';
 import styled from 'styled-components';
-import { useMutation, useQuery } from 'react-apollo';
+import { useMutation, useQuery } from '@apollo/client';
 import { Skeleton } from 'antd';
 
 import message from 'utils/message';

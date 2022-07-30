@@ -1,5 +1,5 @@
 import { createLinkedWantsList } from 'components/Mobile/Deck/LinkedWants/queries';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { MutationCreateWantsListArgs } from 'types/graphql';
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { getDeckDesktop } from '../../queries';

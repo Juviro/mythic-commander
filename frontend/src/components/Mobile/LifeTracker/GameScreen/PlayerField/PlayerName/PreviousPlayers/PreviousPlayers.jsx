@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { List, Divider } from 'antd';
 import UserContext from 'components/Provider/UserProvider';
 import { ltPlayers } from './queries';

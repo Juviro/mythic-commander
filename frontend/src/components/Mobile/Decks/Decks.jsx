@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Spin } from 'antd';
 import styled from 'styled-components';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 
 import UserContext from 'components/Provider/UserProvider';
 import { LoginRequired } from 'components/Elements/Shared/LoginRequired/LoginRequired';

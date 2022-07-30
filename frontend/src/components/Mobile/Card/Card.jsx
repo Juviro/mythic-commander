@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 
 import { useParams } from 'react-router';
 import { Divider } from 'antd';

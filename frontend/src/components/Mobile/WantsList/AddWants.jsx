@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { useParams } from 'react-router';
 import { addCardsToWantsList, wantsList } from './queries';
 import { AddCardMobile } from '../../Elements/Mobile';

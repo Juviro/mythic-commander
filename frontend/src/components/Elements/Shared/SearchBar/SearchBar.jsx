@@ -1,7 +1,7 @@
 import React, { useRef, useContext, useState } from 'react';
 import { Input, AutoComplete } from 'antd';
 import { withRouter } from 'react-router';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 
 import styled from 'styled-components';
 import { getOwnedCardNames } from '../../../../queries';

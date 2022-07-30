@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { useQuery, useMutation } from 'react-apollo';
+import { useQuery, useMutation } from '@apollo/client';
 import { StringParam, useQueryParam } from 'use-query-params';
 
 import { MutationAddCardsToDeckArgs, CardInputType, Query } from 'types/graphql';

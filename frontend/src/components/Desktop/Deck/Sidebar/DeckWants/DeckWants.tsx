@@ -1,7 +1,7 @@
 import React from 'react';
 import { Space } from 'antd';
 import styled from 'styled-components';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 
 import { CardInputType } from 'types/graphql';
 import { UnifiedCard, UnifiedDeck, UnifiedWantsList } from 'types/unifiedTypes';

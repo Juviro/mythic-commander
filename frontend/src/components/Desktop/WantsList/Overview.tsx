@@ -12,7 +12,7 @@ import {
   WantsListCard,
 } from 'types/graphql';
 
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 
 import { useParams } from 'react-router';
 import { UnifiedWantsList } from 'types/unifiedTypes';

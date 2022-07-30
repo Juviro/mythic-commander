@@ -1,7 +1,7 @@
 import React from 'react';
 import GoogleLogin from 'react-google-login';
 import styled from 'styled-components';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import message from 'utils/message';
 import { useHistory } from 'react-router';
 import { login } from './queries';

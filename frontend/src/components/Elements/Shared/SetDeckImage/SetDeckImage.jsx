@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Select, message } from 'antd';
 import styled from 'styled-components';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 
 import { editDeckImage } from './queries';
 import { getImageUrl } from '../../../../utils/cardImage';

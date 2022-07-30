@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { withRouter } from 'react-router';
-import { useQuery, useMutation } from 'react-apollo';
+import { useQuery, useMutation } from '@apollo/client';
 
 import UserContext from 'components/Provider/UserProvider';
 import { LoginRequired } from 'components/Elements/Shared/LoginRequired/LoginRequired';

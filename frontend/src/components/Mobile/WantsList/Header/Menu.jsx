@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import { Dropdown, Menu, Popconfirm } from 'antd';
 import { withRouter } from 'react-router';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import UserContext from 'components/Provider/UserProvider';
 import WantsListVisibility from 'components/Elements/Shared/Visibility/WantsListVisibility';
 import { deleteWantsList, duplicateWantsList, unlinkWantsList } from '../queries';

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useQueryParams, NumberParam, StringParam } from 'use-query-params';
-import { useApolloClient } from 'react-apollo';
+import { useApolloClient } from '@apollo/client';
 
 import { cardSearch } from './queries';
 import { useToggle, useStoredQueryParam } from '../../../Hooks';
