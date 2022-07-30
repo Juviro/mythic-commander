@@ -143,8 +143,9 @@ export const sortByName = (cards, direction = 'asc') => {
   return direction === 'asc' ? sortedCards : sortedCards.reverse();
 };
 
-const sortByPrice = (cards, direction = 'asc') => {
-  const sortedCards = cards.sort((a, b) => a.minPriceUsd - b.minPriceUsd);
+const sortByPrice = (cards, direction = 'asc', isEur = false) => {
+  const priceKey = isEur ? 'minPriceEur' : 'minPriceUsd';
+  const sortedCards = cards.sort((a, b) => a[priceKey] - b[priceKey]);
 
   return direction === 'asc' ? sortedCards : sortedCards.reverse();
 };
@@ -192,7 +193,10 @@ export const sortCards = (cards, orderBy = '') => {
     case 'name':
       return sortByName(cards, direction);
     case 'price':
+    case 'priceUsd':
       return sortByPrice(cards, direction);
+    case 'priceEur':
+      return sortByPrice(cards, direction, true);
     case 'color':
       return sortByColor(cards, direction);
     case 'amount':
