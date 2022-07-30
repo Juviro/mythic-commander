@@ -58,7 +58,7 @@ export default ({
             className="flippable-card "
             style={{
               opacity,
-              transform: transform.interpolate((t) => `${t} rotateY(-180deg)`),
+              transform: transform.to((t) => `${t} rotateY(-180deg)`),
             }}
             src={getImageUrl(id, imgKey, 'normal', 'back')}
           />
@@ -71,7 +71,7 @@ export default ({
           style={
             isTwoFaced
               ? {
-                  opacity: opacity.interpolate((o: number) => 1 - o),
+                  opacity: opacity.to((o: number) => 1 - o),
                   transform,
                 }
               : undefined

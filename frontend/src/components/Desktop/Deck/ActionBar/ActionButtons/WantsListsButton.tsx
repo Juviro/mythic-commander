@@ -115,7 +115,7 @@ export const WantsListsButton = ({ deck, currentTabId, setCurrentTabId }: Props)
       {({ canDrop }) => (
         <Dropdown
           overlay={menu}
-          placement="topCenter"
+          placement="top"
           visible={isHoveringButton || isHoveringMenu || (canDrop && !currentTabId)}
           // @ts-ignore
           onMouseEnter={() => setIsHoveringButton(true)}
