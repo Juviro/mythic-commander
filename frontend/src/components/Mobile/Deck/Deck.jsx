@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
-import { useQuery, useMutation } from 'react-apollo';
+import { useQuery, useMutation } from '@apollo/client';
 
 import NotFound from 'components/Elements/Shared/NotFound';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';

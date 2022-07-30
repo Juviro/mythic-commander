@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Modal, Typography, Input } from 'antd';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 
 import UserContext from 'components/Provider/UserProvider';
 import keyCodes from 'constants/keyCodes';

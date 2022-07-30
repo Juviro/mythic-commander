@@ -1,5 +1,5 @@
-import React from 'react';
-import { useQuery } from 'react-apollo';
+import React, { useMemo } from 'react';
+import { useQuery } from '@apollo/client';
 import { User } from 'types/graphql';
 
 import { getUser } from './queries';
@@ -23,11 +23,17 @@ export const UserContextProvider = ({ children }) => {
     return Boolean(data?.user?.featureFlags?.includes(flag));
   };
 
-  return (
-    <UserContext.Provider value={{ user: data?.user, loading, error, hasFeatureFlag }}>
-      {children}
-    </UserContext.Provider>
+  const value = useMemo(
+    () => ({
+      user: data?.user,
+      loading,
+      error,
+      hasFeatureFlag,
+    }),
+    [data?.user]
   );
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
 export default UserContext;

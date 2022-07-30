@@ -20,6 +20,10 @@ export const getPrimaryType = (primaryTypes: string[]) => {
   })[0];
 };
 
+const labelFormatter = (manaValue: string) => (
+  <Typography.Text strong> {`Mana Value ${manaValue}`}</Typography.Text>
+);
+
 export const DeckCmc = ({ deck }: Props) => {
   const manaValues = deck.cards
     // The integer check if for pretty much one card,
@@ -90,11 +94,7 @@ export const DeckCmc = ({ deck }: Props) => {
           }}
         >
           <XAxis dataKey="cmc" />
-          <Tooltip
-            labelFormatter={(manaValue) => (
-              <Typography.Text strong> {`Mana Value ${manaValue}`}</Typography.Text>
-            )}
-          />
+          <Tooltip labelFormatter={labelFormatter} />
           {CARD_TYPE_DECK_ORDER.map((type) => (
             <Bar
               key={type}

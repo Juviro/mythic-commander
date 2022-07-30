@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery } from '@apollo/client';
 
 import SelectFilter from 'components/Elements/Shared/Filter/SelectFilter/SelectFilter';
 import CardContext from '../../../../Provider/CardProvider';

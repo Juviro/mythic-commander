@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 
 import { getListStats } from 'utils/getListStats';
 import { lightText } from 'constants/colors';

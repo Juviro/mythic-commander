@@ -18,19 +18,21 @@ const addColor = (currentColors, newColor) => {
     .join('');
 };
 
-const getColorTagProps = (invert) => ({ isSelected }) => {
-  const showSelectedStyle = invert ? !isSelected : isSelected;
-  return showSelectedStyle
-    ? `
+const getColorTagProps =
+  (invert) =>
+  ({ isSelected }) => {
+    const showSelectedStyle = invert ? !isSelected : isSelected;
+    return showSelectedStyle
+      ? `
         border: 2px solid #b37c00;
         filter: none;
       `
-    : `
+      : `
         border: 1px solid #333333;
         filter: grayscale(100%);
         opacity: 0.5;
       `;
-};
+  };
 
 const StyledColorTag = styled.img`
   width: 25px;

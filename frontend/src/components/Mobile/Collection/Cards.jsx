@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation, useQuery } from 'react-apollo';
+import { useMutation, useQuery } from '@apollo/client';
 import { useQueryParams, StringParam } from 'use-query-params';
 import { useParams } from 'react-router';
 import { Input, Divider } from 'antd';

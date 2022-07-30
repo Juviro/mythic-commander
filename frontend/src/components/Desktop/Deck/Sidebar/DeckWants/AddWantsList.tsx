@@ -1,7 +1,7 @@
 import React from 'react';
 import { Space, Typography } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { useParams } from 'react-router';
 import styled from 'styled-components';
 

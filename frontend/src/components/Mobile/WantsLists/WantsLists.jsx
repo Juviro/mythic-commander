@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Spin } from 'antd';
 import styled from 'styled-components';
 import { partition } from 'lodash';
-import { useQuery, useMutation } from 'react-apollo';
+import { useQuery, useMutation } from '@apollo/client';
 
 import { withRouter } from 'react-router';
 import UserContext from 'components/Provider/UserProvider';

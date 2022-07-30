@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Space } from 'antd';
 import styled from 'styled-components';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { GRID_CARD_WIDTH } from 'components/Elements/Shared/CardGrid/CardGrid';

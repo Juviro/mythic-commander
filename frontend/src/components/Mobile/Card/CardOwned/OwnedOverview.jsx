@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Divider, message } from 'antd';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 
 import { SaveOutlined } from '@ant-design/icons';
 import EditIcon from 'components/Elements/Shared/EditIcon';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from 'antd';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { LogoutOutlined } from '@ant-design/icons';
 
 import { useHistory } from 'react-router';

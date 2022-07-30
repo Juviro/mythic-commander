@@ -29,7 +29,7 @@ export default ({ symbol, size = 18, margin = 0 }) => {
   }
 
   const src = colorIcons[plainSymbol];
-  if (!src) return <>{`{${plainSymbol}}`}</>;
+  if (!src) return `{${plainSymbol}}`;
 
   return (
     <StyledColorTag src={src} size={size} alt={`{${plainSymbol}}`} style={{ margin }} />

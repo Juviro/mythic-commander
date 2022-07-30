@@ -1,5 +1,5 @@
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloClient } from 'apollo-client';
+import { ApolloClient } from '@apollo/client';
 import { setContext } from 'apollo-link-context';
 import { onError } from 'apollo-link-error';
 import { HttpLink } from 'apollo-link-http';
@@ -53,10 +53,7 @@ const retryLink = new RetryLink({
   },
 });
 
-const link = retryLink
-  .concat(errorLink)
-  .concat(authLink)
-  .concat(httpLink);
+const link = retryLink.concat(errorLink).concat(authLink).concat(httpLink);
 
 const cache = new InMemoryCache({
   addTypename: true,

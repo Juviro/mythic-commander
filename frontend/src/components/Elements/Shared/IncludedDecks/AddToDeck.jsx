@@ -1,6 +1,6 @@
 import React from 'react';
 import { Select, Typography } from 'antd';
-import { useQuery, useMutation } from 'react-apollo';
+import { useQuery, useMutation } from '@apollo/client';
 
 import message from '../../../../utils/message';
 import { getCardByOracleId } from '../../../Mobile/Card/queries';

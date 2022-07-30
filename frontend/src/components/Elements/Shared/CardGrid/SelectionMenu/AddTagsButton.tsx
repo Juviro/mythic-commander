@@ -1,6 +1,6 @@
 import React from 'react';
 import { TagOutlined } from '@ant-design/icons';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 
 import AddTagsPopover from 'components/Elements/Shared/Tags/AddTagsPopover';
 import { MutationAddTagsToCardsArgs } from 'types/graphql';

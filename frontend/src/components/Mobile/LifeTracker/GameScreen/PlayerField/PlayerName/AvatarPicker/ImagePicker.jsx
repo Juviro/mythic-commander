@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useContext } from 'react';
-import { useLazyQuery } from 'react-apollo';
+import { useLazyQuery } from '@apollo/client';
 
 import Flex from 'components/Elements/Shared/Flex';
 import CardSearch from 'components/Elements/Shared/CardSearch';

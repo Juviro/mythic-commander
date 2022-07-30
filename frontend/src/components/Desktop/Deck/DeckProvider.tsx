@@ -1,5 +1,5 @@
 import { useToggle } from 'components/Hooks';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 const DeckContext = React.createContext<{
   isSidebarOpen: boolean;
@@ -12,11 +12,9 @@ const DeckContext = React.createContext<{
 export const DeckContextProvider = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useToggle();
 
-  return (
-    <DeckContext.Provider value={{ isSidebarOpen, setIsSidebarOpen }}>
-      {children}
-    </DeckContext.Provider>
-  );
+  const value = useMemo(() => ({ isSidebarOpen, setIsSidebarOpen }), [isSidebarOpen]);
+
+  return <DeckContext.Provider value={value}>{children}</DeckContext.Provider>;
 };
 
 export default DeckContext;

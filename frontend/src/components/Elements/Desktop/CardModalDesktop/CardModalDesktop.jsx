@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { NavigationButton } from 'components/Elements/Desktop/CardModalDesktop/NavigationButton';
 import Flex from 'components/Elements/Shared/Flex';
 import FocusedModal from 'components/Elements/Shared/FocusedModal';

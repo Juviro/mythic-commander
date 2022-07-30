@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tag } from 'antd';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import styled, { css } from 'styled-components';
 import { DeckStatus as DeckStatusType } from 'types/graphql';
 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useMutation } from 'react-apollo';
+import { useMutation, useQuery } from '@apollo/client';
 
-import { useQuery } from '@apollo/react-hooks';
 import { withRouter } from 'react-router';
 import Flex from '../../Flex';
 import { addCardsToDeckDesktop } from '../../../../Desktop/Deck/queries';

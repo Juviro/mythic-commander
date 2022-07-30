@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 
 import { OverviewList } from '../../Elements/Mobile';
 import { createDeck as createDeckMutation, getDecks } from '../../../queries';

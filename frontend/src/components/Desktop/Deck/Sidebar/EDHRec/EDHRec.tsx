@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { QueryEdhrecCardsArgs, Query } from 'types/graphql';
 import { Divider, Empty } from 'antd';

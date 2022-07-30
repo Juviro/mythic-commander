@@ -23,7 +23,9 @@ const renderSet = (card) => {
 };
 
 const renderPrice = (currency) => (cardPrice) => {
+  // eslint-disable-next-line react/destructuring-assignment
   const price = cardPrice[currency];
+  // eslint-disable-next-line react/destructuring-assignment
   const foilPrice = cardPrice[`${currency}_foil`];
 
   const foilPriceLabel = getPriceLabel(foilPrice, { currency });
@@ -51,23 +53,20 @@ const renderPrice = (currency) => (cardPrice) => {
   );
 };
 
-const renderOwned = (isEditing, onChangeAmount, onSaveChanges, amountKey) => (
-  card,
-  _,
-  index
-) => {
-  const autoFocus = !index && amountKey === 'amountOwned';
-  return (
-    <EditableAmount
-      isEditing={isEditing}
-      onChangeAmount={onChangeAmount}
-      onPressEnter={onSaveChanges}
-      card={card}
-      autoFocus={autoFocus}
-      amountKey={amountKey}
-    />
-  );
-};
+const renderOwned =
+  (isEditing, onChangeAmount, onSaveChanges, amountKey) => (card, _, index) => {
+    const autoFocus = !index && amountKey === 'amountOwned';
+    return (
+      <EditableAmount
+        isEditing={isEditing}
+        onChangeAmount={onChangeAmount}
+        onPressEnter={onSaveChanges}
+        card={card}
+        autoFocus={autoFocus}
+        amountKey={amountKey}
+      />
+    );
+  };
 
 const sortByPrice = (priceKey) => (a, b) => {
   const getPrice = (card) =>

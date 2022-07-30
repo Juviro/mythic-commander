@@ -11,7 +11,7 @@ const StyledOuter = styled.div`
   display: flex;
   justify-content: center;
   position: fixed;
-  z-index: 101;
+  z-index: 1001;
   bottom: 0;
   right: 0;
   left: 0;

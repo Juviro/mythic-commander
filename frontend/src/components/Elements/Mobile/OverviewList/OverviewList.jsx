@@ -88,13 +88,11 @@ const ListItem = ({
     >
       <List.Item.Meta
         title={
-          <>
-            <Left>
-              <Typography.Text ellipsis strong style={{ fontSize: 16, maxWidth: '100%' }}>
-                {name}
-              </Typography.Text>
-            </Left>
-          </>
+          <Left>
+            <Typography.Text ellipsis strong style={{ fontSize: 16, maxWidth: '100%' }}>
+              {name}
+            </Typography.Text>
+          </Left>
         }
         avatar={getImage()}
         description={description}
@@ -120,9 +118,7 @@ const OverviewList = ({ addElementText, onAddElement, elements, onClick, header 
 
   const addElementComponent = onAddElement ? (
     <ListItem name={addElementText} onClick={onAddElement} image={<StyledAddIcon />} />
-  ) : (
-    undefined
-  );
+  ) : undefined;
 
   const dataSource = [addElementComponent, ...deckComponents].filter(Boolean);
 

@@ -108,14 +108,6 @@ export default class CardSearch extends React.Component {
     this.setState({ searchString });
   };
 
-  focus = () => {
-    this.inputRef.current.focus();
-  };
-
-  blur = () => {
-    this.inputRef.current.blur();
-  };
-
   onSubmit = (idAndName, suggestions) => {
     const [id, name] = idAndName.split(';');
     const card = suggestions.find(({ id: cardId }) => id === cardId);

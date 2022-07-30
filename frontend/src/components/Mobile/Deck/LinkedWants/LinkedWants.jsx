@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { Typography } from 'antd';
 
 import CustomSkeleton from 'components/Elements/Shared/CustomSkeleton';

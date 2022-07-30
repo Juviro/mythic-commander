@@ -103,13 +103,8 @@ const CardGrid = ({
 }: PropsWithRouterProps) => {
   const [detailCardIndex, setDetailCardIndex] = useState<number | null>(null);
   const detailCard = cards?.[detailCardIndex];
-  const {
-    selectedCardIds,
-    onSelectCard,
-    onClearSelection,
-    onSelectAll,
-    canSelectAll,
-  } = useSelectCards(cards);
+  const { selectedCardIds, onSelectCard, onClearSelection, onSelectAll, canSelectAll } =
+    useSelectCards(cards);
 
   const setDetailCard = (card: UnifiedCard) => {
     const cardIndex = cards.findIndex(({ id }) => id === card.id);

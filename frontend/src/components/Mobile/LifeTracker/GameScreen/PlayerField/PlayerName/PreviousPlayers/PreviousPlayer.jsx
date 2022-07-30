@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, List } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 
 import Flex from 'components/Elements/Shared/Flex';
 import Avatar from '../Avatar';

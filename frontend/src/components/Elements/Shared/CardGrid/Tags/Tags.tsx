@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { UnifiedDeckCard } from 'types/unifiedTypes';
 import DEFAULT_TAGS from 'constants/tags';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { MutationSetDefaultTagsArgs } from 'types/graphql';
 import { AddTagButton } from './AddTagButton';
 import Tag from '../../Tags/Tag';

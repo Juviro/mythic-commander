@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import useFeatureFlag from 'components/Elements/Shared/FeatureFlag/useFeatureFlag';
 import { FEATURE_FLAG_DEBUG } from 'constants/featureFlags';
 import { getCollectionFromCache } from './cardCache';
@@ -39,19 +39,18 @@ export const CardContextProvider = ({ children }) => {
     // eslint-disable-next-line
   }, [debug]);
 
-  return (
-    <CardContext.Provider
-      value={{
-        cardNames,
-        cards,
-        subTypes,
-        sets,
-        cardTypes: CARD_TYPES,
-      }}
-    >
-      {children}
-    </CardContext.Provider>
+  const value = useMemo(
+    () => ({
+      cardNames,
+      cards,
+      subTypes,
+      sets,
+      cardTypes: CARD_TYPES,
+    }),
+    [cards?.length, cardNames?.length, subTypes?.length, sets?.length]
   );
+
+  return <CardContext.Provider value={value}>{children}</CardContext.Provider>;
 };
 
 export default CardContext;

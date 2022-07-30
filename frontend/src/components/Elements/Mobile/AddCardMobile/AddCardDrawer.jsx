@@ -1,7 +1,7 @@
 import React from 'react';
 import { Drawer } from 'antd';
 
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import CardSearch from '../../Shared/CardSearch';
 import { getOwnedCardNames } from '../../../../queries';
 

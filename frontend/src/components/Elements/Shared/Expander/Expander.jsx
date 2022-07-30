@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
-import { setTimeout } from 'timers';
 
 const ANIMATION_DURATION_MS = 300;
 

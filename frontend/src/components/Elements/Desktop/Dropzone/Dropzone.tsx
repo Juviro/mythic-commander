@@ -30,13 +30,8 @@ const StyledDropzone = styled.div<DropzoneProps>`
   ${dropZoneStyle}
 `;
 
-interface DropCard {
-  id: string;
-  name: string;
-}
-
 interface Props {
-  children: React.ReactNode;
+  children: any;
   listId?: string;
   onDrop?: (card: DragObjectWithType) => void;
   style?: React.CSSProperties;

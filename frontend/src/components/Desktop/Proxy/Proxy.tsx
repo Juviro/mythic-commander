@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Button } from 'antd';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { PrinterOutlined } from '@ant-design/icons';
 import { useQueryParams, StringParam } from 'use-query-params';
 

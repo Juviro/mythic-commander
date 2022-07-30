@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import EditableTitle from 'components/Elements/Shared/EditableTitle';
 import { editWantsList } from './queries';
 

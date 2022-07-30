@@ -1,6 +1,6 @@
 import UserContext from 'components/Provider/UserProvider';
 import React, { useContext } from 'react';
-import { useMutation, useQuery } from 'react-apollo';
+import { useMutation, useQuery } from '@apollo/client';
 
 import { changeCollectionVisibility, collectionVisibility } from './queries';
 import Visibility from './Visibility';

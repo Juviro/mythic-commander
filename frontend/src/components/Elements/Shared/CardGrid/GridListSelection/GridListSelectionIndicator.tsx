@@ -24,7 +24,7 @@ const calcPosition = (type: string) => {
   const element = document.getElementById(`indicator-${type}`);
   const width = element?.getBoundingClientRect().width;
   const left = element?.getBoundingClientRect().left;
-  const top = element?.getBoundingClientRect().top + 32;
+  const top = element?.getBoundingClientRect().top || 0 + 32;
 
   return { left, width, top };
 };

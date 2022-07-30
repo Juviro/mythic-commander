@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 
 import { Tooltip } from 'antd';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import CardSearch from '../../Shared/CardSearch';
 import { useShortcut } from '../../../Hooks';
 import { getOwnedCardNames } from '../../../../queries';
