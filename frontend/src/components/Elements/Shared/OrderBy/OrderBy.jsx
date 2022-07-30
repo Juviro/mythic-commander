@@ -21,12 +21,20 @@ const DEFAULT_FILTER = [
     value: 'name-desc',
   },
   {
-    label: 'Price (lowest first)',
-    value: 'price-asc',
+    label: 'Price € (lowest first)',
+    value: 'priceEur-asc',
   },
   {
-    label: 'Price (highest first)',
-    value: 'price-desc',
+    label: 'Price € (highest first)',
+    value: 'priceEur-desc',
+  },
+  {
+    label: 'Price $ (lowest first)',
+    value: 'priceUsd-asc',
+  },
+  {
+    label: 'Price $ (highest first)',
+    value: 'priceUsd-desc',
   },
   {
     label: 'Mana costs (lowest first)',

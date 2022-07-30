@@ -37,8 +37,11 @@ const addOwnedClause = (q, userId, isOwned) => {
 export const getOrderColumn = (orderBy, useCreatedAt = true) => {
   switch (orderBy) {
     case '':
-    case 'price':
-      return "coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float), 0)";
+    case 'priceEur':
+      return "coalesce(LEAST((prices->>'eur')::float, (prices->>'eur_foil')::float, (prices->>'eur_etched')::float), 0)";
+    case 'price': // Legacy support
+    case 'priceUsd':
+      return "coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float, (prices->>'usd_etched')::float), 0)";
     case 'added':
       return useCreatedAt ? '"createdAt"' : 'released_at';
     case 'amount':
