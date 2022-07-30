@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 import { useDrag } from 'react-dnd';
 
 import { primary } from 'constants/colors';
-import { FEATURE_FLAG_TAG } from 'constants/featureFlags';
 import EnlargeImage from './EnlargeImage';
 import { useToggle } from '../../../Hooks';
 import CardInfo from './CardInfo';
@@ -11,7 +10,6 @@ import Card from '../Card';
 import { CardMenu } from './CardMenu';
 import { SelectButton } from './SelectButton';
 import { Tags } from './Tags/Tags';
-import FeatureFlag from '../FeatureFlag';
 
 export const StyledCenterWrapper = styled.div<{ fixedSize: boolean }>`
   width: 100%;
@@ -172,9 +170,7 @@ const GridCard = ({
         )}
       </StyledImageWrapper>
       <CardInfo card={card} search={search} minimal={minimal} />
-      <FeatureFlag flag={FEATURE_FLAG_TAG}>
-        {onSetTags && <Tags onSetTags={onSetTags} card={card} allTags={allTags} />}
-      </FeatureFlag>
+      {onSetTags && <Tags onSetTags={onSetTags} card={card} allTags={allTags} />}
     </StyledCardWrapper>
   );
 };

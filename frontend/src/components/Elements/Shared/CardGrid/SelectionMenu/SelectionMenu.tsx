@@ -15,7 +15,6 @@ import { buttonHoverBackground } from 'constants/colors';
 import UserContext from 'components/Provider/UserProvider';
 import AddTagsButton from 'components/Elements/Shared/CardGrid/SelectionMenu/AddTagsButton';
 import { UnifiedCard } from 'types/unifiedTypes';
-import { FEATURE_FLAG_TAG } from 'constants/featureFlags';
 import { getProxyUrl } from 'utils/getProxyUrl';
 import DesktopTooltip from '../../../Desktop/DesktopTooltip';
 import Menu from '../../Menu';
@@ -74,7 +73,7 @@ export const SelectionMenu = ({
   allTags,
   allCards,
 }: Props) => {
-  const { user, hasFeatureFlag } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   if (!selectedCardIds.length) return null;
 
   const isSmall = smallSelectionMenu || isMobile();
@@ -88,7 +87,7 @@ export const SelectionMenu = ({
       onClick: onSelectAll,
     });
   }
-  if (!isMobile() && allTags && hasFeatureFlag(FEATURE_FLAG_TAG)) {
+  if (!isMobile() && allTags) {
     actions.push({
       icon: (
         <AddTagsButton
