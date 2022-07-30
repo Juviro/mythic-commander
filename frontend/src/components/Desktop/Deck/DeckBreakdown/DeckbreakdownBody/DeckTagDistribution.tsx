@@ -31,6 +31,7 @@ const tickFormatter =
     fill,
     verticalAnchor: _verticalAnchor,
     visibleTicksCount: _visibleTicksCount,
+    tickFormatter: _tickFormatter,
     ...props
   }) => {
     const { tag, amount } = data[index];
