@@ -105,52 +105,50 @@ const Search = ({ history }) => {
   const isFilterResettable = Object.values(currentOptions).some(Boolean);
 
   return (
-    <>
-      <StyledWrapper>
-        <Header />
-        <Divider />
-        <Filter
-          headerText="Advanced"
+    <StyledWrapper>
+      <Header />
+      <Divider />
+      <Filter
+        headerText="Advanced"
+        onSearch={onSearch}
+        onChangeOption={onChangeOption}
+        options={currentOptions}
+      />
+      <LayoutAndSortPicker />
+      <div ref={scrollRef} />
+      <Affix offsetBottom={0} onChange={setIsButtonAffixed} style={{ width: '100%' }}>
+        <SearchButton
+          buttonRef={buttonRef}
           onSearch={onSearch}
-          onChangeOption={onChangeOption}
-          options={currentOptions}
+          loading={loading}
+          isAffixed={isButtonAffixed}
+          onResetOptions={onResetOptions}
+          isFilterResettable={isFilterResettable}
+          wrapperStyle={{ height: 32 }}
+          style={{
+            height: isButtonAffixed ? 40 : 32,
+            // prevent height change to be animated
+            // while keeping transitions for hover etc
+            transition: 'all 0.3s, height 0ms',
+          }}
         />
-        <LayoutAndSortPicker />
-        <div ref={scrollRef} />
-        <Affix offsetBottom={0} onChange={setIsButtonAffixed} style={{ width: '100%' }}>
-          <SearchButton
-            buttonRef={buttonRef}
-            onSearch={onSearch}
+      </Affix>
+      {isSearching && (
+        <>
+          <Divider />
+          <CardList
+            showTotalResults
+            cards={allCards}
+            hasMore={hasMore}
             loading={loading}
-            isAffixed={isButtonAffixed}
-            onResetOptions={onResetOptions}
-            isFilterResettable={isFilterResettable}
-            wrapperStyle={{ height: 32 }}
-            style={{
-              height: isButtonAffixed ? 40 : 32,
-              // prevent height change to be animated
-              // while keeping transitions for hover etc
-              transition: 'all 0.3s, height 0ms',
-            }}
+            totalResults={totalResults}
+            onLoadMore={onLoadMore}
+            isNewSearch={isNewSearch}
+            backTopStyle={isButtonAffixed ? { bottom: 45 } : null}
           />
-        </Affix>
-        {isSearching && (
-          <>
-            <Divider />
-            <CardList
-              showTotalResults
-              cards={allCards}
-              hasMore={hasMore}
-              loading={loading}
-              totalResults={totalResults}
-              onLoadMore={onLoadMore}
-              isNewSearch={isNewSearch}
-              backTopStyle={isButtonAffixed ? { bottom: 45 } : null}
-            />
-          </>
-        )}
-      </StyledWrapper>
-    </>
+        </>
+      )}
+    </StyledWrapper>
   );
 };
 

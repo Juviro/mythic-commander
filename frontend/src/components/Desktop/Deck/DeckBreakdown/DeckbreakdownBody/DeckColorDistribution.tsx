@@ -51,6 +51,13 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, outerRadius, name, value }) =
   );
 };
 
+const tooltipFormatter = (amount) => (
+  <>
+    <Typography.Text strong>{amount}</Typography.Text>
+    <Typography.Text> Color Symbols</Typography.Text>
+  </>
+);
+
 export const DeckColorDistribution = ({ deck }: Props) => {
   const colorDistribution = deck?.cards.reduce((acc, card) => {
     const { mana_cost, amount } = card;
@@ -89,15 +96,7 @@ export const DeckColorDistribution = ({ deck }: Props) => {
               <Cell key={name} fill={manaSymbolColors[getSymbolFromColor(name)]} />
             ))}
           </Pie>
-          <Tooltip
-            labelFormatter={() => 'cewfewf'}
-            formatter={(amount) => (
-              <>
-                <Typography.Text strong>{amount}</Typography.Text>
-                <Typography.Text> Color Symbols</Typography.Text>
-              </>
-            )}
-          />
+          <Tooltip labelFormatter={() => 'cewfewf'} formatter={tooltipFormatter} />
         </PieChart>
       </ResponsiveContainer>
     </DeckStat>

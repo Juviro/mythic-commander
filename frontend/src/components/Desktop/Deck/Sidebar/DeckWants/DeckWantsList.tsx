@@ -35,7 +35,7 @@ export default ({
 }: Props) => {
   const cardNames = deck?.cards.map(({ name }) => name);
   const alreadyInDeck = ({ name }) => cardNames?.includes(name);
-  const sortedCards = wantsList && sortByAdded([...wantsList?.cards]);
+  const sortedCards = wantsList && sortByAdded([...(wantsList?.cards || [])]);
 
   const [cardToAdd, setCardToAdd] = useState<UnifiedCard | null>(null);
 

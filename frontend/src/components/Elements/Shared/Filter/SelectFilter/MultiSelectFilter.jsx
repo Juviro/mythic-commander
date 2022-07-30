@@ -48,6 +48,24 @@ const renderOptions = (options, getPrefix, isGrouped) => {
   ));
 };
 
+const tagRender = (props) => {
+  const { label, closable, onClose } = props;
+
+  return (
+    <Tag
+      onMouseDown={(e) => e.stopPropagation()}
+      closable={closable}
+      onClose={onClose}
+      style={{ marginRight: 3 }}
+    >
+      {label[0]}
+      <Typography.Text ellipsis style={{ maxWidth: isMobile() ? 140 : 330 }}>
+        {label[1]}
+      </Typography.Text>
+    </Tag>
+  );
+};
+
 const MultiSelectFilter = ({
   onChange,
   options,
@@ -91,23 +109,7 @@ const MultiSelectFilter = ({
 
         return normalize(option.key).includes(normalize(input));
       }}
-      tagRender={(props) => {
-        const { label, closable, onClose } = props;
-
-        return (
-          <Tag
-            onMouseDown={(e) => e.stopPropagation()}
-            closable={closable}
-            onClose={onClose}
-            style={{ marginRight: 3 }}
-          >
-            {label[0]}
-            <Typography.Text ellipsis style={{ maxWidth: isMobile() ? 140 : 330 }}>
-              {label[1]}
-            </Typography.Text>
-          </Tag>
-        );
-      }}
+      tagRender={tagRender}
     >
       {renderOptions(unifiedOptions, getPrefix, isGrouped)}
     </Select>

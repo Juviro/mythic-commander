@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 const FocusContext = React.createContext({
   focusedElement: undefined,
@@ -28,19 +28,18 @@ export const FocusContextProvider = ({ children }) => {
     setFocusedElements(filteredElements);
   };
 
-  return (
-    <FocusContext.Provider
-      value={{
-        focusedElement,
-        focusedElements,
-        addFocus,
-        removeFocus,
-        setFocus: setFocusedElements,
-      }}
-    >
-      {children}
-    </FocusContext.Provider>
+  const value = useMemo(
+    () => ({
+      focusedElement,
+      focusedElements,
+      addFocus,
+      removeFocus,
+      setFocus: setFocusedElements,
+    }),
+    [focusedElement]
   );
+
+  return <FocusContext.Provider value={value}>{children}</FocusContext.Provider>;
 };
 
 export default FocusContext;

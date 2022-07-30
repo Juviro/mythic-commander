@@ -30,7 +30,7 @@ export const UserContextProvider = ({ children }) => {
       error,
       hasFeatureFlag,
     }),
-    []
+    [data?.user]
   );
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

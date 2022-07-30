@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import styled from 'styled-components';
 
 const StyledFullscreenModalContainer = styled.div`
@@ -11,12 +11,15 @@ const FullscreenModal = React.createContext({});
 export const FullscreenModalProvider = ({ children }) => {
   const containerRef = useRef(null);
 
+  const value = useMemo(
+    () => ({
+      getContainer: () => containerRef?.current,
+    }),
+    []
+  );
+
   return (
-    <FullscreenModal.Provider
-      value={{
-        getContainer: () => containerRef?.current,
-      }}
-    >
+    <FullscreenModal.Provider value={value}>
       <StyledFullscreenModalContainer ref={containerRef}>
         {children}
       </StyledFullscreenModalContainer>

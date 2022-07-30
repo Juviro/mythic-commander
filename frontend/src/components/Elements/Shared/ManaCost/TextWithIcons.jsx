@@ -9,12 +9,15 @@ const StyledWrapper = styled.div`
   margin: 8px 0 16px;
 `;
 
+const replacementFunction = (manaIcon) => <ManaSymbol symbol={manaIcon} size={14} />;
+const cursiveTextFunction = (cursiveText) => <i>{cursiveText}</i>;
+
 const TextWithIcons = ({ text }) => {
   const addIcon = (unreplacedText) => (
     <ReplaceText
       text={unreplacedText}
-      replacementPattern={new RegExp(/({[\w/]+}|^[+−]?[\dX]{1,2}:)/)}
-      replacementFunction={(manaIcon) => <ManaSymbol symbol={manaIcon} size={14} />}
+      replacementPattern={/({[\w/]+}|^[+−]?[\dX]{1,2}:)/}
+      replacementFunction={replacementFunction}
     />
   );
 
@@ -22,9 +25,9 @@ const TextWithIcons = ({ text }) => {
     <StyledWrapper>
       <ReplaceText
         text={text}
-        replacementPattern={new RegExp(/\(.*\)/)}
+        replacementPattern={/\(.*\)/}
         textFormatter={addIcon}
-        replacementFunction={(cursiveText) => <i>{cursiveText}</i>}
+        replacementFunction={cursiveTextFunction}
       />
     </StyledWrapper>
   );
