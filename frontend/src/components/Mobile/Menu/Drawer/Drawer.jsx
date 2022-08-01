@@ -19,6 +19,7 @@ export default ({ isVisible, onCloseDrawer }) => {
       onClose={onCloseDrawer}
       visible={isVisible}
       zIndex={1002}
+      width="auto"
       headerStyle={{
         backgroundColor: darkBackground,
         padding: 0,
