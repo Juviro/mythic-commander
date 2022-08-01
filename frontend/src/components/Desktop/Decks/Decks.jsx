@@ -6,12 +6,13 @@ import UserContext from 'components/Provider/UserProvider';
 import { LoginRequired } from 'components/Elements/Shared/LoginRequired/LoginRequired';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import { Button, Divider } from 'antd';
-import { DeckStatus } from 'types/graphql';
 import PageLayout from 'components/Elements/Desktop/PageLayout';
 import OverviewList, {
   OverviewListHeader,
 } from 'components/Elements/Desktop/OverviewList';
 import { getDecksDesktop, createDeckDesktop } from './queries';
+
+const DECK_STAUS = ['Active', 'Draft', 'Archived'];
 
 const Wants = ({ history }) => {
   const { data, loading } = useQuery(getDecksDesktop, {
@@ -83,14 +84,16 @@ const Wants = ({ history }) => {
           </Button>
         }
       />
-      {Object.entries(DeckStatus).map(([key, value]) => (
-        <React.Fragment key={key}>
-          <Divider orientation="left">{key}</Divider>
+      {DECK_STAUS.map((deckStatus) => (
+        <React.Fragment key={deckStatus}>
+          <Divider orientation="left">{deckStatus}</Divider>
           <OverviewList
             loading={loading}
-            lists={filteredDecks.filter(({ status }) => status === value)}
+            lists={filteredDecks.filter(
+              ({ status }) => status === deckStatus.toLowerCase()
+            )}
             onClick={onOpenDeck}
-            emptyText={`You don't have any ${key} decks yet`}
+            emptyText={`You don't have any ${deckStatus} decks yet`}
           />
         </React.Fragment>
       ))}
