@@ -29,7 +29,7 @@ export default () => {
   const { id } = useParams<{ id: string }>();
   const { data, loading } = useQuery<Query>(getDeckDesktop, {
     variables: { id },
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'cache-first',
   });
   const [mutate] = useMutation<any, MutationAddCardsToDeckArgs>(addCardsToDeckDesktop);
 
