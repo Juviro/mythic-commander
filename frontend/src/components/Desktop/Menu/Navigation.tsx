@@ -51,25 +51,25 @@ const StyledLink = styled(Link)`
 `;
 
 const Navigation = ({ location: { pathname } }: RouteComponentProps) => {
-  const { user } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
 
   const menuItems = [
     {
       title: 'Decks',
       href: '/my-decks',
       additionalPaths: ['/decks'],
-      hidden: !user,
+      hidden: !user && !loading,
     },
     {
       title: 'Wants',
       href: '/my-wants',
       additionalPaths: ['/wants'],
-      hidden: !user,
+      hidden: !user && !loading,
     },
     {
       title: 'Collection',
       href: '/collection',
-      hidden: !user,
+      hidden: !user && !loading,
     },
     {
       title: 'Advanced Search',
