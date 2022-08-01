@@ -19,7 +19,6 @@ export default ({ horizontal, showCharts }) => {
   const { data, loading } = useQuery(getCurrentSnapshot);
 
   const currentSnapshot = data?.collection.currentSnapshot ?? {};
-  currentSnapshot.dateLabel = 'Now';
   const referenceSnapshot = data?.collection.referenceSnapshot ?? {};
 
   const percentageMissingEur = Math.ceil(
@@ -78,7 +77,9 @@ export default ({ horizontal, showCharts }) => {
           </StyledCollectionStats>
         </>
       )}
-      {showCharts && <CollectionCharts currentSnapshot={currentSnapshot} />}
+      {showCharts && (
+        <CollectionCharts currentSnapshot={{ ...currentSnapshot, dateLabel: 'Now' }} />
+      )}
     </Flex>
   );
 };

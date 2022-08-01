@@ -1,5 +1,4 @@
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloClient } from '@apollo/client';
+import { InMemoryCache, ApolloClient } from '@apollo/client';
 import { setContext } from 'apollo-link-context';
 import { onError } from 'apollo-link-error';
 import { HttpLink } from 'apollo-link-http';
