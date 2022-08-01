@@ -11,17 +11,16 @@ const pad = num => {
   return num < 10 ? '0' + num : num;
 };
 
-
-const getFilename = ()=> {
+const getFilename = () => {
   const date = new Date();
   const currentDate = `${date.getFullYear()}.${pad(date.getMonth() + 1)}.${pad(
     date.getDate()
   )}-${pad(date.getHours())}:${pad(date.getMinutes())}`;
   return `${backupDir}database-backup-${currentDate}.tar`;
-}
+};
 
 const backupDB = () => {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'dev') {
     console.error('WRONG NODE_ENV FOR DB BACKUP');
     return;
   }
@@ -52,6 +51,8 @@ const backupDB = () => {
 };
 
 export const restore = () => {
+  const fileName = getFilename();
+
   execute(`pg_restore -cC -d ${database} ${fileName}`)
     .then(async () => {
       console.info('Restored');
