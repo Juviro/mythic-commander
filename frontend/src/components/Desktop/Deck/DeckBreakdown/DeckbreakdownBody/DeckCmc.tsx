@@ -12,14 +12,12 @@ interface Props {
 }
 
 export const getPrimaryType = (primaryTypes: string[]) => {
-  return [...primaryTypes]
-    .sort((a, b) => {
-      if (CARD_TYPE_DECK_ORDER.indexOf(a) === -1) return 1;
-      if (CARD_TYPE_DECK_ORDER.indexOf(b) === -1) return -1;
+  return [...primaryTypes].sort((a, b) => {
+    if (CARD_TYPE_DECK_ORDER.indexOf(a) === -1) return 1;
+    if (CARD_TYPE_DECK_ORDER.indexOf(b) === -1) return -1;
 
-      return CARD_TYPE_DECK_ORDER.indexOf(a) - CARD_TYPE_DECK_ORDER.indexOf(b);
-    })
-    .pop();
+    return CARD_TYPE_DECK_ORDER.indexOf(a) - CARD_TYPE_DECK_ORDER.indexOf(b);
+  })[0];
 };
 
 const labelFormatter = (manaValue: string) => (
