@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
 import Flex from 'components/Elements/Shared/Flex';
@@ -8,7 +8,6 @@ import { cardImages } from './queries';
 import FullscreenModalContext from '../../../../../../Provider/FullscreenModalProvider';
 
 const ImagePicker = ({ onPick, currentSelection }) => {
-  const searchInputRef = useRef(null);
   const { getContainer } = useContext(FullscreenModalContext);
   const [fetchImages, { called, data, loading }] = useLazyQuery(cardImages, {
     fetchPolicy: 'cache-first',
@@ -16,11 +15,9 @@ const ImagePicker = ({ onPick, currentSelection }) => {
 
   const onSearchCard = ({ id }) => {
     fetchImages({ variables: { cardId: id } });
-    searchInputRef.current.blur();
   };
 
   useEffect(() => {
-    searchInputRef.current.blur();
     const firstElement = data?.cardImages[0];
     if (loading || !firstElement) return;
 
@@ -35,7 +32,6 @@ const ImagePicker = ({ onPick, currentSelection }) => {
         width="100%"
         loading={loading}
         autoFocus={false}
-        ref={searchInputRef}
         getContainer={getContainer}
       />
       {called && (
