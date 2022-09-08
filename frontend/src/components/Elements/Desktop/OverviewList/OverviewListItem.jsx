@@ -7,8 +7,8 @@ import Cover from './Cover';
 import formatDate from '../../../../utils/formatDate';
 
 const Description = ({ list }) => (
-  <Flex direction="column">
-    <Flex justify="space-between">
+  <Space direction="vertical" size={4}>
+    <Space size={8} align="center">
       <Typography.Text>{`${list.numberOfCards} cards`}</Typography.Text>
       {list.colors && (
         <Space size={4} style={{ marginRight: 2 }}>
@@ -17,18 +17,14 @@ const Description = ({ list }) => (
           ))}
         </Space>
       )}
-    </Flex>
-    <Flex
-      direction="row"
-      justify="space-between"
-      style={{ fontStyle: 'italic', marginTop: 4 }}
-    >
+    </Space>
+    <Space size={4} direction="row" style={{ fontStyle: 'italic', marginTop: 4 }}>
       <Typography.Text type="secondary">Last edit:</Typography.Text>
       <Typography.Text type="secondary">
         {formatDate(list.lastEdit, true)}
       </Typography.Text>
-    </Flex>
-  </Flex>
+    </Space>
+  </Space>
 );
 
 export default ({ list, onClick }) => {
