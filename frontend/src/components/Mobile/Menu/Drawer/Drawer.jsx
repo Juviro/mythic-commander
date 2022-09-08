@@ -4,15 +4,29 @@ import { Drawer, Divider } from 'antd';
 import UserContext from 'components/Provider/UserProvider';
 import Logout from 'components/Elements/Shared/Logout';
 import UserAvatar from 'components/Elements/Shared/UserAvatar';
+import styled from 'styled-components';
 import Header from './Header';
 import Navigation from './Navigation';
 import { darkBackground } from '../../../../constants/colors';
+
+const StyledDrawer = styled(Drawer)`
+  .ant-drawer-header-title {
+    flex-direction: row-reverse;
+  }
+  .ant-drawer-close {
+    color: white;
+  }
+`;
+
+const StyledDivider = styled(Divider)`
+  margin: 16px 0px 8px !important;
+`;
 
 export default ({ isVisible, onCloseDrawer }) => {
   const { user } = useContext(UserContext);
 
   return (
-    <Drawer
+    <StyledDrawer
       title={<Header />}
       placement="left"
       closable
@@ -35,10 +49,10 @@ export default ({ isVisible, onCloseDrawer }) => {
     >
       <span>
         <UserAvatar textPosition="right" />
-        <Divider />
+        <StyledDivider />
         <Navigation onCloseDrawer={onCloseDrawer} />
       </span>
       {user && <Logout />}
-    </Drawer>
+    </StyledDrawer>
   );
 };
