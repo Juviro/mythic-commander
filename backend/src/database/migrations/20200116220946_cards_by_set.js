@@ -1,4 +1,4 @@
-export const up = async knex => {
+export const up = async (knex) => {
   await knex.schema.raw(`
   CREATE VIEW "cardsBySet" AS 
   SELECT oracle_id, ARRAY_AGG(DISTINCT CONCAT(set)) AS all_sets
@@ -6,7 +6,7 @@ export const up = async knex => {
   GROUP BY oracle_id; `);
 };
 
-export const down = async knex => {
+export const down = async (knex) => {
   await knex.schema.raw(`
     DROP VIEW "cardsBySet"
   `);

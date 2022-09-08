@@ -1,5 +1,5 @@
-export const up = async knex => {
-  await knex.schema.createTable('sessions', table => {
+export const up = async (knex) => {
+  await knex.schema.createTable('sessions', (table) => {
     table.increments();
     table
       .string('userId')
@@ -11,6 +11,6 @@ export const up = async knex => {
   });
 };
 
-export const down = async knex => {
+export const down = async (knex) => {
   await knex.schema.dropTable('sessions');
 };

@@ -23,7 +23,7 @@ const getFileName = (card, size = 'normal', face = 'front') => {
   return `${IMG_DIR}/${card.id}_${size}_${face}.avif`;
 };
 
-const doesFileExist = async filename => {
+const doesFileExist = async (filename) => {
   // eslint-disable-next-line no-sync
   return fs.existsSync(filename);
 };
@@ -39,7 +39,7 @@ const downloadImage = async (filename, url, size, alwayswUpdate = false) => {
 
   sharp(buffer)
     .resize(DIMENSIONS[size].width, DIMENSIONS[size].height)
-    .toFile(filename, err => {
+    .toFile(filename, (err) => {
       if (err) {
         console.error(err);
       }
@@ -71,7 +71,7 @@ const downloadAllImages = async (card, imageUris, face) => {
   );
 };
 
-const storeCardImage = async card => {
+const storeCardImage = async (card) => {
   if (!process.env.IMG_DIR) return;
 
   if (card.image_uris) {

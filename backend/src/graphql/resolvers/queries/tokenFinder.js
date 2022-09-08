@@ -2,7 +2,7 @@ import db from '../../../database';
 import { throwAuthError } from '../../../auth/authenticateUser';
 import { getTokenName } from './tokens';
 
-const tokenFinder = async userId => {
+const tokenFinder = async (userId) => {
   if (!userId) throwAuthError();
 
   const { rows: data } = await db.raw(
@@ -55,7 +55,7 @@ const tokenFinder = async userId => {
     `
   );
 
-  return tokens.map(token => ({
+  return tokens.map((token) => ({
     ...token,
     name: getTokenName(token),
   }));

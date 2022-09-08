@@ -53,7 +53,7 @@ export default (
     )
     .select(db.raw('*, count(*) OVER() AS "amountUnique"'))
     .from('grouped')
-    .where(q => {
+    .where((q) => {
       if (search) addNameClause(q, search);
     })
     .limit(limit)

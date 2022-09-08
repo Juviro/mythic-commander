@@ -28,9 +28,7 @@ const getUnownedDeckCards = async (
   ownedOracleIds
 ) => {
   const ownDeckIds = (
-    await db('decks')
-      .select('id')
-      .where({ userId: ownUserId })
+    await db('decks').select('id').where({ userId: ownUserId })
   ).map(({ id }) => id);
 
   return db('cardToDeckWithOracle')
@@ -58,9 +56,7 @@ const getUnownedWantsListCards = async (
   ownedOracleIds
 ) => {
   const ownWantsListIds = (
-    await db('wantsLists')
-      .select('id')
-      .where({ userId: ownUserId })
+    await db('wantsLists').select('id').where({ userId: ownUserId })
   ).map(({ id }) => id);
 
   return db('cardToWantsListWithOracle')

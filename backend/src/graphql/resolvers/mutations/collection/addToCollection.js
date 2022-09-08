@@ -11,9 +11,9 @@ const ON_CONFLICT = `
 export default async (_, { cards }, { user: { id: userId }, db }) => {
   const withoutDuplicates = cards
     .filter(
-      ({ id }, index) => index === cards.findIndex(card => card.id === id)
+      ({ id }, index) => index === cards.findIndex((card) => card.id === id)
     )
-    .map(card => ({ ...card, userId }));
+    .map((card) => ({ ...card, userId }));
 
   const withFoil = withoutDuplicates.map(({ amount, isFoil, ...rest }) => {
     if (!isFoil)
@@ -27,9 +27,7 @@ export default async (_, { cards }, { user: { id: userId }, db }) => {
     };
   });
 
-  const query = db('collection')
-    .insert(withFoil)
-    .toString();
+  const query = db('collection').insert(withFoil).toString();
 
   const { rows: newCardIds } = await db.raw(
     query + ON_CONFLICT + ' returning id'

@@ -1,5 +1,5 @@
-export const up = async knex => {
-  await knex.schema.alterTable('collection', table => {
+export const up = async (knex) => {
+  await knex.schema.alterTable('collection', (table) => {
     table.dropColumn('set');
     table.string('oracle_id');
     table.primary(['id', 'userId', 'isFoil']);
@@ -13,8 +13,8 @@ export const up = async knex => {
   `);
 };
 
-export const down = async knex => {
-  await knex.schema.alterTable('collection', table => {
+export const down = async (knex) => {
+  await knex.schema.alterTable('collection', (table) => {
     table.dropColumn('oracle_id');
     table.string('set');
     table.dropPrimary();

@@ -6,7 +6,7 @@ import {
 import { getImageKey } from './Card/helper';
 import tokenFinder from './tokenFinder';
 
-const addImgKey = card => ({
+const addImgKey = (card) => ({
   ...card,
   imgKey: getImageKey(card),
   isTwoFaced: !card.image_uris,
@@ -76,13 +76,13 @@ const getDeckProxies = async (id, filter, userId) => {
   return cards.map(addImgKey);
 };
 
-const getCardProxies = async cardIds => {
+const getCardProxies = async (cardIds) => {
   const cards = await db('cards').whereIn('id', cardIds.split(','));
 
   return cards.map(addImgKey);
 };
 
-const getTokens = async userId => {
+const getTokens = async (userId) => {
   const cards = await tokenFinder(userId);
   return cards.map(addImgKey);
 };

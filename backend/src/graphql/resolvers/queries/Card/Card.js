@@ -1,12 +1,12 @@
 import { getImageKey } from './helper';
 
-const getCard = db => async ({ id }) => {
-  const card = await db('cards')
-    .where({ id })
-    .first();
+const getCard =
+  (db) =>
+  async ({ id }) => {
+    const card = await db('cards').where({ id }).first();
 
-  return card;
-};
+    return card;
+  };
 
 const resolver = {
   oracleCard(card) {
@@ -17,7 +17,7 @@ const resolver = {
     if (!card_faces) return null;
 
     return card_faces
-      .map(cardFace => cardFace.oracle_text)
+      .map((cardFace) => cardFace.oracle_text)
       .join('\n<cardface>\n');
   },
   prices({ prices }) {
@@ -45,7 +45,7 @@ const resolver = {
   relatedCards({ all_parts, layout }, _, { db }) {
     if (!all_parts || layout === 'token') return null;
 
-    return Promise.all(all_parts.map(getCard(db))).then(parts =>
+    return Promise.all(all_parts.map(getCard(db))).then((parts) =>
       parts.filter(Boolean)
     );
   },

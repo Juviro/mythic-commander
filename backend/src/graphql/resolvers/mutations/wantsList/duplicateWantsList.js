@@ -34,7 +34,5 @@ export default async (_, { wantsListId }, { user: { id: userId }, db }) => {
     [newWantsListId, wantsListId]
   );
 
-  return db('wantsLists')
-    .where({ id: newWantsListId, userId })
-    .first();
+  return db('wantsLists').where({ id: newWantsListId, userId }).first();
 };

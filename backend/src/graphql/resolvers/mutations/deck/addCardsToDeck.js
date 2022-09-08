@@ -73,7 +73,5 @@ export default async (
 
   await updateLastEdit(deckId, db);
 
-  return db('decks')
-    .where({ id: deckId })
-    .first();
+  return db('decks').where({ id: deckId }).first();
 };

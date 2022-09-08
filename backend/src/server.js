@@ -37,7 +37,7 @@ export default new ApolloServer({
 
     return { ...context, user: user ?? {} };
   },
-  formatError: error => {
+  formatError: (error) => {
     console.error('error', error);
     return error;
   },

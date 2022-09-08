@@ -45,9 +45,7 @@ export default async (
   await Promise.all(promises);
 
   if (edited.length) {
-    await db('collection')
-      .where({ amount: 0, amountFoil: 0 })
-      .del();
+    await db('collection').where({ amount: 0, amountFoil: 0 }).del();
   }
 
   const updatedCards = await db('collection')

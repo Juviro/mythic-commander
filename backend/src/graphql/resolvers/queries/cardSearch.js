@@ -1,4 +1,4 @@
-const getColorProps = colorString => {
+const getColorProps = (colorString) => {
   const [filteredColors] = colorString.match(/(w|u|b|r|g)+$/) || [''];
   const excludeOtherColors = colorString.includes('-');
   const exactColors = colorString.includes('x');
@@ -67,7 +67,7 @@ const addRarityClause = (q, rarity) => {
   };
   const rarities = rarity
     .split('')
-    .map(letter => rarityMap[letter])
+    .map((letter) => rarityMap[letter])
     .filter(Boolean);
   q.whereIn('rarity', rarities);
 };
@@ -104,7 +104,7 @@ export default async (
 
   const tableName = sets?.length ? 'distinctCardsPerSet' : 'distinctCards';
 
-  const where = q => {
+  const where = (q) => {
     if (name) addNameClause(q, name);
     if (text) q.where('oracle_text', 'ILIKE', `%${text}%`);
     if (subTypes?.length) q.where('type_line', '~*', subTypes.join('|'));
@@ -131,10 +131,7 @@ export default async (
     .offset(offset)
     .orderByRaw(`${getOrderColumn(order, false)} ${direction.toUpperCase()}`);
 
-  const countQuery = db(tableName)
-    .where(where)
-    .count('*')
-    .first();
+  const countQuery = db(tableName).where(where).count('*').first();
 
   const cards = await cardQuery;
   const { count } = await countQuery;

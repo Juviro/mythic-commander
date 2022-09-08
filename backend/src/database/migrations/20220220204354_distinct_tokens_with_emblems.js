@@ -1,4 +1,4 @@
-export const up = async knex => {
+export const up = async (knex) => {
   await knex.schema.raw(`DROP MATERIALIZED VIEW "distinctTokens"`);
   await knex.schema.raw(`
       CREATE MATERIALIZED VIEW "distinctTokens" AS 

@@ -33,15 +33,11 @@ const resolver = {
     return cards.map(unifyCardFormat(deckId));
   },
   async numberOfCards({ id: deckId }, _, { db }) {
-    const [{ sum }] = await db('cardToDeck')
-      .sum('amount')
-      .where({ deckId });
+    const [{ sum }] = await db('cardToDeck').sum('amount').where({ deckId });
     return sum || 0;
   },
   wantsLists({ id: deckId }, _, { db }) {
-    return db('wantsLists')
-      .where({ deckId })
-      .orderBy('name');
+    return db('wantsLists').where({ deckId }).orderBy('name');
   },
   async colors({ id: deckId }, _, { db }) {
     const result = await db('deckColors')

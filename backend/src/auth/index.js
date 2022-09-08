@@ -22,7 +22,7 @@ export async function validateToken(token) {
   return { id, email, name, avatar };
 }
 
-export const getSession = userId => {
+export const getSession = (userId) => {
   const sessionId = randomBytes(30).toString('hex');
 
   const expires = new Date(Date.now() + TOKEN_EXPIRATION);

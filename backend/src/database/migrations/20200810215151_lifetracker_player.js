@@ -1,5 +1,5 @@
-export const up = async knex => {
-  await knex.schema.createTable('ltPlayers', table => {
+export const up = async (knex) => {
+  await knex.schema.createTable('ltPlayers', (table) => {
     table
       .string('userId')
       .notNullable()
@@ -15,6 +15,6 @@ export const up = async knex => {
   });
 };
 
-export const down = async knex => {
+export const down = async (knex) => {
   await knex.schema.dropTable('ltPlayers');
 };

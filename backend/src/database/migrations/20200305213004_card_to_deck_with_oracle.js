@@ -1,5 +1,5 @@
-export const up = async knex => {
-  await knex.schema.alterTable('cardToDeck', table => {
+export const up = async (knex) => {
+  await knex.schema.alterTable('cardToDeck', (table) => {
     table.dropColumn('oracle_id');
   });
 
@@ -13,10 +13,10 @@ export const up = async knex => {
         `);
 };
 
-export const down = async knex => {
+export const down = async (knex) => {
   await knex.schema.raw('DROP VIEW "cardToDeckWithOracle"');
 
-  await knex.schema.alterTable('cardToDeck', table => {
+  await knex.schema.alterTable('cardToDeck', (table) => {
     table.string('oracle_id');
   });
 

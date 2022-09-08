@@ -12,7 +12,5 @@ export default async (_, { cardIds, deckId }, { user: { id: userId }, db }) => {
     .andWhere({ deckId })
     .update({ isCommander: true });
 
-  return db('decks')
-    .where({ userId, id: deckId })
-    .first();
+  return db('decks').where({ userId, id: deckId }).first();
 };

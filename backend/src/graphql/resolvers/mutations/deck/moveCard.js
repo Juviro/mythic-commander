@@ -15,9 +15,7 @@ const canAccess = (userId, { id, type }) =>
   type === DECK ? canAccessDeck(userId, id) : canAccessWantsList(userId, id);
 
 const getUpdatedList = ({ type, id }, db) =>
-  db(typeToRelation[type])
-    .where({ id })
-    .first();
+  db(typeToRelation[type]).where({ id }).first();
 
 export default async (
   _,
@@ -52,9 +50,7 @@ export default async (
   }
 
   if (from.type === DECK) {
-    await db('cardToDeck')
-      .where({ id: cardId, deckId: from.id })
-      .del();
+    await db('cardToDeck').where({ id: cardId, deckId: from.id }).del();
   } else {
     await db('cardToWantsList')
       .where({ id: cardId, wantsListId: from.id })

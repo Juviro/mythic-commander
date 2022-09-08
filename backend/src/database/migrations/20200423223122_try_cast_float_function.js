@@ -1,4 +1,4 @@
-export const up = async knex => {
+export const up = async (knex) => {
   await knex.raw(`
     create function try_cast_float(float_value anyelement, default_value float default 0)
     returns float
@@ -17,6 +17,6 @@ export const up = async knex => {
     `);
 };
 
-export const down = async knex => {
+export const down = async (knex) => {
   await knex.raw('DROP FUNCTION try_cast_float;');
 };

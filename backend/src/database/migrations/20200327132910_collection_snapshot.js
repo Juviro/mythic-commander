@@ -1,8 +1,8 @@
-export const up = async knex => {
+export const up = async (knex) => {
   await knex.schema.dropTable('collectionValue');
   await knex.schema.dropTable('collectionAmount');
 
-  await knex.schema.createTable('collectionSnapshot', table => {
+  await knex.schema.createTable('collectionSnapshot', (table) => {
     table
       .string('userId')
       .notNullable()
@@ -14,14 +14,14 @@ export const up = async knex => {
     table.timestamp('date').defaultTo(knex.fn.now());
   });
 
-  await knex.schema.alterTable('collection', table => {
+  await knex.schema.alterTable('collection', (table) => {
     table.dropColumn('insertValue');
   });
 };
 
-export const down = async knex => {
+export const down = async (knex) => {
   await knex.schema.dropTable('collectionSnapshot');
-  await knex.schema.createTable('collectionValue', table => {
+  await knex.schema.createTable('collectionValue', (table) => {
     table
       .string('userId')
       .notNullable()
@@ -31,7 +31,7 @@ export const down = async knex => {
     table.timestamp('date').defaultTo(knex.fn.now());
   });
 
-  await knex.schema.createTable('collectionAmount', table => {
+  await knex.schema.createTable('collectionAmount', (table) => {
     table
       .string('userId')
       .notNullable()
@@ -42,7 +42,7 @@ export const down = async knex => {
     table.timestamp('date').defaultTo(knex.fn.now());
   });
 
-  await knex.schema.alterTable('collection', table => {
+  await knex.schema.alterTable('collection', (table) => {
     table.float('insertValue');
   });
 };

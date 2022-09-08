@@ -8,9 +8,7 @@ export default async (_, { cardId, deckId, newProps }, { user, db }) => {
   try {
     newProps.amount =
       newProps.amount && Math.min(Math.max(newProps.amount, 0), 99);
-    await db('cardToDeck')
-      .where({ id: cardId, deckId })
-      .update(newProps);
+    await db('cardToDeck').where({ id: cardId, deckId }).update(newProps);
     await updateLastEdit(deckId, db);
 
     const newCardId = newProps.id || cardId;

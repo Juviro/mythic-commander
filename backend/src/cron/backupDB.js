@@ -7,7 +7,7 @@ const username = process.env.DB_USER;
 const database = process.env.DB_NAME;
 const backupDir = process.env.BACKUP_DIR ? `${process.env.BACKUP_DIR}/` : '';
 
-const pad = num => {
+const pad = (num) => {
   return num < 10 ? '0' + num : num;
 };
 
@@ -40,7 +40,7 @@ const backupDB = () => {
           console.info(`DB Backup to file ${fileName} completed`);
           resolve();
         })
-        .catch(err => {
+        .catch((err) => {
           console.error('Error backing up DB:', err);
           reject();
         });
@@ -57,7 +57,7 @@ export const restore = () => {
     .then(async () => {
       console.info('Restored');
     })
-    .catch(err => {
+    .catch((err) => {
       console.error(err);
     });
 };

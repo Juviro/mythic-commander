@@ -7,9 +7,7 @@ export const throwAuthError = (message = 'Not authenticated') => {
 
 const canAccess = async (type, userId, id) => {
   if (userId) {
-    const isOwner = await db(type)
-      .where({ userId, id })
-      .first();
+    const isOwner = await db(type).where({ userId, id }).first();
 
     if (isOwner) return;
   }
@@ -23,9 +21,7 @@ const canAccess = async (type, userId, id) => {
 };
 
 const canEdit = async (type, userId, id) => {
-  const isOwner = await db(type)
-    .where({ userId, id })
-    .first();
+  const isOwner = await db(type).where({ userId, id }).first();
   if (!isOwner) throwAuthError();
 };
 
@@ -41,7 +37,7 @@ export const canAccessWantsList = async (userId, wantsListId) =>
 export const canEditWantsList = async (userId, wantsListId) =>
   canEdit('wantsLists', userId, wantsListId);
 
-export const isCollectionPublic = async userId => {
+export const isCollectionPublic = async (userId) => {
   const collectionVisibility = await db('collectionVisibility')
     .where({ userId })
     .first();

@@ -1,4 +1,4 @@
-export const up = async knex => {
+export const up = async (knex) => {
   await knex.schema.raw(`
       CREATE VIEW "distinctCards" AS 
       WITH _cards AS (
@@ -14,7 +14,7 @@ export const up = async knex => {
     `);
 };
 
-export const down = async knex => {
+export const down = async (knex) => {
   await knex.schema.raw(`
       DROP VIEW "distinctCards"
     `);

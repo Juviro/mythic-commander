@@ -20,7 +20,5 @@ export default async (_, { oracleIds, wantsListId }, { user, db }) => {
 
   await updateLastEdit(wantsListId, db);
 
-  return db('wantsLists')
-    .where({ id: wantsListId })
-    .first();
+  return db('wantsLists').where({ id: wantsListId }).first();
 };

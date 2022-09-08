@@ -1,6 +1,6 @@
 import { getImageKey } from './Card/helper';
 
-export const getCachedCards = async db => {
+export const getCachedCards = async (db) => {
   const cards = await db('distinctCards');
   return cards.map(({ name, id, oracle_id, ...rest }) => ({
     k: getImageKey(rest),

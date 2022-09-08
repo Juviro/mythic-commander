@@ -10,7 +10,5 @@ export default async (
 
   await db.raw(query.toString() + ON_DUPLICATE);
 
-  return db('ltPlayers')
-    .where({ name, userId })
-    .first();
+  return db('ltPlayers').where({ name, userId }).first();
 };

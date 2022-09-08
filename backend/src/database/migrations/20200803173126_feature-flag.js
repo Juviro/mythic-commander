@@ -1,5 +1,5 @@
-export const up = async knex => {
-  await knex.schema.alterTable('users', table => {
+export const up = async (knex) => {
+  await knex.schema.alterTable('users', (table) => {
     table.specificType('featureFlags', 'text[]');
   });
   await knex('users')
@@ -7,8 +7,8 @@ export const up = async knex => {
     .where({ email: 'hauketw@gmail.com' });
 };
 
-export const down = async knex => {
-  await knex.schema.alterTable('users', table => {
+export const down = async (knex) => {
+  await knex.schema.alterTable('users', (table) => {
     table.dropColumn('featureFlags');
   });
 };

@@ -1,4 +1,4 @@
-export const up = async knex => {
+export const up = async (knex) => {
   await knex.schema.raw('DROP VIEW IF EXISTS "cardToDeckWithOracle"');
 
   await knex.schema.raw(

@@ -7,10 +7,10 @@ const premiumFrameEffects = [
   'compasslanddfc',
 ];
 
-export const isSpecialCard = card => {
+export const isSpecialCard = (card) => {
   if (
     card.frame_effects &&
-    premiumFrameEffects.some(effect => card.frame_effects.includes(effect))
+    premiumFrameEffects.some((effect) => card.frame_effects.includes(effect))
   ) {
     return 3;
   }
@@ -52,7 +52,7 @@ export const getAllSets = async (oracle_id, userId = '', db) => {
 
   const sortedCards = cards.sort(sortSets);
 
-  return sortedCards.map(card => {
+  return sortedCards.map((card) => {
     const cardsWithSameSet = sortedCards.filter(({ set }) => set === card.set);
 
     if (cardsWithSameSet.length === 1) return card;
@@ -75,7 +75,7 @@ export const getTypes = ({ type_line }) => {
   const [mainTypes, flipTypes] = type_line.split(' // ');
   const [primaryTypes, subTypes] = mainTypes
     .split(' — ')
-    .map(part => part.split(' '));
+    .map((part) => part.split(' '));
 
   return { mainTypes, flipTypes, primaryTypes, subTypes };
 };
@@ -138,7 +138,7 @@ export const getMainVariant = ({
   return null;
 };
 
-export const padCollectorNumber = number => {
+export const padCollectorNumber = (number) => {
   if (number.length === 1) return `00${number}`;
   if (number.length === 2) return `0${number}`;
   return number;

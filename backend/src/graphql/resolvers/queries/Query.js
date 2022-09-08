@@ -17,36 +17,26 @@ const resolver = {
   user(_, __, { db, user: { id } }) {
     if (!id) return null;
 
-    return db('users')
-      .where({ id })
-      .first();
+    return db('users').where({ id }).first();
   },
 
   card(_, { id }, { db }) {
-    return db('cards')
-      .where({ id })
-      .first();
+    return db('cards').where({ id }).first();
   },
   cards(_, { cardIds }, { db }) {
     return db('cards').whereIn('id', cardIds);
   },
   async cardByOracleId(_, { oracle_id }, { db }) {
-    const card = await db('distinctCards')
-      .where({ oracle_id })
-      .first();
+    const card = await db('distinctCards').where({ oracle_id }).first();
     if (card) return card;
 
-    return db('cards')
-      .where({ oracle_id })
-      .first();
+    return db('cards').where({ oracle_id }).first();
   },
 
   async deck(_, { id }, { user, db }) {
     await canAccessDeck(user.id, id);
 
-    return db('decks')
-      .where({ id })
-      .first();
+    return db('decks').where({ id }).first();
   },
 
   decks(_, __, { user, db }) {
@@ -70,7 +60,7 @@ const resolver = {
     let hasData = false;
 
     // Remove all empty entries at the start of the array until we find an entry with data
-    return prices.filter(price => {
+    return prices.filter((price) => {
       if (hasData) return true;
       if (price.price) {
         hasData = true;
@@ -144,7 +134,7 @@ const resolver = {
     // Only return one card per name without a primary_variant
     const noVariantCardNames = {};
 
-    return cards.filter(card => {
+    return cards.filter((card) => {
       if (card.primary_variant) return true;
       if (noVariantCardNames[card.name]) return false;
       noVariantCardNames[card.name] = true;
@@ -153,9 +143,7 @@ const resolver = {
   },
   cachedCards: (_, __, { db }) => getCachedCards(db),
   numberOfCachedCards: async (_, __, { db }) => {
-    const { count } = await db('distinctCards')
-      .count('*')
-      .first();
+    const { count } = await db('distinctCards').count('*').first();
     return count;
   },
   cardImages: async (_, { cardId }, { db }) => {
@@ -173,10 +161,10 @@ const resolver = {
     return imageUris
       .map(({ image_uris, card_faces }) => {
         if (card_faces)
-          return card_faces.map(cardFace => cardFace.image_uris.art_crop);
+          return card_faces.map((cardFace) => cardFace.image_uris.art_crop);
         return image_uris.art_crop;
       })
-      .map(artCrop => artCrop.split('?')[0].replace(/\$.+$/, ''))
+      .map((artCrop) => artCrop.split('?')[0].replace(/\$.+$/, ''))
       .flat();
   },
 
@@ -191,9 +179,7 @@ const resolver = {
   async wantsList(_, { id }, { user: { id: userId }, db }) {
     await canAccessWantsList(userId, id);
 
-    return db('wantsLists')
-      .where({ id })
-      .first();
+    return db('wantsLists').where({ id }).first();
   },
 
   wantsLists(_, { deckId }, { user: { id: userId }, db }) {
@@ -201,16 +187,12 @@ const resolver = {
     const where = { userId };
     if (deckId) where.deckId = deckId;
 
-    return db('wantsLists')
-      .where(where)
-      .orderBy('lastEdit', 'desc');
+    return db('wantsLists').where(where).orderBy('lastEdit', 'desc');
   },
   async collectionSnapshots(_, __, { user: { id: userId }, db }) {
     if (!userId) return [];
 
-    return db('collectionSnapshot')
-      .where({ userId })
-      .orderBy('date');
+    return db('collectionSnapshot').where({ userId }).orderBy('date');
   },
 
   proxies(_, params, { user: { id: userId } }) {
@@ -224,9 +206,7 @@ const resolver = {
       .orderBy('deckId', 'asc')
       .orderBy('name', 'asc');
 
-    const decks = db('decks')
-      .where({ userId })
-      .orderBy('name', 'asc');
+    const decks = db('decks').where({ userId }).orderBy('name', 'asc');
 
     return {
       decks,
@@ -237,9 +217,7 @@ const resolver = {
   ltPlayers(_, __, { user: { id: userId }, db }) {
     if (!userId) return null;
 
-    return db('ltPlayers')
-      .where({ userId })
-      .orderBy('lastEdit', 'DESC');
+    return db('ltPlayers').where({ userId }).orderBy('lastEdit', 'DESC');
   },
 };
 

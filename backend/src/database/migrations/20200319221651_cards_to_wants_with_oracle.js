@@ -1,4 +1,4 @@
-export const up = async knex => {
+export const up = async (knex) => {
   await knex.schema.raw(`
     CREATE VIEW "cardToWantsListWithOracle" AS (
         SELECT "cardToWantsList".*, cards.oracle_id
@@ -9,6 +9,6 @@ export const up = async knex => {
   `);
 };
 
-export const down = async knex => {
+export const down = async (knex) => {
   await knex.schema.raw('DROP VIEW "cardToWantsListWithOracle"');
 };

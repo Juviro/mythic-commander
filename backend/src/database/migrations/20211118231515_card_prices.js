@@ -1,10 +1,6 @@
-export const up = async knex => {
-  await knex.schema.createTable('cardPrices', table => {
-    table
-      .string('id')
-      .notNullable()
-      .references('cards.id')
-      .onDelete('CASCADE');
+export const up = async (knex) => {
+  await knex.schema.createTable('cardPrices', (table) => {
+    table.string('id').notNullable().references('cards.id').onDelete('CASCADE');
 
     table.float('priceEur');
     table.float('priceEurFoil');
@@ -14,6 +10,6 @@ export const up = async knex => {
   });
 };
 
-export const down = async knex => {
+export const down = async (knex) => {
   await knex.schema.dropTable('cardPrices');
 };

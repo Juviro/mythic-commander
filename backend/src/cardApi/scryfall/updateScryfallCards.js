@@ -63,7 +63,7 @@ export const updateScryfallCards = async (type, tableName) => {
       printProgress();
       // double faced cards don't always set all fields,
       // so we fallback to the value of the front face
-      const setMissingProp = prop => {
+      const setMissingProp = (prop) => {
         if (card[prop] === undefined) card[prop] = card.card_faces[0]?.[prop];
       };
 
@@ -85,10 +85,8 @@ export const updateScryfallCards = async (type, tableName) => {
       cardToInsert.collector_number = padCollectorNumber(card.collector_number);
 
       await knex.raw(
-        knex(tableName)
-          .insert(cardToInsert)
-          .toString()
-          .replace(/\?/g, '\\?') + ON_DUPLICATE
+        knex(tableName).insert(cardToInsert).toString().replace(/\?/g, '\\?') +
+          ON_DUPLICATE
       );
 
       await storeCardImage(card);
@@ -98,7 +96,7 @@ export const updateScryfallCards = async (type, tableName) => {
   }
   console.info('updated scryfall cards, deleting file');
   return new Promise((resolve, reject) =>
-    fs.unlink(filePath, err => {
+    fs.unlink(filePath, (err) => {
       if (err) {
         reject(err);
       } else {

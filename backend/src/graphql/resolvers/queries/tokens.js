@@ -25,7 +25,7 @@ const KEY_WORDS = [
   'regenerate',
 ];
 
-export const getTokenName = token => {
+export const getTokenName = (token) => {
   const additionalInfo = [];
   if (token.toughness !== null || token.power !== null) {
     additionalInfo.push(`${token.power}/${token.toughness}`);
@@ -39,7 +39,7 @@ export const getTokenName = token => {
   }
 
   if (token.layout === 'token') {
-    KEY_WORDS.forEach(keyWord => {
+    KEY_WORDS.forEach((keyWord) => {
       if (token.oracle_text?.toLowerCase().includes(keyWord.toLowerCase())) {
         additionalInfo.push(keyWord);
       }
@@ -56,7 +56,7 @@ const tokens = async () => {
     .orderBy('power', 'asc')
     .orderBy('toughness', 'asc');
 
-  return allTokens.map(token => ({
+  return allTokens.map((token) => ({
     ...token,
     name: getTokenName(token),
     isTwoFaced: !token.image_uris,

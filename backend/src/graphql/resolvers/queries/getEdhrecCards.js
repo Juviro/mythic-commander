@@ -22,7 +22,7 @@ const formatCards = async (cards, userId) => {
     .leftJoin('cards', 'cards.id', 'collection.id')
     .whereIn(
       'name',
-      cards.map(card => card.name)
+      cards.map((card) => card.name)
     )
     .andWhere('userId', userId);
 
@@ -36,7 +36,7 @@ const formatCards = async (cards, userId) => {
         id,
         imgKey,
         name,
-        owned: ownedCards.some(card => card.name === name),
+        owned: ownedCards.some((card) => card.name === name),
         priceUsd: prices?.tcgplayer?.price,
         priceEur: prices?.cardmarket?.price,
         synergy,
@@ -69,10 +69,10 @@ const getCardList = (json, userId) => {
   }));
 };
 
-const getThemes = json => {
+const getThemes = (json) => {
   const { themes } = json.panels.tribelinks;
 
-  return themes?.map(theme => ({
+  return themes?.map((theme) => ({
     title: theme.value,
     urlSuffix: theme['href-suffix'],
     count: theme.count,

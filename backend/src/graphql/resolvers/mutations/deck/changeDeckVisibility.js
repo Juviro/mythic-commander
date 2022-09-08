@@ -7,9 +7,7 @@ export default async (
 ) => {
   await canEditDeck(userId, deckId);
 
-  await db('decks')
-    .update({ visibility })
-    .where({ userId, id: deckId });
+  await db('decks').update({ visibility }).where({ userId, id: deckId });
 
   return {
     id: deckId,

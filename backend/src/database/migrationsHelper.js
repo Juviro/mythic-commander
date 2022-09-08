@@ -1,6 +1,6 @@
-export const addFieldsToCards = newFields => ({
-  up: async knex => {
-    await knex.schema.alterTable('cards', table => {
+export const addFieldsToCards = (newFields) => ({
+  up: async (knex) => {
+    await knex.schema.alterTable('cards', (table) => {
       newFields.forEach(({ key, type, length, specificType }) => {
         if (type) {
           table[type](key, length);
@@ -11,8 +11,8 @@ export const addFieldsToCards = newFields => ({
     });
   },
 
-  down: async knex => {
-    await knex.schema.alterTable('cards', table => {
+  down: async (knex) => {
+    await knex.schema.alterTable('cards', (table) => {
       newFields.forEach(({ key }) => {
         table.dropColumn(key);
       });
