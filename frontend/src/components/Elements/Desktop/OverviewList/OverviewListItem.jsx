@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, Typography, Space } from 'antd';
 
-import Flex from 'components/Elements/Shared/Flex';
 import ManaSymbol from 'components/Elements/Shared/ManaCost/ManaSymbol';
 import Cover from './Cover';
 import formatDate from '../../../../utils/formatDate';

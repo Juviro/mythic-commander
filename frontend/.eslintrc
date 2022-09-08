@@ -4,9 +4,10 @@
     "prettier",
     "plugin:prettier/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended"
   ],
-  "plugins": ["react", "@typescript-eslint", "prettier", "jsx-a11y"],
+  "plugins": ["import", "react", "@typescript-eslint", "prettier", "jsx-a11y"],
   "parser": "@typescript-eslint/parser",
   "rules": {
     "prettier/prettier": ["error"],
@@ -34,6 +35,7 @@
     "react/require-default-props": 0,
     "react-hooks/exhaustive-deps": 0,
     "@typescript-eslint/no-explicit-any": "off",
+    "import/no-cycle": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -57,9 +59,10 @@
   },
   "settings": {
     "import/resolver": {
-      "typescript": {},
+      "typescript": true,
       "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "moduleDirectory": ["node_modules", "src/"]
       }
     }
   },
