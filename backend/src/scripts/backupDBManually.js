@@ -1,4 +1,4 @@
-import backupDB from './backupDB';
+import backupDB from '../cron/backupDB';
 
 const backup = async () => {
   await backupDB();

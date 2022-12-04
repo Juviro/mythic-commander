@@ -15,6 +15,7 @@ export default async (type) => {
   console.info('starting to download file from', download_uri);
 
   const filePath = `${__dirname}/${type}.json`;
+  return filePath;
 
   const res = await fetch(download_uri);
 

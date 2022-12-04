@@ -1,4 +1,4 @@
-import updateCards from './updateCards';
+import updateCards from '../cardApi/updateCards';
 
 const update = async () => {
   await updateCards();

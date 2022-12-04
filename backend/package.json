@@ -10,8 +10,9 @@
     "build": "babel src --out-dir dist",
     "migrate": "babel-node -r dotenv/config node_modules/.bin/knex migrate:latest",
     "rollback": "babel-node -r dotenv/config node_modules/.bin/knex migrate:rollback",
-    "update-cards": "babel-node -r dotenv/config src/cardApi/updateCardsManually.js",
-    "backup-db": "babel-node -r dotenv/config src/cron/backupDBManually.js",
+    "update-cards": "babel-node -r dotenv/config src/scripts/updateCardsManually.js",
+    "backup-db": "babel-node -r dotenv/config src/scripts/backupDBManually.js",
+    "store-prices": "babel-node -r dotenv/config src/scripts/storeCardProceManually.js",
     "lint": "eslint --fix src"
   },
   "dependencies": {
