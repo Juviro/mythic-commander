@@ -41,6 +41,7 @@ const AddCards = ({
   width = 500,
   allowFoilInput = true,
   additionalOptions = [],
+  autoFocus = false,
   placeholder = 'Add cards, e.g. "2x foil negate"',
 }) => {
   const [cardOptions, setCardOptions] = useState({});
@@ -52,7 +53,7 @@ const AddCards = ({
           isAdvanced
           focusId={focusId}
           allowFoilInput={allowFoilInput}
-          autoFocus={false}
+          autoFocus={autoFocus}
           onAddCards={onAddCards}
           additionalOptions={additionalOptions}
           cardOptions={cardOptions}

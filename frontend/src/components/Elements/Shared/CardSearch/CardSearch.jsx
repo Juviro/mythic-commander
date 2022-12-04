@@ -100,6 +100,18 @@ export default class CardSearch extends React.Component {
 
   inputRef = React.createRef();
 
+  // used outside through ref
+  // eslint-disable-next-line react/no-unused-class-component-methods
+  focus = () => {
+    this.inputRef.current.focus();
+  };
+
+  // used outside through ref
+  // eslint-disable-next-line react/no-unused-class-component-methods
+  blur = () => {
+    this.inputRef.current.blur();
+  };
+
   state = {
     searchString: '',
   };

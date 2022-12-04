@@ -1,8 +1,8 @@
-import storeCardPrice from "../cron/storeCardPrice";
+import storeCardPrice from '../cron/storeCardPrice';
 
-const backup = async () => {
+const storeCardPriceManually = async () => {
   await storeCardPrice();
   process.exit(0);
 };
 
-storeCardPrice();
+storeCardPriceManually();

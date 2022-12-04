@@ -39,6 +39,7 @@ export default ({
         width="100%"
         ownedCardNames={ownedCardNames}
         ref={searchInputRef}
+        autoFocus
         onSearch={onAddCard}
         containedCardNames={containedCardNames}
         allowFoilInput={allowFoilInput}
