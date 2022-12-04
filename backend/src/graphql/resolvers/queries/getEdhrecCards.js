@@ -11,10 +11,10 @@ const getUrl = (names, themeSuffix) => {
     .replace(/\s/g, '-');
 
   if (!themeSuffix) {
-    return `https://json.edhrec.com/commanders/${sanitizedNames}.json`;
+    return `https://json.edhrec.com/pages/commanders/${sanitizedNames}.json`;
   }
 
-  return `https://json.edhrec.com/commanders/${sanitizedNames}${themeSuffix}.json`;
+  return `https://json.edhrec.com/pages/commanders/${sanitizedNames}${themeSuffix}.json`;
 };
 
 const formatCards = async (cards, userId) => {
@@ -26,9 +26,18 @@ const formatCards = async (cards, userId) => {
     )
     .andWhere('userId', userId);
 
-  return cards
-    .map(({ prices, name, synergy, image_uris }) => {
-      const [_, imgKey, id] = image_uris?.[0]?.small?.match(
+  const promises = cards.map(({ url }) => {
+    return fetch(`https://json.edhrec.com${url}`).then((res) =>
+      res.json().catch(() => null)
+    );
+  });
+
+  const fullCards = await Promise.all(promises);
+
+  return fullCards
+    .filter(Boolean)
+    .map(({ prices, name, synergy, image_uris, id }) => {
+      const [_, imgKey, __] = image_uris?.[0]?.match(
         /front\/(\w\/\w)\/(.*)\./
       ) ?? [null, '', name];
 
