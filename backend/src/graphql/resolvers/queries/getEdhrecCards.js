@@ -61,7 +61,7 @@ const fetchCards = async (url, names) => {
   // partner commanders have to bee in a specific order
   // a redirect url is passed in those cases, but we can simply reverse the names as well
   if (json.redirect) {
-    const newUrl = getUrl(names.reverse());
+    const newUrl = `https://json.edhrec.com/pages${json.redirect}.json`;
     return fetchCards(newUrl);
   }
 
