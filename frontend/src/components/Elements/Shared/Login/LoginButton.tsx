@@ -1,7 +1,7 @@
 import { Button, Modal } from 'antd';
-import Login from 'components/Elements/Shared/Login';
 import { useToggle } from 'components/Hooks';
 import React from 'react';
+import Login from './Login';
 
 export default () => {
   const [isOpen, toggleIsOpen] = useToggle(false);
@@ -18,6 +18,7 @@ export default () => {
         title="Login"
         footer={null}
         zIndex={1003}
+        bodyStyle={{ height: 200, display: 'flex', justifyContent: 'center' }}
       >
         <Login />
       </Modal>

@@ -1,16 +1,20 @@
-import GoogleLogin from 'components/Elements/Shared/Login';
 import React from 'react';
 import styled from 'styled-components';
 
+import GoogleLogin from './GoogleLogin';
+
 const StyledWrapper = styled.div`
-  width: 200px;
-  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-export default ({ onLogin }) => {
+const Login = ({ onLogin = null }) => {
   return (
     <StyledWrapper>
       <GoogleLogin onLogin={onLogin} />
     </StyledWrapper>
   );
 };
+
+export default Login;

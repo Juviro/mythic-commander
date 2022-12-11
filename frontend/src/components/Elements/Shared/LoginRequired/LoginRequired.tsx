@@ -1,7 +1,7 @@
 import { Typography } from 'antd';
-import GoogleLogin from 'components/Elements/Shared/Login';
 import React from 'react';
 import styled from 'styled-components';
+import Login from '../Login/Login';
 
 const StyledWrapper = styled.section`
   width: 100%;
@@ -10,11 +10,12 @@ const StyledWrapper = styled.section`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-top: 5rem;
 `;
 
 const StyledMessage = styled(Typography.Text)`
   font-size: 24px;
-  padding: 2rem;
+  margin-top: 4rem;
 `;
 
 interface Props {
@@ -26,7 +27,7 @@ export const LoginRequired = ({
 }: Props) => {
   return (
     <StyledWrapper>
-      <GoogleLogin />
+      <Login />
       <StyledMessage>{message}</StyledMessage>
     </StyledWrapper>
   );

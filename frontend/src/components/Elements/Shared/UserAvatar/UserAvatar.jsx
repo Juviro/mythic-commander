@@ -2,10 +2,9 @@ import React, { useContext } from 'react';
 import { Spin, Typography } from 'antd';
 import styled from 'styled-components';
 
-import { LoginButton } from 'components/Elements/Shared/Login';
-
 import UserContext from 'components/Provider/UserProvider';
 import Flex from '../Flex';
+import LoginButton from '../Login/LoginButton';
 
 const StyledWrapper = styled.div`
   height: 30px;

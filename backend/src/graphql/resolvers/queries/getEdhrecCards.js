@@ -54,12 +54,11 @@ const formatCards = async (cards, userId) => {
     .sort((a, b) => (b.synergy || 0) - (a.synergy || 0));
 };
 
-const fetchCards = async (url, names) => {
+const fetchCards = async (url) => {
   const result = await fetch(url);
   const json = await result.json();
 
   // partner commanders have to bee in a specific order
-  // a redirect url is passed in those cases, but we can simply reverse the names as well
   if (json.redirect) {
     const newUrl = `https://json.edhrec.com/pages${json.redirect}.json`;
     return fetchCards(newUrl);
@@ -93,7 +92,7 @@ const getEdhrecCards = async (names, themeSuffix, userId) => {
 
   const url = getUrl(names, themeSuffix);
 
-  const json = await fetchCards(url, names);
+  const json = await fetchCards(url);
 
   const cardLists = getCardList(json, userId);
   const themes = getThemes(json);
