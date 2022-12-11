@@ -24,6 +24,6 @@ echo -e "\e[44mRestarting Backend\e[0m"
 pm2 reload backend
 
 echo -e "\e[44mRestarting Clash\e[0m"
-pm2 reload myc-clash
+pm2 reload clash
 
 echo -e "\e[45mDeployed Successfully\e[0m"
