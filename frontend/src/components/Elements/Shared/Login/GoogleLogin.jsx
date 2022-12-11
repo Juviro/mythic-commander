@@ -32,8 +32,8 @@ export default () => {
     });
 
     const { session, user } = data.login;
-    Cookies.set('authToken', session);
-    Cookies.set('authToken', session, { domain: window.location.host });
+    Cookies.set('authToken', session, { expires: 365 });
+    Cookies.set('authToken', session, { domain: window.location.host, expires: 365 });
 
     const name = user.username ?? user.name;
     message(`Welcome <b>${name}</b>`);

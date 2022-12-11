@@ -1,4 +1,6 @@
+import { Button } from 'antd';
 import Head from 'next/head';
+import GameBrowser from '../components/GameBrowser/GameBrowser';
 
 export default function Home() {
   return (
@@ -8,7 +10,8 @@ export default function Home() {
         <meta name="description" content="App in progress" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>Hier entsteht eine App</h1>
+      <GameBrowser />
+      <Button>Test Button</Button>
     </div>
   );
 }
