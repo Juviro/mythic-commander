@@ -1,10 +1,8 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import Head from 'next/head';
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>MYC Clash</title>
         <meta name="description" content="App in progress" />
@@ -12,5 +10,5 @@ export default function Home() {
       </Head>
       <h1>Hier entsteht eine App</h1>
     </div>
-  )
+  );
 }
