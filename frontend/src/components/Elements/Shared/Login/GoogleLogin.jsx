@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { useMutation } from '@apollo/client';
 import message from 'utils/message';
 import { useHistory } from 'react-router';
+import Cookies from 'js-cookie';
+
 import { login } from './queries';
 
 const CLIENT_ID =
@@ -30,7 +32,8 @@ export default () => {
     });
 
     const { session, user } = data.login;
-    window.localStorage.setItem('session', session);
+    Cookies.set('authToken', session);
+    Cookies.set('authToken', session, { domain: window.location.host });
 
     const name = user.username ?? user.name;
     message(`Welcome <b>${name}</b>`);

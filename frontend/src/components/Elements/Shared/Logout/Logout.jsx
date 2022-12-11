@@ -2,6 +2,7 @@ import React from 'react';
 import { Typography } from 'antd';
 import { useMutation } from '@apollo/client';
 import { LogoutOutlined } from '@ant-design/icons';
+import Cookies from 'js-cookie';
 
 import { useHistory } from 'react-router';
 import client from 'network/graphqlClient';
@@ -13,9 +14,9 @@ export default () => {
   const { push } = useHistory();
 
   const logOut = async () => {
-    const sessionId = window.localStorage.getItem('session');
+    const sessionId = Cookies.get('authToken');
     await mutate({ variables: { sessionId } });
-    window.localStorage.setItem('session', null);
+    Cookies.set('authToken', null, { domain: window.location.host });
     await client.resetStore();
     push('/');
   };

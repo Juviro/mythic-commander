@@ -3,13 +3,14 @@ import { setContext } from 'apollo-link-context';
 import { onError } from 'apollo-link-error';
 import { HttpLink } from 'apollo-link-http';
 import { RetryLink } from 'apollo-link-retry';
+import Cookies from 'js-cookie';
 
 import { SERVER_URL } from '../constants/network';
 
 const httpLink = new HttpLink({ uri: SERVER_URL });
 
 const authLink = setContext((_, { headers }) => {
-  const session = localStorage.getItem('session');
+  const session = Cookies.get('authToken');
 
   const authorization = { authorization: `Bearer ${session}` };
   return {
