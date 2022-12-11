@@ -33,3 +33,6 @@ yarn-error.log*
 # card images
 /card-images/*
 !/card-images/.gitkeep
+
+# clash
+/clash/.next

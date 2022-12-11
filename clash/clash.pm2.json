@@ -3,7 +3,8 @@
     {
       "name": "clash",
       "script": "yarn",
-      "args": "start"
+      "args": "start",
+      "interpreter": "bash"
     }
   ]
 }

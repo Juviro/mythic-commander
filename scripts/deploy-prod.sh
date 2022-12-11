@@ -14,7 +14,7 @@ echo -e "\e[44mCopying Schema\e[0m"
 cp /opt/mtg/backend/src/graphql/schema.graphql /opt/mtg/backend/dist/graphql/schema.graphql
 
 echo -e "\e[44mMigrating Database\e[0m"
-NODE_ENV=production yarn migrate
+cp /opt/mtg/backend/ && NODE_ENV=production yarn migrate
 
 echo -e "\e[44mDeploying Frontend\e[0m"
 rm -rf /var/www/mtg/* 
