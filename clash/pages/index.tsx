@@ -10,7 +10,7 @@ export default function Home() {
         <meta name="description" content="App in progress" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>Hier entsteht eine App</h1>
+      <h1>Hier entsteht eine freshe App</h1>
     </div>
   )
 }
