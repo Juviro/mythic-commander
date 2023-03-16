@@ -1,4 +1,3 @@
-import { Button } from 'antd';
 import Head from 'next/head';
 import GameBrowser from '../components/GameBrowser/GameBrowser';
 
@@ -7,11 +6,10 @@ export default function Home() {
     <div>
       <Head>
         <title>MYC Clash</title>
-        <meta name="description" content="App in progress" />
+        <meta name="description" content="Play EDH Online" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <GameBrowser />
-      <Button>Test Button</Button>
     </div>
   );
 }

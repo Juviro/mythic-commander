@@ -1,0 +1,38 @@
+.wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url(/assets/images/clash_bg.png);
+    background-position: center;
+    background-size: cover;
+}
+
+.inner {
+    width: 800px;
+    height: 700px;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    color: var(--color-text);
+    border-radius: .5rem;
+    justify-content: space-between;
+    overflow: hidden;
+    box-shadow: 0px 0px 11px 7px #3a3a3a8c;
+}
+
+.title {
+    margin: 0;
+    padding: 1rem;
+    color: white;
+    background-color: var(--color-primary);
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+}
