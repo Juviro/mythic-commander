@@ -3,8 +3,8 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { typeColors } from 'constants/colors';
+import { CARD_TYPES } from 'components/Provider/CardProvider/staticTypes';
 import { DeckStat } from './DeckStat';
-import { getPrimaryType } from './DeckCmc';
 
 interface Props {
   deck: UnifiedDeck;
@@ -13,14 +13,14 @@ interface Props {
 export const DeckTypeDistribution = ({ deck }: Props) => {
   const cardsbyType = deck?.cards.reduce((acc, card) => {
     const { primaryTypes, amount } = card;
+    primaryTypes
+      .filter((type) => CARD_TYPES.includes(type))
+      .forEach((type) => {
+        if (!acc[type]) acc[type] = 0;
+        acc[type] += amount;
+      });
 
-    const primaryType = getPrimaryType(primaryTypes);
-    const currentAmount = acc[primaryType] ?? 0;
-
-    return {
-      ...acc,
-      [primaryType]: currentAmount + amount,
-    };
+    return acc;
   }, {});
 
   const data = Object.keys(cardsbyType).map((name) => ({
