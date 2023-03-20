@@ -13,6 +13,7 @@ import IncludedDecks from 'components/Elements/Shared/IncludedDecks';
 import IncludedWants from 'components/Elements/Shared/IncludedWants';
 import CardLinks from 'components/Elements/Shared/CardLinks';
 import CardRules from 'components/Elements/Shared/CardRules';
+import OracleText from 'components/Elements/Desktop/CardDetailsDesktop/CardDetailBody/OracleText';
 import CardImage from './CardImage';
 import CardOwned from './CardOwned';
 import { getCardByOracleId } from './queries';
@@ -40,6 +41,7 @@ const StyledBodyWrapper = styled.div`
 export default ({ overwriteOracleId, defaultCardId }) => {
   const { oracle_id: paramOracleId } = useParams();
   const { user } = useContext(UserContext);
+  const [isFlipped, setIsFlipped] = useState(false);
   const [selectedCardId, setSelectedCardId] = useState(null);
   const oracle_id = overwriteOracleId || paramOracleId;
   const { data, loading } = useQuery(getCardByOracleId, {
@@ -69,7 +71,7 @@ export default ({ overwriteOracleId, defaultCardId }) => {
 
   return (
     <StyledWrapper>
-      <CardImage card={fullCard} loading={loading} />
+      <CardImage card={fullCard} loading={loading} onFlipCard={setIsFlipped} />
       <StyledBodyWrapper>
         <Divider>Overview</Divider>
         <CardSetOverview
@@ -93,6 +95,8 @@ export default ({ overwriteOracleId, defaultCardId }) => {
             <IncludedDecks card={card} />
           </>
         )}
+        <Divider>Oracle Text & Rules</Divider>
+        <OracleText card={fullCard} loading={loading} isFlipped={isFlipped} />
         <Divider>Resources</Divider>
         <CardLinks card={card} />
         <div style={{ margin: '16px 0' }}>

@@ -9,10 +9,10 @@ const StyledWrapper = styled.div`
   margin: 5vw 0 0;
 `;
 
-export default ({ card, loading }) => {
+export default ({ card, loading, onFlipCard }) => {
   return (
     <StyledWrapper>
-      <Card card={card} loading={loading} />
+      <Card card={card} loading={loading} onFlipCard={onFlipCard} />
     </StyledWrapper>
   );
 };

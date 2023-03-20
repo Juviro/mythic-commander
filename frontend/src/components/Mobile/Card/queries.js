@@ -6,6 +6,7 @@ const CARD_FIELDS = `
   name
   imgKey
   scryfall_uri
+  oracle_text
   isTwoFaced
   
   oracleCard {
