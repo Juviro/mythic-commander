@@ -42,6 +42,7 @@ export const updateScryfallCards = async (type, tableName) => {
   let numberOfSkippedCards = 0;
 
   const printProgress = () => {
+    if (typeof process.stdout.clearLine !== 'function') return;
     process.stdout.clearLine();
     process.stdout.cursorTo(0);
     process.stdout.write(
