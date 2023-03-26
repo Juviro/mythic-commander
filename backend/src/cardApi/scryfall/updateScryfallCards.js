@@ -17,11 +17,13 @@ const updateClause = ALL_CARD_FIELDS.map(
 
 const ON_DUPLICATE = ` ON CONFLICT (id) DO UPDATE SET ${updateClause}, "lastUpdate" = NOW()`;
 
-const shouldSkipCard = ({ set, games }) => {
+const shouldSkipCard = ({ set, games, layout }) => {
   // Jumpstart Front Cards
   if (set === 'fjmp') return true;
   // Cards that only exists digitally
   if (games.length && !games?.includes('paper')) return true;
+  // Art Series from Set boosters
+  if (layout === 'art_series') return true;
 
   return false;
 };

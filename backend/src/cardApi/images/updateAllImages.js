@@ -1,14 +1,35 @@
 import knex from '../../database';
 import storeCardImage from './storeCardImage';
 
+const BATCH_SIZE = 100;
+
+const printProgress = (offset) => {
+  if (typeof process.stdout.clearLine !== 'function') return;
+  process.stdout.clearLine();
+  process.stdout.cursorTo(0);
+  process.stdout.write(`${offset} card images updated`);
+};
+
 const updateAllImages = async () => {
-  const allCards = await knex('cards');
+  let offset = 0;
 
-  const promises = allCards.map(async (card) => {
-    return storeCardImage(card, true);
-  });
+  while (true) {
+    const cards = await knex('cards').limit(BATCH_SIZE).offset(offset);
 
-  return Promise.all(promises);
+    if (cards.length === 0) {
+      break;
+    }
+
+    const promises = cards.map((card) => {
+      return storeCardImage(card, true);
+    });
+
+    await Promise.all(promises);
+    offset += BATCH_SIZE;
+    printProgress(offset);
+  }
+
+  console.info('All card images updated');
 };
 
 export default updateAllImages;
