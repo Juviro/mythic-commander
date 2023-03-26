@@ -8,6 +8,7 @@ const CARD_FIELDS = `
   scryfall_uri
   oracle_text
   isTwoFaced
+  type_line
   
   oracleCard {
     _id

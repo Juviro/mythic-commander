@@ -7,7 +7,7 @@ import CardRules from 'components/Elements/Shared/CardRules';
 import CardLinks from 'components/Elements/Shared/CardLinks';
 import Flex from 'components/Elements/Shared/Flex';
 import RelatedCards from './RelatedCards';
-import OracleText from './OracleText';
+import OracleText from '../../../Shared/OracleText/OracleText';
 
 const StyledColumn = styled(Col)`
   padding: 8px;

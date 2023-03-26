@@ -8,6 +8,7 @@ const StyledRulesWrapper = styled.div`
   width: 100%;
   max-width: 250px;
   height: 32px;
+  flex: 1;
 `;
 
 export default ({ card = {}, loading }) => {

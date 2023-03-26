@@ -29,6 +29,7 @@ type Card {
   purchase_uris: PurchaseUris!
   oracle_id: String!
   rulings_uri: String!
+  type_line: String!
   colors: [String]
   color_identity: [String]
   set_name: String!

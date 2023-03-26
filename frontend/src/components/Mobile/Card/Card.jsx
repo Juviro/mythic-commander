@@ -13,7 +13,7 @@ import IncludedDecks from 'components/Elements/Shared/IncludedDecks';
 import IncludedWants from 'components/Elements/Shared/IncludedWants';
 import CardLinks from 'components/Elements/Shared/CardLinks';
 import CardRules from 'components/Elements/Shared/CardRules';
-import OracleText from 'components/Elements/Desktop/CardDetailsDesktop/CardDetailBody/OracleText';
+import OracleText from 'components/Elements/Shared/OracleText/OracleText';
 import CardImage from './CardImage';
 import CardOwned from './CardOwned';
 import { getCardByOracleId } from './queries';
@@ -36,6 +36,19 @@ const StyledBodyWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   background-color: white;
+`;
+
+const StyledRulesWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  @media (min-width: 600px) {
+    justify-content: space-around;
+  }
 `;
 
 export default ({ overwriteOracleId, defaultCardId }) => {
@@ -97,12 +110,12 @@ export default ({ overwriteOracleId, defaultCardId }) => {
         )}
         <Divider>Oracle Text & Rules</Divider>
         <OracleText card={fullCard} loading={loading} isFlipped={isFlipped} />
+        <StyledRulesWrapper>
+          <CardRules card={card} loading={loading} />
+          <CardLegal card={card} />
+        </StyledRulesWrapper>
         <Divider>Resources</Divider>
         <CardLinks card={card} />
-        <div style={{ margin: '16px 0' }}>
-          <CardLegal card={card} />
-        </div>
-        <CardRules card={card} loading={loading} />
       </StyledBodyWrapper>
     </StyledWrapper>
   );
