@@ -23,6 +23,7 @@ const CARD_FIELDS = `
     containingDecks {
       id
       name
+      status
       imgSrc
     }
   

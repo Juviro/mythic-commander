@@ -57,8 +57,9 @@ export const getAllSets = async (oracle_id, userId = '', db) => {
 
     if (cardsWithSameSet.length === 1) return card;
     // No version indicator for the first card, which we assume is the main card, unless it's has a variant
-    if (cardsWithSameSet[0].id === card.id && !card.primary_variant)
+    if (cardsWithSameSet[0].id === card.id && !card.primary_variant) {
       return card;
+    }
 
     const version = cardsWithSameSet.findIndex(({ id }) => id === card.id) + 1;
 
@@ -121,9 +122,6 @@ export const getMainVariant = ({
   }
   if (finishes?.length === 1 && finishes[0] === 'etched') {
     return 'Etched Foil';
-  }
-  if (frame === 'future') {
-    return 'Future Frame';
   }
   if (frame === 'future') {
     return 'Future Frame';
