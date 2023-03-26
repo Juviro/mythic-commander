@@ -11,6 +11,7 @@
     "migrate": "babel-node -r dotenv/config node_modules/.bin/knex migrate:latest",
     "rollback": "babel-node -r dotenv/config node_modules/.bin/knex migrate:rollback",
     "update-cards": "babel-node -r dotenv/config src/scripts/updateCardsManually.js",
+    "update-card-images": "babel-node -r dotenv/config src/scripts/updateAllCardImages.js",
     "backup-db": "babel-node -r dotenv/config src/scripts/backupDBManually.js",
     "store-prices": "babel-node -r dotenv/config src/scripts/storeCardProceManually.js",
     "lint": "eslint --fix src"
