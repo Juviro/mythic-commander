@@ -14,7 +14,10 @@ const updateAllImages = async () => {
   let offset = 0;
 
   while (true) {
-    const cards = await knex('cards').limit(BATCH_SIZE).offset(offset);
+    const cards = await knex('cards')
+      .orderBy('released_at', 'desc')
+      .limit(BATCH_SIZE)
+      .offset(offset);
 
     if (cards.length === 0) {
       break;
