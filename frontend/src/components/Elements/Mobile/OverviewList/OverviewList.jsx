@@ -102,7 +102,7 @@ const ListItem = ({
 };
 
 const OverviewList = ({ addElementText, onAddElement, elements, onClick, header }) => {
-  const deckComponents = elements.map(
+  const listItems = elements?.map(
     ({ name, imgSrc, id, numberOfCards, additionalDescription, cardPreviews }) => (
       <ListItem
         name={name}
@@ -120,7 +120,7 @@ const OverviewList = ({ addElementText, onAddElement, elements, onClick, header 
     <ListItem name={addElementText} onClick={onAddElement} image={<StyledAddIcon />} />
   ) : undefined;
 
-  const dataSource = [addElementComponent, ...deckComponents].filter(Boolean);
+  const dataSource = [addElementComponent, ...listItems].filter(Boolean);
 
   return (
     <List
