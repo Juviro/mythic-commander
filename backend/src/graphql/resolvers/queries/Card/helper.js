@@ -108,6 +108,9 @@ export const getMainVariant = ({
   if (promo_types?.includes('textured')) {
     return 'Textured';
   }
+  if (promo_types?.includes('stepandcompleat')) {
+    return 'Compleat';
+  }
   if (border_color === 'borderless') {
     return 'Borderless';
   }
