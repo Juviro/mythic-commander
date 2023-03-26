@@ -1,7 +1,7 @@
 import knex from '../../database';
 import storeCardImage from './storeCardImage';
 
-const BATCH_SIZE = 100;
+const BATCH_SIZE = 10;
 
 const printProgress = (offset) => {
   if (typeof process.stdout.clearLine !== 'function') return;
