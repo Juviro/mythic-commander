@@ -1,2 +1,3 @@
 export const FEATURE_FLAG_DEBUG = 'DEBUG';
 export const FEATURE_FLAG_TAG = 'TAG';
+export const FEATURE_FLAG_UPDATE_CARDS = 'UPDATE_CARDS';

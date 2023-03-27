@@ -88,3 +88,9 @@ export const changeCollection = gql`
     }
   }
 `;
+
+export const updateCardImages = gql`
+  mutation updateCardImages($cardId: String!) {
+    updateCardImages(cardId: $cardId)
+  }
+`;

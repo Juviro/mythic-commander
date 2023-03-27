@@ -474,6 +474,9 @@ type Mutation {
 
   ########## Default tags ##########
   setDefaultTags(tags: [String!]!, oracleId: String!): Boolean
+
+  ########## Card Update ##########
+  updateCardImages(cardId: String!): Boolean
 }
 
 ################################# Move Card #################################
