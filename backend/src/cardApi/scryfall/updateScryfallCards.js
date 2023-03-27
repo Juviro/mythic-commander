@@ -17,13 +17,15 @@ const updateClause = ALL_CARD_FIELDS.map(
 
 const ON_DUPLICATE = ` ON CONFLICT (id) DO UPDATE SET ${updateClause}, "lastUpdate" = NOW()`;
 
-const shouldSkipCard = ({ set, games, layout }) => {
+const shouldSkipCard = ({ set, games, layout, set_type }) => {
   // Jumpstart Front Cards
   if (set === 'fjmp') return true;
   // Cards that only exists digitally
   if (games.length && !games?.includes('paper')) return true;
   // Art Series from Set boosters
   if (layout === 'art_series') return true;
+  // Jumpstart cover cards, e.g. https://api.scryfall.com/cards/162c2282-d32e-4465-abc8-df0e858ec118
+  if (set_type === 'memorabilia') return true;
 
   return false;
 };
