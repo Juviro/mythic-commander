@@ -44,6 +44,10 @@ const DEFAULT_FILTER = [
     label: 'Mana costs (highest first)',
     value: 'cmc-desc',
   },
+  {
+    label: 'EDHRec Rank',
+    value: 'edhrec-asc',
+  },
 ];
 
 const COLLECTION_FILTER = [

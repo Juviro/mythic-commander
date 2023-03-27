@@ -46,6 +46,8 @@ export const getOrderColumn = (orderBy, useCreatedAt = true) => {
       return useCreatedAt ? '"createdAt"' : 'released_at';
     case 'amount':
       return '"totalAmount"';
+    case 'edhrec':
+      return '"edhrec_rank"';
     default:
       return `"${orderBy}"`;
   }
