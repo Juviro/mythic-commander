@@ -129,7 +129,12 @@ export default async (
     .where(where)
     .limit(limit)
     .offset(offset)
-    .orderByRaw(`${getOrderColumn(order, false)} ${direction.toUpperCase()}`);
+    .orderByRaw(
+      `${getOrderColumn(
+        order,
+        false
+      )} ${direction.toUpperCase()}, id ${direction.toUpperCase()}`
+    );
 
   const countQuery = db(tableName).where(where).count('*').first();
 
