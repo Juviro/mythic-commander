@@ -13,6 +13,8 @@ const printProgress = (offset) => {
 const updateAllImages = async () => {
   let offset = 0;
 
+  console.info('Updating all card images...');
+
   while (true) {
     const cards = await knex('cards')
       .orderBy('released_at', 'desc')
