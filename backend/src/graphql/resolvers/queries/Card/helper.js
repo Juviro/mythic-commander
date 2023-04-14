@@ -111,6 +111,9 @@ export const getMainVariant = ({
   if (promo_types?.includes('stepandcompleat')) {
     return 'Compleat';
   }
+  if (promo_types?.includes('oilslick')) {
+    return 'Oil Slick';
+  }
   if (border_color === 'borderless') {
     return 'Borderless';
   }
