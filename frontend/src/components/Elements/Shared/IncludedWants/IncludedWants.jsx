@@ -35,7 +35,9 @@ const WantsListLink = ({ id, name }) => {
 export default ({ card, large, cardId, loading }) => {
   const { containingWantsLists } = card ?? {};
 
-  const dataSource = containingWantsLists?.sort((a, b) => (a.name > b.name ? 1 : -1));
+  const dataSource =
+    containingWantsLists &&
+    [...containingWantsLists]?.sort((a, b) => (a.name > b.name ? 1 : -1));
 
   return (
     <StyledWrapper>

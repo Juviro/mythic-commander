@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import getDynamicUrl from '../../../../utils/getDynamicUrl';
 import Flex from '../Flex';
-import AddToDeck from './AddToDeck';
+import AddToDeck, { StyledDeckThumbnail } from './AddToDeck';
 import useGroupByDeckType from '../../../../hooks/useGroupByDeckType';
 import DeckStatusTag from '../../Desktop/OverviewList/DeckStatus/DeckStatusTag';
 
@@ -14,13 +14,6 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   margin-bottom: 16px;
-`;
-
-const StyledPreview = styled.img`
-  width: 38px;
-  height: auto;
-  margin-right: 8px;
-  border-radius: 2px;
 `;
 
 const StyledDivider = styled(Divider)`
@@ -81,7 +74,7 @@ export default ({ card, large, loading }) => {
                 renderItem={({ id, name, imgSrc }) => (
                   <List.Item style={{ padding: large ? 8 : 4, height: 44 }}>
                     <Flex align="center">
-                      <StyledPreview src={imgSrc} />
+                      <StyledDeckThumbnail src={imgSrc} />
                       <DeckLink id={id} name={name} />
                     </Flex>
                   </List.Item>
