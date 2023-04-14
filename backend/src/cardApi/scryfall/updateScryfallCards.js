@@ -54,6 +54,7 @@ export const updateScryfallCards = async (type, tableName) => {
     );
   };
 
+  // TODO: skip first and last line, actually print error in line 100
   for await (const line of rl) {
     try {
       // remove trailing comma

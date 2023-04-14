@@ -56,7 +56,7 @@ export const getAllSets = async (oracle_id, userId = '', db) => {
     const cardsWithSameSet = sortedCards.filter(({ set }) => set === card.set);
 
     if (cardsWithSameSet.length === 1) return card;
-    // No version indicator for the first card, which we assume is the main card, unless it's has a variant
+    // No version indicator for the first card, which we assume is the main card, unless it has a variant
     if (cardsWithSameSet[0].id === card.id && !card.primary_variant) {
       return card;
     }

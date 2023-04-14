@@ -15,6 +15,7 @@ const addMainType = (card: UnifiedDeckCard) => {
   const mainType = card.isCommander
     ? 'Commander'
     : CARD_TYPES.find((type) => card.primaryTypes.includes(type));
+
   return {
     ...card,
     mainType,

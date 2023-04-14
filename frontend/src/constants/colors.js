@@ -48,6 +48,7 @@ export const lifeTracker = [
 ];
 
 // https://material.io/resources/color/  - 300
+// new: http://mcg.mbitson.com/#!?mcgpalette0=%23f1c232
 export const red300 = '#e57373';
 export const pink300 = '#f06292';
 export const purple300 = '#ba68c8';
@@ -55,6 +56,7 @@ export const blue300 = '#64b5f6';
 export const cyan300 = '#4dd0e1';
 export const green300 = '#81c784';
 export const yellow300 = '#fff176';
+export const yellow700 = '#EDB426';
 export const orange300 = '#ffb74d';
 export const deepOrange300 = '#ff8a65';
 export const brown300 = '#a1887f';
@@ -63,6 +65,7 @@ export const typeColors = {
   Creature: green300,
   Enchantment: cyan300,
   Artifact: purple300,
+  Battle: yellow700,
   Planeswalker: deepOrange300,
   Sorcery: red300,
   Instant: blue300,
