@@ -27,6 +27,10 @@ export const addCardsToWantsList = gql`
             id
             name
             amount
+
+            deck {
+              imgSrc
+            }
           }
         }
       }
@@ -41,6 +45,10 @@ export const wantsLists = gql`
       name
       lastEdit
       numberOfCards
+
+      deck {
+        imgSrc
+      }
     }
   }
 `;

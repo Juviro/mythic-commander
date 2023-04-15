@@ -7,6 +7,7 @@ import message from '../../../../utils/message';
 import { getCardByOracleId } from '../../../Mobile/Card/queries';
 import { addCardsToDeckDesktop } from '../../../Desktop/Deck/queries';
 import { getDecksDesktop } from '../../../Desktop/Decks/queries';
+import isMobile from '../../../../utils/isMobile';
 
 const NEW_LIST_DUMMY_ID = 'new-deck';
 const DEFAULT_NEW_LIST_NAME = 'New Deck';
@@ -71,9 +72,9 @@ export default ({
       style={{ width: '100%' }}
       onChange={onAddToList}
       value={title}
-      showSearch
       loading={isLoading}
       disabled={isLoading}
+      showSearch={!isMobile()}
       filterOption={(input, { name }) => name.toLowerCase().includes(input.toLowerCase())}
     >
       {selectOptions.map(({ id, name, imgSrc }) => (

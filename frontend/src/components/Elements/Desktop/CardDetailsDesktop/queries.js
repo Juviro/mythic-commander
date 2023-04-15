@@ -44,6 +44,9 @@ const CARD_FIELDS = `
       id
       name
       amount
+      deck {
+        imgSrc
+      }
     }
   
     containingDecks {

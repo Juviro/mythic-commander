@@ -70,10 +70,15 @@ type OracleCard {
   containingWantsLists: [ContainingList!]!
 }
 
+type ContainingListDeck {
+  imgSrc: String
+}
+
 type ContainingList {
   id: String!
   name: String!
   amount: Int!
+  deck: ContainingListDeck
 }
 
 type Set {

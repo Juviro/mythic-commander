@@ -19,6 +19,10 @@ const CARD_FIELDS = `
       id
       name
       amount
+
+      deck {
+        imgSrc
+      }
     }
   
     containingDecks {
@@ -73,6 +77,10 @@ export const addCardsToWantsList = gql`
             id
             name
             amount
+
+            deck {
+              imgSrc
+            }
           }
         }
       }
