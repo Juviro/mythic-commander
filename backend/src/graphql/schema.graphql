@@ -379,6 +379,7 @@ input CardsOptionsInput {
   colors: String
   subTypes: [String!]
   cardTypes: [String!]
+  tags: [String!]
   isLegendary: String
   isCommanderLegal: String
   isOwned: String

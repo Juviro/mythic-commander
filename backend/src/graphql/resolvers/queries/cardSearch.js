@@ -39,7 +39,6 @@ export const getOrderColumn = (orderBy, useCreatedAt = true) => {
     case '':
     case 'priceEur':
       return "coalesce(LEAST((prices->>'eur')::float, (prices->>'eur_foil')::float, (prices->>'eur_etched')::float), 0)";
-    case 'price': // Legacy support
     case 'priceUsd':
       return "coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float, (prices->>'usd_etched')::float), 0)";
     case 'added':
@@ -74,6 +73,11 @@ const addRarityClause = (q, rarity) => {
   q.whereIn('rarity', rarities);
 };
 
+const addTagsClause = (q, tags) => {
+  const placeholder = tags.map(() => '?');
+  q.whereRaw(`tags && ARRAY[${placeholder}]::text[]`, tags);
+};
+
 export const addNameClause = (q, name) => {
   const searchPattern = name.split(' ').join('%');
 
@@ -99,6 +103,7 @@ export default async (
     power,
     cmc,
     rarity,
+    tags,
     orderBy = 'name-asc',
   } = options;
 
@@ -125,9 +130,12 @@ export default async (
     if (power) addRangeClause(q, power, 'power');
     if (toughness) addRangeClause(q, toughness, 'toughness');
     if (rarity) addRarityClause(q, rarity);
+    if (tags?.length) addTagsClause(q, tags);
   };
 
   const cardQuery = db(tableName)
+    .select(`${tableName}.*`, 'defaultTags.tags')
+    .leftJoin('defaultTags', `${tableName}.oracle_id`, 'defaultTags.oracle_id')
     .where(where)
     .limit(limit)
     .offset(offset)
@@ -138,7 +146,11 @@ export default async (
       )} ${direction.toUpperCase()}, id ${direction.toUpperCase()}`
     );
 
-  const countQuery = db(tableName).where(where).count('*').first();
+  const countQuery = db(tableName)
+    .leftJoin('defaultTags', `${tableName}.oracle_id`, 'defaultTags.oracle_id')
+    .where(where)
+    .count('*')
+    .first();
 
   const cards = await cardQuery;
   const { count } = await countQuery;

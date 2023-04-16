@@ -8,6 +8,7 @@ export default {
   isLegendary: StringParam,
   subTypes: ArrayParam,
   colors: StringParam,
+  tags: ArrayParam,
   rarity: StringParam,
   cmc: StringParam,
   power: StringParam,

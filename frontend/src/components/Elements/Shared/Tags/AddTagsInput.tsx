@@ -1,18 +1,29 @@
 import React, { useState } from 'react';
-import { Select } from 'antd';
+import { Empty, Select } from 'antd';
+
 import getDropdownAlign from 'utils/getDropdownAlign';
+import DEFAULT_TAGS from 'constants/tags';
 import Tag from './Tag';
 
 const tagRender = ({ value, onClose }) => {
-  return <Tag tag={value} key={value} onDeleteTag={(_, event) => onClose(event)} />;
+  return (
+    <Tag
+      tag={value}
+      key={value}
+      onDeleteTag={onClose ? (_, event) => onClose(event) : undefined}
+    />
+  );
 };
 
 interface Props {
-  onSave: (tags: string[]) => void;
-  onClose: () => void;
+  onSave?: (tags: string[]) => void;
+  onClose?: () => void;
   initialTags?: string[];
-  options: string[];
+  options?: string[];
   alignTop?: boolean;
+  defaultOpen?: boolean;
+  allowCustomTags?: boolean;
+  placeholder?: string;
   onChange?: (newTags: string[]) => void;
   value?: string[];
 }
@@ -22,7 +33,10 @@ const AddTagsInput = ({
   onClose,
   initialTags,
   alignTop,
-  options,
+  options = DEFAULT_TAGS,
+  defaultOpen,
+  allowCustomTags,
+  placeholder,
   onChange: passedOnChange,
   value,
 }: Props) => {
@@ -33,9 +47,9 @@ const AddTagsInput = ({
     if (isOpen) return;
     event.stopPropagation();
     if (event.key === 'Enter') {
-      onSave(currentTags);
+      onSave?.(currentTags);
     } else if (event.key === 'Escape') {
-      onClose();
+      onClose?.();
     }
   };
 
@@ -48,11 +62,12 @@ const AddTagsInput = ({
 
   return (
     <Select
-      mode="tags"
+      mode={allowCustomTags ? 'tags' : 'multiple'}
+      allowClear={!allowCustomTags}
       autoFocus
-      defaultOpen
+      defaultOpen={defaultOpen}
       style={{ width: '100%' }}
-      placeholder="Add a tag..."
+      placeholder={placeholder}
       onDropdownVisibleChange={setIsOpen}
       value={value ?? currentTags}
       optionLabelProp="label"
@@ -61,6 +76,13 @@ const AddTagsInput = ({
       dropdownAlign={getDropdownAlign(alignTop)}
       onChange={onChange}
       onKeyDown={onKeyDown}
+      notFoundContent={
+        <Empty
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+          description="No Tags found"
+          style={{ margin: '8px 0' }}
+        />
+      }
     >
       {options.map((tag) => (
         <Select.Option value={tag} key={tag} label={tag}>

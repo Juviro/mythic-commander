@@ -14,6 +14,7 @@ import SetSelection from './SelectFilter/SetSelection';
 import RangeFilter from './RangeFilter';
 import RarityFilter from './RarityFilter';
 import Flex from '../Flex';
+import AddTagsInput from '../Tags/AddTagsInput';
 
 const SytledFilterWrapper = styled.div`
   width: 100%;
@@ -62,6 +63,7 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
     sets,
     text,
     colors,
+    tags,
     subTypes,
     cardTypes,
     isLegendary,
@@ -147,6 +149,17 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
       dividerAbove: true,
       component: (
         <ColorSelection size={size} onChange={onChangeOption('colors')} value={colors} />
+      ),
+    },
+    {
+      title: 'Tag',
+      dividerAbove: true,
+      component: (
+        <AddTagsInput
+          placeholder='e.g. "Ramp"'
+          onChange={onChangeOption('tags')}
+          value={tags ?? []}
+        />
       ),
     },
     {

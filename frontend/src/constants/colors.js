@@ -130,12 +130,12 @@ export const tagColors = [
     fill: '#389e0d',
     background: '#f6ffed',
   },
-  {
-    name: 'Synergy',
-    color: 'cyan',
-    fill: '#08979c',
-    background: '#e6fffb',
-  },
+  // {
+  //   name: 'Synergy',
+  //   color: 'cyan',
+  //   fill: '#08979c',
+  //   background: '#e6fffb',
+  // },
   {
     name: 'Protection',
     color: 'blue',
