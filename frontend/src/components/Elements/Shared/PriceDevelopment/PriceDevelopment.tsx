@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Divider } from 'antd';
 import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
@@ -25,14 +25,34 @@ const PriceDevelopment = ({ selectedCard }: Props) => {
   const [initialPriceDevelopment] = useLocalStorage('price-development', 'Eur');
   const [selectedKey, setSelectedKey] = useState(initialPriceDevelopment);
 
+  // Used for the query if the current key is not available,
+  // e.g. the card is only available in foil / nonfoil.
+  // This tmp key is unly used as long the main key can not be used
+  // and will be reset afterwards.
+  const [tmpSelectedKey, setTmpSelectedKey] = useState(null);
+
+  const usedKey = tmpSelectedKey ?? selectedKey;
+
   const { data, loading } = useQuery(getPriceDevelopment, {
-    // legacy adapter: currency started with "price", which is omitted in the new schema
-    variables: { cardId: selectedCard?.id, currency: selectedKey.replace('price', '') },
+    variables: { cardId: selectedCard?.id, currency: usedKey },
     fetchPolicy: 'cache-first',
     skip: !selectedCard?.id,
   });
 
-  const unit = selectedKey.toLowerCase().includes('usd') ? '$' : '€';
+  const foilOnly = selectedCard && !selectedCard?.nonfoil;
+  const nonfoilOnly = selectedCard && !selectedCard?.foil;
+
+  useEffect(() => {
+    if (selectedKey.includes('Foil') && nonfoilOnly) {
+      setTmpSelectedKey(selectedKey.replace('Foil', ''));
+    } else if (!selectedKey.includes('Foil') && foilOnly) {
+      setTmpSelectedKey(`${selectedKey}Foil`);
+    } else {
+      setTmpSelectedKey(null);
+    }
+  }, [foilOnly, nonfoilOnly]);
+
+  const unit = usedKey.toLowerCase().includes('usd') ? '$' : '€';
 
   const formattedPriceDevelopment = data?.priceDevelopment?.map(({ date, price }) => ({
     date: formatDate(date, true),
@@ -53,9 +73,9 @@ const PriceDevelopment = ({ selectedCard }: Props) => {
       )}
       <PriceDevelopmentSelection
         onSelect={setSelectedKey}
-        selectedKey={selectedKey}
-        foilOnly={!selectedCard?.nonfoil}
-        nonfoilOnly={!selectedCard?.foil}
+        selectedKey={usedKey}
+        foilOnly={foilOnly}
+        nonfoilOnly={nonfoilOnly}
       />
     </StyledWrapper>
   );
