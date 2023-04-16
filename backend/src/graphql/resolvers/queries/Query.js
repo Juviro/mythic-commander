@@ -52,10 +52,17 @@ const resolver = {
   },
 
   async priceDevelopment(_, { cardId, currency }, { db }) {
-    const prices = await db('cardPrices')
-      .orderBy('date', 'ASC')
-      .select('id', 'date', `price${currency} as price`)
-      .where({ id: cardId });
+    // Select 20 days rolling average as price to smooth out the curve
+    const { rows: prices } = await db.raw(
+      `
+      SELECT c.date, c.id,
+        round(AVG(c.??::numeric)
+        OVER(ORDER BY c.date ROWS BETWEEN 20 PRECEDING AND CURRENT ROW), 2)
+        AS price
+        FROM "cardPrices" c WHERE id=?;
+        `,
+      [`price${currency}`, cardId]
+    );
 
     let hasData = false;
 
