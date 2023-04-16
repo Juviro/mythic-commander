@@ -56,6 +56,7 @@ const AddTagMenu = ({
         />
         <AddTagsInput
           defaultOpen
+          autoFocus
           allowCustomTags
           onClose={onClose}
           placeholder="Add a tag..."

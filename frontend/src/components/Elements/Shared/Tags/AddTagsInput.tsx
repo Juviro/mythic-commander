@@ -22,6 +22,7 @@ interface Props {
   options?: string[];
   alignTop?: boolean;
   defaultOpen?: boolean;
+  autoFocus?: boolean;
   allowCustomTags?: boolean;
   placeholder?: string;
   onChange?: (newTags: string[]) => void;
@@ -35,6 +36,7 @@ const AddTagsInput = ({
   alignTop,
   options = DEFAULT_TAGS,
   defaultOpen,
+  autoFocus,
   allowCustomTags,
   placeholder,
   onChange: passedOnChange,
@@ -64,7 +66,7 @@ const AddTagsInput = ({
     <Select
       mode={allowCustomTags ? 'tags' : 'multiple'}
       allowClear={!allowCustomTags}
-      autoFocus
+      autoFocus={autoFocus}
       defaultOpen={defaultOpen}
       style={{ width: '100%' }}
       placeholder={placeholder}
