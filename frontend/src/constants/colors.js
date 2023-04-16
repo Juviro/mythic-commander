@@ -143,7 +143,7 @@ export const tagColors = [
     background: '#e6f7ff',
   },
   {
-    name: 'Card Draw',
+    name: 'Card Advantage',
     color: 'geekblue',
     fill: '#1d39c4',
     background: '#f0f5ff',
