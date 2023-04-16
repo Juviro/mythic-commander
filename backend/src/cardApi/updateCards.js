@@ -1,5 +1,6 @@
 import knex from '../database';
 import { updateScryfallCards } from './scryfall/updateScryfallCards';
+import { setIsSpecialForDistinctCards } from './setIsSpecialForDistinctCards';
 
 const deleteOldCards = async () => {
   try {
@@ -20,6 +21,7 @@ const updateCards = async () => {
   try {
     await updateScryfallCards('default_cards', 'cards');
     await deleteOldCards();
+    await setIsSpecialForDistinctCards();
 
     await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCards"`);
     await knex.raw(`REFRESH MATERIALIZED VIEW "distinctCardsPerSet"`);
