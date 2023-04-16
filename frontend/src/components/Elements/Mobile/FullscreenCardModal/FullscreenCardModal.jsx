@@ -23,6 +23,8 @@ export default ({ card, visible, onChangeIsOpen }) => {
       visible={visible}
       bodyStyle={{
         padding: 0,
+        borderRadius: '4%',
+        overflow: 'hidden',
       }}
       wrapClassName="transparent-modal"
       onCancel={onChangeIsOpen}
