@@ -116,6 +116,12 @@ export const getMainVariant = ({
   if (promo_types?.includes('oilslick')) {
     return 'Oil Slick';
   }
+  if (promo_types?.includes('serialized')) {
+    return 'Serialized';
+  }
+  if (promo_types?.includes('doublerainbow')) {
+    return 'Double Rainbow';
+  }
   if (border_color === 'borderless') {
     return 'Borderless';
   }
