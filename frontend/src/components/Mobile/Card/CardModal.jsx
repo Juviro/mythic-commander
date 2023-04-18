@@ -26,9 +26,6 @@ const StyledSlide = styled.div`
   flex-direction: column;
 `;
 
-// TODO:
-// * when reaching the end of an infinite scroll list, load more options
-
 const CardModal = ({ currentCardId, onClose, cards, setDetailCard }) => {
   const currentCardRef = React.createRef();
 

@@ -17,6 +17,7 @@ import WithActions from './WithActions';
 import { SelectionMenu } from './SelectionMenu/SelectionMenu';
 import useCardDetailNavigation from './useCardDetailNavigation';
 import GridListSelection from './GridListSelection/GridListSelection';
+import scrollIntoView from '../../../../utils/scrollIntoView';
 
 export const GRID_CARD_WIDTH = 220;
 
@@ -128,6 +129,15 @@ const CardGrid = ({
     setDetailCardIndex(null);
     // eslint-disable-next-line
   }, [history.location.pathname]);
+
+  useEffect(() => {
+    const cardElement = document.getElementById(detailCard?.id);
+    if (!cardElement) return;
+
+    scrollIntoView(cardElement, {
+      behavior: 'smooth',
+    });
+  }, [detailCard?.id]);
 
   const showPagination = Boolean(cards?.length) && !hidePagination && !minimal;
   const paginationComponent = showPagination ? (

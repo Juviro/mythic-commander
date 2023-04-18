@@ -128,7 +128,7 @@ const GridCard = ({
   };
 
   return (
-    <StyledCardWrapper key={card.id} fixedSize={fixedSize}>
+    <StyledCardWrapper key={card.id} fixedSize={fixedSize} id={card.id}>
       <StyledImageWrapper
         onClick={onClickCard}
         isSelected={isSelected}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { List, BackTop, Typography } from 'antd';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -10,6 +10,7 @@ import CardListItem from './CardListItem';
 import CustomSkeleton from '../../Shared/CustomSkeleton';
 import Footer from './Footer';
 import CardModal from '../../../Mobile/Card/CardModal';
+import scrollIntoView from '../../../../utils/scrollIntoView';
 
 const StyledPlaceholderWrapper = styled.div`
   padding: 4px 8px;
@@ -37,6 +38,13 @@ const CardList = ({
     name: StringParam,
     layout: StringParam,
   });
+
+  useEffect(() => {
+    const card = document.getElementById(detailCard?.id);
+    if (!card) return;
+
+    scrollIntoView(card);
+  }, [detailCard?.id]);
 
   // we don't want to display the skeletons when loading more with infinite scroll
   // only when a new search is triggered

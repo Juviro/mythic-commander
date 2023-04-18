@@ -29,7 +29,7 @@ export default ({
       size={size}
       index={index}
       zindex={zIndex}
-      relative={relative}
+      relative={relative ? 1 : 0}
     />
   );
 };
