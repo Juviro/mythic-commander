@@ -3,7 +3,6 @@ import { List, BackTop, Typography } from 'antd';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useQueryParams, StringParam } from 'use-query-params';
-import { withRouter } from 'react-router';
 
 import CardGrid from 'components/Elements/Shared/CardGrid';
 import LazyLoad from 'components/Elements/Shared/LazyLoad';
@@ -23,7 +22,6 @@ const CardList = ({
   onLoadMore,
   hasMore,
   totalResults,
-  history,
   hideFooter,
   moveToList,
   onEditCard,
@@ -35,7 +33,7 @@ const CardList = ({
   disableSelection,
 }) => {
   const [detailCard, setDetailCard] = useState(null);
-  const [{ name, layout = 'list' }] = useQueryParams({
+  const [{ name, layout = 'grid' }] = useQueryParams({
     name: StringParam,
     layout: StringParam,
   });
@@ -53,10 +51,6 @@ const CardList = ({
     return <StyledPlaceholderWrapper>{getPlaceholder()}</StyledPlaceholderWrapper>;
   }
 
-  const onOpenDetails = (card) => {
-    setDetailCard(card);
-    history.push(`${history.location.pathname}${history.location.search}#details`);
-  };
   const onCloseModal = () => setDetailCard(null);
 
   const totalResultsLabel = showTotalResults && (
@@ -80,7 +74,7 @@ const CardList = ({
               onEditCard={onEditCard}
               onDeleteCard={onDeleteCard}
               searchString={name}
-              onClick={() => onOpenDetails(card)}
+              onClick={() => setDetailCard(card)}
             />
           </LazyLoad>
         )}
@@ -89,7 +83,7 @@ const CardList = ({
       <CardGrid
         cards={cards}
         loading={loading}
-        onOpenDetails={onOpenDetails}
+        onOpenDetails={setDetailCard}
         hidePagination
         disableSelection={disableSelection}
         cardsPerRow={layout === 'grid' ? 2 : 1}
@@ -121,9 +115,14 @@ const CardList = ({
         />
       )}
       <BackTop style={{ left: 20, bottom: 20, ...backTopStyle }} />
-      <CardModal {...detailCard} onClose={onCloseModal} />
+      <CardModal
+        setDetailCard={setDetailCard}
+        currentCardId={detailCard?.id}
+        cards={cards}
+        onClose={onCloseModal}
+      />
     </>
   );
 };
 
-export default withRouter(CardList);
+export default CardList;

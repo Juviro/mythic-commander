@@ -6,7 +6,6 @@ import { useParams } from 'react-router';
 import { Divider } from 'antd';
 
 import UserContext from 'components/Provider/UserProvider';
-import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import CardLegal from 'components/Elements/Shared/CardLegal';
 import CardSetOverview from 'components/Elements/Shared/CardSetOverview';
 import IncludedDecks from 'components/Elements/Shared/IncludedDecks';
@@ -25,8 +24,8 @@ const StyledWrapper = styled.div`
   min-height: 100px;
   align-items: center;
   flex-direction: column;
-  justify-content: center;
 `;
+
 const StyledBodyWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -63,7 +62,6 @@ export default ({ overwriteOracleId, defaultCardId }) => {
   });
 
   const card = data && unifySingleCard(data.cardByOracleId);
-  useDocumentTitle(card?.name);
 
   const currentCard = card && card.allSets.find(({ id }) => id === selectedCardId);
 

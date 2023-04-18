@@ -62,6 +62,7 @@ export default createGlobalStyle`
     width: auto !important;
     max-width: 100vw;
     padding-bottom: 0;
+    position: fixed;
   }
 
   /* Darken selected color of auto completes to improve clarity for ben's laptop */
