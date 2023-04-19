@@ -59,6 +59,7 @@ export type Card = {
   priceUsd: Scalars['Float'];
   prices: Prices;
   primary_variant?: Maybe<Scalars['String']>;
+  produced_mana?: Maybe<Array<Scalars['String']>>;
   purchase_uris: PurchaseUris;
   rarity: Scalars['String'];
   relatedCards?: Maybe<Array<Card>>;
@@ -95,6 +96,7 @@ export type CardsOptionsInput = {
   rarity?: InputMaybe<Scalars['String']>;
   sets?: InputMaybe<Array<Scalars['String']>>;
   subTypes?: InputMaybe<Array<Scalars['String']>>;
+  tags?: InputMaybe<Array<Scalars['String']>>;
   text?: InputMaybe<Scalars['String']>;
   toughness?: InputMaybe<Scalars['String']>;
 };
@@ -134,8 +136,14 @@ export type CollectionSnapshot = {
 export type ContainingList = {
   __typename?: 'ContainingList';
   amount: Scalars['Int'];
+  deck?: Maybe<ContainingListDeck>;
   id: Scalars['String'];
   name: Scalars['String'];
+};
+
+export type ContainingListDeck = {
+  __typename?: 'ContainingListDeck';
+  imgSrc?: Maybe<Scalars['String']>;
 };
 
 export enum Currency {

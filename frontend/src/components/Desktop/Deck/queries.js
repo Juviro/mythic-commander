@@ -18,6 +18,7 @@ const CARD_FIELDS = `
       possiblePartner
       canBeCommander
       isTwoFaced
+      produced_mana
       
       oracleCard {
         _id

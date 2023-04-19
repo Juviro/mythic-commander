@@ -8,6 +8,7 @@
     "start-prod": "pm2 start ./dist/index.js --name backend --interpreter ./node_modules/.bin/babel-node --node-args=\"-r dotenv/config\"",
     "stop-prod": "pm2 delete backend",
     "build": "babel src --out-dir dist",
+    "create-migration": "babel-node -r dotenv/config node_modules/.bin/knex migrate:make new_migration",
     "migrate": "babel-node -r dotenv/config node_modules/.bin/knex migrate:latest",
     "rollback": "babel-node -r dotenv/config node_modules/.bin/knex migrate:rollback",
     "update-cards": "babel-node -r dotenv/config src/scripts/updateCardsManually.js",

@@ -97,33 +97,34 @@ export const manaSymbolColors = {
   B: '#ccc2c0',
   R: '#faaa8f',
   G: '#9cd6b0',
+  C: '#dc8eed',
 };
 
 export const tagColors = [
-  {
-    name: '???',
-    color: 'gold',
-  },
+  // {
+  //   name: '???',
+  //   color: 'gold',
+  // },
   {
     name: 'Targeted Removal',
     color: 'volcano',
     fill: '#d4380d',
     background: '#ffbb96',
   },
-  {
-    name: '???',
-    color: 'red',
-  },
+  // {
+  //   name: '???',
+  //   color: 'red',
+  // },
   {
     name: 'Board Wipe',
     color: 'orange',
     fill: '#d46b08',
     background: '#ffd591',
   },
-  {
-    name: '???',
-    color: 'lime',
-  },
+  // {
+  //   name: '???',
+  //   color: 'lime',
+  // },
   {
     name: 'Ramp',
     color: 'green',
@@ -131,7 +132,7 @@ export const tagColors = [
     background: '#f6ffed',
   },
   // {
-  //   name: 'Synergy',
+  //   name: '???',
   //   color: 'cyan',
   //   fill: '#08979c',
   //   background: '#e6fffb',

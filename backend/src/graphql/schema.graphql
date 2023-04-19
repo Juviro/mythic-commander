@@ -39,6 +39,7 @@ type Card {
   isTwoFaced: Boolean!
   primary_variant: String
   collector_number: String!
+  produced_mana: [String!]
 
   # Additional card fields
   imgKey: String!
