@@ -44,6 +44,9 @@ interface Props {
 }
 
 const ColorDistributionChart = ({ deck, colorKey }: Props) => {
+  const hasCommander = Boolean(
+    deck?.cards.filter(({ isCommander }) => isCommander)?.length
+  );
   const colorIdentity = getColorIdentity(deck?.cards);
 
   const colorDistribution = deck?.cards.reduce((acc, card) => {
@@ -56,9 +59,11 @@ const ColorDistributionChart = ({ deck, colorKey }: Props) => {
     }
 
     colorSymbols
-      ?.filter(
-        (colorSymbol) => colorSymbol === 'C' || colorIdentity.includes(colorSymbol)
-      )
+      ?.filter((colorSymbol) => {
+        if (colorKey === 'mana_cost') return true;
+        if (!hasCommander) return true;
+        return colorSymbol === 'C' || colorIdentity.includes(colorSymbol);
+      })
       .sort(sortByColor)
       .forEach((symbol) => {
         const fullColor = getFullColor(symbol);
