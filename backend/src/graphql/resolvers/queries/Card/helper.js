@@ -116,6 +116,15 @@ export const getMainVariant = ({
   if (promo_types?.includes('halofoil')) {
     return 'Halo Foil';
   }
+  if (promo_types?.includes('boxtopper')) {
+    return 'Boxtopper';
+  }
+  if (promo_types?.includes('buyabox')) {
+    return 'Buy-a-Box';
+  }
+  if (promo_types?.includes('neonink')) {
+    return 'Neon Ink';
+  }
   if (promo_types?.includes('oilslick')) {
     return 'Oil Slick';
   }

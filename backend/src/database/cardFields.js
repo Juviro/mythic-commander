@@ -219,6 +219,21 @@ export const CARD_FIELDS_ADDITION_11 = [
   },
 ];
 
+export const CARD_FIELDS_ADDITION_12 = [
+  {
+    key: 'promo_types',
+    specificType: 'TEXT[]',
+  },
+  {
+    key: 'border_color',
+    type: 'string',
+  },
+  {
+    key: 'set_type',
+    type: 'string',
+  },
+];
+
 export const ALL_CARD_FIELDS = [
   CARD_FIELDS_INITIAL,
   CARD_FIELDS_ADDITION_1,
@@ -232,4 +247,5 @@ export const ALL_CARD_FIELDS = [
   CARD_FIELDS_ADDITION_9,
   CARD_FIELDS_ADDITION_10,
   CARD_FIELDS_ADDITION_11,
+  CARD_FIELDS_ADDITION_12,
 ].flat();
