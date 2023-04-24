@@ -68,8 +68,8 @@ interface Props {
   cardsPerRow?: number;
   cardLists?: CardList[];
   disableSelection?: boolean;
-  canZoomIn?: boolean;
   minimal?: boolean;
+  onZoomIn?: (card: UnifiedCard) => void;
   onClickCard?: (card: UnifiedCard) => void;
   smallSelectionMenu?: boolean;
   allTags?: string[];
@@ -94,7 +94,7 @@ const CardGrid = ({
   onCopyCardsTo,
   onSetTags,
   cardLists: passedCardLists,
-  canZoomIn,
+  onZoomIn,
   onClickCard,
   disableSelection,
   hidePagination,
@@ -250,7 +250,7 @@ const CardGrid = ({
                 onSetTags={onSetTags}
                 isSelected={selectedCardIds.includes(card.id)}
                 isAnyCardSelected={Boolean(selectedCardIds.length)}
-                canZoomIn={canZoomIn}
+                onZoomIn={onZoomIn}
                 onSelect={() => onSelectCard(card.id)}
                 markAsDisabled={markAsDisabled && markAsDisabled(card)}
                 onOpenDetails={() =>

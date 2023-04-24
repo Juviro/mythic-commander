@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSpring, animated as a } from 'react-spring';
 import { SyncOutlined } from '@ant-design/icons';
 
@@ -36,6 +36,10 @@ export default ({
     if (onFlipCardCallback) onFlipCardCallback(!isFlipped);
     toggleIsFlipped();
   };
+
+  useEffect(() => {
+    if (isFlipped) toggleIsFlipped();
+  }, [card?.id]);
 
   const frontImgSrc = getImageUrl(id, imgKey, 'normal');
 

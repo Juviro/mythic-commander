@@ -34,17 +34,20 @@ const CardList = ({
   disableSelection,
 }) => {
   const [detailCard, setDetailCard] = useState(null);
+  const [zoomedCard, setZoomedCard] = useState(null);
   const [{ name, layout = 'grid' }] = useQueryParams({
     name: StringParam,
     layout: StringParam,
   });
 
-  useEffect(() => {
-    const card = document.getElementById(detailCard?.id);
-    if (!card) return;
+  const currentCardId = detailCard?.id || zoomedCard?.id;
 
-    scrollIntoView(card);
-  }, [detailCard?.id]);
+  useEffect(() => {
+    const cardElement = document.getElementById(currentCardId);
+    if (!cardElement) return;
+
+    scrollIntoView(cardElement, { behavior: 'smooth' });
+  }, [currentCardId]);
 
   // we don't want to display the skeletons when loading more with infinite scroll
   // only when a new search is triggered
@@ -59,7 +62,10 @@ const CardList = ({
     return <StyledPlaceholderWrapper>{getPlaceholder()}</StyledPlaceholderWrapper>;
   }
 
-  const onCloseModal = () => setDetailCard(null);
+  const onCloseModal = () => {
+    setDetailCard(null);
+    setZoomedCard(null);
+  };
 
   const totalResultsLabel = showTotalResults && (
     <Typography.Text
@@ -95,7 +101,7 @@ const CardList = ({
         hidePagination
         disableSelection={disableSelection}
         cardsPerRow={layout === 'grid' ? 2 : 1}
-        canZoomIn
+        onZoomIn={setZoomedCard}
         onEditCard={onEditCard}
         onDeleteCard={onDeleteCard}
         deleteByOracle={deleteByOracle}
@@ -125,7 +131,9 @@ const CardList = ({
       <BackTop style={{ left: 20, bottom: 20, ...backTopStyle }} />
       <CardModal
         setDetailCard={setDetailCard}
-        currentCardId={detailCard?.id}
+        detailedCardId={detailCard?.id}
+        setZoomedCard={setZoomedCard}
+        zoomedCardId={zoomedCard?.id}
         cards={cards}
         onClose={onCloseModal}
       />
