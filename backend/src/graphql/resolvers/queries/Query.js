@@ -167,11 +167,13 @@ const resolver = {
 
     return imageUris
       .map(({ image_uris, card_faces }) => {
-        if (card_faces)
+        if (card_faces) {
           return card_faces.map((cardFace) => cardFace.image_uris.art_crop);
+        }
         return image_uris.art_crop;
       })
-      .map((artCrop) => artCrop.split('?')[0].replace(/\$.+$/, ''))
+      .flat()
+      .map((artCrop) => artCrop?.split('?')[0].replace(/\$.+$/, ''))
       .flat();
   },
 
