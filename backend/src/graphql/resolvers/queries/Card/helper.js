@@ -113,6 +113,9 @@ export const getMainVariant = ({
   if (promo_types?.includes('stepandcompleat')) {
     return 'Compleat';
   }
+  if (promo_types?.includes('halofoil')) {
+    return 'Halo Foil';
+  }
   if (promo_types?.includes('oilslick')) {
     return 'Oil Slick';
   }
