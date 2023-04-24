@@ -11,7 +11,7 @@ import FoilIcon from '../FoilIcon';
 
 export const splitSearchString = (query = '', allowFoilInput = false) => {
   // Match collector number
-  const matchCollectorNumber = query.match(/^(\d{0,2})(f?)(\d{3})$/);
+  const matchCollectorNumber = query.match(/^(\d{0,2}?)(f?)(\d{3,4})$/);
   if (matchCollectorNumber) {
     const [, matchedAmount, matchedFoil, collectorNumber] = matchCollectorNumber;
     const amount = Number(matchedAmount) || 1;

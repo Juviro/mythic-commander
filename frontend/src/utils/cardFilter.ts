@@ -15,10 +15,11 @@ export const filterByName = (cards: UnifiedCard[], searchString = ''): UnifiedCa
   const cleanSearch = trimName(searchString);
   const searchRegExp = new RegExp(cleanSearch.split(' ').join('.*'));
 
-  const isCollectorNumber = searchString.match(/^\d{3}$/);
+  const isCollectorNumber = searchString.match(/^\d{3,4}$/);
 
   return cards.filter(({ name, collector_number }) => {
-    if (isCollectorNumber && collector_number?.startsWith(searchString)) {
+    const paddedCollectorNumber = collector_number?.padStart(3, '0');
+    if (isCollectorNumber && paddedCollectorNumber === searchString) {
       return true;
     }
 
