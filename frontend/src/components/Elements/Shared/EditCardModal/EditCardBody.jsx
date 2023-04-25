@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import isMobile from 'utils/isMobile';
-import { Typography } from 'antd';
+import { Checkbox, Typography } from 'antd';
 import Card from '../Card';
 import SetPicker from '../SetPicker';
 import AmountInput from '../AmountInput';
@@ -19,7 +19,6 @@ const StyledWrapper = styled.div`
 
 const StyledContent = styled.div`
   flex: 1;
-  margin-bottom: 24px;
   margin-top: 24px;
 
   @media (min-width: 500px) {
@@ -61,6 +60,13 @@ export default ({ card, onChangeProp, canSubmit, onSubmit }) => {
           onSelectCard={setSelectedCard}
           onSelect={onChangeProp('id')}
         />
+        <Checkbox
+          // checked={TODO:}
+          onChange={(e) => onChangeProp('isDefault')(e.target.checked)}
+          style={{ marginLeft: 0, marginTop: 16 }}
+        >
+          Set as Default Card Version
+        </Checkbox>
       </StyledContent>
     </StyledWrapper>
   );

@@ -168,6 +168,7 @@ type DeckCard {
   amount: Int!
   createdAt: String!
   isCommander: Boolean
+  # isDefault: Boolean TODO:
   card: Card!
   tags: [String!]
 }
@@ -521,6 +522,7 @@ input EditDeckCardInput {
   id: String
   amount: Int
   isCommander: Boolean
+  isDefault: Boolean
   tags: [String!]
 }
 
