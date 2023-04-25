@@ -62,7 +62,7 @@ export const PurchaseIcon = ({
     cardmarket: {
       icon: mkmIcon,
       name: 'Cardmarket',
-      uri: `https://www.cardmarket.com/en/Magic/Products/Search?searchString=${encodedName}`,
+      uri: `https://www.cardmarket.com/en/Magic/Products/Singles?searchString=${encodedName}`,
     },
     edhrec: {
       icon: edhrecIcon,
