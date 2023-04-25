@@ -1,5 +1,4 @@
-/* eslint-disable */
-
+import { gql } from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -176,6 +175,7 @@ export type DeckCard = {
   createdAt: Scalars['String'];
   id: Scalars['String'];
   isCommander?: Maybe<Scalars['Boolean']>;
+  isDefault?: Maybe<Scalars['Boolean']>;
   tags?: Maybe<Array<Scalars['String']>>;
 };
 
@@ -220,6 +220,7 @@ export type EditDeckCardInput = {
   amount?: InputMaybe<Scalars['Int']>;
   id?: InputMaybe<Scalars['String']>;
   isCommander?: InputMaybe<Scalars['Boolean']>;
+  isDefault?: InputMaybe<Scalars['Boolean']>;
   tags?: InputMaybe<Array<Scalars['String']>>;
 };
 

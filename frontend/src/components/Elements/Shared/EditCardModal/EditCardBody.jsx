@@ -61,7 +61,6 @@ export default ({ card, onChangeProp, canSubmit, onSubmit }) => {
           onSelect={onChangeProp('id')}
         />
         <Checkbox
-          // checked={TODO:}
           onChange={(e) => onChangeProp('isDefault')(e.target.checked)}
           style={{ marginLeft: 0, marginTop: 16 }}
         >
