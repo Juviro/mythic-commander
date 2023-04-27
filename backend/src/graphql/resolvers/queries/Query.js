@@ -12,6 +12,7 @@ import wantedCards from './wantedCards';
 import tokenFinder from './tokenFinder';
 import getEdhrecCards from './getEdhrecCards';
 import tokens from './tokens';
+import collectionBySet from './collectionBySet';
 
 const resolver = {
   user(_, __, { db, user: { id } }) {
@@ -222,6 +223,8 @@ const resolver = {
       wantsLists,
     };
   },
+
+  collectionBySet,
 
   ltPlayers(_, __, { user: { id: userId }, db }) {
     if (!userId) return null;

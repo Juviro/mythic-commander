@@ -557,6 +557,7 @@ export type Query = {
   cards: Array<Maybe<Card>>;
   cardsBySet: Array<Card>;
   collection: Collection;
+  collectionBySet: Array<Set>;
   collectionSnapshots: Array<CollectionSnapshot>;
   deck?: Maybe<Deck>;
   decks: Array<Deck>;
@@ -649,11 +650,14 @@ export type QueryWantsListsArgs = {
 
 export type Set = {
   __typename?: 'Set';
-  card_faces?: Maybe<Array<CardFace>>;
-  id: Scalars['String'];
-  image_uris?: Maybe<ImageUris>;
-  prices: Prices;
-  set: Scalars['String'];
+  card_count: Scalars['Int'];
+  code: Scalars['String'];
+  icon_svg_uri: Scalars['String'];
+  name: Scalars['String'];
+  released_at: Scalars['String'];
+  set_type: Scalars['String'];
+  totalCardsOwned: Scalars['Int'];
+  uniqueCardsOwned: Scalars['Int'];
 };
 
 export type Token = {

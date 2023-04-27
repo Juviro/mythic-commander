@@ -32,8 +32,10 @@ const updateSets = async () => {
     const { data } = await response.json();
 
     const sets = data
-      .filter(({ digital, set_type }) => {
-        return !digital && !SKIPPED_SET_TYPES.includes(set_type);
+      .filter(({ digital, set_type, card_count }) => {
+        return (
+          !digital && !SKIPPED_SET_TYPES.includes(set_type) && card_count > 0
+        );
       })
       .map((set) => pick(set, SET_FIELDS));
 
