@@ -82,14 +82,6 @@ type ContainingList {
   deck: ContainingListDeck
 }
 
-type Set {
-  id: String!
-  set: String!
-  prices: Prices!
-  image_uris: ImageUris
-  card_faces: [CardFace!]
-}
-
 type PurchaseUris {
   tcgplayer: String
   cardmarket: String
@@ -324,6 +316,21 @@ type EDHRecCard {
   owned: Boolean!
 }
 
+type Set {
+  code: String!
+  name: String!
+  released_at: String!
+  set_type: String!
+  icon_svg_uri: String!
+  card_count: Int!
+
+  uniqueCardCount: Int!
+
+  totalCardsOwned: Int!
+  uniqueVersionsOwned: Int!
+  uniqueCardsOwned: Int!
+}
+
 ################################# Queries #################################
 
 type Query {
@@ -343,6 +350,7 @@ type Query {
   ): PaginatedCollection!
   ownedCardNames: [String!]!
   collectionSnapshots: [CollectionSnapshot!]!
+  collectionBySet: [Set!]!
 
   publicCollection(username: String!): [CollectionCard!]
   wantedCards(username: String!): WantedCards
