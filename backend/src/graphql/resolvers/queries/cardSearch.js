@@ -30,8 +30,8 @@ const addOwnedClause = (q, userId, isOwned, tableName) => {
   const operator = isOwned === 'true' ? 'IN' : 'NOT IN';
 
   q.whereRaw(
-    `??.oracle_id ${operator} (SELECT DISTINCT ??.oracle_id FROM "collectionWithOracle" WHERE "userId" = ?)`,
-    [tableName, tableName, userId]
+    `??.oracle_id ${operator} (SELECT DISTINCT "collectionWithOracle".oracle_id FROM "collectionWithOracle" WHERE "userId" = ?)`,
+    [tableName, userId]
   );
 };
 
