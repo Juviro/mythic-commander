@@ -61,7 +61,7 @@ export const gradientGold = css`
   background: radial-gradient(
       ellipse farthest-corner at right bottom,
       #fedb37 0%,
-      #fdb931 8%,
+      #c8a85d 8%,
       #e1b659 30%,
       #ffd77b 40%,
       transparent 80%

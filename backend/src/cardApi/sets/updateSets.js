@@ -28,6 +28,15 @@ const SKIPPED_SET_TYPES = [
 
 const updateSets = async () => {
   try {
+    const uniqueCardsPerSet = await db('distinctCardsPerSet')
+      .select('set', db.raw('count(*) as count'))
+      .groupBy('set');
+
+    const cardsPerSetMap = uniqueCardsPerSet.reduce((acc, { set, count }) => {
+      acc[set] = count;
+      return acc;
+    }, {});
+
     const response = await fetch(SET_URL);
     const { data } = await response.json();
 
@@ -37,7 +46,10 @@ const updateSets = async () => {
           !digital && !SKIPPED_SET_TYPES.includes(set_type) && card_count > 0
         );
       })
-      .map((set) => pick(set, SET_FIELDS));
+      .map((set) => ({
+        ...pick(set, SET_FIELDS),
+        uniqueCardCount: cardsPerSetMap[set.code] ?? 0,
+      }));
 
     await db('sets').insert(sets).onConflict('id').merge();
   } catch (e) {

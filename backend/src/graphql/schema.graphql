@@ -324,6 +324,7 @@ type Set {
   icon_svg_uri: String!
   card_count: Int!
 
+  uniqueCardCount: Int!
   totalCardsOwned: Int!
   uniqueCardsOwned: Int!
 }

@@ -657,6 +657,7 @@ export type Set = {
   released_at: Scalars['String'];
   set_type: Scalars['String'];
   totalCardsOwned: Scalars['Int'];
+  uniqueCardCount: Scalars['Int'];
   uniqueCardsOwned: Scalars['Int'];
 };
 

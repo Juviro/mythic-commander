@@ -1,11 +1,11 @@
 import React from 'react';
 import { Tooltip } from 'antd';
 import styled from 'styled-components';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { InfoCircleOutlined } from '@ant-design/icons';
 
 import { primary } from 'constants/colors';
 
-const StyledIcon = styled(ExclamationCircleOutlined)`
+const StyledIcon = styled(InfoCircleOutlined)`
   margin-left: 6px;
   font-size: 16px;
   cursor: help;

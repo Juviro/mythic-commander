@@ -8,12 +8,19 @@ const collectionBySet = async (_, __, { user, db }) => {
     `
     WITH "cardsPerSet" AS (
       SELECT 
-        set, 
+        set,
         count(*) as "uniqueCardsOwned" 
-      FROM collection 
-      LEFT JOIN cards 
-        ON collection.id = cards.id 
-      WHERE "userId" = ? 
+      FROM (
+      	SELECT 
+	        set,
+	        oracle_id
+	      FROM collection 
+	      LEFT JOIN cards 
+	        ON collection.id = cards.id 
+	      WHERE "userId" = ?
+	      GROUP BY set, oracle_id
+	      ORDER BY set
+      ) uniqueOracleIds
       GROUP BY set
     )
       SELECT * FROM sets

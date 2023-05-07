@@ -7,6 +7,7 @@ interface Props {
   wrap?: 'wrap' | 'nowrap' | 'wrap-reversed';
   flex?: number | string;
   style?: React.CSSProperties;
+  gap?: number;
 }
 
 const Flex = styled.div`
@@ -38,6 +39,11 @@ const Flex = styled.div`
     props.wrap &&
     css`
       flex-wrap: ${props.wrap};
+    `};
+  ${(props: Props) =>
+    props.gap &&
+    css`
+      gap: ${props.gap}px;
     `};
 `;
 

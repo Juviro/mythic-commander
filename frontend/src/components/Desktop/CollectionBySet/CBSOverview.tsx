@@ -1,24 +1,32 @@
 import React from 'react';
-import { Collapse } from 'antd';
+import { Typography } from 'antd';
+import styled from 'styled-components';
 import { Set } from '../../../types/graphql';
 import CBSGroup from './CBSGroup';
-import useGroupSets from './useGroupSets';
+import useGroupSets, { GroupProperty } from './useGroupSets';
+
+const StyledTitle = styled(Typography.Title)`
+  margin-left: 12px;
+`;
 
 interface Props {
   sets: Set[];
+  groupBy: GroupProperty;
+  displayedSetTypes: string[];
 }
 
-const CBSOverview = ({ sets }: Props) => {
-  const { groupedSets } = useGroupSets(sets);
+const CBSOverview = ({ sets, groupBy, displayedSetTypes }: Props) => {
+  const groupedSets = useGroupSets({ sets, groupBy, displayedSetTypes });
 
   return (
-    <Collapse defaultActiveKey={groupedSets.map(({ key }) => key)}>
+    <>
       {groupedSets.map((groupedSet) => (
-        <Collapse.Panel header={groupedSet.key} key={groupedSet.key}>
+        <React.Fragment key={groupedSet.key}>
+          <StyledTitle level={4}>{groupedSet.key}</StyledTitle>
           <CBSGroup sets={groupedSet.sets} />
-        </Collapse.Panel>
+        </React.Fragment>
       ))}
-    </Collapse>
+    </>
   );
 };
 

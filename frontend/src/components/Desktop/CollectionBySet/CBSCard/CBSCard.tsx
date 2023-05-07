@@ -20,8 +20,9 @@ interface Props {
 }
 
 const CBSCard = ({ set }: Props) => {
-  const percentageOwned = Math.round((100 * set.uniqueCardsOwned) / set.card_count) / 100;
-  const popoverTitle = `${set.uniqueCardsOwned} of ${set.card_count} (${Math.round(
+  const percentageOwned =
+    Math.floor((100 * set.uniqueCardsOwned) / set.uniqueCardCount) / 100;
+  const popoverTitle = `${set.uniqueCardsOwned} of ${set.uniqueCardCount} (${Math.round(
     percentageOwned * 100
   )}%)`;
 

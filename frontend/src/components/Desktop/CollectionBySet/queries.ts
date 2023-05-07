@@ -9,6 +9,7 @@ export const collectionBySet = gql`
       set_type
       icon_svg_uri
       card_count
+      uniqueCardCount
 
       totalCardsOwned
       uniqueCardsOwned

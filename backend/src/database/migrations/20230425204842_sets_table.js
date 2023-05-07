@@ -6,6 +6,7 @@ export const up = async (knex) => {
     table.string('released_at').notNullable();
     table.string('set_type').notNullable();
     table.integer('card_count').notNullable();
+    table.integer('uniqueCardCount').notNullable();
     table.string('parent_set_code');
     table.boolean('nonfoil_only');
     table.boolean('foil_only');

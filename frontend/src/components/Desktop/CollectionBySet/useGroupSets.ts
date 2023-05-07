@@ -1,48 +1,57 @@
 import { Set } from '../../../types/graphql';
-import useLocalStorage from '../../Hooks/useLocalStorage';
 
-type GroupProperty = 'type' | 'year';
+export type GroupProperty = 'type' | 'year';
 
-const SET_GROUPS = [
+export const SET_GROUPS = [
   {
     keys: ['core', 'expansion'],
+    key: 'standard',
     name: 'Standard Sets',
   },
   {
     keys: ['masters'],
+    key: 'masters',
     name: 'Masters Sets',
   },
   {
     keys: ['commander'],
+    key: 'commander',
     name: 'Commander Preconstructed Decks',
   },
   {
     keys: ['masterpiece'],
+    key: 'masterpiece',
     name: 'Masterpieces',
   },
   {
     keys: ['draft_innovation'],
+    key: 'draft_innovation',
     name: 'Draft Innovation Sets',
   },
   {
     keys: ['promo'],
+    key: 'promo',
     name: 'Promo Sets',
   },
   {
     keys: ['box'],
+    key: 'box',
     name: 'Box Sets',
   },
   {
     keys: ['spellbook', 'arsenal', 'from_the_vault', 'archenemy'],
+    key: 'special',
     name: 'Arsenal, Spellbook, From the Vault, Archenemy',
   },
   {
     keys: ['premium_deck', 'duel_deck', 'starter'],
+    key: 'premium',
     name: 'Premium Decks, Duel Decks, Starter Decks',
   },
   {
     keys: ['funny'],
-    name: 'Un-Sets, Miscellaneous',
+    key: 'funny',
+    name: 'Funny',
   },
 ];
 
@@ -71,19 +80,24 @@ const groupSets = (sets: Set[], property: GroupProperty) => {
   return SET_GROUPS.map(({ keys, name }) => ({
     key: name,
     sets: sets.filter((set) => keys.includes(set.set_type)),
-  }));
+  })).filter(({ sets: groupedSets }) => groupedSets.length > 0);
 };
 
-const useGroupSets = (sets: Set[]) => {
-  const [groupBy, setGroupBy] = useLocalStorage('group-by', 'type');
+interface Props {
+  sets: Set[];
+  groupBy: GroupProperty;
+  displayedSetTypes: string[];
+}
 
-  const groupedSets = groupSets(sets, groupBy as GroupProperty);
+const useGroupSets = ({ sets, groupBy, displayedSetTypes }: Props) => {
+  const filteredSets = sets.filter((set) => {
+    const categoryKey = SET_GROUPS.find(({ keys }) => keys.includes(set.set_type))?.key;
+    return displayedSetTypes.includes(categoryKey);
+  });
 
-  return {
-    groupedSets,
-    groupBy,
-    setGroupBy,
-  };
+  const groupedSets = groupSets(filteredSets, groupBy as GroupProperty);
+
+  return groupedSets;
 };
 
 export default useGroupSets;
