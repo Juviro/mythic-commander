@@ -22,16 +22,13 @@ interface Props {
 const CBSCard = ({ set }: Props) => {
   const percentageOwned =
     Math.floor((100 * set.uniqueCardsOwned) / set.uniqueCardCount) / 100;
-  const popoverTitle = `${set.uniqueCardsOwned} of ${set.uniqueCardCount} (${Math.round(
-    percentageOwned * 100
-  )}%)`;
 
   return (
     <Popover
       content={<CBSCardPopover set={set} />}
       placement="top"
       showArrow={false}
-      title={popoverTitle}
+      title={set.name}
       trigger="click"
     >
       <StyledWrapper>

@@ -8,30 +8,29 @@ import { collectionBySet } from './queries';
 import CBSOverview from './CBSOverview';
 import useLocalStorage from '../../Hooks/useLocalStorage';
 import CBSOptions, { INITIAL_DISPLAYD_SET_TYPES } from './CBSOptions';
+import Spinner from '../../Elements/Shared/Spinner';
 
 // TODO: IDEAS
-
-// Always group. Allow grouping by
-// - Type (masters, core etc) - default
-// - Release Year
 
 // Allow sorting by
 // - release date
 // - # of Cards
 // - Completion %
 
+// add search
+
 // Menu Point: Submenu of Collection
 
 // grey out unreleased sets
+
+// buggy (?)
+// card_count includes all different versions of basic lands,
+// which amounts to ~25 cards per set
 
 const CollectionBySet = () => {
   const { data, loading } = useQuery<Query>(collectionBySet);
   const [groupBy, setGroupBy] = useLocalStorage('group-by', 'type');
   const [displayedSetTypes, setDisplayedSetTypes] = useState(INITIAL_DISPLAYD_SET_TYPES);
-
-  if (loading) {
-    return <div>TODO: beautiful loading placeholders</div>;
-  }
 
   return (
     <PageLayout>
@@ -42,11 +41,15 @@ const CollectionBySet = () => {
         setDisplayedSetTypes={setDisplayedSetTypes}
       />
       <PageCard>
-        <CBSOverview
-          sets={data.collectionBySet}
-          groupBy={groupBy}
-          displayedSetTypes={displayedSetTypes}
-        />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <CBSOverview
+            sets={data.collectionBySet}
+            groupBy={groupBy}
+            displayedSetTypes={displayedSetTypes}
+          />
+        )}
       </PageCard>
     </PageLayout>
   );

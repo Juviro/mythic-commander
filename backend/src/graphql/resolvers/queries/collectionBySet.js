@@ -9,11 +9,15 @@ const collectionBySet = async (_, __, { user, db }) => {
     WITH "cardsPerSet" AS (
       SELECT 
         set,
-        count(*) as "uniqueCardsOwned" 
+        count(*) as "uniqueCardsOwned",
+        sum("uniqueVersionsOwned") as "uniqueVersionsOwned",
+        sum("totalCardsOwned") as "totalCardsOwned"
       FROM (
       	SELECT 
 	        set,
-	        oracle_id
+	        oracle_id,
+          count(*) as "uniqueVersionsOwned",
+          sum(amount + "amountFoil") as "totalCardsOwned"
 	      FROM collection 
 	      LEFT JOIN cards 
 	        ON collection.id = cards.id 
@@ -31,11 +35,14 @@ const collectionBySet = async (_, __, { user, db }) => {
     [user.id]
   );
 
-  return sets.map(({ uniqueCardsOwned, ...set }) => ({
-    ...set,
-    uniqueCardsOwned: uniqueCardsOwned || 0,
-    totalCardsOwned: 0,
-  }));
+  return sets.map(
+    ({ uniqueCardsOwned, uniqueVersionsOwned, totalCardsOwned, ...set }) => ({
+      ...set,
+      uniqueCardsOwned: uniqueCardsOwned || 0,
+      uniqueVersionsOwned: uniqueVersionsOwned || 0,
+      totalCardsOwned: totalCardsOwned || 0,
+    })
+  );
 };
 
 export default collectionBySet;

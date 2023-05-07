@@ -11,8 +11,9 @@ export const collectionBySet = gql`
       card_count
       uniqueCardCount
 
-      totalCardsOwned
       uniqueCardsOwned
+      uniqueVersionsOwned
+      totalCardsOwned
     }
   }
 `;

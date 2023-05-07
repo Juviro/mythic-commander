@@ -659,6 +659,7 @@ export type Set = {
   totalCardsOwned: Scalars['Int'];
   uniqueCardCount: Scalars['Int'];
   uniqueCardsOwned: Scalars['Int'];
+  uniqueVersionsOwned: Scalars['Int'];
 };
 
 export type Token = {
