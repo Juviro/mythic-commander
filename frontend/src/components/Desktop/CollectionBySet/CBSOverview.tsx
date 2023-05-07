@@ -12,7 +12,7 @@ const CBSOverview = ({ sets }: Props) => {
   const { groupedSets } = useGroupSets(sets);
 
   return (
-    <Collapse ghost defaultActiveKey={groupedSets[0].key}>
+    <Collapse defaultActiveKey={groupedSets.map(({ key }) => key)}>
       {groupedSets.map((groupedSet) => (
         <Collapse.Panel header={groupedSet.key} key={groupedSet.key}>
           <CBSGroup sets={groupedSet.sets} />

@@ -17,10 +17,10 @@ const StyledWrapper = styled.div`
 
 interface Props {
   set: Set;
-  percentageOwned: number;
 }
 
-const CBSCard = ({ set, percentageOwned }: Props) => {
+const CBSCard = ({ set }: Props) => {
+  const percentageOwned = Math.round((100 * set.uniqueCardsOwned) / set.card_count) / 100;
   const popoverTitle = `${set.uniqueCardsOwned} of ${set.card_count} (${Math.round(
     percentageOwned * 100
   )}%)`;

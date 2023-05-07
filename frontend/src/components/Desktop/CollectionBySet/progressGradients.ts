@@ -24,8 +24,8 @@ export const gradientBronze = css`
       ellipse farthest-corner at right bottom,
       #dc8e41 0%,
       #c78a4d 8%,
-      #a9621c 30%,
-      #af6114 40%,
+      #cc955f 30%,
+      #f6bb81 40%,
       transparent 80%
     ),
     radial-gradient(

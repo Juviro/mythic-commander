@@ -1,10 +1,33 @@
 const collectionBySet = async (_, __, { user, db }) => {
-  const sets = await db('sets');
+  if (!user.id) {
+    return null;
+  }
 
-  return sets.map((set) => ({
+  // const sets = await db('sets');
+  const { rows: sets } = await db.raw(
+    `
+    WITH "cardsPerSet" AS (
+      SELECT 
+        set, 
+        count(*) as "uniqueCardsOwned" 
+      FROM collection 
+      LEFT JOIN cards 
+        ON collection.id = cards.id 
+      WHERE "userId" = ? 
+      GROUP BY set
+    )
+      SELECT * FROM sets
+      LEFT JOIN "cardsPerSet"
+        ON sets.code = "cardsPerSet".set
+      ORDER BY released_at DESC
+  `,
+    [user.id]
+  );
+
+  return sets.map(({ uniqueCardsOwned, ...set }) => ({
     ...set,
-    totalCardsOwned: Math.floor(set.card_count * 1.5),
-    uniqueCardsOwned: Math.floor(set.card_count / 3),
+    uniqueCardsOwned: uniqueCardsOwned || 0,
+    totalCardsOwned: 0,
   }));
 };
 

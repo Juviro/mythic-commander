@@ -20,7 +20,7 @@ import CBSOverview from './CBSOverview';
 
 // Menu Point: Submenu of Collection
 
-// allow clicking set name to go to advanced search
+// grey out unreleased sets
 
 const CollectionBySet = () => {
   const { data, loading } = useQuery<Query>(collectionBySet);

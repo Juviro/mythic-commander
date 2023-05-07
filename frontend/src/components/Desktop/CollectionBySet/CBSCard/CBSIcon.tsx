@@ -1,5 +1,5 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
+import React, { useRef } from 'react';
+import styled, { css, keyframes } from 'styled-components';
 
 import { Set } from '../../../../types/graphql';
 import {
@@ -9,6 +9,7 @@ import {
   gradientIron,
   gradientSilver,
 } from '../progressGradients';
+import { useAnimateOnAppearance } from '../../../../hooks/useAnimateOnAppearance';
 
 const StyledBorderedCircle = styled.div`
   display: flex;
@@ -46,16 +47,39 @@ const StyledWrapper = styled(StyledBorderedCircle)`
 const StyledBackground = styled.div<{ percentageOwned: number }>`
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
   ${({ percentageOwned }) => getProgressColorGradient(percentageOwned)};
 `;
 
 const getProgressGradient = (percentageOwned: number) => {
   const percentageOwnedInDegrees = percentageOwned * 360;
+  const animationDurationSeconds = 1.5 * (percentageOwned * 0.5 + 0.5);
+
+  const animation = keyframes`
+    from {
+      --progress: 0deg;
+    }
+    to {
+      --progress: ${percentageOwnedInDegrees}deg;
+    }
+  `;
 
   return css`
+    @property --progress {
+      syntax: '<angle>';
+      inherits: false;
+      initial-value: 0deg;
+    }
+
+    animation: ${animation} ${animationDurationSeconds}s ease-in-out;
+    --progress: ${percentageOwnedInDegrees}deg;
+
     background-image: conic-gradient(
-      transparent ${percentageOwnedInDegrees}deg,
-      #f9f9f9 ${percentageOwnedInDegrees}deg
+      transparent var(--progress),
+      #f9f9f9 var(--progress)
     );
   `;
 };
@@ -74,6 +98,8 @@ const StyledIconWrapper = styled(StyledBorderedCircle)`
   height: 70%;
   width: 70%;
   background-color: white;
+  position: absolute;
+  z-index: 1;
 `;
 
 const StyledSetIcon = styled.img`
@@ -87,17 +113,19 @@ interface Props {
 }
 
 const CBSIcon = ({ set, percentageOwned }: Props) => {
-  //   const percentageOwned = set.uniqueCardsOwned / set.card_count;
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const isVisible = useAnimateOnAppearance(wrapperRef);
 
   return (
-    <StyledWrapper>
-      <StyledBackground percentageOwned={percentageOwned}>
-        <StyledProgress percentageOwned={percentageOwned}>
-          <StyledIconWrapper>
-            <StyledSetIcon src={set.icon_svg_uri} />
-          </StyledIconWrapper>
-        </StyledProgress>
-      </StyledBackground>
+    <StyledWrapper ref={wrapperRef}>
+      {isVisible && (
+        <StyledBackground percentageOwned={percentageOwned}>
+          <StyledProgress percentageOwned={percentageOwned} />
+        </StyledBackground>
+      )}
+      <StyledIconWrapper>
+        <StyledSetIcon src={set.icon_svg_uri} />
+      </StyledIconWrapper>
     </StyledWrapper>
   );
 };

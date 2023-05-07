@@ -31,18 +31,20 @@ const CBSCardPopover = ({ set }: Props) => {
   return (
     <StyledWrapper>
       <table>
-        <tr>
-          <StyledLabel>Release Date</StyledLabel>
-          <StyledValue>{formatDate(set.released_at)}</StyledValue>
-        </tr>
-        <tr>
-          <StyledLabel>Unique Cards Collected</StyledLabel>
-          <StyledValue>{set.uniqueCardsOwned}</StyledValue>
-        </tr>
-        <tr>
-          <StyledLabel>Total Cards Collected</StyledLabel>
-          <StyledValue>{set.totalCardsOwned}</StyledValue>
-        </tr>
+        <tbody>
+          <tr>
+            <StyledLabel>Release Date</StyledLabel>
+            <StyledValue>{formatDate(set.released_at)}</StyledValue>
+          </tr>
+          <tr>
+            <StyledLabel>Unique Cards Collected</StyledLabel>
+            <StyledValue>{set.uniqueCardsOwned}</StyledValue>
+          </tr>
+          <tr>
+            <StyledLabel>Total Cards Collected</StyledLabel>
+            <StyledValue>{set.totalCardsOwned}</StyledValue>
+          </tr>
+        </tbody>
       </table>
       <StyledLink to={`/search?sets=${set.code}`}>
         Show all cards from this set

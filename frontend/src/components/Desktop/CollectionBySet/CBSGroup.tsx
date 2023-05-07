@@ -24,8 +24,8 @@ const CBSGroup = ({ sets }: Props) => {
   return (
     <StyledWrapper>
       <StyledSets>
-        {sets.map((set, index) => (
-          <CBSCard set={set} key={set.code} percentageOwned={(index % 101) / 100} />
+        {sets.map((set) => (
+          <CBSCard set={set} key={set.code} />
         ))}
       </StyledSets>
     </StyledWrapper>
