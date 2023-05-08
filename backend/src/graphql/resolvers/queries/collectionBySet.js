@@ -30,6 +30,7 @@ const collectionBySet = async (_, __, { user, db }) => {
       SELECT * FROM sets
       LEFT JOIN "cardsPerSet"
         ON sets.code = "cardsPerSet".set
+      WHERE "uniqueCardCount" > 0
       ORDER BY released_at DESC
   `,
     [user.id]
