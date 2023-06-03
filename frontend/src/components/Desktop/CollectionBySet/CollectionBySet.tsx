@@ -7,21 +7,15 @@ import { Query } from '../../../types/graphql';
 import { collectionBySet } from './queries';
 import CBSOverview from './CBSOverview';
 import useLocalStorage from '../../Hooks/useLocalStorage';
-import CBSOptions, { INITIAL_DISPLAYD_SET_TYPES } from './CBSOptions';
+import CBSOptions from './CBSOptions/CBSOptions';
 import Spinner from '../../Elements/Shared/Spinner';
+import { INITIAL_DISPLAYD_SET_TYPES } from './CBSOptions/CBSOptionsFilter';
 
 // TODO: IDEAS
-
-// Allow sorting by
-// - release date
-// - # of Cards
-// - Completion %
 
 // add search
 
 // Menu Point: Submenu of Collection
-
-// grey out unreleased sets
 
 // buggy (?)
 // card_count includes all different versions of basic lands,

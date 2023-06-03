@@ -21,9 +21,6 @@ interface Props {
 }
 
 const CBSCard = ({ set }: Props) => {
-  const percentageOwned =
-    Math.floor((100 * set.uniqueCardsOwned) / set.uniqueCardCount) / 100;
-
   const isUnreleased = new Date(set.released_at) > new Date();
 
   return (
@@ -35,7 +32,7 @@ const CBSCard = ({ set }: Props) => {
       trigger="click"
     >
       <StyledWrapper unreleased={isUnreleased}>
-        <CBSIcon set={set} percentageOwned={percentageOwned} />
+        <CBSIcon set={set} />
         <Typography.Text>{set.name}</Typography.Text>
       </StyledWrapper>
     </Popover>

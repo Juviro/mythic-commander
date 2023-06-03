@@ -42,6 +42,8 @@ const collectionBySet = async (_, __, { user, db }) => {
       uniqueCardsOwned: uniqueCardsOwned || 0,
       uniqueVersionsOwned: uniqueVersionsOwned || 0,
       totalCardsOwned: totalCardsOwned || 0,
+      percentageOwned:
+        Math.floor((100 * uniqueCardsOwned) / set.uniqueCardCount) / 100 || 0,
     })
   );
 };

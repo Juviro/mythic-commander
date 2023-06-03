@@ -74,7 +74,11 @@ const CBSCardPopover = ({ set }: Props) => {
           </tr>
         </tbody>
       </table>
-      <StyledLink to={`/search?sets=${set.code}`}>
+      <StyledLink
+        to={`/search?sets=${set.code}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         Show all cards from this set
       </StyledLink>
     </StyledWrapper>

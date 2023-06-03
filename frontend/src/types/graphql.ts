@@ -654,6 +654,7 @@ export type Set = {
   code: Scalars['String'];
   icon_svg_uri: Scalars['String'];
   name: Scalars['String'];
+  percentageOwned: Scalars['Int'];
   released_at: Scalars['String'];
   set_type: Scalars['String'];
   totalCardsOwned: Scalars['Int'];
