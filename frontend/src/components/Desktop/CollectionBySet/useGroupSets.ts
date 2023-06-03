@@ -130,10 +130,13 @@ interface Props {
   sets: Set[];
   groupBy: GroupProperty;
   displayedSetTypes: string[];
+  search: string;
 }
 
-const useGroupSets = ({ sets, groupBy, displayedSetTypes }: Props) => {
+const useGroupSets = ({ sets, groupBy, displayedSetTypes, search }: Props) => {
   const filteredSets = sets.filter((set) => {
+    if (!set.name.toLowerCase().includes(search.toLowerCase())) return false;
+
     const categoryKey = SET_GROUPS.find(({ keys }) => keys.includes(set.set_type))?.key;
     return displayedSetTypes.includes(categoryKey);
   });

@@ -13,24 +13,20 @@ import { INITIAL_DISPLAYD_SET_TYPES } from './CBSOptions/CBSOptionsFilter';
 
 // TODO: IDEAS
 
-// add search
-
 // Menu Point: Submenu of Collection
-
-// buggy (?)
-// card_count includes all different versions of basic lands,
-// which amounts to ~25 cards per set
 
 const CollectionBySet = () => {
   const { data, loading } = useQuery<Query>(collectionBySet);
   const [groupBy, setGroupBy] = useLocalStorage('group-by', 'type');
   const [displayedSetTypes, setDisplayedSetTypes] = useState(INITIAL_DISPLAYD_SET_TYPES);
+  const [search, setSearch] = useState('');
 
   return (
     <PageLayout>
       <CBSOptions
         groupBy={groupBy}
         setGroupBy={setGroupBy}
+        setSearch={setSearch}
         displayedSetTypes={displayedSetTypes}
         setDisplayedSetTypes={setDisplayedSetTypes}
       />
@@ -41,6 +37,7 @@ const CollectionBySet = () => {
           <CBSOverview
             sets={data.collectionBySet}
             groupBy={groupBy}
+            search={search}
             displayedSetTypes={displayedSetTypes}
           />
         )}

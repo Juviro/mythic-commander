@@ -11,12 +11,13 @@ const StyledTitle = styled(Typography.Title)`
 
 interface Props {
   sets: Set[];
+  search: string;
   groupBy: GroupProperty;
   displayedSetTypes: string[];
 }
 
-const CBSOverview = ({ sets, groupBy, displayedSetTypes }: Props) => {
-  const groupedSets = useGroupSets({ sets, groupBy, displayedSetTypes });
+const CBSOverview = ({ sets, groupBy, displayedSetTypes, search }: Props) => {
+  const groupedSets = useGroupSets({ sets, groupBy, displayedSetTypes, search });
 
   return (
     <>

@@ -10,6 +10,7 @@ export interface Props {
   setGroupBy: (value: GroupProperty) => void;
   displayedSetTypes: string[];
   setDisplayedSetTypes: (value: string[]) => void;
+  setSearch: (value: string) => void;
 }
 
 const CBSOptions = ({
@@ -17,6 +18,7 @@ const CBSOptions = ({
   setGroupBy,
   displayedSetTypes,
   setDisplayedSetTypes,
+  setSearch,
 }: Props) => {
   return (
     <PageCard
@@ -27,6 +29,7 @@ const CBSOptions = ({
       <CBSOptionsFilter
         displayedSetTypes={displayedSetTypes}
         setDisplayedSetTypes={setDisplayedSetTypes}
+        setSearch={setSearch}
       />
     </PageCard>
   );

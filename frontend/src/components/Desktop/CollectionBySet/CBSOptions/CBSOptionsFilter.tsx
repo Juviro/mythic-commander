@@ -1,10 +1,17 @@
-import { Checkbox, Collapse, Typography } from 'antd';
-import Flex from 'components/Elements/Shared/Flex';
+import { Checkbox, Collapse, Input, Typography } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
+
+import Flex from 'components/Elements/Shared/Flex';
 import { SET_GROUPS } from '../useGroupSets';
+import { Props as CBSOptionsFilterProps } from './CBSOptions';
 
 export const INITIAL_DISPLAYD_SET_TYPES = SET_GROUPS.map(({ key }) => key);
+
+const StyledSearch = styled(Input.Search)`
+  margin-bottom: 24px;
+  max-width: 250px;
+`;
 
 const StyledLabel = styled(Typography.Text)`
   margin-right: 24px;
@@ -26,12 +33,16 @@ const DISPLAYED_SET_TYPES_OPTIONS = SET_GROUPS.map(({ name, key }) => ({
   value: key,
 }));
 
-interface Props {
-  displayedSetTypes;
-  setDisplayedSetTypes;
-}
+type Props = Pick<
+  CBSOptionsFilterProps,
+  'displayedSetTypes' | 'setDisplayedSetTypes' | 'setSearch'
+>;
 
-const CBSOptionsFilter = ({ displayedSetTypes, setDisplayedSetTypes }: Props) => {
+const CBSOptionsFilter = ({
+  displayedSetTypes,
+  setDisplayedSetTypes,
+  setSearch,
+}: Props) => {
   const onCheckAllChange = (e: any) => {
     setDisplayedSetTypes(e.target.checked ? INITIAL_DISPLAYD_SET_TYPES : []);
   };
@@ -46,6 +57,11 @@ const CBSOptionsFilter = ({ displayedSetTypes, setDisplayedSetTypes }: Props) =>
   return (
     <Collapse ghost style={{ marginBottom: -32 }}>
       <Collapse.Panel key="1" header={panelHeader}>
+        <StyledSearch
+          placeholder="Search"
+          width={20}
+          onChange={(e) => setSearch(e.target.value)}
+        />
         <Flex gap={24} wrap="wrap">
           <Flex flex={1}>
             <Flex direction="column">
