@@ -8,10 +8,11 @@ import GameField from './GameField';
 import { FullscreenModalProvider } from '../../../Provider/FullscreenModalProvider';
 import Menu from './Menu';
 import { LoadingScreen } from './LoadingScreen';
+import usePreventScreenLock from '../../../../hooks/usePreventScreenLock';
 
 const GameScreen = ({ gameSettings, history, handle, displayDamage }) => {
   const isValidGame = Boolean(gameSettings.numberOfPlayers);
-
+  usePreventScreenLock();
   useBeforeunload(IS_DEV ? undefined : () => 'Are you sure you want to leave the game?');
 
   const {
