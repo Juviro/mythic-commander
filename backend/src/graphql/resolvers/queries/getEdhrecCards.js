@@ -1,9 +1,11 @@
 import fetch from 'node-fetch';
 
 import db from '../../../database';
+import { normalizeName } from '../../../utils/normalizeName';
 
 const getUrl = (names, themeSuffix) => {
   const sanitizedNames = names
+    .map(normalizeName)
     .join(' ')
     .toLowerCase()
     .replace(/\s\/\/.*$/, '')
