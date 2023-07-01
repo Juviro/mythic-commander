@@ -10,6 +10,7 @@ import {
 } from '../../graphql/resolvers/queries/Card/helper';
 import storeCardImage from '../images/storeCardImage';
 import downloadCardJson from './downloadCardJson';
+import { normalizeName } from '../../utils/normalizeName';
 
 const updateClause = ALL_CARD_FIELDS.map(
   ({ key }) => `${key} = EXCLUDED.${key}`
@@ -89,6 +90,7 @@ export const updateScryfallCards = async (type, tableName) => {
       cardToInsert.is_special = isSpecialCard(card);
       cardToInsert.primary_variant = getMainVariant(card);
       cardToInsert.collector_number = padCollectorNumber(card.collector_number);
+      cardToInsert.normalized_name = normalizeName(card.name);
 
       await knex.raw(
         knex(tableName).insert(cardToInsert).toString().replace(/\?/g, '\\?') +
