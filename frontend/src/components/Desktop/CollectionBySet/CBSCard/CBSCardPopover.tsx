@@ -50,7 +50,18 @@ const CBSCardPopover = ({ set }: Props) => {
             <StyledValue>
               {getPercentageLabel(set.uniqueCardsOwned, set.uniqueCardCount)}
               {/* eslint-disable-next-line max-len */}
-              <Hint text="Number of unique cards collected from this set (e.g. different card names)" />
+              <Hint
+                text={
+                  <>
+                    <div>
+                      Number of unique cards collected from this set (i.e. different card
+                      names)
+                    </div>
+                    <br />
+                    <div>Does not include basic lands.</div>
+                  </>
+                }
+              />
             </StyledValue>
           </tr>
           {/* {displayUniqueVersionsStat && (
@@ -60,7 +71,7 @@ const CBSCardPopover = ({ set }: Props) => {
                 {getPercentageLabel(set.uniqueVersionsOwned, set.card_count)}
                 <Hint 
                   text="Number of unique card versions collected 
-                  from this set (e.g. different collector numbers)" 
+                  from this set (i.e. different collector numbers)" 
                 />
               </StyledValue>
             </tr>
