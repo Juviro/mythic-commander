@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { trimName } from './cardFilter';
+import { normalizeName } from './cardFilter';
 
 const StyledBoldLetter = styled.span`
   font-weight: 700;
@@ -9,12 +9,14 @@ const StyledBoldLetter = styled.span`
 export const highlightText = (searchString: string, option: string) => {
   if (!searchString) return option;
 
-  const searchTerms = trimName(searchString).split(' ');
+  const searchTerms = normalizeName(searchString).split(' ');
   let remainingOption = option;
   const optionChars = [];
 
   searchTerms.forEach((searchTerm) => {
-    const startingIndex = remainingOption.toLowerCase().indexOf(searchTerm);
+    const startingIndex = normalizeName(remainingOption)
+      .toLowerCase()
+      .indexOf(searchTerm);
     const termLength = searchTerm.length;
     let i = 0;
 

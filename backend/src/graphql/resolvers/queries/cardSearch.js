@@ -1,3 +1,5 @@
+import { normalizeName } from '../../../utils/normalizeName';
+
 const getColorProps = (colorString) => {
   const [filteredColors] = colorString.match(/(w|u|b|r|g)+$/) || [''];
   const excludeOtherColors = colorString.includes('-');
@@ -80,9 +82,10 @@ const addTagsClause = (q, tags) => {
 };
 
 export const addNameClause = (q, name) => {
-  const searchPattern = name.split(' ').join('%');
+  const normalizedName = normalizeName(name);
+  const searchPattern = normalizedName.split(' ').join('%');
 
-  q.where('name', 'ILIKE', `%${searchPattern}%`);
+  q.where('normalized_name', 'ILIKE', `%${searchPattern}%`);
 };
 
 export default async (

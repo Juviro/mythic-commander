@@ -13,6 +13,7 @@ const StyledWrapper = styled.div`
   flex-wrap: wrap;
 
   @media (min-width: 500px) {
+    flex-wrap: nowrap;
     flex-direction: row;
   }
 `;
@@ -23,6 +24,7 @@ const StyledContent = styled.div`
 
   @media (min-width: 500px) {
     margin-top: 0;
+    width: 50%;
   }
 `;
 
@@ -57,6 +59,7 @@ export default ({ card, onChangeProp, canSubmit, onSubmit }) => {
           onSubmit={canSubmit && onSubmit}
           size="default"
           card={card}
+          // style={{ maxWidth: 400 }}
           onSelectCard={setSelectedCard}
           onSelect={onChangeProp('id')}
         />

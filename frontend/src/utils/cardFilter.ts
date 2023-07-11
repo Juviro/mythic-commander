@@ -1,9 +1,11 @@
 import { UnifiedCard } from 'types/unifiedTypes';
 
-export const trimName = (str: string) => {
+export const normalizeName = (str: string) => {
   return (
     str
       .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // removes accents
       // replaces token stats, e.g. Angel (4/4) -> Angel
       .replace(/\s\(.*\)/g, '')
       .replace(/[().*/\\^$+{},:[\]]/g, '')
@@ -12,7 +14,7 @@ export const trimName = (str: string) => {
 
 export const filterByName = (cards: UnifiedCard[], searchString = ''): UnifiedCard[] => {
   if (!cards) return [];
-  const cleanSearch = trimName(searchString);
+  const cleanSearch = normalizeName(searchString);
   const searchRegExp = new RegExp(cleanSearch.split(' ').join('.*'));
 
   const isCollectorNumber = searchString.match(/^\d{3,4}$/);
@@ -23,7 +25,7 @@ export const filterByName = (cards: UnifiedCard[], searchString = ''): UnifiedCa
       return true;
     }
 
-    return searchRegExp.test(trimName(name));
+    return searchRegExp.test(normalizeName(name));
   });
 };
 
@@ -115,9 +117,9 @@ export const sortCardsBySearch =
       return pvA ? pvA.localeCompare(pvB) : 0;
     }
 
-    const cleanSearch = trimName(searchString);
-    const cleanCardNameA = trimName(cardA);
-    const cleanCardNameB = trimName(cardB);
+    const cleanSearch = normalizeName(searchString);
+    const cleanCardNameA = normalizeName(cardA);
+    const cleanCardNameB = normalizeName(cardB);
     if (!cleanSearch) return cleanCardNameA > cleanCardNameB ? 1 : -1;
 
     if (cleanCardNameB === cleanSearch) return 1;
