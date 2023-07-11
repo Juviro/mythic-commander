@@ -2,6 +2,9 @@ import { lightBackground } from 'constants/colors';
 import React from 'react';
 import styled from 'styled-components';
 
+export const PAGE_WIDTH_SMALL = 1250;
+export const PAGE_WIDTH_LARGE = 1800;
+
 const StyledBackground = styled.div`
   height: 100%;
   min-height: 100vh;
@@ -20,7 +23,8 @@ const StyledContent = styled.div<{ large: boolean }>`
   min-height: 100%;
   height: fit-content;
   position: relative;
-  max-width: ${({ large }) => (large ? '1800px' : '1250px')};
+  max-width: ${({ large }) =>
+    large ? `${PAGE_WIDTH_LARGE}px` : `${PAGE_WIDTH_SMALL}px`};
 `;
 
 interface Props {

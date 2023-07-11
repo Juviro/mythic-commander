@@ -46,10 +46,8 @@ const CBSCardPopover = ({ set }: Props) => {
             <StyledValue>{formatDate(set.released_at)}</StyledValue>
           </tr>
           <tr>
-            <StyledLabel>Unique Cards Collected:</StyledLabel>
-            <StyledValue>
-              {getPercentageLabel(set.uniqueCardsOwned, set.uniqueCardCount)}
-              {/* eslint-disable-next-line max-len */}
+            <StyledLabel>
+              Unique Cards Collected:
               <Hint
                 text={
                   <>
@@ -62,6 +60,9 @@ const CBSCardPopover = ({ set }: Props) => {
                   </>
                 }
               />
+            </StyledLabel>
+            <StyledValue>
+              {getPercentageLabel(set.uniqueCardsOwned, set.uniqueCardCount)}
             </StyledValue>
           </tr>
           {/* {displayUniqueVersionsStat && (
@@ -77,11 +78,11 @@ const CBSCardPopover = ({ set }: Props) => {
             </tr>
           )} */}
           <tr>
-            <StyledLabel>Total Cards Collected:</StyledLabel>
-            <StyledValue>
-              {set.totalCardsOwned}
+            <StyledLabel>
+              Total Cards Collected:
               <Hint text="Total number of physical cards collected from this set" />
-            </StyledValue>
+            </StyledLabel>
+            <StyledValue>{set.totalCardsOwned}</StyledValue>
           </tr>
         </tbody>
       </table>

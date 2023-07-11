@@ -1,97 +1,132 @@
 import React, { useContext } from 'react';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import UserContext from 'components/Provider/UserProvider';
-import { primary } from 'constants/colors';
+import { defaultText, lightWhite, primary } from 'constants/colors';
+import { Menu } from 'antd';
 
-const StyledMenu = styled.ul`
+const StyledMenu = styled(Menu)`
   height: 48px;
-  display: flex;
-  flex-direction: row;
-  list-style: none;
-  align-items: center;
-  padding: 0;
-  margin: 0 0 0 12px;
-`;
-
-const StyledMenuItem = styled.li<{ active: boolean }>`
+  border-bottom: none;
   font-size: 16px;
-  height: 100%;
-  display: flex;
-  color: hsla(0, 0%, 100%, 0.65);
-  transition: background-color 0.3s;
-  white-space: nowrap;
+  margin-left: 12px;
 
-  ${({ active }) =>
-    active &&
-    css`
-      color: white;
-      background-color: ${primary};
-    `}
+  .ant-menu-item,
+  .ant-menu-submenu {
+    top: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 !important;
 
-  &:hover {
-    color: white;
-    background-color: ${primary};
+    &:after {
+      display: none;
+    }
+  }
+
+  .ant-menu-item-selected,
+  .ant-menu-item-active,
+  .ant-menu-submenu-selected,
+  .ant-menu-submenu-active {
+    background-color: ${primary} !important;
   }
 `;
 
 const StyledLink = styled(Link)`
-  color: inherit;
+  color: ${lightWhite} !important;
 
-  padding: 11px 24px;
-
-  @media (min-width: 1400px) {
-    padding: 11px 48px;
+  @media (min-width: 1200px) {
+    padding: 20px 48px;
   }
 
-  &:hover {
-    color: inherit;
+  .ant-menu-item-selected &,
+  .ant-menu-submenu-selected & {
+    color: #fff !important;
+  }
+
+  .ant-menu-sub & {
+    padding: 0;
+    color: ${defaultText} !important;
+
+    &:hover {
+      color: ${primary} !important;
+    }
   }
 `;
 
 const Navigation = ({ location: { pathname } }: RouteComponentProps) => {
   const { user, loading } = useContext(UserContext);
 
+  const selectedKeys = [];
+
   const menuItems = [
     {
-      title: 'Decks',
+      label: 'Decks',
+      key: 'decks',
       href: '/my-decks',
       additionalPaths: ['/decks'],
       hidden: !user && !loading,
+      children: [
+        {
+          label: 'Token finder',
+          key: 'token-finder',
+          href: '/proxy?type=tokens',
+        },
+      ],
     },
     {
-      title: 'Wants',
+      label: 'Wants',
+      key: 'wants',
       href: '/my-wants',
       additionalPaths: ['/wants'],
       hidden: !user && !loading,
     },
     {
-      title: 'Collection',
+      label: 'Collection',
+      key: 'collection',
       href: '/collection',
       hidden: !user && !loading,
+      children: [
+        {
+          label: 'By Set',
+          key: 'by-set',
+          href: '/collection/by-set',
+        },
+      ],
     },
     {
-      title: 'Advanced Search',
+      label: 'Advanced Search',
+      key: 'search',
       href: '/search',
     },
   ]
     .filter(({ hidden }) => !hidden)
-    .map((item) => ({
-      ...item,
-      active: [item.href, ...(item.additionalPaths ?? [])].some((path) =>
+    .map(({ label, href, additionalPaths, ...item }) => {
+      const active = [href, ...(additionalPaths ?? [])].some((path) =>
         pathname.includes(path)
-      ),
-    }));
+      );
+
+      if (active) {
+        selectedKeys.push(item.key);
+      }
+
+      return {
+        ...item,
+        label: <StyledLink to={href}>{label}</StyledLink>,
+        children: item.children?.map((child) => ({
+          ...child,
+          label: <StyledLink to={child.href}>{child.label}</StyledLink>,
+        })),
+      };
+    });
 
   return (
-    <StyledMenu>
-      {menuItems.map(({ title, href, active }) => (
-        <StyledMenuItem active={active} key={href}>
-          <StyledLink to={href}>{title}</StyledLink>
-        </StyledMenuItem>
-      ))}
-    </StyledMenu>
+    <StyledMenu
+      mode="horizontal"
+      items={menuItems}
+      openKeys={['collection']}
+      selectedKeys={selectedKeys}
+    />
   );
 };
 
