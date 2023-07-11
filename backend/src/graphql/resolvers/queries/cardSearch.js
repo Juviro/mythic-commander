@@ -28,8 +28,17 @@ const addColorClause = (q, colors) => {
   }
 };
 
-const addOwnedClause = (q, userId, isOwned, tableName) => {
+const addOwnedClause = (q, userId, isOwned, tableName, sets) => {
   const operator = isOwned === 'true' ? 'IN' : 'NOT IN';
+
+  if (sets?.length) {
+    q.whereRaw(
+      `??.oracle_id ${operator} (SELECT DISTINCT oracle_id FROM cards LEFT JOIN collection ON collection.id = cards.id WHERE "userId" = ? AND set IN (?))`,
+      [tableName, userId, sets.join(',')]
+    );
+
+    return;
+  }
 
   q.whereRaw(
     `??.oracle_id ${operator} (SELECT DISTINCT "collectionWithOracle".oracle_id FROM "collectionWithOracle" WHERE "userId" = ?)`,
@@ -130,7 +139,7 @@ export default async (
       q.whereNot('type_line', 'ILIKE', `%Legendary%`);
     if (colors.length) addColorClause(q, colors);
     if (isOwned && user && user.id)
-      addOwnedClause(q, user.id, isOwned, tableName);
+      addOwnedClause(q, user.id, isOwned, tableName, sets);
     if (cmc) addRangeClause(q, cmc, 'cmc');
     if (power) addRangeClause(q, power, 'power');
     if (toughness) addRangeClause(q, toughness, 'toughness');
