@@ -34,6 +34,7 @@ const StyledMenu = styled(Menu)`
 
 const StyledLink = styled(Link)`
   color: ${lightWhite} !important;
+  padding: 20px;
 
   @media (min-width: 1200px) {
     padding: 20px 48px;
