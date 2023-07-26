@@ -88,7 +88,7 @@ const Navigation = ({ location: { pathname } }: RouteComponentProps) => {
       hidden: !user && !loading,
       children: [
         {
-          label: 'By Set',
+          label: 'Set Completion',
           key: 'by-set',
           href: '/collection/by-set',
         },
@@ -120,14 +120,7 @@ const Navigation = ({ location: { pathname } }: RouteComponentProps) => {
       };
     });
 
-  return (
-    <StyledMenu
-      mode="horizontal"
-      items={menuItems}
-      openKeys={['collection']}
-      selectedKeys={selectedKeys}
-    />
-  );
+  return <StyledMenu mode="horizontal" items={menuItems} selectedKeys={selectedKeys} />;
 };
 
 export default withRouter(Navigation);
