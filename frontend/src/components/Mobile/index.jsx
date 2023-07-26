@@ -3,6 +3,7 @@ import { message } from 'antd';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import UsernameModal from 'components/Elements/Shared/UsernameModal';
+import CollectionBySet from 'components/Desktop/CollectionBySet/CollectionBySet';
 import Menu from './Menu';
 
 import GlobalStyle from './GlobalStyle';
@@ -34,6 +35,7 @@ const Mobile = () => {
           <Route path="/m/my-decks" exact component={Decks} />
           <Route path="/m/decks/:id" exact component={Deck} />
           <Route path="/m/cards/:oracle_id" component={Card} />
+          <Route path="/m/collection/by-set" component={CollectionBySet} />
           <Route path="/m/collection/:username" exact component={Collection} />
           <Route path="/m/collection" exact component={Collection} />
           <Route path="/m/my-wants" exact component={WantsLists} />
