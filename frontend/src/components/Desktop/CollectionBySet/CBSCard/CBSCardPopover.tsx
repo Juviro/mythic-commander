@@ -46,11 +46,23 @@ const CBSCardPopover = ({ set }: Props) => {
             <StyledValue>{formatDate(set.released_at)}</StyledValue>
           </tr>
           <tr>
-            <StyledLabel>Unique Cards Collected:</StyledLabel>
+            <StyledLabel>
+              Unique Cards Collected:
+              <Hint
+                text={
+                  <>
+                    <div>
+                      Number of unique cards collected from this set (i.e. different card
+                      names)
+                    </div>
+                    <br />
+                    <div>Does not include basic lands.</div>
+                  </>
+                }
+              />
+            </StyledLabel>
             <StyledValue>
               {getPercentageLabel(set.uniqueCardsOwned, set.uniqueCardCount)}
-              {/* eslint-disable-next-line max-len */}
-              <Hint text="Number of unique cards collected from this set (e.g. different card names)" />
             </StyledValue>
           </tr>
           {/* {displayUniqueVersionsStat && (
@@ -60,21 +72,25 @@ const CBSCardPopover = ({ set }: Props) => {
                 {getPercentageLabel(set.uniqueVersionsOwned, set.card_count)}
                 <Hint 
                   text="Number of unique card versions collected 
-                  from this set (e.g. different collector numbers)" 
+                  from this set (i.e. different collector numbers)" 
                 />
               </StyledValue>
             </tr>
           )} */}
           <tr>
-            <StyledLabel>Total Cards Collected:</StyledLabel>
-            <StyledValue>
-              {set.totalCardsOwned}
+            <StyledLabel>
+              Total Cards Collected:
               <Hint text="Total number of physical cards collected from this set" />
-            </StyledValue>
+            </StyledLabel>
+            <StyledValue>{set.totalCardsOwned}</StyledValue>
           </tr>
         </tbody>
       </table>
-      <StyledLink to={`/search?sets=${set.code}`}>
+      <StyledLink
+        to={`/search?sets=${set.code}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         Show all cards from this set
       </StyledLink>
     </StyledWrapper>

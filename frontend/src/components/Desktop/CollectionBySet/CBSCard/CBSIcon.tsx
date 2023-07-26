@@ -10,6 +10,7 @@ import {
   gradientSilver,
 } from '../progressGradients';
 import { useAnimateOnAppearance } from '../../../../hooks/useAnimateOnAppearance';
+import { getCompletionGroup } from '../useGroupSets';
 
 const StyledBorderedCircle = styled.div`
   display: flex;
@@ -20,21 +21,17 @@ const StyledBorderedCircle = styled.div`
   overflow: hidden;
 `;
 
-const getProgressColorGradient = (percentageOwned: number) => {
-  if (percentageOwned < 0.25) {
-    return gradientIron;
-  }
-  if (percentageOwned < 0.5) {
-    return gradientBronze;
-  }
-  if (percentageOwned < 0.75) {
-    return gradientSilver;
-  }
-  if (percentageOwned < 1) {
-    return gradientGold;
-  }
+const GRADIENTS = {
+  iron: gradientIron,
+  bronze: gradientBronze,
+  silver: gradientSilver,
+  gold: gradientGold,
+  diamond: gradientDiamond,
+};
 
-  return gradientDiamond;
+const getProgressColorGradient = (percentageOwned: number) => {
+  const group = getCompletionGroup(percentageOwned);
+  return GRADIENTS[group];
 };
 
 const StyledWrapper = styled(StyledBorderedCircle)`
@@ -109,18 +106,17 @@ const StyledSetIcon = styled.img`
 
 interface Props {
   set: Set;
-  percentageOwned: number;
 }
 
-const CBSIcon = ({ set, percentageOwned }: Props) => {
+const CBSIcon = ({ set }: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const isVisible = useAnimateOnAppearance(wrapperRef);
 
   return (
     <StyledWrapper ref={wrapperRef}>
       {isVisible && (
-        <StyledBackground percentageOwned={percentageOwned}>
-          <StyledProgress percentageOwned={percentageOwned} />
+        <StyledBackground percentageOwned={set.percentageOwned}>
+          <StyledProgress percentageOwned={set.percentageOwned} />
         </StyledBackground>
       )}
       <StyledIconWrapper>

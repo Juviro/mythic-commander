@@ -6,13 +6,14 @@ import { Set } from '../../../../types/graphql';
 import CBSIcon from './CBSIcon';
 import CBSCardPopover from './CBSCardPopover';
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<{ unreleased: boolean }>`
   display: flex;
   text-align: center;
   flex-direction: column;
   align-items: center;
   gap: 16px;
   cursor: pointer;
+  ${({ unreleased }) => unreleased && 'filter: opacity(0.4);'}
 `;
 
 interface Props {
@@ -20,8 +21,7 @@ interface Props {
 }
 
 const CBSCard = ({ set }: Props) => {
-  const percentageOwned =
-    Math.floor((100 * set.uniqueCardsOwned) / set.uniqueCardCount) / 100;
+  const isUnreleased = new Date(set.released_at) > new Date();
 
   return (
     <Popover
@@ -31,8 +31,8 @@ const CBSCard = ({ set }: Props) => {
       title={set.name}
       trigger="click"
     >
-      <StyledWrapper>
-        <CBSIcon set={set} percentageOwned={percentageOwned} />
+      <StyledWrapper unreleased={isUnreleased}>
+        <CBSIcon set={set} />
         <Typography.Text>{set.name}</Typography.Text>
       </StyledWrapper>
     </Popover>

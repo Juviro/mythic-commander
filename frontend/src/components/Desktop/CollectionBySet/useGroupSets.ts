@@ -1,6 +1,6 @@
 import { Set } from '../../../types/graphql';
 
-export type GroupProperty = 'type' | 'year';
+export type GroupProperty = 'type' | 'year' | 'completion';
 
 export const SET_GROUPS = [
   {
@@ -55,6 +55,25 @@ export const SET_GROUPS = [
   },
 ];
 
+const COMPLETION_GROUPS = {
+  zero: 'Unowned',
+  iron: 'Iron',
+  bronze: 'Bronze',
+  silver: 'Silver',
+  gold: 'Gold',
+  diamond: 'Diamond',
+};
+
+export const getCompletionGroup = (percentageOwned: number) => {
+  if (percentageOwned === 0) return 'zero';
+  if (percentageOwned < 0.25) return 'iron';
+  if (percentageOwned < 0.5) return 'bronze';
+  if (percentageOwned < 0.75) return 'silver';
+  if (percentageOwned < 1) return 'gold';
+
+  return 'diamond';
+};
+
 const groupSets = (sets: Set[], property: GroupProperty) => {
   if (property === 'year') {
     const setGroupsMap = sets.reduce((acc, set) => {
@@ -76,6 +95,30 @@ const groupSets = (sets: Set[], property: GroupProperty) => {
       }))
       .sort((a, b) => Number(b.key) - Number(a.key));
   }
+  if (property === 'completion') {
+    const setGroupsMap = sets.reduce((acc, set) => {
+      const completion = getCompletionGroup(set.percentageOwned);
+
+      if (!acc[completion]) {
+        acc[completion] = [];
+      }
+
+      acc[completion].push(set);
+
+      return acc;
+    }, {} as { [key: string]: Set[] });
+
+    return Object.entries(setGroupsMap)
+      .sort(([a], [b]) => {
+        const order = ['diamond', 'gold', 'silver', 'bronze', 'iron', 'zero'];
+
+        return order.indexOf(a) - order.indexOf(b);
+      })
+      .map(([key, value]) => ({
+        key: `${COMPLETION_GROUPS[key]} (${value.length})`,
+        sets: value.sort((a, b) => b.percentageOwned - a.percentageOwned),
+      }));
+  }
 
   return SET_GROUPS.map(({ keys, name }) => ({
     key: name,
@@ -87,10 +130,13 @@ interface Props {
   sets: Set[];
   groupBy: GroupProperty;
   displayedSetTypes: string[];
+  search: string;
 }
 
-const useGroupSets = ({ sets, groupBy, displayedSetTypes }: Props) => {
+const useGroupSets = ({ sets, groupBy, displayedSetTypes, search }: Props) => {
   const filteredSets = sets.filter((set) => {
+    if (!set.name.toLowerCase().includes(search.toLowerCase())) return false;
+
     const categoryKey = SET_GROUPS.find(({ keys }) => keys.includes(set.set_type))?.key;
     return displayedSetTypes.includes(categoryKey);
   });

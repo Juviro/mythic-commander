@@ -329,6 +329,7 @@ type Set {
   totalCardsOwned: Int!
   uniqueVersionsOwned: Int!
   uniqueCardsOwned: Int!
+  percentageOwned: Float!
 }
 
 ################################# Queries #################################

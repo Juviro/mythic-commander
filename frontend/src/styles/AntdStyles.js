@@ -1,16 +1,15 @@
-import { createGlobalStyle } from 'styled-components';
+import { css } from 'styled-components';
 import { darkBackground } from '../constants/colors';
 
-export default createGlobalStyle`
+export default css`
   /* transparent search field for deck view */
-  .transparent  .ant-select-clear {
+  .transparent .ant-select-clear {
     border-radius: 50%;
   }
   .transparent input {
     border: none;
     color: white;
-    background-color: rgba(45,45,45,0.6);
-    
+    background-color: rgba(45, 45, 45, 0.6);
   }
   .transparent .ant-select-selection-placeholder {
     color: white;
@@ -20,8 +19,8 @@ export default createGlobalStyle`
     color: ${darkBackground};
     opacity: 0.5;
   }
-  .transparent .ant-select-selection-search-input  {
-    background-color: rgba(45,45,45, 1);
+  .transparent .ant-select-selection-search-input {
+    background-color: rgba(45, 45, 45, 1);
     border: none;
     opacity: 0.6;
     border-radius: 2px;
@@ -48,7 +47,7 @@ export default createGlobalStyle`
     position: absolute;
     border-radius: 4%;
     background-size: cover;
-    will-change: transform,opacity;
+    will-change: transform, opacity;
   }
 
   /* modal with transparent background */

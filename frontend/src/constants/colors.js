@@ -16,6 +16,7 @@ export const darkBackgroundTransparent = '#05346133';
 export const lightBackground = '#f5f5f5';
 export const lightWhite = 'rgba(255, 255, 255, 0.7)';
 export const lightText = 'rgba(0, 0, 0, 0.45)';
+export const defaultText = 'rgba(0, 0, 0, 0.65)';
 
 export const greyBorder = '#d9d9d9';
 export const buttonHoverBackground = '#e0dfdf';

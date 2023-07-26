@@ -14,6 +14,7 @@ export const collectionBySet = gql`
       uniqueCardsOwned
       uniqueVersionsOwned
       totalCardsOwned
+      percentageOwned
     }
   }
 `;

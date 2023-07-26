@@ -29,6 +29,7 @@ const SKIPPED_SET_TYPES = [
 const updateSets = async () => {
   try {
     const uniqueCardsPerSet = await db('distinctCardsPerSet')
+      .whereNot('name', 'ilike', 'Basic Land —%')
       .select('set', db.raw('count(*) as count'))
       .groupBy('set');
 
