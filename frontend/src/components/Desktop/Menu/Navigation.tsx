@@ -11,6 +11,12 @@ const StyledMenu = styled(Menu)`
   border-bottom: none;
   font-size: 16px;
   margin-left: 12px;
+  flex: 2;
+  min-width: 450px;
+
+  @media (min-width: 1200px) {
+    min-width: 700px;
+  }
 
   .ant-menu-item,
   .ant-menu-submenu {
