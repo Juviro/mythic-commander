@@ -10,7 +10,7 @@ interface Props {
 export const DeckColorDistribution = ({ deck }: Props) => {
   return (
     <>
-      <DeckStat title="Mana Symbols" hidden={!deck?.cards.length}>
+      <DeckStat title="Mana Symbols in Spells" hidden={!deck?.cards.length}>
         <ColorDistributionChart colorKey="mana_cost" deck={deck} />
       </DeckStat>
       <DeckStat title="Mana Production" hidden={!deck?.cards.length}>
