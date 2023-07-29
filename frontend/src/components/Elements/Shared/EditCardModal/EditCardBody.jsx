@@ -35,7 +35,7 @@ const StyledImageWrapper = styled.div`
   align-self: center;
 `;
 
-export default ({ card, onChangeProp, canSubmit, onSubmit }) => {
+const EditCardBody = ({ card, onChangeProp, canSubmit, onSubmit }) => {
   const [selectedCard, setSelectedCard] = useState(null);
 
   return (
@@ -73,3 +73,5 @@ export default ({ card, onChangeProp, canSubmit, onSubmit }) => {
     </StyledWrapper>
   );
 };
+
+export default EditCardBody;

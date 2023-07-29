@@ -10,6 +10,9 @@ const premiumFrameEffects = [
 // Try to find the main variant of a card
 // For most cards, this will be set by isSpecialForDistinctCards to -1
 export const isSpecialCard = (card) => {
+  if (card.promo_types?.includes('boxtopper')) {
+    return 4;
+  }
   if (
     card.frame_effects &&
     premiumFrameEffects.some((effect) => card.frame_effects.includes(effect))

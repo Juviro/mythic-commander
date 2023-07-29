@@ -42,5 +42,8 @@ export const setIsSpecialForDistinctCards = async () => {
     }
   }
 
-  await knex('cards').update({ is_special: -1 }).whereIn('id', cardIds);
+  await knex('cards')
+    .update({ is_special: -1 })
+    .whereIn('id', cardIds)
+    .andWhere('is_special', 0);
 };
