@@ -33,7 +33,12 @@ const tokenFinder = async (userId) => {
     .map(({ all_parts }) => all_parts)
     .flat()
     .filter(({ component, type_line }) => {
-      return component === 'token' || type_line.startsWith('Emblem');
+      return (
+        component === 'token' ||
+        type_line.startsWith('Emblem') ||
+        // "Tolkien" creature - tokens from the LOTR set
+        type_line.startsWith('Tolkien')
+      );
     })
     .map(({ id }) => `'${id}'`);
 
