@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import EditCardBody from './EditCardBody';
 import FocusedModal from '../FocusedModal';
 
-const EditCardModal = ({ onEdit, card, onCancel }) => {
+const EditCardModal = ({ onEdit, card, onCancel, allowSettingDefaultCardVersion }) => {
   const [newProps, setNewProps] = useState({});
 
   const onSubmit = () => {
@@ -36,6 +36,7 @@ const EditCardModal = ({ onEdit, card, onCancel }) => {
     >
       <EditCardBody
         card={card}
+        allowSettingDefaultCardVersion={allowSettingDefaultCardVersion}
         onChangeProp={onChangeProp}
         canSubmit={canSubmit}
         onSubmit={onSubmit}

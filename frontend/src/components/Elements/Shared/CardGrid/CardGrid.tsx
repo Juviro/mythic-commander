@@ -276,14 +276,20 @@ const CardGrid = ({
 
 interface FullProps extends Props {
   deleteByOracle?: (oracleIds: string[], numberOfCards: number) => void;
+  allowSettingDefaultCardVersion?: boolean;
 }
 
 const CardGridWithActions = ({
   deleteByOracle,
   onEditCard,
+  allowSettingDefaultCardVersion,
   ...props
 }: FullProps & RouteComponentProps) => (
-  <WithActions deleteByOracle={deleteByOracle} onEditCard={onEditCard}>
+  <WithActions
+    deleteByOracle={deleteByOracle}
+    onEditCard={onEditCard}
+    allowSettingDefaultCardVersion={allowSettingDefaultCardVersion}
+  >
     {(actionProps) => <CardGrid {...props} {...actionProps} />}
   </WithActions>
 );

@@ -11,6 +11,7 @@ const WithActions = ({
   onEditCard = null,
   deleteByOracle = null,
   children,
+  allowSettingDefaultCardVersion,
   ...props
 }) => {
   const [{ page, layout }] = useQueryParams({
@@ -97,6 +98,7 @@ const WithActions = ({
           onEdit={onEditCard}
           card={selectedSingleCard}
           onCancel={onCancel}
+          allowSettingDefaultCardVersion={allowSettingDefaultCardVersion}
         />
       )}
       <AddCardsTo

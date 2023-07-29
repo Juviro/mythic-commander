@@ -144,6 +144,7 @@ export default ({ loading, cardsByType, deck }) => {
   return (
     <CardGrid
       hidePagination
+      allowSettingDefaultCardVersion
       loading={loading}
       cards={allCardsInOrder}
       cardLists={cardLists}

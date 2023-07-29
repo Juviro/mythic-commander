@@ -35,7 +35,13 @@ const StyledImageWrapper = styled.div`
   align-self: center;
 `;
 
-const EditCardBody = ({ card, onChangeProp, canSubmit, onSubmit }) => {
+const EditCardBody = ({
+  card,
+  onChangeProp,
+  canSubmit,
+  onSubmit,
+  allowSettingDefaultCardVersion,
+}) => {
   const [selectedCard, setSelectedCard] = useState(null);
 
   return (
@@ -63,12 +69,14 @@ const EditCardBody = ({ card, onChangeProp, canSubmit, onSubmit }) => {
           onSelectCard={setSelectedCard}
           onSelect={onChangeProp('id')}
         />
-        <Checkbox
-          onChange={(e) => onChangeProp('isDefault')(e.target.checked)}
-          style={{ marginLeft: 0, marginTop: 16 }}
-        >
-          Set as Default Card Version
-        </Checkbox>
+        {allowSettingDefaultCardVersion && (
+          <Checkbox
+            onChange={(e) => onChangeProp('isDefault')(e.target.checked)}
+            style={{ marginLeft: 0, marginTop: 16 }}
+          >
+            Set as Default Card Version
+          </Checkbox>
+        )}
       </StyledContent>
     </StyledWrapper>
   );
