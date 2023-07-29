@@ -45,6 +45,7 @@ export type Card = {
   id: Scalars['String'];
   image_uris?: Maybe<ImageUris>;
   imgKey: Scalars['String'];
+  isModalDfcLand: Scalars['Boolean'];
   isTwoFaced: Scalars['Boolean'];
   legalities: Legalities;
   mana_cost?: Maybe<Scalars['String']>;
@@ -654,7 +655,7 @@ export type Set = {
   code: Scalars['String'];
   icon_svg_uri: Scalars['String'];
   name: Scalars['String'];
-  percentageOwned: Scalars['Int'];
+  percentageOwned: Scalars['Float'];
   released_at: Scalars['String'];
   set_type: Scalars['String'];
   totalCardsOwned: Scalars['Int'];

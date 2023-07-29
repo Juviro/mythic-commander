@@ -8,7 +8,6 @@ import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import styled from 'styled-components';
 import PageLayout, { PageCard } from 'components/Elements/Desktop/PageLayout';
 import AddCards from 'components/Elements/Desktop/AddCards';
-import OneTimeInfoBox from 'components/Elements/Shared/OneTimeInfoBox/OneTimeInfoBox';
 import { proxies, tokens } from './queries';
 import ProxyCards from './ProxyCards';
 import PrintView from './PrintView';

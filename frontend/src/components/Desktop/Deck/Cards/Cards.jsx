@@ -8,6 +8,10 @@ import { sortByCmc, sortByName } from '../../../../utils/cardFilter';
 import Dropzone from '../../../Elements/Desktop/Dropzone';
 
 export default ({ deck, loading, onAddCards, view }) => {
+  const numberOfModalDfcLands = deck?.cards?.filter(
+    ({ isModalDfcLand }) => isModalDfcLand
+  ).length;
+
   const getCards = () => {
     if (!deck) return null;
     const sortedCards = sortByCmc(sortByName(deck.cards));
@@ -38,7 +42,12 @@ export default ({ deck, loading, onAddCards, view }) => {
 
   return (
     <Dropzone onDrop={onDrop} listId={deck?.id}>
-      <CardLists deck={deck} loading={loading} cardsByType={cardsByTypeWithoutEmpty} />
+      <CardLists
+        deck={deck}
+        loading={loading}
+        cardsByType={cardsByTypeWithoutEmpty}
+        numberOfModalDfcLands={numberOfModalDfcLands}
+      />
     </Dropzone>
   );
 };

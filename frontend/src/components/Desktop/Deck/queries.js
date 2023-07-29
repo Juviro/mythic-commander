@@ -17,6 +17,7 @@ const CARD_FIELDS = `
       color_identity
       possiblePartner
       canBeCommander
+      isModalDfcLand
       isTwoFaced
       produced_mana
       

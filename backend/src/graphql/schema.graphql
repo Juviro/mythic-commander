@@ -47,6 +47,7 @@ type Card {
   amountOwnedFoil: Int!
   possiblePartner: String
   canBeCommander: Boolean!
+  isModalDfcLand: Boolean!
 
   oracleCard: OracleCard!
   relatedCards: [Card!]
