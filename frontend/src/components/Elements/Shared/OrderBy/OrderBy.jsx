@@ -37,11 +37,11 @@ const DEFAULT_FILTER = [
     value: 'priceUsd-desc',
   },
   {
-    label: 'Mana costs (lowest first)',
+    label: 'Mana value (lowest first)',
     value: 'cmc-asc',
   },
   {
-    label: 'Mana costs (highest first)',
+    label: 'Mana value (highest first)',
     value: 'cmc-desc',
   },
   {
