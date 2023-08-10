@@ -13,7 +13,7 @@ import { GameSettings } from './LifeTracker.types';
 const StyledWrapper = styled.div`
   flex-flow: column;
   display: flex;
-  height: calc(100% - 50px);
+  height: 100%;
 `;
 
 const INITIAL_GAME_SETTINGS = {
