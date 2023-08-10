@@ -1,55 +1,47 @@
 import React from 'react';
-import { Button } from 'antd';
 import Flex from 'components/Elements/Shared/Flex';
-import useLocalStorage from '../../../Hooks/useLocalStorage';
-import SettingSelection from './SettingSelection';
-import SwitchSetting from './SwitchSetting';
+import { Typography } from 'antd';
+import RejoinGame from './RejoinGame';
+import StartNewGame from './StartNewGame';
 
-export default ({ onStart }) => {
-  const [numberOfPlayers, setNumberOfPlayers] = useLocalStorage('LT-numberOfPlayers', 4);
-  const [startingLife, setStartingLife] = useLocalStorage('LT-startingLife', 40);
-  const [displayDamage, setDisplayDamage] = useLocalStorage('LT-displayDamage', true);
-  const [useImages, setUseImages] = useLocalStorage('LT-useImages', true);
-
+const StartingScreen = ({
+  gameSettings,
+  setGameSettings,
+  onStart,
+  canRejoin,
+  onRejoin,
+  players,
+}) => {
   const onStartGame = () => {
-    onStart({ numberOfPlayers, startingLife, displayDamage, useImages });
+    onStart();
+  };
+
+  const setGameSetting = (key) => (value) => {
+    setGameSettings({ ...gameSettings, [key]: value });
   };
 
   return (
     <Flex
-      direction="column"
-      style={{ padding: 24, height: '100%' }}
+      style={{ height: '100%', padding: 24 }}
       justify="space-between"
+      direction="column"
     >
-      <Flex direction="column">
-        <SettingSelection
-          title="Players"
-          minValue={2}
-          maxValue={6}
-          value={numberOfPlayers}
-          onChange={setNumberOfPlayers}
-        />
-        <SettingSelection
-          step={10}
-          minValue={10}
-          title="Starting Life"
-          value={startingLife}
-          onChange={setStartingLife}
+      {canRejoin && (
+        <Flex direction="column" gap={16} flex={1}>
+          <Typography.Title level={3}>Resume last Game</Typography.Title>
+          <RejoinGame onRejoin={onRejoin} players={players} />
+        </Flex>
+      )}
+      <Flex direction="column" gap={16}>
+        <Typography.Title level={3}>Start a new Game</Typography.Title>
+        <StartNewGame
+          gameSettings={gameSettings}
+          setGameSetting={setGameSetting}
+          onStartGame={onStartGame}
         />
       </Flex>
-      <SwitchSetting
-        checked={displayDamage}
-        label="Track Player Damage"
-        onChange={() => setDisplayDamage(!displayDamage)}
-      />
-      <SwitchSetting
-        checked={useImages}
-        label="Background Images"
-        onChange={() => setUseImages(!useImages)}
-      />
-      <Button type="primary" onClick={onStartGame}>
-        Start Game
-      </Button>
     </Flex>
   );
 };
+
+export default StartingScreen;

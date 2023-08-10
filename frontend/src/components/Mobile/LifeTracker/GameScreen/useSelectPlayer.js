@@ -19,8 +19,8 @@ const getNumberOfTicks = (numberOfPlayers) => {
   return currentTicks + startingPlayerIndex;
 };
 
-export default (players) => {
-  const [isLoading, toggleIsLoading] = useToggle(true);
+export default (players, isRejoinedGame) => {
+  const [isLoading, toggleIsLoading] = useToggle(!isRejoinedGame);
   const playerIds = players.map(({ id }) => id).reverse();
 
   const [highlightedPlayerIndex, setHighlightedPlayerIndex] = useState(null);
@@ -69,6 +69,7 @@ export default (players) => {
 
   // eslint-disable-next-line
   useEffect(() => {
+    if (isRejoinedGame) return;
     const preloadImages = async () => {
       try {
         await preloadByStrings(players.map(({ img }) => img).filter(Boolean));

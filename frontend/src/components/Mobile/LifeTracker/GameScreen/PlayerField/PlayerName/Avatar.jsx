@@ -40,7 +40,15 @@ const StyledAvatar = styled.div`
       : ''}
 `;
 
-export default ({ isInfect, img, color, height = 32, style, onClick, isSelected }) => {
+export default ({
+  isInfect = false,
+  img,
+  color = null,
+  height = 32,
+  style = null,
+  onClick = undefined,
+  isSelected = false,
+}) => {
   const width = height * 1.3;
 
   return (

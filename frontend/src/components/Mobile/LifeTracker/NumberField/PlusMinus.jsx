@@ -14,17 +14,17 @@ const StyledButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: ${({ value }) => (value === '+' ? 'flex-end' : 'flex-start')};
-  font-size: 200%;
+  font-size: ${({ small }) => (small ? '100%' : '200%')};
 
   &:active ${StyledValue} {
     transform: scale(0.9);
   }
 `;
 
-export default ({ value, onPress, onLongPress }) => {
+export default ({ value, onPress, onLongPress, small }) => {
   return (
     <LongPress time={LONG_PRESS_DELAY} onLongPress={onLongPress} onPress={onPress}>
-      <StyledButton value={value}>
+      <StyledButton value={value} small={small}>
         <StyledValue>{value}</StyledValue>
       </StyledButton>
     </LongPress>

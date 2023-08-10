@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Prompt } from 'react-router';
-import { withRouter } from 'react-router-dom';
 import { IS_DEV } from 'constants/network';
 import PlayerField from './PlayerField/PlayerField';
 
@@ -61,7 +60,7 @@ const GameScreen = ({
 
   return (
     <StyledWrapper>
-      {!IS_DEV && <Prompt when message="Are you sure you want to leave the game?" />}
+      <Prompt when={!IS_DEV} message="Are you sure you want to leave the game?" />
       <StyledHalf position={position1}>
         {leftSidePlayers.map((player) => (
           <PlayerField
@@ -96,4 +95,4 @@ const GameScreen = ({
   );
 };
 
-export default withRouter(GameScreen);
+export default GameScreen;

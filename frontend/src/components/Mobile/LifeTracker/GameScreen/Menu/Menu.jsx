@@ -56,6 +56,3 @@ export default ({ handle, onRestartGame }) => {
     </Flex>
   );
 };
-
-// exit, <CloseOutlined />
-// restart <UndoOutlined />

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { randomImages } from '../../../../constants/images';
 import { lifeTracker } from '../../../../constants/colors';
 import useSelectPlayer from './useSelectPlayer';
@@ -39,12 +39,23 @@ const getInitialPlayers = ({ numberOfPlayers, startingLife, useImages }) => {
   return playerIds.map(getPlayer);
 };
 
-export default (gameSettings) => {
-  // eslint-disable-next-line
-  const initialPlayers = useMemo(() => getInitialPlayers(gameSettings), []);
+export default (gameSettings, initialGameState) => {
+  const isRejoinedGame = Boolean(initialGameState?.players?.length);
+  const initialPlayers = useMemo(() => {
+    if (initialGameState?.players?.length) return initialGameState.players;
+    return getInitialPlayers(gameSettings);
+  }, []);
+
   const [players, setPlayers] = useState(initialPlayers);
-  const { highlightedPlayerId, onSelectRandomPlayer, isLoading } =
-    useSelectPlayer(initialPlayers);
+  const { highlightedPlayerId, onSelectRandomPlayer, isLoading } = useSelectPlayer(
+    initialPlayers,
+    isRejoinedGame
+  );
+
+  useEffect(() => {
+    if (!initialGameState?.players?.length) return;
+    setPlayers(initialGameState.players);
+  }, [initialGameState]);
 
   const onUpdatePlayer = (playerId, newValues) => {
     const updatedPlayers = players.map((player) => {

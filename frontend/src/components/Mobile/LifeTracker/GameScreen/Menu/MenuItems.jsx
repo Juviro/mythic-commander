@@ -6,7 +6,8 @@ import {
   FullscreenExitOutlined,
 } from '@ant-design/icons';
 import styled from 'styled-components';
-import { withRouter } from 'react-router';
+import { useHistory } from 'react-router-dom';
+
 import Confirm from 'components/Elements/Shared/Confirm';
 import { useToggle } from '../../../../Hooks';
 import { primary } from '../../../../../constants/colors';
@@ -33,8 +34,9 @@ const StyledMenuItem = styled.div`
   }
 `;
 
-const MenuItem = ({ handle, isOpen, onCloseMenu, history, onRestartGame }) => {
+const MenuItem = ({ handle, isOpen, onCloseMenu, onRestartGame }) => {
   const [isRestarting, toggleIsRestarting] = useToggle(false);
+  const history = useHistory();
 
   const onToggleFullscreen = () => {
     if (handle.active) {
@@ -45,20 +47,20 @@ const MenuItem = ({ handle, isOpen, onCloseMenu, history, onRestartGame }) => {
     onCloseMenu();
   };
 
-  const onLeave = () => {
-    history.goBack();
-  };
-
   const onRestart = () => {
     onRestartGame();
     onCloseMenu();
     toggleIsRestarting();
   };
 
+  const onEnd = () => {
+    history.push(`/m/life-tracker`);
+  };
+
   const menuItems = [
     {
       icon: <CloseOutlined />,
-      onClick: onLeave,
+      onClick: onEnd,
     },
     {
       icon: <UndoOutlined />,
@@ -88,4 +90,4 @@ const MenuItem = ({ handle, isOpen, onCloseMenu, history, onRestartGame }) => {
   );
 };
 
-export default withRouter(MenuItem);
+export default MenuItem;
