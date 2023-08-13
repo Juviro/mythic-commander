@@ -26,6 +26,7 @@ const CARD_FIELDS = `
         owned
         
         primaryTypes
+        subTypes
         isCommanderLegal
         minPriceUsd
         minPriceEur

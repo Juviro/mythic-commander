@@ -7,6 +7,7 @@ import { UnifiedDeck } from 'types/unifiedTypes';
 import {
   CARD_TYPES,
   CARD_TYPE_DECK_ORDER,
+  CardType,
 } from 'components/Provider/CardProvider/staticTypes';
 import { DeckStat } from './DeckStat';
 
@@ -16,10 +17,10 @@ interface Props {
 
 export const getPrimaryType = (primaryTypes: string[]) => {
   return [...primaryTypes].sort((a, b) => {
-    if (CARD_TYPES.indexOf(a) === -1) return 1;
-    if (CARD_TYPES.indexOf(b) === -1) return -1;
+    if (CARD_TYPES.indexOf(a as CardType) === -1) return 1;
+    if (CARD_TYPES.indexOf(b as CardType) === -1) return -1;
 
-    return CARD_TYPES.indexOf(a) - CARD_TYPES.indexOf(b);
+    return CARD_TYPES.indexOf(a as CardType) - CARD_TYPES.indexOf(b as CardType);
   })[0];
 };
 

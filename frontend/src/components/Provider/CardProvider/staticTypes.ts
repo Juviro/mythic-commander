@@ -8,7 +8,9 @@ export const CARD_TYPES = [
   'Sorcery',
   'Instant',
   'Battle',
-];
+] as const;
+
+export type CardType = typeof CARD_TYPES[number];
 
 // Order determines order of deck categories
 export const CARD_TYPE_DECK_ORDER = [
@@ -20,4 +22,4 @@ export const CARD_TYPE_DECK_ORDER = [
   'Instant',
   'Sorcery',
   'Land',
-];
+] as const;
