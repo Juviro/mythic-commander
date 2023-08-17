@@ -9,7 +9,7 @@ const typeMap = {
   Commander: 'Commander',
 };
 
-const typeToPlural = (type: string) => typeMap[type] || `${type}s`;
+export const typeToPlural = (type: string) => typeMap[type] || `${type}s`;
 
 const addMainType = (card: UnifiedDeckCard) => {
   const mainType = card.isCommander

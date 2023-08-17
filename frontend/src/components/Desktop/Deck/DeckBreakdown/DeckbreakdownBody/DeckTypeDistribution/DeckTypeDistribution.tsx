@@ -5,8 +5,8 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import { UnifiedDeck } from 'types/unifiedTypes';
 import { typeColors } from 'constants/colors';
 import { CARD_TYPES, CardType } from 'components/Provider/CardProvider/staticTypes';
-import { DeckStat } from './DeckStat';
 import DeckCardSubTypes from './DeckCardSubTypes';
+import { DeckStat } from '../DeckStat';
 
 interface Props {
   deck: UnifiedDeck;
