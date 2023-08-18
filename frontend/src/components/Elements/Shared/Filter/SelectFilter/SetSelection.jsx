@@ -4,7 +4,14 @@ import CardContext from '../../../../Provider/CardProvider';
 import MultiSelectFilter from './MultiSelectFilter';
 import SetIcon from '../../SetIcon';
 
-export default ({ onChange, value, allowClear, size, placeholder = 'e.g. "Theros"' }) => {
+const SetSelection = ({
+  onChange,
+  value,
+  allowClear,
+  size,
+  onSearch,
+  placeholder = 'e.g. "Theros"',
+}) => {
   const { sets } = useContext(CardContext);
   const allSets = Object.keys(sets)
     .map((key) => ({ value: key, ...sets[key] }))
@@ -16,6 +23,7 @@ export default ({ onChange, value, allowClear, size, placeholder = 'e.g. "Theros
     <MultiSelectFilter
       value={value}
       size={size}
+      onSearch={onSearch}
       options={allSets}
       onChange={onChange}
       allowClear={allowClear}
@@ -24,3 +32,5 @@ export default ({ onChange, value, allowClear, size, placeholder = 'e.g. "Theros
     />
   );
 };
+
+export default SetSelection;

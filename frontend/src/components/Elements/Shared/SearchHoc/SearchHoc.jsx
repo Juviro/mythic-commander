@@ -133,6 +133,11 @@ export default ({ children, researchOnOrderChange, blockInitialSearch = false })
       {}
     );
     setCurrentOptions(defaultOptions);
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   const numberOfCards = queryResult.totalResults;

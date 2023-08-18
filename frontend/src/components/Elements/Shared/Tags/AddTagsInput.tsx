@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Empty, Select } from 'antd';
 
 import getDropdownAlign from 'utils/getDropdownAlign';
 import DEFAULT_TAGS from 'constants/tags';
+import SubmittableSelect from 'components/Elements/Desktop/SubmittableSelect/SubmittableSelect';
 import Tag from './Tag';
 
 const tagRender = ({ value, onClose }) => {
@@ -39,45 +40,26 @@ const AddTagsInput = ({
   autoFocus,
   allowCustomTags,
   placeholder,
-  onChange: passedOnChange,
+  onChange,
   value,
 }: Props) => {
-  const [currentTags, setCurrentTags] = useState(initialTags ?? []);
-  const [isOpen, setIsOpen] = useState(true);
-
-  const onKeyDown = (event: React.KeyboardEvent) => {
-    if (isOpen) return;
-    event.stopPropagation();
-    if (event.key === 'Enter') {
-      onSave?.(currentTags);
-    } else if (event.key === 'Escape') {
-      onClose?.();
-    }
-  };
-
-  const onChange = (newTags: string[]) => {
-    setCurrentTags(newTags);
-    if (passedOnChange) {
-      passedOnChange(newTags);
-    }
-  };
-
   return (
-    <Select
+    <SubmittableSelect
+      value={value}
+      initialValue={initialTags}
+      onClose={onClose}
+      onSubmit={onSave}
       mode={allowCustomTags ? 'tags' : 'multiple'}
       allowClear={!allowCustomTags}
       autoFocus={autoFocus}
       defaultOpen={defaultOpen}
       style={{ width: '100%' }}
       placeholder={placeholder}
-      onDropdownVisibleChange={setIsOpen}
-      value={value ?? currentTags}
-      optionLabelProp="label"
       tagRender={tagRender}
       onMouseDown={(e) => e.stopPropagation()}
       dropdownAlign={getDropdownAlign(alignTop)}
       onChange={onChange}
-      onKeyDown={onKeyDown}
+      optionLabelProp="label"
       notFoundContent={
         <Empty
           image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -85,13 +67,14 @@ const AddTagsInput = ({
           style={{ margin: '8px 0' }}
         />
       }
-    >
-      {options.map((tag) => (
-        <Select.Option value={tag} key={tag} label={tag}>
-          <Tag tag={tag} key={tag} />
-        </Select.Option>
-      ))}
-    </Select>
+      renderOptions={() =>
+        options.map((tag) => (
+          <Select.Option value={tag} key={tag} label={tag}>
+            <Tag tag={tag} key={tag} />
+          </Select.Option>
+        ))
+      }
+    />
   );
 };
 

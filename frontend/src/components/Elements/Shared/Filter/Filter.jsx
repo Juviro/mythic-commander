@@ -100,7 +100,12 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
     {
       title: 'Set',
       component: (
-        <SetSelection size={size} onChange={onChangeOption('sets')} value={sets} />
+        <SetSelection
+          size={size}
+          onChange={onChangeOption('sets')}
+          value={sets}
+          onSearch={onSearch}
+        />
       ),
     },
     {
@@ -109,6 +114,7 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
       component: (
         <CardTypeSelection
           size={size}
+          onSearch={onSearch}
           onChangeOption={onChangeOption}
           value={cardTypes}
         />
