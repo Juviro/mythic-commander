@@ -20,7 +20,7 @@ const useCreateWantsList = (deck: UnifiedDeck, setCurrentTabId: (id: string) => 
         createWantsList: {
           __typename: 'wantsList',
           id: DUMMY_ID,
-          name: `New list - ${deck.name}`,
+          name: deck.name,
           lastEdit: Date.now(),
           numberOfCards: 0,
           cards: [],
