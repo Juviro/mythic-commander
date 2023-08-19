@@ -11,7 +11,7 @@ export default ({ onChangeOption, value, size, onSearch }) => {
       size={size}
       value={value}
       onSearch={onSearch}
-      onChange={onChangeOption('cardTypes')}
+      onChange={onChangeOption}
       options={cardTypes}
       placeholder={'e.g. "Planeswalker"'}
     />

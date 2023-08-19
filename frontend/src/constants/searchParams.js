@@ -7,6 +7,7 @@ export default {
   cardTypes: ArrayParam,
   isLegendary: StringParam,
   subTypes: ArrayParam,
+  variants: ArrayParam,
   colors: StringParam,
   tags: ArrayParam,
   rarity: StringParam,

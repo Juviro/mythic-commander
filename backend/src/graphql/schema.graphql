@@ -384,6 +384,8 @@ type Query {
   ltPlayers: [LTPlayer!]
 
   edhrecCards(names: [String!]!, themeSuffix: String): EDHRecData
+
+  cardVariants: [String!]!
 }
 
 input CardsOptionsInput {
@@ -402,6 +404,7 @@ input CardsOptionsInput {
   toughness: String
   sets: [String!]
   orderBy: String
+  variants: [String]
 }
 
 ################################# Mutations #################################

@@ -99,6 +99,7 @@ export type CardsOptionsInput = {
   tags?: InputMaybe<Array<Scalars['String']>>;
   text?: InputMaybe<Scalars['String']>;
   toughness?: InputMaybe<Scalars['String']>;
+  variants?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 export type ChangeCollectionInput = {
@@ -555,6 +556,7 @@ export type Query = {
   cardByOracleId?: Maybe<Card>;
   cardImages: Array<Maybe<Scalars['String']>>;
   cardSearch: PaginatedCards;
+  cardVariants: Array<Scalars['String']>;
   cards: Array<Maybe<Card>>;
   cardsBySet: Array<Card>;
   collection: Collection;

@@ -13,6 +13,7 @@ import tokenFinder from './tokenFinder';
 import getEdhrecCards from './getEdhrecCards';
 import tokens from './tokens';
 import collectionBySet from './collectionBySet';
+import { VARIANTS } from './Card/cardVariants';
 
 const resolver = {
   user(_, __, { db, user: { id } }) {
@@ -230,6 +231,10 @@ const resolver = {
     if (!userId) return null;
 
     return db('ltPlayers').where({ userId }).orderBy('lastEdit', 'DESC');
+  },
+
+  cardVariants: () => {
+    return Object.values(VARIANTS).sort((a, b) => a.localeCompare(b));
   },
 };
 

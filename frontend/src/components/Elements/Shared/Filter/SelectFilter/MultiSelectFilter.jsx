@@ -108,7 +108,7 @@ const MultiSelectFilter = ({
 // Wrap around loader so default value is set correctly
 // even if options are not loaded from provider yet
 export default ({ options, ...rest }) => {
-  if (!options.length) return <CustomSkeleton.Line />;
+  if (!options?.length) return <CustomSkeleton.Line />;
 
   return <MultiSelectFilter options={options} {...rest} />;
 };

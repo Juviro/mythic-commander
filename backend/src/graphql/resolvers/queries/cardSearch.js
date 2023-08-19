@@ -90,6 +90,20 @@ const addTagsClause = (q, tags) => {
   q.whereRaw(`tags && ARRAY[${placeholder}]::text[]`, tags);
 };
 
+const addVariantClause = (q, variants) => {
+  const placeholder = variants.map(() => '?');
+  q.whereRaw(`variants && ARRAY[${placeholder}]::text[]`, variants);
+  q.whereNotIn('layout', [
+    'token',
+    'double_faced_token',
+    'emblem',
+    'planar',
+    'vanguard',
+    'scheme',
+    'art_series',
+  ]);
+};
+
 export const addNameClause = (q, name) => {
   const normalizedName = normalizeName(name);
   const searchPattern = normalizedName.split(' ').join('%');
@@ -117,14 +131,21 @@ export default async (
     cmc,
     rarity,
     tags,
+    variants,
     orderBy = 'name-asc',
   } = options;
 
   const [order, direction = 'asc'] = orderBy.split('-');
 
-  const tableName = sets?.length ? 'distinctCardsPerSet' : 'distinctCards';
+  let tableName = 'distinctCards';
+  if (variants?.length) {
+    tableName = 'cards';
+  } else if (sets?.length) {
+    tableName = 'distinctCardsPerSet';
+  }
 
   const where = (q) => {
+    q.whereNot('set_type', 'token');
     if (name) addNameClause(q, name);
     if (text) q.where('oracle_text', 'ILIKE', `%${text}%`);
     if (subTypes?.length) q.where('type_line', '~*', subTypes.join('|'));
@@ -145,6 +166,7 @@ export default async (
     if (toughness) addRangeClause(q, toughness, 'toughness');
     if (rarity) addRarityClause(q, rarity);
     if (tags?.length) addTagsClause(q, tags);
+    if (variants) addVariantClause(q, variants);
   };
 
   const cardQuery = db(tableName)
