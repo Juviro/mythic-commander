@@ -25,6 +25,8 @@ interface Props {
 }
 
 const CardSlide = ({ card, displayDetails, cardRef }: Props) => {
+  if (!card) return null;
+
   return (
     <StyledSlideSnapper ref={cardRef}>
       <StyledSlide>

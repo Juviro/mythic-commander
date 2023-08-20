@@ -47,6 +47,14 @@ const CardModal = ({
   }, [displayedCardId]);
 
   const currentCardIndex = cards.findIndex((card) => card.id === displayedCardId);
+
+  useEffect(() => {
+    if (currentCardIndex !== -1) return;
+    onClose();
+  }, [currentCardIndex]);
+
+  if (currentCardIndex === -1) return null;
+
   const currentCard = cards[currentCardIndex];
   const prevCard = cards[currentCardIndex - 1];
   const nextCard = cards[currentCardIndex + 1];
