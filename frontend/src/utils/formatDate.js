@@ -6,7 +6,7 @@ const formatDate = (dateString, isShort) => {
   if (Number.isNaN(date.getTime())) {
     date = new Date(Number(dateString));
   }
-  return new Date(date).toLocaleDateString('en-US', isShort ? shortOptions : options);
+  return new Date(date).toLocaleDateString('de-DE', isShort ? shortOptions : options);
 };
 
 export default formatDate;
