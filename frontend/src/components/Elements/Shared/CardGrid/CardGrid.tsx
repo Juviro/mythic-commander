@@ -107,6 +107,8 @@ const CardGrid = ({
   const { selectedCardIds, onSelectCard, onClearSelection, onSelectAll, canSelectAll } =
     useSelectCards(cards);
 
+  const cardRefs = useRef<Record<string, HTMLDivElement>>({});
+
   const setDetailCard = (card: UnifiedCard) => {
     const cardIndex = cards.findIndex(({ id }) => id === card.id);
     setDetailCardIndex(cardIndex);
@@ -131,7 +133,7 @@ const CardGrid = ({
   }, [history.location.pathname]);
 
   useEffect(() => {
-    const cardElement = document.getElementById(detailCard?.id);
+    const cardElement = cardRefs.current[detailCard?.id];
     if (!cardElement) return;
 
     scrollIntoView(cardElement, {
@@ -241,6 +243,9 @@ const CardGrid = ({
                 onClick={onClickCard}
                 dragProps={dragProps}
                 key={card.id}
+                cardRef={(ref) => {
+                  cardRefs.current[card.id] = ref;
+                }}
                 actions={[...actions, ...(list.additionalActions ?? [])]}
                 search={search}
                 minimal={minimal}

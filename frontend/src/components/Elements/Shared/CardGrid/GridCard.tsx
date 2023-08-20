@@ -91,6 +91,7 @@ const GridCard = ({
   onClick,
   onSetTags,
   allTags,
+  cardRef,
 }) => {
   const { canDrag = false, listId, onSuccessfullDrop } = dragProps ?? {};
   const displayedAmount = card.amount || card.totalAmount;
@@ -129,7 +130,7 @@ const GridCard = ({
   };
 
   return (
-    <StyledCardWrapper key={card.id} fixedSize={fixedSize} id={card.id}>
+    <StyledCardWrapper key={card.id} fixedSize={fixedSize} ref={cardRef} id={card.id}>
       <StyledImageWrapper
         onClick={onClickCard}
         isSelected={isSelected}
