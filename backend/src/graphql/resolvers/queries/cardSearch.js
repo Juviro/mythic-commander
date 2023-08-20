@@ -28,13 +28,28 @@ const addColorClause = (q, colors) => {
   }
 };
 
-const addOwnedClause = (q, userId, isOwned, tableName, sets) => {
+const addOwnedClause = (
+  q,
+  userId,
+  isOwned,
+  tableName,
+  sets,
+  displayAllVariants
+) => {
   const operator = isOwned === 'true' ? 'IN' : 'NOT IN';
 
   if (sets?.length) {
     q.whereRaw(
       `??.oracle_id ${operator} (SELECT DISTINCT oracle_id FROM cards LEFT JOIN collection ON collection.id = cards.id WHERE "userId" = ? AND set IN (?))`,
       [tableName, userId, sets.join(',')]
+    );
+
+    return;
+  }
+  if (displayAllVariants) {
+    q.whereRaw(
+      `??.id ${operator} (SELECT id FROM collection WHERE "userId" = ?)`,
+      [tableName, userId]
     );
 
     return;
@@ -133,12 +148,13 @@ export default async (
     tags,
     variants,
     orderBy = 'name-asc',
+    displayAllVariants,
   } = options;
 
   const [order, direction = 'asc'] = orderBy.split('-');
 
   let tableName = 'distinctCards';
-  if (variants?.length) {
+  if (variants?.length || displayAllVariants) {
     tableName = 'cards';
   } else if (sets?.length) {
     tableName = 'distinctCardsPerSet';
@@ -160,13 +176,13 @@ export default async (
       q.whereNot('type_line', 'ILIKE', `%Legendary%`);
     if (colors.length) addColorClause(q, colors);
     if (isOwned && user && user.id)
-      addOwnedClause(q, user.id, isOwned, tableName, sets);
+      addOwnedClause(q, user.id, isOwned, tableName, sets, displayAllVariants);
     if (cmc) addRangeClause(q, cmc, 'cmc');
     if (power) addRangeClause(q, power, 'power');
     if (toughness) addRangeClause(q, toughness, 'toughness');
     if (rarity) addRarityClause(q, rarity);
     if (tags?.length) addTagsClause(q, tags);
-    if (variants) addVariantClause(q, variants);
+    if (variants?.length) addVariantClause(q, variants);
   };
 
   const cardQuery = db(tableName)

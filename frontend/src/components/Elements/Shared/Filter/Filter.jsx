@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
 
-import { Divider, Typography } from 'antd';
+import { Checkbox, Divider, Typography } from 'antd';
 import BooleanSelection from 'components/Elements/Shared/Filter/SelectFilter/BooleanSelection';
 import UserContext from 'components/Provider/UserProvider';
 import ColorSelection from './ColorSelection';
@@ -71,6 +71,7 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
     isOwned,
     isCommanderLegal,
     variants,
+    displayAllVariants,
   } = options;
 
   const { user } = useContext(UserContext);
@@ -160,28 +161,6 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
       ),
     },
     {
-      title: 'Tag',
-      dividerAbove: true,
-      component: (
-        <AddTagsInput
-          placeholder='e.g. "Ramp"'
-          onChange={onChangeOption('tags')}
-          value={tags ?? []}
-        />
-      ),
-    },
-    {
-      title: 'Variant',
-      component: (
-        <VariantSelection
-          size={size}
-          onSearch={onSearch}
-          onChangeOption={onChangeOption('variants')}
-          value={variants}
-        />
-      ),
-    },
-    {
       title: 'Converted Mana Cost',
       dividerAbove: true,
       component: (
@@ -237,6 +216,39 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
           trueLabel="Owned Cards Only"
           falseLabel="Unowned Cards Only"
         />
+      ),
+    },
+    {
+      title: 'Tag',
+      dividerAbove: true,
+      component: (
+        <AddTagsInput
+          placeholder='e.g. "Ramp"'
+          onChange={onChangeOption('tags')}
+          value={tags ?? []}
+        />
+      ),
+    },
+    {
+      title: 'Variant',
+      component: (
+        <VariantSelection
+          size={size}
+          onSearch={onSearch}
+          onChangeOption={onChangeOption('variants')}
+          value={variants}
+        />
+      ),
+    },
+    {
+      title: '',
+      component: (
+        <Checkbox
+          onChange={(e) => onChangeOption('displayAllVariants')(e.target.checked)}
+          checked={displayAllVariants}
+        >
+          Show all Card Versions
+        </Checkbox>
       ),
     },
   ];

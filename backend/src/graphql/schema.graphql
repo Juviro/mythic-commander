@@ -405,6 +405,7 @@ input CardsOptionsInput {
   sets: [String!]
   orderBy: String
   variants: [String]
+  displayAllVariants: Boolean
 }
 
 ################################# Mutations #################################
