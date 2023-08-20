@@ -22,7 +22,7 @@ const StartingScreen = ({
 
   return (
     <Flex
-      style={{ height: 'calc(100% - 50px)', padding: 24 }}
+      style={{ height: 'calc(100% - 50px)', padding: '24px 24px 0' }}
       justify="space-between"
       direction="column"
     >

@@ -33,11 +33,6 @@ const StartNewGame = ({ gameSettings, setGameSetting, onStartGame }: Props) => {
         label="Track Player Damage"
         onChange={() => setGameSetting('displayDamage')(!gameSettings.displayDamage)}
       />
-      <SwitchSetting
-        checked={gameSettings.useImages}
-        label="Background Images"
-        onChange={() => setGameSetting('useImages')(!gameSettings.useImages)}
-      />
       <Button
         type="primary"
         onClick={onStartGame}
