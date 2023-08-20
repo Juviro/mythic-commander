@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 
 import Flex from 'components/Elements/Shared/Flex';
@@ -6,8 +6,6 @@ import PlayerName from './PlayerName';
 import NumberField from '../../NumberField';
 import { useWindowSize } from '../../../../Hooks';
 import DamageTracker from './DamageTracker/DamageTracker';
-
-const initialHeight = window.innerHeight;
 
 const StyledWrapper = styled.div`
   flex: 1;
@@ -59,22 +57,13 @@ export default ({
   useWindowSize();
   // prevent resize of player fields when keyboard expanded
   const currentHeight = window.innerHeight;
-  const [fullscreenHeight, setFullscreenHeight] = useState(initialHeight);
-
-  useEffect(() => {
-    if (currentHeight >= initialHeight) {
-      setFullscreenHeight(currentHeight);
-    }
-  }, [currentHeight, setFullscreenHeight]);
 
   return (
     <StyledWrapper
       img={player.img}
       color={player.color}
       highlighted={highlighted}
-      minWidth={
-        numberOfPlayersInRow !== 1 && `${fullscreenHeight / numberOfPlayersInRow}px`
-      }
+      minWidth={numberOfPlayersInRow !== 1 && `${currentHeight / numberOfPlayersInRow}px`}
     >
       {displayDamage && (
         <DamageTracker player={player} players={players} onTrackDamage={onTrackDamage} />
