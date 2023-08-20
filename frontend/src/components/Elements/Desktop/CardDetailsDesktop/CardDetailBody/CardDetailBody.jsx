@@ -37,7 +37,7 @@ export default ({
         setSelectedCardId={setSelectedCardId}
       />
       <UpdateCardImage cardId={usedCard.id} />
-      <PriceDevelopment selectedCard={selectedCard} />
+      <PriceDevelopment selectedCard={selectedCard} cardId={usedCard.id} />
       {user && <DecksAndWants card={usedCard} loading={loading} />}
       <AdditionalInfos card={usedCard} loading={loading} isFlipped={isFlipped} />
     </>

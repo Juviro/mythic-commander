@@ -17,26 +17,27 @@ const StyledWrapper = styled.section`
 
 interface Props {
   selectedCard?: UnifiedCard;
+  cardId?: string;
 }
 
 const DATA_KEY = 'Price';
 
-const PriceDevelopment = ({ selectedCard }: Props) => {
+const PriceDevelopment = ({ selectedCard, cardId }: Props) => {
   const [initialPriceDevelopment] = useLocalStorage('price-development', 'Eur');
   const [selectedKey, setSelectedKey] = useState(initialPriceDevelopment);
 
   // Used for the query if the current key is not available,
   // e.g. the card is only available in foil / nonfoil.
-  // This tmp key is unly used as long the main key can not be used
+  // This tmp key is only used as long the main key can not be used
   // and will be reset afterwards.
   const [tmpSelectedKey, setTmpSelectedKey] = useState(null);
 
   const usedKey = tmpSelectedKey ?? selectedKey;
 
   const { data, loading } = useQuery(getPriceDevelopment, {
-    variables: { cardId: selectedCard?.id, currency: usedKey },
+    variables: { cardId, currency: usedKey },
     fetchPolicy: 'cache-first',
-    skip: !selectedCard?.id,
+    skip: !cardId,
   });
 
   const foilOnly = selectedCard && !selectedCard?.nonfoil;
