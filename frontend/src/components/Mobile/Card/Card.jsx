@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 
 import { useParams } from 'react-router';
-import { Divider } from 'antd';
+import { Divider, Typography } from 'antd';
 
 import UserContext from 'components/Provider/UserProvider';
 import CardLegal from 'components/Elements/Shared/CardLegal';
@@ -114,6 +114,14 @@ export default ({ overwriteOracleId, defaultCardId }) => {
         </StyledRulesWrapper>
         <Divider>Resources</Divider>
         <CardLinks card={card} />
+        {card?.reserved && (
+          <>
+            <Divider>Reserved List</Divider>
+            <Typography.Text strong style={{ marginBottom: 16 }}>
+              This Card is Part of the Reserved List
+            </Typography.Text>
+          </>
+        )}
       </StyledBodyWrapper>
     </StyledWrapper>
   );

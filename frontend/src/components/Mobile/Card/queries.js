@@ -14,6 +14,7 @@ const CARD_FIELDS = `
     _id
     totalAmount
     isCommanderLegal
+    reserved
 
     containingWantsLists {
       id
