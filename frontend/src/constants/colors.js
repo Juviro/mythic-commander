@@ -16,6 +16,7 @@ export const darkBackgroundTransparent = '#05346133';
 export const lightBackground = '#f5f5f5';
 export const lightWhite = 'rgba(255, 255, 255, 0.7)';
 export const lightText = 'rgba(0, 0, 0, 0.45)';
+export const defaultText = 'rgba(0, 0, 0, 0.65)';
 
 export const greyBorder = '#d9d9d9';
 export const buttonHoverBackground = '#e0dfdf';
@@ -48,6 +49,7 @@ export const lifeTracker = [
 ];
 
 // https://material.io/resources/color/  - 300
+// new: http://mcg.mbitson.com/#!?mcgpalette0=%23f1c232
 export const red300 = '#e57373';
 export const pink300 = '#f06292';
 export const purple300 = '#ba68c8';
@@ -55,6 +57,7 @@ export const blue300 = '#64b5f6';
 export const cyan300 = '#4dd0e1';
 export const green300 = '#81c784';
 export const yellow300 = '#fff176';
+export const yellow700 = '#EDB426';
 export const orange300 = '#ffb74d';
 export const deepOrange300 = '#ff8a65';
 export const brown300 = '#a1887f';
@@ -63,6 +66,7 @@ export const typeColors = {
   Creature: green300,
   Enchantment: cyan300,
   Artifact: purple300,
+  Battle: yellow700,
   Planeswalker: deepOrange300,
   Sorcery: red300,
   Instant: blue300,
@@ -94,45 +98,46 @@ export const manaSymbolColors = {
   B: '#ccc2c0',
   R: '#faaa8f',
   G: '#9cd6b0',
+  C: '#dc8eed',
 };
 
 export const tagColors = [
-  {
-    name: '???',
-    color: 'gold',
-  },
+  // {
+  //   name: '???',
+  //   color: 'gold',
+  // },
   {
     name: 'Targeted Removal',
     color: 'volcano',
     fill: '#d4380d',
     background: '#ffbb96',
   },
-  {
-    name: '???',
-    color: 'red',
-  },
+  // {
+  //   name: '???',
+  //   color: 'red',
+  // },
   {
     name: 'Board Wipe',
     color: 'orange',
     fill: '#d46b08',
     background: '#ffd591',
   },
-  {
-    name: '???',
-    color: 'lime',
-  },
+  // {
+  //   name: '???',
+  //   color: 'lime',
+  // },
   {
     name: 'Ramp',
     color: 'green',
     fill: '#389e0d',
     background: '#f6ffed',
   },
-  {
-    name: 'Synergy',
-    color: 'cyan',
-    fill: '#08979c',
-    background: '#e6fffb',
-  },
+  // {
+  //   name: '???',
+  //   color: 'cyan',
+  //   fill: '#08979c',
+  //   background: '#e6fffb',
+  // },
   {
     name: 'Protection',
     color: 'blue',
@@ -140,7 +145,7 @@ export const tagColors = [
     background: '#e6f7ff',
   },
   {
-    name: 'Card Draw',
+    name: 'Card Advantage',
     color: 'geekblue',
     fill: '#1d39c4',
     background: '#f0f5ff',

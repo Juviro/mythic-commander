@@ -87,14 +87,23 @@ const resolver = {
     if (!userId) return [];
 
     const result = await db('wantsLists')
+      .select('wantsLists.*', 'cardToWantsListWithOracle.*', 'decks.imgSrc')
       .leftJoin('cardToWantsListWithOracle', {
         'cardToWantsListWithOracle.wantsListId': 'wantsLists.id',
       })
+      .leftJoin('decks', {
+        'decks.id': 'wantsLists.deckId',
+      })
       .where('oracle_id', oracle_id)
-      .where('userId', userId);
+      .where('wantsLists.userId', userId);
 
-    return result.map(({ wantsListId, ...rest }) => ({
+    return result.map(({ wantsListId, imgSrc, ...rest }) => ({
       ...rest,
+      deck: imgSrc
+        ? {
+            imgSrc,
+          }
+        : undefined,
       id: wantsListId,
     }));
   },

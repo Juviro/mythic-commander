@@ -3,7 +3,6 @@ import unifyCardFormat from '../../unifyCardFormat';
 const ON_DUPLICATE =
   ' ON CONFLICT (id, "userId") DO UPDATE SET amount = collection.amount + EXCLUDED.amount, "createdAt" = NOW()';
 
-// TODO: remove cardOracleId
 export default async (
   _,
   { cardOracleId, added = [], edited = [], deleted = [] },

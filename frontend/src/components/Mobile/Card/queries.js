@@ -6,22 +6,30 @@ const CARD_FIELDS = `
   name
   imgKey
   scryfall_uri
+  oracle_text
   isTwoFaced
+  type_line
   
   oracleCard {
     _id
     totalAmount
     isCommanderLegal
+    reserved
 
     containingWantsLists {
       id
       name
       amount
+
+      deck {
+        imgSrc
+      }
     }
   
     containingDecks {
       id
       name
+      status
       imgSrc
     }
   
@@ -70,6 +78,10 @@ export const addCardsToWantsList = gql`
             id
             name
             amount
+
+            deck {
+              imgSrc
+            }
           }
         }
       }

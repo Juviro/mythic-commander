@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Divider } from 'antd';
+import { Row, Col, Divider, Typography } from 'antd';
 
 import styled from 'styled-components';
 import CardLegal from 'components/Elements/Shared/CardLegal';
@@ -7,7 +7,7 @@ import CardRules from 'components/Elements/Shared/CardRules';
 import CardLinks from 'components/Elements/Shared/CardLinks';
 import Flex from 'components/Elements/Shared/Flex';
 import RelatedCards from './RelatedCards';
-import OracleText from './OracleText';
+import OracleText from '../../../Shared/OracleText/OracleText';
 
 const StyledColumn = styled(Col)`
   padding: 8px;
@@ -38,6 +38,14 @@ export default ({ card, loading, isFlipped }) => {
       >
         <Divider>Related Cards</Divider>
         <RelatedCards card={card} loading={loading} />
+        {card.reserved && (
+          <>
+            <Divider>Reserved List</Divider>
+            <Typography.Text strong style={{ marginBottom: 16 }}>
+              This Card is Part of the Reserved List
+            </Typography.Text>
+          </>
+        )}
       </StyledColumn>
       <StyledColumn span={5}>
         <Divider>Resources</Divider>

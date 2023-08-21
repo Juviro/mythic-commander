@@ -14,6 +14,11 @@ const StyledSetIcon = styled.img`
   margin-right: 4px;
 `;
 
+const filterOption = (input, { name }) => {
+  const searchRegExp = new RegExp(input.split(' ').join('.*'), 'i');
+  return searchRegExp.test(name);
+};
+
 export default ({
   card,
   onSubmit,
@@ -59,12 +64,14 @@ export default ({
       style={{ width, ...style }}
       onKeyDown={useSubmitOnEnter(!isOpen && onSubmit)}
       onSelect={onSelectOption}
+      showSearch
       dropdownStyle={{ width }}
       onClick={(e) => e.stopPropagation()}
       onDropdownVisibleChange={toggleIsOpen}
+      filterOption={filterOption}
     >
       {allCardSets.map(({ name, icon_svg_uri, id }) => (
-        <Select.Option value={id} key={id} style={{ width }}>
+        <Select.Option value={id} key={id} style={{ width }} name={name}>
           <StyledSetIcon src={icon_svg_uri} alt={name} />
           {name}
         </Select.Option>

@@ -7,6 +7,7 @@ import Menu from './Menu';
 
 import GlobalStyle from './GlobalStyle';
 import MobileRedirect from './MobileRedirect';
+import CollectionBySet from './CollectionBySet/CollectionBySet';
 
 const Search = React.lazy(() => import('./Search'));
 const Collection = React.lazy(() => import('./Collection/Collection'));
@@ -31,6 +32,7 @@ const Desktop = () => {
         <Suspense fallback={<div />}>
           <Switch>
             <Route path="/search" exact component={Search} />
+            <Route path="/collection/by-set" component={CollectionBySet} />
             <Route path="/collection/:username" component={Collection} />
             <Route path="/collection" component={Collection} />
             <Route path="/my-decks" exact component={Decks} />

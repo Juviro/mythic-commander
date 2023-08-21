@@ -11,8 +11,7 @@ import OverviewList, {
   OverviewListHeader,
 } from 'components/Elements/Desktop/OverviewList';
 import { getDecksDesktop, createDeckDesktop } from './queries';
-
-const DECK_STAUS = ['Active', 'Draft', 'Archived'];
+import useGroupByDeckType from '../../../hooks/useGroupByDeckType';
 
 const Wants = ({ history }) => {
   const { data, loading } = useQuery(getDecksDesktop, {
@@ -22,6 +21,8 @@ const Wants = ({ history }) => {
   const [mutate] = useMutation(createDeckDesktop);
   const { user, loading: userLoading } = useContext(UserContext);
   useDocumentTitle('Your Decks');
+
+  const deckListssByType = useGroupByDeckType(data?.decks);
 
   if (!user && !userLoading) {
     return <LoginRequired message="Log in to create your own decks" />;
@@ -84,16 +85,14 @@ const Wants = ({ history }) => {
           </Button>
         }
       />
-      {DECK_STAUS.map((deckStatus) => (
-        <React.Fragment key={deckStatus}>
-          <Divider orientation="left">{deckStatus}</Divider>
+      {deckListssByType.map(({ decks: decksByType, status }) => (
+        <React.Fragment key={status}>
+          <Divider orientation="left">{status}</Divider>
           <OverviewList
             loading={loading}
-            lists={filteredDecks.filter(
-              ({ status }) => status === deckStatus.toLowerCase()
-            )}
+            lists={decksByType}
             onClick={onOpenDeck}
-            emptyText={`You don't have any ${deckStatus} decks yet`}
+            emptyText={`You don't have any ${status} decks yet`}
           />
         </React.Fragment>
       ))}

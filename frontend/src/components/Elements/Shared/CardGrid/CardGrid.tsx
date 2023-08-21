@@ -17,6 +17,7 @@ import WithActions from './WithActions';
 import { SelectionMenu } from './SelectionMenu/SelectionMenu';
 import useCardDetailNavigation from './useCardDetailNavigation';
 import GridListSelection from './GridListSelection/GridListSelection';
+import scrollIntoView from '../../../../utils/scrollIntoView';
 
 export const GRID_CARD_WIDTH = 220;
 
@@ -67,8 +68,8 @@ interface Props {
   cardsPerRow?: number;
   cardLists?: CardList[];
   disableSelection?: boolean;
-  canZoomIn?: boolean;
   minimal?: boolean;
+  onZoomIn?: (card: UnifiedCard) => void;
   onClickCard?: (card: UnifiedCard) => void;
   smallSelectionMenu?: boolean;
   allTags?: string[];
@@ -93,7 +94,7 @@ const CardGrid = ({
   onCopyCardsTo,
   onSetTags,
   cardLists: passedCardLists,
-  canZoomIn,
+  onZoomIn,
   onClickCard,
   disableSelection,
   hidePagination,
@@ -105,6 +106,8 @@ const CardGrid = ({
   const detailCard = cards?.[detailCardIndex];
   const { selectedCardIds, onSelectCard, onClearSelection, onSelectAll, canSelectAll } =
     useSelectCards(cards);
+
+  const cardRefs = useRef<Record<string, HTMLDivElement>>({});
 
   const setDetailCard = (card: UnifiedCard) => {
     const cardIndex = cards.findIndex(({ id }) => id === card.id);
@@ -128,6 +131,15 @@ const CardGrid = ({
     setDetailCardIndex(null);
     // eslint-disable-next-line
   }, [history.location.pathname]);
+
+  useEffect(() => {
+    const cardElement = cardRefs.current[detailCard?.id];
+    if (!cardElement) return;
+
+    scrollIntoView(cardElement, {
+      behavior: 'smooth',
+    });
+  }, [detailCard?.id]);
 
   const showPagination = Boolean(cards?.length) && !hidePagination && !minimal;
   const paginationComponent = showPagination ? (
@@ -231,6 +243,9 @@ const CardGrid = ({
                 onClick={onClickCard}
                 dragProps={dragProps}
                 key={card.id}
+                cardRef={(ref) => {
+                  cardRefs.current[card.id] = ref;
+                }}
                 actions={[...actions, ...(list.additionalActions ?? [])]}
                 search={search}
                 minimal={minimal}
@@ -240,7 +255,7 @@ const CardGrid = ({
                 onSetTags={onSetTags}
                 isSelected={selectedCardIds.includes(card.id)}
                 isAnyCardSelected={Boolean(selectedCardIds.length)}
-                canZoomIn={canZoomIn}
+                onZoomIn={onZoomIn}
                 onSelect={() => onSelectCard(card.id)}
                 markAsDisabled={markAsDisabled && markAsDisabled(card)}
                 onOpenDetails={() =>
@@ -266,14 +281,20 @@ const CardGrid = ({
 
 interface FullProps extends Props {
   deleteByOracle?: (oracleIds: string[], numberOfCards: number) => void;
+  allowSettingDefaultCardVersion?: boolean;
 }
 
 const CardGridWithActions = ({
   deleteByOracle,
   onEditCard,
+  allowSettingDefaultCardVersion,
   ...props
 }: FullProps & RouteComponentProps) => (
-  <WithActions deleteByOracle={deleteByOracle} onEditCard={onEditCard}>
+  <WithActions
+    deleteByOracle={deleteByOracle}
+    onEditCard={onEditCard}
+    allowSettingDefaultCardVersion={allowSettingDefaultCardVersion}
+  >
     {(actionProps) => <CardGrid {...props} {...actionProps} />}
   </WithActions>
 );

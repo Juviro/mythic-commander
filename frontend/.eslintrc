@@ -66,5 +66,5 @@
       }
     }
   },
-  "ignorePatterns": ["build"]
+  "ignorePatterns": ["build", "src/types/graphql.ts"]
 }

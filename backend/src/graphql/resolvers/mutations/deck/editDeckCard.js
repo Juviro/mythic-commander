@@ -6,12 +6,33 @@ export default async (_, { cardId, deckId, newProps }, { user, db }) => {
   await canAccessDeck(user.id, deckId);
 
   try {
-    newProps.amount =
-      newProps.amount && Math.min(Math.max(newProps.amount, 0), 99);
-    await db('cardToDeck').where({ id: cardId, deckId }).update(newProps);
-    await updateLastEdit(deckId, db);
+    const { isDefault, ...cardProps } = newProps;
+    const newCardId = cardProps.id || cardId;
 
-    const newCardId = newProps.id || cardId;
+    if (isDefault) {
+      const { oracle_id } = await db('cards')
+        .select('oracle_id')
+        .where({ id: newCardId })
+        .first();
+
+      await db('defaultCardVersions')
+        .insert({
+          userId: user.id,
+          id: newCardId,
+          oracle_id,
+        })
+        .onConflict(['oracle_id', 'userId'])
+        .merge();
+    }
+
+    if (Object.keys(cardProps).length) {
+      cardProps.amount =
+        cardProps.amount && Math.min(Math.max(cardProps.amount, 0), 99);
+
+      await db('cardToDeck').where({ id: cardId, deckId }).update(cardProps);
+      await updateLastEdit(deckId, db);
+    }
+
     const [updatedCard] = await db('cardToDeck')
       .leftJoin('cards', { 'cards.id': 'cardToDeck.id' })
       .where({ deckId, 'cardToDeck.id': newCardId });

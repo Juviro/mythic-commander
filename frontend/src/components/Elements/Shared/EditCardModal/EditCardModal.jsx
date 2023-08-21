@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import EditCardBody from './EditCardBody';
 import FocusedModal from '../FocusedModal';
 
-export default ({ onEdit, card, onCancel }) => {
+const EditCardModal = ({ onEdit, card, onCancel, allowSettingDefaultCardVersion }) => {
   const [newProps, setNewProps] = useState({});
 
   const onSubmit = () => {
@@ -36,6 +36,7 @@ export default ({ onEdit, card, onCancel }) => {
     >
       <EditCardBody
         card={card}
+        allowSettingDefaultCardVersion={allowSettingDefaultCardVersion}
         onChangeProp={onChangeProp}
         canSubmit={canSubmit}
         onSubmit={onSubmit}
@@ -43,3 +44,5 @@ export default ({ onEdit, card, onCancel }) => {
     </FocusedModal>
   );
 };
+
+export default EditCardModal;

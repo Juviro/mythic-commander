@@ -8,6 +8,7 @@ const CARD_FIELDS = `
   imgKey
   oracle_text
   scryfall_uri
+  type_line
   isTwoFaced
 
   relatedCards {
@@ -22,6 +23,7 @@ const CARD_FIELDS = `
     owned
     totalAmount
     isCommanderLegal
+    reserved
     allSets {
       id
       set
@@ -43,11 +45,15 @@ const CARD_FIELDS = `
       id
       name
       amount
+      deck {
+        imgSrc
+      }
     }
   
     containingDecks {
       id
       name
+      status
       imgSrc
     }
   }
@@ -84,5 +90,11 @@ export const changeCollection = gql`
     ) {
       ${COLLECTION_CARD_FIELDS}
     }
+  }
+`;
+
+export const updateCardImages = gql`
+  mutation updateCardImages($cardId: String!) {
+    updateCardImages(cardId: $cardId)
   }
 `;

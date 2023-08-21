@@ -1,3 +1,4 @@
+// Order determines which type is the primary type
 export const CARD_TYPES = [
   'Land',
   'Creature',
@@ -6,14 +7,19 @@ export const CARD_TYPES = [
   'Planeswalker',
   'Sorcery',
   'Instant',
-];
+  'Battle',
+] as const;
 
+export type CardType = typeof CARD_TYPES[number];
+
+// Order determines order of deck categories
 export const CARD_TYPE_DECK_ORDER = [
   'Creature',
   'Enchantment',
   'Artifact',
   'Planeswalker',
-  'Sorcery',
+  'Battle',
   'Instant',
+  'Sorcery',
   'Land',
-];
+] as const;

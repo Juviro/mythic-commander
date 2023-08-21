@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledIcon = styled.div`
-  position: absolute;
-  font-size: 180%;
+  position: ${({ relative }) => (relative ? 'relative' : 'absolute')};
+  font-size: ${({ size }) => size};
   z-index: ${({ zindex }) => zindex};
   opacity: 0.5;
   top: ${({ index }) => 10 + index * 18}%;
@@ -14,6 +14,22 @@ const StyledIcon = styled.div`
   background-color: white;
 `;
 
-export default ({ Icon, index, onClick, zIndex = 7 }) => {
-  return <StyledIcon onClick={onClick} as={Icon} index={index} zindex={zIndex} />;
+export default ({
+  Icon,
+  index,
+  size = '180%',
+  onClick,
+  zIndex = 7,
+  relative = false,
+}) => {
+  return (
+    <StyledIcon
+      onClick={onClick}
+      as={Icon}
+      size={size}
+      index={index}
+      zindex={zIndex}
+      relative={relative ? 1 : 0}
+    />
+  );
 };

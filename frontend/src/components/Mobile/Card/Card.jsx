@@ -3,16 +3,16 @@ import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 
 import { useParams } from 'react-router';
-import { Divider } from 'antd';
+import { Divider, Typography } from 'antd';
 
 import UserContext from 'components/Provider/UserProvider';
-import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import CardLegal from 'components/Elements/Shared/CardLegal';
 import CardSetOverview from 'components/Elements/Shared/CardSetOverview';
 import IncludedDecks from 'components/Elements/Shared/IncludedDecks';
 import IncludedWants from 'components/Elements/Shared/IncludedWants';
 import CardLinks from 'components/Elements/Shared/CardLinks';
 import CardRules from 'components/Elements/Shared/CardRules';
+import OracleText from 'components/Elements/Shared/OracleText/OracleText';
 import CardImage from './CardImage';
 import CardOwned from './CardOwned';
 import { getCardByOracleId } from './queries';
@@ -24,8 +24,8 @@ const StyledWrapper = styled.div`
   min-height: 100px;
   align-items: center;
   flex-direction: column;
-  justify-content: center;
 `;
+
 const StyledBodyWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -37,9 +37,23 @@ const StyledBodyWrapper = styled.div`
   background-color: white;
 `;
 
+const StyledRulesWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  @media (min-width: 600px) {
+    justify-content: space-around;
+  }
+`;
+
 export default ({ overwriteOracleId, defaultCardId }) => {
   const { oracle_id: paramOracleId } = useParams();
   const { user } = useContext(UserContext);
+  const [isFlipped, setIsFlipped] = useState(false);
   const [selectedCardId, setSelectedCardId] = useState(null);
   const oracle_id = overwriteOracleId || paramOracleId;
   const { data, loading } = useQuery(getCardByOracleId, {
@@ -48,7 +62,6 @@ export default ({ overwriteOracleId, defaultCardId }) => {
   });
 
   const card = data && unifySingleCard(data.cardByOracleId);
-  useDocumentTitle(card?.name);
 
   const currentCard = card && card.allSets.find(({ id }) => id === selectedCardId);
 
@@ -69,7 +82,7 @@ export default ({ overwriteOracleId, defaultCardId }) => {
 
   return (
     <StyledWrapper>
-      <CardImage card={fullCard} loading={loading} />
+      <CardImage card={fullCard} loading={loading} onFlipCard={setIsFlipped} />
       <StyledBodyWrapper>
         <Divider>Overview</Divider>
         <CardSetOverview
@@ -93,12 +106,22 @@ export default ({ overwriteOracleId, defaultCardId }) => {
             <IncludedDecks card={card} />
           </>
         )}
+        <Divider>Oracle Text & Rules</Divider>
+        <OracleText card={fullCard} loading={loading} isFlipped={isFlipped} />
+        <StyledRulesWrapper>
+          <CardRules card={card} loading={loading} />
+          <CardLegal card={card} />
+        </StyledRulesWrapper>
         <Divider>Resources</Divider>
         <CardLinks card={card} />
-        <div style={{ margin: '16px 0' }}>
-          <CardLegal card={card} />
-        </div>
-        <CardRules card={card} loading={loading} />
+        {card?.reserved && (
+          <>
+            <Divider>Reserved List</Divider>
+            <Typography.Text strong style={{ marginBottom: 16 }}>
+              This Card is Part of the Reserved List
+            </Typography.Text>
+          </>
+        )}
       </StyledBodyWrapper>
     </StyledWrapper>
   );

@@ -4,7 +4,7 @@ import { UnifiedDeck } from 'types/unifiedTypes';
 import { DeckCmc } from './DeckCmc';
 import { DeckValue } from './DeckValue';
 import { DeckColorDistribution } from './DeckColorDistribution';
-import { DeckTypeDistribution } from './DeckTypeDistribution';
+import { DeckTypeDistribution } from './DeckTypeDistribution/DeckTypeDistribution';
 import { DeckTagDistribution } from './DeckTagDistribution';
 
 interface Props {

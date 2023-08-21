@@ -4,7 +4,11 @@ import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 import { typeColors } from 'constants/colors';
 import { UnifiedDeck } from 'types/unifiedTypes';
-import { CARD_TYPE_DECK_ORDER } from 'components/Provider/CardProvider/staticTypes';
+import {
+  CARD_TYPES,
+  CARD_TYPE_DECK_ORDER,
+  CardType,
+} from 'components/Provider/CardProvider/staticTypes';
 import { DeckStat } from './DeckStat';
 
 interface Props {
@@ -13,10 +17,10 @@ interface Props {
 
 export const getPrimaryType = (primaryTypes: string[]) => {
   return [...primaryTypes].sort((a, b) => {
-    if (CARD_TYPE_DECK_ORDER.indexOf(a) === -1) return 1;
-    if (CARD_TYPE_DECK_ORDER.indexOf(b) === -1) return -1;
+    if (CARD_TYPES.indexOf(a as CardType) === -1) return 1;
+    if (CARD_TYPES.indexOf(b as CardType) === -1) return -1;
 
-    return CARD_TYPE_DECK_ORDER.indexOf(a) - CARD_TYPE_DECK_ORDER.indexOf(b);
+    return CARD_TYPES.indexOf(a as CardType) - CARD_TYPES.indexOf(b as CardType);
   })[0];
 };
 

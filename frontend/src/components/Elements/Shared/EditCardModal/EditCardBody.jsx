@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import isMobile from 'utils/isMobile';
-import { Typography } from 'antd';
+import { Checkbox, Typography } from 'antd';
 import Card from '../Card';
 import SetPicker from '../SetPicker';
 import AmountInput from '../AmountInput';
@@ -13,17 +13,18 @@ const StyledWrapper = styled.div`
   flex-wrap: wrap;
 
   @media (min-width: 500px) {
+    flex-wrap: nowrap;
     flex-direction: row;
   }
 `;
 
 const StyledContent = styled.div`
   flex: 1;
-  margin-bottom: 24px;
   margin-top: 24px;
 
   @media (min-width: 500px) {
     margin-top: 0;
+    width: 50%;
   }
 `;
 
@@ -34,7 +35,13 @@ const StyledImageWrapper = styled.div`
   align-self: center;
 `;
 
-export default ({ card, onChangeProp, canSubmit, onSubmit }) => {
+const EditCardBody = ({
+  card,
+  onChangeProp,
+  canSubmit,
+  onSubmit,
+  allowSettingDefaultCardVersion,
+}) => {
   const [selectedCard, setSelectedCard] = useState(null);
 
   return (
@@ -58,10 +65,21 @@ export default ({ card, onChangeProp, canSubmit, onSubmit }) => {
           onSubmit={canSubmit && onSubmit}
           size="default"
           card={card}
+          // style={{ maxWidth: 400 }}
           onSelectCard={setSelectedCard}
           onSelect={onChangeProp('id')}
         />
+        {allowSettingDefaultCardVersion && (
+          <Checkbox
+            onChange={(e) => onChangeProp('isDefault')(e.target.checked)}
+            style={{ marginLeft: 0, marginTop: 16 }}
+          >
+            Set as Default Card Version
+          </Checkbox>
+        )}
       </StyledContent>
     </StyledWrapper>
   );
 };
+
+export default EditCardBody;

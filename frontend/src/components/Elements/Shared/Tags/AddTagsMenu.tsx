@@ -55,7 +55,11 @@ const AddTagMenu = ({
           onSave={onSave}
         />
         <AddTagsInput
+          defaultOpen
+          autoFocus
+          allowCustomTags
           onClose={onClose}
+          placeholder="Add a tag..."
           initialTags={existingTags}
           onSave={onSave}
           options={existingTags}

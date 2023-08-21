@@ -8,10 +8,12 @@ const StyledButton = styled(Button)`
   animation: ${fadeIn} 0.3s linear;
 `;
 
-export default ({ title = 'Reset Filter', onReset }) => {
+const ResetFilter = ({ title = 'Reset Filter', onReset }) => {
   return (
     <StyledButton danger ghost type="primary" onClick={onReset}>
       {title}
     </StyledButton>
   );
 };
+
+export default ResetFilter;

@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { List, BackTop, Typography } from 'antd';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useQueryParams, StringParam } from 'use-query-params';
-import { withRouter } from 'react-router';
 
 import CardGrid from 'components/Elements/Shared/CardGrid';
 import LazyLoad from 'components/Elements/Shared/LazyLoad';
@@ -11,6 +10,7 @@ import CardListItem from './CardListItem';
 import CustomSkeleton from '../../Shared/CustomSkeleton';
 import Footer from './Footer';
 import CardModal from '../../../Mobile/Card/CardModal';
+import scrollIntoView from '../../../../utils/scrollIntoView';
 
 const StyledPlaceholderWrapper = styled.div`
   padding: 4px 8px;
@@ -23,7 +23,6 @@ const CardList = ({
   onLoadMore,
   hasMore,
   totalResults,
-  history,
   hideFooter,
   moveToList,
   onEditCard,
@@ -35,10 +34,20 @@ const CardList = ({
   disableSelection,
 }) => {
   const [detailCard, setDetailCard] = useState(null);
-  const [{ name, layout = 'list' }] = useQueryParams({
+  const [zoomedCard, setZoomedCard] = useState(null);
+  const [{ name, layout = 'grid' }] = useQueryParams({
     name: StringParam,
     layout: StringParam,
   });
+
+  const currentCardId = detailCard?.id || zoomedCard?.id;
+
+  useEffect(() => {
+    const cardElement = document.getElementById(currentCardId);
+    if (!cardElement) return;
+
+    scrollIntoView(cardElement, { behavior: 'smooth' });
+  }, [currentCardId]);
 
   // we don't want to display the skeletons when loading more with infinite scroll
   // only when a new search is triggered
@@ -53,11 +62,10 @@ const CardList = ({
     return <StyledPlaceholderWrapper>{getPlaceholder()}</StyledPlaceholderWrapper>;
   }
 
-  const onOpenDetails = (card) => {
-    setDetailCard(card);
-    history.push(`${history.location.pathname}${history.location.search}#details`);
+  const onCloseModal = () => {
+    setDetailCard(null);
+    setZoomedCard(null);
   };
-  const onCloseModal = () => setDetailCard(null);
 
   const totalResultsLabel = showTotalResults && (
     <Typography.Text
@@ -80,7 +88,7 @@ const CardList = ({
               onEditCard={onEditCard}
               onDeleteCard={onDeleteCard}
               searchString={name}
-              onClick={() => onOpenDetails(card)}
+              onClick={() => setDetailCard(card)}
             />
           </LazyLoad>
         )}
@@ -89,11 +97,11 @@ const CardList = ({
       <CardGrid
         cards={cards}
         loading={loading}
-        onOpenDetails={onOpenDetails}
+        onOpenDetails={setDetailCard}
         hidePagination
         disableSelection={disableSelection}
         cardsPerRow={layout === 'grid' ? 2 : 1}
-        canZoomIn
+        onZoomIn={setZoomedCard}
         onEditCard={onEditCard}
         onDeleteCard={onDeleteCard}
         deleteByOracle={deleteByOracle}
@@ -121,9 +129,16 @@ const CardList = ({
         />
       )}
       <BackTop style={{ left: 20, bottom: 20, ...backTopStyle }} />
-      <CardModal {...detailCard} onClose={onCloseModal} />
+      <CardModal
+        setDetailCard={setDetailCard}
+        detailedCardId={detailCard?.id}
+        setZoomedCard={setZoomedCard}
+        zoomedCardId={zoomedCard?.id}
+        cards={cards}
+        onClose={onCloseModal}
+      />
     </>
   );
 };
 
-export default withRouter(CardList);
+export default CardList;

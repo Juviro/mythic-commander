@@ -23,7 +23,7 @@ export default async (
     await canEditWantsList(userId, wantsListId);
   }
   if (wantsListName) {
-    const [id] = await db('wantsLists')
+    const [{ id }] = await db('wantsLists')
       .insert({ userId, name: wantsListName, id: randomId() })
       .returning('id');
     wantsListId = id;

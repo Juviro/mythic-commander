@@ -8,7 +8,7 @@ export default async (
 ) => {
   await canEditWantsList(userId, wantsListId);
 
-  const [id] = await db('cardToWantsList')
+  const [{ id }] = await db('cardToWantsList')
     .where({ id: cardId, wantsListId })
     .update(newProps)
     .returning('id');

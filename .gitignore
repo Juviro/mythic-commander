@@ -31,8 +31,7 @@ yarn-error.log*
 /backend/src/cardApi/*/*.json
 
 # card images
-/card-images/*
-!/card-images/.gitkeep
+/backend/images
 
 # clash
 /clash/.next

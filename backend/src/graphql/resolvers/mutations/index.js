@@ -3,6 +3,7 @@ import deck from './deck';
 import lifetracker from './lifetracker';
 import session from './session';
 import tags from './tags';
+import updateCards from './updateCards';
 import user from './user';
 import wantsList from './wantsList';
 
@@ -12,6 +13,7 @@ export default {
   ...lifetracker,
   ...session,
   ...tags,
+  ...updateCards,
   ...user,
   ...wantsList,
 };

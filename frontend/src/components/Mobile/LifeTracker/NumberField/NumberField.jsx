@@ -13,6 +13,7 @@ const StyledWrapper = styled.div`
   height: 100%;
   position: relative;
   font-size: 200%;
+  flex: 1;
 
   ${({ whiteText }) =>
     whiteText
@@ -24,7 +25,7 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledValue = styled.div`
-  font-size: 300%;
+  font-size: ${({ small }) => (small ? '100%' : '300%')};
   z-index: 1;
 `;
 
@@ -36,6 +37,7 @@ export default ({
   step = 1,
   largeStep = 10,
   whiteText,
+  small = false,
 }) => {
   const changeValue = (isPlus, isLargeStep) => {
     const modifier = isPlus ? 1 : -1;
@@ -53,16 +55,18 @@ export default ({
       >
         <PlusMinus
           value="-"
+          small={small}
           onLongPress={() => changeValue(false, true)}
           onPress={() => changeValue(false, false)}
         />
         <PlusMinus
           value="+"
+          small={small}
           onLongPress={() => changeValue(true, true)}
           onPress={() => changeValue(true, false)}
         />
       </Flex>
-      <StyledValue>{value}</StyledValue>
+      <StyledValue small={small}>{value}</StyledValue>
     </StyledWrapper>
   );
 };

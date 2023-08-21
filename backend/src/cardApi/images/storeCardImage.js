@@ -28,9 +28,9 @@ const doesFileExist = async (filename) => {
   return fs.existsSync(filename);
 };
 
-const downloadImage = async (filename, url, size, alwayswUpdate = false) => {
+const downloadImage = async (filename, url, size, forceUpdate = false) => {
   const exists = await doesFileExist(filename);
-  if (exists && !alwayswUpdate) {
+  if (exists && !forceUpdate) {
     return;
   }
 
@@ -46,40 +46,30 @@ const downloadImage = async (filename, url, size, alwayswUpdate = false) => {
     });
 };
 
-const downloadAllImages = async (card, imageUris, face) => {
+const downloadAllImages = async (card, imageUris, face, forceUpdate) => {
   // Some cards are spoiled in different languages, but by their release date
   // they should have the english image. Until then, we always update those images
   const isUnreleased = new Date(card.released_at) > new Date();
 
-  await downloadImage(
-    getFileName(card, 'small', face),
-    imageUris.small,
-    'small',
-    isUnreleased
-  );
-  await downloadImage(
-    getFileName(card, 'normal', face),
-    imageUris.normal,
-    'normal',
-    isUnreleased
-  );
-  await downloadImage(
-    getFileName(card, 'art_crop', face),
-    imageUris.art_crop,
-    'art_crop',
-    isUnreleased
-  );
+  const shouldForceUpdate = forceUpdate || isUnreleased;
+
+  const promises = ['small', 'normal', 'art_crop'].map((size) => {
+    const filename = getFileName(card, size, face);
+    return downloadImage(filename, imageUris[size], size, shouldForceUpdate);
+  });
+
+  return Promise.all(promises);
 };
 
-const storeCardImage = async (card) => {
+const storeCardImage = async (card, forceUpdate = false) => {
   if (!process.env.IMG_DIR) return;
 
   if (card.image_uris) {
-    await downloadAllImages(card, card.image_uris, 'front');
+    await downloadAllImages(card, card.image_uris, 'front', forceUpdate);
   } else {
     const faces = card.card_faces;
-    await downloadAllImages(card, faces[0].image_uris, 'front');
-    await downloadAllImages(card, faces[1].image_uris, 'back');
+    await downloadAllImages(card, faces[0].image_uris, 'front', forceUpdate);
+    await downloadAllImages(card, faces[1].image_uris, 'back', forceUpdate);
   }
 };
 

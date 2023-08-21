@@ -85,6 +85,15 @@ const resolver = {
 
     return type_line.includes('Creature');
   },
+  isModalDfcLand(card) {
+    const { layout, type_line } = card;
+
+    return (
+      layout === 'modal_dfc' &&
+      type_line.includes('// Land') &&
+      type_line !== 'Land // Land'
+    );
+  },
 };
 
 export default resolver;

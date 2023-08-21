@@ -1,3 +1,5 @@
+import { normalizeName } from '../../../utils/normalizeName';
+
 const getColorProps = (colorString) => {
   const [filteredColors] = colorString.match(/(w|u|b|r|g)+$/) || [''];
   const excludeOtherColors = colorString.includes('-');
@@ -26,11 +28,36 @@ const addColorClause = (q, colors) => {
   }
 };
 
-const addOwnedClause = (q, userId, isOwned) => {
+const addOwnedClause = (
+  q,
+  userId,
+  isOwned,
+  tableName,
+  sets,
+  displayAllVariants
+) => {
   const operator = isOwned === 'true' ? 'IN' : 'NOT IN';
+
+  if (sets?.length) {
+    q.whereRaw(
+      `??.oracle_id ${operator} (SELECT DISTINCT oracle_id FROM cards LEFT JOIN collection ON collection.id = cards.id WHERE "userId" = ? AND set IN (?))`,
+      [tableName, userId, sets.join(',')]
+    );
+
+    return;
+  }
+  if (displayAllVariants) {
+    q.whereRaw(
+      `??.id ${operator} (SELECT id FROM collection WHERE "userId" = ?)`,
+      [tableName, userId]
+    );
+
+    return;
+  }
+
   q.whereRaw(
-    `oracle_id ${operator} (SELECT DISTINCT oracle_id FROM "collectionWithOracle" WHERE "userId" = ?)`,
-    userId
+    `??.oracle_id ${operator} (SELECT DISTINCT "collectionWithOracle".oracle_id FROM "collectionWithOracle" WHERE "userId" = ?)`,
+    [tableName, userId]
   );
 };
 
@@ -39,13 +66,14 @@ export const getOrderColumn = (orderBy, useCreatedAt = true) => {
     case '':
     case 'priceEur':
       return "coalesce(LEAST((prices->>'eur')::float, (prices->>'eur_foil')::float, (prices->>'eur_etched')::float), 0)";
-    case 'price': // Legacy support
     case 'priceUsd':
       return "coalesce(LEAST((prices->>'usd')::float, (prices->>'usd_foil')::float, (prices->>'usd_etched')::float), 0)";
     case 'added':
       return useCreatedAt ? '"createdAt"' : 'released_at';
     case 'amount':
       return '"totalAmount"';
+    case 'edhrec':
+      return '"edhrec_rank"';
     default:
       return `"${orderBy}"`;
   }
@@ -72,10 +100,30 @@ const addRarityClause = (q, rarity) => {
   q.whereIn('rarity', rarities);
 };
 
-export const addNameClause = (q, name) => {
-  const searchPattern = name.split(' ').join('%');
+const addTagsClause = (q, tags) => {
+  const placeholder = tags.map(() => '?');
+  q.whereRaw(`tags && ARRAY[${placeholder}]::text[]`, tags);
+};
 
-  q.where('name', 'ILIKE', `%${searchPattern}%`);
+const addVariantClause = (q, variants) => {
+  const placeholder = variants.map(() => '?');
+  q.whereRaw(`variants && ARRAY[${placeholder}]::text[]`, variants);
+  q.whereNotIn('layout', [
+    'token',
+    'double_faced_token',
+    'emblem',
+    'planar',
+    'vanguard',
+    'scheme',
+    'art_series',
+  ]);
+};
+
+export const addNameClause = (q, name) => {
+  const normalizedName = normalizeName(name);
+  const searchPattern = normalizedName.split(' ').join('%');
+
+  q.where('normalized_name', 'ILIKE', `%${searchPattern}%`);
 };
 
 export default async (
@@ -97,14 +145,23 @@ export default async (
     power,
     cmc,
     rarity,
+    tags,
+    variants,
     orderBy = 'name-asc',
+    displayAllVariants,
   } = options;
 
   const [order, direction = 'asc'] = orderBy.split('-');
 
-  const tableName = sets?.length ? 'distinctCardsPerSet' : 'distinctCards';
+  let tableName = 'distinctCards';
+  if (variants?.length || displayAllVariants) {
+    tableName = 'cards';
+  } else if (sets?.length) {
+    tableName = 'distinctCardsPerSet';
+  }
 
   const where = (q) => {
+    q.whereNot('set_type', 'token');
     if (name) addNameClause(q, name);
     if (text) q.where('oracle_text', 'ILIKE', `%${text}%`);
     if (subTypes?.length) q.where('type_line', '~*', subTypes.join('|'));
@@ -118,20 +175,34 @@ export default async (
     if (isLegendary === 'false')
       q.whereNot('type_line', 'ILIKE', `%Legendary%`);
     if (colors.length) addColorClause(q, colors);
-    if (isOwned && user && user.id) addOwnedClause(q, user.id, isOwned);
+    if (isOwned && user && user.id)
+      addOwnedClause(q, user.id, isOwned, tableName, sets, displayAllVariants);
     if (cmc) addRangeClause(q, cmc, 'cmc');
     if (power) addRangeClause(q, power, 'power');
     if (toughness) addRangeClause(q, toughness, 'toughness');
     if (rarity) addRarityClause(q, rarity);
+    if (tags?.length) addTagsClause(q, tags);
+    if (variants?.length) addVariantClause(q, variants);
   };
 
   const cardQuery = db(tableName)
+    .select(`${tableName}.*`, 'defaultTags.tags')
+    .leftJoin('defaultTags', `${tableName}.oracle_id`, 'defaultTags.oracle_id')
     .where(where)
     .limit(limit)
     .offset(offset)
-    .orderByRaw(`${getOrderColumn(order, false)} ${direction.toUpperCase()}`);
+    .orderByRaw(
+      `${getOrderColumn(
+        order,
+        false
+      )} ${direction.toUpperCase()}, id ${direction.toUpperCase()}`
+    );
 
-  const countQuery = db(tableName).where(where).count('*').first();
+  const countQuery = db(tableName)
+    .leftJoin('defaultTags', `${tableName}.oracle_id`, 'defaultTags.oracle_id')
+    .where(where)
+    .count('*')
+    .first();
 
   const cards = await cardQuery;
   const { count } = await countQuery;

@@ -200,6 +200,54 @@ export const CARD_FIELDS_ADDITION_10 = [
   },
 ];
 
+export const CARD_FIELDS_ADDITION_11 = [
+  {
+    key: 'produced_mana',
+    specificType: 'TEXT[]',
+  },
+  {
+    key: 'keywords',
+    specificType: 'TEXT[]',
+  },
+  {
+    key: 'finishes',
+    specificType: 'TEXT[]',
+  },
+  {
+    key: 'reserved',
+    type: 'boolean',
+  },
+];
+
+export const CARD_FIELDS_ADDITION_12 = [
+  {
+    key: 'promo_types',
+    specificType: 'TEXT[]',
+  },
+  {
+    key: 'border_color',
+    type: 'string',
+  },
+  {
+    key: 'set_type',
+    type: 'string',
+  },
+];
+
+export const CARD_FIELDS_ADDITION_13 = [
+  {
+    key: 'normalized_name',
+    type: 'string',
+  },
+];
+
+export const CARD_FIELDS_ADDITION_14 = [
+  {
+    key: 'variants',
+    specificType: 'TEXT[]',
+  },
+];
+
 export const ALL_CARD_FIELDS = [
   CARD_FIELDS_INITIAL,
   CARD_FIELDS_ADDITION_1,
@@ -212,4 +260,8 @@ export const ALL_CARD_FIELDS = [
   CARD_FIELDS_ADDITION_8,
   CARD_FIELDS_ADDITION_9,
   CARD_FIELDS_ADDITION_10,
+  CARD_FIELDS_ADDITION_11,
+  CARD_FIELDS_ADDITION_12,
+  CARD_FIELDS_ADDITION_13,
+  CARD_FIELDS_ADDITION_14,
 ].flat();

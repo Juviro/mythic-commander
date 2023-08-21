@@ -3,14 +3,15 @@ import React, { useContext } from 'react';
 import CardContext from '../../../../Provider/CardProvider';
 import MultiSelectFilter from './MultiSelectFilter';
 
-export default ({ onChangeOption, value, size }) => {
+export default ({ onChangeOption, value, size, onSearch }) => {
   const { cardTypes } = useContext(CardContext);
 
   return (
     <MultiSelectFilter
       size={size}
       value={value}
-      onChange={onChangeOption('cardTypes')}
+      onSearch={onSearch}
+      onChange={onChangeOption}
       options={cardTypes}
       placeholder={'e.g. "Planeswalker"'}
     />

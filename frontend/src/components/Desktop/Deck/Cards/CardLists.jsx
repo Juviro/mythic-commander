@@ -18,7 +18,7 @@ const StyledSubtitle = styled.span`
   color: ${lightText};
 `;
 
-export default ({ loading, cardsByType, deck }) => {
+export default ({ loading, cardsByType, deck, numberOfModalDfcLands }) => {
   const [mutateDelete] = useMutation(deleteFromDeckDesktop);
   const [mutateEdit] = useMutation(editDeckCardDesktop);
 
@@ -101,16 +101,24 @@ export default ({ loading, cardsByType, deck }) => {
   const cardLists = cardsByType?.map(({ type, cards, titleColor }) => {
     const { valueLabelEur, valueLabelUsd } = getListStats({ cards });
     const isCommander = type === 'Commander';
-    const numberOfCardsLabel = isCommander ? '' : `(${sumCardAmount(cards)})`;
 
     const getListHeading = () => {
       if (!isCommander || !cards[0]) return type;
       return `Commander - ${cards.map(({ name }) => name).join(' & ')}`;
     };
 
+    const getAmountLabel = () => {
+      if (isCommander) return '';
+
+      const amount = sumCardAmount(cards);
+      if (type !== 'Lands' || !numberOfModalDfcLands) return `(${amount})`;
+
+      return `(${amount} + ${numberOfModalDfcLands} MDFC)`;
+    };
+
     const title = (
       <Flex direction="column" style={{ color: titleColor ?? 'black' }}>
-        <span>{`${getListHeading()} ${numberOfCardsLabel}`}</span>
+        <span>{`${getListHeading()} ${getAmountLabel()}`}</span>
         <StyledSubtitle>
           {cards.length && deck.canEdit ? `${valueLabelUsd} | ${valueLabelEur}` : ''}
         </StyledSubtitle>
@@ -144,6 +152,7 @@ export default ({ loading, cardsByType, deck }) => {
   return (
     <CardGrid
       hidePagination
+      allowSettingDefaultCardVersion
       loading={loading}
       cards={allCardsInOrder}
       cardLists={cardLists}

@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import NotFound from 'components/Elements/Shared/NotFound';
-import GlobalStyle from './GlobalStyle';
+import GlobalStyle from '../styles/GlobalStyle';
 import LoginPage from './Elements/Shared/Login/LoginPage';
 
 const Mobile = React.lazy(() => import('./Mobile'));

@@ -7,7 +7,13 @@ import AddCardsTo from '../AddCardsTo';
 import ConfirmDeleteCards from '../ConfirmDeleteCards';
 import EditCardModal from '../EditCardModal';
 
-export default ({ onEditCard = null, deleteByOracle = null, children, ...props }) => {
+const WithActions = ({
+  onEditCard = null,
+  deleteByOracle = null,
+  children,
+  allowSettingDefaultCardVersion,
+  ...props
+}) => {
   const [{ page, layout }] = useQueryParams({
     page: NumberParam,
     layout: StringParam,
@@ -92,6 +98,7 @@ export default ({ onEditCard = null, deleteByOracle = null, children, ...props }
           onEdit={onEditCard}
           card={selectedSingleCard}
           onCancel={onCancel}
+          allowSettingDefaultCardVersion={allowSettingDefaultCardVersion}
         />
       )}
       <AddCardsTo
@@ -110,3 +117,5 @@ export default ({ onEditCard = null, deleteByOracle = null, children, ...props }
     </>
   );
 };
+
+export default WithActions;

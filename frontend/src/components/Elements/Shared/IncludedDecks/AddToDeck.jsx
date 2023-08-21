@@ -1,14 +1,23 @@
 import React from 'react';
 import { Select, Typography } from 'antd';
 import { useQuery, useMutation } from '@apollo/client';
+import styled from 'styled-components';
 
 import message from '../../../../utils/message';
 import { getCardByOracleId } from '../../../Mobile/Card/queries';
 import { addCardsToDeckDesktop } from '../../../Desktop/Deck/queries';
 import { getDecksDesktop } from '../../../Desktop/Decks/queries';
+import isMobile from '../../../../utils/isMobile';
 
 const NEW_LIST_DUMMY_ID = 'new-deck';
 const DEFAULT_NEW_LIST_NAME = 'New Deck';
+
+export const StyledDeckThumbnail = styled.img`
+  width: 38px;
+  height: auto;
+  margin-right: 8px;
+  border-radius: 2px;
+`;
 
 export default ({
   cardIds,
@@ -65,9 +74,12 @@ export default ({
       value={title}
       loading={isLoading}
       disabled={isLoading}
+      showSearch={!isMobile()}
+      filterOption={(input, { name }) => name.toLowerCase().includes(input.toLowerCase())}
     >
-      {selectOptions.map(({ id, name }) => (
-        <Select.Option value={id} key={id}>
+      {selectOptions.map(({ id, name, imgSrc }) => (
+        <Select.Option value={id} key={id} name={name}>
+          <StyledDeckThumbnail src={imgSrc} />
           <Typography.Text type={id === NEW_LIST_DUMMY_ID ? 'secondary' : 'primary'}>
             {name}
           </Typography.Text>

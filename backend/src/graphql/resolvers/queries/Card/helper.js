@@ -7,7 +7,12 @@ const premiumFrameEffects = [
   'compasslanddfc',
 ];
 
+// Try to find the main variant of a card
+// For most cards, this will be set by isSpecialForDistinctCards to -1
 export const isSpecialCard = (card) => {
+  if (card.promo_types?.includes('boxtopper')) {
+    return 4;
+  }
   if (
     card.frame_effects &&
     premiumFrameEffects.some((effect) => card.frame_effects.includes(effect))
@@ -56,9 +61,10 @@ export const getAllSets = async (oracle_id, userId = '', db) => {
     const cardsWithSameSet = sortedCards.filter(({ set }) => set === card.set);
 
     if (cardsWithSameSet.length === 1) return card;
-    // No version indicator for the first card, which we assume is the main card, unless it's has a variant
-    if (cardsWithSameSet[0].id === card.id && !card.primary_variant)
+    // No version indicator for the first card, which we assume is the main card, unless it has a variant
+    if (cardsWithSameSet[0].id === card.id && !card.primary_variant) {
       return card;
+    }
 
     const version = cardsWithSameSet.findIndex(({ id }) => id === card.id) + 1;
 
@@ -88,54 +94,6 @@ export const getImageKey = ({ image_uris, card_faces }) => {
   if (!cardMatch) return '';
 
   return cardMatch[1];
-};
-
-export const getMainVariant = ({
-  finishes,
-  border_color,
-  full_art,
-  textless,
-  frame_effects,
-  promo_types,
-  frame,
-  released_at,
-  lang,
-}) => {
-  if (lang === 'ja') {
-    return 'Japanese';
-  }
-  if (promo_types?.includes('textured')) {
-    return 'Textured';
-  }
-  if (border_color === 'borderless') {
-    return 'Borderless';
-  }
-  if (full_art === true) {
-    return 'Full Art';
-  }
-  if (frame_effects?.includes('showcase')) {
-    return 'Showcase';
-  }
-  if (frame_effects?.includes('extendedart')) {
-    return 'Extended Art';
-  }
-  if (finishes?.length === 1 && finishes[0] === 'etched') {
-    return 'Etched Foil';
-  }
-  if (frame === 'future') {
-    return 'Future Frame';
-  }
-  if (frame === 'future') {
-    return 'Future Frame';
-  }
-  if (parseInt(frame) < 2000 && new Date(released_at).getFullYear() > 2020) {
-    return 'Retro Frame';
-  }
-  if (textless === true) {
-    return 'Textless';
-  }
-
-  return null;
 };
 
 export const padCollectorNumber = (number) => {

@@ -7,6 +7,7 @@ import PreviewAndSets from './PreviewAndSets';
 import AdditionalInfos from './AdditionalInfos';
 import CardTitle from './CardTitle';
 import { useToggle } from '../../../../Hooks';
+import UpdateCardImage from './UpdateCardImage';
 
 export default ({
   card,
@@ -35,7 +36,8 @@ export default ({
         selectedCardId={selectedCardId}
         setSelectedCardId={setSelectedCardId}
       />
-      <PriceDevelopment selectedCard={selectedCard} />
+      <UpdateCardImage cardId={usedCard.id} />
+      <PriceDevelopment selectedCard={selectedCard} cardId={usedCard.id} />
       {user && <DecksAndWants card={usedCard} loading={loading} />}
       <AdditionalInfos card={usedCard} loading={loading} isFlipped={isFlipped} />
     </>

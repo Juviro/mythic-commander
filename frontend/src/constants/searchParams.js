@@ -1,4 +1,4 @@
-import { StringParam, ArrayParam } from 'use-query-params';
+import { StringParam, ArrayParam, BooleanParam } from 'use-query-params';
 
 export default {
   name: StringParam,
@@ -8,10 +8,13 @@ export default {
   isLegendary: StringParam,
   subTypes: ArrayParam,
   colors: StringParam,
+  tags: ArrayParam,
   rarity: StringParam,
   cmc: StringParam,
   power: StringParam,
   toughness: StringParam,
   isCommanderLegal: StringParam,
   isOwned: StringParam,
+  variants: ArrayParam,
+  displayAllVariants: BooleanParam,
 };

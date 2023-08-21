@@ -96,14 +96,13 @@ export default ({ player, onClose, onUpdatePlayer }) => {
             onChange={onChangeName}
           />
         </Flex>
-        <Expander isExpanded={isExpanded} c>
+        <Expander isExpanded={isExpanded}>
           <AvatarPicker
             currentSettings={currentSettings}
-            onPickColor={onChangeAvatar('color')}
             onPickImg={onChangeAvatar('img')}
           />
         </Expander>
-        <PreviousPlayers onSelectPlayer={onSelectPlayer} />
+        {!isExpanded && <PreviousPlayers onSelectPlayer={onSelectPlayer} />}
       </Flex>
     </Modal>
   );

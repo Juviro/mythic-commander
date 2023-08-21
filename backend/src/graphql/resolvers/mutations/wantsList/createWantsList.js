@@ -12,7 +12,7 @@ export default async (_, { deckId }, { user: { id: userId }, db }) => {
       .where({ id: deckId })
       .first();
     newWantsList.deckId = deckId;
-    newWantsList.name = `New list - ${name}`;
+    newWantsList.name = name;
   }
   const [wantsList] = await db('wantsLists')
     .insert(newWantsList)

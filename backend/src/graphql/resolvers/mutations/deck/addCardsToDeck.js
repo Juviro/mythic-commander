@@ -10,13 +10,13 @@ const ON_CONFLICT = `
       "createdAt" = NOW()
   `;
 
-export default async (
+const addCardsToDeck = async (
   _,
   { cards, deckId, deckName },
   { user: { id: userId }, db }
 ) => {
   if (deckName) {
-    const [id] = await db('decks')
+    const [{ id }] = await db('decks')
       .insert({ userId, name: deckName, id: randomId() })
       .returning('id');
     deckId = id;
@@ -40,14 +40,26 @@ export default async (
 
   const { rows: defaultTags } = await db.raw(
     `
-  SELECT cards.id, "defaultTags".tags
-  FROM "defaultTags"
-  LEFT JOIN cards
-  ON cards.oracle_id = "defaultTags".oracle_id
-  WHERE cards.id = ANY(?);
+    SELECT cards.id, "defaultTags".tags
+    FROM "defaultTags"
+    LEFT JOIN cards
+    ON cards.oracle_id = "defaultTags".oracle_id
+    WHERE cards.id = ANY(?);
   `,
     [cardIds]
   );
+
+  const { rows: defaultVersions } = await db.raw(
+    `
+      SELECT cards.id as "originalId", "defaultCardVersions".id as "defaultId"
+      FROM "defaultCardVersions"
+      LEFT JOIN cards
+      ON cards.oracle_id = "defaultCardVersions".oracle_id
+      WHERE cards.id = ANY(?);
+    `,
+    [cardIds]
+  );
+
   const tagMap = defaultTags.reduce(
     (acc, val) => ({ ...acc, [val.id]: val.tags }),
     {}
@@ -57,7 +69,17 @@ export default async (
     const existingCard = cardsAlreadyInDeck.find(
       ({ addingId }) => addingId === id
     );
-    const insertId = existingCard ? existingCard.existingId : id;
+
+    const defaultVersion = defaultVersions.find(
+      ({ originalId }) => originalId === id
+    );
+    let insertId = id;
+
+    if (existingCard) {
+      insertId = existingCard.existingId;
+    } else if (defaultVersion) {
+      insertId = defaultVersion.defaultId;
+    }
 
     return {
       id: insertId,
@@ -75,3 +97,4 @@ export default async (
 
   return db('decks').where({ id: deckId }).first();
 };
+export default addCardsToDeck;

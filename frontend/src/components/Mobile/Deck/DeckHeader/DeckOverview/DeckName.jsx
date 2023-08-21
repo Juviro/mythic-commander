@@ -25,7 +25,7 @@ const StyledColorIcon = styled.img`
 export default ({ commander, name }) => {
   if (!name) return <CustomSkeleton.Line style={{ margin: '6px 0' }} />;
 
-  const colorIdentity = commander?.color_identity ?? [];
+  const colorIdentity = commander?.color_identity ? [...commander.color_identity] : [];
   // Colorless symbol for colorless commanders
   if (commander && !colorIdentity.length) colorIdentity.push('C');
 

@@ -3,13 +3,14 @@ import styled, { css } from 'styled-components';
 import { useDrag } from 'react-dnd';
 
 import { primary } from 'constants/colors';
-import EnlargeImage from './EnlargeImage';
+import { ZoomInOutlined } from '@ant-design/icons';
 import { useToggle } from '../../../Hooks';
 import CardInfo from './CardInfo';
 import Card from '../Card';
 import { CardMenu } from './CardMenu';
 import { SelectButton } from './SelectButton';
 import { Tags } from './Tags/Tags';
+import CardButton from '../CardButton';
 
 export const StyledCenterWrapper = styled.div<{ fixedSize: boolean }>`
   width: 100%;
@@ -80,7 +81,7 @@ const GridCard = ({
   search,
   markAsDisabled,
   dragProps,
-  canZoomIn,
+  onZoomIn,
   onSelect,
   isSelected,
   isAnyCardSelected,
@@ -90,6 +91,7 @@ const GridCard = ({
   onClick,
   onSetTags,
   allTags,
+  cardRef,
 }) => {
   const { canDrag = false, listId, onSuccessfullDrop } = dragProps ?? {};
   const displayedAmount = card.amount || card.totalAmount;
@@ -128,7 +130,7 @@ const GridCard = ({
   };
 
   return (
-    <StyledCardWrapper key={card.id} fixedSize={fixedSize}>
+    <StyledCardWrapper key={card.id} fixedSize={fixedSize} ref={cardRef} id={card.id}>
       <StyledImageWrapper
         onClick={onClickCard}
         isSelected={isSelected}
@@ -147,7 +149,16 @@ const GridCard = ({
           onSelect();
         }}
       >
-        {canZoomIn && <EnlargeImage card={card} />}
+        {onZoomIn && (
+          <CardButton
+            index={2}
+            onClick={(e) => {
+              e.stopPropagation();
+              onZoomIn(card);
+            }}
+            Icon={ZoomInOutlined}
+          />
+        )}
         <Card card={card} onFlipCard={() => toggleShowMenu(false)} />
         {displayedAmount > 1 && (
           <StyledAmountWrapper>{`${displayedAmount}x`}</StyledAmountWrapper>

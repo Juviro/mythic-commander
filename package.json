@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=dev concurrently \"cd ./backend && yarn start\" \"cd ./frontend && yarn start\" \"cd ./clash && yarn dev\"",
+    "start": "NODE_ENV=dev concurrently \"cd ./backend && yarn start\" \"cd ./frontend && yarn start\"",
+    "start-all": "NODE_ENV=dev concurrently \"cd ./backend && yarn start\" \"cd ./frontend && yarn start\" \"cd ./clash && yarn dev\"",
     "start-db": "brew services start postgresql",
     "stop-db": "brew services stop postgresql",
     "deploy-prod": "./scripts/deploy-prod.sh",

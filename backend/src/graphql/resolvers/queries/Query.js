@@ -12,6 +12,8 @@ import wantedCards from './wantedCards';
 import tokenFinder from './tokenFinder';
 import getEdhrecCards from './getEdhrecCards';
 import tokens from './tokens';
+import collectionBySet from './collectionBySet';
+import { VARIANTS } from './Card/cardVariants';
 
 const resolver = {
   user(_, __, { db, user: { id } }) {
@@ -52,22 +54,24 @@ const resolver = {
   },
 
   async priceDevelopment(_, { cardId, currency }, { db }) {
-    const prices = await db('cardPrices')
-      .orderBy('date', 'ASC')
-      .select('id', 'date', `price${currency} as price`)
-      .where({ id: cardId });
+    const { entries } = await db('cardPrices').where({ id: cardId }).first();
 
     let hasData = false;
 
-    // Remove all empty entries at the start of the array until we find an entry with data
-    return prices.filter((price) => {
-      if (hasData) return true;
-      if (price.price) {
-        hasData = true;
-        return true;
-      }
-      return false;
-    });
+    return entries
+      .map((entry) => ({
+        date: entry.date,
+        price: entry[`price${currency}`],
+      }))
+      .filter((price) => {
+        // Remove all empty entries at the start of the array until we find an entry with data
+        if (hasData) return true;
+        if (price.price) {
+          hasData = true;
+          return true;
+        }
+        return false;
+      });
   },
 
   edhrecCards(_, { names, themeSuffix }, { user: { id: userId } }) {
@@ -160,11 +164,13 @@ const resolver = {
 
     return imageUris
       .map(({ image_uris, card_faces }) => {
-        if (card_faces)
+        if (card_faces) {
           return card_faces.map((cardFace) => cardFace.image_uris.art_crop);
+        }
         return image_uris.art_crop;
       })
-      .map((artCrop) => artCrop.split('?')[0].replace(/\$.+$/, ''))
+      .flat()
+      .map((artCrop) => artCrop?.split('?')[0].replace(/\$.+$/, ''))
       .flat();
   },
 
@@ -214,10 +220,16 @@ const resolver = {
     };
   },
 
+  collectionBySet,
+
   ltPlayers(_, __, { user: { id: userId }, db }) {
     if (!userId) return null;
 
     return db('ltPlayers').where({ userId }).orderBy('lastEdit', 'DESC');
+  },
+
+  cardVariants: () => {
+    return Object.values(VARIANTS).sort((a, b) => a.localeCompare(b));
   },
 };
 

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { Typography, Divider, Space } from 'antd';
-import { LineChartOutlined } from '@ant-design/icons';
+import { LineChartOutlined, LoadingOutlined } from '@ant-design/icons';
 
 import { useToggle } from '../../../Hooks';
 import { collectionSnapshots } from './queries';
@@ -22,7 +22,15 @@ const StyledWrapper = styled.div`
 
 export default ({ currentSnapshot }) => {
   const [visible, toggleVisible] = useToggle();
-  const { data } = useQuery(collectionSnapshots);
+
+  const [fetchData, { data, loading, called }] = useLazyQuery(collectionSnapshots, {
+    fetchPolicy: 'cache-first',
+  });
+
+  useEffect(() => {
+    if (!visible || called) return;
+    fetchData();
+  }, [visible]);
 
   const snapshots =
     data && [...data.collectionSnapshots, currentSnapshot].filter(Boolean);
@@ -52,15 +60,28 @@ export default ({ currentSnapshot }) => {
         visible={visible}
         onCancel={toggleVisible}
         style={{ height: 500, top: 20 }}
+        bodyStyle={{
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          minHeight: 500,
+        }}
         width={800}
         footer={null}
         title="Collection Trend"
         focusId="modal.collectionCharts"
       >
-        <Divider>Collected Cards</Divider>
-        <AmountChart formattedData={formattedData} />
-        <Divider>Collection Value</Divider>
-        <ValueChart formattedData={formattedData} />
+        {loading ? (
+          <LoadingOutlined style={{ fontSize: 48 }} />
+        ) : (
+          <>
+            <Divider>Collected Cards</Divider>
+            <AmountChart formattedData={formattedData} />
+            <Divider>Collection Value</Divider>
+            <ValueChart formattedData={formattedData} />
+          </>
+        )}
       </FocusedModal>
     </StyledWrapper>
   );

@@ -1,32 +1,21 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Button } from 'antd';
 import { PrinterOutlined } from '@ant-design/icons';
-
-import UserContext from 'components/Provider/UserProvider';
-import ProxyModal from './ProxyModal';
-import { useToggle } from '../../../Hooks';
+import { primary } from 'constants/colors';
 
 export default ({ id, type }) => {
-  const url = `/proxy?type=${type}&value=${id}`;
-  const { user } = useContext(UserContext);
-  const [isVisible, toggleIsVisible] = useToggle();
-
-  const onClick = () => {
-    // only logged in users can see the modal
-    // and select the option "unowned only"
-    if (user) {
-      toggleIsVisible();
-    } else {
-      window.open(url, '_newtab');
-    }
-  };
+  const href = `/proxy?type=${type}&value=${id}`;
 
   return (
-    <>
-      <Button type="link" onClick={onClick} icon={<PrinterOutlined />}>
-        Proxy Cards...
-      </Button>
-      <ProxyModal url={url} onCancel={toggleIsVisible} isVisible={isVisible} />
-    </>
+    <Button
+      type="link"
+      icon={<PrinterOutlined />}
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ color: primary }}
+    >
+      Proxy Cards
+    </Button>
   );
 };

@@ -1,28 +1,30 @@
 import React from 'react';
 import { Typography } from 'antd';
-import styled from 'styled-components';
 
 import Flex from 'components/Elements/Shared/Flex';
 import NumberField from '../NumberField/NumberField';
 
-const StyledNumberFieldWrapper = styled.div`
-  width: 100%;
-  height: 25vh;
-`;
-
-export default ({ title, value, step, onChange, maxValue, minValue }) => {
+export default ({
+  title,
+  value,
+  step = undefined,
+  onChange,
+  maxValue = undefined,
+  minValue,
+}) => {
   return (
-    <Flex direction="column">
-      <Typography.Title level={3}>{title}</Typography.Title>
-      <StyledNumberFieldWrapper>
-        <NumberField
-          step={step}
-          value={value}
-          setValue={onChange}
-          maxValue={maxValue}
-          minValue={minValue}
-        />
-      </StyledNumberFieldWrapper>
+    <Flex direction="row" align="center">
+      <Typography.Text style={{ fontWeight: 400, fontSize: 20, flex: 1 }}>
+        {title}
+      </Typography.Text>
+      <NumberField
+        small
+        step={step}
+        value={value}
+        setValue={onChange}
+        maxValue={maxValue}
+        minValue={minValue}
+      />
     </Flex>
   );
 };

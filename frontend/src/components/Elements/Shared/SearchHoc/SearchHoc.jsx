@@ -13,7 +13,7 @@ export default ({ children, researchOnOrderChange, blockInitialSearch = false })
   const [currentCards, setCurrentCards] = useState([]);
   const [loading, toggleLoading] = useToggle(false);
   const [queryResult, setQueryResult] = useState({});
-  const [initialPageSize, setInitialPageSize] = useLocalStorage('pageSize', 25);
+  const [initialPageSize, setInitialPageSize] = useLocalStorage('pageSize', 20);
   const [lastSearchOptions, setLastSearchOptions] = useState({});
   const [orderBy] = useStoredQueryParam('orderBy', StringParam);
   const [params, setParams] = useQueryParams({
@@ -133,6 +133,11 @@ export default ({ children, researchOnOrderChange, blockInitialSearch = false })
       {}
     );
     setCurrentOptions(defaultOptions);
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   const numberOfCards = queryResult.totalResults;

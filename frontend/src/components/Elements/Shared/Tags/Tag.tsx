@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { tagColors } from 'constants/colors';
 
 export const StyledTag = styled(AntdTag)<{ onClick?: () => void }>`
-  margin-top: 4px;
+  margin: 2px 8px 2px 0;
   position: relative;
   border-radius: 12px;
   cursor: ${({ onClick }) => (onClick ? 'pointer' : 'default')};

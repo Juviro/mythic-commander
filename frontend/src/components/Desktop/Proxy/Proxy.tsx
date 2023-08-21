@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button } from 'antd';
+import { Button, Typography } from 'antd';
 import { useQuery } from '@apollo/client';
 import { PrinterOutlined } from '@ant-design/icons';
 import { useQueryParams, StringParam } from 'use-query-params';
@@ -77,6 +77,14 @@ export default () => {
                 Print
               </Button>
             </Flex>
+            {type === 'tokens' && (
+              <Typography.Paragraph style={{ marginTop: 32 }}>
+                <Typography.Text style={{ fontSize: 18 }}>
+                  In this view you find all tokens that any card in your active decks can
+                  create.
+                </Typography.Text>
+              </Typography.Paragraph>
+            )}
           </PageCard>
           <PageCard>
             <ProxyCards

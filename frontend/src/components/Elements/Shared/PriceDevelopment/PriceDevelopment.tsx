@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Divider } from 'antd';
 import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
@@ -17,45 +17,84 @@ const StyledWrapper = styled.section`
 
 interface Props {
   selectedCard?: UnifiedCard;
+  cardId?: string;
 }
 
 const DATA_KEY = 'Price';
+const AVERAGE_INTERVAL = 5;
 
-const PriceDevelopment = ({ selectedCard }: Props) => {
+const PriceDevelopment = ({ selectedCard, cardId }: Props) => {
   const [initialPriceDevelopment] = useLocalStorage('price-development', 'Eur');
   const [selectedKey, setSelectedKey] = useState(initialPriceDevelopment);
 
+  // Used for the query if the current key is not available,
+  // e.g. the card is only available in foil / nonfoil.
+  // This tmp key is only used as long the main key can not be used
+  // and will be reset afterwards.
+  const [tmpSelectedKey, setTmpSelectedKey] = useState(null);
+
+  const usedKey = tmpSelectedKey ?? selectedKey;
+
   const { data, loading } = useQuery(getPriceDevelopment, {
-    // legacy adapter: currency started with "price", which is omitted in the new schema
-    variables: { cardId: selectedCard?.id, currency: selectedKey.replace('price', '') },
+    variables: { cardId, currency: usedKey },
     fetchPolicy: 'cache-first',
-    skip: !selectedCard?.id,
+    skip: !cardId,
   });
 
-  const unit = selectedKey.toLowerCase().includes('usd') ? '$' : '€';
+  const foilOnly = selectedCard && !selectedCard?.nonfoil;
+  const nonfoilOnly = selectedCard && !selectedCard?.foil;
+
+  useEffect(() => {
+    if (selectedKey.includes('Foil') && nonfoilOnly) {
+      setTmpSelectedKey(selectedKey.replace('Foil', ''));
+    } else if (!selectedKey.includes('Foil') && foilOnly) {
+      setTmpSelectedKey(`${selectedKey}Foil`);
+    } else {
+      setTmpSelectedKey(null);
+    }
+  }, [foilOnly, nonfoilOnly]);
+
+  const unit = usedKey.toLowerCase().includes('usd') ? '$' : '€';
 
   const formattedPriceDevelopment = data?.priceDevelopment?.map(({ date, price }) => ({
     date: formatDate(date, true),
     [DATA_KEY]: price,
   }));
 
+  // for each point, select the AVERAGE_INTERVAL day average
+  const smoothedPriceDevelopment = formattedPriceDevelopment?.map((entry, index) => {
+    const startIndex = Math.max(index - AVERAGE_INTERVAL, 0);
+    const endIndex = Math.min(
+      index + AVERAGE_INTERVAL,
+      formattedPriceDevelopment.length - 1
+    );
+    const average = formattedPriceDevelopment
+      .slice(startIndex, endIndex)
+      .reduce((acc, curr) => acc + curr[DATA_KEY], 0);
+
+    return {
+      ...entry,
+      [DATA_KEY]: (average / (endIndex - startIndex)).toFixed(2),
+    };
+  });
+
   return (
     <StyledWrapper>
       <Divider>Price Development</Divider>
-      {loading || !formattedPriceDevelopment?.length ? (
+      {loading || !smoothedPriceDevelopment?.length ? (
         <PriceDevelopmentPlaceholder loading={loading} />
       ) : (
         <ValueChart
-          formattedData={formattedPriceDevelopment}
+          formattedData={smoothedPriceDevelopment}
           dataKey={DATA_KEY}
           unit={unit}
         />
       )}
       <PriceDevelopmentSelection
         onSelect={setSelectedKey}
-        selectedKey={selectedKey}
-        foilOnly={!selectedCard?.nonfoil}
-        nonfoilOnly={!selectedCard?.foil}
+        selectedKey={usedKey}
+        foilOnly={foilOnly}
+        nonfoilOnly={nonfoilOnly}
       />
     </StyledWrapper>
   );

@@ -29,6 +29,7 @@ type Card {
   purchase_uris: PurchaseUris!
   oracle_id: String!
   rulings_uri: String!
+  type_line: String!
   colors: [String]
   color_identity: [String]
   set_name: String!
@@ -38,6 +39,7 @@ type Card {
   isTwoFaced: Boolean!
   primary_variant: String
   collector_number: String!
+  produced_mana: [String!]
 
   # Additional card fields
   imgKey: String!
@@ -45,6 +47,7 @@ type Card {
   amountOwnedFoil: Int!
   possiblePartner: String
   canBeCommander: Boolean!
+  isModalDfcLand: Boolean!
 
   oracleCard: OracleCard!
   relatedCards: [Card!]
@@ -60,6 +63,7 @@ type OracleCard {
 
   owned: Boolean!
   totalAmount: Int!
+  reserved: Boolean!
 
   isCommanderLegal: Boolean!
   primaryTypes: [String!]!
@@ -69,18 +73,15 @@ type OracleCard {
   containingWantsLists: [ContainingList!]!
 }
 
+type ContainingListDeck {
+  imgSrc: String
+}
+
 type ContainingList {
   id: String!
   name: String!
   amount: Int!
-}
-
-type Set {
-  id: String!
-  set: String!
-  prices: Prices!
-  image_uris: ImageUris
-  card_faces: [CardFace!]
+  deck: ContainingListDeck
 }
 
 type PurchaseUris {
@@ -161,6 +162,7 @@ type DeckCard {
   amount: Int!
   createdAt: String!
   isCommander: Boolean
+  isDefault: Boolean
   card: Card!
   tags: [String!]
 }
@@ -316,6 +318,22 @@ type EDHRecCard {
   owned: Boolean!
 }
 
+type Set {
+  code: String!
+  name: String!
+  released_at: String!
+  set_type: String!
+  icon_svg_uri: String!
+  card_count: Int!
+
+  uniqueCardCount: Int!
+
+  totalCardsOwned: Int!
+  uniqueVersionsOwned: Int!
+  uniqueCardsOwned: Int!
+  percentageOwned: Float!
+}
+
 ################################# Queries #################################
 
 type Query {
@@ -335,6 +353,7 @@ type Query {
   ): PaginatedCollection!
   ownedCardNames: [String!]!
   collectionSnapshots: [CollectionSnapshot!]!
+  collectionBySet: [Set!]!
 
   publicCollection(username: String!): [CollectionCard!]
   wantedCards(username: String!): WantedCards
@@ -366,6 +385,8 @@ type Query {
   ltPlayers: [LTPlayer!]
 
   edhrecCards(names: [String!]!, themeSuffix: String): EDHRecData
+
+  cardVariants: [String!]!
 }
 
 input CardsOptionsInput {
@@ -373,6 +394,7 @@ input CardsOptionsInput {
   colors: String
   subTypes: [String!]
   cardTypes: [String!]
+  tags: [String!]
   isLegendary: String
   isCommanderLegal: String
   isOwned: String
@@ -383,6 +405,8 @@ input CardsOptionsInput {
   toughness: String
   sets: [String!]
   orderBy: String
+  variants: [String]
+  displayAllVariants: Boolean
 }
 
 ################################# Mutations #################################
@@ -473,6 +497,9 @@ type Mutation {
 
   ########## Default tags ##########
   setDefaultTags(tags: [String!]!, oracleId: String!): Boolean
+
+  ########## Card Update ##########
+  updateCardImages(cardId: String!): Boolean
 }
 
 ################################# Move Card #################################
@@ -510,6 +537,7 @@ input EditDeckCardInput {
   id: String
   amount: Int
   isCommander: Boolean
+  isDefault: Boolean
   tags: [String!]
 }
 

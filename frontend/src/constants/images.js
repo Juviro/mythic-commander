@@ -28,7 +28,6 @@ const imageIds = [
   '4d879a13-6ec3-44da-b3fd-d9c1545f3822', // Whatever
   '52474056-771a-495b-8f6b-d429f316d93e', // Mountain
   'fcab7eaa-5e16-40b5-992b-9cc51a95376b', // Swamp
-  '71f57c7b-4c90-41e3-8aef-c13f06c1f302', // Swamp
   '553b6aaa-3ae3-4f3b-9ab6-361eddf996a2', // Plains
   '73c6382b-ceff-4092-9ec3-328cefab440e', // Mountain
   'a5b2d0ed-0b47-459a-8f5c-554dd816c03a', // Plains
@@ -39,7 +38,6 @@ const imageIds = [
   '049528b8-f922-4671-931d-9b37640d5a07', // Forest
   'edc50993-1fd4-4dba-9d2f-ae7a18559829', // Forest
   '6a0715a0-dce2-427d-964c-0e179309499d', // Forest
-  '6eac71d1-c83c-45fe-9a00-301aba68f901', // Forest
   '76b4a655-0051-47c6-a683-c4c3f56e45fc', // Island
   '75884fdb-0d6c-4b2a-8081-99aac4ccb21a', // Island
 ];

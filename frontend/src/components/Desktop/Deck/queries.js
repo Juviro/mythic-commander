@@ -17,13 +17,16 @@ const CARD_FIELDS = `
       color_identity
       possiblePartner
       canBeCommander
+      isModalDfcLand
       isTwoFaced
+      produced_mana
       
       oracleCard {
         _id
         owned
         
         primaryTypes
+        subTypes
         isCommanderLegal
         minPriceUsd
         minPriceEur

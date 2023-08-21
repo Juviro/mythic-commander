@@ -7,6 +7,7 @@ export const getDecks = gql`
       name
       lastEdit
       imgSrc
+      status
       numberOfCards
     }
   }

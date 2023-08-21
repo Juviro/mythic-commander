@@ -1,10 +1,13 @@
 import React from 'react';
-import { Typography, Col, Row, List } from 'antd';
+import { Typography, List } from 'antd';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import getDynamicUrl from '../../../../utils/getDynamicUrl';
-import AddToWants from './AddToWants';
+import AddToWants, { StyledCoverLetterWrapper } from './AddToWants';
+import { StyledDeckThumbnail } from '../IncludedDecks/AddToDeck';
+import DeckCoverLetter from '../../Desktop/OverviewList/DeckCoverLetter';
+import Flex from '../Flex';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -35,7 +38,9 @@ const WantsListLink = ({ id, name }) => {
 export default ({ card, large, cardId, loading }) => {
   const { containingWantsLists } = card ?? {};
 
-  const dataSource = containingWantsLists?.sort((a, b) => (a.name > b.name ? 1 : -1));
+  const dataSource =
+    containingWantsLists &&
+    [...containingWantsLists]?.sort((a, b) => (a.name > b.name ? 1 : -1));
 
   return (
     <StyledWrapper>
@@ -51,16 +56,18 @@ export default ({ card, large, cardId, loading }) => {
           size="small"
           style={{ margin: '16px 0 24px' }}
           dataSource={dataSource}
-          renderItem={({ id, name, amount }) => (
-            <List.Item style={{ padding: large ? undefined : 0 }}>
-              <Row style={{ width: '100%' }}>
-                <Col span={2}>
-                  <Typography.Text strong>{`${amount}x`}</Typography.Text>
-                </Col>
-                <Col span={22}>
-                  <WantsListLink id={id} name={name} />
-                </Col>
-              </Row>
+          renderItem={({ id, name, deck }) => (
+            <List.Item style={{ padding: large ? 8 : 4, height: 44 }}>
+              <Flex align="center">
+                {deck?.imgSrc ? (
+                  <StyledDeckThumbnail src={deck?.imgSrc} />
+                ) : (
+                  <StyledCoverLetterWrapper>
+                    <DeckCoverLetter id={id} name={name} size={14} />
+                  </StyledCoverLetterWrapper>
+                )}
+                <WantsListLink id={id} name={name} />
+              </Flex>
             </List.Item>
           )}
         />

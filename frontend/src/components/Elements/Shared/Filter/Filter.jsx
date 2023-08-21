@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
 
-import { Divider, Typography } from 'antd';
+import { Checkbox, Divider, Typography } from 'antd';
 import BooleanSelection from 'components/Elements/Shared/Filter/SelectFilter/BooleanSelection';
 import UserContext from 'components/Provider/UserProvider';
 import ColorSelection from './ColorSelection';
@@ -14,6 +14,8 @@ import SetSelection from './SelectFilter/SetSelection';
 import RangeFilter from './RangeFilter';
 import RarityFilter from './RarityFilter';
 import Flex from '../Flex';
+import AddTagsInput from '../Tags/AddTagsInput';
+import VariantSelection from './SelectFilter/VariantSelection';
 
 const SytledFilterWrapper = styled.div`
   width: 100%;
@@ -62,11 +64,14 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
     sets,
     text,
     colors,
+    tags,
     subTypes,
     cardTypes,
     isLegendary,
     isOwned,
     isCommanderLegal,
+    variants,
+    displayAllVariants,
   } = options;
 
   const { user } = useContext(UserContext);
@@ -98,7 +103,12 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
     {
       title: 'Set',
       component: (
-        <SetSelection size={size} onChange={onChangeOption('sets')} value={sets} />
+        <SetSelection
+          size={size}
+          onChange={onChangeOption('sets')}
+          value={sets}
+          onSearch={onSearch}
+        />
       ),
     },
     {
@@ -107,7 +117,8 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
       component: (
         <CardTypeSelection
           size={size}
-          onChangeOption={onChangeOption}
+          onSearch={onSearch}
+          onChangeOption={onChangeOption('cardTypes')}
           value={cardTypes}
         />
       ),
@@ -205,6 +216,39 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
           trueLabel="Owned Cards Only"
           falseLabel="Unowned Cards Only"
         />
+      ),
+    },
+    {
+      title: 'Tag',
+      dividerAbove: true,
+      component: (
+        <AddTagsInput
+          placeholder='e.g. "Ramp"'
+          onChange={onChangeOption('tags')}
+          value={tags ?? []}
+        />
+      ),
+    },
+    {
+      title: 'Variant',
+      component: (
+        <VariantSelection
+          size={size}
+          onSearch={onSearch}
+          onChangeOption={onChangeOption('variants')}
+          value={variants}
+        />
+      ),
+    },
+    {
+      title: '',
+      component: (
+        <Checkbox
+          onChange={(e) => onChangeOption('displayAllVariants')(e.target.checked)}
+          checked={displayAllVariants}
+        >
+          Show all Card Versions
+        </Checkbox>
       ),
     },
   ];

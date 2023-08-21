@@ -44,7 +44,7 @@ const updateCollection = async (
   return stored;
 };
 
-export const getCollectionFromCache = async (type, { forceUpdate, debug }) => {
+export const getCollectionFromCache = async (type, { forceUpdate = false, debug }) => {
   const lastUpdateKey = `lastUpdate-${type}`;
   const collectionKey = `stored-${type}`;
 

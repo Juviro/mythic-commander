@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import CardDetailBody from './CardDetailBody';
 
-export default ({
+const CardDetailsDesktop = ({
   card,
   fallbackCard,
   initialCardId,
@@ -34,3 +34,5 @@ export default ({
     />
   );
 };
+
+export default CardDetailsDesktop;

@@ -1,11 +1,13 @@
 import React from 'react';
-import { List, Typography } from 'antd';
+import { Divider, List, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 import getDynamicUrl from '../../../../utils/getDynamicUrl';
 import Flex from '../Flex';
-import AddToDeck from './AddToDeck';
+import AddToDeck, { StyledDeckThumbnail } from './AddToDeck';
+import useGroupByDeckType from '../../../../hooks/useGroupByDeckType';
+import DeckStatusTag from '../../Desktop/OverviewList/DeckStatus/DeckStatusTag';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -14,11 +16,14 @@ const StyledWrapper = styled.div`
   margin-bottom: 16px;
 `;
 
-const StyledPreview = styled.img`
-  width: 38px;
-  height: auto;
-  margin-right: 8px;
-  border-radius: 2px;
+const StyledDivider = styled(Divider)`
+  &::before {
+    content: none !important;
+  }
+
+  & > span {
+    padding-left: 0;
+  }
 `;
 
 const NEW_DECK_DUMMY_ID = 'new-deck';
@@ -46,6 +51,8 @@ export default ({ card, large, loading }) => {
   const dataSource =
     containingDecks && [...containingDecks].sort((a, b) => (a.name > b.name ? 1 : -1));
 
+  const decksByType = useGroupByDeckType(dataSource, true);
+
   return (
     <StyledWrapper>
       <AddToDeck cardIds={[card?.id]} oracle_id={card?.oracle_id} loading={loading} />
@@ -53,20 +60,29 @@ export default ({ card, large, loading }) => {
       {loading ? (
         <div style={{ height: 54 }} />
       ) : containingDecks?.length ? (
-        <List
-          rowKey="id"
-          size="small"
-          style={{ margin: '16px 0 24px' }}
-          dataSource={dataSource}
-          renderItem={({ id, name, imgSrc }) => (
-            <List.Item style={{ padding: large ? 8 : 4, height: 44 }}>
-              <Flex align="center">
-                <StyledPreview src={imgSrc} />
-                <DeckLink id={id} name={name} />
-              </Flex>
-            </List.Item>
-          )}
-        />
+        <>
+          {decksByType.map(({ decks, status }) => (
+            <React.Fragment key={status}>
+              <StyledDivider orientation="left" style={{ marginBottom: 0 }}>
+                <DeckStatusTag status={status} />
+              </StyledDivider>
+              <List
+                rowKey="id"
+                size="small"
+                style={{ marginTop: -16 }}
+                dataSource={decks}
+                renderItem={({ id, name, imgSrc }) => (
+                  <List.Item style={{ padding: large ? 8 : 4, height: 44 }}>
+                    <Flex align="center">
+                      <StyledDeckThumbnail src={imgSrc} />
+                      <DeckLink id={id} name={name} />
+                    </Flex>
+                  </List.Item>
+                )}
+              />
+            </React.Fragment>
+          ))}
+        </>
       ) : (
         <Typography.Text type="secondary" style={{ marginTop: 32 }}>
           You don&apos;t have any deck containing this card

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import { Select, Typography, Tag } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import SubmittableSelect from 'components/Elements/Desktop/SubmittableSelect/SubmittableSelect';
 import CustomSkeleton from '../../CustomSkeleton';
 import isMobile from '../../../../../utils/isMobile';
 
@@ -74,35 +75,24 @@ const MultiSelectFilter = ({
   allowClear,
   getPrefix,
   isGrouped,
+  onSearch,
   size = 'default',
 }) => {
   const unifiedOptions = getUnifiedOptions(options, isGrouped);
 
-  const [currentValue, setCurrentValue] = useState(value);
-  const onChangeInput = (newValues = []) => {
-    setCurrentValue(newValues);
-    onChange(newValues);
-  };
-
-  // reset current input when parent is reset
-  useEffect(() => {
-    if (value?.length || !currentValue?.length) return;
-    setCurrentValue([]);
-    // eslint-disable-next-line
-  }, [value]);
-
   return (
-    <Select
+    <SubmittableSelect
       mode="multiple"
-      value={currentValue}
+      value={value}
       dropdownMatchSelectWidth
       allowClear={allowClear}
       style={{ width: '100%' }}
-      onChange={onChangeInput}
+      onChange={onChange}
       defaultActiveFirstOption
       size={size}
       placeholder={placeholder}
       showSearch
+      onSubmit={onSearch}
       suffixIcon={<SearchOutlined />}
       filterOption={(input, option) => {
         const normalize = (val) => val.replace(/\s/g, '').toLowerCase();
@@ -110,16 +100,15 @@ const MultiSelectFilter = ({
         return normalize(option.key).includes(normalize(input));
       }}
       tagRender={tagRender}
-    >
-      {renderOptions(unifiedOptions, getPrefix, isGrouped)}
-    </Select>
+      renderOptions={() => renderOptions(unifiedOptions, getPrefix, isGrouped)}
+    />
   );
 };
 
 // Wrap around loader so default value is set correctly
 // even if options are not loaded from provider yet
 export default ({ options, ...rest }) => {
-  if (!options.length) return <CustomSkeleton.Line />;
+  if (!options?.length) return <CustomSkeleton.Line />;
 
   return <MultiSelectFilter options={options} {...rest} />;
 };

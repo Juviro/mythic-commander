@@ -38,7 +38,7 @@ const tickFormatter =
     const color = getTagColor(tag);
 
     const LARGEST_BAR_WIDTH = 510;
-    const CHAR_WIDTH = 8;
+    const CHAR_WIDTH = 9;
     const currentBarWidth = LARGEST_BAR_WIDTH * (amount / maxAmount);
     const maxTextLength = tag.length * CHAR_WIDTH;
 
