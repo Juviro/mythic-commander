@@ -17,7 +17,12 @@ const websocket = (_: any, res: any) => {
       let user: User;
 
       socket.on(SOCKET_MSG.INITIALIZE, async () => {
-        user = await getUser(socket.handshake.headers.cookie);
+        try {
+          user = await getUser(socket.handshake.headers.cookie);
+        } catch {
+          socket.emit(SOCKET_MSG.NOT_LOGGED_IN);
+          return;
+        }
         io.to(socket.id).emit(SOCKET_MSG.INITIALIZE, user);
       });
 

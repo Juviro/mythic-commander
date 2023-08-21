@@ -41,6 +41,12 @@ export const SocketContextProvider = ({ children }: Props) => {
     socket.on(SOCKET_MSG.INITIALIZE, (msg) => {
       setUser(msg);
     });
+
+    socket.on(SOCKET_MSG.NOT_LOGGED_IN, () => {
+      // eslint-disable-next-line max-len
+      const redirectUrl = `${process.env.NEXT_PUBLIC_LOGIN_URL}?redirect=${window.location.href}`;
+      window.location.href = redirectUrl;
+    });
   };
 
   useEffect(() => {

@@ -22,6 +22,7 @@ export class GameLobby {
       host: user.id,
     };
     this.openLobbies.push(lobby);
+    console.log('lobby', lobby);
   }
 
   leaveAll(user: User) {}
