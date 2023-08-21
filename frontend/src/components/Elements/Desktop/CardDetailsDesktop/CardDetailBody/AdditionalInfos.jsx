@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Divider } from 'antd';
+import { Row, Col, Divider, Typography } from 'antd';
 
 import styled from 'styled-components';
 import CardLegal from 'components/Elements/Shared/CardLegal';
@@ -38,6 +38,14 @@ export default ({ card, loading, isFlipped }) => {
       >
         <Divider>Related Cards</Divider>
         <RelatedCards card={card} loading={loading} />
+        {card.reserved && (
+          <>
+            <Divider>Reserved List</Divider>
+            <Typography.Text strong style={{ marginBottom: 16 }}>
+              This Card is Part of the Reserved List
+            </Typography.Text>
+          </>
+        )}
       </StyledColumn>
       <StyledColumn span={5}>
         <Divider>Resources</Divider>

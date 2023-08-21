@@ -23,6 +23,7 @@ const CARD_FIELDS = `
     owned
     totalAmount
     isCommanderLegal
+    reserved
     allSets {
       id
       set

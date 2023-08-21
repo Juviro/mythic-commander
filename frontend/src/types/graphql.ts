@@ -63,6 +63,7 @@ export type Card = {
   purchase_uris: PurchaseUris;
   rarity: Scalars['String'];
   relatedCards?: Maybe<Array<Card>>;
+  reserved: Scalars['Boolean'];
   rulings_uri: Scalars['String'];
   scryfall_uri?: Maybe<Scalars['String']>;
   set: Scalars['String'];
@@ -87,6 +88,7 @@ export type CardsOptionsInput = {
   cardTypes?: InputMaybe<Array<Scalars['String']>>;
   cmc?: InputMaybe<Scalars['String']>;
   colors?: InputMaybe<Scalars['String']>;
+  displayAllVariants?: InputMaybe<Scalars['Boolean']>;
   isCommanderLegal?: InputMaybe<Scalars['String']>;
   isLegendary?: InputMaybe<Scalars['String']>;
   isOwned?: InputMaybe<Scalars['String']>;
