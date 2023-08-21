@@ -21,6 +21,7 @@ interface Props {
 }
 
 const DATA_KEY = 'Price';
+const AVERAGE_INTERVAL = 5;
 
 const PriceDevelopment = ({ selectedCard, cardId }: Props) => {
   const [initialPriceDevelopment] = useLocalStorage('price-development', 'Eur');
@@ -60,14 +61,31 @@ const PriceDevelopment = ({ selectedCard, cardId }: Props) => {
     [DATA_KEY]: price,
   }));
 
+  // for each point, select the AVERAGE_INTERVAL day average
+  const smoothedPriceDevelopment = formattedPriceDevelopment?.map((entry, index) => {
+    const startIndex = Math.max(index - AVERAGE_INTERVAL, 0);
+    const endIndex = Math.min(
+      index + AVERAGE_INTERVAL,
+      formattedPriceDevelopment.length - 1
+    );
+    const average = formattedPriceDevelopment
+      .slice(startIndex, endIndex)
+      .reduce((acc, curr) => acc + curr[DATA_KEY], 0);
+
+    return {
+      ...entry,
+      [DATA_KEY]: (average / (endIndex - startIndex)).toFixed(2),
+    };
+  });
+
   return (
     <StyledWrapper>
       <Divider>Price Development</Divider>
-      {loading || !formattedPriceDevelopment?.length ? (
+      {loading || !smoothedPriceDevelopment?.length ? (
         <PriceDevelopmentPlaceholder loading={loading} />
       ) : (
         <ValueChart
-          formattedData={formattedPriceDevelopment}
+          formattedData={smoothedPriceDevelopment}
           dataKey={DATA_KEY}
           unit={unit}
         />
