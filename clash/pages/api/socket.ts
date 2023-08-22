@@ -1,3 +1,3 @@
-import websocket from '../../websocket/websocket';
+import websocket from '../../backend/websocket/websocket';
 
 export default websocket;

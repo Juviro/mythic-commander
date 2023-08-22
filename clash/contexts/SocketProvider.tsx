@@ -11,10 +11,12 @@ const SocketContext = React.createContext<{
   user: User | null;
   isReady: boolean;
   emit: (event: string, payload: string) => void;
+  socket: Socket | null;
 }>({
   user: null,
   isReady: false,
   emit: () => null,
+  socket: null,
 });
 
 interface Props {
@@ -32,10 +34,7 @@ export const SocketContextProvider = ({ children }: Props) => {
     ws.current = socket;
 
     socket.on('connect', () => {
-      // TODO: fix racing condition
-      setTimeout(() => {
-        socket?.emit(SOCKET_MSG.INITIALIZE);
-      }, 100);
+      socket.emit(SOCKET_MSG.INITIALIZE);
     });
 
     socket.on(SOCKET_MSG.INITIALIZE, (msg) => {
@@ -43,9 +42,8 @@ export const SocketContextProvider = ({ children }: Props) => {
     });
 
     socket.on(SOCKET_MSG.NOT_LOGGED_IN, () => {
-      // eslint-disable-next-line max-len
-      const redirectUrl = `${process.env.NEXT_PUBLIC_LOGIN_URL}?redirect=${window.location.href}`;
-      window.location.href = redirectUrl;
+      const loginPath = process.env.NEXT_PUBLIC_LOGIN_URL;
+      window.location.href = `${loginPath}?redirect=${window.location.href}`;
     });
   };
 
@@ -60,6 +58,7 @@ export const SocketContextProvider = ({ children }: Props) => {
       emit: (event: string, payload: string) => {
         ws.current?.emit(event, payload);
       },
+      socket: ws.current,
     }),
     [user]
   );

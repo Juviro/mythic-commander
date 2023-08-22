@@ -17,8 +17,10 @@ interface Player {
 }
 
 export interface Lobby {
-  id: string;
+  lobbyId: string;
   name: string;
   players: Player[];
-  host: string;
+  maxPlayers: number;
+  hostId: string;
+  hostName: string;
 }

@@ -1,14 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
+import SocketContext from '../../../contexts/SocketProvider';
+import SOCKET_MSG from '../../../constants/wsEvents';
+import { Lobby } from '../../../backend/websocket/GameLobby.types';
 
 interface Props {
-  games: string[];
+  openLobbies: Lobby[];
 }
 
-const GameList = ({ games }: Props) => {
+const GameList = ({ openLobbies }: Props) => {
+  const { socket } = useContext(SocketContext);
+
   return (
     <ul>
-      <li>Game 1</li>
-      <li>Game 2</li>
+      {openLobbies.map((lobby) => (
+        <li key={lobby.lobbyId}>
+          <button
+            type="button"
+            onClick={() => {
+              socket?.emit(SOCKET_MSG.JOIN_LOBBY, lobby);
+            }}
+          >
+            {lobby.name}
+          </button>
+        </li>
+      ))}
     </ul>
   );
 };

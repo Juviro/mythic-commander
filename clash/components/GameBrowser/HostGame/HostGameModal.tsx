@@ -21,6 +21,7 @@ const HostGameModal = ({ user, onClose, onHostGame }: Props) => {
       onOk={() => {
         form.validateFields().then((values) => {
           onHostGame(values.gamename);
+          onClose();
         });
       }}
     >

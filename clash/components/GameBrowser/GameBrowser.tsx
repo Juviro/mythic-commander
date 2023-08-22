@@ -6,14 +6,14 @@ import HostGame from './HostGame/HostGame';
 import useGameBrowser from './useGameBrowser';
 
 const GameBrowser = () => {
-  const { user, games, onHostGame } = useGameBrowser();
+  const { user, openLobbies, onHostGame } = useGameBrowser();
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.inner}>
         <div className={styles.browser}>
           <h1 className={styles.title}>Game Browser</h1>
-          <GameList games={games} />
+          <GameList openLobbies={openLobbies} />
         </div>
         <HostGame user={user} onHostGame={onHostGame} />
       </div>
