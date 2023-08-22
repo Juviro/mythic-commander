@@ -1,26 +1,26 @@
 import { Server } from 'socket.io';
 import uniqid from 'uniqid';
 
-import SOCKET_MSG from '../../constants/wsEvents';
+import { SOCKET_MSG_BROWSER } from '../../constants/wsEvents';
 import { Lobby, User } from './GameLobby.types';
 import { GameOptions } from '../../types/api.types';
 
 const DUMMY_LOBBY = {
-  lobbyId: '1',
-  name: 'test',
+  id: '1',
+  name: 'My first Game',
   players: [
     {
       id: '1',
-      username: 'test',
+      avatar: '',
+      username: 'Dieter-Johann',
     },
   ],
   hostId: '1',
-  hostName: 'test',
-  numberOfPlayers: 4,
+  maxNumberOfPlayers: 4,
 };
 
 const DUMMY_LOBBIES = [...new Array(15)].map((_, i) => ({
-  lobbyId: i.toString(),
+  id: i.toString(),
   name: `test${i}`,
   players: [
     {
@@ -29,8 +29,7 @@ const DUMMY_LOBBIES = [...new Array(15)].map((_, i) => ({
     },
   ],
   hostId: i.toString(),
-  hostName: `test${i}`,
-  numberOfPlayers: 4,
+  maxNumberOfPlayers: 4,
 }));
 
 export class GameLobbies {
@@ -40,17 +39,18 @@ export class GameLobbies {
 
   constructor(ws: Server) {
     this.ws = ws;
-    this.openLobbies = DUMMY_LOBBIES;
+    // this.openLobbies = [];
+    this.openLobbies = [DUMMY_LOBBY];
+    // this.openLobbies = DUMMY_LOBBIES;
   }
 
   private addLobby(lobbyOptions: GameOptions, user: User) {
     const lobby: Lobby = {
-      lobbyId: uniqid(),
+      id: uniqid(),
       name: lobbyOptions.name,
       players: [user],
       hostId: user.id,
-      hostName: user.username,
-      numberOfPlayers: lobbyOptions.numberOfPlayers,
+      maxNumberOfPlayers: lobbyOptions.maxNumberOfPlayers,
     };
     this.openLobbies.push(lobby);
   }
@@ -58,22 +58,35 @@ export class GameLobbies {
   leaveAll(user: User) {
     this.openLobbies = this.openLobbies.filter((lobby) => {
       if (lobby.hostId === user.id) {
-        this.ws.to(lobby.lobbyId).emit(SOCKET_MSG.CLOSE_LOBBY);
         return false;
       }
       // eslint-disable-next-line no-param-reassign
       lobby.players = lobby.players.filter((player) => player.id !== user.id);
       return true;
     });
-    this.ws.emit(SOCKET_MSG.UPDATE_LOBBIES, this.openLobbies);
+    this.ws.emit(SOCKET_MSG_BROWSER.UPDATE_LOBBIES, this.openLobbies);
   }
 
   open(lobbyOptions: GameOptions, user: User) {
     this.addLobby(lobbyOptions, user);
-    this.ws.emit(SOCKET_MSG.UPDATE_LOBBIES, this.openLobbies);
+    this.ws.emit(SOCKET_MSG_BROWSER.UPDATE_LOBBIES, this.openLobbies);
+  }
+
+  join(id: string, user: User) {
+    const lobby = this.openLobbies.find((l) => l.id === id);
+    if (!lobby) return;
+    if (lobby.players.length >= lobby.maxNumberOfPlayers) return;
+    if (lobby.players.find((player) => player.id === user.id)) return;
+    this.openLobbies.forEach((l) => {
+      // eslint-disable-next-line no-param-reassign
+      l.players = l.players.filter((player) => player.id !== user.id);
+    });
+
+    lobby.players.push(user);
+    this.ws.emit(SOCKET_MSG_BROWSER.UPDATE_LOBBIES, this.openLobbies);
   }
 
   emitLobbies(socket: any = this.ws) {
-    socket.emit(SOCKET_MSG.UPDATE_LOBBIES, this.openLobbies);
+    socket.emit(SOCKET_MSG_BROWSER.UPDATE_LOBBIES, this.openLobbies);
   }
 }

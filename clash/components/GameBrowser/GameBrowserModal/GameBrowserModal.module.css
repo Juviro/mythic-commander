@@ -1,0 +1,19 @@
+.browser {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.title {
+  margin: 0;
+  padding: 1rem;
+  color: white;
+  background-color: var(--color-primary);
+}
+
+.inner {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

@@ -1,17 +1,17 @@
 import { Button } from 'antd';
 import React, { useState } from 'react';
-import { User } from '../../../contexts/SocketProvider';
 
 import styles from './HostGame.module.css';
 import HostGameModal from './HostGameModal';
 import { GameOptions } from '../../../types/api.types';
+import { User } from '../../../backend/websocket/GameLobby.types';
 
 interface Props {
   user: User | null;
-  onHostGame: (options: GameOptions) => void;
+  onHostLobby: (options: GameOptions) => void;
 }
 
-const HostGame = ({ user, onHostGame }: Props) => {
+const HostGame = ({ user, onHostLobby }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -25,7 +25,7 @@ const HostGame = ({ user, onHostGame }: Props) => {
       </Button>
       {user?.username && isOpen && (
         <HostGameModal
-          onHostGame={onHostGame}
+          onHostLobby={onHostLobby}
           user={user}
           onClose={() => setIsOpen(false)}
         />

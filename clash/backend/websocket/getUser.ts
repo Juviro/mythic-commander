@@ -10,7 +10,7 @@ const getUser = async (cookie?: string): Promise<User> => {
   const {
     rows: [user],
   } = await db.raw(
-    `SELECT users.username, users.id 
+    `SELECT users.username, users.id, users.avatar
     FROM users 
     INNER JOIN sessions 
     ON users.id = sessions."userId" 

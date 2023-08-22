@@ -1,16 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import { Form, Input, InputRef, Modal, Select } from 'antd';
 
-import { User } from '../../../contexts/SocketProvider';
 import { GameOptions } from '../../../types/api.types';
+import { User } from '../../../backend/websocket/GameLobby.types';
 
 interface Props {
   user: User;
   onClose: () => void;
-  onHostGame: (gameOptions: GameOptions) => void;
+  onHostLobby: (gameOptions: GameOptions) => void;
 }
 
-const HostGameModal = ({ user, onClose, onHostGame }: Props) => {
+const HostGameModal = ({ user, onClose, onHostLobby }: Props) => {
   const [form] = Form.useForm();
   const inputRef = useRef<InputRef>(null);
 
@@ -20,7 +20,7 @@ const HostGameModal = ({ user, onClose, onHostGame }: Props) => {
 
   const onSubmit = () => {
     form.validateFields().then((values) => {
-      onHostGame(values);
+      onHostLobby(values);
       onClose();
     });
   };
@@ -49,7 +49,7 @@ const HostGameModal = ({ user, onClose, onHostGame }: Props) => {
         >
           <Input ref={inputRef} />
         </Form.Item>
-        <Form.Item label="Number of Players" name="numberOfPlayers" initialValue={4}>
+        <Form.Item label="Number of Players" name="maxNumberOfPlayers" initialValue={4}>
           <Select options={[1, 2, 3, 4].map((n) => ({ label: n, value: n }))} />
         </Form.Item>
       </Form>

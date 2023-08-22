@@ -1,5 +1,5 @@
 import { Server } from 'socket.io';
-import SOCKET_MSG from '../../constants/wsEvents';
+import { SOCKET_MSG_BROWSER } from '../../constants/wsEvents';
 import { GameLobbies } from './GameLobbies';
 import { User } from './GameLobby.types';
 import getUser from './getUser';
@@ -19,19 +19,26 @@ const websocket = (_: any, res: any) => {
     socket.join('lobby');
     let user: User;
 
-    socket.on(SOCKET_MSG.INITIALIZE, async () => {
+    socket.on(SOCKET_MSG_BROWSER.INITIALIZE, async () => {
       try {
         user = await getUser(socket.handshake.headers.cookie);
-        socket.emit(SOCKET_MSG.INITIALIZE, user);
+        socket.emit(SOCKET_MSG_BROWSER.INITIALIZE, user);
         Lobby.emitLobbies(socket);
       } catch {
-        socket.emit(SOCKET_MSG.NOT_LOGGED_IN);
+        socket.emit(SOCKET_MSG_BROWSER.NOT_LOGGED_IN);
       }
     });
 
-    socket.on(SOCKET_MSG.HOST_GAME, (lobbyOptions) => {
+    socket.on(SOCKET_MSG_BROWSER.HOST_LOBBY, (lobbyOptions) => {
       const parsedLobbyOptions = JSON.parse(lobbyOptions);
       Lobby.open(parsedLobbyOptions, user);
+    });
+
+    socket.on(SOCKET_MSG_BROWSER.JOIN_LOBBY, (id: string) => {
+      Lobby.join(id, user);
+    });
+    socket.on(SOCKET_MSG_BROWSER.LEAVE_LOBBY, () => {
+      Lobby.leaveAll(user);
     });
 
     socket.on('disconnect', () => {

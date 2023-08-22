@@ -1,11 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import io, { Socket } from 'socket.io-client';
-import SOCKET_MSG from '../constants/wsEvents';
 
-export type User = {
-  id: string;
-  username: string;
-};
+import { SOCKET_MSG_BROWSER } from '../constants/wsEvents';
+import { User } from '../backend/websocket/GameLobby.types';
 
 const SocketContext = React.createContext<{
   user: User | null;
@@ -34,14 +31,14 @@ export const SocketContextProvider = ({ children }: Props) => {
     ws.current = socket;
 
     socket.on('connect', () => {
-      socket.emit(SOCKET_MSG.INITIALIZE);
+      socket.emit(SOCKET_MSG_BROWSER.INITIALIZE);
     });
 
-    socket.on(SOCKET_MSG.INITIALIZE, (msg) => {
+    socket.on(SOCKET_MSG_BROWSER.INITIALIZE, (msg) => {
       setUser(msg);
     });
 
-    socket.on(SOCKET_MSG.NOT_LOGGED_IN, () => {
+    socket.on(SOCKET_MSG_BROWSER.NOT_LOGGED_IN, () => {
       const loginPath = process.env.NEXT_PUBLIC_LOGIN_URL;
       window.location.href = `${loginPath}?redirect=${window.location.href}`;
     });

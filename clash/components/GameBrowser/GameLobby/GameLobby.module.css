@@ -1,0 +1,21 @@
+.title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.body {
+    padding: 16px;
+}
+
+.players {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.player {
+    list-style: none;
+}

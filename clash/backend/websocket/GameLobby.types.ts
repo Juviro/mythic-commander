@@ -1,5 +1,6 @@
 export interface User {
   id: string;
+  avatar: string;
   username: string;
 }
 
@@ -10,17 +11,14 @@ interface Deck {
   id: string;
 }
 
-interface Player {
-  username: string;
-  id: string;
+export type Player = User & {
   deck?: Deck | null;
-}
+};
 
 export interface Lobby {
-  lobbyId: string;
+  id: string;
   name: string;
   players: Player[];
-  numberOfPlayers: number;
+  maxNumberOfPlayers: number;
   hostId: string;
-  hostName: string;
 }
