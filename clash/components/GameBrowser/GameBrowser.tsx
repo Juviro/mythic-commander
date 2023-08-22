@@ -1,34 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import styles from './GameBrowser.module.css';
 import GameList from './GameList/GameList';
-import useGameBrowser from './useGameBrowser';
 import GameLobby from './GameLobby/GameLobby';
-import { User } from '../../backend/websocket/GameLobby.types';
+import GameBrowserContext from './GameBrowserProvider';
+
+const queryClient = new QueryClient();
 
 const GameBrowser = () => {
-  const { user, openLobbies, onHostLobby, onJoinLobby, currentLobby, onLeaveLobby } =
-    useGameBrowser();
+  const { currentLobby } = useContext(GameBrowserContext);
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.inner}>
-        {currentLobby ? (
-          <GameLobby
-            user={user as User}
-            lobby={currentLobby}
-            onLeaveLobby={onLeaveLobby}
-          />
-        ) : (
-          <GameList
-            openLobbies={openLobbies}
-            onJoinLobby={onJoinLobby}
-            user={user}
-            onHostLobby={onHostLobby}
-          />
-        )}
+    <QueryClientProvider client={queryClient}>
+      <div className={styles.wrapper}>
+        <div className={styles.inner}>{currentLobby ? <GameLobby /> : <GameList />}</div>
       </div>
-    </div>
+    </QueryClientProvider>
   );
 };
 

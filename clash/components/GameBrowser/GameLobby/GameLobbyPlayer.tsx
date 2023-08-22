@@ -5,6 +5,7 @@ import { Card } from 'antd';
 import { Player } from '../../../backend/websocket/GameLobby.types';
 
 import styles from './GameLobbyPlayer.module.css';
+import DeckSelection from './DeckSelection';
 
 interface Props {
   player?: Player;
@@ -19,27 +20,38 @@ const GameLobbyPlayer = ({ player, isSelf, isHost, canKick }: Props) => {
   const onImgError = () => {
     setImgError(true);
   };
+
   return (
     <Card
-      bodyStyle={{ padding: 16, minHeight: 66 }}
+      bodyStyle={{ padding: 16, minHeight: 66, display: 'flex', alignItems: 'center' }}
       className={isSelf ? styles.card : ''}
     >
-      {player && (
-        <div className={styles.player}>
-          {imgError ? (
-            <UserOutlined className={styles.fallback_avatar} size={32} />
-          ) : (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              className={styles.avatar}
-              src={player.avatar}
-              alt="avatar"
-              onError={onImgError}
+      <div className={styles.player}>
+        {player ? (
+          <>
+            {imgError || !player ? (
+              <UserOutlined className={styles.fallback_avatar} size={32} />
+            ) : (
+              <img
+                className={styles.avatar}
+                src={player.avatar}
+                alt="avatar"
+                onError={onImgError}
+              />
+            )}
+            <span className={styles.player_name}>{`${player.username}${
+              isHost ? ' (Host)' : ''
+            }`}</span>
+            <DeckSelection
+              deck={player.deck}
+              canSelectDeck={isSelf}
+              playerId={player.id}
             />
-          )}
-          <span>{`${player.username}${isHost ? ' (Host)' : ''}`}</span>
-        </div>
-      )}
+          </>
+        ) : (
+          <span className={styles.empty}>Waiting for player to join...</span>
+        )}
+      </div>
     </Card>
   );
 };

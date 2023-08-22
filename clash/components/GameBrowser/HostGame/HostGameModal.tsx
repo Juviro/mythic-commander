@@ -1,16 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { Form, Input, InputRef, Modal, Select } from 'antd';
 
-import { GameOptions } from '../../../types/api.types';
-import { User } from '../../../backend/websocket/GameLobby.types';
+import GameBrowserContext from '../GameBrowserProvider';
 
 interface Props {
-  user: User;
   onClose: () => void;
-  onHostLobby: (gameOptions: GameOptions) => void;
 }
 
-const HostGameModal = ({ user, onClose, onHostLobby }: Props) => {
+const HostGameModal = ({ onClose }: Props) => {
+  const { onHostLobby, user } = useContext(GameBrowserContext);
+
   const [form] = Form.useForm();
   const inputRef = useRef<InputRef>(null);
 

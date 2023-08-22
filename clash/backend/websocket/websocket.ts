@@ -1,7 +1,7 @@
 import { Server } from 'socket.io';
 import { SOCKET_MSG_BROWSER } from '../../constants/wsEvents';
 import { GameLobbies } from './GameLobbies';
-import { User } from './GameLobby.types';
+import { Deck, Lobby as LobbyType, User } from './GameLobby.types';
 import getUser from './getUser';
 
 const websocket = (_: any, res: any) => {
@@ -30,7 +30,7 @@ const websocket = (_: any, res: any) => {
     });
 
     socket.on(SOCKET_MSG_BROWSER.HOST_LOBBY, (lobbyOptions) => {
-      const parsedLobbyOptions = JSON.parse(lobbyOptions);
+      const parsedLobbyOptions: LobbyType = JSON.parse(lobbyOptions);
       Lobby.open(parsedLobbyOptions, user);
     });
 
@@ -39,6 +39,10 @@ const websocket = (_: any, res: any) => {
     });
     socket.on(SOCKET_MSG_BROWSER.LEAVE_LOBBY, () => {
       Lobby.leaveAll(user);
+    });
+    socket.on(SOCKET_MSG_BROWSER.SELECT_DECK, (deck: string) => {
+      const parsedDeck: Deck = JSON.parse(deck);
+      Lobby.setDeck(parsedDeck, user);
     });
 
     socket.on('disconnect', () => {

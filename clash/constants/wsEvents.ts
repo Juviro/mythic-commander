@@ -5,4 +5,5 @@ export const SOCKET_MSG_BROWSER = {
   NOT_LOGGED_IN: 'not_logged_in',
   JOIN_LOBBY: 'join_lobby',
   LEAVE_LOBBY: 'leave_lobby',
+  SELECT_DECK: 'select_deck',
 };

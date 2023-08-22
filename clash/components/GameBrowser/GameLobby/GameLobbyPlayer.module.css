@@ -28,3 +28,15 @@
     align-items: center;
     color: white;
 }
+
+.player_name {
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.empty {
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.58);
+}

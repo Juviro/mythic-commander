@@ -4,12 +4,15 @@ export interface User {
   username: string;
 }
 
-interface Deck {
-  name: string;
-  imgSrc: string;
-  colors: string[];
+export interface Deck {
   id: string;
+  name?: string;
+  imgSrc: string;
 }
+
+export type OwnDeck = Deck & {
+  publicName: string;
+};
 
 export type Player = User & {
   deck?: Deck | null;
@@ -21,4 +24,9 @@ export interface Lobby {
   players: Player[];
   maxNumberOfPlayers: number;
   hostId: string;
+}
+
+export interface GameOptions {
+  name: string;
+  maxNumberOfPlayers: number;
 }

@@ -1,0 +1,19 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.image {
+    width: 45px;
+    height: 32px;
+    border-radius: 2px;
+}
+
+.label {
+    font-size: 16px;
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

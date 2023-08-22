@@ -1,17 +1,12 @@
 import { Button } from 'antd';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import styles from './HostGame.module.css';
 import HostGameModal from './HostGameModal';
-import { GameOptions } from '../../../types/api.types';
-import { User } from '../../../backend/websocket/GameLobby.types';
+import GameBrowserContext from '../GameBrowserProvider';
 
-interface Props {
-  user: User | null;
-  onHostLobby: (options: GameOptions) => void;
-}
-
-const HostGame = ({ user, onHostLobby }: Props) => {
+const HostGame = () => {
+  const { user } = useContext(GameBrowserContext);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -23,13 +18,7 @@ const HostGame = ({ user, onHostLobby }: Props) => {
       >
         Host Match
       </Button>
-      {user?.username && isOpen && (
-        <HostGameModal
-          onHostLobby={onHostLobby}
-          user={user}
-          onClose={() => setIsOpen(false)}
-        />
-      )}
+      {user?.username && isOpen && <HostGameModal onClose={() => setIsOpen(false)} />}
     </div>
   );
 };

@@ -2,8 +2,9 @@ import { Server } from 'socket.io';
 import uniqid from 'uniqid';
 
 import { SOCKET_MSG_BROWSER } from '../../constants/wsEvents';
-import { Lobby, User } from './GameLobby.types';
-import { GameOptions } from '../../types/api.types';
+import { Deck, GameOptions, Lobby, User } from './GameLobby.types';
+
+/* eslint-disable no-param-reassign */
 
 const DUMMY_LOBBY = {
   id: '1',
@@ -19,19 +20,6 @@ const DUMMY_LOBBY = {
   maxNumberOfPlayers: 4,
 };
 
-const DUMMY_LOBBIES = [...new Array(15)].map((_, i) => ({
-  id: i.toString(),
-  name: `test${i}`,
-  players: [
-    {
-      id: i.toString(),
-      username: `test${i}`,
-    },
-  ],
-  hostId: i.toString(),
-  maxNumberOfPlayers: 4,
-}));
-
 export class GameLobbies {
   ws: Server;
 
@@ -41,7 +29,6 @@ export class GameLobbies {
     this.ws = ws;
     // this.openLobbies = [];
     this.openLobbies = [DUMMY_LOBBY];
-    // this.openLobbies = DUMMY_LOBBIES;
   }
 
   private addLobby(lobbyOptions: GameOptions, user: User) {
@@ -60,7 +47,6 @@ export class GameLobbies {
       if (lobby.hostId === user.id) {
         return false;
       }
-      // eslint-disable-next-line no-param-reassign
       lobby.players = lobby.players.filter((player) => player.id !== user.id);
       return true;
     });
@@ -78,11 +64,23 @@ export class GameLobbies {
     if (lobby.players.length >= lobby.maxNumberOfPlayers) return;
     if (lobby.players.find((player) => player.id === user.id)) return;
     this.openLobbies.forEach((l) => {
-      // eslint-disable-next-line no-param-reassign
       l.players = l.players.filter((player) => player.id !== user.id);
     });
 
     lobby.players.push(user);
+    this.ws.emit(SOCKET_MSG_BROWSER.UPDATE_LOBBIES, this.openLobbies);
+  }
+
+  setDeck(deck: Deck, user: User) {
+    const lobby = this.openLobbies.find((l) =>
+      l.players.some((player) => player.id === user.id)
+    );
+    if (!lobby) return;
+
+    lobby.players.forEach((player) => {
+      if (player.id !== user.id) return;
+      player.deck = deck;
+    });
     this.ws.emit(SOCKET_MSG_BROWSER.UPDATE_LOBBIES, this.openLobbies);
   }
 
