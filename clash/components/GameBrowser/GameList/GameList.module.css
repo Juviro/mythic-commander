@@ -1,0 +1,39 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 16px;
+    gap: 8px;
+    margin: 0;
+}
+
+.list_item {
+    list-style: none;
+    width: 100%;
+    border: 2px solid var(--color-primary);
+    border-radius: 4px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.list_item:hover {
+    background-color: var(--color-primary-light);
+}
+
+.list_item:active {
+    background-color: var(--color-primary-semi-light);
+}
+
+.list_button {
+    border: unset;
+    background-color: unset;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 12px;
+    justify-content: space-between;
+}

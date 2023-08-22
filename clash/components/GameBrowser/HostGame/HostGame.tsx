@@ -4,10 +4,11 @@ import { User } from '../../../contexts/SocketProvider';
 
 import styles from './HostGame.module.css';
 import HostGameModal from './HostGameModal';
+import { GameOptions } from '../../../types/api.types';
 
 interface Props {
   user: User | null;
-  onHostGame: (name: string) => void;
+  onHostGame: (options: GameOptions) => void;
 }
 
 const HostGame = ({ user, onHostGame }: Props) => {

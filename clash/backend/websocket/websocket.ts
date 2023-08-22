@@ -29,8 +29,9 @@ const websocket = (_: any, res: any) => {
       }
     });
 
-    socket.on(SOCKET_MSG.HOST_GAME, (lobbyName) => {
-      Lobby.open(lobbyName, user);
+    socket.on(SOCKET_MSG.HOST_GAME, (lobbyOptions) => {
+      const parsedLobbyOptions = JSON.parse(lobbyOptions);
+      Lobby.open(parsedLobbyOptions, user);
     });
 
     socket.on('disconnect', () => {

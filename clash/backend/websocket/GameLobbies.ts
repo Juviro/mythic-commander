@@ -3,6 +3,7 @@ import uniqid from 'uniqid';
 
 import SOCKET_MSG from '../../constants/wsEvents';
 import { Lobby, User } from './GameLobby.types';
+import { GameOptions } from '../../types/api.types';
 
 const DUMMY_LOBBY = {
   lobbyId: '1',
@@ -15,8 +16,22 @@ const DUMMY_LOBBY = {
   ],
   hostId: '1',
   hostName: 'test',
-  maxPlayers: 4,
+  numberOfPlayers: 4,
 };
+
+const DUMMY_LOBBIES = [...new Array(15)].map((_, i) => ({
+  lobbyId: i.toString(),
+  name: `test${i}`,
+  players: [
+    {
+      id: i.toString(),
+      username: `test${i}`,
+    },
+  ],
+  hostId: i.toString(),
+  hostName: `test${i}`,
+  numberOfPlayers: 4,
+}));
 
 export class GameLobbies {
   ws: Server;
@@ -25,17 +40,17 @@ export class GameLobbies {
 
   constructor(ws: Server) {
     this.ws = ws;
-    this.openLobbies = [DUMMY_LOBBY];
+    this.openLobbies = DUMMY_LOBBIES;
   }
 
-  private addLobby(name: string, user: User) {
+  private addLobby(lobbyOptions: GameOptions, user: User) {
     const lobby: Lobby = {
       lobbyId: uniqid(),
-      name,
+      name: lobbyOptions.name,
       players: [user],
       hostId: user.id,
       hostName: user.username,
-      maxPlayers: 4,
+      numberOfPlayers: lobbyOptions.numberOfPlayers,
     };
     this.openLobbies.push(lobby);
   }
@@ -53,8 +68,8 @@ export class GameLobbies {
     this.ws.emit(SOCKET_MSG.UPDATE_LOBBIES, this.openLobbies);
   }
 
-  open(name: string, user: User) {
-    this.addLobby(name, user);
+  open(lobbyOptions: GameOptions, user: User) {
+    this.addLobby(lobbyOptions, user);
     this.ws.emit(SOCKET_MSG.UPDATE_LOBBIES, this.openLobbies);
   }
 
