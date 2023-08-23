@@ -2,7 +2,8 @@ import { Select } from 'antd';
 import React, { useContext, useEffect } from 'react';
 import { useQuery } from 'react-query';
 
-import { Deck, OwnDeck } from '../../../../backend/websocket/GameLobby.types';
+import { Deck, OwnDeck } from 'backend/websocket/GameLobby.types';
+import { DownOutlined } from '@ant-design/icons';
 import useLocalStorage from '../../../../backend/hooks/useLocalStorage';
 import GameBrowserContext from '../../GameBrowserProvider';
 import DeckLabel from './DeckLabel';
@@ -69,15 +70,28 @@ const DeckSelection = ({ canSelectDeck, playerId, deck, isReady }: Props) => {
     return <DeckLabel deck={deck as Deck} displayTooltip />;
   }
 
+  const disabled = isLoading || isReady;
+
   return (
     <Select
       onChange={onSelect}
       className={styles.select}
       loading={isLoading}
-      disabled={isLoading || isReady}
+      disabled={disabled}
       value={deck?.id}
       size="large"
       bordered={false}
+      suffixIcon={
+        <DownOutlined
+          color="black"
+          style={{
+            color: disabled ? undefined : 'var(--color-text)',
+            transition: 'color 0.3s ease',
+            transitionDelay: '0.2s',
+            pointerEvents: 'none',
+          }}
+        />
+      }
       placeholder="Select your deck"
     >
       {options?.map((option) => (

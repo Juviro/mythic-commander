@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
+
+import { Deck, GameOptions, Lobby, User } from 'backend/websocket/GameLobby.types';
 import SocketContext from '../../contexts/SocketProvider';
-import { Deck, GameOptions, Lobby, User } from '../../backend/websocket/GameLobby.types';
 import { SOCKET_MSG_BROWSER } from '../../constants/wsEvents';
 
 const GameBrowserContext = React.createContext<{

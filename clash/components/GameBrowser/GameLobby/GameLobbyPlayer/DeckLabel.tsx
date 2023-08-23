@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tooltip } from 'antd';
-import { Deck } from '../../../../backend/websocket/GameLobby.types';
 
+import { Deck } from 'backend/websocket/GameLobby.types';
 import styles from './DeckLabel.module.css';
 
 // image urls of new decks start with https://mythic-commander.com/, old ones don't

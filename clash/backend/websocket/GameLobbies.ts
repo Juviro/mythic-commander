@@ -1,10 +1,9 @@
+/* eslint-disable no-param-reassign */
 import { Server } from 'socket.io';
 import uniqid from 'uniqid';
 
 import { SOCKET_MSG_BROWSER } from '../../constants/wsEvents';
 import { Deck, GameOptions, Lobby, Player, User } from './GameLobby.types';
-
-/* eslint-disable no-param-reassign */
 
 const DUMMY_LOBBY = {
   id: '1',
@@ -18,7 +17,7 @@ const DUMMY_LOBBY = {
     },
   ],
   hostId: '1',
-  maxNumberOfPlayers: 4,
+  maxNumberOfPlayers: 3,
 };
 
 export class GameLobbies {

@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import io, { Socket } from 'socket.io-client';
 
+import { User } from 'backend/websocket/GameLobby.types';
 import { SOCKET_MSG_BROWSER } from '../constants/wsEvents';
-import { User } from '../backend/websocket/GameLobby.types';
 
 const SocketContext = React.createContext<{
   user: User | null;
