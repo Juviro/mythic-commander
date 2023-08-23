@@ -14,18 +14,20 @@ const GameList = () => {
     <GameBrowserModal title="Game Browser">
       {openLobbies?.length ? (
         <ul className={styles.list}>
-          {openLobbies.map((lobby) => (
-            <li key={lobby.id} className={styles.list_item}>
-              <button
-                type="button"
-                onClick={() => onJoinLobby(lobby.id)}
-                className={styles.list_button}
-              >
-                <span>{lobby.name}</span>
-                <span>{`${lobby.players.length} / ${lobby.maxNumberOfPlayers}`}</span>
-              </button>
-            </li>
-          ))}
+          {openLobbies
+            .filter(({ starting }) => !starting)
+            .map((lobby) => (
+              <li key={lobby.id} className={styles.list_item}>
+                <button
+                  type="button"
+                  onClick={() => onJoinLobby(lobby.id)}
+                  className={styles.list_button}
+                >
+                  <span>{lobby.name}</span>
+                  <span>{`${lobby.players.length} / ${lobby.maxNumberOfPlayers}`}</span>
+                </button>
+              </li>
+            ))}
         </ul>
       ) : (
         <div className={styles.empty}>

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 import { Deck, GameOptions, Lobby, User } from 'backend/websocket/GameLobby.types';
-import SocketContext from '../../contexts/SocketProvider';
 import { SOCKET_MSG_BROWSER } from '../../constants/wsEvents';
+import GameBrowserSocketContext from './GameBrowserSocketContextProvider';
 
 const GameBrowserContext = React.createContext<{
   openLobbies: Lobby[];
@@ -13,6 +13,7 @@ const GameBrowserContext = React.createContext<{
   onLeaveLobby: () => void;
   onSelectDeck: (deck: Deck) => void;
   onReady: (isReady: boolean) => void;
+  onStartMatch: () => void;
 }>({
   openLobbies: [],
   user: null,
@@ -22,6 +23,7 @@ const GameBrowserContext = React.createContext<{
   onLeaveLobby: () => {},
   onSelectDeck: () => {},
   onReady: () => {},
+  onStartMatch: () => {},
   /* eslint-enable @typescript-eslint/no-empty-function */
 });
 
@@ -30,7 +32,7 @@ interface Props {
 }
 
 export const GameBrowserContextProvider = ({ children }: Props) => {
-  const { user, emit, socket } = useContext(SocketContext);
+  const { user, emit, socket } = useContext(GameBrowserSocketContext);
 
   const [openLobbies, setOpenLobbies] = useState<Lobby[]>([]);
 
@@ -70,6 +72,12 @@ export const GameBrowserContextProvider = ({ children }: Props) => {
     emit(SOCKET_MSG_BROWSER.READY, isReady.toString());
   };
 
+  const onStartMatch = () => {
+    if (!currentLobby) return;
+
+    emit(SOCKET_MSG_BROWSER.START_MATCH);
+  };
+
   const value = useMemo(
     () => ({
       openLobbies,
@@ -80,6 +88,7 @@ export const GameBrowserContextProvider = ({ children }: Props) => {
       onLeaveLobby,
       onSelectDeck,
       onReady,
+      onStartMatch,
     }),
     [
       openLobbies,
@@ -90,6 +99,7 @@ export const GameBrowserContextProvider = ({ children }: Props) => {
       onLeaveLobby,
       onSelectDeck,
       onReady,
+      onStartMatch,
     ]
   );
 

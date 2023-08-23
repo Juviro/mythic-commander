@@ -1,24 +1,36 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import uniqid from 'uniqid';
 import { Modal, Tooltip } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/navigation';
 
 import GameBrowserModal from '../GameBrowserModal/GameBrowserModal';
-
-import styles from './GameLobby.module.css';
 import GameLobbyPlayer from './GameLobbyPlayer/GameLobbyPlayer';
 import GameBrowserContext from '../GameBrowserProvider';
 import PlayerHeader from './PlayerHeader';
+import GameLobbyFooter from './GameLobbyFooter';
+
+import styles from './GameLobby.module.css';
 
 const GameLobby = () => {
   const [isLeaving, setIsLeaving] = useState(false);
   const { currentLobby: lobby, user, onLeaveLobby } = useContext(GameBrowserContext);
+  const router = useRouter();
+
+  const isStartingMatch = lobby?.starting;
 
   const playerDummies = Array.from({ length: lobby!.maxNumberOfPlayers });
 
   const onClickLeaveLobby = () => {
     setIsLeaving(true);
   };
+
+  useEffect(() => {
+    if (!isStartingMatch) return;
+    setTimeout(() => {
+      router.push(`/match/${lobby.id}`);
+    }, 1500);
+  }, [isStartingMatch]);
 
   return (
     <>
@@ -31,6 +43,13 @@ const GameLobby = () => {
       >
         <p>Are you sure you want to leave the lobby?</p>
       </Modal>
+      <div
+        className={
+          isStartingMatch ? styles.start_overlay_visible : styles.start_overlay_hidden
+        }
+      >
+        <span className={styles.start_overlay_text}>Starting Match</span>
+      </div>
       <GameBrowserModal
         title={
           <div className={styles.title}>
@@ -59,6 +78,7 @@ const GameLobby = () => {
           </ul>
         </div>
       </GameBrowserModal>
+      <GameLobbyFooter />
     </>
   );
 };

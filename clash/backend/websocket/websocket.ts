@@ -31,15 +31,15 @@ const websocket = (_: any, res: any) => {
 
     socket.on(SOCKET_MSG_BROWSER.HOST_LOBBY, (lobbyOptions) => {
       const parsedLobbyOptions: LobbyType = JSON.parse(lobbyOptions);
-      Lobby.open(parsedLobbyOptions, user);
+      Lobby.open(parsedLobbyOptions, user, socket);
     });
 
     socket.on(SOCKET_MSG_BROWSER.JOIN_LOBBY, (id: string) => {
-      Lobby.join(id, user);
+      Lobby.join(id, user, socket);
     });
 
     socket.on(SOCKET_MSG_BROWSER.LEAVE_LOBBY, () => {
-      Lobby.leaveAll(user);
+      Lobby.leaveAll(user, socket);
     });
 
     socket.on(SOCKET_MSG_BROWSER.SELECT_DECK, (deck: string) => {
@@ -52,9 +52,13 @@ const websocket = (_: any, res: any) => {
       Lobby.isReady(isReadyBool, user);
     });
 
+    socket.on(SOCKET_MSG_BROWSER.START_MATCH, () => {
+      Lobby.startMatch(user);
+    });
+
     socket.on('disconnect', () => {
       if (!user) return;
-      Lobby.leaveAll(user);
+      Lobby.leaveAll(user, socket);
     });
   });
 

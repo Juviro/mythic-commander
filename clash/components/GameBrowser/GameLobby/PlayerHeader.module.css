@@ -5,5 +5,5 @@
 }
 
 .ready {
-    justify-self: end;
+    justify-self: flex-end;
 }

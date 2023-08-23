@@ -2,12 +2,12 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import io, { Socket } from 'socket.io-client';
 
 import { User } from 'backend/websocket/GameLobby.types';
-import { SOCKET_MSG_BROWSER } from '../constants/wsEvents';
+import { SOCKET_MSG_BROWSER } from 'constants/wsEvents';
 
-const SocketContext = React.createContext<{
+const GameBrowserSocketContext = React.createContext<{
   user: User | null;
   isReady: boolean;
-  emit: (event: string, payload?: string) => void;
+  emit: (event: string, payload: string) => void;
   socket: Socket | null;
 }>({
   user: null,
@@ -20,13 +20,13 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const SocketContextProvider = ({ children }: Props) => {
+export const GameBrowserSocketContextProvider = ({ children }: Props) => {
   const [user, setUser] = useState<User | null>(null);
 
   const ws = useRef<Socket | null>(null);
 
   const initSocket = async () => {
-    await fetch('/api/socket');
+    await fetch('/api/lobby-socket');
     const socket = io();
     ws.current = socket;
 
@@ -46,6 +46,10 @@ export const SocketContextProvider = ({ children }: Props) => {
 
   useEffect(() => {
     initSocket();
+
+    return () => {
+      ws.current?.disconnect();
+    };
   }, []);
 
   const value = useMemo(
@@ -60,7 +64,11 @@ export const SocketContextProvider = ({ children }: Props) => {
     [user]
   );
 
-  return <SocketContext.Provider value={value}>{children}</SocketContext.Provider>;
+  return (
+    <GameBrowserSocketContext.Provider value={value}>
+      {children}
+    </GameBrowserSocketContext.Provider>
+  );
 };
 
-export default SocketContext;
+export default GameBrowserSocketContext;

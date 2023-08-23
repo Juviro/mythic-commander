@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import uniqid from 'uniqid';
 
 import { SOCKET_MSG_BROWSER } from '../../constants/wsEvents';
@@ -7,17 +7,17 @@ import { Deck, GameOptions, Lobby, Player, User } from './GameLobby.types';
 
 const DUMMY_LOBBY = {
   id: '1',
-  name: 'My first Game',
+  name: "Juviro's Game",
   players: [
     {
-      id: '1',
+      id: '109818915788176405213',
       avatar: '',
-      username: 'Dieter-Johann',
+      username: 'Juviro',
       isReady: true,
     },
   ],
-  hostId: '1',
-  maxNumberOfPlayers: 3,
+  hostId: '109818915788176405213',
+  maxNumberOfPlayers: 2,
 };
 
 export class GameLobbies {
@@ -40,35 +40,46 @@ export class GameLobbies {
       maxNumberOfPlayers: lobbyOptions.maxNumberOfPlayers,
     };
     this.openLobbies.push(lobby);
+
+    return lobby.id;
   }
 
-  leaveAll(user: User) {
+  emitLobbiesUpdate() {
+    this.ws.emit(SOCKET_MSG_BROWSER.UPDATE_LOBBIES, this.openLobbies);
+  }
+
+  leaveAll(user: User, socket: Socket) {
     this.openLobbies = this.openLobbies.filter((lobby) => {
       if (lobby.hostId === user.id) {
         return false;
       }
       lobby.players = lobby.players.filter((player) => player.id !== user.id);
+      socket.leave(lobby.id);
       return true;
     });
-    this.ws.emit(SOCKET_MSG_BROWSER.UPDATE_LOBBIES, this.openLobbies);
+    this.emitLobbiesUpdate();
   }
 
-  open(lobbyOptions: GameOptions, user: User) {
-    this.addLobby(lobbyOptions, user);
-    this.ws.emit(SOCKET_MSG_BROWSER.UPDATE_LOBBIES, this.openLobbies);
+  open(lobbyOptions: GameOptions, user: User, socket: Socket) {
+    const lobbyId = this.addLobby(lobbyOptions, user);
+    this.emitLobbiesUpdate();
+    socket.join(lobbyId);
   }
 
-  join(id: string, user: User) {
+  join(id: string, user: User, socket: Socket) {
     const lobby = this.openLobbies.find((l) => l.id === id);
     if (!lobby) return;
     if (lobby.players.length >= lobby.maxNumberOfPlayers) return;
     if (lobby.players.find((player) => player.id === user.id)) return;
+    if (lobby.starting) return;
+
     this.openLobbies.forEach((l) => {
       l.players = l.players.filter((player) => player.id !== user.id);
     });
 
     lobby.players.push({ ...user, deck: null, isReady: false });
-    this.ws.emit(SOCKET_MSG_BROWSER.UPDATE_LOBBIES, this.openLobbies);
+    this.emitLobbiesUpdate();
+    socket.join(id);
   }
 
   updatePlayer(user: User, updatedValues: Partial<Player>) {
@@ -84,7 +95,7 @@ export class GameLobbies {
         player[key] = updatedValues[key];
       });
     });
-    this.ws.emit(SOCKET_MSG_BROWSER.UPDATE_LOBBIES, this.openLobbies);
+    this.emitLobbiesUpdate();
   }
 
   setDeck(deck: Deck, user: User) {
@@ -93,6 +104,18 @@ export class GameLobbies {
 
   isReady(isReady: boolean, user: User) {
     this.updatePlayer(user, { isReady });
+  }
+
+  startMatch(user: User) {
+    const lobby = this.openLobbies.find(({ hostId }) => hostId === user.id);
+
+    if (!lobby) return;
+
+    lobby.starting = true;
+    this.emitLobbiesUpdate();
+
+    // TODO:
+    // - create match in db
   }
 
   emitLobbies(socket: any = this.ws) {

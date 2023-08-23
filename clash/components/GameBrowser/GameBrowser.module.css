@@ -10,6 +10,7 @@
 }
 
 .inner {
+  position: relative;
   width: 800px;
   height: 700px;
   max-width: 100%;
