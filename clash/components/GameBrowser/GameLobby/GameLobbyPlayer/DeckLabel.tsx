@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tooltip } from 'antd';
-import { Deck } from '../../../backend/websocket/GameLobby.types';
+import { Deck } from '../../../../backend/websocket/GameLobby.types';
 
 import styles from './DeckLabel.module.css';
 

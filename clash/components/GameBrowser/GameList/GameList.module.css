@@ -17,11 +17,11 @@
 }
 
 .list_item:hover {
-    background-color: var(--color-primary-light);
+    background-color: var(--color-primary--light);
 }
 
 .list_item:active {
-    background-color: var(--color-primary-semi-light);
+    background-color: var(--color-primary--semi-light);
 }
 
 .list_button {

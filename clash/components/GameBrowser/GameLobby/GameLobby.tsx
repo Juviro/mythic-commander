@@ -6,8 +6,9 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 import GameBrowserModal from '../GameBrowserModal/GameBrowserModal';
 
 import styles from './GameLobby.module.css';
-import GameLobbyPlayer from './GameLobbyPlayer';
+import GameLobbyPlayer from './GameLobbyPlayer/GameLobbyPlayer';
 import GameBrowserContext from '../GameBrowserProvider';
+import PlayerHeader from './PlayerHeader';
 
 const GameLobby = () => {
   const [isLeaving, setIsLeaving] = useState(false);
@@ -40,6 +41,7 @@ const GameLobby = () => {
           </div>
         }
       >
+        <PlayerHeader />
         <div className={styles.body}>
           <ul className={styles.players}>
             {playerDummies.map((_, index) => {

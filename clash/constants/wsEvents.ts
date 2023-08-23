@@ -6,4 +6,5 @@ export const SOCKET_MSG_BROWSER = {
   JOIN_LOBBY: 'join_lobby',
   LEAVE_LOBBY: 'leave_lobby',
   SELECT_DECK: 'select_deck',
+  READY: 'ready',
 };

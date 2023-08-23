@@ -11,6 +11,7 @@ const GameBrowserContext = React.createContext<{
   onJoinLobby: (id: string) => void;
   onLeaveLobby: () => void;
   onSelectDeck: (deck: Deck) => void;
+  onReady: (isReady: boolean) => void;
 }>({
   openLobbies: [],
   user: null,
@@ -19,6 +20,7 @@ const GameBrowserContext = React.createContext<{
   onJoinLobby: () => {},
   onLeaveLobby: () => {},
   onSelectDeck: () => {},
+  onReady: () => {},
   /* eslint-enable @typescript-eslint/no-empty-function */
 });
 
@@ -61,6 +63,12 @@ export const GameBrowserContextProvider = ({ children }: Props) => {
     emit(SOCKET_MSG_BROWSER.SELECT_DECK, JSON.stringify(deck));
   };
 
+  const onReady = (isReady: boolean) => {
+    if (!currentLobby) return;
+
+    emit(SOCKET_MSG_BROWSER.READY, isReady.toString());
+  };
+
   const value = useMemo(
     () => ({
       openLobbies,
@@ -70,6 +78,7 @@ export const GameBrowserContextProvider = ({ children }: Props) => {
       onJoinLobby,
       onLeaveLobby,
       onSelectDeck,
+      onReady,
     }),
     [
       openLobbies,
@@ -79,6 +88,7 @@ export const GameBrowserContextProvider = ({ children }: Props) => {
       onJoinLobby,
       onLeaveLobby,
       onSelectDeck,
+      onReady,
     ]
   );
 

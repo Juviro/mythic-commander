@@ -7,7 +7,7 @@ import { User } from '../backend/websocket/GameLobby.types';
 const SocketContext = React.createContext<{
   user: User | null;
   isReady: boolean;
-  emit: (event: string, payload: string) => void;
+  emit: (event: string, payload?: string) => void;
   socket: Socket | null;
 }>({
   user: null,

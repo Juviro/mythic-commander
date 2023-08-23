@@ -16,6 +16,7 @@ export type OwnDeck = Deck & {
 
 export type Player = User & {
   deck?: Deck | null;
+  isReady: boolean;
 };
 
 export interface Lobby {

@@ -1,4 +1,4 @@
-import React, { use, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import styles from './GameBrowser.module.css';

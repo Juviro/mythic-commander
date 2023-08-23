@@ -2,7 +2,7 @@ import { Server } from 'socket.io';
 import uniqid from 'uniqid';
 
 import { SOCKET_MSG_BROWSER } from '../../constants/wsEvents';
-import { Deck, GameOptions, Lobby, User } from './GameLobby.types';
+import { Deck, GameOptions, Lobby, Player, User } from './GameLobby.types';
 
 /* eslint-disable no-param-reassign */
 
@@ -14,6 +14,7 @@ const DUMMY_LOBBY = {
       id: '1',
       avatar: '',
       username: 'Dieter-Johann',
+      isReady: true,
     },
   ],
   hostId: '1',
@@ -35,7 +36,7 @@ export class GameLobbies {
     const lobby: Lobby = {
       id: uniqid(),
       name: lobbyOptions.name,
-      players: [user],
+      players: [{ ...user, deck: null, isReady: false }],
       hostId: user.id,
       maxNumberOfPlayers: lobbyOptions.maxNumberOfPlayers,
     };
@@ -67,11 +68,11 @@ export class GameLobbies {
       l.players = l.players.filter((player) => player.id !== user.id);
     });
 
-    lobby.players.push(user);
+    lobby.players.push({ ...user, deck: null, isReady: false });
     this.ws.emit(SOCKET_MSG_BROWSER.UPDATE_LOBBIES, this.openLobbies);
   }
 
-  setDeck(deck: Deck, user: User) {
+  updatePlayer(user: User, updatedValues: Partial<Player>) {
     const lobby = this.openLobbies.find((l) =>
       l.players.some((player) => player.id === user.id)
     );
@@ -79,9 +80,20 @@ export class GameLobbies {
 
     lobby.players.forEach((player) => {
       if (player.id !== user.id) return;
-      player.deck = deck;
+      Object.keys(updatedValues).forEach((key) => {
+        // @ts-ignore
+        player[key] = updatedValues[key];
+      });
     });
     this.ws.emit(SOCKET_MSG_BROWSER.UPDATE_LOBBIES, this.openLobbies);
+  }
+
+  setDeck(deck: Deck, user: User) {
+    this.updatePlayer(user, { deck });
+  }
+
+  isReady(isReady: boolean, user: User) {
+    this.updatePlayer(user, { isReady });
   }
 
   emitLobbies(socket: any = this.ws) {

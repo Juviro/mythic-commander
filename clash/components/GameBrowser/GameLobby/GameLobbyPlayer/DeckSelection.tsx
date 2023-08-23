@@ -2,9 +2,9 @@ import { Select } from 'antd';
 import React, { useContext, useEffect } from 'react';
 import { useQuery } from 'react-query';
 
-import { Deck, OwnDeck } from '../../../backend/websocket/GameLobby.types';
-import useLocalStorage from '../../../backend/hooks/useLocalStorage';
-import GameBrowserContext from '../GameBrowserProvider';
+import { Deck, OwnDeck } from '../../../../backend/websocket/GameLobby.types';
+import useLocalStorage from '../../../../backend/hooks/useLocalStorage';
+import GameBrowserContext from '../../GameBrowserProvider';
 import DeckLabel from './DeckLabel';
 
 import styles from './DeckSelection.module.css';
@@ -18,9 +18,10 @@ interface Props {
   deck?: Deck | null;
   canSelectDeck: boolean;
   playerId: string;
+  isReady: boolean;
 }
 
-const DeckSelection = ({ canSelectDeck, playerId, deck }: Props) => {
+const DeckSelection = ({ canSelectDeck, playerId, deck, isReady }: Props) => {
   const { onSelectDeck } = useContext(GameBrowserContext);
   const [initialDeckId, setInitialDeckId] = useLocalStorage<string>('initial-deck');
 
@@ -73,7 +74,7 @@ const DeckSelection = ({ canSelectDeck, playerId, deck }: Props) => {
       onChange={onSelect}
       className={styles.select}
       loading={isLoading}
-      disabled={isLoading}
+      disabled={isLoading || isReady}
       value={deck?.id}
       size="large"
       bordered={false}

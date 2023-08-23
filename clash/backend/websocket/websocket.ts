@@ -37,12 +37,19 @@ const websocket = (_: any, res: any) => {
     socket.on(SOCKET_MSG_BROWSER.JOIN_LOBBY, (id: string) => {
       Lobby.join(id, user);
     });
+
     socket.on(SOCKET_MSG_BROWSER.LEAVE_LOBBY, () => {
       Lobby.leaveAll(user);
     });
+
     socket.on(SOCKET_MSG_BROWSER.SELECT_DECK, (deck: string) => {
       const parsedDeck: Deck = JSON.parse(deck);
       Lobby.setDeck(parsedDeck, user);
+    });
+
+    socket.on(SOCKET_MSG_BROWSER.READY, (isReady: string) => {
+      const isReadyBool = isReady === 'true';
+      Lobby.isReady(isReadyBool, user);
     });
 
     socket.on('disconnect', () => {
