@@ -11,10 +11,9 @@ interface Props {
   player?: Player;
   isSelf: boolean;
   isHost: boolean;
-  canKick: boolean;
 }
 
-const GameLobbyPlayer = ({ player, isSelf, isHost, canKick }: Props) => {
+const GameLobbyPlayer = ({ player, isSelf, isHost }: Props) => {
   const [imgError, setImgError] = useState(!player?.avatar);
 
   const onImgError = () => {
