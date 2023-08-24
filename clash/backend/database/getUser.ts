@@ -1,6 +1,10 @@
-import db from '../database/db';
+import db from './db';
 
-import { User } from './GameLobby.types';
+export interface User {
+  id: string;
+  avatar: string;
+  username: string;
+}
 
 const getUser = async (cookie?: string): Promise<User> => {
   const [__, authToken] = cookie?.match(/authToken=([\w\d]*)/) ?? [];

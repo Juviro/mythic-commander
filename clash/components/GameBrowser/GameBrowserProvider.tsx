@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 
-import { Deck, GameOptions, Lobby, User } from 'backend/websocket/GameLobby.types';
-import { SOCKET_MSG_BROWSER } from '../../constants/wsEvents';
-import GameBrowserSocketContext from './GameBrowserSocketContextProvider';
+import { Deck, GameOptions, Lobby } from 'backend/lobby/GameLobby.types';
+import { User } from 'backend/database/getUser';
+import SocketContext from 'components/SocketContext/SocketContextProvider';
+import { SOCKET_MSG_LOBBY } from '../../backend/constants/wsEvents';
 
 const GameBrowserContext = React.createContext<{
   openLobbies: Lobby[];
@@ -32,23 +33,23 @@ interface Props {
 }
 
 export const GameBrowserContextProvider = ({ children }: Props) => {
-  const { user, emit, socket } = useContext(GameBrowserSocketContext);
+  const { user, emit, socket } = useContext(SocketContext);
 
   const [openLobbies, setOpenLobbies] = useState<Lobby[]>([]);
 
   useEffect(() => {
     if (!socket) return;
-    socket.on(SOCKET_MSG_BROWSER.UPDATE_LOBBIES, (msg: Lobby[]) => {
+    socket.on(SOCKET_MSG_LOBBY.UPDATE_LOBBIES, (msg: Lobby[]) => {
       setOpenLobbies(msg);
     });
   }, [socket]);
 
   const onHostLobby = (gameOptions: GameOptions) => {
-    emit(SOCKET_MSG_BROWSER.HOST_LOBBY, JSON.stringify(gameOptions));
+    emit(SOCKET_MSG_LOBBY.HOST_LOBBY, JSON.stringify(gameOptions));
   };
 
   const onJoinLobby = (id: string) => {
-    emit(SOCKET_MSG_BROWSER.JOIN_LOBBY, id);
+    emit(SOCKET_MSG_LOBBY.JOIN_LOBBY, id);
   };
 
   const currentLobby = openLobbies.find((lobby) =>
@@ -57,25 +58,25 @@ export const GameBrowserContextProvider = ({ children }: Props) => {
 
   const onLeaveLobby = () => {
     if (!currentLobby) return;
-    emit(SOCKET_MSG_BROWSER.LEAVE_LOBBY, currentLobby.id);
+    emit(SOCKET_MSG_LOBBY.LEAVE_LOBBY, currentLobby.id);
   };
 
   const onSelectDeck = (deck: Deck) => {
     if (!currentLobby) return;
 
-    emit(SOCKET_MSG_BROWSER.SELECT_DECK, JSON.stringify(deck));
+    emit(SOCKET_MSG_LOBBY.SELECT_DECK, JSON.stringify(deck));
   };
 
   const onReady = (isReady: boolean) => {
     if (!currentLobby) return;
 
-    emit(SOCKET_MSG_BROWSER.READY, isReady.toString());
+    emit(SOCKET_MSG_LOBBY.READY, isReady.toString());
   };
 
   const onStartMatch = () => {
     if (!currentLobby) return;
 
-    emit(SOCKET_MSG_BROWSER.START_MATCH);
+    emit(SOCKET_MSG_LOBBY.START_MATCH);
   };
 
   const value = useMemo(

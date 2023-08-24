@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useContext } from 'react';
 import { CheckOutlined } from '@ant-design/icons';
 
-import { Player } from 'backend/websocket/GameLobby.types';
+import { Player } from 'backend/lobby/GameLobby.types';
 import GameBrowserContext from '../../GameBrowserProvider';
 
 import styles from './PlayerReady.module.css';

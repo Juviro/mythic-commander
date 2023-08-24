@@ -6,8 +6,9 @@
     "dev": "next dev -p 1235",
     "build": "next build",
     "start": "next start -p 1235",
-    "lint": "next lint",
+    "lint": "tsc --noEmit && next lint",
     "lint:fix": "next lint --fix",
+    "type": "tsc --noEmit",
     "start-prod": "pm2 start clash.pm2.json",
     "stop-prod": "pm2 delete clash"
   },

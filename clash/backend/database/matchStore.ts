@@ -1,4 +1,4 @@
-import { Lobby } from 'backend/websocket/GameLobby.types';
+import { Lobby } from 'backend/lobby/GameLobby.types';
 import { GameState } from './gamestate.types';
 import db from './db';
 
@@ -52,11 +52,11 @@ export const getDecks = async (lobby: Lobby): Promise<Deck[]> => {
         ON
             cards.id = "cardToDeck".id
         WHERE 
-            decks.id IN (?)
+            decks.id = ANY(?)
         GROUP BY 
             decks.id, decks.name
   `,
-    [deckIds.join(',')]
+    [deckIds]
   );
 
   return decks;
@@ -70,4 +70,15 @@ export const storeGameState = async (
     id: gameId,
     state: gameState,
   });
+};
+
+export const getGameState = async (gameId: string): Promise<GameState> => {
+  const { state }: { state: GameState } = await db('gameStates')
+    .where({
+      id: gameId,
+    })
+    .select('state')
+    .first();
+
+  return state;
 };

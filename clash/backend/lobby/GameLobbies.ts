@@ -3,8 +3,9 @@ import { Server, Socket } from 'socket.io';
 import uniqid from 'uniqid';
 
 import initMatch from 'backend/match/initMatch';
-import { SOCKET_MSG_BROWSER } from '../../constants/wsEvents';
-import { Deck, GameOptions, Lobby, Player, User } from './GameLobby.types';
+import { User } from 'backend/database/getUser';
+import { SOCKET_MSG_LOBBY } from '../constants/wsEvents';
+import { Deck, GameOptions, Lobby, Player } from './GameLobby.types';
 
 export class GameLobbies {
   ws: Server;
@@ -30,7 +31,7 @@ export class GameLobbies {
   }
 
   emitLobbiesUpdate() {
-    this.ws.emit(SOCKET_MSG_BROWSER.UPDATE_LOBBIES, this.openLobbies);
+    this.ws.emit(SOCKET_MSG_LOBBY.UPDATE_LOBBIES, this.openLobbies);
   }
 
   leaveAll(user: User, socket: Socket) {
@@ -103,6 +104,6 @@ export class GameLobbies {
   }
 
   emitLobbies(socket: any = this.ws) {
-    socket.emit(SOCKET_MSG_BROWSER.UPDATE_LOBBIES, this.openLobbies);
+    socket.emit(SOCKET_MSG_LOBBY.UPDATE_LOBBIES, this.openLobbies);
   }
 }

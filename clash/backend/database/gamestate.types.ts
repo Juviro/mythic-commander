@@ -22,6 +22,7 @@ export interface Player {
 }
 
 export interface GameState {
+  gameId: string;
   players: Player[];
   turn: number;
   activePlayerId: string;

@@ -1,13 +1,13 @@
 import uniqid from 'uniqid';
 
 import { getDecks, storeGameState } from 'backend/database/matchStore';
-import { Lobby } from 'backend/websocket/GameLobby.types';
+import { Lobby } from 'backend/lobby/GameLobby.types';
 import { Commander, Card, GameState, Player } from 'backend/database/gamestate.types';
 
 const initMatch = async (lobby: Lobby) => {
   const decks = await getDecks(lobby);
 
-  const spreadDeckCards = decks.map((deck) => {
+  const decksWithSpreadedCards = decks.map((deck) => {
     const commanders: Commander[] = [];
 
     const cards = deck.cards
@@ -47,7 +47,9 @@ const initMatch = async (lobby: Lobby) => {
   });
 
   const players: Player[] = lobby.players.map((player) => {
-    const deck = spreadDeckCards.find((spreadDeck) => spreadDeck.id === player.deck!.id)!;
+    const deck = decksWithSpreadedCards.find(
+      (spreadDeck) => spreadDeck.id === player.deck!.id
+    )!;
 
     return {
       id: player.id,
@@ -66,6 +68,7 @@ const initMatch = async (lobby: Lobby) => {
   const activePlayerId = players.sort(() => Math.random() - 0.5)[0].id;
 
   const initialGameState: GameState = {
+    gameId: lobby.id,
     players,
     turn: 0,
     activePlayerId,

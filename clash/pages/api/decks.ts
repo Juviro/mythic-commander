@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import getUser from 'backend/websocket/getUser';
+import getUser from 'backend/database/getUser';
 import db from '../../backend/database/db';
 
 const decks = async (req: NextApiRequest, res: NextApiResponse) => {

@@ -2,7 +2,7 @@ import { Select } from 'antd';
 import React, { useContext, useEffect } from 'react';
 import { useQuery } from 'react-query';
 
-import { Deck, OwnDeck } from 'backend/websocket/GameLobby.types';
+import { Deck, OwnDeck } from 'backend/lobby/GameLobby.types';
 import { DownOutlined } from '@ant-design/icons';
 import useLocalStorage from '../../../../backend/hooks/useLocalStorage';
 import GameBrowserContext from '../../GameBrowserProvider';

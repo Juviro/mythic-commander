@@ -1,7 +1,8 @@
+import Game from 'components/Game/Game';
 import React from 'react';
 
 const index = () => {
-  return <h1>Hello Game</h1>;
+  return <Game />;
 };
 
 export default index;

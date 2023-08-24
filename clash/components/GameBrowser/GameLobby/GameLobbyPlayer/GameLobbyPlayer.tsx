@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import { Card } from 'antd';
 
-import { Player } from 'backend/websocket/GameLobby.types';
+import { Player } from 'backend/lobby/GameLobby.types';
 import DeckSelection from './DeckSelection';
 import PlayerReady from './PlayerReady';
 

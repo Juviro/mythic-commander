@@ -40,7 +40,7 @@ const HostGameModal = ({ onClose }: Props) => {
         <Form.Item
           label="Game Name"
           name="name"
-          initialValue={`${user.username}'s Game`}
+          initialValue={`${user!.username}'s Game`}
           rules={[
             { required: true, message: 'Please enter a name' },
             { min: 3, message: 'Name must be at least 3 characters' },
