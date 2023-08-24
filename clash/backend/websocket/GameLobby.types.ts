@@ -1,9 +1,3 @@
-export interface User {
-  id: string;
-  avatar: string;
-  username: string;
-}
-
 export interface Deck {
   id: string;
   name?: string;
@@ -13,6 +7,12 @@ export interface Deck {
 export type OwnDeck = Deck & {
   publicName: string;
 };
+
+export interface User {
+  id: string;
+  avatar: string;
+  username: string;
+}
 
 export type Player = User & {
   deck?: Deck | null;

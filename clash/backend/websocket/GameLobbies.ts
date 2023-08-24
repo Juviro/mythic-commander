@@ -2,23 +2,9 @@
 import { Server, Socket } from 'socket.io';
 import uniqid from 'uniqid';
 
+import initMatch from 'backend/match/initMatch';
 import { SOCKET_MSG_BROWSER } from '../../constants/wsEvents';
 import { Deck, GameOptions, Lobby, Player, User } from './GameLobby.types';
-
-const DUMMY_LOBBY = {
-  id: '1',
-  name: "Juviro's Game",
-  players: [
-    {
-      id: '109818915788176405213',
-      avatar: '',
-      username: 'Juviro',
-      isReady: true,
-    },
-  ],
-  hostId: '109818915788176405213',
-  maxNumberOfPlayers: 2,
-};
 
 export class GameLobbies {
   ws: Server;
@@ -27,8 +13,7 @@ export class GameLobbies {
 
   constructor(ws: Server) {
     this.ws = ws;
-    // this.openLobbies = [];
-    this.openLobbies = [DUMMY_LOBBY];
+    this.openLobbies = [];
   }
 
   private addLobby(lobbyOptions: GameOptions, user: User) {
@@ -114,8 +99,7 @@ export class GameLobbies {
     lobby.starting = true;
     this.emitLobbiesUpdate();
 
-    // TODO:
-    // - create match in db
+    initMatch(lobby);
   }
 
   emitLobbies(socket: any = this.ws) {
