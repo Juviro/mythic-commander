@@ -9,14 +9,14 @@ const lobbySocketActions = (io: Server) => {
   const Lobby = new GameLobbies(io);
 
   io.on('connection', (socket) => {
-    socket.join('lobby');
     let user: User;
 
     socket.on(SOCKET_MSG_LOBBY.INITIALIZE, async () => {
+      socket.join('lobby');
       try {
         user = await getUser(socket.handshake.headers.cookie);
         socket.emit(SOCKET_MSG_LOBBY.INITIALIZE, user);
-        Lobby.emitLobbies(socket);
+        Lobby.emitLobbiesUpdate(socket.id);
       } catch {
         socket.emit(SOCKET_MSG_GENERAL.NOT_LOGGED_IN);
       }

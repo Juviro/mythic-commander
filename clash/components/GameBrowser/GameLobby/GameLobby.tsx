@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 
 import GameBrowserModal from '../GameBrowserModal/GameBrowserModal';
 import GameLobbyPlayer from './GameLobbyPlayer/GameLobbyPlayer';
-import GameBrowserContext from '../GameBrowserProvider';
+import GameBrowserContext from '../GameBrowserContext';
 import PlayerHeader from './PlayerHeader';
 import GameLobbyFooter from './GameLobbyFooter';
 

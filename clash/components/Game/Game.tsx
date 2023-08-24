@@ -1,7 +1,13 @@
 import React from 'react';
 
+import { GameStateContextProvider } from './GameStateContext';
+
 const Game = () => {
-  return <div>Game</div>;
+  return (
+    <GameStateContextProvider>
+      <div>Game</div>
+    </GameStateContextProvider>
+  );
 };
 
 export default Game;

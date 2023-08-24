@@ -7,6 +7,8 @@ import { User } from 'backend/database/getUser';
 import { SOCKET_MSG_LOBBY } from '../constants/wsEvents';
 import { Deck, GameOptions, Lobby, Player } from './GameLobby.types';
 
+export const LOBBY_ROOM = 'lobby';
+
 export class GameLobbies {
   ws: Server;
 
@@ -30,19 +32,27 @@ export class GameLobbies {
     return lobby.id;
   }
 
-  emitLobbiesUpdate() {
-    this.ws.emit(SOCKET_MSG_LOBBY.UPDATE_LOBBIES, this.openLobbies);
+  emitLobbiesUpdate(to: string = LOBBY_ROOM) {
+    this.ws.to(to).emit(SOCKET_MSG_LOBBY.UPDATE_LOBBIES, this.openLobbies);
   }
 
   leaveAll(user: User, socket: Socket) {
+    let shouldEmit = false;
     this.openLobbies = this.openLobbies.filter((lobby) => {
       if (lobby.hostId === user.id) {
+        shouldEmit = true;
         return false;
       }
+      const isInLobby = lobby.players.some((player) => player.id === user.id);
+      if (!isInLobby) return true;
+
       lobby.players = lobby.players.filter((player) => player.id !== user.id);
       socket.leave(lobby.id);
+      shouldEmit = true;
       return true;
     });
+    if (!shouldEmit) return;
+
     this.emitLobbiesUpdate();
   }
 
@@ -101,9 +111,5 @@ export class GameLobbies {
     this.emitLobbiesUpdate();
 
     initMatch(lobby);
-  }
-
-  emitLobbies(socket: any = this.ws) {
-    socket.emit(SOCKET_MSG_LOBBY.UPDATE_LOBBIES, this.openLobbies);
   }
 }

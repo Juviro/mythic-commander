@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Button, Tooltip } from 'antd';
 
-import GameBrowserContext from '../GameBrowserProvider';
+import GameBrowserContext from '../GameBrowserContext';
 
 import styles from './GameLobbyFooter.module.css';
 

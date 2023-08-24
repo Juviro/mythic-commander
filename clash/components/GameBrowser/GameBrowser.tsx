@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import styles from './GameBrowser.module.css';
 import GameList from './GameList/GameList';
 import GameLobby from './GameLobby/GameLobby';
-import GameBrowserContext from './GameBrowserProvider';
+import GameBrowserContext from './GameBrowserContext';
 
 const queryClient = new QueryClient();
 

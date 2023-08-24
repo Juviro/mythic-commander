@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { Form, Input, InputRef, Modal, Select } from 'antd';
 
-import GameBrowserContext from '../GameBrowserProvider';
+import GameBrowserContext from '../GameBrowserContext';
 
 interface Props {
   onClose: () => void;

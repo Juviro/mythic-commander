@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react';
 
 import styles from './HostGame.module.css';
 import HostGameModal from './HostGameModal';
-import GameBrowserContext from '../GameBrowserProvider';
+import GameBrowserContext from '../GameBrowserContext';
 
 const HostGame = () => {
   const { user } = useContext(GameBrowserContext);
