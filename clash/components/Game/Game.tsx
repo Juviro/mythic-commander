@@ -1,11 +1,12 @@
 import React from 'react';
 
 import { GameStateContextProvider } from './GameStateContext';
+import GameField from './GameField/GameField';
 
 const Game = () => {
   return (
     <GameStateContextProvider>
-      <div>Game</div>
+      <GameField />
     </GameStateContextProvider>
   );
 };

@@ -58,8 +58,8 @@ export class GameLobbies {
 
   open(lobbyOptions: GameOptions, user: User, socket: Socket) {
     const lobbyId = this.addLobby(lobbyOptions, user);
-    this.emitLobbiesUpdate();
     socket.join(lobbyId);
+    this.emitLobbiesUpdate();
   }
 
   join(id: string, user: User, socket: Socket) {

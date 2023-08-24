@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url(/assets/images/clash_bg.png);
+  background: url(/assets/images/lobby_bg.png);
   background-position: center;
   background-size: cover;
 }

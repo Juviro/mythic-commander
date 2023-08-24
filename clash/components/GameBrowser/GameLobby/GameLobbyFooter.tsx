@@ -28,7 +28,7 @@ const GameLobbyFooter = () => {
 
   return (
     <div className={styles.wrapper}>
-      <Tooltip title={tooltipText} open={tooltipText ? false : undefined}>
+      <Tooltip title={tooltipText} open={tooltipText ? undefined : false}>
         <Button
           type="primary"
           disabled={!canStart}

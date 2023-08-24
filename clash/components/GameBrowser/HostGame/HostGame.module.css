@@ -1,14 +1,3 @@
-.wrapper {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: url(/assets/images/clash_bg.png);
-    background-position: center;
-    background-size: cover;
-}
-
 .inner {
     width: 800px;
     height: 700px;

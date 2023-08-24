@@ -1,0 +1,10 @@
+.wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url(/assets/images/match_bg.webp);
+    background-position: center;
+    background-size: cover;
+}
