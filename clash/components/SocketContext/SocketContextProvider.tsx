@@ -48,6 +48,12 @@ export const SocketContextProvider = ({ children }: Props) => {
       setUser(msg);
     });
 
+    socket.on(SOCKET_MSG_GENERAL.ERROR, (msg) => {
+      // TODO: replace with a toast
+      // eslint-disable-next-line no-alert
+      alert(`Error: ${msg}`);
+    });
+
     socket.on(SOCKET_MSG_GENERAL.NOT_LOGGED_IN, () => {
       const loginPath = process.env.NEXT_PUBLIC_LOGIN_URL;
       window.location.href = `${loginPath}?redirect=${window.location.href}`;
