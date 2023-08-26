@@ -1,0 +1,48 @@
+.card {
+  border-color: var(--color-primary);
+}
+
+.player {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.player_info {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.avatar {
+  width: 32px;
+  border-radius: 50%;
+}
+
+.fallback_avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #9f9f9f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.player_name {
+  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.deck {
+  width: 300px;
+}
+
+.empty {
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.58);
+}

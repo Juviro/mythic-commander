@@ -1,0 +1,12 @@
+.wrapper {
+    width: 248px;
+     height:  345px;
+    padding: 4px;
+    border: 1px solid black;
+    background-color: var(--player-color);
+}
+
+.image {
+    width: 100%;
+    border-radius: 12px;
+}

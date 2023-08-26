@@ -38,7 +38,11 @@ export default () => {
     const name = user.username ?? user.name;
     message(`Welcome <b>${name}</b>`);
 
-    if (window.location.pathname === '/login') {
+    const redirectUrl = new URLSearchParams(window.location.search).get('redirect');
+
+    if (redirectUrl) {
+      window.location.href = redirectUrl;
+    } else if (window.location.pathname === '/login') {
       push('/');
     } else {
       window.location.reload();

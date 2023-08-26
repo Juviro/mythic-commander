@@ -1,0 +1,68 @@
+.title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.body {
+    padding: 16px;
+}
+
+.players {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.player {
+    list-style: none;
+}
+
+.start_overlay_visible {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-overlay);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    pointer-events: none;
+}
+
+.start_overlay_hidden {
+    display: none;
+}
+
+@keyframes animateDots {
+    0% {
+        content: " "
+    }
+    30% {
+        content: "."
+    }
+    50% {
+        content: ".."
+    }
+    70% {
+        content: "..."
+    }
+    100% {
+        content: "..."
+    }
+}
+
+.start_overlay_text {
+    width: 170px;
+}
+
+.start_overlay_text::after {
+    animation: animateDots 2.5s infinite;
+    content: "...";
+}

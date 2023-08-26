@@ -1,0 +1,9 @@
+.wrapper {
+    padding: 12px 32px 0;
+    display: grid;
+    grid-auto-flow: column;
+}
+
+.ready {
+    justify-self: flex-end;
+}

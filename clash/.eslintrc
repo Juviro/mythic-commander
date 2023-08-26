@@ -27,6 +27,9 @@
       "react/require-default-props": 0,
       "react-hooks/exhaustive-deps": 0,
       "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "@next/next/no-img-element": "off",
+      "jsx-a11y/alt-text": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
@@ -52,7 +55,8 @@
       "import/resolver": {
         "typescript": {},
         "node": {
-          "extensions": [".js", ".jsx", ".ts", ".tsx"]
+          "extensions": [".js", ".jsx", ".ts", ".tsx"],
+          "moduleDirectory": ["node_modules", "."]
         }
       }
     },
