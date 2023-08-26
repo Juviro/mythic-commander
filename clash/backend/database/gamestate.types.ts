@@ -1,7 +1,7 @@
 export interface Card {
   id: string;
   name: string;
-  clashId: string;
+  clashId: string; // unique id for each card
 }
 
 export type Commander = Omit<Card, 'clashId'>;
@@ -19,6 +19,7 @@ export interface Player {
   name: string;
   commanders: Commander[];
   zones: Zones;
+  life: number;
 }
 
 export interface GameState {

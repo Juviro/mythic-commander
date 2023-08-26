@@ -4,6 +4,8 @@ import { getDecks, storeGameState } from 'backend/database/matchStore';
 import { Lobby } from 'backend/lobby/GameLobby.types';
 import { Commander, Card, GameState, Player } from 'backend/database/gamestate.types';
 
+const STARTING_LIFE = 40;
+
 const initMatch = async (lobby: Lobby) => {
   const decks = await getDecks(lobby);
 
@@ -55,6 +57,7 @@ const initMatch = async (lobby: Lobby) => {
       id: player.id,
       name: player.username,
       commanders: deck.commanders,
+      life: STARTING_LIFE,
       zones: {
         hand: deck.cards.slice(0, 7),
         library: deck.cards.slice(7),

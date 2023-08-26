@@ -2,6 +2,9 @@ import { GameState } from 'backend/database/gamestate.types';
 import { SOCKET_MSG_GAME } from 'backend/constants/wsEvents';
 import { Server, Socket } from 'socket.io';
 
+// TODO:
+// * store player to socketId mapping
+// * obfuscate game state
 export default class Game {
   server: Server;
 

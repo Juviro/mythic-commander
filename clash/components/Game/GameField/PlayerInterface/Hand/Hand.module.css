@@ -1,0 +1,26 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card_wrapper {
+  position: absolute;
+  transform-origin: 50% 100vw;
+  transform: rotate(calc(var(--rotation) * 1deg)) translateY(20%);
+  transition: transform 0.1s;
+}
+
+.card_wrapper:hover {
+  z-index: 1;
+
+  .card {
+    transform: rotate(calc(var(--rotation) * -1deg)) translateY(-50%);
+  }
+}
+
+.card {
+  pointer-events: none;
+  transition: transform 0.1s;
+}
