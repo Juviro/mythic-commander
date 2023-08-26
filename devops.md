@@ -12,6 +12,7 @@
 
 - located at `/etc/nginx/`
 - commands: `sudo service nginx start|stop|reload|restart|status`
+- download nginx config: `scp -i /Users/haukewitte/.ssh/sshhs juviro@juviro.ddns.net:/etc/nginx/nginx.conf .`
 
 ### Disk Space
 
