@@ -6,6 +6,7 @@ interface Card {
   id: string;
   name: string;
   amount: number;
+  manaValue: number;
 }
 
 interface Deck {
@@ -37,6 +38,7 @@ export const getDecks = async (lobby: Lobby): Promise<Deck[]> => {
             jsonb_agg(
                 json_build_object(
                     'id', "cardToDeck".id,
+                    'manaValue', cards.cmc,
                     'amount', "cardToDeck".amount,
                     'name', cards.name
                 )

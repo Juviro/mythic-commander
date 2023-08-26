@@ -26,11 +26,12 @@ const initMatch = async (lobby: Lobby) => {
         return true;
       })
       .map((card) => {
-        const spreadeCards: Card[] = [];
+        const spreadeCards = [];
         for (let i = 0; i < card.amount; i += 1) {
           spreadeCards.push({
             id: card.id,
             name: card.name,
+            manaValue: card.manaValue,
             clashId: uniqid(),
           });
         }
@@ -54,6 +55,17 @@ const initMatch = async (lobby: Lobby) => {
       (spreadDeck) => spreadDeck.id === player.deck!.id
     )!;
 
+    const removeManaValue = (card: Card) => ({
+      ...card,
+      manaValue: undefined,
+    });
+
+    const hand = deck.cards
+      .slice(0, 7)
+      .sort((a, b) => a.manaValue - b.manaValue)
+      .map(removeManaValue);
+    const library = deck.cards.slice(7).map(removeManaValue);
+
     return {
       id: player.id,
       name: player.username,
@@ -61,8 +73,8 @@ const initMatch = async (lobby: Lobby) => {
       commanders: deck.commanders,
       life: STARTING_LIFE,
       zones: {
-        hand: deck.cards.slice(0, 7),
-        library: deck.cards.slice(7),
+        hand,
+        library,
         commandZone: deck.commanders,
         exile: [],
         graveyard: [],

@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>MYC Clash</title>
+        <title>Play - Mythic-Commander</title>
         <meta name="description" content="Play EDH Online" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
