@@ -1,11 +1,13 @@
 interface HiddenCard {
   clashId: string;
 }
-interface VisibleCardCard {
+interface VisibleCard {
   clashId: string;
+  id: string;
+  name: string;
 }
 
-export type Card = HiddenCard | VisibleCardCard;
+export type Card = HiddenCard | VisibleCard;
 
 type PositionedCard = Card & {
   x: number;

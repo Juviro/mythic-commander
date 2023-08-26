@@ -8,6 +8,9 @@ interface StoredPlayer {
   name: string;
   socket: Socket;
 }
+
+// TODO: add player color for sleeves
+
 export default class Game {
   server: Server;
 

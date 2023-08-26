@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-
-import GameStateContext, { InitializedGameState } from 'components/Game/GameStateContext';
+import React from 'react';
 
 import Card from 'components/GameComponents/Card/Card';
+import { Player } from 'backend/database/gamestate.types';
+
 import styles from './Hand.module.css';
 
 const getMaxDegree = (length: number) => {
@@ -23,12 +23,15 @@ const getRotation = (index: number, length: number) => {
   return from + ((to - from) / (length - 1)) * index;
 };
 
-const Hand = () => {
-  const { player } = useContext(GameStateContext) as InitializedGameState;
+interface Props {
+  player: Player;
+}
+
+const Hand = ({ player }: Props) => {
   const { hand } = player.zones;
 
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} hand`}>
       {hand.map((card, index) => (
         <div
           key={card.clashId}

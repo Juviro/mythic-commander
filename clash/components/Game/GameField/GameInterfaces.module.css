@@ -1,0 +1,27 @@
+.wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.self {
+    position: fixed;
+    width: 100%;
+    height: 20%;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.opponents {
+    position: fixed;
+    width: 100%;
+    height: 20%;
+    top: 0%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.opponents :global(.hand) {
+    transform: rotate(180deg) scale(var(--scale)) translateY(calc(var(--translate) * 1%));
+}
