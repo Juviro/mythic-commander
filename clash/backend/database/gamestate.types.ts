@@ -1,25 +1,33 @@
-export interface Card {
-  id: string;
-  name: string;
-  clashId: string; // unique id for each card
+interface HiddenCard {
+  clashId: string;
+}
+interface VisibleCardCard {
+  clashId: string;
 }
 
-export type Commander = Omit<Card, 'clashId'>;
+export type Card = HiddenCard | VisibleCardCard;
+
+type PositionedCard = Card & {
+  x: number;
+  y: number;
+};
 
 interface Zones {
   hand: Card[];
   library: Card[];
   exile: Card[];
   graveyard: Card[];
-  commandZone: Commander[];
+  commandZone: Card[];
+  battlefield: PositionedCard[];
 }
 
 export interface Player {
   id: string;
   name: string;
-  commanders: Commander[];
+  commanders: Card[];
   zones: Zones;
   life: number;
+  isSelf?: boolean;
 }
 
 export interface GameState {

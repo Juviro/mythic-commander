@@ -27,13 +27,13 @@ const gameSocketActions = (io: Server) => {
       }
 
       if (currentGames[gameId]) {
-        currentGames[gameId].join(socket);
+        currentGames[gameId].join(socket, user);
         return;
       }
 
       const game = new Game(gameState, io);
       currentGames[gameId] = game;
-      game.join(socket);
+      game.join(socket, user);
     });
   });
 };

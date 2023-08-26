@@ -39,8 +39,7 @@ export const GameStateContextProvider = ({ children }: Props) => {
     });
   }, [socket]);
 
-  // TODO: get correct player
-  const player = gameState?.players[0];
+  const player = gameState?.players.find(({ isSelf }) => isSelf);
 
   const value: GameStateContextType = useMemo(() => {
     if (!gameState || !player) {

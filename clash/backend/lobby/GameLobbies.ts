@@ -2,8 +2,8 @@
 import { Server, Socket } from 'socket.io';
 import uniqid from 'uniqid';
 
-import initMatch from 'backend/match/initMatch';
 import { User } from 'backend/database/getUser';
+import initMatch from './initMatch';
 import { SOCKET_MSG_LOBBY } from '../constants/wsEvents';
 import { Deck, GameOptions, Lobby, Player } from './GameLobby.types';
 

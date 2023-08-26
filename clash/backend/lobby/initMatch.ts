@@ -2,7 +2,7 @@ import uniqid from 'uniqid';
 
 import { getDecks, storeGameState } from 'backend/database/matchStore';
 import { Lobby } from 'backend/lobby/GameLobby.types';
-import { Commander, Card, GameState, Player } from 'backend/database/gamestate.types';
+import { Card, GameState, Player } from 'backend/database/gamestate.types';
 
 const STARTING_LIFE = 40;
 
@@ -10,7 +10,7 @@ const initMatch = async (lobby: Lobby) => {
   const decks = await getDecks(lobby);
 
   const decksWithSpreadedCards = decks.map((deck) => {
-    const commanders: Commander[] = [];
+    const commanders: Card[] = [];
 
     const cards = deck.cards
       .filter((card) => {
@@ -18,6 +18,7 @@ const initMatch = async (lobby: Lobby) => {
           commanders.push({
             id: card.id,
             name: card.name,
+            clashId: uniqid(),
           });
           return false;
         }
@@ -64,6 +65,7 @@ const initMatch = async (lobby: Lobby) => {
         commandZone: deck.commanders,
         exile: [],
         graveyard: [],
+        battlefield: [],
       },
     };
   });
