@@ -38,6 +38,10 @@
   white-space: nowrap;
 }
 
+.deck {
+  width: 300px;
+}
+
 .empty {
   font-style: italic;
   color: rgba(0, 0, 0, 0.58);

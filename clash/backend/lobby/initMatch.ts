@@ -57,6 +57,7 @@ const initMatch = async (lobby: Lobby) => {
     return {
       id: player.id,
       name: player.username,
+      color: player.color!,
       commanders: deck.commanders,
       life: STARTING_LIFE,
       zones: {

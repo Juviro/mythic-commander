@@ -9,7 +9,7 @@ import { Deck, GameOptions, Lobby, Player } from './GameLobby.types';
 
 export const LOBBY_ROOM = 'lobby';
 
-export class GameLobbies {
+export class GameLobby {
   ws: Server;
 
   openLobbies: Lobby[] = [];
@@ -23,7 +23,7 @@ export class GameLobbies {
     const lobby: Lobby = {
       id: uniqid(),
       name: lobbyOptions.name,
-      players: [{ ...user, deck: null, isReady: false }],
+      players: [{ ...user, deck: null, isReady: false, color: null }],
       hostId: user.id,
       maxNumberOfPlayers: lobbyOptions.maxNumberOfPlayers,
     };
@@ -73,7 +73,7 @@ export class GameLobbies {
       l.players = l.players.filter((player) => player.id !== user.id);
     });
 
-    lobby.players.push({ ...user, deck: null, isReady: false });
+    lobby.players.push({ ...user, deck: null, isReady: false, color: null });
     this.emitLobbiesUpdate();
     socket.join(id);
   }
@@ -96,6 +96,10 @@ export class GameLobbies {
 
   setDeck(deck: Deck, user: User) {
     this.updatePlayer(user, { deck });
+  }
+
+  setColor(color: string, user: User) {
+    this.updatePlayer(user, { color });
   }
 
   isReady(isReady: boolean, user: User) {

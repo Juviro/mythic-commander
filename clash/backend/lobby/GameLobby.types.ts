@@ -11,8 +11,9 @@ export type OwnDeck = Deck & {
 };
 
 export type Player = User & {
-  deck?: Deck | null;
+  deck: Deck | null;
   isReady: boolean;
+  color: string | null;
 };
 
 export interface Lobby {

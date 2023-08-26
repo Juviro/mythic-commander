@@ -1,12 +1,12 @@
 import { Server } from 'socket.io';
 
 import { SOCKET_MSG_GENERAL, SOCKET_MSG_LOBBY } from '../constants/wsEvents';
-import { GameLobbies } from './GameLobbies';
+import { GameLobby } from './GameLobby';
 import { Deck, Lobby as LobbyType } from './GameLobby.types';
 import getUser, { User } from '../database/getUser';
 
 const lobbySocketActions = (io: Server) => {
-  const Lobby = new GameLobbies(io);
+  const Lobby = new GameLobby(io);
 
   io.on('connection', (socket) => {
     let user: User;
@@ -33,6 +33,10 @@ const lobbySocketActions = (io: Server) => {
 
     socket.on(SOCKET_MSG_LOBBY.LEAVE_LOBBY, () => {
       Lobby.leaveAll(user, socket);
+    });
+
+    socket.on(SOCKET_MSG_LOBBY.SELECT_COLOR, (color: string) => {
+      Lobby.setColor(color, user);
     });
 
     socket.on(SOCKET_MSG_LOBBY.SELECT_DECK, (deck: string) => {

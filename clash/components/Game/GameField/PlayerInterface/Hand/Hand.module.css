@@ -24,7 +24,5 @@
   pointer-events: none;
   transition: transform 0.1s;
 
-  padding: 4px;
-  background-color: #751a1a;
   border-radius: 2px;
 }

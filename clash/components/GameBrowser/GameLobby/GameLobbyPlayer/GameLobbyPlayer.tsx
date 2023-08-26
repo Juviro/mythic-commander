@@ -7,6 +7,7 @@ import DeckSelection from './DeckSelection';
 import PlayerReady from './PlayerReady';
 
 import styles from './GameLobbyPlayer.module.css';
+import ColorPicker from './ColorPicker/ColorPicker';
 
 interface Props {
   player?: Player;
@@ -48,12 +49,15 @@ const GameLobbyPlayer = ({ player, isSelf, isHost }: Props) => {
               <span className={styles.player_name}>{`${player.username}${
                 isHost ? ' (Host)' : ''
               }`}</span>
-              <DeckSelection
-                deck={player.deck}
-                canSelectDeck={isSelf}
-                isReady={player.isReady}
-                playerId={player.id}
-              />
+              <div className={styles.deck}>
+                <DeckSelection
+                  deck={player.deck}
+                  canSelectDeck={isSelf}
+                  isReady={player.isReady}
+                  playerId={player.id}
+                />
+              </div>
+              <ColorPicker canSelectColor={isSelf} color={player.color} />
             </div>
             <PlayerReady player={player} isSelf={isSelf} />
           </>

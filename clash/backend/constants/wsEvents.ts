@@ -10,6 +10,7 @@ export const SOCKET_MSG_LOBBY = {
   JOIN_LOBBY: 'join_lobby',
   LEAVE_LOBBY: 'leave_lobby',
   SELECT_DECK: 'select_deck',
+  SELECT_COLOR: 'select_color',
   READY: 'ready',
   START_MATCH: 'start_match',
 };

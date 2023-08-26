@@ -26,6 +26,7 @@ interface Zones {
 export interface Player {
   id: string;
   name: string;
+  color: string;
   commanders: Card[];
   zones: Zones;
   life: number;

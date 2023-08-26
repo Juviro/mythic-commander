@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 import { Player } from 'backend/database/gamestate.types';
 import Hand from './Hand/Hand';
@@ -11,7 +11,10 @@ interface Props {
 
 const PlayerInterface = ({ player }: Props) => {
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={styles.wrapper}
+      style={{ '--player-color': player.color } as CSSProperties}
+    >
       <div>Graveyard</div>
       <Hand player={player} />
       <div>buttons</div>

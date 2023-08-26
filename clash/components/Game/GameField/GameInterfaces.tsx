@@ -42,7 +42,3 @@ const GameInterfaces = () => {
 };
 
 export default GameInterfaces;
-
-100;
-50;
-30;

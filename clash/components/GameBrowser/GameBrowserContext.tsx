@@ -15,6 +15,7 @@ const GameBrowserContext = React.createContext<{
   onSelectDeck: (deck: Deck) => void;
   onReady: (isReady: boolean) => void;
   onStartMatch: () => void;
+  onSelectColor?: (color: string) => void;
 }>({
   openLobbies: [],
   user: null,
@@ -25,6 +26,7 @@ const GameBrowserContext = React.createContext<{
   onSelectDeck: () => {},
   onReady: () => {},
   onStartMatch: () => {},
+  onSelectColor: () => {},
   /* eslint-enable @typescript-eslint/no-empty-function */
 });
 
@@ -67,6 +69,12 @@ export const GameBrowserContextProvider = ({ children }: Props) => {
     emit(SOCKET_MSG_LOBBY.SELECT_DECK, JSON.stringify(deck));
   };
 
+  const onSelectColor = (color: string) => {
+    if (!currentLobby) return;
+
+    emit(SOCKET_MSG_LOBBY.SELECT_COLOR, color);
+  };
+
   const onReady = (isReady: boolean) => {
     if (!currentLobby) return;
 
@@ -90,6 +98,7 @@ export const GameBrowserContextProvider = ({ children }: Props) => {
       onSelectDeck,
       onReady,
       onStartMatch,
+      onSelectColor,
     }),
     [
       openLobbies,
@@ -101,6 +110,7 @@ export const GameBrowserContextProvider = ({ children }: Props) => {
       onSelectDeck,
       onReady,
       onStartMatch,
+      onSelectColor,
     ]
   );
 
