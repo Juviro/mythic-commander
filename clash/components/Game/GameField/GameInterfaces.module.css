@@ -13,15 +13,18 @@
 }
 
 
-.opponents {
-    position: fixed;
-    width: 100%;
-    height: 20%;
+.opponent .interface  {
     top: 0%;
-    display: flex;
-    justify-content: space-between;
+    bottom: unset;
+    transform: rotate(180deg) scale(var(--scale));
+    transform-origin: calc(var(--origin-offset-x) * 1%) calc(var(--origin-offset-y) * 1%);
 }
 
-.opponents :global(.hand) {
-    transform: rotate(180deg) scale(var(--scale)) translateY(calc(var(--translate) * 1%));
+.interface {
+    width: 100vw;
+    height: 20%;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
 }

@@ -31,7 +31,7 @@ const Hand = ({ player }: Props) => {
   const { hand } = player.zones;
 
   return (
-    <div className={`${styles.wrapper} hand`}>
+    <div className={styles.wrapper}>
       {hand.map((card, index) => (
         <div
           key={card.clashId}

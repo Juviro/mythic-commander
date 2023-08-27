@@ -2,9 +2,9 @@ import React, { CSSProperties } from 'react';
 
 import { Player } from 'backend/database/gamestate.types';
 import Hand from './Hand/Hand';
-
-import styles from './PlayerInterface.module.css';
 import Library from './Library/Library';
+
+import styles from '../GameInterfaces.module.css';
 
 interface Props {
   player: Player;
@@ -13,12 +13,12 @@ interface Props {
 const PlayerInterface = ({ player }: Props) => {
   return (
     <div
-      className={styles.wrapper}
+      className={styles.interface}
       style={{ '--player-color': player.color } as CSSProperties}
     >
       <Library player={player} />
       <Hand player={player} />
-      <div>buttons</div>
+      <div />
     </div>
   );
 };

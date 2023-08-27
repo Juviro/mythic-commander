@@ -10,5 +10,7 @@
 
     --size-card-width: 248px;
     --size-card-height: 345px;
+    --size-card-base-width: 248px;
+    --size-card-base-height: 345px;
     --zone-padding: 4px;
 }
