@@ -18,7 +18,7 @@ const Library = ({ player }: Props) => {
 
   return (
     <div className={StyleSheet.wrapper}>
-      <CardStack cards={cards} />
+      <CardStack cards={cards} emptyText="Library" />
     </div>
   );
 };

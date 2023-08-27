@@ -7,9 +7,10 @@ import styles from './CardStack.module.css';
 
 interface Props {
   cards: CardType[];
+  emptyText: string;
 }
 
-const CardStack = ({ cards }: Props) => {
+const CardStack = ({ cards, emptyText }: Props) => {
   return (
     <div className={styles.wrapper}>
       {cards.map((card, index) => (
@@ -21,6 +22,7 @@ const CardStack = ({ cards }: Props) => {
           <Card card={card} />
         </div>
       ))}
+      {!cards.length && <div className={styles.empty}>{emptyText}</div>}
     </div>
   );
 };

@@ -18,7 +18,7 @@ const Graveyard = ({ player }: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      <CardStack cards={cards} />
+      <CardStack cards={cards} emptyText="Graveyard" />
     </div>
   );
 };
