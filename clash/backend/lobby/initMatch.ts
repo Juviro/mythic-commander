@@ -83,13 +83,13 @@ const initMatch = async (lobby: Lobby) => {
     };
   });
 
-  const activePlayerId = players.sort(() => Math.random() - 0.5)[0].id;
+  const sortedPlayers = players.sort(() => Math.random() - 0.5);
 
   const initialGameState: GameState = {
     gameId: lobby.id,
-    players,
+    players: sortedPlayers,
     turn: 0,
-    activePlayerId,
+    activePlayerId: sortedPlayers[0].id,
   };
 
   await storeGameState(lobby.id, initialGameState);
