@@ -1,0 +1,17 @@
+.wrapper {
+    width: var(--size-card-width);
+    height: var(--size-card-height);
+    background-color: var(--color-primary--transparent);
+    border-radius: 4px;
+    position: relative;
+    margin: 12px auto;
+    transform: var(--card-stack--transform);
+}
+
+.card {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    transform: rotate(calc(var(--rotation) * 0.3deg));
+}

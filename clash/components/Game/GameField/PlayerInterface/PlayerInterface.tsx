@@ -4,7 +4,8 @@ import { Player } from 'backend/database/gamestate.types';
 import Hand from './Hand/Hand';
 import Library from './Library/Library';
 
-import styles from '../GameInterfaces.module.css';
+import styles from '../PlayerInterfaces.module.css';
+import Graveyard from './Graveyard/Graveyard';
 
 interface Props {
   player: Player;
@@ -16,6 +17,7 @@ const PlayerInterface = ({ player }: Props) => {
       className={styles.interface}
       style={{ '--player-color': player.color } as CSSProperties}
     >
+      <Graveyard player={player} />
       <Library player={player} />
       <Hand player={player} />
       <div />

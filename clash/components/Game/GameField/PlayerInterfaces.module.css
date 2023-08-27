@@ -13,6 +13,8 @@
 }
 
 
+/* single interface */
+
 .opponent .interface  {
     top: 0%;
     bottom: unset;
@@ -25,6 +27,8 @@
     height: 20%;
     position: fixed;
     bottom: 0;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 150px 150px auto 100px;
+    grid-template-areas: 
+    "graveyard library hand";
 }

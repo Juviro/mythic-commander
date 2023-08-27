@@ -8,9 +8,8 @@
     --color-line: #949494;
     --color-overlay: #00000080;
 
-    --size-card-width: 248px;
-    --size-card-height: 345px;
     --size-card-base-width: 248px;
     --size-card-base-height: 345px;
-    --zone-padding: 4px;
+    --size-card-width: var(--size-card-base-width);
+    --size-card-height: var(--size-card-base-height);
 }

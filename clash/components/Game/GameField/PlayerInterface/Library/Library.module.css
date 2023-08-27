@@ -1,21 +1,7 @@
 .wrapper {
-    --size-card-width: 207px;
-    --size-card-height: 149px;
-
-    width: var(--size-card-width);
-    height: var(--size-card-height);
-    background-color: var(--color-primary--transparent);
-    border-radius: 4px;
-    position: relative;
-    justify-self: flex-start;
-    align-self: end;
-    margin: 16px;
-}
-
-.card {
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    transform: rotate(calc(var(--rotation) * 0.3deg));
+  grid-area: library;
+  display: flex;
+  align-items: flex-end;
+  --size-card-width: calc(var(--size-card-base-height) * 0.5);
+  --size-card-height: calc(var(--size-card-base-width) * 0.5);
 }

@@ -5,9 +5,9 @@ import GameStateContext, { InitializedGameState } from '../GameStateContext';
 
 import PlayerInterface from './PlayerInterface/PlayerInterface';
 
-import styles from './GameInterfaces.module.css';
+import styles from './PlayerInterfaces.module.css';
 
-const GameInterfaces = () => {
+const PlayerInterfaces = () => {
   const { gameState, player } = useContext(GameStateContext) as InitializedGameState;
 
   const opponentsAfterSelf: Player[] = [];
@@ -50,4 +50,4 @@ const GameInterfaces = () => {
   );
 };
 
-export default GameInterfaces;
+export default PlayerInterfaces;
