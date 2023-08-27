@@ -1,5 +1,6 @@
 import React, { CSSProperties, useContext } from 'react';
 
+import { Player } from 'backend/database/gamestate.types';
 import GameStateContext, { InitializedGameState } from '../GameStateContext';
 
 import PlayerInterface from './PlayerInterface/PlayerInterface';
@@ -15,7 +16,21 @@ const getTranslate = (numberOfOpponents: number) => {
 const GameInterfaces = () => {
   const { gameState, player } = useContext(GameStateContext) as InitializedGameState;
 
-  const opponents = gameState.players.filter(({ id }) => id !== player!.id);
+  const opponentsAfterSelf: Player[] = [];
+  const opponentsBeforeSelf: Player[] = [];
+  let foundSelf = false;
+
+  gameState.players.forEach((p) => {
+    if (p.id === player.id) {
+      foundSelf = true;
+    } else if (foundSelf) {
+      opponentsAfterSelf.push(p);
+    } else {
+      opponentsBeforeSelf.push(p);
+    }
+  });
+
+  const opponents = [...opponentsAfterSelf, ...opponentsBeforeSelf];
 
   const scale = 1 / opponents.length;
 
