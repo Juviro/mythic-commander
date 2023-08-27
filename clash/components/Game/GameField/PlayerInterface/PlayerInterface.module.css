@@ -1,5 +1,7 @@
 .wrapper {
     width: 100%;
-    display: flex;
+    display: grid;
     justify-content: space-between;
+    direction: initial;
+    grid-auto-flow: column;
 }

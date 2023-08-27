@@ -1,9 +1,14 @@
 :root {
     --color-text: #1f1d33;
     --color-primary: #d5712d;
+    --color-primary--transparent: #d5712d5c;
     --color-primary--semi-light: #e8a57a;
     --color-primary--light: #f1d3c0;
     --color-success: #196e3b;
     --color-line: #949494;
     --color-overlay: #00000080;
+
+    --size-card-width: 248px;
+    --size-card-height: 345px;
+    --zone-padding: 4px;
 }
