@@ -1,3 +1,5 @@
+import { GameLog } from 'backend/constants/logMessages';
+
 interface HiddenCard {
   clashId: string;
 }
@@ -38,4 +40,5 @@ export interface GameState {
   players: Player[];
   turn: number;
   activePlayerId: string;
+  gameLog: GameLog[];
 }

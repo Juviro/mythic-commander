@@ -2,6 +2,7 @@ import { Card, GameState, Player } from 'backend/database/gamestate.types';
 import { SOCKET_MSG_GAME, SOCKET_MSG_GENERAL } from 'backend/constants/wsEvents';
 import { Server, Socket } from 'socket.io';
 import { User } from 'backend/database/getUser';
+import { LOG_MESSAGES, LogKey, LogPayload } from 'backend/constants/logMessages';
 
 interface StoredPlayer {
   userId: string;
@@ -19,6 +20,11 @@ export default class Game {
   constructor(gameState: GameState, server: Server) {
     this.server = server;
     this.gameState = gameState;
+
+    // TODO: remove this later
+    if (!gameState.gameLog) {
+      this.gameState.gameLog = [];
+    }
   }
 
   static obfuscatePlayer(player: Player, isSelf: boolean): Player {
@@ -91,6 +97,19 @@ export default class Game {
     return player;
   }
 
+  logAction(socket: Socket, message: LogKey, payload: LogPayload) {
+    const { userId } = this.players[socket.id];
+    const newLogEntry = {
+      playerId: userId,
+      timestamp: Date.now(),
+      logKey: message,
+      payload,
+    };
+    this.gameState.gameLog.push(newLogEntry);
+
+    this.server.to(this.id).emit(SOCKET_MSG_GAME.GAME_LOG, newLogEntry);
+  }
+
   // ##################### Actions #####################
 
   drawCard(socket: Socket) {
@@ -100,5 +119,6 @@ export default class Game {
 
     player.zones.hand.push(card);
     this.emitPlayerUpdate(socket, player);
+    this.logAction(socket, LOG_MESSAGES.DRAW_CARD, { amount: 1 });
   }
 }

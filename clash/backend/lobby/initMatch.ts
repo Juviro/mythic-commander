@@ -90,6 +90,7 @@ const initMatch = async (lobby: Lobby) => {
     players: sortedPlayers,
     turn: 0,
     activePlayerId: sortedPlayers[0].id,
+    gameLog: [],
   };
 
   await storeGameState(lobby.id, initialGameState);

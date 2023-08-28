@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 import SocketContext from 'components/SocketContext/SocketContextProvider';
 import { GameState, Player } from 'backend/database/gamestate.types';
+import { GameLog } from 'backend/constants/logMessages';
 import { SOCKET_MSG_GAME } from '../../backend/constants/wsEvents';
 
 export interface InitializedGameState {
@@ -45,6 +46,15 @@ export const GameStateContextProvider = ({ children }: Props) => {
         return {
           ...prev,
           players: prev.players.map((p) => (p.id === player.id ? player : p)),
+        };
+      });
+    });
+    socket.on(SOCKET_MSG_GAME.GAME_LOG, (newLogEntry: GameLog) => {
+      setGameState((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          gameLog: [...prev.gameLog, newLogEntry],
         };
       });
     });

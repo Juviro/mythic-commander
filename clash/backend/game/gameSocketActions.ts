@@ -4,6 +4,8 @@ import { getGameState } from 'backend/database/matchStore';
 import { SOCKET_MSG_GAME, SOCKET_MSG_GENERAL } from '../constants/wsEvents';
 import Game from './Game';
 
+// TODO: store currentGames (in redis?)
+
 const gameSocketActions = (io: Server) => {
   const currentGames: { [key: string]: Game } = {};
 

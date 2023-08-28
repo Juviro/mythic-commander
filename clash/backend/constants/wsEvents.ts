@@ -19,6 +19,7 @@ export const SOCKET_MSG_GAME = {
   INITIALIZE: 'initialize_game',
   GAME_STATE: 'gameState',
   UPDATE_PLAYER: 'update_player',
+  GAME_LOG: 'game_log',
 
   DRAW_CARD: 'draw_card',
 };
