@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Player } from 'backend/database/gamestate.types';
+import LibraryImage from 'public/assets/icons/library.svg';
 import CardStack from '../CardStack/CardStack';
 
 import StyleSheet from './Library.module.css';
@@ -18,7 +19,7 @@ const Library = ({ player }: Props) => {
 
   return (
     <div className={StyleSheet.wrapper}>
-      <CardStack cards={cards} emptyText="Library" />
+      <CardStack cards={cards} emptyImage={<LibraryImage />} />
     </div>
   );
 };

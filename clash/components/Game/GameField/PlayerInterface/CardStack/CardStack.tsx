@@ -1,16 +1,17 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, ReactNode } from 'react';
 
 import { Card as CardType } from 'backend/database/gamestate.types';
-
 import Card from 'components/GameComponents/Card/Card';
+
 import styles from './CardStack.module.css';
 
 interface Props {
   cards: CardType[];
-  emptyText: string;
+  emptyText?: string;
+  emptyImage?: ReactNode;
 }
 
-const CardStack = ({ cards, emptyText }: Props) => {
+const CardStack = ({ cards, emptyText, emptyImage }: Props) => {
   return (
     <div className={styles.wrapper}>
       {cards.map((card, index) => (
@@ -22,7 +23,7 @@ const CardStack = ({ cards, emptyText }: Props) => {
           <Card card={card} />
         </div>
       ))}
-      {!cards.length && <div className={styles.empty}>{emptyText}</div>}
+      {!cards.length && <div className={styles.empty}>{emptyImage || emptyText}</div>}
     </div>
   );
 };

@@ -6,11 +6,9 @@
     border-radius: 4px;
     position: relative;
     margin: 12px auto;
-    transform: var(--card-stack--transform);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fffa;
 }
 
 .card {
@@ -19,4 +17,14 @@
     left: 0;
 
     transform: rotate(calc(var(--rotation) * 0.3deg));
+}
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+    color: #ffffff70;
+    align-items: center;
+    gap: 8px;
 }

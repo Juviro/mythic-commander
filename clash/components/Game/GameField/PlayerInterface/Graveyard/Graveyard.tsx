@@ -1,9 +1,10 @@
 import React from 'react';
 
 import { Player } from 'backend/database/gamestate.types';
+import GraveyardImage from 'public/assets/icons/graveyard.svg';
+import CardStack from '../CardStack/CardStack';
 
 import styles from './Graveyard.module.css';
-import CardStack from '../CardStack/CardStack';
 
 const MAX_DISPLAYED_CARDS = 10;
 
@@ -18,7 +19,7 @@ const Graveyard = ({ player }: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      <CardStack cards={cards} emptyText="Graveyard" />
+      <CardStack cards={cards} emptyImage={<GraveyardImage />} />
     </div>
   );
 };

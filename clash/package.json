@@ -28,6 +28,7 @@
     "uniqid": "5.4.0"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
     "@types/antd": "1.0.0",
     "@types/node": "18.11.13",
     "@types/react": "18.0.26",
