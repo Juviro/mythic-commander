@@ -34,8 +34,19 @@ export const GameStateContextProvider = ({ children }: Props) => {
 
   useEffect(() => {
     if (!socket) return;
+
     socket.on(SOCKET_MSG_GAME.GAME_STATE, (msg: GameState) => {
       setGameState(msg);
+    });
+
+    socket.on(SOCKET_MSG_GAME.UPDATE_PLAYER, (player: Player) => {
+      setGameState((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          players: prev.players.map((p) => (p.id === player.id ? player : p)),
+        };
+      });
     });
   }, [socket]);
 

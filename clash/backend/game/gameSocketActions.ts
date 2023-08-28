@@ -9,6 +9,7 @@ const gameSocketActions = (io: Server) => {
 
   io.on('connection', (socket) => {
     let user: User;
+    let currentGameId: string;
 
     socket.on(SOCKET_MSG_GAME.INITIALIZE, async (gameId: string) => {
       try {
@@ -25,6 +26,7 @@ const gameSocketActions = (io: Server) => {
         socket.emit(SOCKET_MSG_GENERAL.ERROR, 'You are not in this game');
         return;
       }
+      currentGameId = gameId;
 
       if (currentGames[gameId]) {
         currentGames[gameId].join(socket, user);
@@ -34,6 +36,10 @@ const gameSocketActions = (io: Server) => {
       const game = new Game(gameState, io);
       currentGames[gameId] = game;
       game.join(socket, user);
+    });
+
+    socket.on(SOCKET_MSG_GAME.DRAW_CARD, () => {
+      currentGames[currentGameId].drawCard(socket);
     });
   });
 };
