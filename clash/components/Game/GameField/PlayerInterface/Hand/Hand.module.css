@@ -14,7 +14,7 @@
   transition: transform 0.1s;
 }
 
-.card_wrapper:hover {
+.is_self .card_wrapper:hover {
   z-index: 1;
 
   .card {
@@ -23,8 +23,18 @@
 }
 
 .card {
-  pointer-events: none;
-  transition: transform 0.1s;
-
   border-radius: 2px;
+}
+
+.is_self .card {
+  cursor: grab;
+  transition: transform 0.1s;
+  border-radius: 2px;
+}
+
+.card:active {
+  opacity: 0.01;
+  user-select: none;
+  z-index: unset !important;
+  transform: unset !important;
 }

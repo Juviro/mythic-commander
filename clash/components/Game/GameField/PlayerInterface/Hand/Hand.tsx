@@ -3,6 +3,7 @@ import React from 'react';
 import Card from 'components/GameComponents/Card/Card';
 import { Player } from 'backend/database/gamestate.types';
 
+import classNames from 'classnames';
 import styles from './Hand.module.css';
 
 const getMaxDegree = (length: number) => {
@@ -25,13 +26,18 @@ const getRotation = (index: number, length: number) => {
 
 interface Props {
   player: Player;
+  isSelf?: boolean;
 }
 
-const Hand = ({ player }: Props) => {
+const Hand = ({ player, isSelf }: Props) => {
   const { hand } = player.zones;
 
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={classNames(styles.wrapper, {
+        [styles.is_self]: isSelf,
+      })}
+    >
       {hand.map((card, index) => (
         <div
           key={card.clashId}
@@ -43,7 +49,7 @@ const Hand = ({ player }: Props) => {
           }
         >
           <div className={styles.card}>
-            <Card card={card} />
+            <Card card={card} draggable={isSelf} />
           </div>
         </div>
       ))}

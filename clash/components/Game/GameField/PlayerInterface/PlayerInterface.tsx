@@ -10,9 +10,10 @@ import Battlefield from './Battlefield/Battlefield';
 
 interface Props {
   player: Player;
+  isSelf?: boolean;
 }
 
-const PlayerInterface = ({ player }: Props) => {
+const PlayerInterface = ({ player, isSelf }: Props) => {
   return (
     <div className={styles.interface_wrapper}>
       <Battlefield player={player} />
@@ -22,7 +23,7 @@ const PlayerInterface = ({ player }: Props) => {
       >
         <Graveyard player={player} />
         <Library player={player} />
-        <Hand player={player} />
+        <Hand player={player} isSelf={isSelf} />
         <div />
       </div>
     </div>

@@ -5,7 +5,14 @@ export const LOG_MESSAGES = {
 interface LogPayloadDraw {
   amount: number;
 }
-export type LogPayload = LogPayloadDraw;
+
+interface LogPlayoadMoveZone {
+  cardId: string;
+  from: string;
+  to: string;
+}
+
+export type LogPayload = LogPayloadDraw | LogPlayoadMoveZone;
 
 export type LogKey = typeof LOG_MESSAGES[keyof typeof LOG_MESSAGES];
 

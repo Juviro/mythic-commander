@@ -33,7 +33,7 @@ const PlayerInterfaces = () => {
 
   return (
     <div className={styles.wrapper}>
-      <PlayerInterface player={player} />
+      <PlayerInterface player={player} isSelf />
       <div className={styles.opponents}>
         {opponents.map((otherPlayer) => (
           <div
