@@ -27,25 +27,31 @@ const PlayerInterfaces = () => {
   const opponents = [...opponentsAfterSelf, ...opponentsBeforeSelf];
 
   const scale = 1 / opponents.length;
+  const originOffsetX = 100 / (opponents.length + 1) - 1;
+  const originOffsetY = 60 - opponents.length * 10;
+  const opponentBattlefieldHeight = 70 + opponents.length * 5;
 
   return (
     <div className={styles.wrapper}>
       <PlayerInterface player={player} />
-      {opponents.map((otherPlayer, index) => (
-        <div
-          key={otherPlayer.id}
-          className={styles.opponent}
-          style={
-            {
-              '--scale': scale,
-              '--origin-offset-x': ((index + 1) / gameState.players.length) * 100,
-              '--origin-offset-y': 60 - opponents.length * 10,
-            } as CSSProperties
-          }
-        >
-          <PlayerInterface player={otherPlayer} />
-        </div>
-      ))}
+      <div className={styles.opponents}>
+        {opponents.map((otherPlayer) => (
+          <div
+            key={otherPlayer.id}
+            className={styles.opponent}
+            style={
+              {
+                '--scale': scale,
+                '--origin-offset-x': originOffsetX,
+                '--origin-offset-y': originOffsetY,
+                '--opponent-battlefield-height': opponentBattlefieldHeight,
+              } as CSSProperties
+            }
+          >
+            <PlayerInterface player={otherPlayer} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
