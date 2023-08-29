@@ -3,18 +3,17 @@ import { GameLog } from 'backend/constants/logMessages';
 interface HiddenCard {
   clashId: string;
 }
-interface VisibleCard {
+export interface VisibleCard extends HiddenCard {
   clashId: string;
   id: string;
   name: string;
+  position?: {
+    x: number;
+    y: number;
+  };
 }
 
 export type Card = HiddenCard | VisibleCard;
-
-type PositionedCard = Card & {
-  x: number;
-  y: number;
-};
 
 interface Zones {
   hand: Card[];
@@ -22,8 +21,19 @@ interface Zones {
   exile: Card[];
   graveyard: Card[];
   commandZone: Card[];
-  battlefield: PositionedCard[];
+  battlefield: VisibleCard[];
 }
+
+export type Zone = keyof Zones;
+
+export const ZONES = {
+  HAND: 'hand',
+  LIBRARY: 'library',
+  EXILE: 'exile',
+  GRAVEYARD: 'graveyard',
+  COMMAND_ZONE: 'commandZone',
+  BATTLEFIELD: 'battlefield',
+} as const;
 
 export interface Player {
   id: string;

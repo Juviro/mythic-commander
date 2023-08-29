@@ -1,7 +1,11 @@
 import { Server } from 'socket.io';
 import getUser, { User } from 'backend/database/getUser';
 import { getGameState } from 'backend/database/matchStore';
-import { SOCKET_MSG_GAME, SOCKET_MSG_GENERAL } from '../constants/wsEvents';
+import {
+  MoveCardPayload,
+  SOCKET_MSG_GAME,
+  SOCKET_MSG_GENERAL,
+} from '../constants/wsEvents';
 import Game from './Game';
 
 // TODO: store currentGames (in redis?)
@@ -42,6 +46,10 @@ const gameSocketActions = (io: Server) => {
 
     socket.on(SOCKET_MSG_GAME.DRAW_CARD, () => {
       currentGames[currentGameId].drawCard(socket);
+    });
+
+    socket.on(SOCKET_MSG_GAME.MOVE_CARD, (payload: MoveCardPayload) => {
+      currentGames[currentGameId].moveCard(socket, payload);
     });
   });
 };

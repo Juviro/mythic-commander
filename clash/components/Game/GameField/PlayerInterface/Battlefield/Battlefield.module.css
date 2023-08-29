@@ -3,4 +3,17 @@
     width: 100%;
     padding: 4px;
     align-self: flex-start;
+    position: relative;
+
+    --card-scale: calc(var(--scale, 1) * 0.5);
+    --size-card-width: calc(var(--size-card-base-width) * var(--card-scale));
+    --size-card-height: calc(var(--size-card-base-height) * var(--card-scale));
+    --size-card-padding: calc(var(--size-card-base-padding) * var(--card-scale));
+}
+
+.card {
+    position: absolute;
+    top: var(--y);
+    left: var(--x);
+    transform: translate(-50%, -50%);
 }

@@ -1,5 +1,9 @@
-import { Card, GameState, Player } from 'backend/database/gamestate.types';
-import { SOCKET_MSG_GAME, SOCKET_MSG_GENERAL } from 'backend/constants/wsEvents';
+import { Card, GameState, Player, VisibleCard } from 'backend/database/gamestate.types';
+import {
+  MoveCardPayload,
+  SOCKET_MSG_GAME,
+  SOCKET_MSG_GENERAL,
+} from 'backend/constants/wsEvents';
 import { Server, Socket } from 'socket.io';
 import { User } from 'backend/database/getUser';
 import { LOG_MESSAGES, LogKey, LogPayload } from 'backend/constants/logMessages';
@@ -118,6 +122,23 @@ export default class Game {
     if (!card) return;
 
     player.zones.hand.push(card);
+    this.emitPlayerUpdate(socket, player);
+    this.logAction(socket, LOG_MESSAGES.DRAW_CARD, { amount: 1 });
+  }
+
+  moveCard(socket: Socket, payload: MoveCardPayload) {
+    const player = this.getPlayer(socket);
+    const { clashId, toZone, position } = payload;
+
+    const fromZone: Card[] = Object.values(player.zones).find((zone: Card[]) =>
+      zone.some((card) => card.clashId === clashId)
+    );
+    const card = fromZone?.find((c) => c.clashId === clashId);
+    const index = fromZone?.findIndex((c) => c.clashId === clashId);
+
+    fromZone.splice(index, 1);
+    player.zones[toZone].push({ ...card, position } as VisibleCard);
+
     this.emitPlayerUpdate(socket, player);
     this.logAction(socket, LOG_MESSAGES.DRAW_CARD, { amount: 1 });
   }

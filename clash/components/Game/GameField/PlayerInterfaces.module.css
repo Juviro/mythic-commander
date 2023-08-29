@@ -54,5 +54,6 @@
 
 .opponent :global(.battlefield)  {
     align-self: flex-end;
+    transform: rotate(180deg);
     height: calc(var(--opponent-battlefield-height) * 1%)
 }

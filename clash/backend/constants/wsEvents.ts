@@ -1,3 +1,5 @@
+import { Zone } from 'backend/database/gamestate.types';
+
 export const SOCKET_MSG_GENERAL = {
   ERROR: 'error',
   NOT_LOGGED_IN: 'not_logged_in',
@@ -22,4 +24,11 @@ export const SOCKET_MSG_GAME = {
   GAME_LOG: 'game_log',
 
   DRAW_CARD: 'draw_card',
+  MOVE_CARD: 'move_card',
 };
+
+export interface MoveCardPayload {
+  clashId: string;
+  toZone: Zone;
+  position?: { x: number; y: number };
+}

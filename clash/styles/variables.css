@@ -12,4 +12,6 @@
     --size-card-base-height: 345px;
     --size-card-width: var(--size-card-base-width);
     --size-card-height: var(--size-card-base-height);
+    --size-card-base-padding: 4px;
+    --size-card-padding: var(--size-card-base-padding);
 }

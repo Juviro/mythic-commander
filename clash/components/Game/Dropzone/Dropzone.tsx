@@ -1,12 +1,16 @@
 import React, { ReactNode } from 'react';
-import { useDrop } from 'react-dnd';
+import { DropTargetMonitor, useDrop } from 'react-dnd';
 
 import classNames from 'classnames';
 import styles from './Dropzone.module.css';
 
+export interface DropCard {
+  clashId: string;
+}
+
 interface Props {
   children: ReactNode;
-  onDrop: (card: { clashId: string }) => void;
+  onDrop: (card: DropCard, monitor: DropTargetMonitor) => void;
   disabled?: boolean;
 }
 
@@ -20,7 +24,7 @@ const Dropzone = ({ children, onDrop, disabled }: Props) => {
   });
 
   if (disabled) {
-    return children;
+    return <div>{children}</div>;
   }
 
   return (

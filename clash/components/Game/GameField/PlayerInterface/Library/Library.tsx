@@ -11,16 +11,17 @@ const MAX_DISPLAYED_CARDS = 10;
 
 interface Props {
   player: Player;
+  isSelf?: boolean;
 }
 
-const Library = ({ player }: Props) => {
+const Library = ({ player, isSelf }: Props) => {
   const { onDrawCard } = useGameActions();
   const { library } = player.zones;
 
   const cards = library.slice(0, MAX_DISPLAYED_CARDS);
 
   return (
-    <div className={StyleSheet.wrapper} onDoubleClick={onDrawCard}>
+    <div className={StyleSheet.wrapper} onDoubleClick={isSelf ? onDrawCard : undefined}>
       <CardStack cards={cards} emptyImage={<LibraryImage />} />
     </div>
   );

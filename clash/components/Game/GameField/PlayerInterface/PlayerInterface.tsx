@@ -15,14 +15,14 @@ interface Props {
 
 const PlayerInterface = ({ player, isSelf }: Props) => {
   return (
-    <div className={styles.interface_wrapper}>
+    <div
+      className={styles.interface_wrapper}
+      style={{ '--player-color': player.color } as CSSProperties}
+    >
       <Battlefield player={player} />
-      <div
-        className={styles.interface}
-        style={{ '--player-color': player.color } as CSSProperties}
-      >
+      <div className={styles.interface}>
         <Graveyard player={player} />
-        <Library player={player} />
+        <Library player={player} isSelf={isSelf} />
         <Hand player={player} isSelf={isSelf} />
         <div />
       </div>
