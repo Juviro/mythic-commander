@@ -1,12 +1,15 @@
 .wrapper {
-  width: var(--size-card-width);
-  height: var(--size-card-height);
   padding: var(--size-card-padding);
+  display: flex;
   border: 1px solid black;
   background-color: var(--player-color);
+  width: var(--size-card-width);
+  aspect-ratio: var(--card-aspect-ratio);
+  justify-content: center;
+  align-items: center;
 }
 
 .image {
   width: 100%;
-  border-radius: 12px;
+  border-radius: 4%;
 }

@@ -1,19 +1,18 @@
 .wrapper {
-    height: 75%;
-    width: 100%;
-    padding: 4px;
-    align-self: flex-start;
-    position: relative;
+  height: 75%;
+  width: 100%;
+  padding: 4px;
+  align-self: flex-start;
+  position: relative;
+  container: sidebar / inline-size;
 
-    --card-scale: calc(var(--scale, 1) * 0.5);
-    --size-card-width: calc(var(--size-card-base-width) * var(--card-scale));
-    --size-card-height: calc(var(--size-card-base-height) * var(--card-scale));
-    --size-card-padding: calc(var(--size-card-base-padding) * var(--card-scale));
+  --size-card-width: 7cqw;
+  --size-card-padding: 0.07cqw;
 }
 
 .card {
-    position: absolute;
-    top: var(--y);
-    left: var(--x);
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  transform: translate(-50%, -50%);
 }

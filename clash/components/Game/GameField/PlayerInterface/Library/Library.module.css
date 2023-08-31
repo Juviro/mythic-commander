@@ -3,5 +3,4 @@
   display: flex;
   align-items: flex-end;
   --size-card-width: calc(var(--size-card-base-width) * 0.5);
-  --size-card-height: calc(var(--size-card-base-height) * 0.5);
 }
