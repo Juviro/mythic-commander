@@ -5,17 +5,12 @@ import {
   VisibleCard,
   Zone,
 } from 'backend/database/gamestate.types';
-import {
-  MoveCardPayload,
-  SOCKET_MSG_GAME,
-  SOCKET_MSG_GENERAL,
-} from 'backend/constants/wsEvents';
+import { MoveCardPayload, SOCKET_MSG_GAME } from 'backend/constants/wsEvents';
 import { Server, Socket } from 'socket.io';
-import { User } from 'backend/database/getUser';
+import { User as DatabaseUser } from 'backend/database/getUser';
 import { LOG_MESSAGES, LogKey, LogPayload } from 'backend/constants/logMessages';
 
-interface StoredPlayer {
-  userId: string;
+interface User {
   name: string;
   socket: Socket;
 }
@@ -25,7 +20,7 @@ export default class Game {
 
   gameState: GameState;
 
-  players: { [socketId: string]: StoredPlayer } = {};
+  users: { [userId: string]: User } = {};
 
   constructor(gameState: GameState, server: Server) {
     this.server = server;
@@ -52,9 +47,9 @@ export default class Game {
     };
   }
 
-  obfuscateGameState(userId: string): GameState {
+  obfuscateGameState(playerId: string): GameState {
     const obfuscatedPlayers = this.gameState.players.map((player) => {
-      const isSelf = player.id === userId;
+      const isSelf = player.id === playerId;
       return Game.obfuscatePlayer(player, isSelf);
     });
 
@@ -71,13 +66,12 @@ export default class Game {
     this.server.to(this.id).emit(msg, data);
   }
 
-  emitGameState(socket: Socket) {
-    const { userId } = this.players[socket.id];
-    socket.emit(SOCKET_MSG_GAME.GAME_STATE, this.obfuscateGameState(userId));
+  emitGameState(socket: Socket, playerId: string) {
+    socket.emit(SOCKET_MSG_GAME.GAME_STATE, this.obfuscateGameState(playerId));
   }
 
   emitPlayerUpdate(player: Player) {
-    const thatPlayerId = this.getSocketId(player.id);
+    const thatPlayerId = this.users[player.id].socket.id;
     const messageToThatPlayer = Game.obfuscatePlayer(player, true);
     const messageToOtherPlayers = Game.obfuscatePlayer(player, false);
 
@@ -88,42 +82,32 @@ export default class Game {
       .emit(SOCKET_MSG_GAME.UPDATE_PLAYER, messageToOtherPlayers);
   }
 
-  join(socket: Socket, user: User) {
-    this.players[socket.id] = {
-      userId: user.id,
+  join(socket: Socket, user: DatabaseUser) {
+    this.users[user.id] = {
       name: user.username,
       socket,
     };
 
     socket.join(this.id);
-    this.emitGameState(socket);
+    this.emitGameState(socket, user.id);
   }
 
   // ##################### Utils #####################
 
-  getSelf(socket: Socket): Player {
-    const { userId } = this.players[socket.id];
-    const player = this.gameState.players.find(({ id }) => id === userId);
-    if (!player) {
-      socket.emit(SOCKET_MSG_GENERAL.ERROR, 'You are not in this game');
-      throw new Error('Player not found');
-    }
-    return player;
-  }
-
-  getPlayer(playerId: string): Player {
+  getPlayerById(playerId: string): Player {
     return this.gameState.players.find(({ id }) => id === playerId) as Player;
   }
 
-  getSocketId(playerId: string) {
-    return Object.values(this.players).find(({ userId: id }) => id === playerId)?.socket
-      .id as string;
+  getPlayerBySocket(socket: Socket): Player {
+    const userId = Object.entries(this.users).find(
+      ([, { socket: s }]) => s === socket
+    )![0];
+    return this.getPlayerById(userId);
   }
 
-  logAction(socket: Socket, message: LogKey, payload: LogPayload) {
-    const { userId } = this.players[socket.id];
+  logAction(playerId: string, message: LogKey, payload: LogPayload) {
     const newLogEntry = {
-      playerId: userId,
+      playerId,
       timestamp: Date.now(),
       logKey: message,
       payload,
@@ -136,13 +120,13 @@ export default class Game {
   // ##################### Actions #####################
 
   drawCard(socket: Socket) {
-    const player = this.getSelf(socket);
+    const player = this.getPlayerBySocket(socket);
     const card = player.zones.library.pop();
     if (!card) return;
 
     player.zones.hand.push(card);
     this.emitPlayerUpdate(player);
-    this.logAction(socket, LOG_MESSAGES.DRAW_CARD, { amount: 1 });
+    this.logAction(player.id, LOG_MESSAGES.DRAW_CARD, { amount: 1 });
   }
 
   moveCard(socket: Socket, payload: MoveCardPayload) {
@@ -171,15 +155,15 @@ export default class Game {
     }
 
     playersToUpdate.add(fromPlayer!.id);
-    const toPlayer = this.getPlayer(to.playerId);
+    const toPlayer = this.getPlayerById(to.playerId);
     toPlayer.zones[to.zone].push(newCard);
 
     playersToUpdate.forEach((playerId) => {
-      const player = this.getPlayer(playerId);
+      const player = this.getPlayerById(playerId);
       this.emitPlayerUpdate(player);
     });
 
-    this.logAction(socket, LOG_MESSAGES.MOVE_CARD, {
+    this.logAction(this.getPlayerBySocket(socket).id, LOG_MESSAGES.MOVE_CARD, {
       cardName: cardToMove!.name,
       from: {
         zone: fromZone!,
