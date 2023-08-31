@@ -29,6 +29,9 @@ export const SOCKET_MSG_GAME = {
 
 export interface MoveCardPayload {
   clashId: string;
-  toZone: Zone;
+  to: {
+    zone: Zone;
+    playerId: string;
+  };
   position?: { x: number; y: number };
 }

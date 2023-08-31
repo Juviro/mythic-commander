@@ -19,7 +19,7 @@ const PlayerInterface = ({ player, isSelf }: Props) => {
       className={styles.interface_wrapper}
       style={{ '--player-color': player.color } as CSSProperties}
     >
-      <Battlefield player={player} />
+      <Battlefield player={player} isSelf={isSelf} />
       <div className={styles.interface}>
         <Graveyard player={player} />
         <Library player={player} isSelf={isSelf} />

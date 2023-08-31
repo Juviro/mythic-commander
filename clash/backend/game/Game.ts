@@ -1,4 +1,10 @@
-import { Card, GameState, Player, VisibleCard } from 'backend/database/gamestate.types';
+import {
+  Card,
+  GameState,
+  Player,
+  VisibleCard,
+  Zone,
+} from 'backend/database/gamestate.types';
 import {
   MoveCardPayload,
   SOCKET_MSG_GAME,
@@ -19,7 +25,7 @@ export default class Game {
 
   gameState: GameState;
 
-  players: { [key: string]: StoredPlayer } = {};
+  players: { [socketId: string]: StoredPlayer } = {};
 
   constructor(gameState: GameState, server: Server) {
     this.server = server;
@@ -38,7 +44,6 @@ export default class Game {
 
     return {
       ...player,
-      isSelf,
       zones: {
         ...player.zones,
         library: player.zones.library.map(obfuscateCard),
@@ -71,11 +76,16 @@ export default class Game {
     socket.emit(SOCKET_MSG_GAME.GAME_STATE, this.obfuscateGameState(userId));
   }
 
-  emitPlayerUpdate(socket: Socket, player: Player) {
-    const messageToSelf = Game.obfuscatePlayer(player, true);
-    socket.emit(SOCKET_MSG_GAME.UPDATE_PLAYER, messageToSelf);
-    const messageToOthers = Game.obfuscatePlayer(player, false);
-    socket.to(this.id).emit(SOCKET_MSG_GAME.UPDATE_PLAYER, messageToOthers);
+  emitPlayerUpdate(player: Player) {
+    const thatPlayerId = this.getSocketId(player.id);
+    const messageToThatPlayer = Game.obfuscatePlayer(player, true);
+    const messageToOtherPlayers = Game.obfuscatePlayer(player, false);
+
+    this.server.to(thatPlayerId).emit(SOCKET_MSG_GAME.UPDATE_PLAYER, messageToThatPlayer);
+    this.server
+      .to(this.id)
+      .except(thatPlayerId)
+      .emit(SOCKET_MSG_GAME.UPDATE_PLAYER, messageToOtherPlayers);
   }
 
   join(socket: Socket, user: User) {
@@ -91,7 +101,7 @@ export default class Game {
 
   // ##################### Utils #####################
 
-  getPlayer(socket: Socket): Player {
+  getSelf(socket: Socket): Player {
     const { userId } = this.players[socket.id];
     const player = this.gameState.players.find(({ id }) => id === userId);
     if (!player) {
@@ -99,6 +109,15 @@ export default class Game {
       throw new Error('Player not found');
     }
     return player;
+  }
+
+  getPlayer(playerId: string): Player {
+    return this.gameState.players.find(({ id }) => id === playerId) as Player;
+  }
+
+  getSocketId(playerId: string) {
+    return Object.values(this.players).find(({ userId: id }) => id === playerId)?.socket
+      .id as string;
   }
 
   logAction(socket: Socket, message: LogKey, payload: LogPayload) {
@@ -117,29 +136,59 @@ export default class Game {
   // ##################### Actions #####################
 
   drawCard(socket: Socket) {
-    const player = this.getPlayer(socket);
+    const player = this.getSelf(socket);
     const card = player.zones.library.pop();
     if (!card) return;
 
     player.zones.hand.push(card);
-    this.emitPlayerUpdate(socket, player);
+    this.emitPlayerUpdate(player);
     this.logAction(socket, LOG_MESSAGES.DRAW_CARD, { amount: 1 });
   }
 
   moveCard(socket: Socket, payload: MoveCardPayload) {
-    const player = this.getPlayer(socket);
-    const { clashId, toZone, position } = payload;
+    const { clashId, to, position } = payload;
+    const playersToUpdate = new Set<string>([to.playerId]);
 
-    const fromZone: Card[] = Object.values(player.zones).find((zone: Card[]) =>
-      zone.some((card) => card.clashId === clashId)
+    let fromPlayer: Player;
+    let fromZone: Zone;
+    let cardToMove: VisibleCard;
+
+    this.gameState.players.forEach((player) =>
+      Object.entries(player.zones).forEach(([zone, cards]) =>
+        (cards as Card[]).some((card, index) => {
+          if (card.clashId !== clashId) return false;
+          fromPlayer = player;
+          fromZone = zone as Zone;
+          cardToMove = cards.splice(index, 1)[0] as VisibleCard;
+          return true;
+        })
+      )
     );
-    const card = fromZone?.find((c) => c.clashId === clashId);
-    const index = fromZone?.findIndex((c) => c.clashId === clashId);
 
-    fromZone.splice(index, 1);
-    player.zones[toZone].push({ ...card, position } as VisibleCard);
+    const newCard = { ...cardToMove!, position };
+    if (fromPlayer!.id !== to.playerId && !newCard.ownerId) {
+      newCard.ownerId = fromPlayer!.id;
+    }
 
-    this.emitPlayerUpdate(socket, player);
-    this.logAction(socket, LOG_MESSAGES.DRAW_CARD, { amount: 1 });
+    playersToUpdate.add(fromPlayer!.id);
+    const toPlayer = this.getPlayer(to.playerId);
+    toPlayer.zones[to.zone].push(newCard);
+
+    playersToUpdate.forEach((playerId) => {
+      const player = this.getPlayer(playerId);
+      this.emitPlayerUpdate(player);
+    });
+
+    this.logAction(socket, LOG_MESSAGES.MOVE_CARD, {
+      cardName: cardToMove!.name,
+      from: {
+        zone: fromZone!,
+        playerName: fromPlayer!.name,
+      },
+      to: {
+        zone: to.zone,
+        playerName: toPlayer.name,
+      },
+    });
   }
 }

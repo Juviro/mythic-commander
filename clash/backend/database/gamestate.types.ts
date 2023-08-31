@@ -7,6 +7,7 @@ export interface VisibleCard extends HiddenCard {
   clashId: string;
   id: string;
   name: string;
+  ownerId?: string;
   position?: {
     x: number;
     y: number;
@@ -42,7 +43,6 @@ export interface Player {
   commanders: Card[];
   zones: Zones;
   life: number;
-  isSelf?: boolean;
 }
 
 export interface GameState {

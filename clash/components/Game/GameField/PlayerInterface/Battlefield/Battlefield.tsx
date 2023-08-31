@@ -9,9 +9,10 @@ import BattlefieldCard from './BattlefieldCard';
 
 interface Props {
   player: Player;
+  isSelf?: boolean;
 }
 
-const Battlefield = ({ player }: Props) => {
+const Battlefield = ({ player, isSelf }: Props) => {
   const { onMoveCard } = useGameActions();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -20,10 +21,14 @@ const Battlefield = ({ player }: Props) => {
     const { left, top } = ref.current!.getBoundingClientRect();
     const relativeX = x - left;
     const relativeY = y - top;
-    const posX = (relativeX / ref.current!.clientWidth) * 100;
-    const posY = (relativeY / ref.current!.clientHeight) * 100;
+    let posX = (relativeX / ref.current!.clientWidth) * 100;
+    let posY = (relativeY / ref.current!.clientHeight) * 100;
+    if (!isSelf) {
+      posX = 100 - posX;
+      posY = 100 - posY;
+    }
 
-    onMoveCard(clashId, ZONES.BATTLEFIELD, { x: posX, y: posY });
+    onMoveCard(clashId, ZONES.BATTLEFIELD, player.id, { x: posX, y: posY });
   };
 
   const cards = player.zones.battlefield;

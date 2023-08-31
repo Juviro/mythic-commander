@@ -1,15 +1,20 @@
 export const LOG_MESSAGES = {
   DRAW_CARD: 'DRAW_CARD',
+  MOVE_CARD: 'MOVE_CARD',
 } as const;
 
 interface LogPayloadDraw {
   amount: number;
 }
 
+interface MoveCardLocation {
+  zone: string;
+  playerName: string;
+}
 interface LogPlayoadMoveZone {
-  cardId: string;
-  from: string;
-  to: string;
+  cardName: string;
+  from: MoveCardLocation;
+  to: MoveCardLocation;
 }
 
 export type LogPayload = LogPayloadDraw | LogPlayoadMoveZone;

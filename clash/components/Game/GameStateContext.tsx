@@ -5,13 +5,16 @@ import { GameState, Player } from 'backend/database/gamestate.types';
 import { GameLog } from 'backend/constants/logMessages';
 import { SOCKET_MSG_GAME } from '../../backend/constants/wsEvents';
 
-export interface InitializedGameState {
+interface BaseGameState {
+  getPlayerColor: (playerId?: string) => string | undefined;
+}
+export interface InitializedGameState extends BaseGameState {
   gameState: GameState;
   player: Player;
   isInitialized: true;
 }
 
-interface LoadingGameState {
+interface LoadingGameState extends BaseGameState {
   gameState: null;
   player: null;
   isInitialized: false;
@@ -23,6 +26,7 @@ const GameStateContext = React.createContext<InitializedGameState | LoadingGameS
   gameState: null,
   player: null,
   isInitialized: false,
+  getPlayerColor: () => undefined,
 });
 
 interface Props {
@@ -30,7 +34,7 @@ interface Props {
 }
 
 export const GameStateContextProvider = ({ children }: Props) => {
-  const { socket } = useContext(SocketContext);
+  const { socket, user } = useContext(SocketContext);
   const [gameState, setGameState] = useState<GameState | null>(null);
 
   useEffect(() => {
@@ -60,14 +64,19 @@ export const GameStateContextProvider = ({ children }: Props) => {
     });
   }, [socket]);
 
-  const player = gameState?.players.find(({ isSelf }) => isSelf);
+  const getPlayerColor = (playerId?: string) => {
+    const player = gameState?.players.find(({ id }) => id === playerId);
+    return player?.color;
+  };
+
+  const player = gameState?.players.find(({ id }) => id === user?.id);
 
   const value: GameStateContextType = useMemo(() => {
     if (!gameState || !player) {
-      return { gameState: null, player: null, isInitialized: false };
+      return { gameState: null, player: null, isInitialized: false, getPlayerColor };
     }
 
-    return { gameState, player, isInitialized: true };
+    return { gameState, player, isInitialized: true, getPlayerColor };
   }, [gameState]);
 
   return <GameStateContext.Provider value={value}>{children}</GameStateContext.Provider>;
