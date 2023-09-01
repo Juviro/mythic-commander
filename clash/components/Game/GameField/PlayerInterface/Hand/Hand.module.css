@@ -5,11 +5,19 @@
   align-items: center;
   height: 100%;
   grid-area: hand;
+  transform: translateY(0%);
+  transition: transform 0.1s;
+  padding-top: 10%;
+  /* background-color: #faaa; */
+}
+
+.wrapper:hover {
+  transform: translateY(-70%);
 }
 
 .card_wrapper {
   position: absolute;
-  transform-origin: 50% 100vw;
+  transform-origin: 50% 150vw;
   transform: rotate(calc(var(--rotation) * 1deg)) translateY(20%);
   transition: transform 0.1s;
 }
@@ -18,7 +26,8 @@
   z-index: 1;
 
   .card {
-    transform: rotate(calc(var(--rotation) * -1deg)) translateY(-70%) scale(1.5);
+    /* transform: translateY(-70%) scale(1.5); */
+    transform: rotate(calc(var(--rotation) * -1deg)) translateY(-70%) scale(1.2);
   }
 }
 

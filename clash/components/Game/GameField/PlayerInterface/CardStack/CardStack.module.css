@@ -1,4 +1,5 @@
 .wrapper {
+    --size-card-width: calc(var(--size-card-base-width) * 0.4);
     width: var(--size-card-width);
     aspect-ratio: var(--card-aspect-ratio);
     background: color-mix(in srgb, var(--player-color) 50%, transparent);

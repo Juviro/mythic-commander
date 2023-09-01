@@ -6,7 +6,7 @@
   position: relative;
   container: sidebar / inline-size;
 
-  --size-card-width: 7cqw;
+  --size-card-width: calc(calc(7cqw + 7cqh) / 2);
   --size-card-padding: 0.07cqw;
 }
 

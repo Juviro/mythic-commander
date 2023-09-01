@@ -42,7 +42,7 @@
   position: fixed;
   width: 100%;
   display: grid;
-  grid-template-columns: 150px 150px auto 100px;
+  grid-template-columns: 110px 110px auto 100px;
   grid-template-areas: 'graveyard library hand';
 }
 

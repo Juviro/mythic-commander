@@ -44,7 +44,7 @@ const Hand = ({ player, isSelf }: Props) => {
           className={styles.card_wrapper}
           style={
             {
-              '--rotation': getRotation(index, hand.length),
+              '--rotation': getRotation(index, hand.length) / 2,
             } as React.CSSProperties
           }
         >
