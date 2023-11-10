@@ -1,9 +1,9 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import Card from 'components/GameComponents/Card/Card';
 import { Player } from 'backend/database/gamestate.types';
 
-import classNames from 'classnames';
 import styles from './Hand.module.css';
 
 const getMaxDegree = (length: number) => {
@@ -17,12 +17,24 @@ const getMaxDegree = (length: number) => {
   return 17.5;
 };
 
-const getRotation = (index: number, length: number) => {
-  const from = getMaxDegree(length) * -1;
-  const to = getMaxDegree(length);
+const getRotation = (index: number, numberOfCards: number) => {
+  const from = getMaxDegree(numberOfCards) * -1;
+  const to = getMaxDegree(numberOfCards);
 
-  return from + ((to - from) / (length - 1)) * index;
+  const rotation = (from + ((to - from) / (numberOfCards - 1)) * index) * 0.5;
+  return rotation;
 };
+
+const getCardStyles = (index: number, numberOfCards: number) => {
+  const rotation = getRotation(index, numberOfCards);
+
+  return {
+    '--rotation': rotation,
+    '--additional-hover-rotation': Math.min(numberOfCards / 10, 3),
+  } as React.CSSProperties;
+};
+
+// const getRandomColor = () => `hsl(${Math.random() * 360}, 100%, 50%)`;
 
 interface Props {
   player: Player;
@@ -39,19 +51,24 @@ const Hand = ({ player, isSelf }: Props) => {
       })}
     >
       {hand.map((card, index) => (
-        <div
-          key={card.clashId}
-          className={styles.card_wrapper}
-          style={
-            {
-              '--rotation': getRotation(index, hand.length) / 2,
-            } as React.CSSProperties
-          }
-        >
-          <div className={styles.card}>
-            <Card card={card} draggable={isSelf} />
+        <React.Fragment key={card.clashId}>
+          <div
+            className={styles.hover_element}
+            style={{
+              // backgroundColor: getRandomColor(),
+              opacity: 0.5,
+            }}
+          />
+          <div
+            key={card.clashId}
+            className={styles.card_wrapper}
+            style={getCardStyles(index, hand.length)}
+          >
+            <div className={styles.card}>
+              <Card card={card} draggable={isSelf} />
+            </div>
           </div>
-        </div>
+        </React.Fragment>
       ))}
     </div>
   );
