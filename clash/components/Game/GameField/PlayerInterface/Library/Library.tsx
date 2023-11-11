@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { Player } from 'backend/database/gamestate.types';
+import { Player, ZONES } from 'backend/database/gamestate.types';
 import LibraryImage from 'public/assets/icons/library.svg';
 import useGameActions from 'components/Game/useGameActions';
+import Dropzone, { DropCard } from 'components/Game/Dropzone/Dropzone';
 import CardStack from '../CardStack/CardStack';
 
 import StyleSheet from './Library.module.css';
@@ -15,14 +16,20 @@ interface Props {
 }
 
 const Library = ({ player, isSelf }: Props) => {
-  const { onDrawCard } = useGameActions();
+  const { onMoveCard, onDrawCard } = useGameActions();
   const { library } = player.zones;
 
   const cards = library.slice(0, MAX_DISPLAYED_CARDS);
 
+  const onDrop = ({ clashId }: DropCard) => {
+    onMoveCard(clashId, ZONES.LIBRARY, player.id);
+  };
+
   return (
     <div className={StyleSheet.wrapper} onClick={isSelf ? onDrawCard : undefined}>
-      <CardStack cards={cards} emptyImage={<LibraryImage />} />
+      <Dropzone onDrop={onDrop}>
+        <CardStack cards={cards} emptyImage={<LibraryImage />} draggable />
+      </Dropzone>
     </div>
   );
 };
