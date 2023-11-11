@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import Card from 'components/GameComponents/Card/Card';
 import { Player } from 'backend/database/gamestate.types';
 
+import { useDrop } from 'react-dnd';
 import styles from './Hand.module.css';
 import HandHoverElement from './HandHoverElement';
 
@@ -43,11 +44,21 @@ interface Props {
 const Hand = ({ player, isSelf }: Props) => {
   const { hand } = player.zones;
 
+  const [{ isOver }, dropRef] = useDrop({
+    accept: 'CARD',
+    drop: () => null,
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  });
+
   return (
     <div
       className={classNames(styles.wrapper, {
-        [styles.is_self]: isSelf,
+        [styles.wrapper__is_self]: isSelf,
+        [styles.wrapper__is_over]: isOver,
       })}
+      ref={dropRef}
     >
       {hand.map((card, index) => (
         <React.Fragment key={card.clashId}>

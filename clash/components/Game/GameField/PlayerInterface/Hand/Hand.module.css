@@ -5,20 +5,19 @@
   align-items: center;
   height: 200%;
   grid-area: hand;
-  transform: translateY(0%);
+  transform: translateY(10%);
   transition: transform 0.1s;
   padding-top: 0%;
 }
 
-.is_self {
+.wrapper__is_self {
   cursor: grab;
 }
 
-.is_self:has(.hover_element__drop),
-.is_self:hover:not(:active) {
+.wrapper__is_over,
+.wrapper__is_self:hover:not(:active) {
   transform: translateY(-30%);
 }
-
 
 .card_wrapper {
   width: fit-content;
@@ -46,15 +45,18 @@
   }
 }
 
-
 .card_wrapper:has(~ .hover_element__drop),
 .card_wrapper:has(~ .hover_element:not(.hover_element__last):hover) {
-  --hover-rotation: calc(var(--rotation) - var(--hover-rotation-scale) - var(--additional-hover-rotation));
+  --hover-rotation: calc(
+    var(--rotation) - var(--hover-rotation-scale) - var(--additional-hover-rotation)
+  );
 }
 
 .hover_element__drop ~ .card_wrapper,
 .hover_element:hover + .card_wrapper ~ .card_wrapper {
-  --hover-rotation: calc(var(--rotation) + var(--hover-rotation-scale) + var(--additional-hover-rotation));
+  --hover-rotation: calc(
+    var(--rotation) + var(--hover-rotation-scale) + var(--additional-hover-rotation)
+  );
 }
 
 .hover_element:hover + .card_wrapper {
@@ -71,7 +73,7 @@
 .card {
   transition: transform 0.1s;
 }
-.is_self .hover_element {
+.wrapper__is_self .hover_element {
   height: 100%;
   z-index: 2;
   flex: 1;
