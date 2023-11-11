@@ -5,6 +5,7 @@ import Card from 'components/GameComponents/Card/Card';
 import { Player } from 'backend/database/gamestate.types';
 
 import styles from './Hand.module.css';
+import HandHoverElement from './HandHoverElement';
 
 const getMaxDegree = (length: number) => {
   if (length === 1) return 0;
@@ -34,8 +35,6 @@ const getCardStyles = (index: number, numberOfCards: number) => {
   } as React.CSSProperties;
 };
 
-// const getRandomColor = () => `hsl(${Math.random() * 360}, 100%, 50%)`;
-
 interface Props {
   player: Player;
   isSelf?: boolean;
@@ -52,13 +51,7 @@ const Hand = ({ player, isSelf }: Props) => {
     >
       {hand.map((card, index) => (
         <React.Fragment key={card.clashId}>
-          <div
-            className={styles.hover_element}
-            style={{
-              // backgroundColor: getRandomColor(),
-              opacity: 0.5,
-            }}
-          />
+          <HandHoverElement index={index} player={player} />
           <div
             key={card.clashId}
             className={styles.card_wrapper}
@@ -70,6 +63,7 @@ const Hand = ({ player, isSelf }: Props) => {
           </div>
         </React.Fragment>
       ))}
+      <HandHoverElement index={hand.length} isLast player={player} />
     </div>
   );
 };

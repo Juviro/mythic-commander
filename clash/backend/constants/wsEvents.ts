@@ -27,11 +27,15 @@ export const SOCKET_MSG_GAME = {
   MOVE_CARD: 'move_card',
 };
 
-export interface MoveCardPayload {
+export interface MoveCardDetails {
+  position?: { x: number; y: number };
+  index?: number;
+}
+
+export interface MoveCardPayload extends MoveCardDetails {
   clashId: string;
   to: {
     zone: Zone;
     playerId: string;
   };
-  position?: { x: number; y: number };
 }

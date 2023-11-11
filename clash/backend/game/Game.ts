@@ -130,20 +130,23 @@ export default class Game {
   }
 
   moveCard(socket: Socket, payload: MoveCardPayload) {
-    const { clashId, to, position } = payload;
+    const { clashId, to, position, index } = payload;
     const playersToUpdate = new Set<string>([to.playerId]);
 
     let fromPlayer: Player;
     let fromZone: Zone;
     let cardToMove: VisibleCard;
 
+    let spliceIndex = -1;
+
     this.gameState.players.forEach((player) =>
       Object.entries(player.zones).forEach(([zone, cards]) =>
-        (cards as Card[]).some((card, index) => {
+        (cards as Card[]).some((card, i) => {
           if (card.clashId !== clashId) return false;
           fromPlayer = player;
           fromZone = zone as Zone;
-          cardToMove = cards.splice(index, 1)[0] as VisibleCard;
+          spliceIndex = i;
+          cardToMove = cards.splice(i, 1)[0] as VisibleCard;
           return true;
         })
       )
@@ -156,7 +159,13 @@ export default class Game {
 
     playersToUpdate.add(fromPlayer!.id);
     const toPlayer = this.getPlayerById(to.playerId);
-    toPlayer.zones[to.zone].push(newCard);
+    if (typeof index === 'number') {
+      const isMovingToSameZone = fromZone! === to.zone && fromPlayer!.id === to.playerId;
+      const addIndex = spliceIndex < index && isMovingToSameZone ? index - 1 : index;
+      toPlayer.zones[to.zone].splice(addIndex, 0, newCard);
+    } else {
+      toPlayer.zones[to.zone].push(newCard);
+    }
 
     playersToUpdate.forEach((playerId) => {
       const player = this.getPlayerById(playerId);

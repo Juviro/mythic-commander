@@ -41,7 +41,9 @@ const Battlefield = ({ player, isSelf }: Props) => {
     }
     // const [snappedX, snappedY] = snapToGrid(posX, posY);
 
-    onMoveCard(clashId, ZONES.BATTLEFIELD, player.id, { x: posX, y: posY });
+    const position = { x: posX, y: posY };
+
+    onMoveCard(clashId, ZONES.BATTLEFIELD, player.id, { position });
   };
 
   const cards = player.zones.battlefield;

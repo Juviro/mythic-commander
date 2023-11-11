@@ -10,13 +10,15 @@
   padding-top: 0%;
 }
 
-.wrapper:hover {
+.is_self {
+  cursor: grab;
+}
+
+.is_self:has(.hover_element__drop),
+.is_self:hover:not(:active) {
   transform: translateY(-30%);
 }
 
-.wrapper:active {
-  transform: translateY(0%);
-}
 
 .card_wrapper {
   width: fit-content;
@@ -25,7 +27,6 @@
   transform-origin: 50% 220vw;
   transform: rotate(calc(var(--hover-rotation, var(--rotation)) * 1deg));
   transition: transform 0.1s;
-  cursor: grab;
   border-radius: 2px;
   transition: transform 0.1s;
 
@@ -45,10 +46,13 @@
   }
 }
 
-.card_wrapper:has(~ .hover_element:hover) {
+
+.card_wrapper:has(~ .hover_element__drop),
+.card_wrapper:has(~ .hover_element:not(.hover_element__last):hover) {
   --hover-rotation: calc(var(--rotation) - var(--hover-rotation-scale) - var(--additional-hover-rotation));
 }
 
+.hover_element__drop ~ .card_wrapper,
 .hover_element:hover + .card_wrapper ~ .card_wrapper {
   --hover-rotation: calc(var(--rotation) + var(--hover-rotation-scale) + var(--additional-hover-rotation));
 }
@@ -60,9 +64,15 @@
   }
 }
 
+.hover_element__hiddden {
+  width: 0;
+}
+
+.card {
+  transition: transform 0.1s;
+}
 .is_self .hover_element {
   height: 100%;
-  /* margin-top: -5%; */
   z-index: 2;
   flex: 1;
   max-width: var(--size-card-width);
