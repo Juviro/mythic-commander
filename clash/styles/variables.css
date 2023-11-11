@@ -7,6 +7,9 @@
     --color-success: #196e3b;
     --color-line: #949494;
     --color-overlay: #00000080;
+    --color-dropzone-border: blue;
+    --color-dropzone-can-drop: #1313e624;
+    --color-dropzone-is-over: #1313e65b;
 
     --size-card-base-width: 248px;
     --size-card-base-height: 345px;

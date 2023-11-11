@@ -1,9 +1,25 @@
 .wrapper {
-    border: 1px solid green;
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
-.is_over {
-    border: 1px solid red;
+.dropzone {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.dropzone__can_drop {
+  border: 2px solid var(--color-dropzone-border);
+  border-radius: 8px;
+  background: var(--color-dropzone-can-drop);
+}
+
+.dropzone__is_over {
+  background: var(--color-dropzone-is-over);
 }

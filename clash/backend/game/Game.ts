@@ -71,7 +71,8 @@ export default class Game {
   }
 
   emitPlayerUpdate(player: Player) {
-    const thatPlayerId = this.users[player.id].socket.id;
+    // might be undefined if player is not connected
+    const thatPlayerId = this.users[player.id]?.socket.id;
     const messageToThatPlayer = Game.obfuscatePlayer(player, true);
     const messageToOtherPlayers = Game.obfuscatePlayer(player, false);
 

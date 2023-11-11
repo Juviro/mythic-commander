@@ -19,18 +19,20 @@ const HandHoverElement = ({ index, isLast, player }: Props) => {
     onMoveCard(clashId, ZONES.HAND, player.id, { index });
   };
 
-  const [{ isOver }, dropRef] = useDrop({
+  const [{ isOver, canDrop }, dropRef] = useDrop({
     accept: 'CARD',
     drop: onDrop,
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
+      canDrop: !!monitor.canDrop(),
     }),
   });
 
   return (
     <div
       className={classNames(styles.hover_element, {
-        [styles.hover_element__drop]: isOver,
+        [styles.hover_element__is_over]: isOver,
+        [styles.hover_element__can_drop]: canDrop,
         [styles.hover_element__last]: isLast,
       })}
       ref={dropRef}

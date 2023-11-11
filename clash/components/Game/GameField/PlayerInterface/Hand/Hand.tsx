@@ -9,7 +9,6 @@ import styles from './Hand.module.css';
 import HandHoverElement from './HandHoverElement';
 
 const getMaxDegree = (length: number) => {
-  if (length === 1) return 0;
   if (length === 2) return 2.5;
   if (length === 3) return 5;
   if (length === 4) return 7.5;
@@ -20,6 +19,10 @@ const getMaxDegree = (length: number) => {
 };
 
 const getRotation = (index: number, numberOfCards: number) => {
+  if (numberOfCards <= 1) {
+    return 0;
+  }
+
   const from = getMaxDegree(numberOfCards) * -1;
   const to = getMaxDegree(numberOfCards);
 

@@ -19,6 +19,11 @@
   transform: translateY(-30%);
 }
 
+.hover_element__can_drop {
+  border-radius: 8px;
+  background: var(--color-dropzone-can-drop);
+}
+
 .card_wrapper {
   width: fit-content;
   height: 100%;
@@ -45,14 +50,14 @@
   }
 }
 
-.card_wrapper:has(~ .hover_element__drop),
+.card_wrapper:has(~ .hover_element__is_over),
 .card_wrapper:has(~ .hover_element:not(.hover_element__last):hover) {
   --hover-rotation: calc(
     var(--rotation) - var(--hover-rotation-scale) - var(--additional-hover-rotation)
   );
 }
 
-.hover_element__drop ~ .card_wrapper,
+.hover_element__is_over ~ .card_wrapper,
 .hover_element:hover + .card_wrapper ~ .card_wrapper {
   --hover-rotation: calc(
     var(--rotation) + var(--hover-rotation-scale) + var(--additional-hover-rotation)

@@ -15,11 +15,12 @@ interface Props {
 }
 
 const Dropzone = ({ children, onDrop, disabled }: Props) => {
-  const [{ isOver }, dropRef] = useDrop({
+  const [{ isOver, canDrop }, dropRef] = useDrop({
     accept: 'CARD',
     drop: onDrop,
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
+      canDrop: !!monitor.canDrop(),
     }),
   });
 
@@ -28,12 +29,13 @@ const Dropzone = ({ children, onDrop, disabled }: Props) => {
   }
 
   return (
-    <div
-      ref={dropRef}
-      className={classNames(styles.wrapper, {
-        [styles.is_over]: isOver,
-      })}
-    >
+    <div className={styles.wrapper} ref={dropRef}>
+      <div
+        className={classNames(styles.dropzone, {
+          [styles.dropzone__is_over]: isOver,
+          [styles.dropzone__can_drop]: canDrop,
+        })}
+      />
       {children}
     </div>
   );
