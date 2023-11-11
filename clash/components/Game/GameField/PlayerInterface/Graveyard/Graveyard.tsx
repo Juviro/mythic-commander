@@ -18,7 +18,7 @@ const Graveyard = ({ player }: Props) => {
   const { onMoveCard } = useGameActions();
   const { graveyard } = player.zones;
 
-  const cards = graveyard.slice(0, MAX_DISPLAYED_CARDS);
+  const cards = graveyard.slice(-MAX_DISPLAYED_CARDS);
 
   const onDrop = ({ clashId }: DropCard) => {
     onMoveCard(clashId, ZONES.GRAVEYARD, player.id);

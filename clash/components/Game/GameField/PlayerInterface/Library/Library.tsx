@@ -19,7 +19,7 @@ const Library = ({ player, isSelf }: Props) => {
   const { onMoveCard, onDrawCard } = useGameActions();
   const { library } = player.zones;
 
-  const cards = library.slice(0, MAX_DISPLAYED_CARDS);
+  const cards = library.slice(-MAX_DISPLAYED_CARDS);
 
   const onDrop = ({ clashId }: DropCard) => {
     onMoveCard(clashId, ZONES.LIBRARY, player.id);

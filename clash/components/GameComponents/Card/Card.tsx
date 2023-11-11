@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useDrag } from 'react-dnd';
 
 import { Card as CardType } from 'backend/database/gamestate.types';
@@ -6,6 +6,7 @@ import { getImageUrl } from 'utils/getImageUrl';
 
 import classNames from 'classnames';
 import styles from './Card.module.css';
+import useAnimateCardPositionChange from './useAnimateCardPositionChange';
 
 interface Props {
   card: CardType;
@@ -13,6 +14,8 @@ interface Props {
 }
 
 const Card = ({ card, draggable }: Props) => {
+  const cardRef = useRef<HTMLDivElement | null>(null);
+
   const [{ isDragging }, dragRef] = useDrag({
     type: 'CARD',
     item: { clashId: card.clashId },
@@ -26,6 +29,8 @@ const Card = ({ card, draggable }: Props) => {
     }),
   });
 
+  useAnimateCardPositionChange(card, cardRef);
+
   const hidden = !('id' in card);
 
   return (
@@ -33,7 +38,10 @@ const Card = ({ card, draggable }: Props) => {
       className={classNames(styles.wrapper, {
         [styles.dragging]: isDragging,
       })}
-      ref={dragRef}
+      ref={(val) => {
+        dragRef(val);
+        cardRef.current = val!;
+      }}
     >
       {!hidden && <img className={styles.image} src={getImageUrl(card.id)} />}
     </div>
