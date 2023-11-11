@@ -23,6 +23,7 @@ const gameSocketActions = (io: Server) => {
         socket.emit(SOCKET_MSG_GAME.INITIALIZE, user);
       } catch {
         socket.emit(SOCKET_MSG_GENERAL.NOT_LOGGED_IN);
+        return;
       }
 
       const gameState = await getGameState(gameId);

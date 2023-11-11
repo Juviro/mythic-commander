@@ -1,4 +1,8 @@
-import { MoveCardPayload, SOCKET_MSG_GAME } from 'backend/constants/wsEvents';
+import {
+  MoveCardDetails,
+  MoveCardPayload,
+  SOCKET_MSG_GAME,
+} from 'backend/constants/wsEvents';
 import { Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
 import { useContext } from 'react';
@@ -14,12 +18,12 @@ const useGameActions = () => {
     clashId: string,
     toZone: Zone,
     zonePlayerId: string,
-    position?: { x: number; y: number }
+    details?: MoveCardDetails
   ) => {
     const payload: MoveCardPayload = {
       clashId,
       to: { zone: toZone, playerId: zonePlayerId },
-      position,
+      ...details,
     };
     socket?.emit(SOCKET_MSG_GAME.MOVE_CARD, payload);
   };

@@ -21,7 +21,7 @@ const Library = ({ player, isSelf }: Props) => {
   const cards = library.slice(0, MAX_DISPLAYED_CARDS);
 
   return (
-    <div className={StyleSheet.wrapper} onDoubleClick={isSelf ? onDrawCard : undefined}>
+    <div className={StyleSheet.wrapper} onClick={isSelf ? onDrawCard : undefined}>
       <CardStack cards={cards} emptyImage={<LibraryImage />} />
     </div>
   );

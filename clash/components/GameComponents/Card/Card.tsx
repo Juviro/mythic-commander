@@ -4,6 +4,7 @@ import { useDrag } from 'react-dnd';
 import { Card as CardType } from 'backend/database/gamestate.types';
 import { getImageUrl } from 'utils/getImageUrl';
 
+import classNames from 'classnames';
 import styles from './Card.module.css';
 
 interface Props {
@@ -12,10 +13,10 @@ interface Props {
 }
 
 const Card = ({ card, draggable }: Props) => {
-  const [, dragRef] = useDrag({
+  const [{ isDragging }, dragRef] = useDrag({
     type: 'CARD',
     item: { clashId: card.clashId },
-    canDrag: draggable,
+    canDrag: Boolean(draggable),
     previewOptions: {
       offsetX: -200,
       offsetY: -200,
@@ -28,7 +29,12 @@ const Card = ({ card, draggable }: Props) => {
   const hidden = !('id' in card);
 
   return (
-    <div className={styles.wrapper} ref={dragRef}>
+    <div
+      className={classNames(styles.wrapper, {
+        [styles.dragging]: isDragging,
+      })}
+      ref={dragRef}
+    >
       {!hidden && <img className={styles.image} src={getImageUrl(card.id)} />}
     </div>
   );
