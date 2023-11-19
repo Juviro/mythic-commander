@@ -17,8 +17,8 @@ const StyledWrapper = styled.section`
 `;
 
 const StyledCardWrapper = styled.div`
-  height: 320.5px;
-  width: 230px;
+  height: 347px;
+  width: 249px;
   position: relative;
 
   ${shimmer}
