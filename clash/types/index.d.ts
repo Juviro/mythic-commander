@@ -1,9 +1,13 @@
+import { Zone } from 'backend/database/gamestate.types';
+
 export {};
 
-interface CardPosition {
+export interface CardPosition {
   x: number;
   y: number;
   width: number;
+  isVisible: boolean;
+  zone?: Zone;
 }
 
 declare global {

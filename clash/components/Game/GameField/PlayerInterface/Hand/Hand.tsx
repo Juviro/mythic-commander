@@ -72,7 +72,7 @@ const Hand = ({ player, isSelf }: Props) => {
             style={getCardStyles(index, hand.length)}
           >
             <div className={styles.card}>
-              <Card card={card} draggable={isSelf} />
+              <Card card={card} draggable={isSelf} zone="hand" />
             </div>
           </div>
         </React.Fragment>

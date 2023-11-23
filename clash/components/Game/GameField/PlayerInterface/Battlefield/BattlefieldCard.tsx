@@ -21,7 +21,7 @@ const BattlefieldCard = ({ card }: Props) => {
 
   return (
     <div className={styles.card} style={style}>
-      <Card card={card} draggable />
+      <Card card={card} draggable zone="battlefield" />
     </div>
   );
 };

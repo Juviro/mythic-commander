@@ -2,9 +2,16 @@
 
 * hands wrapper width needs to be as wide as cards, otherwise the outer cards can't be dragged when the user has a lot of cards
 
+# Missing in current feature
+
+* fix flipped movement on opponent's battlefield
+* dragging a hand card removes the image
+* changing battlefield position will animate from last zone it was in
+* move card position state to context ref
 
 # Next features
 
+* animate card flip when moving card from library to any other zone
 * fix card move animation on opponent side
 
 * layout:

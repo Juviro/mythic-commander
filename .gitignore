@@ -35,3 +35,4 @@ yarn-error.log*
 
 # clash
 /clash/.next
+/clash/tsconfig.tsbuildinfo

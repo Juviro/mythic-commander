@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useDrag } from 'react-dnd';
 
-import { Card as CardType } from 'backend/database/gamestate.types';
+import { Card as CardType, Zone } from 'backend/database/gamestate.types';
 import { getImageUrl } from 'utils/getImageUrl';
 
 import classNames from 'classnames';
@@ -11,9 +11,10 @@ import useAnimateCardPositionChange from './useAnimateCardPositionChange';
 interface Props {
   card: CardType;
   draggable?: boolean;
+  zone?: Zone;
 }
 
-const Card = ({ card, draggable }: Props) => {
+const Card = ({ card, draggable, zone }: Props) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
 
   const [{ isDragging }, dragRef] = useDrag({
@@ -29,7 +30,7 @@ const Card = ({ card, draggable }: Props) => {
     }),
   });
 
-  useAnimateCardPositionChange(card, cardRef);
+  useAnimateCardPositionChange(card, cardRef, zone);
 
   const hidden = !('id' in card);
 

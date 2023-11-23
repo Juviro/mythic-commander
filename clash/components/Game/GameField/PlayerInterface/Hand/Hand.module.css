@@ -15,7 +15,8 @@
 }
 
 .wrapper__is_over,
-.wrapper__is_self:hover:not(:active) {
+.wrapper:has(.hover_element:hover)
+{
   transform: translateY(-30%);
 }
 
