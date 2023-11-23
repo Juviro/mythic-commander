@@ -5,7 +5,6 @@
 # Missing in current feature
 
 * fix flipped movement on opponent's battlefield
-* dragging a hand card removes the image
 * changing battlefield position will animate from last zone it was in
 * move card position state to context ref
 
