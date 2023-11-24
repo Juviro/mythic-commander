@@ -8,9 +8,12 @@ export const StyledWrapper = styled.div`
 `;
 
 export const StyledInputWrapper = styled.div`
-  width: 100%;
   height: 100%;
   display: flex;
+  max-height: 60vh;
+  overflow: auto;
+  margin: 0 -24px;
+  padding: 0 24px;
 `;
 
 export const StyledStatus = styled.div`
