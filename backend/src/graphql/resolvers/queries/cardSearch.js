@@ -38,18 +38,19 @@ const addOwnedClause = (
 ) => {
   const operator = isOwned === 'true' ? 'IN' : 'NOT IN';
 
-  if (sets?.length) {
-    q.whereRaw(
-      `??.oracle_id ${operator} (SELECT DISTINCT oracle_id FROM cards LEFT JOIN collection ON collection.id = cards.id WHERE "userId" = ? AND set IN (?))`,
-      [tableName, userId, sets.join(',')]
-    );
-
-    return;
-  }
   if (displayAllVariants) {
     q.whereRaw(
       `??.id ${operator} (SELECT id FROM collection WHERE "userId" = ?)`,
       [tableName, userId]
+    );
+
+    return;
+  }
+
+  if (sets?.length) {
+    q.whereRaw(
+      `??.oracle_id ${operator} (SELECT DISTINCT oracle_id FROM cards LEFT JOIN collection ON collection.id = cards.id WHERE "userId" = ? AND set IN (?))`,
+      [tableName, userId, sets.join(',')]
     );
 
     return;
