@@ -22,8 +22,8 @@ const StyledPrintWrapper = styled.div`
 
 const StyledCardWrapper = styled.div`
   margin: -1px;
-  height: 332px;
-  width: 238px;
+  height: 335px;
+  width: 241px;
   padding: 1px;
   border: 1px solid rgb(0, 0, 0, 0.85);
   float: left;
@@ -42,7 +42,6 @@ interface Props {
 const PrintView = ({ cards }: Props) => {
   const displayedCards = [];
 
-  // eslint-disable-next-line no-unused-expressions
   cards?.forEach((card) => {
     for (let i = 0; i < card.amount; i++) {
       displayedCards.push({
