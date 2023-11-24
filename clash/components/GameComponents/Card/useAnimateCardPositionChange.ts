@@ -14,7 +14,8 @@ const storeCardPosition = (
   zone?: Zone
 ) => {
   if (!cardRef.current) return;
-  const { width, x, y } = cardRef.current.getBoundingClientRect();
+  const parent = cardRef.current.parentNode as HTMLDivElement;
+  const { width, x, y } = parent.getBoundingClientRect();
   // eslint-disable-next-line no-param-reassign
   cardPositions.current[clashId] = {
     isVisible,
@@ -55,13 +56,15 @@ const animateDirectPositionChange = (
 
 const animateArcPositionChange = (
   storedPosition: CardPosition,
-  cardRef: React.RefObject<HTMLDivElement>
+  cardRef: React.RefObject<HTMLDivElement>,
+  isVisible?: boolean
 ) => {
   const { width, x } = cardRef.current!.getBoundingClientRect();
 
   const deltaX = storedPosition.x - storedPosition.width / 2 - x;
   const deltaWidth = storedPosition.width / width;
   const radius = Math.abs(deltaX / 2);
+  const rotateY = storedPosition.isVisible === isVisible ? 0 : 180;
 
   const from = `
             translateX(${-radius}px)
@@ -70,7 +73,7 @@ const animateArcPositionChange = (
             scale(${deltaWidth})
             rotate(-180deg)
             translateY(-200px)
-            rotateY(180deg)
+            rotateY(${rotateY}deg)
           `;
   const to = `
             translateX(${-radius}px)
@@ -90,8 +93,6 @@ const animateArcPositionChange = (
     },
   ];
 
-  const duration = 1000;
-
   cardRef.current!.animate(animationSteps, {
     duration: 1000,
     easing: 'cubic-bezier(.18,.55,.36,.99)',
@@ -102,14 +103,15 @@ const animateCardPositionChange = (
   cardRef: React.RefObject<HTMLDivElement>,
   clashId: string,
   cardPositions: CardPositions,
-  zone?: Zone
+  zone?: Zone,
+  isVisible?: boolean
 ) => {
   const storedPosition = cardPositions.current[clashId];
   if (!cardRef.current || !storedPosition) return;
 
-  const fromLibToHand = storedPosition.zone === 'library' && zone === 'hand';
-  if (fromLibToHand) {
-    animateArcPositionChange(storedPosition, cardRef);
+  const animateInArc = zone === 'hand';
+  if (animateInArc) {
+    animateArcPositionChange(storedPosition, cardRef, isVisible);
   } else {
     animateDirectPositionChange(storedPosition, cardRef);
   }
@@ -130,7 +132,7 @@ const useAnimateCardPositionChange = (
 
   useLayoutEffect(() => {
     if (cardPositions.current[clashId] && cardRef.current) {
-      animateCardPositionChange(cardRef, clashId, cardPositions, zone);
+      animateCardPositionChange(cardRef, clashId, cardPositions, zone, isVisible);
     }
 
     return () => {

@@ -5,8 +5,6 @@
 # Missing in current feature
 
 * fix flipped movement on opponent's battlefield
-* changing battlefield position will animate from last zone it was in
-* move card position state to context ref
 
 # Next features
 
