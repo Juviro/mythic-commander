@@ -164,7 +164,12 @@ export default async (
     q.whereNot('set_type', 'token');
     if (name) addNameClause(q, name);
     if (text) q.where('oracle_text', 'ILIKE', `%${text}%`);
-    if (subTypes?.length) q.where('type_line', '~*', subTypes.join('|'));
+    if (subTypes?.length)
+      q.where(
+        'type_line',
+        '~*',
+        subTypes.map((type) => ` ${type}( |$)`).join('|')
+      );
     if (cardTypes?.length) q.where('type_line', '~*', cardTypes.join('|'));
     if (sets?.length) q.whereIn('set', sets);
     if (isCommanderLegal === 'true')
