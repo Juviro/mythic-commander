@@ -16,6 +16,9 @@ export const VARIANTS = {
   FUTURE_FRAME: 'Future Frame',
   RETRO_FRAME: 'Retro Frame',
   TEXTLESS: 'Textless',
+  CONFETTI_FOIL: 'Confetti Foil',
+  EMBOSSED: 'Embossed',
+  SURGE_FOIL: 'Surge Foil',
 };
 
 const HIDDEN_VARIANTS = {
@@ -39,6 +42,15 @@ export const getCardVariants = ({
   }
   if (promo_types?.includes('textured')) {
     variants.push(VARIANTS.TEXTURED);
+  }
+  if (promo_types?.includes('confettifoil')) {
+    variants.push(VARIANTS.CONFETTI_FOIL);
+  }
+  if (promo_types?.includes('embossed')) {
+    variants.push(VARIANTS.EMBOSSED);
+  }
+  if (promo_types?.includes('surgefoil')) {
+    variants.push(VARIANTS.SURGE_FOIL);
   }
   if (promo_types?.includes('stepandcompleat')) {
     variants.push(VARIANTS.COMPLEAT);
