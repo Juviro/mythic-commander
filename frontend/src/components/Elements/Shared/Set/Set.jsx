@@ -13,9 +13,6 @@ const StyledSetIcon = styled.img`
 `;
 
 const StyledSetName = styled.div`
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   height: 24px;
   line-height: 24px;
 
@@ -24,19 +21,34 @@ const StyledSetName = styled.div`
   }
 `;
 
+const StyledLink = styled(Link)`
+  width: calc(100% - 12px);
+  display: inline-flex;
+`;
+
+const StylesSetNameOnly = styled.span`
+  margin-right: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
+
 export default ({ setKey, name: overwriteName }) => {
   const { sets } = useContext(CardContext);
   const { name, icon_svg_uri } = sets[setKey] || {};
   const setName = overwriteName || name;
   const to = getDynamicUrl(`/search?sets=${setKey}`);
 
+  const [, setNameOnly, variant] = setName.match(/([^(]+)(\(.*\))?/);
+
   return (
     <DesktopTooltip title={setName}>
       <StyledSetName>
-        {icon_svg_uri && <StyledSetIcon src={icon_svg_uri} alt="seticon" />}
-        <Link to={to} onClick={(e) => e.stopPropagation()} tabIndex="-1">
-          {setName}
-        </Link>
+        {icon_svg_uri && <StyledSetIcon src={icon_svg_uri} alt="" />}
+        <StyledLink to={to} onClick={(e) => e.stopPropagation()} tabIndex="-1">
+          <StylesSetNameOnly>{setNameOnly}</StylesSetNameOnly>
+          <span>{variant}</span>
+        </StyledLink>
       </StyledSetName>
     </DesktopTooltip>
   );
