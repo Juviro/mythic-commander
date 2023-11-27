@@ -12,7 +12,7 @@
   backface-visibility: hidden;
 }
 
-.wrapper:not(:hover)::after {
+:global(.flipping).wrapper::after {
   position: absolute;
   content: '';
   width: 100%;
@@ -30,11 +30,6 @@
   opacity: 0.01;
   transform-style: unset;
   backface-visibility: unset;
-}
-
-.dragging::after {
-  display: none;
-  background-color: transparent;
 }
 
 .image {

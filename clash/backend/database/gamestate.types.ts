@@ -1,5 +1,6 @@
 import { GameLog } from 'backend/constants/logMessages';
 
+// ##################### Card #####################
 interface HiddenCard {
   clashId: string;
 }
@@ -16,6 +17,7 @@ export interface VisibleCard extends HiddenCard {
 
 export type Card = HiddenCard | VisibleCard;
 
+// ##################### Zone #####################
 interface Zones {
   hand: Card[];
   library: Card[];
@@ -36,6 +38,7 @@ export const ZONES = {
   BATTLEFIELD: 'battlefield',
 } as const;
 
+// ##################### Player #####################
 export interface Player {
   id: string;
   name: string;
@@ -45,6 +48,7 @@ export interface Player {
   life: number;
 }
 
+// ##################### GameState #####################
 export interface GameState {
   gameId: string;
   players: Player[];
