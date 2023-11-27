@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-cycle
 import { GameLog } from 'backend/constants/logMessages';
 
 // ##################### Card #####################

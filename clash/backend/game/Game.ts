@@ -197,4 +197,13 @@ export default class Game {
       },
     });
   }
+
+  sendChatMessage(socket: Socket, message: string) {
+    const player = this.getPlayerBySocket(socket);
+    this.logAction({
+      playerId: player.id,
+      logKey: LOG_MESSAGES.CHAT_MESSAGE,
+      payload: message.slice(0, 1000),
+    });
+  }
 }

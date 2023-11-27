@@ -3,8 +3,8 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 
 import GameStateContext from 'components/Game/GameStateContext';
 
-import styles from './Chat.module.css';
-import ChatMessage from './ChatMessage/ChatMessage';
+import styles from '../Chat.module.css';
+import ChatMessage from './ChatMessage';
 
 const ChatMessages = () => {
   const { gameState } = useContext(GameStateContext);

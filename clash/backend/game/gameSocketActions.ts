@@ -8,8 +8,6 @@ import {
 } from '../constants/wsEvents';
 import Game from './Game';
 
-// TODO: store currentGames (in redis?)
-
 const gameSocketActions = (io: Server) => {
   const currentGames: { [key: string]: Game } = {};
 
@@ -51,6 +49,10 @@ const gameSocketActions = (io: Server) => {
 
     socket.on(SOCKET_MSG_GAME.MOVE_CARD, (payload: MoveCardPayload) => {
       currentGames[currentGameId].moveCard(socket, payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.SEND_CHAT_MESSAGE, (message: string) => {
+      currentGames[currentGameId].sendChatMessage(socket, message);
     });
   });
 };

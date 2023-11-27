@@ -6,6 +6,7 @@ import GameStateContext from 'components/Game/GameStateContext';
 import styles from '../Chat.module.css';
 import MessageDraw from './MessageDraw';
 import MessageMove from './MessageMove';
+import MessageChat from './MessageChat';
 
 interface Props {
   message: GameLog;
@@ -26,6 +27,9 @@ const ChatMessage = ({ message }: Props) => {
   }
   if (logKey === 'MOVE_CARD') {
     return <MessageMove playerName={playerName} playerId={playerId} payload={payload} />;
+  }
+  if (logKey === 'CHAT_MESSAGE') {
+    return <MessageChat playerName={playerName} playerId={playerId} message={payload} />;
   }
 
   return <div className={styles.message}>{logKey}</div>;

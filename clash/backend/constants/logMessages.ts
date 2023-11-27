@@ -4,6 +4,7 @@ import { Zone } from 'backend/database/gamestate.types';
 export const LOG_MESSAGES = {
   DRAW_CARD: 'DRAW_CARD',
   MOVE_CARD: 'MOVE_CARD',
+  CHAT_MESSAGE: 'CHAT_MESSAGE',
 } as const;
 
 interface MoveCardLocation {
@@ -38,7 +39,12 @@ interface LogMessageMove extends LogMessageWithPlayer {
   payload: LogPlayoadMoveZone;
 }
 
-export type LogMessage = LogMessageDraw | LogMessageMove;
+interface LogMessageChat extends LogMessageWithPlayer {
+  logKey: 'CHAT_MESSAGE';
+  payload: string;
+}
+
+export type LogMessage = LogMessageDraw | LogMessageMove | LogMessageChat;
 
 export type GameLog = {
   timestamp: number;

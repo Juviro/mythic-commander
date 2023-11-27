@@ -1,15 +1,15 @@
 import React from 'react';
-import { Input } from 'antd';
 
-import ChatMessages from './ChatMessages';
+import ChatMessages from './ChatMessages/ChatMessages';
 
 import styles from './Chat.module.css';
+import ChatInput from './ChatInput/ChatInput';
 
 const GameChat = () => {
   return (
     <div className={styles.wrapper}>
       <ChatMessages />
-      <Input placeholder="Insult the other players..." />
+      <ChatInput />
     </div>
   );
 };
