@@ -1,9 +1,40 @@
 .wrapper {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column-reverse;
+  display: grid;
 }
+
+/* one player */
+.wrapper:has(> :last-child:nth-child(2)) {
+  grid-template-columns: 1fr auto;
+  grid-template-areas: 
+    'player1 menu'
+}
+
+/* two players */
+.wrapper:has(> :last-child:nth-child(3)) {
+  grid-template-columns: 1fr auto;
+  grid-template-areas: 
+    'player1 menu'
+    'player2 menu';
+}
+
+/* three players */
+.wrapper:has(> :last-child:nth-child(4)) {
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 
+    'player1 player2'
+    'player3 menu';
+}
+
+/* four players */
+.wrapper:has(> :last-child:nth-child(5)) {
+  grid-template-columns: 1fr 1fr auto;
+  grid-template-areas: 
+    'player1 player2 menu'
+    'player4 player3 menu';
+}
+
 
 .self {
   position: fixed;
@@ -14,46 +45,22 @@
   justify-content: space-between;
 }
 
-.opponents {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.opponent {
-  flex: 1;
-}
 
 /* single interface */
-
-.opponent .interface_wrapper {
-  align-items: flex-start;
-}
-
 .interface_wrapper {
   height: 100%;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+}
+
+.opponent .interface_wrapper {
+  flex-direction: column-reverse;
 }
 
 .interface {
-  position: fixed;
   width: 100%;
   display: grid;
+  container: interface / inline-size;
   grid-template-columns: 110px 110px auto 100px;
   grid-template-areas: 'graveyard library hand';
-}
-
-.opponent .interface {
-  grid-template-columns: 150px 150px auto;
-  transform: rotate(180deg) scale(var(--scale));
-  transform-origin: calc(var(--origin-offset-x) * 1%) calc(var(--origin-offset-y) * 1%);
-}
-
-.opponent :global(.battlefield)  {
-    align-self: flex-end;
-    transform: rotate(180deg);
-    height: calc(var(--opponent-battlefield-height) * 1%)
 }

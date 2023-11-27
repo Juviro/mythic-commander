@@ -1,5 +1,5 @@
 .wrapper {
-  height: 75%;
+  flex: 1;
   width: 100%;
   padding: 4px;
   align-self: flex-start;
@@ -15,4 +15,8 @@
   top: var(--y);
   left: var(--x);
   transform: translate(-50%, -50%);
+}
+
+:global(.opponent) .card img {
+  transform: rotate(180deg);
 }

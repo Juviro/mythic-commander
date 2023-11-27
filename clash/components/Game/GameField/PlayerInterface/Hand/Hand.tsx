@@ -35,7 +35,7 @@ const getCardStyles = (index: number, numberOfCards: number) => {
 
   return {
     '--rotation': rotation,
-    '--additional-hover-rotation': Math.min(numberOfCards / 10, 3),
+    '--additional-hover-rotation': Math.min(numberOfCards / 2, 4),
   } as React.CSSProperties;
 };
 
@@ -72,7 +72,7 @@ const Hand = ({ player, isSelf }: Props) => {
             style={getCardStyles(index, hand.length)}
           >
             <div className={styles.card}>
-              <Card card={card} draggable={isSelf} />
+              <Card card={card} draggable={isSelf} zone="hand" />
             </div>
           </div>
         </React.Fragment>

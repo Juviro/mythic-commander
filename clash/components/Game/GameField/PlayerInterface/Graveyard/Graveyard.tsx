@@ -27,7 +27,12 @@ const Graveyard = ({ player }: Props) => {
   return (
     <div className={styles.wrapper}>
       <Dropzone onDrop={onDrop}>
-        <CardStack cards={cards} emptyImage={<GraveyardImage />} draggable />
+        <CardStack
+          cards={cards}
+          emptyImage={<GraveyardImage />}
+          draggable
+          zone="graveyard"
+        />
       </Dropzone>
     </div>
   );
