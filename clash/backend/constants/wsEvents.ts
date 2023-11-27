@@ -19,9 +19,10 @@ export const SOCKET_MSG_LOBBY = {
 
 export const SOCKET_MSG_GAME = {
   INITIALIZE: 'initialize_game',
-  GAME_STATE: 'gameState',
+  GAME_STATE: 'game_state',
   UPDATE_PLAYER: 'update_player',
   GAME_LOG: 'game_log',
+  SEND_CHAT_MESSAGE: 'send_chat_message',
 
   DRAW_CARD: 'draw_card',
   MOVE_CARD: 'move_card',

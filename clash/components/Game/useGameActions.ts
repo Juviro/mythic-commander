@@ -28,9 +28,14 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.MOVE_CARD, payload);
   };
 
+  const onSendChatMessage = (message: string) => {
+    socket?.emit(SOCKET_MSG_GAME.SEND_CHAT_MESSAGE, message);
+  };
+
   return {
     onDrawCard,
     onMoveCard,
+    onSendChatMessage,
   };
 };
 
