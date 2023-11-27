@@ -109,7 +109,7 @@ const animateCardPositionChange = (
   const storedPosition = cardPositions.current[clashId];
   if (!cardRef.current || !storedPosition) return;
 
-  const animateInArc = zone === 'hand';
+  const animateInArc = zone === 'hand' && storedPosition.zone === 'library';
   if (animateInArc) {
     animateArcPositionChange(storedPosition, cardRef, isVisible);
   } else {
@@ -130,6 +130,7 @@ const useAnimateCardPositionChange = (
   const isVisible = 'id' in card;
   const { clashId } = card;
 
+  // animation on zone change
   useLayoutEffect(() => {
     if (cardPositions.current[clashId] && cardRef.current) {
       animateCardPositionChange(cardRef, clashId, cardPositions, zone, isVisible);
@@ -138,12 +139,14 @@ const useAnimateCardPositionChange = (
     return () => {
       storeCardPosition(cardRef, clashId, isVisible, cardPositions, zone);
     };
-  }, [JSON.stringify(cardPosition)]);
+  }, []);
 
+  // animation when moving on the battlefield
   useLayoutEffect(() => {
     if (!cardRef.current || !cardPosition) return;
+    animateCardPositionChange(cardRef, clashId, cardPositions, zone, isVisible);
     storeCardPosition(cardRef, clashId, isVisible, cardPositions, zone);
-  }, [cardPosition]);
+  }, [JSON.stringify(cardPosition)]);
 };
 
 export default useAnimateCardPositionChange;

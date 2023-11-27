@@ -35,7 +35,7 @@ const getCardStyles = (index: number, numberOfCards: number) => {
 
   return {
     '--rotation': rotation,
-    '--additional-hover-rotation': Math.min(numberOfCards / 10, 3),
+    '--additional-hover-rotation': Math.min(numberOfCards / 2, 4),
   } as React.CSSProperties;
 };
 

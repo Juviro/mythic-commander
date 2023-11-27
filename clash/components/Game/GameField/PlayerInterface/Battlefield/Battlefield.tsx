@@ -52,7 +52,7 @@ const Battlefield = ({ player, isSelf }: Props) => {
     <div className={`${styles.wrapper} battlefield`} ref={wrapperRef}>
       <Dropzone onDrop={onDrop}>
         {cards.map((card) => (
-          <BattlefieldCard card={card} key={card.clashId} />
+          <BattlefieldCard card={card} isSelf={isSelf} key={card.clashId} />
         ))}
       </Dropzone>
     </div>

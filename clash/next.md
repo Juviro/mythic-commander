@@ -4,19 +4,16 @@
 
 # Missing in current feature
 
-* fix flipped movement on opponent's battlefield
 
 # Next features
-
-* animate card flip when moving card from library to any other zone
-* fix card move animation on opponent side
 
 * layout:
     * command zone
     * exile
-    * gamelog / chat
-    * restart game and other actions
     * life totals
+    * sidebar
+        * gamelog / chat
+        * restart game and other actions
 
 * snap 
     * to grid
@@ -35,8 +32,6 @@
     * turn order
     * priority
     * stack
-    * triggers
-    * abilities
     * counters
     * tokens
     * emblems
@@ -45,30 +40,3 @@
     * commander damage
     * commander tax
     * commander zone
-    * commander damage zone
-    * commander tax zone
-    * commander graveyard
-    * commander exile
-    * commander hand
-    * commander library
-    * commander shuffle
-    * commander draw
-    * commander play
-    * commander tap
-    * commander untap
-    * commander move
-    * commander shuffle
-    * commander exile
-    * commander graveyard
-    * commander life totals
-    * commander mana pool
-    * commander phases
-    * commander turn order
-    * commander priority
-    * commander stack
-    * commander triggers
-    * commander abilities
-    * commander counters
-    * commander tokens
-    * commander emblems
-    * commander planeswalkers

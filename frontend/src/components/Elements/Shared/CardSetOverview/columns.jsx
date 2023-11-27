@@ -23,10 +23,7 @@ const renderSet = (card) => {
 };
 
 const renderPrice = (currency) => (cardPrice) => {
-  // eslint-disable-next-line react/destructuring-assignment
-  const price = cardPrice[currency];
-  // eslint-disable-next-line react/destructuring-assignment
-  const foilPrice = cardPrice[`${currency}_foil`];
+  const { [currency]: price, [`${currency}_foil`]: foilPrice } = cardPrice;
 
   const foilPriceLabel = getPriceLabel(foilPrice, { currency });
   const priceLabel = getPriceLabel(price, { currency });
