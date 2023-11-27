@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { CSSProperties, useContext, useEffect, useMemo, useState } from 'react';
 
 import SocketContext from 'components/SocketContext/SocketContextProvider';
 import { GameState, Player } from 'backend/database/gamestate.types';
@@ -79,7 +79,22 @@ export const GameStateContextProvider = ({ children }: Props) => {
     return { gameState, player, isInitialized: true, getPlayerColor };
   }, [gameState]);
 
-  return <GameStateContext.Provider value={value}>{children}</GameStateContext.Provider>;
+  const globalCssStyle = useMemo<CSSProperties>(() => {
+    if (!gameState?.players.length) return {};
+    return gameState.players.reduce(
+      (acc, currentPlayer) => ({
+        ...acc,
+        [`--color-player-${currentPlayer.id}`]: currentPlayer.color,
+      }),
+      {}
+    );
+  }, [gameState?.players.length]);
+
+  return (
+    <GameStateContext.Provider value={value}>
+      <div style={globalCssStyle}>{children}</div>
+    </GameStateContext.Provider>
+  );
 };
 
 export default GameStateContext;

@@ -1,42 +1,45 @@
 # Bugs
 
-* hands wrapper width needs to be as wide as cards, otherwise the outer cards can't be dragged when the user has a lot of cards
+# Current feature
+  * gamelog / chat
+    * add chat
 
-# Missing in current feature
-
+  * sidebar
+      * command zones
+          * commander tax
+      * life totals
+          * active player
+          * commander damage
+      * phases
+      * restart game and other actions
 
 # Next features
 
-* layout:
-    * command zone
-    * exile
-    * life totals
-    * sidebar
-        * gamelog / chat
-        * restart game and other actions
+- layout:
 
-* snap 
-    * to grid
-    * to other cards
-    * enchant / equip
+  - exile
+  - priority
+  - commander damage
 
+- snap
 
-* Copilot ideas
-    * tap cards
-    * untap cards
-    * shuffle cards
-    * exile cards
-    * life totals
-    * mana pool
-    * phases
-    * turn order
-    * priority
-    * stack
-    * counters
-    * tokens
-    * emblems
-    * planeswalkers
-    * commander
-    * commander damage
-    * commander tax
-    * commander zone
+  - to grid
+  - to other cards
+  - enchant / equip
+
+- stack
+
+  - movable popup?
+  - only visible when it contains cards or when dragging
+
+- game actions
+  - tap cards
+  - untap cards
+  - shuffle library
+  - counters
+  - tokens
+  - emblems
+
+  # Backlog
+
+  * cards form other players have wrong sleeve color in hand
