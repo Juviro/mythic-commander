@@ -5,18 +5,26 @@
 
 .command_zone {
   flex: 1;
-  position: relative;
   max-width: 50%;
-  background-color: var(--player-color);
-  aspect-ratio: var(--card-aspect-ratio);
-  
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
 }
 
-.command_zone:has(:last-child:nth-child(3)) {
+.command_zone_card {
+  flex: 1;
+  width: 100%;
+  position: relative;
+  background-color: var(--player-color);
+  aspect-ratio: var(--card-aspect-ratio);
+}
+
+.command_zone_card:has(:last-child:nth-child(3)) {
     overflow: hidden;
 }
 
-.command_zone:has(:last-child:nth-child(3)):after {
+.command_zone_card:has(:last-child:nth-child(3)):after {
     content: '';
     background-color: var(--player-color);
     width: 100%;

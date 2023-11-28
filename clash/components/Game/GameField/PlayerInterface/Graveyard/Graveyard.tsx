@@ -33,6 +33,7 @@ const Graveyard = ({ player, isSelf }: Props) => {
           emptyImage={<GraveyardImage />}
           draggable={isSelf}
           zone="graveyard"
+          canHover
         />
       </Dropzone>
     </div>
