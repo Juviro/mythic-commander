@@ -5,25 +5,36 @@ import GameStateContext from 'components/Game/GameStateContext';
 
 import styles from '../Chat.module.css';
 import ChatMessage from './ChatMessage';
+import { MessageType } from '../ChatControls/ChatControls';
 
-const ChatMessages = () => {
+interface Props {
+  enabledTypes: MessageType[];
+}
+
+const ChatMessages = ({ enabledTypes }: Props) => {
   const { gameState } = useContext(GameStateContext);
   const { gameLog } = gameState!;
   const parentRef = useRef<HTMLDivElement>(null);
 
+  const displayedLog = gameLog.filter(({ logKey }) => {
+    if (!enabledTypes.length) return true;
+    if (logKey === 'CHAT_MESSAGE') return enabledTypes.includes('CHAT');
+    return enabledTypes.includes('LOG');
+  });
+
   const virtualizer = useVirtualizer({
-    count: gameLog.length,
+    count: displayedLog.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 45,
   });
 
   const items = virtualizer.getVirtualItems();
 
-  useEffect(() => {
-    setTimeout(() => {
-      parentRef.current?.scrollTo(0, parentRef.current.scrollHeight);
-    }, 100);
-  }, []);
+  const scrollToBottom = () => {
+    parentRef.current?.scrollTo(0, parentRef.current.scrollHeight);
+  };
+
+  useEffect(scrollToBottom, [enabledTypes.length]);
 
   useEffect(() => {
     if (!parentRef.current) return;
@@ -34,9 +45,9 @@ const ChatMessages = () => {
 
     // auto scroll, but only if the user is already close to the bottom
     if (diff < 600) {
-      parentRef.current.scrollTo(0, parentRef.current.scrollHeight);
+      scrollToBottom();
     }
-  }, [gameLog.length]);
+  }, [displayedLog.length]);
 
   return (
     <div ref={parentRef} className={styles.messages}>
@@ -62,7 +73,7 @@ const ChatMessages = () => {
               data-index={virtualRow.index}
               ref={virtualizer.measureElement}
             >
-              <ChatMessage message={gameLog[virtualRow.index]} />
+              <ChatMessage message={displayedLog[virtualRow.index]} />
             </div>
           ))}
         </div>

@@ -7,7 +7,7 @@
   container: sidebar / inline-size;
 
   --size-card-width: 7cqh;
-  --size-card-padding: 0.07cqw;
+  --size-card-padding: 2px;
 }
 
 .card {
