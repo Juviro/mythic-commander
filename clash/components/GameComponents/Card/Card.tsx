@@ -11,15 +11,16 @@ import useAnimateCardPositionChange from './useAnimateCardPositionChange';
 interface Props {
   card: CardType;
   draggable?: boolean;
+  dynamicSize?: boolean;
   zone?: Zone;
 }
 
-const Card = ({ card, draggable, zone }: Props) => {
+const Card = ({ card, draggable, dynamicSize, zone }: Props) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
 
   const [{ isDragging }, dragRef] = useDrag({
     type: 'CARD',
-    item: { clashId: card.clashId },
+    item: { clashId: card.clashId, ownerId: card.ownerId },
     canDrag: Boolean(draggable),
     previewOptions: {
       offsetX: -200,
@@ -37,7 +38,9 @@ const Card = ({ card, draggable, zone }: Props) => {
   return (
     <div
       className={classNames(styles.wrapper, {
-        [styles.dragging]: isDragging,
+        [styles.wrapper__dynamic_size]: dynamicSize,
+        [styles.wrapper__draggable]: draggable,
+        [styles.wrapper__dragging]: isDragging,
       })}
       ref={(val) => {
         dragRef(val);

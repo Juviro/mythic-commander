@@ -26,7 +26,7 @@ const Graveyard = ({ player }: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      <Dropzone onDrop={onDrop}>
+      <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id}>
         <CardStack
           cards={cards}
           emptyImage={<GraveyardImage />}

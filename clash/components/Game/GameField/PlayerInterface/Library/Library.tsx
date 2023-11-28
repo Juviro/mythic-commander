@@ -27,7 +27,7 @@ const Library = ({ player, isSelf }: Props) => {
 
   return (
     <div className={StyleSheet.wrapper} onClick={isSelf ? onDrawCard : undefined}>
-      <Dropzone onDrop={onDrop}>
+      <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id}>
         <CardStack cards={cards} emptyImage={<LibraryImage />} draggable zone="library" />
       </Dropzone>
     </div>

@@ -2,7 +2,7 @@ import uniqid from 'uniqid';
 
 import { getDecks, storeGameState } from 'backend/database/matchStore';
 import { Lobby } from 'backend/lobby/GameLobby.types';
-import { Card, GameState, Player } from 'backend/database/gamestate.types';
+import { Card, GameState, Player, VisibleCard } from 'backend/database/gamestate.types';
 
 const STARTING_LIFE = 40;
 
@@ -10,7 +10,7 @@ const initMatch = async (lobby: Lobby) => {
   const decks = await getDecks(lobby);
 
   const decksWithSpreadedCards = decks.map((deck) => {
-    const commanders: Card[] = [];
+    const commanders: Omit<VisibleCard, 'ownerId'>[] = [];
 
     const cards = deck.cards
       .filter((card) => {
@@ -55,8 +55,9 @@ const initMatch = async (lobby: Lobby) => {
       (spreadDeck) => spreadDeck.id === player.deck!.id
     )!;
 
-    const removeManaValue = (card: Card) => ({
+    const removeManaValue = (card: Omit<Card, 'ownerId'>) => ({
       ...card,
+      ownerId: player.id,
       manaValue: undefined,
     });
 
@@ -66,16 +67,27 @@ const initMatch = async (lobby: Lobby) => {
       .map(removeManaValue);
     const library = deck.cards.slice(7).map(removeManaValue);
 
+    const commandZone = deck.commanders.map((commander) => ({
+      ...commander,
+      ownerId: player.id,
+    }));
+
+    const commanders = commandZone.map((commander) => ({
+      ...commander,
+      commanderDamageDealt: {},
+      timesCasted: 0,
+    }));
+
     return {
       id: player.id,
       name: player.username,
       color: player.color!,
-      commanders: deck.commanders,
+      commanders,
       life: STARTING_LIFE,
       zones: {
         hand,
         library,
-        commandZone: deck.commanders,
+        commandZone,
         exile: [],
         graveyard: [],
         battlefield: [],

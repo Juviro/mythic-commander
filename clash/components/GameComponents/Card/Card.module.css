@@ -10,6 +10,24 @@
   position: relative;
   transform-style: preserve-3d;
   backface-visibility: hidden;
+  pointer-events: none;
+}
+
+.wrapper__dynamic_size {
+  width: auto;
+  border: unset;
+}
+
+.wrapper__draggable {
+  cursor: grab;
+  pointer-events: all;
+}
+
+
+.wrapper__dragging {
+  opacity: 0.01;
+  transform-style: unset;
+  backface-visibility: unset;
 }
 
 :global(.flipping).wrapper::after {
@@ -26,11 +44,6 @@
   backface-visibility: hidden;
 }
 
-.dragging {
-  opacity: 0.01;
-  transform-style: unset;
-  backface-visibility: unset;
-}
 
 .image {
   width: 100%;

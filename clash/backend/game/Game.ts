@@ -28,7 +28,7 @@ export default class Game {
   }
 
   static obfuscatePlayer(player: Player, isSelf: boolean): Player {
-    const obfuscateCard = ({ clashId }: Card) => ({ clashId });
+    const obfuscateCard = ({ clashId, ownerId }: Card) => ({ clashId, ownerId });
 
     const hand = isSelf ? player.zones.hand : player.zones.hand.map(obfuscateCard);
 

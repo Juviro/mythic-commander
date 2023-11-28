@@ -6,17 +6,32 @@ import styles from './Dropzone.module.css';
 
 export interface DropCard {
   clashId: string;
+  ownerId?: string;
 }
 
 interface Props {
   children: ReactNode;
   onDrop: (card: DropCard, monitor: DropTargetMonitor) => void;
   disabled?: boolean;
+  acceptFromPlayerId?: string;
+  acceptedIds?: string[];
 }
 
-const Dropzone = ({ children, onDrop, disabled }: Props) => {
+const Dropzone = ({
+  children,
+  onDrop,
+  disabled,
+  acceptFromPlayerId,
+  acceptedIds,
+}: Props) => {
   const [{ isOver, canDrop }, dropRef] = useDrop({
     accept: 'CARD',
+    canDrop: ({ ownerId, clashId }) => {
+      if (acceptedIds && !acceptedIds.includes(clashId)) {
+        return false;
+      }
+      return !acceptFromPlayerId || ownerId === acceptFromPlayerId;
+    },
     drop: onDrop,
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
@@ -32,7 +47,7 @@ const Dropzone = ({ children, onDrop, disabled }: Props) => {
     <div className={styles.wrapper} ref={dropRef}>
       <div
         className={classNames(styles.dropzone, {
-          [styles.dropzone__is_over]: isOver,
+          [styles.dropzone__is_over]: isOver && canDrop,
           [styles.dropzone__can_drop]: canDrop,
         })}
       />

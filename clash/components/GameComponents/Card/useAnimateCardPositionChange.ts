@@ -115,8 +115,14 @@ const animateCardPositionChange = (
   const storedPosition = cardPositions.current[clashId];
   if (!cardRef.current || !storedPosition) return;
 
-  const animateInArc = zone === 'hand' && storedPosition.zone === 'library';
-  if (animateInArc) {
+  const shouldAnimateInArc = () => {
+    if (zone === 'hand' && storedPosition.zone === 'library') {
+      return true;
+    }
+    return false;
+  };
+
+  if (shouldAnimateInArc()) {
     animateArcPositionChange(storedPosition, cardRef, isVisible);
   } else {
     animateDirectPositionChange(storedPosition, cardRef);
