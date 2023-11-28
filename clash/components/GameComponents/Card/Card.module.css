@@ -30,7 +30,7 @@
   backface-visibility: unset;
 }
 
-:global(.flipping).wrapper::after {
+:global(.add_backside).wrapper::after {
   position: absolute;
   content: '';
   width: 100%;

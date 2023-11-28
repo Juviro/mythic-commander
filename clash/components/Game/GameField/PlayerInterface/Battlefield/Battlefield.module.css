@@ -17,6 +17,6 @@
   transform: translate(-50%, -50%);
 }
 
-:global(.opponent) .card img {
+:global(.flipped) .card img {
   transform: rotate(180deg);
 }

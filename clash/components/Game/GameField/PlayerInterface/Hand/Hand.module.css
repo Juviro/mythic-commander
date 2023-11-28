@@ -14,7 +14,7 @@
   margin-right: auto;
 }
 
-:global(.opponent) .wrapper {
+:global(.flipped) .wrapper {
   transform: translateY(-10cqh);
 }
 
@@ -58,7 +58,7 @@
   }
 }
 
-:global(.opponent) .card_wrapper {
+:global(.flipped) .card_wrapper {
   transform-origin: 50% -160cqw;
 }
 

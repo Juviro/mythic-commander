@@ -55,7 +55,7 @@
   flex-direction: column;
 }
 
-.opponent .interface_wrapper {
+:global(.flipped) .interface_wrapper {
   flex-direction: column-reverse;
 }
 

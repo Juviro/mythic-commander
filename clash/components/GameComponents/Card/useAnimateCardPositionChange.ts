@@ -94,14 +94,14 @@ const animateArcPositionChange = (
   ];
 
   // adds a temporary "backside" to the card
-  cardRef.current?.classList.add('flipping');
+  cardRef.current?.classList.add('add_backside');
   const animation = cardRef.current!.animate(animationSteps, {
     duration: 1000,
     easing: 'cubic-bezier(.18,.55,.36,.99)',
   });
 
   animation.onfinish = () => {
-    cardRef.current?.classList.remove('flipping');
+    cardRef.current?.classList.remove('add_backside');
   };
 };
 
