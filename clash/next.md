@@ -1,5 +1,7 @@
 # Bugs
 
+* card position change only works sometimes
+
 # Current feature
 
 - sidebar
@@ -42,9 +44,9 @@
 # Backlog
 
 - store currentGames (in redis?)
+* when playing alon, display partner commanders next to each other
 
 # Backlog Bugs
 
 - cards form other players have wrong sleeve color in hand
-- it's possible to drag cards to opponen's library and graveyard. 
-- It's also possible to change the graveyard and put cards from the lib onto the battlefield
+- It's possible to change the graveyard of opponents and put cards from the lib onto the battlefield

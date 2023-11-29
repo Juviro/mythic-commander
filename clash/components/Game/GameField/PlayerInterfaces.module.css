@@ -2,18 +2,19 @@
   width: 100%;
   height: 100%;
   display: grid;
+  --menu-width: 500px;
 }
 
 /* one player */
 .wrapper:has(> :last-child:nth-child(2)) {
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr var(--menu-width);
   grid-template-areas: 
     'player1 menu'
 }
 
 /* two players */
 .wrapper:has(> :last-child:nth-child(3)) {
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr var(--menu-width);
   grid-template-areas: 
     'player1 menu'
     'player2 menu';
@@ -22,6 +23,7 @@
 /* three players */
 .wrapper:has(> :last-child:nth-child(4)) {
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   grid-template-areas: 
     'player1 player2'
     'player3 menu';
@@ -29,7 +31,7 @@
 
 /* four players */
 .wrapper:has(> :last-child:nth-child(5)) {
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: 1fr 1fr var(--menu-width);
   grid-template-areas: 
     'player1 player2 menu'
     'player4 player3 menu';
@@ -53,7 +55,7 @@
   flex-direction: column;
 }
 
-.opponent .interface_wrapper {
+:global(.flipped) .interface_wrapper {
   flex-direction: column-reverse;
 }
 

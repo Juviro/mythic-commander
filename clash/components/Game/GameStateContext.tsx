@@ -76,7 +76,16 @@ export const GameStateContextProvider = ({ children }: Props) => {
       return { gameState: null, player: null, isInitialized: false, getPlayerColor };
     }
 
-    return { gameState, player, isInitialized: true, getPlayerColor };
+    return {
+      gameState: {
+        ...gameState,
+        // TODO: remove at some point - currently used to easily debug 4 players
+        // players: [...gameState.players, gameState.players[0]],
+      },
+      player,
+      isInitialized: true,
+      getPlayerColor,
+    };
   }, [gameState]);
 
   const globalCssStyle = useMemo<CSSProperties>(() => {

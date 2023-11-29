@@ -12,9 +12,10 @@ const MAX_DISPLAYED_CARDS = 10;
 
 interface Props {
   player: Player;
+  isSelf?: boolean;
 }
 
-const Graveyard = ({ player }: Props) => {
+const Graveyard = ({ player, isSelf }: Props) => {
   const { onMoveCard } = useGameActions();
   const { graveyard } = player.zones;
 
@@ -26,12 +27,13 @@ const Graveyard = ({ player }: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      <Dropzone onDrop={onDrop}>
+      <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id} disabled={!isSelf}>
         <CardStack
           cards={cards}
           emptyImage={<GraveyardImage />}
-          draggable
+          draggable={isSelf}
           zone="graveyard"
+          canHover
         />
       </Dropzone>
     </div>

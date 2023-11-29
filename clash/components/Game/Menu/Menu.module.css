@@ -3,8 +3,23 @@
     opacity: 1;
     width: auto;
     height: 100%;
+    overflow: hidden;
     min-width: 400px;
+    position: relative;
     grid-area: menu;
     padding: 16px;
+    display: flex;
+    gap: 32px;
+    flex-direction: column;
     box-shadow: -8px -8px 20px -6px rgba(0, 0, 0, 0.6);
+}
+
+.wrapper__horizontal {
+    flex-direction: row-reverse;
+}
+
+.game_state {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }

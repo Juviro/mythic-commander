@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
 import { Player } from 'backend/database/gamestate.types';
+import classNames from 'classnames';
 import GameStateContext, { InitializedGameState } from '../GameStateContext';
 
 import PlayerInterface from './PlayerInterface/PlayerInterface';
@@ -33,7 +34,9 @@ const PlayerInterfaces = () => {
         <div
           key={opponent.id}
           style={{ gridArea: `player${index + 1}` }}
-          className={`${styles.opponent} opponent`}
+          className={classNames(styles.opponent, {
+            flipped: index < 2,
+          })}
         >
           <PlayerInterface player={opponent} />
         </div>

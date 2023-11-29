@@ -30,7 +30,7 @@ const BattlefieldCard = ({ card, isSelf }: Props) => {
 
   return (
     <div className={styles.card} style={style}>
-      <Card card={card} draggable zone="battlefield" />
+      <Card card={card} draggable zone="battlefield" enlargeOnHover />
     </div>
   );
 };

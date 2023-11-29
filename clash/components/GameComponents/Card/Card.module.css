@@ -12,7 +12,23 @@
   backface-visibility: hidden;
 }
 
-:global(.flipping).wrapper::after {
+.wrapper__dynamic_size {
+  width: auto;
+  border: unset;
+}
+
+.wrapper__draggable {
+  cursor: grab;
+}
+
+
+.wrapper__dragging {
+  opacity: 0.01;
+  transform-style: unset;
+  backface-visibility: unset;
+}
+
+:global(.add_backside).wrapper::after {
   position: absolute;
   content: '';
   width: 100%;
@@ -26,13 +42,25 @@
   backface-visibility: hidden;
 }
 
-.dragging {
-  opacity: 0.01;
-  transform-style: unset;
-  backface-visibility: unset;
-}
 
 .image {
   width: 100%;
   border-radius: 4%;
+  pointer-events: none;
+}
+
+
+.wrapper__draggable .image {
+  pointer-events: all;
+}
+
+.tooltip_wrapper  {
+  width: 350px;
+  max-width: unset;
+  
+}
+
+.tooltip_wrapper :global(.ant-tooltip-inner),
+.tooltip_wrapper :global(.ant-tooltip-arrow):before {
+  background-color: white;
 }

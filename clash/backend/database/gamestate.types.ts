@@ -4,16 +4,23 @@ import { GameLog } from 'backend/constants/logMessages';
 // ##################### Card #####################
 interface HiddenCard {
   clashId: string;
+  ownerId: string;
 }
 export interface VisibleCard extends HiddenCard {
   clashId: string;
   id: string;
   name: string;
-  ownerId?: string;
   position?: {
     x: number;
     y: number;
   };
+}
+
+export interface Commander extends Omit<VisibleCard, 'ownerId' | 'position'> {
+  commanderDamageDealt: {
+    [playerId: string]: number;
+  };
+  timesCasted: number;
 }
 
 export type Card = HiddenCard | VisibleCard;
@@ -44,7 +51,7 @@ export interface Player {
   id: string;
   name: string;
   color: string;
-  commanders: Card[];
+  commanders: Commander[];
   zones: Zones;
   life: number;
 }

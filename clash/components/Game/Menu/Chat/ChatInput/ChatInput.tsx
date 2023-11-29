@@ -20,6 +20,7 @@ const ChatInput = () => {
         value={message}
         onChange={(event) => setMessage(event.target.value)}
         onPressEnter={onSubmit}
+        autoComplete="off"
       />
     </Form>
   );

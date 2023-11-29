@@ -1,17 +1,19 @@
 .wrapper {
-  max-height: 500px;
   height: 100%;
+  max-width: 500px;
+  overflow: hidden;
+  flex: 1;
   background-color: var(--color-chat-background);
   border-radius: 8px;
   padding: 16px;
   display: flex;
+  gap: 16px;
   flex-direction: column;
 }
 
 .messages {
   flex: 1;
   overflow: auto;
-  margin-bottom: 16px;
   padding: 8px 0;
 }
 
