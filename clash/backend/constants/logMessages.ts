@@ -1,10 +1,12 @@
 // eslint-disable-next-line import/no-cycle
 import { Zone } from 'backend/database/gamestate.types';
+import { SetCommanderTimesCastedPayload } from './wsEvents';
 
 export const LOG_MESSAGES = {
   DRAW_CARD: 'DRAW_CARD',
   MOVE_CARD: 'MOVE_CARD',
   CHAT_MESSAGE: 'CHAT_MESSAGE',
+  SET_COMMANDER_TIMES_CASTED: 'SET_COMMANDER_TIMES_CASTED',
 } as const;
 
 interface MoveCardLocation {
@@ -20,6 +22,10 @@ export interface LogPlayoadMoveZone {
 export interface LogPayloadDraw {
   amount: number;
 }
+
+export type LogPayloadSetCommanderTimesCasted = SetCommanderTimesCastedPayload & {
+  commanderName: string;
+};
 
 export type LogPayload = LogPayloadDraw | LogPlayoadMoveZone;
 
@@ -44,7 +50,16 @@ interface LogMessageChat extends LogMessageWithPlayer {
   payload: string;
 }
 
-export type LogMessage = LogMessageDraw | LogMessageMove | LogMessageChat;
+interface LogMessageSetCommanderTimesCasted extends LogMessageWithPlayer {
+  logKey: 'SET_COMMANDER_TIMES_CASTED';
+  payload: LogPayloadSetCommanderTimesCasted;
+}
+
+export type LogMessage =
+  | LogMessageDraw
+  | LogMessageMove
+  | LogMessageChat
+  | LogMessageSetCommanderTimesCasted;
 
 export type GameLog = {
   timestamp: number;

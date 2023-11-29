@@ -5,7 +5,11 @@ import {
   VisibleCard,
   Zone,
 } from 'backend/database/gamestate.types';
-import { MoveCardPayload, SOCKET_MSG_GAME } from 'backend/constants/wsEvents';
+import {
+  MoveCardPayload,
+  SOCKET_MSG_GAME,
+  SetCommanderTimesCastedPayload,
+} from 'backend/constants/wsEvents';
 import { Server, Socket } from 'socket.io';
 import { User as DatabaseUser } from 'backend/database/getUser';
 import { GameLog, LOG_MESSAGES, LogMessage } from 'backend/constants/logMessages';
@@ -204,6 +208,34 @@ export default class Game {
       playerId: player.id,
       logKey: LOG_MESSAGES.CHAT_MESSAGE,
       payload: message.slice(0, 1000),
+    });
+  }
+
+  setCommanderTimesCasted(socket: Socket, payload: SetCommanderTimesCastedPayload) {
+    const player = this.getPlayerBySocket(socket);
+
+    const isOwnCommander = player.commanders.some(
+      ({ clashId }) => clashId === payload.commanderClashId
+    );
+
+    if (!isOwnCommander || payload.amount < 0) return;
+
+    let commanderName = '';
+    player.commanders.forEach((commander) => {
+      if (commander.clashId !== payload.commanderClashId) return;
+      // eslint-disable-next-line no-param-reassign
+      commander.timesCasted = payload.amount;
+      commanderName = commander.name;
+    })!;
+
+    this.emitPlayerUpdate(player);
+    this.logAction({
+      playerId: player.id,
+      logKey: LOG_MESSAGES.SET_COMMANDER_TIMES_CASTED,
+      payload: {
+        ...payload,
+        commanderName,
+      },
     });
   }
 }

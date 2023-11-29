@@ -5,6 +5,7 @@ import {
   MoveCardPayload,
   SOCKET_MSG_GAME,
   SOCKET_MSG_GENERAL,
+  SetCommanderTimesCastedPayload,
 } from '../constants/wsEvents';
 import Game from './Game';
 
@@ -54,6 +55,13 @@ const gameSocketActions = (io: Server) => {
     socket.on(SOCKET_MSG_GAME.SEND_CHAT_MESSAGE, (message: string) => {
       currentGames[currentGameId].sendChatMessage(socket, message);
     });
+
+    socket.on(
+      SOCKET_MSG_GAME.SET_COMMANDER_TIMES_CASTED,
+      (payload: SetCommanderTimesCastedPayload) => {
+        currentGames[currentGameId].setCommanderTimesCasted(socket, payload);
+      }
+    );
   });
 };
 

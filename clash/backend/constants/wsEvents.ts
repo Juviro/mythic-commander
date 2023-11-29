@@ -26,6 +26,7 @@ export const SOCKET_MSG_GAME = {
 
   DRAW_CARD: 'draw_card',
   MOVE_CARD: 'move_card',
+  SET_COMMANDER_TIMES_CASTED: 'set_commander_times_casted',
 };
 
 export interface MoveCardDetails {
@@ -39,4 +40,9 @@ export interface MoveCardPayload extends MoveCardDetails {
     zone: Zone;
     playerId: string;
   };
+}
+
+export interface SetCommanderTimesCastedPayload {
+  commanderClashId: string;
+  amount: number;
 }

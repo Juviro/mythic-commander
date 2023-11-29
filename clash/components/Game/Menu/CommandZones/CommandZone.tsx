@@ -39,7 +39,7 @@ const CommandZone = ({ player, isSelf }: Props) => {
             );
             return (
               <div key={commander.clashId} className={styles.card}>
-                <CommanderCasted commander={commander} />
+                <CommanderCasted commander={commander} isSelf={isSelf} />
                 {card && (
                   <Card
                     card={card}
