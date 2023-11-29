@@ -1,0 +1,46 @@
+.wrapper {
+  display: flex;
+  color: white;
+  width: 100%;
+  justify-content: space-between;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.player {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  max-width: 50%;
+}
+
+.life:before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+
+  background-color: var(--player-color);
+  transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+}
+
+.player__active .life:before {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.life {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+
+  &.life * {
+    z-index: 0;
+  }
+}
