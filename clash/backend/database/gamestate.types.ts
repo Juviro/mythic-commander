@@ -16,7 +16,7 @@ export interface VisibleCard extends HiddenCard {
   };
 }
 
-export interface Commander extends Omit<VisibleCard, 'ownerId'> {
+export interface Commander extends Omit<VisibleCard, 'ownerId' | 'position'> {
   commanderDamageDealt: {
     [playerId: string]: number;
   };

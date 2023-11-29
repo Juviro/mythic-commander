@@ -48,7 +48,7 @@ const Card = ({
 
   const cardComponent = (
     <div
-      className={classNames(styles.wrapper, {
+      className={classNames(styles.wrapper, 'card', {
         [styles.wrapper__dynamic_size]: dynamicSize,
         [styles.wrapper__draggable]: draggable,
         [styles.wrapper__dragging]: isDragging,
