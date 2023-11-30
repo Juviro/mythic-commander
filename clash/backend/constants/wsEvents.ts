@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { Zone } from 'backend/database/gamestate.types';
+import { Phase, Zone } from 'backend/database/gamestate.types';
 
 export const SOCKET_MSG_GENERAL = {
   ERROR: 'error',
@@ -24,6 +24,8 @@ export const SOCKET_MSG_GAME = {
   UPDATE_PLAYER: 'update_player',
   GAME_LOG: 'game_log',
   SEND_CHAT_MESSAGE: 'send_chat_message',
+  SET_PHASE: 'set_phase',
+  END_TURN: 'end_turn',
 
   DRAW_CARD: 'draw_card',
   MOVE_CARD: 'move_card',
@@ -57,4 +59,8 @@ export interface SetCommanderTimesCastedPayload {
 export interface SetPlayerLifePayload {
   forPlayerId: string;
   total: number;
+}
+
+export interface SetPhasePayload {
+  phase: Phase;
 }

@@ -1,6 +1,10 @@
 // eslint-disable-next-line import/no-cycle
 import { GameLog } from 'backend/constants/logMessages';
 
+export const PHASES = ['beginning', 'main1', 'combat', 'main2', 'end'] as const;
+
+export type Phase = typeof PHASES[number];
+
 // ##################### Card #####################
 interface HiddenCard {
   clashId: string;
@@ -57,10 +61,12 @@ export interface Player {
 }
 
 // ##################### GameState #####################
+
 export interface GameState {
   gameId: string;
   players: Player[];
   turn: number;
+  phase: Phase;
   activePlayerId: string;
   gameLog: GameLog[];
 }

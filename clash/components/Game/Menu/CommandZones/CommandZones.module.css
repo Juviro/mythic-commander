@@ -15,6 +15,7 @@
 .command_zone_card {
   flex: 1;
   width: 100%;
+  max-width: 150px;
   position: relative;
   aspect-ratio: var(--card-aspect-ratio);
   overflow: hidden;

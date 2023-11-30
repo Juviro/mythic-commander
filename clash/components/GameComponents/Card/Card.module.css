@@ -21,7 +21,6 @@
   cursor: grab;
 }
 
-
 .wrapper__dragging {
   opacity: 0.01;
   transform-style: unset;
@@ -42,22 +41,26 @@
   backface-visibility: hidden;
 }
 
-
 .image {
   width: 100%;
   border-radius: 4%;
   pointer-events: none;
 }
 
-
 .wrapper__draggable .image {
   pointer-events: all;
 }
 
-.tooltip_wrapper  {
-  width: 350px;
+.tooltip_wrapper {
+  width: 250px;
   max-width: unset;
-  
+
+  @media (min-height: 900px) {
+    width: 300px;
+  }
+  @media (min-height: 1200px) {
+    width: 350px;
+  }
 }
 
 .tooltip_wrapper :global(.ant-tooltip-inner),

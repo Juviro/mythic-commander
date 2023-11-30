@@ -7,6 +7,7 @@ import { SOCKET_MSG_GAME } from '../../backend/constants/wsEvents';
 
 interface BaseGameState {
   getPlayerColor: (playerId?: string) => string | undefined;
+  playerNames: { [key: string]: string };
 }
 export interface InitializedGameState extends BaseGameState {
   gameState: GameState;
@@ -22,12 +23,8 @@ interface LoadingGameState extends BaseGameState {
 
 type GameStateContextType = InitializedGameState | LoadingGameState;
 
-const GameStateContext = React.createContext<InitializedGameState | LoadingGameState>({
-  gameState: null,
-  player: null,
-  isInitialized: false,
-  getPlayerColor: () => undefined,
-});
+// @ts-ignore
+const GameStateContext = React.createContext<InitializedGameState | LoadingGameState>();
 
 interface Props {
   children: React.ReactNode;
@@ -41,7 +38,10 @@ export const GameStateContextProvider = ({ children }: Props) => {
     if (!socket) return;
 
     socket.on(SOCKET_MSG_GAME.GAME_STATE, (msg: GameState) => {
-      setGameState(msg);
+      setGameState((prev) => ({
+        ...prev,
+        ...msg,
+      }));
     });
 
     socket.on(SOCKET_MSG_GAME.UPDATE_PLAYER, (player: Player) => {
@@ -77,9 +77,24 @@ export const GameStateContextProvider = ({ children }: Props) => {
 
   const player = gameState?.players.find(({ id }) => id === user?.id);
 
+  const playerNames: { [key: string]: string } =
+    gameState?.players.reduce(
+      (acc, currentPlayer) => ({
+        ...acc,
+        [currentPlayer.id]: currentPlayer.name,
+      }),
+      {}
+    ) ?? {};
+
   const value: GameStateContextType = useMemo(() => {
     if (!gameState || !player) {
-      return { gameState: null, player: null, isInitialized: false, getPlayerColor };
+      return {
+        gameState: null,
+        player: null,
+        isInitialized: false,
+        getPlayerColor,
+        playerNames,
+      };
     }
 
     return {
@@ -89,6 +104,7 @@ export const GameStateContextProvider = ({ children }: Props) => {
         // players: [...gameState.players, gameState.players.at(-1)!],
       },
       player,
+      playerNames,
       isInitialized: true,
       getPlayerColor,
     };

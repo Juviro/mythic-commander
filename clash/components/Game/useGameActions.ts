@@ -2,11 +2,12 @@ import {
   MoveCardDetails,
   MoveCardPayload,
   SOCKET_MSG_GAME,
+  SetPhasePayload,
   SendMessagePayload,
   SetCommanderTimesCastedPayload,
   SetPlayerLifePayload,
 } from 'backend/constants/wsEvents';
-import { Zone } from 'backend/database/gamestate.types';
+import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
 import { useContext } from 'react';
 
@@ -45,12 +46,23 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.SET_PLAYER_LIFE, payload);
   };
 
+  const setPhase = (phase: Phase) => {
+    const payload: SetPhasePayload = { phase };
+    socket?.emit(SOCKET_MSG_GAME.SET_PHASE, payload);
+  };
+
+  const endTurn = () => {
+    socket?.emit(SOCKET_MSG_GAME.END_TURN);
+  };
+
   return {
     onDrawCard,
     onMoveCard,
     onSendChatMessage,
     onSetCommanderTimesCasted,
     setPlayerLife,
+    setPhase,
+    endTurn,
   };
 };
 

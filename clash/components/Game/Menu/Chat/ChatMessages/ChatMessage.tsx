@@ -4,11 +4,13 @@ import { GameLog } from 'backend/constants/logMessages';
 import GameStateContext from 'components/Game/GameStateContext';
 
 import styles from '../Chat.module.css';
-import MessageDraw from './MessageDraw';
-import MessageMove from './MessageMove';
-import MessageChat from './MessageChat';
-import MessageSetCommanderTimesCasted from './MessageSetCommanderTimesCasted';
-import MessageSetLife from './MessageSetLife';
+import MessageDraw from './Message/MessageDraw';
+import MessageMove from './Message/MessageMove';
+import MessageChat from './Message/MessageChat';
+import MessageSetCommanderTimesCasted from './Message/MessageSetCommanderTimesCasted';
+import MessageSetLife from './Message/MessageSetLife';
+import MessageSetActivePlayer from './Message/MessageSetActivePlayer';
+import MessageSetPhase from './Message/MessageSetPhase';
 
 interface Props {
   message: GameLog;
@@ -52,6 +54,12 @@ const ChatMessage = ({ message }: Props) => {
     return (
       <MessageSetLife playerName={playerName} playerId={playerId} payload={payload} />
     );
+  }
+  if (logKey === 'SET_ACTIVE_PLAYER') {
+    return <MessageSetActivePlayer payload={payload} />;
+  }
+  if (logKey === 'SET_PHASE') {
+    return <MessageSetPhase payload={payload} />;
   }
 
   return (

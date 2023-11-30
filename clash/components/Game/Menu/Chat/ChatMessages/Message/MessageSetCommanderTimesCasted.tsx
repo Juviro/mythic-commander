@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { LogPayloadSetCommanderTimesCasted } from 'backend/constants/logMessages';
-import ColoredPlayerName from './ColoredPlayerName';
+import ColoredPlayerName from '../ColoredPlayerName';
 
-import styles from '../Chat.module.css';
+import styles from '../../Chat.module.css';
 
 interface Props {
   playerName: string;

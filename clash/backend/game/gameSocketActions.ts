@@ -7,6 +7,7 @@ import {
   SOCKET_MSG_GENERAL,
   SendMessagePayload,
   SetCommanderTimesCastedPayload,
+  SetPhasePayload,
   SetPlayerLifePayload,
 } from '../constants/wsEvents';
 import Game from './Game';
@@ -64,8 +65,17 @@ const gameSocketActions = (io: Server) => {
         currentGames[currentGameId].setCommanderTimesCasted(socket, payload);
       }
     );
+
     socket.on(SOCKET_MSG_GAME.SET_PLAYER_LIFE, (payload: SetPlayerLifePayload) => {
       currentGames[currentGameId].setPlayerLife(socket, payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.END_TURN, () => {
+      currentGames[currentGameId].endTurn(socket);
+    });
+
+    socket.on(SOCKET_MSG_GAME.SET_PHASE, (payload: SetPhasePayload) => {
+      currentGames[currentGameId].setPhase(socket, payload);
     });
   });
 };

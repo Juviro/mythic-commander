@@ -12,6 +12,7 @@
     --color-dropzone-is-over: #1313e65b;
     --color-menu-background: rgb(0 0 0 / 50%);
     --color-chat-background: #fff;
+    --color-active: #145bd8;
 
     --size-card-base-width: 248px;
     --size-card-base-height: 345px;
@@ -20,4 +21,6 @@
     --size-card-padding: var(--size-card-base-padding);
     
     --card-aspect-ratio: 301 / 419;
+
+    overflow: hidden;
 }

@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 
 import { LogPayloadSetPlayerLife } from 'backend/constants/logMessages';
 import GameStateContext from 'components/Game/GameStateContext';
-import ColoredPlayerName from './ColoredPlayerName';
+import ColoredPlayerName from '../ColoredPlayerName';
 
-import styles from '../Chat.module.css';
+import styles from '../../Chat.module.css';
 
 interface Props {
   playerName: string;

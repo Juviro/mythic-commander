@@ -1,19 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-	 viewBox="0 0 512 512" xml:space="preserve">
-<g>
-	<path style="fill:#003B54;" d="M496,16c-8.836,0-16,7.164-16,16v16H32V32c0-8.836-7.164-16-16-16S0,23.164,0,32v32v192v224
-		c0,8.836,7.164,16,16,16s16-7.164,16-16V272h448v208c0,8.836,7.164,16,16,16s16-7.164,16-16V256V64V32
-		C512,23.164,504.836,16,496,16z M416,240v-80h-80v80h-80v-80h-80v80H96v-80H32V80h64v80h80V80h80v80h80V80h80v80h64v80H416z"/>
-	<g>
-		<rect x="256" y="160" style="fill:#FFFFFF;" width="80" height="80"/>
-		<rect x="32" y="80" style="fill:#FFFFFF;" width="64" height="80"/>
-		<rect x="96" y="160" style="fill:#FFFFFF;" width="80" height="80"/>
-		<rect x="416" y="160" style="fill:#FFFFFF;" width="64" height="80"/>
-		<rect x="336" y="80" style="fill:#FFFFFF;" width="80" height="80"/>
-		<rect x="176" y="80" style="fill:#FFFFFF;" width="80" height="80"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32px"
+	height="32px" viewBox="0 0 32 32" version="1.1">
+	<g id="surface1">
+		<path
+			style=" stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1;"
+			d="M 31 1 C 30.449219 1 30 1.449219 30 2 L 30 3 L 2 3 L 2 2 C 2 1.449219 1.550781 1 1 1 C 0.449219 1 0 1.449219 0 2 L 0 30 C 0 30.550781 0.449219 31 1 31 C 1.550781 31 2 30.550781 2 30 L 2 17 L 30 17 L 30 30 C 30 30.550781 30.449219 31 31 31 C 31.550781 31 32 30.550781 32 30 L 32 2 C 32 1.449219 31.550781 1 31 1 Z M 26 15 L 26 10 L 21 10 L 21 15 L 16 15 L 16 10 L 11 10 L 11 15 L 6 15 L 6 10 L 2 10 L 2 5 L 6 5 L 6 10 L 11 10 L 11 5 L 16 5 L 16 10 L 21 10 L 21 5 L 26 5 L 26 10 L 30 10 L 30 15 Z M 26 15 " />
+		<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,23.137255%,32.941176%);fill-opacity:1;"
+			d="M 16 10 L 21 10 L 21 15 L 16 15 Z M 2 5 L 6 5 L 6 10 L 2 10 Z M 6 10 L 11 10 L 11 15 L 6 15 Z M 26 10 L 30 10 L 30 15 L 26 15 Z M 21 5 L 26 5 L 26 10 L 21 10 Z M 11 5 L 16 5 L 16 10 L 11 10 Z M 11 5 " />
 	</g>
-</g>
 </svg>
