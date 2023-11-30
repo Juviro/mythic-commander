@@ -16,7 +16,7 @@ import {
 import { Server, Socket } from 'socket.io';
 import { User as DatabaseUser } from 'backend/database/getUser';
 import { GameLog, LOG_MESSAGES, LogMessage } from 'backend/constants/logMessages';
-import { getGameState } from 'backend/database/matchStore';
+import { getGameState, storeGameState } from 'backend/database/matchStore';
 import initMatch from 'backend/lobby/initMatch';
 import addLogEntry from './addLogEntry';
 
@@ -80,6 +80,11 @@ export default class Game {
   }
 
   // ##################### Game #####################
+
+  storeGameState() {
+    // currently, the game state is stored whenever the active player changes
+    storeGameState(this.gameState.gameId, this.gameState);
+  }
 
   async restartGame(socket: Socket) {
     const player = this.getPlayerBySocket(socket);
@@ -319,6 +324,8 @@ export default class Game {
     this.gameState.phase = 'beginning';
 
     this.emitGameUpdate();
+
+    this.storeGameState();
 
     this.logAction({
       playerId: player.id,

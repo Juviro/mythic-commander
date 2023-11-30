@@ -107,7 +107,7 @@ const initMatch = async (lobby: Lobby) => {
     gameLog: [],
   };
 
-  await storeGameState(lobby, initialGameState);
+  await storeGameState(lobby.id, initialGameState, lobby);
 };
 
 export default initMatch;
