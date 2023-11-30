@@ -20,8 +20,10 @@ const Menu = () => {
     >
       <Chat />
       <div className={styles.game_state}>
-        <CommandZones />
-        <LifeTotals />
+        <div className={styles.game_state_players}>
+          <CommandZones />
+          <LifeTotals />
+        </div>
         <Phases />
         <GameInfo />
       </div>
