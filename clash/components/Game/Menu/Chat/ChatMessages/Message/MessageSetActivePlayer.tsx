@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import { LogPayloadSetActivePlayer } from 'backend/constants/logMessages';
 import GameStateContext from 'components/Game/GameStateContext';
-import ColoredPlayerName from '../ColoredPlayerName';
+import ColoredPlayerName from '../../../../../GameComponents/ColoredPlayerName/ColoredPlayerName';
 
 import styles from '../../Chat.module.css';
 

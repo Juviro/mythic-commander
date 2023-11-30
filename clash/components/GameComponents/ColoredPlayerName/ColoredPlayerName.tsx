@@ -1,5 +1,8 @@
-import { Player } from 'backend/database/gamestate.types';
 import { CSSProperties } from 'react';
+
+import { Player } from 'backend/database/gamestate.types';
+
+import styles from './ColoredPlayerName.module.css';
 
 export const getColorVariable = (id: string) => {
   return `var(--color-player-${id})`;
@@ -20,9 +23,15 @@ const ColoredPlayerName = ({ id, name, addGenetiveSuffix }: Props) => {
     return `${name}'s`;
   };
 
-  const style: CSSProperties = { color: getColorVariable(id!), whiteSpace: 'nowrap' };
+  const style: CSSProperties = {
+    color: getColorVariable(id!),
+  };
 
-  return <b style={style}>{getName()}</b>;
+  return (
+    <b style={style} className={styles.text}>
+      {getName()}
+    </b>
+  );
 };
 
 export default ColoredPlayerName;

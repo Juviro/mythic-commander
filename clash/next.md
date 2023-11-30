@@ -4,13 +4,13 @@
 
 # Current feature
 
+- display active player differently? Maybe icon next to name. The current implementation takes up too much space.
+
 - sidebar
 
-  - track commander damage
   - current turn
   - restart game
 
-- display active player differently? Maybe icon next to name. The current implementation takes up too much space.
 
 # MVP
 
@@ -68,12 +68,19 @@
 
 # Backlog
 
+- adjust colors to work on every background
+  - black and red are too dark
+
+- track commander damage
+
 - message in the center of the screen for
 
   - active player changes
   - animated (grow)
 
 - flip coin, roll dice
+
+- long clicking life buttons adds in 10s
 
 - stack
 

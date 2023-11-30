@@ -1,4 +1,6 @@
 import React, { useContext } from 'react';
+import classNames from 'classnames';
+import { Tooltip } from 'antd';
 
 import BeginningIcon from 'public/assets/icons/phase_beginning.svg';
 import MainIcon from 'public/assets/icons/phase_main.svg';
@@ -8,7 +10,8 @@ import { Phase } from 'backend/database/gamestate.types';
 
 import GameStateContext from 'components/Game/GameStateContext';
 import useGameActions from 'components/Game/useGameActions';
-import classNames from 'classnames';
+import { getPhaseName } from '../Chat/ChatMessages/Message/MessageSetPhase';
+
 import styles from './Phases.module.css';
 
 interface Props {
@@ -43,16 +46,18 @@ const PhaseIcon = ({ phase }: Props) => {
   const canSetPhase = !isActive && isOwnTurn;
 
   return (
-    <button
-      onClick={canSetPhase ? () => setPhase(phase) : undefined}
-      type="button"
-      className={classNames(styles.phase_icon, {
-        [styles.phase_icon__active]: isActive,
-        [styles.phase_icon__clickable]: canSetPhase,
-      })}
-    >
-      {getIcon()}
-    </button>
+    <Tooltip title={`${getPhaseName(phase)} phase`} mouseEnterDelay={0.5}>
+      <button
+        onClick={canSetPhase ? () => setPhase(phase) : undefined}
+        type="button"
+        className={classNames(styles.phase_icon, {
+          [styles.phase_icon__active]: isActive,
+          [styles.phase_icon__clickable]: canSetPhase,
+        })}
+      >
+        {getIcon()}
+      </button>
+    </Tooltip>
   );
 };
 

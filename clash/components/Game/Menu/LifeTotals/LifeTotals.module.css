@@ -11,38 +11,18 @@
   display: flex;
   justify-content: center;
   position: relative;
-  max-width: 50%;
   gap: 8px;
-}
-
-.life:before {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-
-  background-color: var(--player-color);
-  transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
-}
-
-.player__active .life:before {
-  height: 80px;
-  width: 80px;
+  height: 56px;
+  width: 100%;
+  margin: -24px 0;
+  user-select: none;
 }
 
 .life {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
-  
-  border-radius: 50%;
-
-  &.life * {
-    z-index: 0;
-  }
+  font-size: 24px;
 }
 
 .buttons {
@@ -53,14 +33,13 @@
   height: 100%;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
-  user-select: none;
 }
 
 .buttons:hover {
   opacity: 1;
 }
 
-.buttons :global(.anticon)  {
+.buttons :global(.anticon) {
   width: 50%;
   height: 100%;
   display: flex;
@@ -69,14 +48,14 @@
   font-size: 14px;
 }
 
-.buttons :global(.anticon) :global(svg)  {
+.buttons :global(.anticon) :global(svg) {
   transition: transform 0.2s ease-in-out;
 }
 
-.buttons :global(.anticon):hover :global(svg)  {
+.buttons :global(.anticon):hover :global(svg) {
   transform: scale(1.4);
 }
 
-.buttons :global(.anticon):active :global(svg)  {
+.buttons :global(.anticon):active :global(svg) {
   transform: scale(1.2);
 }

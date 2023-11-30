@@ -9,11 +9,12 @@ import { PHASES } from 'backend/database/gamestate.types';
 import styles from './Phases.module.css';
 
 const PhaseButtons = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { gameState, player } = useContext(GameStateContext);
   const { endTurn, setPhase } = useGameActions();
   const currentPhase = gameState!.phase;
 
-  const isOwnTurn = gameState?.activePlayerId === player?.id;
+  const isOwnTurn = true; // TODO: enable gameState?.activePlayerId === player?.id;
 
   const onNextPhase = () => {
     if (currentPhase === 'end') {

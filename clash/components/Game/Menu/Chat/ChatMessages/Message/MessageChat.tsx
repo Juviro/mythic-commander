@@ -1,7 +1,9 @@
 import React from 'react';
 
 import { MessageOutlined } from '@ant-design/icons';
-import ColoredPlayerName, { getColorVariable } from '../ColoredPlayerName';
+import ColoredPlayerName, {
+  getColorVariable,
+} from '../../../../../GameComponents/ColoredPlayerName/ColoredPlayerName';
 
 import styles from '../../Chat.module.css';
 

@@ -1,6 +1,5 @@
 .wrapper {
   height: 100%;
-  max-width: 500px;
   overflow: hidden;
   flex: 1;
   background-color: var(--color-chat-background);

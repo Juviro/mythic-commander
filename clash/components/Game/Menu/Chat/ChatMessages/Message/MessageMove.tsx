@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { LogPlayoadMoveZone } from 'backend/constants/logMessages';
-import ColoredPlayerName from '../ColoredPlayerName';
+import ColoredPlayerName from '../../../../../GameComponents/ColoredPlayerName/ColoredPlayerName';
 
 import styles from '../../Chat.module.css';
 

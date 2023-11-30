@@ -1,14 +1,15 @@
 import React, { CSSProperties } from 'react';
+import classNames from 'classnames';
 
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import Card from 'components/GameComponents/Card/Card';
 import Dropzone, { DropCard } from 'components/Game/Dropzone/Dropzone';
 import useGameActions from 'components/Game/useGameActions';
 
-import classNames from 'classnames';
-import styles from './CommandZones.module.css';
-import ColoredPlayerName from '../Chat/ChatMessages/ColoredPlayerName';
 import CommanderCasted from './CommanderCasted';
+
+import styles from './CommandZones.module.css';
+import PlayerName from './PlayerName';
 
 interface Props {
   player: Player;
@@ -54,9 +55,7 @@ const CommandZone = ({ player, isSelf }: Props) => {
           })}
         </Dropzone>
       </div>
-      <div className={styles.player_name}>
-        <ColoredPlayerName id={player.id} name={player.name} />
-      </div>
+      <PlayerName player={player} />
     </div>
   );
 };
