@@ -4,21 +4,12 @@
 
 # Current feature
 
-- display active player differently? Maybe icon next to name. The current implementation takes up too much space.
-
-- sidebar
-
-  - current turn
-  - restart game
-
+* layout:
+  - exile
 
 # MVP
 
-- only show card tooltip on right click?
-
-* layout:
-
-  - exile
+- only show card tooltip on right click? - do this once the context menues are implemented
 
 * snap
 
