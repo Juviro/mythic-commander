@@ -21,10 +21,10 @@ import BattlefieldCard from './BattlefieldCard';
 
 interface Props {
   player: Player;
-  isSelf?: boolean;
+  isFlipped?: boolean;
 }
 
-const Battlefield = ({ player, isSelf }: Props) => {
+const Battlefield = ({ player, isFlipped }: Props) => {
   const { onMoveCard } = useGameActions();
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -35,7 +35,7 @@ const Battlefield = ({ player, isSelf }: Props) => {
     const relativeY = y - top;
     let posX = (relativeX / wrapperRef.current!.clientWidth) * 100;
     let posY = (relativeY / wrapperRef.current!.clientHeight) * 100;
-    if (!isSelf) {
+    if (isFlipped) {
       posX = 100 - posX;
       posY = 100 - posY;
     }
@@ -52,7 +52,7 @@ const Battlefield = ({ player, isSelf }: Props) => {
     <div className={`${styles.wrapper} battlefield`} ref={wrapperRef}>
       <Dropzone onDrop={onDrop}>
         {cards.map((card) => (
-          <BattlefieldCard card={card} isSelf={isSelf} key={card.clashId} />
+          <BattlefieldCard card={card} key={card.clashId} />
         ))}
       </Dropzone>
     </div>

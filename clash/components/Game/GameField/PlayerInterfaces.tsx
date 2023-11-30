@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
+import classNames from 'classnames';
 
 import { Player } from 'backend/database/gamestate.types';
-import classNames from 'classnames';
 import GameStateContext, { InitializedGameState } from '../GameStateContext';
-
+import Menu from '../Menu/Menu';
 import PlayerInterface from './PlayerInterface/PlayerInterface';
 
 import styles from './PlayerInterfaces.module.css';
-import Menu from '../Menu/Menu';
 
 const PlayerInterfaces = () => {
   const { gameState, player } = useContext(GameStateContext) as InitializedGameState;
@@ -38,7 +37,7 @@ const PlayerInterfaces = () => {
             flipped: index < 2,
           })}
         >
-          <PlayerInterface player={opponent} />
+          <PlayerInterface player={opponent} isFlipped={index < 2} />
         </div>
       ))}
       <div style={{ gridArea: `player${gameState.players.length}` }}>

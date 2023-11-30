@@ -11,15 +11,16 @@ import Battlefield from './Battlefield/Battlefield';
 interface Props {
   player: Player;
   isSelf?: boolean;
+  isFlipped?: boolean;
 }
 
-const PlayerInterface = ({ player, isSelf }: Props) => {
+const PlayerInterface = ({ player, isSelf, isFlipped }: Props) => {
   return (
     <div
       className={styles.interface_wrapper}
       style={{ '--player-color': player.color } as CSSProperties}
     >
-      <Battlefield player={player} isSelf={isSelf} />
+      <Battlefield player={player} isFlipped={isFlipped} />
       <div className={styles.interface}>
         <Graveyard player={player} isSelf={isSelf} />
         <Library player={player} isSelf={isSelf} />

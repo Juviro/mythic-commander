@@ -8,24 +8,17 @@ import styles from './Battlefield.module.css';
 
 interface Props {
   card: VisibleCard;
-  isSelf?: boolean;
 }
 
-const BattlefieldCard = ({ card, isSelf }: Props) => {
+const BattlefieldCard = ({ card }: Props) => {
   const { getPlayerColor } = useContext(GameStateContext);
 
-  let { x, y } = card.position!;
-
-  if (!isSelf) {
-    x = 100 - x;
-    y = 100 - y;
-  }
+  const { x, y } = card.position!;
 
   const style = {
-    '--x': `${x}%`,
-    '--y': `${y}%`,
+    '--x': x,
+    '--y': y,
     '--player-color': getPlayerColor(card.ownerId),
-    '--rotation': isSelf ? '0deg' : '180deg',
   } as CSSProperties;
 
   return (

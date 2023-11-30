@@ -12,9 +12,14 @@
 
 .card {
   position: absolute;
-  top: var(--y);
-  left: var(--x);
+  top: calc(var(--y) * 1%);
+  left: calc(var(--x) * 1%);
   transform: translate(-50%, -50%);
+}
+
+:global(.flipped) .card {
+  top: calc((100 - var(--y)) * 1%);
+  left: calc((100 - var(--x)) * 1%);
 }
 
 :global(.flipped) .card img {
