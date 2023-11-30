@@ -8,11 +8,14 @@ import {
 import {
   MoveCardPayload,
   SOCKET_MSG_GAME,
+  SendMessagePayload,
   SetCommanderTimesCastedPayload,
+  SetPlayerLifePayload,
 } from 'backend/constants/wsEvents';
 import { Server, Socket } from 'socket.io';
 import { User as DatabaseUser } from 'backend/database/getUser';
 import { GameLog, LOG_MESSAGES, LogMessage } from 'backend/constants/logMessages';
+import addLogEntry from './addLogEntry';
 
 interface User {
   name: string;
@@ -115,9 +118,15 @@ export default class Game {
       logKey,
       payload,
     } as GameLog;
-    this.gameState.gameLog.push(newLogEntry);
+    const oldLogLength = this.gameState.gameLog.length;
+    const newLog = addLogEntry(this.gameState.gameLog, newLogEntry);
 
-    this.server.to(this.id).emit(SOCKET_MSG_GAME.GAME_LOG, newLogEntry);
+    this.gameState.gameLog = newLog;
+
+    this.server.to(this.id).emit(SOCKET_MSG_GAME.GAME_LOG, {
+      ...newLog.at(-1),
+      overwritesPreviousLog: oldLogLength === newLog.length,
+    });
   }
 
   // ##################### Actions #####################
@@ -202,12 +211,12 @@ export default class Game {
     });
   }
 
-  sendChatMessage(socket: Socket, message: string) {
+  sendChatMessage(socket: Socket, { message }: SendMessagePayload) {
     const player = this.getPlayerBySocket(socket);
     this.logAction({
       playerId: player.id,
       logKey: LOG_MESSAGES.CHAT_MESSAGE,
-      payload: message.slice(0, 1000),
+      payload: { message: message.slice(0, 1000) },
     });
   }
 
@@ -218,13 +227,15 @@ export default class Game {
       ({ clashId }) => clashId === payload.commanderClashId
     );
 
-    if (!isOwnCommander || payload.amount < 0) return;
+    if (!isOwnCommander || payload.total < 0) return;
 
     let commanderName = '';
+    let previousTotal = 0;
     player.commanders.forEach((commander) => {
       if (commander.clashId !== payload.commanderClashId) return;
+      previousTotal = commander.timesCasted;
       // eslint-disable-next-line no-param-reassign
-      commander.timesCasted = payload.amount;
+      commander.timesCasted = payload.total;
       commanderName = commander.name;
     })!;
 
@@ -234,7 +245,33 @@ export default class Game {
       logKey: LOG_MESSAGES.SET_COMMANDER_TIMES_CASTED,
       payload: {
         ...payload,
+        previousTotal,
         commanderName,
+      },
+    });
+  }
+
+  setPlayerLife(socket: Socket, payload: SetPlayerLifePayload) {
+    const player = this.getPlayerBySocket(socket);
+
+    let previousTotal = 0;
+    this.gameState.players.forEach((p) => {
+      if (p.id !== payload.forPlayerId) return;
+      previousTotal = p.life;
+      // eslint-disable-next-line no-param-reassign
+      p.life = payload.total;
+    });
+
+    const forPlayer = this.getPlayerById(payload.forPlayerId);
+
+    this.emitPlayerUpdate(forPlayer);
+    this.logAction({
+      playerId: player.id,
+      logKey: LOG_MESSAGES.SET_LIFE,
+      payload: {
+        ...payload,
+        previousTotal,
+        fromPlayerId: player.id,
       },
     });
   }

@@ -19,6 +19,8 @@
 
 .message {
   padding: 2px 0;
+  display: flex;
+  gap: 4px;
 }
 
 .message :global(.anticon) {

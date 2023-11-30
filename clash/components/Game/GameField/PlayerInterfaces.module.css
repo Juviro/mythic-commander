@@ -61,8 +61,14 @@
 
 .interface {
   width: 100%;
+  padding: 0 16px;
   display: grid;
   container: interface / inline-size;
   grid-template-columns: 110px 110px auto 100px;
-  grid-template-areas: 'graveyard library hand';
+  grid-template-areas: 'graveyard library hand .';
+}
+
+:global(.flipped) .interface {
+  grid-template-columns: 100px auto 110px 110px;
+  grid-template-areas: '. hand library graveyard';
 }

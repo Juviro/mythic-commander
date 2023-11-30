@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-cycle
 import { Zone } from 'backend/database/gamestate.types';
 
 export const SOCKET_MSG_GENERAL = {
@@ -26,7 +27,9 @@ export const SOCKET_MSG_GAME = {
 
   DRAW_CARD: 'draw_card',
   MOVE_CARD: 'move_card',
+
   SET_COMMANDER_TIMES_CASTED: 'set_commander_times_casted',
+  SET_PLAYER_LIFE: 'set_player_life',
 };
 
 export interface MoveCardDetails {
@@ -42,7 +45,16 @@ export interface MoveCardPayload extends MoveCardDetails {
   };
 }
 
+export interface SendMessagePayload {
+  message: string;
+}
+
 export interface SetCommanderTimesCastedPayload {
   commanderClashId: string;
-  amount: number;
+  total: number;
+}
+
+export interface SetPlayerLifePayload {
+  forPlayerId: string;
+  total: number;
 }
