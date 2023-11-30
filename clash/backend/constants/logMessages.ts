@@ -1,14 +1,22 @@
 // eslint-disable-next-line import/no-cycle
 import { Zone } from 'backend/database/gamestate.types';
-import { SetCommanderTimesCastedPayload } from './wsEvents';
+import {
+  SendMessagePayload,
+  SetCommanderTimesCastedPayload,
+  SetPlayerLifePayload,
+} from './wsEvents';
 
 export const LOG_MESSAGES = {
   DRAW_CARD: 'DRAW_CARD',
   MOVE_CARD: 'MOVE_CARD',
   CHAT_MESSAGE: 'CHAT_MESSAGE',
   SET_COMMANDER_TIMES_CASTED: 'SET_COMMANDER_TIMES_CASTED',
+  SET_LIFE: 'SET_LIFE',
 } as const;
 
+export type LogKey = typeof LOG_MESSAGES[keyof typeof LOG_MESSAGES];
+
+// ############################### Payloads ###############################
 interface MoveCardLocation {
   zone: Zone;
   playerName: string;
@@ -25,11 +33,15 @@ export interface LogPayloadDraw {
 
 export type LogPayloadSetCommanderTimesCasted = SetCommanderTimesCastedPayload & {
   commanderName: string;
+  previousTotal: number;
 };
 
-export type LogPayload = LogPayloadDraw | LogPlayoadMoveZone;
+export type LogPayloadSetPlayerLife = SetPlayerLifePayload & {
+  fromPlayerId: string;
+  previousTotal: number;
+};
 
-export type LogKey = typeof LOG_MESSAGES[keyof typeof LOG_MESSAGES];
+// ############################### Messages ###############################
 
 interface LogMessageWithPlayer {
   playerId: string;
@@ -47,7 +59,7 @@ interface LogMessageMove extends LogMessageWithPlayer {
 
 interface LogMessageChat extends LogMessageWithPlayer {
   logKey: 'CHAT_MESSAGE';
-  payload: string;
+  payload: SendMessagePayload;
 }
 
 interface LogMessageSetCommanderTimesCasted extends LogMessageWithPlayer {
@@ -55,12 +67,21 @@ interface LogMessageSetCommanderTimesCasted extends LogMessageWithPlayer {
   payload: LogPayloadSetCommanderTimesCasted;
 }
 
+interface LogMessageSetPlayerLife extends LogMessageWithPlayer {
+  logKey: 'SET_LIFE';
+  payload: LogPayloadSetPlayerLife;
+}
+
+// ############################### Log ###############################
+
 export type LogMessage =
   | LogMessageDraw
   | LogMessageMove
   | LogMessageChat
+  | LogMessageSetPlayerLife
   | LogMessageSetCommanderTimesCasted;
 
 export type GameLog = {
   timestamp: number;
+  overwritesPreviousLog?: boolean;
 } & LogMessage;

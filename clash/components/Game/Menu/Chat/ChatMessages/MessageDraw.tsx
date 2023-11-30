@@ -16,7 +16,8 @@ const MessageDraw = ({ payload, playerId, playerName }: Props) => {
   return (
     <div className={styles.message}>
       <ColoredPlayerName id={playerId} name={playerName} />
-      <span> drew {pluralizeCards(payload.amount)}</span>
+      {` drew `}
+      <b>{pluralizeCards(payload.amount)}</b>
     </div>
   );
 };

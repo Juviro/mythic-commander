@@ -56,6 +56,12 @@ export const GameStateContextProvider = ({ children }: Props) => {
     socket.on(SOCKET_MSG_GAME.GAME_LOG, (newLogEntry: GameLog) => {
       setGameState((prev) => {
         if (!prev) return prev;
+        if (newLogEntry.overwritesPreviousLog) {
+          return {
+            ...prev,
+            gameLog: [...prev.gameLog.slice(0, -1), newLogEntry],
+          };
+        }
         return {
           ...prev,
           gameLog: [...prev.gameLog, newLogEntry],
@@ -80,7 +86,7 @@ export const GameStateContextProvider = ({ children }: Props) => {
       gameState: {
         ...gameState,
         // TODO: remove at some point - currently used to easily debug 4 players
-        // players: [...gameState.players, gameState.players[0]],
+        // players: [...gameState.players, gameState.players.at(-1)!],
       },
       player,
       isInitialized: true,

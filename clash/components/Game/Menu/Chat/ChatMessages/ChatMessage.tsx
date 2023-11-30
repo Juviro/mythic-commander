@@ -8,6 +8,7 @@ import MessageDraw from './MessageDraw';
 import MessageMove from './MessageMove';
 import MessageChat from './MessageChat';
 import MessageSetCommanderTimesCasted from './MessageSetCommanderTimesCasted';
+import MessageSetLife from './MessageSetLife';
 
 interface Props {
   message: GameLog;
@@ -30,7 +31,13 @@ const ChatMessage = ({ message }: Props) => {
     return <MessageMove playerName={playerName} playerId={playerId} payload={payload} />;
   }
   if (logKey === 'CHAT_MESSAGE') {
-    return <MessageChat playerName={playerName} playerId={playerId} message={payload} />;
+    return (
+      <MessageChat
+        playerName={playerName}
+        playerId={playerId}
+        message={payload.message}
+      />
+    );
   }
   if (logKey === 'SET_COMMANDER_TIMES_CASTED') {
     return (
@@ -41,8 +48,15 @@ const ChatMessage = ({ message }: Props) => {
       />
     );
   }
+  if (logKey === 'SET_LIFE') {
+    return (
+      <MessageSetLife playerName={playerName} playerId={playerId} payload={payload} />
+    );
+  }
 
-  return <div className={styles.message}>{logKey}</div>;
+  return (
+    <div className={styles.message}>{`${logKey} ${JSON.stringify({ payload })}`}</div>
+  );
 };
 
 export default ChatMessage;

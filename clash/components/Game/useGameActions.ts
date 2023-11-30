@@ -2,7 +2,9 @@ import {
   MoveCardDetails,
   MoveCardPayload,
   SOCKET_MSG_GAME,
+  SendMessagePayload,
   SetCommanderTimesCastedPayload,
+  SetPlayerLifePayload,
 } from 'backend/constants/wsEvents';
 import { Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
@@ -29,13 +31,18 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.MOVE_CARD, payload);
   };
 
-  const onSendChatMessage = (message: string) => {
+  const onSendChatMessage = (message: SendMessagePayload) => {
     socket?.emit(SOCKET_MSG_GAME.SEND_CHAT_MESSAGE, message);
   };
 
-  const onSetCommanderTimesCasted = (commanderClashId: string, amount: number) => {
-    const payload: SetCommanderTimesCastedPayload = { commanderClashId, amount };
+  const onSetCommanderTimesCasted = (commanderClashId: string, total: number) => {
+    const payload: SetCommanderTimesCastedPayload = { commanderClashId, total };
     socket?.emit(SOCKET_MSG_GAME.SET_COMMANDER_TIMES_CASTED, payload);
+  };
+
+  const setPlayerLife = (forPlayerId: string, total: number) => {
+    const payload: SetPlayerLifePayload = { total, forPlayerId };
+    socket?.emit(SOCKET_MSG_GAME.SET_PLAYER_LIFE, payload);
   };
 
   return {
@@ -43,6 +50,7 @@ const useGameActions = () => {
     onMoveCard,
     onSendChatMessage,
     onSetCommanderTimesCasted,
+    setPlayerLife,
   };
 };
 

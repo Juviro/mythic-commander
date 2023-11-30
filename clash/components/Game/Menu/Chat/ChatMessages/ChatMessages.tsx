@@ -1,29 +1,22 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
-
-import GameStateContext from 'components/Game/GameStateContext';
 
 import styles from '../Chat.module.css';
 import ChatMessage from './ChatMessage';
 import { MessageType } from '../ChatControls/ChatControls';
+import useGameLog from './useGameLog';
 
 interface Props {
   enabledTypes: MessageType[];
 }
 
 const ChatMessages = ({ enabledTypes }: Props) => {
-  const { gameState } = useContext(GameStateContext);
-  const { gameLog } = gameState!;
   const parentRef = useRef<HTMLDivElement>(null);
 
-  const displayedLog = gameLog.filter(({ logKey }) => {
-    if (!enabledTypes.length) return true;
-    if (logKey === 'CHAT_MESSAGE') return enabledTypes.includes('CHAT');
-    return enabledTypes.includes('LOG');
-  });
+  const { log } = useGameLog(enabledTypes);
 
   const virtualizer = useVirtualizer({
-    count: displayedLog.length,
+    count: log.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 45,
   });
@@ -44,10 +37,10 @@ const ChatMessages = ({ enabledTypes }: Props) => {
     const diff = scrollHeight - currentScroll;
 
     // auto scroll, but only if the user is already close to the bottom
-    if (diff < 600) {
+    if (diff < 1000) {
       scrollToBottom();
     }
-  }, [displayedLog.length]);
+  }, [log.length]);
 
   return (
     <div ref={parentRef} className={styles.messages}>
@@ -73,7 +66,7 @@ const ChatMessages = ({ enabledTypes }: Props) => {
               data-index={virtualRow.index}
               ref={virtualizer.measureElement}
             >
-              <ChatMessage message={displayedLog[virtualRow.index]} />
+              <ChatMessage message={log[virtualRow.index]} />
             </div>
           ))}
         </div>

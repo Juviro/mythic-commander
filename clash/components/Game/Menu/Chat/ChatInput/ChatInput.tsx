@@ -9,7 +9,7 @@ const ChatInput = () => {
   const onSubmit = () => {
     if (!message) return;
     setMessage('');
-    onSendChatMessage(message);
+    onSendChatMessage({ message });
   };
 
   return (
