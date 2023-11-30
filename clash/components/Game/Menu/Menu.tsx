@@ -7,6 +7,7 @@ import GameStateContext from '../GameStateContext';
 import CommandZones from './CommandZones/CommandZones';
 import LifeTotals from './LifeTotals/LifeTotals';
 import Phases from './Phases/Phases';
+import GameInfo from './GameInfo/GameInfo';
 
 const Menu = () => {
   const { gameState } = useContext(GameStateContext);
@@ -22,6 +23,7 @@ const Menu = () => {
         <CommandZones />
         <LifeTotals />
         <Phases />
+        <GameInfo />
       </div>
     </div>
   );

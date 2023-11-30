@@ -28,7 +28,7 @@ const gameSocketActions = (io: Server) => {
         return;
       }
 
-      const gameState = await getGameState(gameId);
+      const { gameState } = await getGameState(gameId);
 
       const isInGame = gameState?.players.some((player) => player.id === user.id);
       if (!isInGame) {
@@ -45,6 +45,10 @@ const gameSocketActions = (io: Server) => {
       const game = new Game(gameState, io);
       currentGames[gameId] = game;
       game.join(socket, user);
+    });
+
+    socket.on(SOCKET_MSG_GAME.RESTART_GAME, () => {
+      currentGames[currentGameId].restartGame(socket);
     });
 
     socket.on(SOCKET_MSG_GAME.DRAW_CARD, () => {

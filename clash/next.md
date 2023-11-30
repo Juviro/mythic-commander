@@ -68,6 +68,8 @@
 
 # Backlog
 
+- defeated player / ff
+
 - adjust colors to work on every background
   - black and red are too dark
 

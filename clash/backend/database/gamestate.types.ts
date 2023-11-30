@@ -63,6 +63,7 @@ export interface Player {
 // ##################### GameState #####################
 
 export interface GameState {
+  hostId: string;
   gameId: string;
   players: Player[];
   turn: number;

@@ -16,6 +16,8 @@ import {
 import { Server, Socket } from 'socket.io';
 import { User as DatabaseUser } from 'backend/database/getUser';
 import { GameLog, LOG_MESSAGES, LogMessage } from 'backend/constants/logMessages';
+import { getGameState } from 'backend/database/matchStore';
+import initMatch from 'backend/lobby/initMatch';
 import addLogEntry from './addLogEntry';
 
 interface User {
@@ -33,35 +35,6 @@ export default class Game {
   constructor(gameState: GameState, server: Server) {
     this.server = server;
     this.gameState = gameState;
-
-    // TODO: remove later
-    if (!this.gameState.phase) {
-      this.gameState.phase = 'beginning';
-    }
-  }
-
-  static obfuscatePlayer(player: Player, isSelf: boolean): Player {
-    const obfuscateCard = ({ clashId, ownerId }: Card) => ({ clashId, ownerId });
-
-    const hand = isSelf ? player.zones.hand : player.zones.hand.map(obfuscateCard);
-
-    return {
-      ...player,
-      zones: {
-        ...player.zones,
-        library: player.zones.library.map(obfuscateCard),
-        hand,
-      },
-    };
-  }
-
-  obfuscateGameState(playerId: string): GameState {
-    const obfuscatedPlayers = this.gameState.players.map((player) => {
-      const isSelf = player.id === playerId;
-      return Game.obfuscatePlayer(player, isSelf);
-    });
-
-    return { ...this.gameState, players: obfuscatedPlayers };
   }
 
   get id() {
@@ -106,7 +79,51 @@ export default class Game {
     this.emitGameState(socket, user.id);
   }
 
+  // ##################### Game #####################
+
+  async restartGame(socket: Socket) {
+    const player = this.getPlayerBySocket(socket);
+    if (player.id !== this.gameState.hostId) return;
+
+    const { lobby } = await getGameState(this.gameState.gameId);
+    await initMatch(lobby);
+    const { gameState: newGameState } = await getGameState(this.gameState.gameId);
+
+    this.gameState = newGameState;
+
+    newGameState.players.forEach(({ id: playerId }) => {
+      const user = this.users[playerId];
+      // might be undefined if player is not connected
+      if (!user) return;
+      this.emitGameState(user.socket, playerId);
+    });
+  }
+
   // ##################### Utils #####################
+
+  static obfuscatePlayer(player: Player, isSelf: boolean): Player {
+    const obfuscateCard = ({ clashId, ownerId }: Card) => ({ clashId, ownerId });
+
+    const hand = isSelf ? player.zones.hand : player.zones.hand.map(obfuscateCard);
+
+    return {
+      ...player,
+      zones: {
+        ...player.zones,
+        library: player.zones.library.map(obfuscateCard),
+        hand,
+      },
+    };
+  }
+
+  obfuscateGameState(playerId: string): GameState {
+    const obfuscatedPlayers = this.gameState.players.map((player) => {
+      const isSelf = player.id === playerId;
+      return Game.obfuscatePlayer(player, isSelf);
+    });
+
+    return { ...this.gameState, players: obfuscatedPlayers };
+  }
 
   getPlayerById(playerId: string): Player {
     return this.gameState.players.find(({ id }) => id === playerId) as Player;

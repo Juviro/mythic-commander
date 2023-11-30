@@ -1,0 +1,6 @@
+.wrapper {
+    color: var(--color-text-light);
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;
+}

@@ -95,18 +95,19 @@ const initMatch = async (lobby: Lobby) => {
     };
   });
 
-  const sortedPlayers = players.sort(() => Math.random() - 0.5);
+  const randomizedPlayers = players.sort(() => Math.random() - 0.5);
 
   const initialGameState: GameState = {
+    hostId: lobby.hostId,
     gameId: lobby.id,
-    players: sortedPlayers,
-    turn: 0,
+    players: randomizedPlayers,
+    turn: 1,
     phase: 'beginning',
-    activePlayerId: sortedPlayers[0].id,
+    activePlayerId: randomizedPlayers[0].id,
     gameLog: [],
   };
 
-  await storeGameState(lobby.id, initialGameState);
+  await storeGameState(lobby, initialGameState);
 };
 
 export default initMatch;

@@ -65,22 +65,30 @@ export const getDecks = async (lobby: Lobby): Promise<Deck[]> => {
 };
 
 export const storeGameState = async (
-  gameId: string,
+  lobby: Lobby,
   gameState: GameState
 ): Promise<void> => {
-  await db('gameStates').insert({
-    id: gameId,
-    state: gameState,
-  });
+  await db('gameStates')
+    .insert({
+      id: lobby.id,
+      state: gameState,
+      lobby,
+    })
+    .onConflict('id')
+    .merge();
 };
 
-export const getGameState = async (gameId: string): Promise<GameState> => {
-  const { state }: { state: GameState } = await db('gameStates')
+export const getGameState = async (
+  gameId: string
+): Promise<{ gameState: GameState; lobby: Lobby }> => {
+  const { state, lobby }: { state: GameState; lobby: Lobby } = await db('gameStates')
     .where({
       id: gameId,
     })
-    .select('state')
     .first();
 
-  return state;
+  return {
+    gameState: state,
+    lobby,
+  };
 };

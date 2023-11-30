@@ -55,6 +55,10 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.END_TURN);
   };
 
+  const restartGame = () => {
+    socket?.emit(SOCKET_MSG_GAME.RESTART_GAME);
+  };
+
   return {
     onDrawCard,
     onMoveCard,
@@ -63,6 +67,7 @@ const useGameActions = () => {
     setPlayerLife,
     setPhase,
     endTurn,
+    restartGame,
   };
 };
 
