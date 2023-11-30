@@ -10,6 +10,7 @@ import {
   SOCKET_MSG_GAME,
   SendMessagePayload,
   SetCommanderTimesCastedPayload,
+  SetPhasePayload,
   SetPlayerLifePayload,
 } from 'backend/constants/wsEvents';
 import { Server, Socket } from 'socket.io';
@@ -32,6 +33,11 @@ export default class Game {
   constructor(gameState: GameState, server: Server) {
     this.server = server;
     this.gameState = gameState;
+
+    // TODO: remove later
+    if (!this.gameState.phase) {
+      this.gameState.phase = 'beginning';
+    }
   }
 
   static obfuscatePlayer(player: Player, isSelf: boolean): Player {
@@ -70,6 +76,11 @@ export default class Game {
 
   emitGameState(socket: Socket, playerId: string) {
     socket.emit(SOCKET_MSG_GAME.GAME_STATE, this.obfuscateGameState(playerId));
+  }
+
+  emitGameUpdate() {
+    const { activePlayerId, phase, turn } = this.gameState;
+    this.emitToAll(SOCKET_MSG_GAME.GAME_STATE, { activePlayerId, phase, turn });
   }
 
   emitPlayerUpdate(player: Player) {
@@ -272,6 +283,49 @@ export default class Game {
         ...payload,
         previousTotal,
         fromPlayerId: player.id,
+      },
+    });
+  }
+
+  endTurn(socket: Socket) {
+    const player = this.getPlayerBySocket(socket);
+    const { players, activePlayerId } = this.gameState;
+    const activePlayerIndex = players.findIndex(({ id }) => id === activePlayerId);
+
+    const newActivePlayerIndex = (activePlayerIndex + 1) % players.length;
+
+    if (newActivePlayerIndex === 0) {
+      this.gameState.turn += 1;
+    }
+
+    this.gameState.activePlayerId = players[newActivePlayerIndex].id;
+    this.gameState.phase = 'beginning';
+
+    this.emitGameUpdate();
+
+    this.logAction({
+      playerId: player.id,
+      logKey: LOG_MESSAGES.SET_ACTIVE_PLAYER,
+      payload: {
+        activePlayerId: players[newActivePlayerIndex].id,
+      },
+    });
+  }
+
+  setPhase(socket: Socket, payload: SetPhasePayload) {
+    const player = this.getPlayerBySocket(socket);
+    this.gameState.phase = payload.phase;
+
+    const activePlayer = this.getPlayerById(this.gameState.activePlayerId);
+
+    this.emitGameUpdate();
+
+    this.logAction({
+      playerId: player.id,
+      logKey: LOG_MESSAGES.SET_PHASE,
+      payload: {
+        ...payload,
+        activePlayerId: activePlayer.id,
       },
     });
   }

@@ -1,0 +1,56 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.phase_icons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 8px;
+  color: white;
+}
+
+.phase_icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 0 var(--color-active);
+  transition: all 0.2s ease-in-out;
+  border-radius: 50%;
+  border: unset;
+  background: unset;
+  padding: unset;
+  color: inherit;
+}
+
+.phase_icon__clickable {
+  cursor: pointer;
+}
+
+.phase_icon__clickable:hover {
+  transform: scale(1.2);
+}
+
+.phase_icon__clickable:active {
+  transform: scale(1.1);
+}
+
+.phase_icon__active {
+  box-shadow: 0 0 5px 12px var(--color-active);
+  background-color: var(--color-active);
+}
+
+.phase_buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 32px;
+  justify-content: flex-end;
+}
+
+.phase_buttons :global(.ant-btn-primary:disabled) {
+    color: grey;
+    border-color: grey;
+}

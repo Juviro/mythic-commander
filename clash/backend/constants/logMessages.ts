@@ -3,6 +3,7 @@ import { Zone } from 'backend/database/gamestate.types';
 import {
   SendMessagePayload,
   SetCommanderTimesCastedPayload,
+  SetPhasePayload,
   SetPlayerLifePayload,
 } from './wsEvents';
 
@@ -12,6 +13,8 @@ export const LOG_MESSAGES = {
   CHAT_MESSAGE: 'CHAT_MESSAGE',
   SET_COMMANDER_TIMES_CASTED: 'SET_COMMANDER_TIMES_CASTED',
   SET_LIFE: 'SET_LIFE',
+  SET_PHASE: 'SET_PHASE',
+  SET_ACTIVE_PLAYER: 'SET_ACTIVE_PLAYER',
 } as const;
 
 export type LogKey = typeof LOG_MESSAGES[keyof typeof LOG_MESSAGES];
@@ -39,6 +42,14 @@ export type LogPayloadSetCommanderTimesCasted = SetCommanderTimesCastedPayload &
 export type LogPayloadSetPlayerLife = SetPlayerLifePayload & {
   fromPlayerId: string;
   previousTotal: number;
+};
+
+export type LogPayloadSetPhase = SetPhasePayload & {
+  activePlayerId: string;
+};
+
+export type LogPayloadSetActivePlayer = {
+  activePlayerId: string;
 };
 
 // ############################### Messages ###############################
@@ -72,6 +83,16 @@ interface LogMessageSetPlayerLife extends LogMessageWithPlayer {
   payload: LogPayloadSetPlayerLife;
 }
 
+interface LogMessageSetPhase extends LogMessageWithPlayer {
+  logKey: 'SET_PHASE';
+  payload: LogPayloadSetPhase;
+}
+
+interface LogMessageSetActivePlayer extends LogMessageWithPlayer {
+  logKey: 'SET_ACTIVE_PLAYER';
+  payload: LogPayloadSetActivePlayer;
+}
+
 // ############################### Log ###############################
 
 export type LogMessage =
@@ -79,7 +100,9 @@ export type LogMessage =
   | LogMessageMove
   | LogMessageChat
   | LogMessageSetPlayerLife
-  | LogMessageSetCommanderTimesCasted;
+  | LogMessageSetCommanderTimesCasted
+  | LogMessageSetPhase
+  | LogMessageSetActivePlayer;
 
 export type GameLog = {
   timestamp: number;

@@ -23,7 +23,7 @@ const CommanderCasted = ({ commander, isSelf }: Props) => {
           <MinusOutlined
             className={styles.commander_casted_button}
             onClick={() =>
-              onSetCommanderTimesCasted(commander.clashId, commander.timesCasted - 1)
+              onSetCommanderTimesCasted(commander.clashId, commander.timesCasted - 2)
             }
           />
         )}
@@ -32,7 +32,7 @@ const CommanderCasted = ({ commander, isSelf }: Props) => {
           <PlusOutlined
             className={styles.commander_casted_button}
             onClick={() =>
-              onSetCommanderTimesCasted(commander.clashId, commander.timesCasted + 1)
+              onSetCommanderTimesCasted(commander.clashId, commander.timesCasted + 2)
             }
           />
         )}

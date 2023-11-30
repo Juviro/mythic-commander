@@ -101,6 +101,7 @@ const initMatch = async (lobby: Lobby) => {
     gameId: lobby.id,
     players: sortedPlayers,
     turn: 0,
+    phase: 'beginning',
     activePlayerId: sortedPlayers[0].id,
     gameLog: [],
   };

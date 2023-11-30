@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { LogPlayoadMoveZone } from 'backend/constants/logMessages';
-import ColoredPlayerName from './ColoredPlayerName';
+import ColoredPlayerName from '../ColoredPlayerName';
 
-import styles from '../Chat.module.css';
+import styles from '../../Chat.module.css';
 
 const getZoneLabelFrom = (zone: string) => {
   switch (zone) {
