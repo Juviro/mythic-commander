@@ -1,6 +1,7 @@
 # Bugs
 
 - card position change only works sometimes
+  - milling and the reverse action are wrong on flipped board
 
 # Current feature
 
@@ -75,8 +76,7 @@
 
 - long clicking life buttons adds in 10s
 
-- stack
-
+- stack ?
   - movable popup?
   - only visible when it contains cards or when dragging
 
@@ -87,4 +87,5 @@
 
 # Backlog Bugs
 
-- cards form other players have wrong sleeve color in hand
+- cards from other players have wrong sleeve color in hand
+- on page load, cards in exile are animated

@@ -48,9 +48,15 @@ const animateDirectPositionChange = (
     },
   ];
 
-  cardRef.current!.animate(animationSteps, {
+  const animation = cardRef.current!.animate(animationSteps, {
     duration: 300,
     easing: 'ease-in-out',
+  });
+
+  return new Promise((resolve) => {
+    animation.onfinish = () => {
+      resolve(true);
+    };
   });
 };
 
@@ -109,14 +115,21 @@ const animateArcPositionChange = (
   animation.onfinish = () => {
     cardRef.current?.classList.remove('add_backside');
   };
+
+  return new Promise((resolve) => {
+    animation.onfinish = () => {
+      cardRef.current?.classList.remove('add_backside');
+      resolve(true);
+    };
+  });
 };
 
-const animateCardPositionChange = (
+const animateCardPositionChange = async (
   cardRef: React.RefObject<HTMLDivElement>,
   clashId: string,
   cardPositions: CardPositions,
-  zone?: Zone,
-  isVisible?: boolean
+  isVisible: boolean,
+  zone?: Zone
 ) => {
   const storedPosition = cardPositions.current[clashId];
   if (!cardRef.current || !storedPosition) return;
@@ -129,13 +142,12 @@ const animateCardPositionChange = (
   };
 
   if (shouldAnimateInArc()) {
-    animateArcPositionChange(storedPosition, cardRef, isVisible);
+    await animateArcPositionChange(storedPosition, cardRef, isVisible);
   } else {
-    animateDirectPositionChange(storedPosition, cardRef);
+    await animateDirectPositionChange(storedPosition, cardRef);
   }
 
-  // eslint-disable-next-line no-param-reassign
-  cardPositions.current[clashId] = null;
+  storeCardPosition(cardRef, clashId, isVisible, cardPositions, zone);
 };
 
 const useAnimateCardPositionChange = (
@@ -148,22 +160,12 @@ const useAnimateCardPositionChange = (
   const isVisible = 'id' in card;
   const { clashId } = card;
 
-  // animation on zone change
   useLayoutEffect(() => {
     if (cardPositions.current[clashId] && cardRef.current) {
-      animateCardPositionChange(cardRef, clashId, cardPositions, zone, isVisible);
-    }
-
-    return () => {
+      animateCardPositionChange(cardRef, clashId, cardPositions, isVisible, zone);
+    } else {
       storeCardPosition(cardRef, clashId, isVisible, cardPositions, zone);
-    };
-  }, []);
-
-  // animation when moving on the battlefield
-  useLayoutEffect(() => {
-    if (!cardRef.current || !cardPosition) return;
-    animateCardPositionChange(cardRef, clashId, cardPositions, zone, isVisible);
-    storeCardPosition(cardRef, clashId, isVisible, cardPositions, zone);
+    }
   }, [JSON.stringify(cardPosition)]);
 };
 
