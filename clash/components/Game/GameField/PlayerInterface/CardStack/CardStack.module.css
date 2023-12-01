@@ -25,7 +25,7 @@
     flex-direction: column;
     width: 80%;
     margin: auto;
-    color: #ffffff70;
+    color: var(--color-icon-light);
     align-items: center;
     gap: 8px;
 }

@@ -40,7 +40,7 @@ const Dropzone = ({
   });
 
   if (disabled) {
-    return <div>{children}</div>;
+    return children;
   }
 
   return (

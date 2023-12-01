@@ -7,6 +7,7 @@ import Library from './Library/Library';
 import styles from '../PlayerInterfaces.module.css';
 import Graveyard from './Graveyard/Graveyard';
 import Battlefield from './Battlefield/Battlefield';
+import Exile from './Exile/Exile';
 
 interface Props {
   player: Player;
@@ -25,6 +26,7 @@ const PlayerInterface = ({ player, isSelf, isFlipped }: Props) => {
         <Graveyard player={player} isSelf={isSelf} />
         <Library player={player} isSelf={isSelf} />
         <Hand player={player} isSelf={isSelf} />
+        <Exile player={player} isSelf={isSelf} />
         <div />
       </div>
     </div>

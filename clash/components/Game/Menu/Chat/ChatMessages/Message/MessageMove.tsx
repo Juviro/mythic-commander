@@ -18,7 +18,7 @@ const getZoneLabelFrom = (zone: string) => {
     case 'commandZone':
       return 'the command zone';
     case 'library':
-      return 'the top of the library';
+      return 'their library';
     default:
       return zone;
   }
@@ -61,7 +61,6 @@ const MessageMove = ({ payload, playerId, playerName }: Props) => {
       case 'graveyard':
         action = 'discarded';
         break;
-        break;
       default:
         break;
     }
@@ -77,6 +76,11 @@ const MessageMove = ({ payload, playerId, playerName }: Props) => {
       default:
         break;
     }
+  }
+
+  if (payload.to.zone === 'exile') {
+    action = 'exiled';
+    actionSuffix = `from ${getZoneLabelFrom(payload.from.zone)}`;
   }
 
   if (!action) {

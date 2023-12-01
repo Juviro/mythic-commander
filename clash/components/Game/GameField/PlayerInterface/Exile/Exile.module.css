@@ -1,0 +1,77 @@
+@keyframes rotateAndScale {
+  0% {
+    transform: rotate(0deg) scale(0.9);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(0.9);
+  }
+}
+
+@keyframes dissappear {
+  0% {
+    width: var(--size-card-width);
+    aspect-ratio: var(--card-aspect-ratio);
+    transform: scale(1);
+  }
+  100% {
+    width: var(--size-card-width);
+    aspect-ratio: var(--card-aspect-ratio);
+    transform: scale(0);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.wrapper {
+  aspect-ratio: 1 / 1;
+  border-radius: 4px;
+  align-self: flex-end;
+  margin: 16px 0;
+  color: var(--color-icon-light);
+  border: 3px solid var(--player-color);
+  max-width: 120px;
+  width: 70%;
+  justify-self: flex-end;
+}
+
+.inner {
+  padding: 8px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--player-color) 50%, transparent);
+}
+
+.inner :global(svg) {
+  height: 100%;
+  max-height: 80px;
+  animation: rotateAndScale 20s linear infinite;
+}
+
+:global(.flipped) .inner {
+  align-self: flex-start;
+  justify-self: flex-start;
+}
+
+.card {
+  width: 0px;
+  height: 0px;
+  position: absolute;
+
+  animation: dissappear 0.5s linear forwards;
+}
+
+.card :global(.card) {
+  padding: 0px;
+}
