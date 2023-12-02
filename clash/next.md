@@ -1,25 +1,18 @@
 # Bugs
 
-- card position change only works sometimes
-  - milling and the reverse action are wrong on flipped board
+* don't revela card name in chat when user puts card from hand onto lib
 
 # Current feature
 
-* layout:
-  - exile
 
 # MVP
 
-- only show card tooltip on right click? - do this once the context menues are implemented
-
 * snap
-
   - to grid
   - to other cards
-  - enchant / equip
+  -   enchant / equip
 
 * card actions
-
   - tap
   - flip
   - counter
@@ -30,7 +23,6 @@
     - ??? maybe retrieve from database (search for "XXX counter")
 
 * battlefield
-
   - emblems
   - select multiple cards
     - tap
@@ -39,24 +31,23 @@
     - create token
 
 * library
-
   - search
   - shuffle
   - scry, mill
   - put card on bottom, on nth position
 
 * graveyard
-
   - search
 
 * hand
-
   - discard random card
 
 * shortcuts for every action
 
 * game
   - mulligan
+
+- only show card tooltip on right click? - do this once the context menues are implemented
 
 # Backlog
 
@@ -85,7 +76,14 @@
 - when playing alone, display partner commanders next to each other
 - store currentGames (in redis?)
 
+- show last games in lobby
+- display confirm when user closes tab
+- add route /playtest/:deckId
+  - no stored game state in backend
+  - reloading resets the game (destroy game state on socket disconnect)
+
 # Backlog Bugs
 
 - cards from other players have wrong sleeve color in hand
 - on page load, cards in exile are animated
+- milling action animation is wrong on flipped board

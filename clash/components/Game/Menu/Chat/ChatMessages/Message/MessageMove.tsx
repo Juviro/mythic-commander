@@ -77,6 +77,15 @@ const MessageMove = ({ payload, playerId, playerName }: Props) => {
         break;
     }
   }
+  if (payload.from.zone === 'commandZone') {
+    switch (payload.to.zone) {
+      case 'battlefield':
+        action = 'casted their commander';
+        break;
+      default:
+        break;
+    }
+  }
 
   if (payload.to.zone === 'exile') {
     action = 'exiled';

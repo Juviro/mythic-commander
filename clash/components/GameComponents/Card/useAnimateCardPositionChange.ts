@@ -35,6 +35,8 @@ const animateDirectPositionChange = (
   const deltaY = storedPosition.y - y;
   const deltaWidth = storedPosition.width / width;
 
+  if (!deltaWidth && !deltaX && !deltaY) return Promise.resolve(true);
+
   const transformFrom = `translate(${deltaX}px, ${deltaY}px) scale(${deltaWidth})`;
 
   const transformTo = `translate(0px, 0px) scale(1)`;
