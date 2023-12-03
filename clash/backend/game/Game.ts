@@ -7,6 +7,7 @@ import {
 } from 'backend/database/gamestate.types';
 import {
   MoveCardPayload,
+  PeekPayload,
   SOCKET_MSG_GAME,
   SendMessagePayload,
   SetCommanderTimesCastedPayload,
@@ -240,6 +241,30 @@ export default class Game {
           zone: to.zone,
           playerName: toPlayer.name,
         },
+      },
+    });
+  }
+
+  peek(socket: Socket, payload: PeekPayload) {
+    const { amount, zone, playerId } = payload;
+    const peekingPlayer = this.getPlayerBySocket(socket);
+    const player = this.getPlayerById(playerId);
+
+    const peekedCards = player.zones[zone].slice(-amount);
+
+    socket.emit(SOCKET_MSG_GAME.PEEK, {
+      zone,
+      playerId,
+      cards: peekedCards,
+    });
+
+    this.logAction({
+      playerId: peekingPlayer.id,
+      logKey: LOG_MESSAGES.PEEK,
+      payload: {
+        peekedPlayerId: player.id,
+        amount,
+        zone,
       },
     });
   }

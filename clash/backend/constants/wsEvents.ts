@@ -30,6 +30,7 @@ export const SOCKET_MSG_GAME = {
 
   DRAW_CARD: 'draw_card',
   MOVE_CARD: 'move_card',
+  PEEK: 'peek',
 
   SET_COMMANDER_TIMES_CASTED: 'set_commander_times_casted',
   SET_PLAYER_LIFE: 'set_player_life',
@@ -46,6 +47,12 @@ export interface MoveCardPayload extends MoveCardDetails {
     zone: Zone;
     playerId: string;
   };
+}
+
+export interface PeekPayload {
+  playerId: string;
+  amount: number;
+  zone: Zone;
 }
 
 export interface SendMessagePayload {

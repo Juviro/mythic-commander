@@ -11,6 +11,7 @@ import MessageSetCommanderTimesCasted from './Message/MessageSetCommanderTimesCa
 import MessageSetLife from './Message/MessageSetLife';
 import MessageSetActivePlayer from './Message/MessageSetActivePlayer';
 import MessageSetPhase from './Message/MessageSetPhase';
+import MessagePeek from './Message/MessagePeek';
 
 interface Props {
   message: GameLog;
@@ -32,6 +33,10 @@ const ChatMessage = ({ message }: Props) => {
   if (logKey === 'MOVE_CARD') {
     return <MessageMove playerName={playerName} playerId={playerId} payload={payload} />;
   }
+  if (logKey === 'PEEK') {
+    return <MessagePeek playerId={playerId} payload={payload} />;
+  }
+
   if (logKey === 'CHAT_MESSAGE') {
     return (
       <MessageChat

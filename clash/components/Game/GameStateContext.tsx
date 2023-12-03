@@ -1,13 +1,20 @@
 import React, { CSSProperties, useContext, useEffect, useMemo, useState } from 'react';
 
 import SocketContext from 'components/SocketContext/SocketContextProvider';
-import { GameState, Player } from 'backend/database/gamestate.types';
+import { GameState, Player, VisibleCard, Zone } from 'backend/database/gamestate.types';
 import { GameLog } from 'backend/constants/logMessages';
 import { SOCKET_MSG_GAME } from '../../backend/constants/wsEvents';
 
+interface PeekingCards {
+  zone: Zone;
+  playerId: string;
+  cards: VisibleCard[];
+}
 interface BaseGameState {
   getPlayerColor: (playerId?: string) => string | undefined;
   playerNames: { [key: string]: string };
+  peekingCards: PeekingCards | null;
+  setPeekingCards: (peekingCards: PeekingCards | null) => void;
 }
 export interface InitializedGameState extends BaseGameState {
   gameState: GameState;
@@ -33,6 +40,7 @@ interface Props {
 export const GameStateContextProvider = ({ children }: Props) => {
   const { socket, user } = useContext(SocketContext);
   const [gameState, setGameState] = useState<GameState | null>(null);
+  const [peekingCards, setPeekingCards] = useState<PeekingCards | null>(null);
 
   useEffect(() => {
     if (!socket) return;
@@ -42,6 +50,7 @@ export const GameStateContextProvider = ({ children }: Props) => {
         ...prev,
         ...msg,
       }));
+      setPeekingCards(null);
     });
 
     socket.on(SOCKET_MSG_GAME.UPDATE_PLAYER, (player: Player) => {
@@ -53,6 +62,10 @@ export const GameStateContextProvider = ({ children }: Props) => {
         };
       });
     });
+    socket.on(SOCKET_MSG_GAME.PEEK, (peek: PeekingCards) => {
+      setPeekingCards(peek);
+    });
+
     socket.on(SOCKET_MSG_GAME.GAME_LOG, (newLogEntry: GameLog) => {
       setGameState((prev) => {
         if (!prev) return prev;
@@ -87,28 +100,32 @@ export const GameStateContextProvider = ({ children }: Props) => {
     ) ?? {};
 
   const value: GameStateContextType = useMemo(() => {
+    const baseState = {
+      getPlayerColor,
+      playerNames,
+      peekingCards,
+      setPeekingCards,
+    };
     if (!gameState || !player) {
       return {
+        ...baseState,
         gameState: null,
         player: null,
         isInitialized: false,
-        getPlayerColor,
-        playerNames,
       };
     }
 
     return {
+      ...baseState,
       gameState: {
         ...gameState,
         // TODO: remove at some point - currently used to easily debug 4 players
         // players: [...gameState.players, gameState.players.at(-1)!],
       },
       player,
-      playerNames,
       isInitialized: true,
-      getPlayerColor,
     };
-  }, [gameState]);
+  }, [gameState, peekingCards]);
 
   const globalCssStyle = useMemo<CSSProperties>(() => {
     if (!gameState?.players.length) return {};

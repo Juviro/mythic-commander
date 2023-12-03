@@ -10,6 +10,8 @@ import {
 export const LOG_MESSAGES = {
   DRAW_CARD: 'DRAW_CARD',
   MOVE_CARD: 'MOVE_CARD',
+  PEEK: 'PEEK',
+
   CHAT_MESSAGE: 'CHAT_MESSAGE',
   SET_COMMANDER_TIMES_CASTED: 'SET_COMMANDER_TIMES_CASTED',
   SET_LIFE: 'SET_LIFE',
@@ -28,6 +30,12 @@ export interface LogPlayoadMoveZone {
   cardName: string;
   from: MoveCardLocation;
   to: MoveCardLocation;
+}
+
+export interface LogPayloadPeek {
+  amount: number;
+  peekedPlayerId: string;
+  zone: Zone;
 }
 
 export interface LogPayloadDraw {
@@ -68,6 +76,11 @@ interface LogMessageMove extends LogMessageWithPlayer {
   payload: LogPlayoadMoveZone;
 }
 
+interface LogPeek extends LogMessageWithPlayer {
+  logKey: 'PEEK';
+  payload: LogPayloadPeek;
+}
+
 interface LogMessageChat extends LogMessageWithPlayer {
   logKey: 'CHAT_MESSAGE';
   payload: SendMessagePayload;
@@ -98,6 +111,7 @@ interface LogMessageSetActivePlayer extends LogMessageWithPlayer {
 export type LogMessage =
   | LogMessageDraw
   | LogMessageMove
+  | LogPeek
   | LogMessageChat
   | LogMessageSetPlayerLife
   | LogMessageSetCommanderTimesCasted

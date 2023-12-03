@@ -1,9 +1,18 @@
 # Bugs
 
-* don't revela card name in chat when user puts card from hand onto lib
+* animating card position change on flipped boards wrong again
+* don't reveal card name in chat when user puts card from hand onto lib
 
 # Current feature
 
+* lib context menu
+  * add "randomize" checkbox for bottom cards
+  * add submit button to save changes
+  * add peek custom amount
+  * correct label for peek one -> i18n
+  * only allow peeking if there are enough cards in the library
+  * message when peeking -> put into hand is wrong (says "drew"). same for graveyard ("milled")
+  * peeked cards don't have hover effect
 
 # MVP
 
@@ -87,3 +96,4 @@
 - cards from other players have wrong sleeve color in hand
 - on page load, cards in exile are animated
 - milling action animation is wrong on flipped board
+- prevent interacting with own lib when someone is peeking it (self or opponent)

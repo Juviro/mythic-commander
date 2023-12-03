@@ -16,7 +16,7 @@
 }
 
 :global(.flipped) .wrapper {
-  transform: translateY(-15cqw);
+  transform: translateY(-20cqh) rotate(180deg);
 }
 
 
@@ -57,10 +57,6 @@
   @media (min-width: 2560px) {
     --hover-rotation-scale: 0;
   }
-}
-
-:global(.flipped) .card_wrapper {
-  transform-origin: 50% -160cqw;
 }
 
 .card_wrapper:has(~ .hover_element__is_over),
