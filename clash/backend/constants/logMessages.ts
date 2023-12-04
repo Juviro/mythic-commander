@@ -26,7 +26,7 @@ export type LogKey = typeof LOG_MESSAGES[keyof typeof LOG_MESSAGES];
 // ############################### Payloads ###############################
 interface MoveCardLocation {
   zone: Zone;
-  playerName: string;
+  playerId: string;
 }
 export interface LogPlayoadMoveZone {
   cardName: string | null;

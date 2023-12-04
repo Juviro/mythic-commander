@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { LogPlayoadMoveZone } from 'backend/constants/logMessages';
 import ColoredPlayerName from '../../../../../GameComponents/ColoredPlayerName/ColoredPlayerName';
 
 import styles from '../../Chat.module.css';
 
-const getZoneLabelFrom = (zone: string) => {
+const getZoneLabelFrom = (zone: string, playerId?: string | null) => {
+  if (playerId) {
+    return (
+      <>
+        <ColoredPlayerName id={playerId} addGenetiveSuffix />
+        {` ${zone}`}
+      </>
+    );
+  }
+
   switch (zone) {
     case 'hand':
       return 'their hand';
@@ -44,14 +53,13 @@ const getZoneLabelTo = (zone: string) => {
 };
 
 interface Props {
-  playerName: string;
   playerId: string;
   payload: LogPlayoadMoveZone;
 }
 
-const MessageMove = ({ payload, playerId, playerName }: Props) => {
+const MessageMove = ({ payload, playerId }: Props) => {
   let action = '';
-  let actionSuffix = '';
+  let actionSuffix: ReactNode = '';
 
   if (payload.from.zone === 'hand') {
     switch (payload.to.zone) {
@@ -82,18 +90,25 @@ const MessageMove = ({ payload, playerId, playerName }: Props) => {
 
   if (!action) {
     action = 'put';
-    const zoneLabelFrom = getZoneLabelFrom(payload.from.zone);
+    const isOwnZone = payload.from.playerId === payload.to.playerId;
+    const fromPlayerId = isOwnZone ? null : payload.from.playerId;
+    const zoneLabelFrom = getZoneLabelFrom(payload.from.zone, fromPlayerId);
     const zoneLabelTo = getZoneLabelTo(payload.to.zone);
-    actionSuffix = `from ${zoneLabelFrom} ${zoneLabelTo}`;
+    actionSuffix = (
+      <>
+        {'from '}
+        {zoneLabelFrom} {zoneLabelTo}
+      </>
+    );
   }
 
   return (
     <div className={styles.message}>
-      <ColoredPlayerName id={playerId} name={playerName} />
+      <ColoredPlayerName id={playerId} />
       <span>
         {` ${action} `}
         <b>{payload.cardName ?? 'a card'}</b>
-        {actionSuffix && ` ${actionSuffix}`}
+        {actionSuffix && <> {actionSuffix}</>}
       </span>
     </div>
   );

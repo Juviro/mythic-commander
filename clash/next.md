@@ -4,10 +4,7 @@
 
 # Current feature
 
-* lib context menu
-  * add peek custom amount
-  * correct label for peek one -> i18n
-  * only allow peeking if there are enough cards in the library
+* shuffle library
 
 # MVP
 

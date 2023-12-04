@@ -1,6 +1,6 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, useContext } from 'react';
 
-import { Player } from 'backend/database/gamestate.types';
+import GameStateContext from 'components/Game/GameStateContext';
 
 export const getColorVariable = (id: string) => {
   return `var(--color-player-${id})`;
@@ -8,9 +8,14 @@ export const getColorVariable = (id: string) => {
 
 type Props = {
   addGenetiveSuffix?: boolean;
-} & Pick<Player, 'id' | 'name'>;
+  id: string;
+  name?: string;
+};
 
-const ColoredPlayerName = ({ id, name, addGenetiveSuffix }: Props) => {
+const ColoredPlayerName = ({ id, addGenetiveSuffix, name: providedName }: Props) => {
+  const { playerNames } = useContext(GameStateContext);
+  const name = providedName || playerNames[id!];
+
   const getName = () => {
     if (!addGenetiveSuffix) {
       return name;

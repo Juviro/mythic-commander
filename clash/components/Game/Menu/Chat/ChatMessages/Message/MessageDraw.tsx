@@ -7,15 +7,14 @@ import { pluralizeCards } from '../util';
 import styles from '../../Chat.module.css';
 
 interface Props {
-  playerName: string;
   playerId: string;
   payload: LogPayloadDraw;
 }
 
-const MessageDraw = ({ payload, playerId, playerName }: Props) => {
+const MessageDraw = ({ payload, playerId }: Props) => {
   return (
     <div className={styles.message}>
-      <ColoredPlayerName id={playerId} name={playerName} />
+      <ColoredPlayerName id={playerId} />
       {` drew `}
       <b>{pluralizeCards(payload.amount, true)}</b>
     </div>

@@ -7,7 +7,12 @@ interface Props extends PropsWithChildren {
 
 const ContextMenu = ({ children, items }: Props) => {
   return (
-    <Dropdown trigger={['contextMenu']} menu={{ items }} placement="top">
+    <Dropdown
+      trigger={['contextMenu']}
+      menu={{ items }}
+      placement="top"
+      destroyPopupOnHide
+    >
       {children}
     </Dropdown>
   );

@@ -241,11 +241,11 @@ export default class Game {
         cardName: shouldRevealCardName ? cardToMove!.name : null,
         from: {
           zone: fromZone!,
-          playerName: fromPlayer!.name,
+          playerId: fromPlayer!.id,
         },
         to: {
           zone: to.zone,
-          playerName: toPlayer.name,
+          playerId: toPlayer.id,
         },
       },
     });
