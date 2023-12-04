@@ -25,7 +25,7 @@ const Dropzone = ({
   acceptedIds,
 }: Props) => {
   const [{ isOver, canDrop }, dropRef] = useDrop({
-    accept: 'CARD',
+    accept: ['CARD', 'LIST_CARD'],
     canDrop: ({ ownerId, clashId }) => {
       if (acceptedIds && !acceptedIds.includes(clashId)) {
         return false;

@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+
 import {
   MoveCardDetails,
   MoveCardPayload,
@@ -6,10 +8,12 @@ import {
   SendMessagePayload,
   SetCommanderTimesCastedPayload,
   SetPlayerLifePayload,
+  PeekPayload,
+  SearchLibraryPayload,
+  EndPeekPayload,
 } from 'backend/constants/wsEvents';
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
-import { useContext } from 'react';
 
 const useGameActions = () => {
   const { socket } = useContext(SocketContext);
@@ -30,6 +34,24 @@ const useGameActions = () => {
       ...details,
     };
     socket?.emit(SOCKET_MSG_GAME.MOVE_CARD, payload);
+  };
+
+  const onPeek = (playerId: string, zone: Zone, amount: number) => {
+    const payload: PeekPayload = { playerId, zone, amount };
+    socket?.emit(SOCKET_MSG_GAME.PEEK, payload);
+  };
+
+  const onEndPeek = (payload: EndPeekPayload) => {
+    socket?.emit(SOCKET_MSG_GAME.END_PEEK, payload);
+  };
+
+  const onSearchLibrary = (playerId: string) => {
+    const payload: SearchLibraryPayload = { playerId };
+    socket?.emit(SOCKET_MSG_GAME.SEARCH_LIBRARY, payload);
+  };
+
+  const onShuffle = () => {
+    socket?.emit(SOCKET_MSG_GAME.SHUFFLE_LIBRARY);
   };
 
   const onSendChatMessage = (message: SendMessagePayload) => {
@@ -62,6 +84,11 @@ const useGameActions = () => {
   return {
     onDrawCard,
     onMoveCard,
+    onPeek,
+    onEndPeek,
+    onSearchLibrary,
+    onShuffle,
+
     onSendChatMessage,
     onSetCommanderTimesCasted,
     setPlayerLife,

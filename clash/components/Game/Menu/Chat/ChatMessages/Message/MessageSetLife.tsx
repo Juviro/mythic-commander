@@ -7,12 +7,11 @@ import ColoredPlayerName from '../../../../../GameComponents/ColoredPlayerName/C
 import styles from '../../Chat.module.css';
 
 interface Props {
-  playerName: string;
   playerId: string;
   payload: LogPayloadSetPlayerLife;
 }
 
-const MessageSetLife = ({ payload, playerId, playerName }: Props) => {
+const MessageSetLife = ({ payload, playerId }: Props) => {
   const { gameState } = useContext(GameStateContext);
 
   const targetPlayer = gameState!.players.find((p) => p.id === payload.forPlayerId)!
@@ -20,7 +19,7 @@ const MessageSetLife = ({ payload, playerId, playerName }: Props) => {
   const setOwnLife = payload.forPlayerId === playerId;
   return (
     <div className={styles.message}>
-      <ColoredPlayerName id={playerId} name={playerName} />
+      <ColoredPlayerName id={playerId} />
       <div>
         <span>
           {` set `}

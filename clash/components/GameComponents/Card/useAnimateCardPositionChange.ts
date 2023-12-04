@@ -35,6 +35,8 @@ const animateDirectPositionChange = (
   const deltaY = storedPosition.y - y;
   const deltaWidth = storedPosition.width / width;
 
+  if (!deltaWidth && !deltaX && !deltaY) return Promise.resolve(true);
+
   const transformFrom = `translate(${deltaX}px, ${deltaY}px) scale(${deltaWidth})`;
 
   const transformTo = `translate(0px, 0px) scale(1)`;
@@ -150,20 +152,23 @@ const animateCardPositionChange = async (
   storeCardPosition(cardRef, clashId, isVisible, cardPositions, zone);
 };
 
-const useAnimateCardPositionChange = (
-  card: Card,
-  cardRef: React.RefObject<HTMLDivElement>,
-  zone?: Zone
-) => {
+interface Props {
+  card: Card;
+  cardRef: React.RefObject<HTMLDivElement>;
+  zone?: Zone;
+  noAnimation?: boolean;
+}
+
+const useAnimateCardPositionChange = ({ card, cardRef, noAnimation, zone }: Props) => {
   const { cardPositions } = useContext(CardPositionContext);
   const cardPosition = 'position' in card ? card.position : undefined;
   const isVisible = 'id' in card;
   const { clashId } = card;
 
   useLayoutEffect(() => {
-    if (cardPositions.current[clashId] && cardRef.current) {
+    if (cardPositions.current[clashId] && cardRef.current && !noAnimation) {
       animateCardPositionChange(cardRef, clashId, cardPositions, isVisible, zone);
-    } else {
+    } else if (!noAnimation) {
       storeCardPosition(cardRef, clashId, isVisible, cardPositions, zone);
     }
   }, [JSON.stringify(cardPosition)]);

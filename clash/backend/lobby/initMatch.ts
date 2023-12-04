@@ -3,20 +3,9 @@ import uniqid from 'uniqid';
 import { getDecks, storeGameState } from 'backend/database/matchStore';
 import { Lobby } from 'backend/lobby/GameLobby.types';
 import { Card, GameState, Player, VisibleCard } from 'backend/database/gamestate.types';
+import { randomizeArray } from 'utils/randomizeArray';
 
 const STARTING_LIFE = 40;
-
-// Fisher-Yates algorithm
-const shuffleArray = (array: any[]) => {
-  const copy = [...array];
-  for (let i = copy.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const temp = copy[i];
-    copy[i] = copy[j];
-    copy[j] = temp;
-  }
-  return copy;
-};
 
 const initMatch = async (lobby: Lobby) => {
   const decks = await getDecks(lobby);
@@ -52,7 +41,7 @@ const initMatch = async (lobby: Lobby) => {
       })
       .flat();
 
-    const randomizedCards = shuffleArray(cards);
+    const randomizedCards = randomizeArray(cards);
 
     return {
       id: deck.id,
@@ -107,7 +96,7 @@ const initMatch = async (lobby: Lobby) => {
     };
   });
 
-  const randomizedPlayers = shuffleArray(players);
+  const randomizedPlayers = randomizeArray(players);
 
   const initialGameState: GameState = {
     hostId: lobby.hostId,

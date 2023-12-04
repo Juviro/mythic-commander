@@ -6,15 +6,14 @@ import ColoredPlayerName from '../../../../../GameComponents/ColoredPlayerName/C
 import styles from '../../Chat.module.css';
 
 interface Props {
-  playerName: string;
   playerId: string;
   payload: LogPayloadSetCommanderTimesCasted;
 }
 
-const MessageSetCommanderTimesCasted = ({ payload, playerId, playerName }: Props) => {
+const MessageSetCommanderTimesCasted = ({ payload, playerId }: Props) => {
   return (
     <div className={styles.message}>
-      <ColoredPlayerName id={playerId} name={playerName} />
+      <ColoredPlayerName id={playerId} />
       <div>
         <span>
           {` set the commander tax of `}

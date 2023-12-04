@@ -10,6 +10,11 @@ import {
 export const LOG_MESSAGES = {
   DRAW_CARD: 'DRAW_CARD',
   MOVE_CARD: 'MOVE_CARD',
+  PEEK: 'PEEK',
+  END_PEEK: 'END_PEEK',
+  SEARCH_LIBRARY: 'SEARCH_LIBRARY',
+  SHUFFLE_LIBRARY: 'SHUFFLE_LIBRARY',
+
   CHAT_MESSAGE: 'CHAT_MESSAGE',
   SET_COMMANDER_TIMES_CASTED: 'SET_COMMANDER_TIMES_CASTED',
   SET_LIFE: 'SET_LIFE',
@@ -22,12 +27,30 @@ export type LogKey = typeof LOG_MESSAGES[keyof typeof LOG_MESSAGES];
 // ############################### Payloads ###############################
 interface MoveCardLocation {
   zone: Zone;
-  playerName: string;
+  playerId: string;
 }
 export interface LogPlayoadMoveZone {
-  cardName: string;
+  cardName: string | null;
   from: MoveCardLocation;
   to: MoveCardLocation;
+}
+
+export interface LogPayloadPeek {
+  amount: number;
+  peekedPlayerId: string;
+  zone: Zone;
+}
+
+export interface LogPayloadEndPeek {
+  playerId: string;
+  amountToBottom: number;
+  amountToTop: number;
+  shuffleLibrary: boolean;
+  randomizeBottomCards: boolean;
+}
+
+export interface LogPayloadSearchLibrary {
+  libraryPlayerId: string;
 }
 
 export interface LogPayloadDraw {
@@ -68,6 +91,26 @@ interface LogMessageMove extends LogMessageWithPlayer {
   payload: LogPlayoadMoveZone;
 }
 
+interface LogPeek extends LogMessageWithPlayer {
+  logKey: 'PEEK';
+  payload: LogPayloadPeek;
+}
+
+interface LogEndPeek extends LogMessageWithPlayer {
+  logKey: 'END_PEEK';
+  payload: LogPayloadEndPeek;
+}
+
+interface LogSearchLibrary extends LogMessageWithPlayer {
+  logKey: 'SEARCH_LIBRARY';
+  payload: LogPayloadSearchLibrary;
+}
+
+interface LogShuffleLibrary extends LogMessageWithPlayer {
+  logKey: 'SHUFFLE_LIBRARY';
+  payload: Record<string, never>;
+}
+
 interface LogMessageChat extends LogMessageWithPlayer {
   logKey: 'CHAT_MESSAGE';
   payload: SendMessagePayload;
@@ -98,6 +141,10 @@ interface LogMessageSetActivePlayer extends LogMessageWithPlayer {
 export type LogMessage =
   | LogMessageDraw
   | LogMessageMove
+  | LogPeek
+  | LogEndPeek
+  | LogSearchLibrary
+  | LogShuffleLibrary
   | LogMessageChat
   | LogMessageSetPlayerLife
   | LogMessageSetCommanderTimesCasted

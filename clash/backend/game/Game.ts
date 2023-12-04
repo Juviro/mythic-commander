@@ -6,8 +6,11 @@ import {
   Zone,
 } from 'backend/database/gamestate.types';
 import {
+  EndPeekPayload,
   MoveCardPayload,
+  PeekPayload,
   SOCKET_MSG_GAME,
+  SearchLibraryPayload,
   SendMessagePayload,
   SetCommanderTimesCastedPayload,
   SetPhasePayload,
@@ -18,6 +21,7 @@ import { User as DatabaseUser } from 'backend/database/getUser';
 import { GameLog, LOG_MESSAGES, LogMessage } from 'backend/constants/logMessages';
 import { getGameState, storeGameState } from 'backend/database/matchStore';
 import initMatch from 'backend/lobby/initMatch';
+import { randomizeArray } from 'utils/randomizeArray';
 import addLogEntry from './addLogEntry';
 
 interface User {
@@ -201,11 +205,6 @@ export default class Game {
       )
     );
 
-    if (fromZone! === 'library' && to.zone === 'hand') {
-      this.drawCard(socket);
-      return;
-    }
-
     const newCard = { ...cardToMove!, position };
     if (fromPlayer!.id !== to.playerId && !newCard.ownerId) {
       newCard.ownerId = fromPlayer!.id;
@@ -226,21 +225,135 @@ export default class Game {
       this.emitPlayerUpdate(player);
     });
 
+    let shouldRevealCardName = true;
+    if (fromZone! === 'library' && to.zone === 'hand') {
+      shouldRevealCardName = false;
+    }
+    if (fromZone! === 'hand' && to.zone === 'library') {
+      shouldRevealCardName = false;
+    }
+
     const playerId = this.getPlayerBySocket(socket).id;
     this.logAction({
       playerId,
       logKey: LOG_MESSAGES.MOVE_CARD,
       payload: {
-        cardName: cardToMove!.name,
+        cardName: shouldRevealCardName ? cardToMove!.name : null,
         from: {
           zone: fromZone!,
-          playerName: fromPlayer!.name,
+          playerId: fromPlayer!.id,
         },
         to: {
           zone: to.zone,
-          playerName: toPlayer.name,
+          playerId: toPlayer.id,
         },
       },
+    });
+  }
+
+  peek(socket: Socket, payload: PeekPayload) {
+    const { amount, zone, playerId } = payload;
+    const peekingPlayer = this.getPlayerBySocket(socket);
+    const player = this.getPlayerById(playerId);
+
+    const peekedCards = player.zones[zone].slice(-amount);
+
+    socket.emit(SOCKET_MSG_GAME.PEEK, {
+      zone,
+      playerId,
+      cards: peekedCards,
+    });
+
+    this.logAction({
+      playerId: peekingPlayer.id,
+      logKey: LOG_MESSAGES.PEEK,
+      payload: {
+        peekedPlayerId: player.id,
+        amount,
+        zone,
+      },
+    });
+  }
+
+  endPeek(socket: Socket, payload: EndPeekPayload) {
+    const peekingPlayer = this.getPlayerBySocket(socket);
+    const {
+      playerId,
+      cardsToBottom: cardIdsToBottom,
+      cardsToTop: cardIdsToTop,
+      randomizeBottomCards,
+      shuffleLibrary,
+    } = payload;
+    const player = this.getPlayerById(playerId);
+
+    let cardsToBottom = cardIdsToBottom.map(
+      (id) => player.zones.library.find((card) => card.clashId === id)!
+    );
+    const cardsToTop = cardIdsToTop.map(
+      (id) => player.zones.library.find((card) => card.clashId === id)!
+    );
+    player.zones.library = player.zones.library.filter((card) => {
+      return (
+        !cardIdsToTop.includes(card.clashId) && !cardIdsToBottom.includes(card.clashId)
+      );
+    });
+
+    if (randomizeBottomCards) {
+      cardsToBottom = randomizeArray(cardsToBottom);
+    }
+    if (shuffleLibrary) {
+      player.zones.library = randomizeArray(player.zones.library);
+    }
+
+    player.zones.library.unshift(...cardsToBottom);
+    player.zones.library.push(...cardsToTop);
+
+    this.emitPlayerUpdate(player);
+
+    this.logAction({
+      playerId: peekingPlayer.id,
+      logKey: LOG_MESSAGES.END_PEEK,
+      payload: {
+        playerId,
+        amountToBottom: cardsToBottom.length,
+        amountToTop: cardsToTop.length,
+        randomizeBottomCards,
+        shuffleLibrary,
+      },
+    });
+  }
+
+  searchLibrary(socket: Socket, payload: SearchLibraryPayload) {
+    const { playerId } = payload;
+    const searchingPlayer = this.getPlayerBySocket(socket);
+    const player = this.getPlayerById(playerId);
+
+    socket.emit(SOCKET_MSG_GAME.PEEK, {
+      zone: 'library',
+      playerId,
+      isSearch: true,
+      cards: player.zones.library,
+    });
+
+    this.logAction({
+      playerId: searchingPlayer.id,
+      logKey: LOG_MESSAGES.SEARCH_LIBRARY,
+      payload: {
+        libraryPlayerId: player.id,
+      },
+    });
+  }
+
+  shuffleLibrary(socket: Socket) {
+    const player = this.getPlayerBySocket(socket);
+    player.zones.library = randomizeArray(player.zones.library);
+
+    this.emitPlayerUpdate(player);
+
+    this.logAction({
+      playerId: player.id,
+      logKey: LOG_MESSAGES.SHUFFLE_LIBRARY,
+      payload: {},
     });
   }
 

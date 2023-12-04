@@ -1,26 +1,20 @@
 import React from 'react';
-
 import { useDrop } from 'react-dnd';
 import classNames from 'classnames';
-import useGameActions from 'components/Game/useGameActions';
+
 import { DropCard } from 'components/Game/Dropzone/Dropzone';
-import { Player, ZONES } from 'backend/database/gamestate.types';
-import styles from './Hand.module.css';
+
+import styles from './StackedCardList.module.css';
 
 interface Props {
-  player: Player;
+  onDrop: (card: DropCard) => void;
   index: number;
-  isLast?: boolean;
+  numberOfElements: number;
 }
 
-const HandHoverElement = ({ index, isLast, player }: Props) => {
-  const { onMoveCard } = useGameActions();
-  const onDrop = ({ clashId }: DropCard) => {
-    onMoveCard(clashId, ZONES.HAND, player.id, { index });
-  };
-
+const CardListHoverElement = ({ onDrop, index, numberOfElements }: Props) => {
   const [{ isOver, canDrop }, dropRef] = useDrop({
-    accept: ['CARD', 'LIST_CARD'],
+    accept: 'LIST_CARD',
     drop: onDrop,
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
@@ -28,16 +22,21 @@ const HandHoverElement = ({ index, isLast, player }: Props) => {
     }),
   });
 
+  const style = {
+    width: `${100 / numberOfElements}%`,
+    left: `${100 * (index / numberOfElements)}%`,
+  };
+
   return (
     <div
+      ref={dropRef}
+      style={style}
       className={classNames(styles.hover_element, {
         [styles.hover_element__is_over]: isOver,
         [styles.hover_element__can_drop]: canDrop,
-        [styles.hover_element__last]: isLast,
       })}
-      ref={dropRef}
     />
   );
 };
 
-export default HandHoverElement;
+export default CardListHoverElement;

@@ -1,0 +1,42 @@
+.wrapper {
+    display: flex;
+    position: relative;
+    padding: 16px 50px;
+}
+
+
+.cards {
+    display: flex;
+    position: relative;
+}
+
+.card {
+    transition: transform 0.1s;
+}
+
+/* first one is a hover element */
+.card:not(:nth-child(2)) {
+    margin-left: -130px;
+}
+
+.hover_element__is_over~.card {
+    transform: translateX(50px);
+}
+
+.card:has(~ .hover_element__is_over) {
+    transform: translateX(-50px);
+}
+
+.hover_element {
+    position: absolute;
+    height: 100%;
+    flex: 1;
+    width: 100%;
+    z-index: 1;
+    pointer-events: none;
+    cursor: grab;
+}
+
+body:has(:global(.card__dragging)) .hover_element {
+    pointer-events: auto;
+}

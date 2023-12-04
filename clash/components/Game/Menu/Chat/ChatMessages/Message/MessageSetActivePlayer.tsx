@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { LogPayloadSetActivePlayer } from 'backend/constants/logMessages';
-import GameStateContext from 'components/Game/GameStateContext';
 import ColoredPlayerName from '../../../../../GameComponents/ColoredPlayerName/ColoredPlayerName';
 
 import styles from '../../Chat.module.css';
@@ -11,16 +10,10 @@ interface Props {
 }
 
 const MessageSetActivePlayer = ({ payload: { activePlayerId } }: Props) => {
-  const { playerNames } = useContext(GameStateContext);
-
   return (
     <div className={styles.message}>
       {`It's `}
-      <ColoredPlayerName
-        id={activePlayerId}
-        name={playerNames[activePlayerId]}
-        addGenetiveSuffix
-      />
+      <ColoredPlayerName id={activePlayerId} addGenetiveSuffix />
       {` turn `}
     </div>
   );

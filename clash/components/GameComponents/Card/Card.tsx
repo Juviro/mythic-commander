@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
-import { useDrag } from 'react-dnd';
+import { DragSourceMonitor, useDrag } from 'react-dnd';
 import classNames from 'classnames';
 import { Tooltip } from 'antd';
 import { TooltipPlacement } from 'antd/es/tooltip';
 
 import { Card as CardType, Zone } from 'backend/database/gamestate.types';
 import { getImageUrl } from 'utils/getImageUrl';
+import { DropCard } from 'components/Game/Dropzone/Dropzone';
 import useAnimateCardPositionChange from './useAnimateCardPositionChange';
 
 import styles from './Card.module.css';
@@ -16,7 +17,10 @@ interface Props {
   dynamicSize?: boolean;
   zone?: Zone;
   enlargeOnHover?: boolean;
+  noAnimation?: boolean;
   tooltipPlacement?: TooltipPlacement;
+  dropType?: 'CARD' | 'LIST_CARD';
+  onDropEnd?: (item: DropCard, monitor: DragSourceMonitor<DropCard>) => void;
 }
 
 const Card = ({
@@ -25,24 +29,28 @@ const Card = ({
   dynamicSize,
   zone,
   enlargeOnHover,
+  noAnimation,
   tooltipPlacement,
+  onDropEnd,
+  dropType = 'CARD',
 }: Props) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
 
   const [{ isDragging }, dragRef] = useDrag({
-    type: 'CARD',
+    type: dropType,
     item: { clashId: card.clashId, ownerId: card.ownerId },
     canDrag: Boolean(draggable),
     previewOptions: {
       offsetX: -200,
       offsetY: -200,
     },
+    end: onDropEnd,
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
   });
 
-  useAnimateCardPositionChange(card, cardRef, zone);
+  useAnimateCardPositionChange({ card, cardRef, zone, noAnimation });
 
   const hidden = !('id' in card);
 
@@ -52,6 +60,7 @@ const Card = ({
         [styles.wrapper__dynamic_size]: dynamicSize,
         [styles.wrapper__draggable]: draggable,
         [styles.wrapper__dragging]: isDragging,
+        card__dragging: isDragging,
       })}
       ref={(val) => {
         dragRef(val);

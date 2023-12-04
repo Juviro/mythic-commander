@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { LogPayloadSetPhase } from 'backend/constants/logMessages';
-import GameStateContext from 'components/Game/GameStateContext';
 import { Phase } from 'backend/database/gamestate.types';
 import ColoredPlayerName from '../../../../../GameComponents/ColoredPlayerName/ColoredPlayerName';
 
@@ -30,11 +29,10 @@ export const getPhaseName = (phase: Phase) => {
 
 const MessageSetPhase = ({ payload }: Props) => {
   const { activePlayerId, phase } = payload;
-  const { playerNames } = useContext(GameStateContext);
 
   return (
     <div className={styles.message}>
-      <ColoredPlayerName id={activePlayerId} name={playerNames[activePlayerId]} />
+      <ColoredPlayerName id={activePlayerId} />
       {` moved to `}
       <b>{getPhaseName(phase)}</b>
       {` phase`}
