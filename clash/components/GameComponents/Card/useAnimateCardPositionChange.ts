@@ -69,16 +69,10 @@ const animateArcPositionChange = (
 ) => {
   const { width, x } = cardRef.current!.getBoundingClientRect();
 
-  const isFlipped = Boolean(cardRef.current?.closest('.flipped'));
-
   const deltaX = storedPosition.x - storedPosition.width / 2 - x;
   const deltaWidth = storedPosition.width / width;
-  let radius = Math.abs(deltaX / 2);
+  const radius = Math.abs(deltaX / 2);
   const rotateY = storedPosition.isVisible === isVisible ? 0 : 180;
-
-  if (isFlipped) {
-    radius *= -1;
-  }
 
   const from = `
               translateX(${-radius}px)
@@ -86,7 +80,7 @@ const animateArcPositionChange = (
               translateX(${radius}px)
               scale(${deltaWidth})
               rotate(-180deg)
-              translateY(-200px)
+              translateY(-150px)
               rotateY(${rotateY}deg)
             `;
   const to = `
@@ -110,7 +104,7 @@ const animateArcPositionChange = (
   // adds a temporary "backside" to the card
   cardRef.current?.classList.add('add_backside');
   const animation = cardRef.current!.animate(animationSteps, {
-    duration: 1000,
+    duration: 5000,
     easing: 'cubic-bezier(.18,.55,.36,.99)',
   });
 
