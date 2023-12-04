@@ -60,6 +60,7 @@ const Card = ({
         [styles.wrapper__dynamic_size]: dynamicSize,
         [styles.wrapper__draggable]: draggable,
         [styles.wrapper__dragging]: isDragging,
+        card__dragging: isDragging,
       })}
       ref={(val) => {
         dragRef(val);

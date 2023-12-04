@@ -9,6 +9,8 @@ import {
   SetCommanderTimesCastedPayload,
   SetPlayerLifePayload,
   PeekPayload,
+  SearchLibraryPayload,
+  EndPeekPayload,
 } from 'backend/constants/wsEvents';
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
@@ -37,6 +39,15 @@ const useGameActions = () => {
   const onPeek = (playerId: string, zone: Zone, amount: number) => {
     const payload: PeekPayload = { playerId, zone, amount };
     socket?.emit(SOCKET_MSG_GAME.PEEK, payload);
+  };
+
+  const onEndPeek = (payload: EndPeekPayload) => {
+    socket?.emit(SOCKET_MSG_GAME.END_PEEK, payload);
+  };
+
+  const onSearchLibrary = (playerId: string) => {
+    const payload: SearchLibraryPayload = { playerId };
+    socket?.emit(SOCKET_MSG_GAME.SEARCH_LIBRARY, payload);
   };
 
   const onSendChatMessage = (message: SendMessagePayload) => {
@@ -69,13 +80,16 @@ const useGameActions = () => {
   return {
     onDrawCard,
     onMoveCard,
+    onPeek,
+    onEndPeek,
+    onSearchLibrary,
+
     onSendChatMessage,
     onSetCommanderTimesCasted,
     setPlayerLife,
     setPhase,
     endTurn,
     restartGame,
-    onPeek,
   };
 };
 

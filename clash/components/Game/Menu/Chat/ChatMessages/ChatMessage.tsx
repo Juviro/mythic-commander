@@ -12,6 +12,7 @@ import MessageSetLife from './Message/MessageSetLife';
 import MessageSetActivePlayer from './Message/MessageSetActivePlayer';
 import MessageSetPhase from './Message/MessageSetPhase';
 import MessagePeek from './Message/MessagePeek';
+import MessageSearchLibrary from './Message/MessageSearchLibrary';
 
 interface Props {
   message: GameLog;
@@ -35,6 +36,9 @@ const ChatMessage = ({ message }: Props) => {
   }
   if (logKey === 'PEEK') {
     return <MessagePeek playerId={playerId} payload={payload} />;
+  }
+  if (logKey === 'SEARCH_LIBRARY') {
+    return <MessageSearchLibrary playerId={playerId} payload={payload} />;
   }
 
   if (logKey === 'CHAT_MESSAGE') {

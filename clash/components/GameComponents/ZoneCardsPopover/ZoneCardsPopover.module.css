@@ -7,22 +7,26 @@
 .title {
   display: flex;
   justify-content: space-between;
+  margin: 0;
+  min-height: 32px;
 }
 
 .card_list_wrapper {
   display: flex;
   flex-direction: column;
   min-width: 302px;
+  gap: 8px;
 }
 
-.card_list_wrapper h4 {
-  margin: 0 0 8px;
+.card_list_wrapper :global(.ant-space) {
+  align-self: self-end;
 }
-
 
 .cards_list {
   min-width: 200px;
-  height: 100%;
+  max-width: 800px;
+  height: 330px;
+  overflow: auto;
   position: relative;
   border-radius: 8px;
   display: flex;

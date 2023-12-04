@@ -20,7 +20,7 @@ const HandHoverElement = ({ index, isLast, player }: Props) => {
   };
 
   const [{ isOver, canDrop }, dropRef] = useDrop({
-    accept: 'CARD',
+    accept: ['CARD', 'LIST_CARD'],
     drop: onDrop,
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),

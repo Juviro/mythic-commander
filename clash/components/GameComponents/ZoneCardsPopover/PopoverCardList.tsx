@@ -11,10 +11,11 @@ interface Props {
   onDrop: (card: DropCard, index: number) => void;
   title: ReactNode;
   titleRight?: ReactNode;
-  where: 'top' | 'the bottom';
+  bottom?: ReactNode;
+  empty?: string;
 }
 
-const PopoverCardList = ({ cards, title, titleRight, where, onDrop }: Props) => {
+const PopoverCardList = ({ cards, title, titleRight, empty, onDrop, bottom }: Props) => {
   return (
     <div className={styles.card_list_wrapper}>
       <h4 className={styles.title}>
@@ -23,12 +24,11 @@ const PopoverCardList = ({ cards, title, titleRight, where, onDrop }: Props) => 
       </h4>
       <Dropzone onDrop={(card) => onDrop(card, 0)} disabled={Boolean(cards.length)}>
         <div className={styles.cards_list}>
-          <div className={styles.cards_list_empty}>
-            {`Drag Cards here to put them on ${where} of the Library`}
-          </div>
+          {empty && <div className={styles.cards_list_empty}>{empty}</div>}
           <StackedCardList cards={cards} draggable onDrop={onDrop} />
         </div>
       </Dropzone>
+      {bottom}
     </div>
   );
 };

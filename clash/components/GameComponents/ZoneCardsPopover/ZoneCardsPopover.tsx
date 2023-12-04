@@ -6,11 +6,10 @@ import GameStateContext from 'components/Game/GameStateContext';
 import PopoverContent from './PopoverContent';
 
 interface Props extends PropsWithChildren {
-  searchable?: boolean;
   cards?: VisibleCard[] | null;
 }
 
-const ZoneCardsPopover = ({ children, cards, searchable }: Props) => {
+const ZoneCardsPopover = ({ children, cards }: Props) => {
   const { getPlayerColor } = useContext(GameStateContext);
   if (!cards?.length) {
     // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -20,11 +19,7 @@ const ZoneCardsPopover = ({ children, cards, searchable }: Props) => {
   const color = getPlayerColor(cards[0].ownerId);
 
   return (
-    <Popover
-      content={<PopoverContent cards={cards} searchable={searchable} color={color} />}
-      open
-      placement="topLeft"
-    >
+    <Popover content={<PopoverContent color={color} />} open placement="topLeft">
       {children}
     </Popover>
   );

@@ -9,6 +9,7 @@ interface PeekingCards {
   zone: Zone;
   playerId: string;
   cards: VisibleCard[];
+  isSearch?: boolean;
 }
 interface BaseGameState {
   getPlayerColor: (playerId?: string) => string | undefined;

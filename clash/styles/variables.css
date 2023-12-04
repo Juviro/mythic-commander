@@ -29,4 +29,7 @@
     .ant-dropdown-menu-sub {
         margin: 0;
     }
+    .ant-popover-inner {
+        max-width: 90vw;
+    }
 }

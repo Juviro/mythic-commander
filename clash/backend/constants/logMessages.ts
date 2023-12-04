@@ -11,6 +11,8 @@ export const LOG_MESSAGES = {
   DRAW_CARD: 'DRAW_CARD',
   MOVE_CARD: 'MOVE_CARD',
   PEEK: 'PEEK',
+  END_PEEK: 'END_PEEK',
+  SEARCH_LIBRARY: 'SEARCH_LIBRARY',
 
   CHAT_MESSAGE: 'CHAT_MESSAGE',
   SET_COMMANDER_TIMES_CASTED: 'SET_COMMANDER_TIMES_CASTED',
@@ -27,7 +29,7 @@ interface MoveCardLocation {
   playerName: string;
 }
 export interface LogPlayoadMoveZone {
-  cardName: string;
+  cardName: string | null;
   from: MoveCardLocation;
   to: MoveCardLocation;
 }
@@ -36,6 +38,18 @@ export interface LogPayloadPeek {
   amount: number;
   peekedPlayerId: string;
   zone: Zone;
+}
+
+export interface LogPayloadEndPeek {
+  playerId: string;
+  amountToBottom: number;
+  amountToTop: number;
+  shuffleLibrary: boolean;
+  randomizeBottomCards: boolean;
+}
+
+export interface LogPayloadSearchLibrary {
+  libraryPlayerId: string;
 }
 
 export interface LogPayloadDraw {
@@ -81,6 +95,16 @@ interface LogPeek extends LogMessageWithPlayer {
   payload: LogPayloadPeek;
 }
 
+interface LogEndPeek extends LogMessageWithPlayer {
+  logKey: 'END_PEEK';
+  payload: LogPayloadEndPeek;
+}
+
+interface LogSearchLibrary extends LogMessageWithPlayer {
+  logKey: 'SEARCH_LIBRARY';
+  payload: LogPayloadSearchLibrary;
+}
+
 interface LogMessageChat extends LogMessageWithPlayer {
   logKey: 'CHAT_MESSAGE';
   payload: SendMessagePayload;
@@ -112,6 +136,8 @@ export type LogMessage =
   | LogMessageDraw
   | LogMessageMove
   | LogPeek
+  | LogEndPeek
+  | LogSearchLibrary
   | LogMessageChat
   | LogMessageSetPlayerLife
   | LogMessageSetCommanderTimesCasted

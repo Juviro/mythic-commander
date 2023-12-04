@@ -33,9 +33,10 @@
     flex: 1;
     width: 100%;
     z-index: 1;
+    pointer-events: none;
     cursor: grab;
 }
 
-.hover_element:active {
-    pointer-events: none;
+body:has(:global(.card__dragging)) .hover_element {
+    pointer-events: auto;
 }

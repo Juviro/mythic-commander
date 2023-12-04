@@ -16,7 +16,7 @@ const getSubItems = (
 };
 
 const useLibraryActions = (player: Player) => {
-  const { onPeek } = useGameActions();
+  const { onPeek, onSearchLibrary } = useGameActions();
   const onPeekCard = (amount: number) => {
     onPeek(player.id, 'library', amount);
   };
@@ -26,6 +26,11 @@ const useLibraryActions = (player: Player) => {
     //   key: 'shuffle',
     //   label: 'Shuffle',
     // },
+    {
+      key: 'search',
+      label: 'Search Library...',
+      onClick: () => onSearchLibrary(player.id),
+    },
     {
       key: 'peek',
       label: 'Look at...',

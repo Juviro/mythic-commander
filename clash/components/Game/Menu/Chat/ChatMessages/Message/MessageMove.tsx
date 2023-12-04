@@ -65,18 +65,6 @@ const MessageMove = ({ payload, playerId, playerName }: Props) => {
         break;
     }
   }
-  if (payload.from.zone === 'library') {
-    switch (payload.to.zone) {
-      case 'graveyard':
-        action = 'milled';
-        break;
-      case 'hand':
-        action = 'drew';
-        break;
-      default:
-        break;
-    }
-  }
   if (payload.from.zone === 'commandZone') {
     switch (payload.to.zone) {
       case 'battlefield':
@@ -104,7 +92,7 @@ const MessageMove = ({ payload, playerId, playerName }: Props) => {
       <ColoredPlayerName id={playerId} name={playerName} />
       <span>
         {` ${action} `}
-        <b>{payload.cardName}</b>
+        <b>{payload.cardName ?? 'a card'}</b>
         {actionSuffix && ` ${actionSuffix}`}
       </span>
     </div>

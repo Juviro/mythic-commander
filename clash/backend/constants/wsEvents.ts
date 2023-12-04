@@ -31,6 +31,8 @@ export const SOCKET_MSG_GAME = {
   DRAW_CARD: 'draw_card',
   MOVE_CARD: 'move_card',
   PEEK: 'peek',
+  END_PEEK: 'end_peek',
+  SEARCH_LIBRARY: 'search_library',
 
   SET_COMMANDER_TIMES_CASTED: 'set_commander_times_casted',
   SET_PLAYER_LIFE: 'set_player_life',
@@ -53,6 +55,18 @@ export interface PeekPayload {
   playerId: string;
   amount: number;
   zone: Zone;
+}
+
+export interface EndPeekPayload {
+  playerId: string;
+  cardsToTop: string[];
+  cardsToBottom: string[];
+  shuffleLibrary: boolean;
+  randomizeBottomCards: boolean;
+}
+
+export interface SearchLibraryPayload {
+  playerId: string;
 }
 
 export interface SendMessagePayload {
