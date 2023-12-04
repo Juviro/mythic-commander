@@ -90,7 +90,7 @@ const MessageMove = ({ payload, playerId }: Props) => {
 
   if (!action) {
     action = 'put';
-    const isOwnZone = payload.from.playerId === payload.to.playerId;
+    const isOwnZone = playerId === payload.from.playerId;
     const fromPlayerId = isOwnZone ? null : payload.from.playerId;
     const zoneLabelFrom = getZoneLabelFrom(payload.from.zone, fromPlayerId);
     const zoneLabelTo = getZoneLabelTo(payload.to.zone);

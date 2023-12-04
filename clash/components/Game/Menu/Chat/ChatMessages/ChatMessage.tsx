@@ -13,6 +13,7 @@ import MessageSetPhase from './Message/MessageSetPhase';
 import MessagePeek from './Message/MessagePeek';
 import MessageSearchLibrary from './Message/MessageSearchLibrary';
 import MessageEndPeek from './Message/MessageEndPeek';
+import MessageShuffleLibrary from './Message/MessageShuffleLibrary';
 
 interface Props {
   message: GameLog;
@@ -29,6 +30,9 @@ const ChatMessage = ({ message }: Props) => {
   }
   if (logKey === 'PEEK') {
     return <MessagePeek playerId={playerId} payload={payload} />;
+  }
+  if (logKey === 'SHUFFLE_LIBRARY') {
+    return <MessageShuffleLibrary playerId={playerId} />;
   }
   if (logKey === 'END_PEEK') {
     return <MessageEndPeek playerId={playerId} payload={payload} />;

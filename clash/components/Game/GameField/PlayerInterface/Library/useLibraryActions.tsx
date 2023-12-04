@@ -1,8 +1,10 @@
 import { Input, MenuProps } from 'antd';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import { Player } from 'backend/database/gamestate.types';
+import GameStateContext from 'components/Game/GameStateContext';
 import { pluralizeCards } from 'components/Game/Menu/Chat/ChatMessages/util';
 import useGameActions from 'components/Game/useGameActions';
+import { useContext } from 'react';
 
 const getPeekSubItems = (onClick: (amount: number) => void, count: number) => {
   const maxPeekCount = Math.min(count, 10);
@@ -41,16 +43,15 @@ const getPeekSubItems = (onClick: (amount: number) => void, count: number) => {
 };
 
 const useLibraryActions = (player: Player) => {
-  const { onPeek, onSearchLibrary } = useGameActions();
+  const { player: self } = useContext(GameStateContext);
+  const { onPeek, onSearchLibrary, onShuffle } = useGameActions();
   const onPeekCard = (amount: number) => {
     onPeek(player.id, 'library', amount);
   };
 
+  const isSelf = player.id === self!.id;
+
   const items: MenuProps['items'] = [
-    // {
-    //   key: 'shuffle',
-    //   label: 'Shuffle',
-    // },
     {
       key: 'search',
       label: 'Search Library...',
@@ -62,6 +63,14 @@ const useLibraryActions = (player: Player) => {
       children: getPeekSubItems(onPeekCard, player.zones.library.length),
     },
   ];
+
+  if (isSelf) {
+    items.unshift({
+      key: 'shuffle',
+      label: 'Shuffle',
+      onClick: onShuffle,
+    });
+  }
 
   return {
     items,

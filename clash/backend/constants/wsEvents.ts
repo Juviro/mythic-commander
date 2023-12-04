@@ -33,6 +33,7 @@ export const SOCKET_MSG_GAME = {
   PEEK: 'peek',
   END_PEEK: 'end_peek',
   SEARCH_LIBRARY: 'search_library',
+  SHUFFLE_LIBRARY: 'shuffle_library',
 
   SET_COMMANDER_TIMES_CASTED: 'set_commander_times_casted',
   SET_PLAYER_LIFE: 'set_player_life',

@@ -344,6 +344,19 @@ export default class Game {
     });
   }
 
+  shuffleLibrary(socket: Socket) {
+    const player = this.getPlayerBySocket(socket);
+    player.zones.library = randomizeArray(player.zones.library);
+
+    this.emitPlayerUpdate(player);
+
+    this.logAction({
+      playerId: player.id,
+      logKey: LOG_MESSAGES.SHUFFLE_LIBRARY,
+      payload: {},
+    });
+  }
+
   sendChatMessage(socket: Socket, { message }: SendMessagePayload) {
     const player = this.getPlayerBySocket(socket);
     this.logAction({

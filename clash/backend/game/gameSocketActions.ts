@@ -65,12 +65,17 @@ const gameSocketActions = (io: Server) => {
     socket.on(SOCKET_MSG_GAME.PEEK, (payload: PeekPayload) => {
       currentGames[currentGameId].peek(socket, payload);
     });
+
     socket.on(SOCKET_MSG_GAME.END_PEEK, (payload: EndPeekPayload) => {
       currentGames[currentGameId].endPeek(socket, payload);
     });
 
     socket.on(SOCKET_MSG_GAME.SEARCH_LIBRARY, (payload: SearchLibraryPayload) => {
       currentGames[currentGameId].searchLibrary(socket, payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.SHUFFLE_LIBRARY, () => {
+      currentGames[currentGameId].shuffleLibrary(socket);
     });
 
     socket.on(SOCKET_MSG_GAME.SEND_CHAT_MESSAGE, (message: SendMessagePayload) => {

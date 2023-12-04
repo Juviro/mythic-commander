@@ -13,6 +13,7 @@ export const LOG_MESSAGES = {
   PEEK: 'PEEK',
   END_PEEK: 'END_PEEK',
   SEARCH_LIBRARY: 'SEARCH_LIBRARY',
+  SHUFFLE_LIBRARY: 'SHUFFLE_LIBRARY',
 
   CHAT_MESSAGE: 'CHAT_MESSAGE',
   SET_COMMANDER_TIMES_CASTED: 'SET_COMMANDER_TIMES_CASTED',
@@ -105,6 +106,11 @@ interface LogSearchLibrary extends LogMessageWithPlayer {
   payload: LogPayloadSearchLibrary;
 }
 
+interface LogShuffleLibrary extends LogMessageWithPlayer {
+  logKey: 'SHUFFLE_LIBRARY';
+  payload: Record<string, never>;
+}
+
 interface LogMessageChat extends LogMessageWithPlayer {
   logKey: 'CHAT_MESSAGE';
   payload: SendMessagePayload;
@@ -138,6 +144,7 @@ export type LogMessage =
   | LogPeek
   | LogEndPeek
   | LogSearchLibrary
+  | LogShuffleLibrary
   | LogMessageChat
   | LogMessageSetPlayerLife
   | LogMessageSetCommanderTimesCasted

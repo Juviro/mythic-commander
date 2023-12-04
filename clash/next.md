@@ -4,7 +4,6 @@
 
 # Current feature
 
-* shuffle library
 
 # MVP
 

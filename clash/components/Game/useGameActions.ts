@@ -50,6 +50,10 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.SEARCH_LIBRARY, payload);
   };
 
+  const onShuffle = () => {
+    socket?.emit(SOCKET_MSG_GAME.SHUFFLE_LIBRARY);
+  };
+
   const onSendChatMessage = (message: SendMessagePayload) => {
     socket?.emit(SOCKET_MSG_GAME.SEND_CHAT_MESSAGE, message);
   };
@@ -83,6 +87,7 @@ const useGameActions = () => {
     onPeek,
     onEndPeek,
     onSearchLibrary,
+    onShuffle,
 
     onSendChatMessage,
     onSetCommanderTimesCasted,
