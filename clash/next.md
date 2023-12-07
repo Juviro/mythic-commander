@@ -1,16 +1,15 @@
 # Bugs
 
-* animating card position change on flipped boards wrong again
-
 # Current feature
 
+* card drop position is wrong
+* drop preview from hand is wrong
+
+* snap
+  - enchant / equip
 
 # MVP
 
-* snap
-  - to grid
-  - to other cards
-  -   enchant / equip
 
 * card actions
   - tap
@@ -29,12 +28,6 @@
     - move to different zone
   - context menu
     - create token
-
-* library
-  - search
-  - shuffle
-  - scry, mill
-  - put card on bottom, on nth position
 
 * graveyard
   - search

@@ -1,0 +1,15 @@
+.wrapper {
+    position: fixed;
+    top: var(--top);
+    left: var(--left);
+    z-index: 100;
+    pointer-events: none;
+    width: var(--size-card-width);
+    aspect-ratio: var(--card-aspect-ratio);
+}
+
+.align_indicator {
+    border: 1px dashed var(--color-line);
+    position: fixed;
+    z-index: 1;
+}
