@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 
 import { Typography } from 'antd';
 import { withRouter } from 'react-router';
-import icon from '../../../../assets/icons/favicon.ico';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -43,7 +42,7 @@ const MythicCommanderBanner = ({
       style={{ ...style, cursor: showCollectionOnClick && 'pointer' }}
       onClick={showCollectionOnClick && navigateToCollection}
     >
-      <StyledIcon src={icon} alt="mythic-commander-logo" />
+      <StyledIcon src="/favicon.svg" alt="mythic-commander-logo" />
       <StyledTextWrapper hideWhenSmall={hideWhenSmall}>
         <Typography.Text style={{ fontSize, color: 'rgba(255, 255, 255, 0.8)' }}>
           Mythic Commander
