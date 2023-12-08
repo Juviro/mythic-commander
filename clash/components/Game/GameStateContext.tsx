@@ -96,7 +96,7 @@ export const GameStateContextProvider = ({ children }: Props) => {
     if (!gameState?.players.length) return 0;
     const aspectRatio = 301 / 419;
     const cardWidth = (window.innerHeight / 10) * aspectRatio;
-    if (gameState.players.length === 1) return cardWidth * 2;
+    if (gameState.players.length === 1) return cardWidth * 1.5;
     return cardWidth;
   }, [gameState?.players.length]);
 

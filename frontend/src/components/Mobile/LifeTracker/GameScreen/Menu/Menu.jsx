@@ -2,7 +2,6 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 import Flex from 'components/Elements/Shared/Flex';
-import icon from '../../../../../assets/icons/favicon.ico';
 import { primary } from '../../../../../constants/colors';
 import { useToggle } from '../../../../Hooks';
 import MenuItems from './MenuItems';
@@ -45,7 +44,7 @@ export default ({ handle, onRestartGame }) => {
       }}
     >
       <StyledIconWrapper isOpen={isOpen} onClick={toggleIsOpen}>
-        <StyledMenuIcon src={icon} />
+        <StyledMenuIcon src="/favicon.svg" />
       </StyledIconWrapper>
       <MenuItems
         isOpen={isOpen}

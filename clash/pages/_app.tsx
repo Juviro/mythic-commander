@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>Play - Mythic-Commander</title>
         <meta name="description" content="Play EDH Online" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" />
       </Head>
       <SocketContextProvider>
         <ConfigProvider theme={antdTheme}>
