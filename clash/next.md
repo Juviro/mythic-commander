@@ -2,13 +2,8 @@
 
 # Current feature
 
-
-- graveyard, exile
-  - search
-
 # MVP
 
-- when dragging a card over a flipped battlefield, flip the card
 - card actions
   - tap
   - flip
@@ -74,6 +69,7 @@
 # Backlog Bugs
 
 - cards from other players have wrong sleeve color in hand
+- when moving a peeking card into hand, the draw animation is used
 - on page load, cards in exile are animated
 - milling action animation is wrong on flipped board
 - prevent interacting with own lib when someone is peeking it (self or opponent)

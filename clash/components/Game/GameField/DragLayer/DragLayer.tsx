@@ -5,12 +5,15 @@ import { getColorVariable } from 'components/GameComponents/ColoredPlayerName/Co
 import GameStateContext from 'components/Game/GameStateContext';
 import Card from 'components/GameComponents/Card/Card';
 
+import CardPositionContext from 'components/Game/CardPositionContext';
+import classNames from 'classnames';
 import styles from './DragLayer.module.css';
 import AlignIndicator from './AlignIndicator';
 import useDragAlign from './useDragAlign';
 
 const DragLayer = () => {
   const { battlefieldCardWidth } = useContext(GameStateContext);
+  const { hoveredBattlefield } = useContext(CardPositionContext);
 
   const { isDragging, item, currentOffset, itemType } = useDragLayer((monitor) => ({
     item: monitor.getItem(),
@@ -24,6 +27,7 @@ const DragLayer = () => {
   if (!item || !currentOffset || !isDragging || itemType !== 'CARD') {
     return null;
   }
+  const shouldFlip = Boolean(hoveredBattlefield.current?.element.closest('.flipped'));
 
   const style = {
     '--top': `${top}px`,
@@ -48,7 +52,13 @@ const DragLayer = () => {
           property="y"
         />
       )}
-      <Card card={item} noAnimation />
+      <div
+        className={classNames({
+          [styles.card__flipped]: shouldFlip,
+        })}
+      >
+        <Card card={item} noAnimation />
+      </div>
     </div>
   );
 };

@@ -42,6 +42,7 @@
   max-width: 120px;
   width: 70%;
   justify-self: flex-end;
+  cursor: pointer;
 }
 
 .inner {
