@@ -9,7 +9,7 @@
 }
 
 .align_indicator {
-    border: 1px dashed var(--color-line);
+    border: 1px dashed var(--color-card-align);
     position: fixed;
     z-index: 1;
 }

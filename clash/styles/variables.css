@@ -15,6 +15,7 @@
     --color-text-light: #fff;
     --color-active: #145bd8;
     --color-icon-light: #ffffff70;
+    --color-card-align: var(--color-primary);
 
     --size-card-base-width: 248px;
     --size-card-width: var(--size-card-base-width);

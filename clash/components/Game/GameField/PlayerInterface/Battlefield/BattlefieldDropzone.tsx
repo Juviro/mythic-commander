@@ -17,7 +17,16 @@ const BattlefieldDropzone = ({ children, player, wrapperRef, isFlipped }: Props)
   const { snapChoords } = useContext(CardPositionContext);
 
   const onDrop = ({ clashId }: DropCard, monitor: DropTargetMonitor) => {
-    const { x, y } = monitor.getClientOffset() as { x: number; y: number };
+    let { x, y } = monitor.getClientOffset() as { x: number; y: number };
+    if (snapChoords.current.x !== null) {
+      x = snapChoords.current.x;
+      snapChoords.current.x = null;
+    }
+    if (snapChoords.current.y !== null) {
+      y = snapChoords.current.y;
+      snapChoords.current.y = null;
+    }
+
     const { left, top } = wrapperRef.current!.getBoundingClientRect();
     const relativeX = x - left;
     const relativeY = y - top;
@@ -27,15 +36,6 @@ const BattlefieldDropzone = ({ children, player, wrapperRef, isFlipped }: Props)
     if (isFlipped) {
       posX = 100 - posX;
       posY = 100 - posY;
-    }
-
-    if (snapChoords.current.x !== null) {
-      posX = snapChoords.current.x;
-      snapChoords.current.x = null;
-    }
-    if (snapChoords.current.y !== null) {
-      posY = snapChoords.current.y;
-      snapChoords.current.y = null;
     }
 
     const position = { x: posX, y: posY };

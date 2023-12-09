@@ -5,7 +5,9 @@ import CardPositionContext, {
 import { useContext, useEffect } from 'react';
 import { XYCoord } from 'react-dnd';
 
-const MIN_DISTANCE = 20;
+const MIN_DISTANCE_ALIGN = 20;
+const MIN_DISTANCE_STACK = 40;
+const STACK_DISTANCE = 20;
 
 const getOtherCardsFromBattlefield = (
   hoveredBattlefield: HoveredBattlefield,
@@ -19,42 +21,85 @@ const getOtherCardsFromBattlefield = (
   });
 };
 
-const getClosestCard = (
-  currentOffset: XYCoord,
-  cards: Element[],
-  property: 'x' | 'y'
-) => {
-  if (cards.length === 0) return { distance: Infinity, element: null };
+interface Distance {
+  distance: number;
+  element: Element;
+}
+
+interface StackedCard {
+  position: 'topLeft' | 'bottomRight';
+  element: Element;
+}
+
+interface ClosesCards {
+  x: Distance | null;
+  y: Distance | null;
+  stack: StackedCard | null;
+}
+
+const getClosestCards = (currentOffset: XYCoord, cards: Element[]) => {
+  if (cards.length === 0) return { x: null, y: null, stack: null };
 
   return cards.reduce(
-    (
-      closest: {
-        distance: number;
-        element: Element | null;
-      },
-      card
-    ) => {
-      const cardOffset = card.getBoundingClientRect()[property];
-      const distance = Math.abs(cardOffset - currentOffset[property]);
+    (closest: ClosesCards, card: Element) => {
+      const cardOffsetX = card.getBoundingClientRect().x;
+      const cardOffsetY = card.getBoundingClientRect().y;
+      const diffX = cardOffsetX - currentOffset.x;
+      const distanceX = Math.abs(diffX);
+      const diffY = cardOffsetY - currentOffset.y;
+      const distanceY = Math.abs(diffY);
 
-      if (!closest) {
-        return {
-          distance,
+      const newClosest = { ...closest };
+
+      if (
+        distanceX < MIN_DISTANCE_ALIGN &&
+        distanceY > MIN_DISTANCE_ALIGN &&
+        (closest.x?.distance || Infinity) > distanceX
+      ) {
+        newClosest.x = {
+          distance: distanceX,
           element: card,
         };
       }
 
-      if (distance < closest.distance) {
-        return {
-          distance,
+      if (
+        distanceY < MIN_DISTANCE_ALIGN &&
+        distanceX > MIN_DISTANCE_ALIGN &&
+        (closest.y?.distance || Infinity) > distanceY
+      ) {
+        newClosest.y = {
+          distance: distanceY,
           element: card,
         };
       }
-      return closest;
+      if (distanceY < MIN_DISTANCE_ALIGN && distanceX < MIN_DISTANCE_ALIGN) {
+        newClosest.y = {
+          distance: distanceY,
+          element: card,
+        };
+      }
+
+      if (distanceX < MIN_DISTANCE_STACK && distanceY < MIN_DISTANCE_STACK) {
+        if (diffX <= 0 && diffY <= 0) {
+          newClosest.stack = {
+            position: 'bottomRight',
+            element: card,
+          };
+        }
+        if (diffX > 0 && diffY > 0) {
+          newClosest.stack = {
+            position: 'topLeft',
+            element: card,
+          };
+        }
+      }
+
+      return newClosest;
     },
     {
-      distance: Infinity,
-      element: null,
+      x: null,
+      y: null,
+      stack: null,
     }
   );
 };
@@ -64,40 +109,72 @@ const getCardsToAlign = (
   currentOffset: XYCoord | null,
   hoveredBattlefield: HoveredBattlefield | null
 ) => {
-  if (!hoveredBattlefield || !currentOffset) return null;
+  if (!hoveredBattlefield || !currentOffset)
+    return {
+      x: null,
+      y: null,
+      stack: null,
+    };
   const cards = getOtherCardsFromBattlefield(hoveredBattlefield, item);
-  const closestCardX = getClosestCard(currentOffset, cards, 'x');
-  const closestCardY = getClosestCard(currentOffset, cards, 'y');
 
-  return {
-    x: closestCardX.distance < MIN_DISTANCE ? closestCardX.element : null,
-    y: closestCardY.distance < MIN_DISTANCE ? closestCardY.element : null,
-  };
+  return getClosestCards(currentOffset, cards);
 };
 
 const useDragAlign = (item: Card, currentOffset: XYCoord | null) => {
   const { hoveredBattlefield, snapChoords } = useContext(CardPositionContext);
-  const cardToAlign = getCardsToAlign(item, currentOffset, hoveredBattlefield.current!);
+  const { x, y, stack } = getCardsToAlign(
+    item,
+    currentOffset,
+    hoveredBattlefield.current!
+  );
 
-  const top = cardToAlign?.y
-    ? cardToAlign.y.getBoundingClientRect().top
-    : currentOffset?.y;
+  let top = currentOffset?.y ?? 0;
+  if (stack) {
+    const factor = stack.position === 'topLeft' ? -1 : 1;
+    top = stack.element.getBoundingClientRect().top + STACK_DISTANCE * factor;
+  } else if (y) {
+    top = y.element.getBoundingClientRect().top;
+  }
 
-  const left = cardToAlign?.x
-    ? cardToAlign.x.getBoundingClientRect().left
-    : currentOffset?.x;
+  let left = currentOffset?.x ?? 0;
+  if (stack) {
+    const factor = stack.position === 'topLeft' ? -1 : 1;
+    left = stack.element.getBoundingClientRect().left + STACK_DISTANCE * factor;
+  } else if (x) {
+    left = x.element.getBoundingClientRect().left;
+  }
+
+  const getChoord = (element: Element | null | undefined, property: 'x' | 'y') => {
+    if (!element) return null;
+    const { x: valX, y: valY, width, height } = element.getBoundingClientRect();
+    if (property === 'x') return valX + width / 2;
+    return valY + height / 2;
+  };
 
   useEffect(() => {
+    let choordX = getChoord(x?.element, 'x');
+    let choordY = getChoord(y?.element, 'y');
+
+    if (stack) {
+      const offset = stack.position === 'topLeft' ? -STACK_DISTANCE : STACK_DISTANCE;
+      choordX = getChoord(stack!.element, 'x')! + offset;
+      choordY = getChoord(stack!.element, 'y')! + offset;
+    }
+
     snapChoords.current = {
-      x: Number(cardToAlign?.x?.getAttribute('data-card-x')) || null,
-      y: Number(cardToAlign?.y?.getAttribute('data-card-y')) || null,
+      x: choordX ?? null,
+      y: choordY ?? null,
     };
-  }, [cardToAlign?.x, cardToAlign?.y]);
+  }, [x?.element, y?.element, stack?.element]);
 
   return {
     top,
     left,
-    cardToAlign,
+    cardToAlign: {
+      x,
+      y,
+      stack,
+    },
   };
 };
 

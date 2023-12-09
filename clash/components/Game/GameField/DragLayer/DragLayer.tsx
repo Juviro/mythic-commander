@@ -35,11 +35,19 @@ const DragLayer = () => {
 
   return (
     <div style={style} className={styles.wrapper}>
-      {cardToAlign?.x && (
-        <AlignIndicator element={cardToAlign.x} offset={currentOffset} property="x" />
+      {cardToAlign?.x && !cardToAlign.stack && (
+        <AlignIndicator
+          element={cardToAlign.x.element}
+          offset={currentOffset}
+          property="x"
+        />
       )}
-      {cardToAlign?.y && (
-        <AlignIndicator element={cardToAlign.y} offset={currentOffset} property="y" />
+      {cardToAlign?.y && !cardToAlign.stack && (
+        <AlignIndicator
+          element={cardToAlign.y.element}
+          offset={currentOffset}
+          property="y"
+        />
       )}
       <Card card={item} draggable={false} noAnimation />
     </div>

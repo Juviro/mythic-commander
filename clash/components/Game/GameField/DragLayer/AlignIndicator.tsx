@@ -1,6 +1,6 @@
 import React, { CSSProperties } from 'react';
-
 import { XYCoord } from 'react-dnd';
+
 import styles from './DragLayer.module.css';
 
 interface Props {
