@@ -3,12 +3,13 @@
 # Current feature
 
 
-* graveyard, exile
+- graveyard, exile
   - search
 
 # MVP
 
-* card actions
+- when dragging a card over a flipped battlefield, flip the card
+- card actions
   - tap
   - flip
   - counter
@@ -17,7 +18,7 @@
     - loyalty / chapter(?) (maybe automatically)
     - ??? maybe retrieve from database (search for "XXX counter")
 
-* battlefield
+- battlefield
   - emblems
   - select multiple cards
     - tap
@@ -25,17 +26,20 @@
   - context menu
     - create token
 
+- library:
+  - mill X
 
-* hand
+- hand
   - discard random card
   - play card face-down (e.g. fortell, morph)
 
-* shortcuts for every action
+- shortcuts for every action
 
-* game
+- game
   - mulligan
 
 # Backlog
+
 
 - defeated player / ff
 

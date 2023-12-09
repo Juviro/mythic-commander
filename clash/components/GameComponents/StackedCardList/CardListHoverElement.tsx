@@ -7,7 +7,7 @@ import { DropCard } from 'components/Game/Dropzone/Dropzone';
 import styles from './StackedCardList.module.css';
 
 interface Props {
-  onDrop: (card: DropCard) => void;
+  onDrop?: (card: DropCard) => void;
   index: number;
   numberOfElements: number;
 }

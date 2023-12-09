@@ -27,7 +27,7 @@ a {
   max-width: 90vw;
 }
 
-/* one below context menu */
+/* below context menu and popover */
 .ant-tooltip {
-  z-index: 1049;
+  z-index: 1000;
 }
