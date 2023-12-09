@@ -4,6 +4,7 @@ import { VisibleCard } from 'backend/database/gamestate.types';
 import Card from 'components/GameComponents/Card/Card';
 
 import GameStateContext from 'components/Game/GameStateContext';
+import classNames from 'classnames';
 import styles from './Battlefield.module.css';
 
 interface Props {
@@ -22,7 +23,13 @@ const BattlefieldCard = ({ card }: Props) => {
   } as CSSProperties;
 
   return (
-    <div className={styles.card} style={style}>
+    <div
+      style={style}
+      className={classNames(styles.card, 'battlefield_card')}
+      data-card-id={card.clashId}
+      data-card-x={x}
+      data-card-y={y}
+    >
       <Card card={card} draggable zone="battlefield" enlargeOnHover />
     </div>
   );

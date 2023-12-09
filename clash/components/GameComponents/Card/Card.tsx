@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { DragSourceMonitor, useDrag } from 'react-dnd';
 import classNames from 'classnames';
 import { Tooltip } from 'antd';
@@ -7,6 +7,7 @@ import { TooltipPlacement } from 'antd/es/tooltip';
 import { Card as CardType, Zone } from 'backend/database/gamestate.types';
 import { getImageUrl } from 'utils/getImageUrl';
 import { DropCard } from 'components/Game/Dropzone/Dropzone';
+import { getEmptyImage } from 'react-dnd-html5-backend';
 import useAnimateCardPositionChange from './useAnimateCardPositionChange';
 
 import styles from './Card.module.css';
@@ -36,14 +37,10 @@ const Card = ({
 }: Props) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
 
-  const [{ isDragging }, dragRef] = useDrag({
+  const [{ isDragging }, dragRef, preview] = useDrag({
     type: dropType,
-    item: { clashId: card.clashId, ownerId: card.ownerId },
+    item: card,
     canDrag: Boolean(draggable),
-    previewOptions: {
-      offsetX: -200,
-      offsetY: -200,
-    },
     end: onDropEnd,
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
@@ -53,6 +50,11 @@ const Card = ({
   useAnimateCardPositionChange({ card, cardRef, zone, noAnimation });
 
   const hidden = !('id' in card);
+
+  useEffect(() => {
+    if (dropType !== 'CARD') return;
+    preview(getEmptyImage(), { captureDraggingState: true });
+  });
 
   const cardComponent = (
     <div
@@ -76,9 +78,8 @@ const Card = ({
   return (
     <Tooltip
       title={!hidden && <img className={styles.image} src={getImageUrl(card.id)} />}
+      trigger={['contextMenu']}
       overlayClassName={styles.tooltip_wrapper}
-      mouseEnterDelay={0.3}
-      popupVisible={false}
       open={isDragging ? false : undefined}
       placement={tooltipPlacement}
     >

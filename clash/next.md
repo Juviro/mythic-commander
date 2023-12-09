@@ -1,16 +1,13 @@
 # Bugs
 
-* animating card position change on flipped boards wrong again
-
 # Current feature
 
 
 # MVP
 
-* snap
-  - to grid
-  - to other cards
-  -   enchant / equip
+* graveyard, exile
+  - search
+
 
 * card actions
   - tap
@@ -30,14 +27,6 @@
   - context menu
     - create token
 
-* library
-  - search
-  - shuffle
-  - scry, mill
-  - put card on bottom, on nth position
-
-* graveyard
-  - search
 
 * hand
   - discard random card

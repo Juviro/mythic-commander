@@ -100,3 +100,11 @@
 .hover_element:active {
   pointer-events: none;
 }
+
+.card_wrapper:active {
+  --size-card-width: var(--battlefield-card-width);
+
+  .card {
+    transform: unset;
+  }
+}

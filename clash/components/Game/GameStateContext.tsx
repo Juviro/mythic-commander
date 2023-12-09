@@ -5,6 +5,7 @@ import { GameState, Player, VisibleCard, Zone } from 'backend/database/gamestate
 import { GameLog } from 'backend/constants/logMessages';
 import { SOCKET_MSG_GAME } from '../../backend/constants/wsEvents';
 
+export const CARD_ASPECT_RATIO = 301 / 419;
 interface PeekingCards {
   zone: Zone;
   playerId: string;
@@ -16,6 +17,8 @@ interface BaseGameState {
   playerNames: { [key: string]: string };
   peekingCards: PeekingCards | null;
   setPeekingCards: (peekingCards: PeekingCards | null) => void;
+  battlefieldCardWidth: number;
+  battlefieldCardHeight: number;
 }
 export interface InitializedGameState extends BaseGameState {
   gameState: GameState;
@@ -91,6 +94,14 @@ export const GameStateContextProvider = ({ children }: Props) => {
 
   const player = gameState?.players.find(({ id }) => id === user?.id);
 
+  const battlefieldCardWidth = useMemo(() => {
+    if (!gameState?.players.length) return 0;
+
+    const cardWidth = (window.innerHeight / 10) * CARD_ASPECT_RATIO;
+    if (gameState.players.length === 1) return cardWidth * 1.5;
+    return cardWidth;
+  }, [gameState?.players.length]);
+
   const playerNames: { [key: string]: string } =
     gameState?.players.reduce(
       (acc, currentPlayer) => ({
@@ -106,6 +117,8 @@ export const GameStateContextProvider = ({ children }: Props) => {
       playerNames,
       peekingCards,
       setPeekingCards,
+      battlefieldCardWidth,
+      battlefieldCardHeight: battlefieldCardWidth / CARD_ASPECT_RATIO,
     };
     if (!gameState || !player) {
       return {
@@ -130,13 +143,18 @@ export const GameStateContextProvider = ({ children }: Props) => {
 
   const globalCssStyle = useMemo<CSSProperties>(() => {
     if (!gameState?.players.length) return {};
-    return gameState.players.reduce(
+    const playerColors = gameState.players.reduce(
       (acc, currentPlayer) => ({
         ...acc,
         [`--color-player-${currentPlayer.id}`]: currentPlayer.color,
       }),
       {}
     );
+
+    return {
+      '--battlefield-card-width': `${battlefieldCardWidth}px`,
+      ...playerColors,
+    };
   }, [gameState?.players.length]);
 
   return (
