@@ -41,10 +41,6 @@ const Card = ({
     type: dropType,
     item: card,
     canDrag: Boolean(draggable),
-    previewOptions: {
-      offsetX: -200,
-      offsetY: -200,
-    },
     end: onDropEnd,
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
@@ -82,9 +78,8 @@ const Card = ({
   return (
     <Tooltip
       title={!hidden && <img className={styles.image} src={getImageUrl(card.id)} />}
+      trigger={['contextMenu']}
       overlayClassName={styles.tooltip_wrapper}
-      mouseEnterDelay={1}
-      popupVisible={false}
       open={isDragging ? false : undefined}
       placement={tooltipPlacement}
     >

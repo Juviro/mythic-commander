@@ -2,13 +2,11 @@
 
 # Current feature
 
-* card drop position is wrong
-* drop preview from hand is wrong
-
-* snap
-  - enchant / equip
 
 # MVP
+
+* graveyard, exile
+  - search
 
 
 * card actions
@@ -29,8 +27,6 @@
   - context menu
     - create token
 
-* graveyard
-  - search
 
 * hand
   - discard random card

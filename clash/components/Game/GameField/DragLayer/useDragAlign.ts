@@ -1,13 +1,15 @@
+import { useContext, useEffect } from 'react';
+import { XYCoord } from 'react-dnd';
+
 import { Card } from 'backend/database/gamestate.types';
 import CardPositionContext, {
   HoveredBattlefield,
 } from 'components/Game/CardPositionContext';
-import { useContext, useEffect } from 'react';
-import { XYCoord } from 'react-dnd';
 
 const MIN_DISTANCE_ALIGN = 20;
 const MIN_DISTANCE_STACK = 40;
-const STACK_DISTANCE = 20;
+const STACK_DISTANCE_X = 15;
+const STACK_DISTANCE_Y = 25;
 
 const getOtherCardsFromBattlefield = (
   hoveredBattlefield: HoveredBattlefield,
@@ -131,7 +133,7 @@ const useDragAlign = (item: Card, currentOffset: XYCoord | null) => {
   let top = currentOffset?.y ?? 0;
   if (stack) {
     const factor = stack.position === 'topLeft' ? -1 : 1;
-    top = stack.element.getBoundingClientRect().top + STACK_DISTANCE * factor;
+    top = stack.element.getBoundingClientRect().top + STACK_DISTANCE_Y * factor;
   } else if (y) {
     top = y.element.getBoundingClientRect().top;
   }
@@ -139,7 +141,7 @@ const useDragAlign = (item: Card, currentOffset: XYCoord | null) => {
   let left = currentOffset?.x ?? 0;
   if (stack) {
     const factor = stack.position === 'topLeft' ? -1 : 1;
-    left = stack.element.getBoundingClientRect().left + STACK_DISTANCE * factor;
+    left = stack.element.getBoundingClientRect().left + STACK_DISTANCE_X * factor;
   } else if (x) {
     left = x.element.getBoundingClientRect().left;
   }
@@ -156,9 +158,9 @@ const useDragAlign = (item: Card, currentOffset: XYCoord | null) => {
     let choordY = getChoord(y?.element, 'y');
 
     if (stack) {
-      const offset = stack.position === 'topLeft' ? -STACK_DISTANCE : STACK_DISTANCE;
-      choordX = getChoord(stack!.element, 'x')! + offset;
-      choordY = getChoord(stack!.element, 'y')! + offset;
+      const factor = stack.position === 'topLeft' ? -1 : 1;
+      choordX = getChoord(stack!.element, 'x')! + factor * STACK_DISTANCE_X;
+      choordY = getChoord(stack!.element, 'y')! + factor * STACK_DISTANCE_Y;
     }
 
     snapChoords.current = {

@@ -15,7 +15,6 @@ const DragLayer = () => {
   const { isDragging, item, currentOffset, itemType } = useDragLayer((monitor) => ({
     item: monitor.getItem(),
     itemType: monitor.getItemType(),
-    initialOffset: monitor.getInitialSourceClientOffset(),
     currentOffset: monitor.getSourceClientOffset(),
     isDragging: monitor.isDragging(),
   }));
@@ -38,18 +37,18 @@ const DragLayer = () => {
       {cardToAlign?.x && !cardToAlign.stack && (
         <AlignIndicator
           element={cardToAlign.x.element}
-          offset={currentOffset}
+          offset={cardToAlign.y?.element.getBoundingClientRect().y ?? currentOffset.y}
           property="x"
         />
       )}
       {cardToAlign?.y && !cardToAlign.stack && (
         <AlignIndicator
           element={cardToAlign.y.element}
-          offset={currentOffset}
+          offset={cardToAlign.x?.element.getBoundingClientRect().x ?? currentOffset.x}
           property="y"
         />
       )}
-      <Card card={item} draggable={false} noAnimation />
+      <Card card={item} noAnimation />
     </div>
   );
 };
