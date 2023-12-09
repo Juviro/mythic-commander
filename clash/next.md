@@ -2,6 +2,11 @@
 
 # Current feature
 
+- battlefield
+  - select multiple cards
+    - tap
+    - move to different zone
+
 # MVP
 
 - card actions
@@ -65,6 +70,8 @@
 - add route /playtest/:deckId
   - no stored game state in backend
   - reloading resets the game (destroy game state on socket disconnect)
+
+- don't animate card move on battlefield when done by yourself
 
 # Backlog Bugs
 
