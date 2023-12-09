@@ -15,10 +15,9 @@ import styles from './Exile.module.css';
 
 interface Props {
   player: Player;
-  isSelf?: boolean;
 }
 
-const Exile = ({ player, isSelf }: Props) => {
+const Exile = ({ player }: Props) => {
   const { onMoveCard } = useGameActions();
   const { getPlayerColor } = useContext(GameStateContext);
 
@@ -40,7 +39,7 @@ const Exile = ({ player, isSelf }: Props) => {
   const cards = player.zones.exile;
   const hasCards = cards.length > 0;
 
-  if (!hasCards && (!isSelf || !canDrop)) {
+  if (!hasCards && !canDrop) {
     return null;
   }
 
@@ -56,7 +55,7 @@ const Exile = ({ player, isSelf }: Props) => {
         }
       >
         <div className={styles.wrapper}>
-          <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id} disabled={!isSelf}>
+          <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id}>
             <div className={styles.inner}>
               <ExileImage />
               {cards.map((card) => (

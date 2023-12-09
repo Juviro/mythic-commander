@@ -25,6 +25,8 @@ const ZoneCardsPopover = ({ children, cards, trigger }: Props) => {
       open={trigger ? undefined : true}
       placement="topLeft"
       trigger={trigger}
+      // below graveyard and exile popovers so they can be looked at while searching
+      zIndex={1000}
     >
       {children}
     </Popover>

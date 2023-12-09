@@ -23,10 +23,10 @@ const PlayerInterface = ({ player, isSelf, isFlipped }: Props) => {
     >
       <Battlefield player={player} isFlipped={isFlipped} />
       <div className={styles.interface}>
-        <Graveyard player={player} isSelf={isSelf} />
+        <Graveyard player={player} />
         <Library player={player} isSelf={isSelf} />
         <Hand player={player} isSelf={isSelf} />
-        <Exile player={player} isSelf={isSelf} />
+        <Exile player={player} />
         <div />
       </div>
     </div>
