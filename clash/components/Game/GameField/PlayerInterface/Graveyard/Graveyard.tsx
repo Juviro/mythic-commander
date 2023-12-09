@@ -4,6 +4,8 @@ import { Player, ZONES } from 'backend/database/gamestate.types';
 import GraveyardImage from 'public/assets/icons/graveyard.svg';
 import Dropzone, { DropCard } from 'components/Game/Dropzone/Dropzone';
 import useGameActions from 'components/Game/useGameActions';
+import { Tooltip } from 'antd';
+import { pluralizeCards } from 'components/Game/Menu/Chat/ChatMessages/util';
 import CardStack from '../CardStack/CardStack';
 
 import styles from './Graveyard.module.css';
@@ -26,17 +28,19 @@ const Graveyard = ({ player, isSelf }: Props) => {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id}>
-        <CardStack
-          cards={cards}
-          emptyImage={<GraveyardImage />}
-          draggable={isSelf}
-          zone="graveyard"
-          canHover
-        />
-      </Dropzone>
-    </div>
+    <Tooltip title={`Graveyard: ${pluralizeCards(graveyard.length, 'one')}`}>
+      <div className={styles.wrapper}>
+        <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id}>
+          <CardStack
+            cards={cards}
+            emptyImage={<GraveyardImage />}
+            draggable={isSelf}
+            zone="graveyard"
+            canHover
+          />
+        </Dropzone>
+      </div>
+    </Tooltip>
   );
 };
 

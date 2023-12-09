@@ -23,14 +23,4 @@
     --size-card-padding: var(--size-card-base-padding);
     
     --card-aspect-ratio: 301 / 419;
-
-    overflow: hidden;
-
-    /* antd fixes */
-    .ant-dropdown-menu-sub {
-        margin: 0;
-    }
-    .ant-popover-inner {
-        max-width: 90vw;
-    }
 }

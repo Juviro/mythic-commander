@@ -76,7 +76,7 @@ const PopoverContent = ({ color }: Props) => {
         <PopoverCardList
           onDrop={onDropLibrary}
           cards={filteredCards}
-          empty="No cards in library"
+          empty="No cards found"
           title={
             <Space size={16}>
               <span>Library</span>

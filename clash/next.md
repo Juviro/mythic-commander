@@ -3,11 +3,10 @@
 # Current feature
 
 
-# MVP
-
 * graveyard, exile
   - search
 
+# MVP
 
 * card actions
   - tap
@@ -15,8 +14,7 @@
   - counter
     - +1/+1
     - -1/-1
-    - loyalty (maybe automatically)
-    - saga (maybe automatically)
+    - loyalty / chapter(?) (maybe automatically)
     - ??? maybe retrieve from database (search for "XXX counter")
 
 * battlefield
@@ -30,13 +28,12 @@
 
 * hand
   - discard random card
+  - play card face-down (e.g. fortell, morph)
 
 * shortcuts for every action
 
 * game
   - mulligan
-
-- only show card tooltip on right click? - do this once the context menues are implemented
 
 # Backlog
 
@@ -48,7 +45,6 @@
 - track commander damage
 
 - message in the center of the screen for
-
   - active player changes
   - animated (grow)
 
