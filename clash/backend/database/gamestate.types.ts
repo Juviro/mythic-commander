@@ -33,9 +33,9 @@ export type Card = HiddenCard | VisibleCard;
 interface Zones {
   hand: Card[];
   library: Card[];
-  exile: Card[];
-  graveyard: Card[];
-  commandZone: Card[];
+  exile: VisibleCard[];
+  graveyard: VisibleCard[];
+  commandZone: VisibleCard[];
   battlefield: VisibleCard[];
 }
 

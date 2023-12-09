@@ -7,6 +7,8 @@ import Dropzone, { DropCard } from 'components/Game/Dropzone/Dropzone';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import GameStateContext from 'components/Game/GameStateContext';
 import ZoneCardsPopover from 'components/GameComponents/ZoneCardsPopover/ZoneCardsPopover';
+import { pluralizeCards } from 'components/Game/Menu/Chat/ChatMessages/util';
+import { Tooltip } from 'antd';
 import CardStack from '../CardStack/CardStack';
 import useLibraryActions from './useLibraryActions';
 
@@ -36,23 +38,31 @@ const Library = ({ player, isSelf }: Props) => {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.popover_wrapper}>
-        <ZoneCardsPopover cards={isPeeking ? peekingCards.cards : null} />
-      </div>
-      <ContextMenu items={items}>
-        <div className={styles.inner} onClick={isSelf ? onDrawCard : undefined}>
-          <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id} disabled={isPeeking}>
-            <CardStack
-              cards={cards}
-              emptyImage={<LibraryImage />}
-              draggable={isSelf}
-              zone="library"
-            />
-          </Dropzone>
+    <Tooltip
+      title={`Library: ${pluralizeCards(library.length, 'one')}`}
+      open={isPeeking ? false : undefined}
+    >
+      <div className={styles.wrapper}>
+        <div className={styles.popover_wrapper}>
+          <ZoneCardsPopover cards={isPeeking ? peekingCards.cards : null} />
         </div>
-      </ContextMenu>
-    </div>
+        <ContextMenu items={items}>
+          <div
+            className={styles.inner}
+            onClick={isSelf && !isPeeking ? onDrawCard : undefined}
+          >
+            <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id} disabled={isPeeking}>
+              <CardStack
+                cards={cards}
+                emptyImage={<LibraryImage />}
+                draggable={isSelf}
+                zone="library"
+              />
+            </Dropzone>
+          </div>
+        </ContextMenu>
+      </div>
+    </Tooltip>
   );
 };
 

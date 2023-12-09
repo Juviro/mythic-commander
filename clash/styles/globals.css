@@ -16,3 +16,18 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+/* antd fixes */
+.ant-dropdown-menu-sub {
+  margin: 0;
+}
+
+.ant-popover-inner {
+  max-width: 90vw;
+}
+
+/* below context menu and popover */
+.ant-tooltip {
+  z-index: 1000;
+}

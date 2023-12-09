@@ -14,8 +14,8 @@
     transition: transform 0.1s;
 }
 
-/* first one is a hover element */
-.card:not(:nth-child(2)) {
+/* margin for all cards except the first one */
+.card ~ .card {
     margin-left: -130px;
 }
 

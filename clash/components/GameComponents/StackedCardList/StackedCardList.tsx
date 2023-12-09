@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 import { VisibleCard } from 'backend/database/gamestate.types';
 import { DropCard } from 'components/Game/Dropzone/Dropzone';
@@ -10,22 +10,27 @@ import CardListHoverElement from './CardListHoverElement';
 interface Props {
   cards: VisibleCard[];
   draggable?: boolean;
-  onDrop: (item: DropCard, index: number) => void;
+  onDrop?: (item: DropCard, index: number) => void;
+  color?: string;
 }
 
-const StackedCardList = ({ cards, draggable, onDrop }: Props) => {
+const StackedCardList = ({ cards, draggable, onDrop, color }: Props) => {
   if (!cards.length) return null;
 
+  const style = color ? ({ '--player-color': color } as CSSProperties) : undefined;
+
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} style={style}>
       <div className={styles.cards}>
         {cards.map((card, index) => (
           <React.Fragment key={card.clashId}>
-            <CardListHoverElement
-              onDrop={(droppedCard) => onDrop(droppedCard, index)}
-              index={index}
-              numberOfElements={cards.length + 1}
-            />
+            {onDrop && (
+              <CardListHoverElement
+                onDrop={(droppedCard) => onDrop(droppedCard, index)}
+                index={index}
+                numberOfElements={cards.length + 1}
+              />
+            )}
             <div className={styles.card}>
               <Card
                 card={card}
@@ -38,11 +43,13 @@ const StackedCardList = ({ cards, draggable, onDrop }: Props) => {
             </div>
           </React.Fragment>
         ))}
-        <CardListHoverElement
-          onDrop={(droppedCard) => onDrop(droppedCard, cards.length)}
-          index={cards.length}
-          numberOfElements={cards.length + 1}
-        />
+        {onDrop && (
+          <CardListHoverElement
+            onDrop={(droppedCard) => onDrop(droppedCard, cards.length)}
+            index={cards.length}
+            numberOfElements={cards.length + 1}
+          />
+        )}
       </div>
     </div>
   );

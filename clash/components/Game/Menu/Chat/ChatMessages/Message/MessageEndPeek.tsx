@@ -29,12 +29,12 @@ const MessageEndPeek = ({ payload, playerId }: Props) => {
         {movedCards && ' put '}
         {Boolean(amountToTop) && (
           <>
-            <b>{`${pluralizeCards(amountToTop, true)} on top `}</b>
+            <b>{`${pluralizeCards(amountToTop, 'a')} on top `}</b>
             {Boolean(amountToBottom) && 'and '}
           </>
         )}
         {Boolean(amountToBottom) && (
-          <b>{`${pluralizeCards(amountToBottom, true)} on the bottom `}</b>
+          <b>{`${pluralizeCards(amountToBottom, 'a')} on the bottom `}</b>
         )}
         {movedCards && 'of '}
         {!movedCards && shuffleLibrary && 'shuffled '}

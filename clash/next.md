@@ -2,24 +2,18 @@
 
 # Current feature
 
-
 # MVP
 
-* graveyard, exile
-  - search
-
-
-* card actions
+- card actions
   - tap
   - flip
   - counter
     - +1/+1
     - -1/-1
-    - loyalty (maybe automatically)
-    - saga (maybe automatically)
+    - loyalty / chapter(?) (maybe automatically)
     - ??? maybe retrieve from database (search for "XXX counter")
 
-* battlefield
+- battlefield
   - emblems
   - select multiple cards
     - tap
@@ -27,18 +21,20 @@
   - context menu
     - create token
 
+- library:
+  - mill X
 
-* hand
+- hand
   - discard random card
+  - play card face-down (e.g. fortell, morph)
 
-* shortcuts for every action
+- shortcuts for every action
 
-* game
+- game
   - mulligan
 
-- only show card tooltip on right click? - do this once the context menues are implemented
-
 # Backlog
+
 
 - defeated player / ff
 
@@ -48,7 +44,6 @@
 - track commander damage
 
 - message in the center of the screen for
-
   - active player changes
   - animated (grow)
 
@@ -74,6 +69,7 @@
 # Backlog Bugs
 
 - cards from other players have wrong sleeve color in hand
+- when moving a peeking card into hand, the draw animation is used
 - on page load, cards in exile are animated
 - milling action animation is wrong on flipped board
 - prevent interacting with own lib when someone is peeking it (self or opponent)
