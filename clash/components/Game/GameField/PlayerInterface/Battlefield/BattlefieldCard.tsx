@@ -6,6 +6,7 @@ import Card from 'components/GameComponents/Card/Card';
 import GameStateContext from 'components/Game/GameStateContext';
 import classNames from 'classnames';
 import styles from './Battlefield.module.css';
+import BattlefieldSelectionContext from './BattlefieldSelection/BattlefieldSelectionContext';
 
 interface Props {
   card: VisibleCard;
@@ -13,6 +14,7 @@ interface Props {
 
 const BattlefieldCard = ({ card }: Props) => {
   const { getPlayerColor } = useContext(GameStateContext);
+  const { hoveredCardIds, selectedCardIds } = useContext(BattlefieldSelectionContext);
 
   const { x, y } = card.position!;
 
@@ -22,10 +24,15 @@ const BattlefieldCard = ({ card }: Props) => {
     '--player-color': getPlayerColor(card.ownerId),
   } as CSSProperties;
 
+  const isSelected =
+    hoveredCardIds.includes(card.clashId) || selectedCardIds.includes(card.clashId);
+
   return (
     <div
       style={style}
-      className={classNames(styles.card, 'battlefield_card')}
+      className={classNames(styles.card, 'battlefield_card', {
+        [styles.card__selected]: isSelected,
+      })}
       data-card-id={card.clashId}
       data-card-x={x}
       data-card-y={y}

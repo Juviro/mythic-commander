@@ -1,0 +1,11 @@
+
+.selection {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .rectangle {
+    border: 2px solid var(--color-primary);
+    position: fixed;
+    z-index: 100;
+  }

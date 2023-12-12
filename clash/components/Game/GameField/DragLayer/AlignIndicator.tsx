@@ -18,7 +18,6 @@ const AlignIndicator = ({ element, offset, property }: Props) => {
     const top = offset < y ? offset : y;
 
     style.height = Math.abs(offset - y);
-    style.width = '1px';
     style.top = top + height / 2;
     style.left = x + width / 2;
   } else {
@@ -26,7 +25,6 @@ const AlignIndicator = ({ element, offset, property }: Props) => {
     const left = offset < x ? offset : x;
 
     style.width = Math.abs(offset - x);
-    style.height = '1px';
     style.top = y + height / 2;
     style.left = left + width / 2;
   }

@@ -9,6 +9,8 @@
 }
 
 .align_indicator {
+    width: 1px;
+    height: 1px;
     border: 1px dashed var(--color-card-align);
     position: fixed;
     z-index: 1;

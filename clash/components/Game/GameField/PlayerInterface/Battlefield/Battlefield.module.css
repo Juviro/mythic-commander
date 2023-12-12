@@ -3,25 +3,15 @@
   width: 100%;
   align-self: flex-start;
   position: relative;
-  container: battlefield / size;
 
   --size-card-width: var(--battlefield-card-width);
+  border: 1px solid transparent;
   --size-card-padding: 2px;
 }
 
-.selection {
-  width: 100%;
-  height: 100%;
-}
-
-.rectangle {
-  width: 100%;
-  height: 100%;
-  fill: transparent;
-  stroke: var(--color-primary);
-  stroke-width: 2px;
-  stroke-dasharray: 5;
-  position: absolute;
+.wrapper:active {
+  border: 1px solid var(--color-dropzone-border);
+  border-radius: 8px;
 }
 
 .card {
@@ -29,6 +19,10 @@
   top: calc(var(--y) * 1%);
   left: calc(var(--x) * 1%);
   transform: translate(-50%, -50%);
+}
+
+.card__selected {
+  border: 3px dashed var(--color-primary);
 }
 
 :global(.flipped) .card {
