@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react';
 
 import { VisibleCard } from 'backend/database/gamestate.types';
-import Dropzone, { DropCard } from 'components/Game/Dropzone/Dropzone';
+import Dropzone from 'components/Game/Dropzone/Dropzone';
+import { DropCard } from 'types/dnd.types';
 import StackedCardList from '../StackedCardList/StackedCardList';
 
 import styles from './ZoneCardsPopover.module.css';

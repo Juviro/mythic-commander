@@ -30,6 +30,7 @@ export const SOCKET_MSG_GAME = {
 
   DRAW_CARD: 'draw_card',
   MOVE_CARD: 'move_card',
+  MOVE_CARDS_GROUP: 'move_cards_group',
   PEEK: 'peek',
   END_PEEK: 'end_peek',
   SEARCH_LIBRARY: 'search_library',
@@ -50,6 +51,12 @@ export interface MoveCardPayload extends MoveCardDetails {
     zone: Zone;
     playerId: string;
   };
+}
+
+export interface MoveCardsGroupPayload {
+  cardIds: string[];
+  battlefieldPlayerId: string;
+  delta: { x: number; y: number };
 }
 
 export interface PeekPayload {

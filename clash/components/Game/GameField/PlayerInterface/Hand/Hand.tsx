@@ -1,12 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
+import { useDrop } from 'react-dnd';
 
 import Card from 'components/GameComponents/Card/Card';
 import { Player } from 'backend/database/gamestate.types';
-
-import { useDrop } from 'react-dnd';
-import styles from './Hand.module.css';
+import { DndItemTypes } from 'types/dnd.types';
 import HandHoverElement from './HandHoverElement';
+
+import styles from './Hand.module.css';
 
 const getMaxDegree = (length: number) => {
   if (length === 2) return 2.5;
@@ -48,7 +49,7 @@ const Hand = ({ player, isSelf }: Props) => {
   const { hand } = player.zones;
 
   const [{ isOver }, dropRef] = useDrop({
-    accept: 'CARD',
+    accept: DndItemTypes.CARD,
     drop: () => null,
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),

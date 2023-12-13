@@ -1,7 +1,7 @@
 import { VisibleCard } from 'backend/database/gamestate.types';
-import { DropCard } from 'components/Game/Dropzone/Dropzone';
 import GameStateContext from 'components/Game/GameStateContext';
 import { useContext, useEffect, useState } from 'react';
+import { DropCard } from 'types/dnd.types';
 
 const usePopoverCards = () => {
   const { gameState, peekingCards, setPeekingCards } = useContext(GameStateContext);

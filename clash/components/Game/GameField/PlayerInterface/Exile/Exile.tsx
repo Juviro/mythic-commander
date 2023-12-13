@@ -1,16 +1,17 @@
 import React, { useContext } from 'react';
+import { Popover, Tooltip } from 'antd';
+import { useDrop } from 'react-dnd';
 
 import { Player } from 'backend/database/gamestate.types';
 import ExileImage from 'public/assets/icons/exile.svg';
-
-import Dropzone, { DropCard } from 'components/Game/Dropzone/Dropzone';
-import { useDrop } from 'react-dnd';
+import Dropzone from 'components/Game/Dropzone/Dropzone';
 import useGameActions from 'components/Game/useGameActions';
 import Card from 'components/GameComponents/Card/Card';
-import { Popover, Tooltip } from 'antd';
 import { pluralizeCards } from 'components/Game/Menu/Chat/ChatMessages/util';
 import StackedCardList from 'components/GameComponents/StackedCardList/StackedCardList';
 import GameStateContext from 'components/Game/GameStateContext';
+import { DndItemTypes, DropCard } from 'types/dnd.types';
+
 import styles from './Exile.module.css';
 
 interface Props {
@@ -22,7 +23,7 @@ const Exile = ({ player }: Props) => {
   const { getPlayerColor } = useContext(GameStateContext);
 
   const [{ canDrop }] = useDrop({
-    accept: 'CARD',
+    accept: DndItemTypes.CARD,
     canDrop: ({ ownerId }: DropCard) => {
       return ownerId === player.id;
     },
@@ -40,7 +41,9 @@ const Exile = ({ player }: Props) => {
   const hasCards = cards.length > 0;
 
   if (!hasCards && !canDrop) {
-    return null;
+    // it's important to always render something,
+    // otherwise chrome will crash for some reason
+    return <div />;
   }
 
   const title = `Exile: ${pluralizeCards(cards.length, 'one')}`;

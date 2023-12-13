@@ -7,6 +7,7 @@ import Card from 'components/GameComponents/Card/Card';
 
 import CardPositionContext from 'components/Game/CardPositionContext';
 import classNames from 'classnames';
+import { DndItemTypes } from 'types/dnd.types';
 import styles from './DragLayer.module.css';
 import AlignIndicator from './AlignIndicator';
 import useDragAlign from './useDragAlign';
@@ -24,7 +25,7 @@ const DragLayer = () => {
 
   const { cardToAlign, left, top } = useDragAlign(item, currentOffset);
 
-  if (!item || !currentOffset || !isDragging || itemType !== 'CARD') {
+  if (!item || !currentOffset || !isDragging || itemType !== DndItemTypes.CARD) {
     return null;
   }
   const shouldFlip = Boolean(hoveredBattlefield.current?.element.closest('.flipped'));

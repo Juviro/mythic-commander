@@ -2,13 +2,9 @@ import React, { ReactNode, useContext, useEffect, useRef } from 'react';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
 
 import classNames from 'classnames';
+import { DndItemTypes, DropCard } from 'types/dnd.types';
 import styles from './Dropzone.module.css';
 import CardPositionContext from '../CardPositionContext';
-
-export interface DropCard {
-  clashId: string;
-  ownerId?: string;
-}
 
 interface Props {
   children: ReactNode;
@@ -17,6 +13,7 @@ interface Props {
   acceptFromPlayerId?: string;
   acceptedIds?: string[];
   playerId?: string;
+  accept?: DndItemTypes[];
 }
 
 const Dropzone = ({
@@ -26,12 +23,13 @@ const Dropzone = ({
   acceptFromPlayerId,
   acceptedIds,
   playerId,
+  accept = [DndItemTypes.CARD, DndItemTypes.LIST_CARD],
 }: Props) => {
   const { hoveredBattlefield } = useContext(CardPositionContext);
   const dropzoneRef = useRef<HTMLDivElement | null>(null);
 
   const [{ isOver, canDrop }, dropRef] = useDrop({
-    accept: ['CARD', 'LIST_CARD'],
+    accept,
     canDrop: ({ ownerId, clashId }) => {
       if (acceptedIds && !acceptedIds.includes(clashId)) {
         return false;

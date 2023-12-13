@@ -16,14 +16,16 @@ const MessageSetLife = ({ payload, playerId }: Props) => {
 
   const targetPlayer = gameState!.players.find((p) => p.id === payload.forPlayerId)!
     .name!;
-  const setOwnLife = payload.forPlayerId === playerId;
+
+  const didSetOwnLife = payload.forPlayerId === playerId;
+
   return (
     <div className={styles.message}>
       <ColoredPlayerName id={playerId} />
       <div>
         <span>
           {` set `}
-          {setOwnLife ? (
+          {didSetOwnLife ? (
             `their`
           ) : (
             <ColoredPlayerName

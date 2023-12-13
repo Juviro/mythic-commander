@@ -6,6 +6,8 @@ import CardPositionContext, {
   CardPositions,
 } from 'components/Game/CardPositionContext';
 
+const ANIMATION_THRESHOLD = 10;
+
 const storeCardPosition = (
   cardRef: React.RefObject<HTMLDivElement>,
   clashId: string,
@@ -35,7 +37,12 @@ const animateDirectPositionChange = (
   const deltaY = storedPosition.y - y;
   const deltaWidth = storedPosition.width / width;
 
-  if (!deltaWidth && !deltaX && !deltaY) return Promise.resolve(true);
+  const isWithinThreshold =
+    Math.abs(deltaX) < ANIMATION_THRESHOLD &&
+    Math.abs(deltaY) < ANIMATION_THRESHOLD &&
+    Math.abs(deltaWidth) < ANIMATION_THRESHOLD;
+
+  if (isWithinThreshold) return Promise.resolve(true);
 
   const transformFrom = `translate(${deltaX}px, ${deltaY}px) scale(${deltaWidth})`;
 

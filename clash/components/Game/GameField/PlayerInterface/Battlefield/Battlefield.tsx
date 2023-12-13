@@ -19,7 +19,7 @@ const Battlefield = ({ player, isFlipped }: Props) => {
   const cards = player.zones.battlefield;
 
   return (
-    <BattlefieldSelectionContextProvider>
+    <BattlefieldSelectionContextProvider player={player}>
       <div className={styles.wrapper} ref={wrapperRef}>
         <BattlefieldSelection>
           <BattlefieldDropzone

@@ -2,8 +2,7 @@ import React from 'react';
 import { useDrop } from 'react-dnd';
 import classNames from 'classnames';
 
-import { DropCard } from 'components/Game/Dropzone/Dropzone';
-
+import { DndItemTypes, DropCard } from 'types/dnd.types';
 import styles from './StackedCardList.module.css';
 
 interface Props {
@@ -14,7 +13,7 @@ interface Props {
 
 const CardListHoverElement = ({ onDrop, index, numberOfElements }: Props) => {
   const [{ isOver, canDrop }, dropRef] = useDrop({
-    accept: 'LIST_CARD',
+    accept: DndItemTypes.LIST_CARD,
     drop: onDrop,
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),

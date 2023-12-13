@@ -1,8 +1,15 @@
-import React, { PropsWithChildren, useContext, useRef, useState } from 'react';
+import React, {
+  MouseEvent,
+  PropsWithChildren,
+  useContext,
+  useRef,
+  useState,
+} from 'react';
 import { XYCoord } from 'react-dnd';
 
-import SelectionRectangle from './SelectionRectangle';
+import DragRectange from './DragRectange';
 import BattlefieldSelectionContext from './BattlefieldSelectionContext';
+import SelectionRectangle from './SelectionRectangle';
 
 import styles from './BattlefieldSelection.module.css';
 
@@ -13,15 +20,20 @@ const BattlefieldSelection = ({ children }: Props) => {
   const [startingPoint, setStartingPoint] = useState<XYCoord | null>(null);
   const [currentPoint, setCurrentPoint] = useState<XYCoord | null>(null);
 
-  const { hoveredCardIds, setSelectedCardsIds } = useContext(BattlefieldSelectionContext);
+  const { hoveredCardIds, selectedCardIds, setSelectedCardsIds } = useContext(
+    BattlefieldSelectionContext
+  );
 
-  const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+  const onMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     setStartingPoint({ x: e.clientX, y: e.clientY });
   };
 
-  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const onMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!startingPoint) return;
     setCurrentPoint({ x: e.clientX, y: e.clientY });
+
+    if (!selectedCardIds.length) return;
+    setSelectedCardsIds([]);
   };
 
   const onMouseLeave = () => {
@@ -30,8 +42,10 @@ const BattlefieldSelection = ({ children }: Props) => {
   };
 
   const onMouseUp = () => {
+    if (!startingPoint) return;
     setStartingPoint(null);
     setCurrentPoint(null);
+    if (!hoveredCardIds.length) return;
     setSelectedCardsIds(hoveredCardIds);
   };
 
@@ -46,12 +60,13 @@ const BattlefieldSelection = ({ children }: Props) => {
       ref={wrapperRef}
     >
       {startingPoint && currentPoint && (
-        <SelectionRectangle
+        <DragRectange
           startingPoint={startingPoint}
           currentPoint={currentPoint}
           wrapperRef={wrapperRef}
         />
       )}
+      <SelectionRectangle selectedCardIds={selectedCardIds} wrapperRef={wrapperRef} />
       {children}
     </div>
   );
