@@ -1,9 +1,21 @@
-const RED = '#751a1a';
+const RED = '#ca3939';
 const PINK = '#f198a7';
 const ORANGE = '#bc7a02';
-const YELLOW = '#b4b40a';
+const YELLOW = '#dedc2f';
 const GREEN = '#005c00';
+const APPLE_GREEN = '#7bc423';
 const CYAN = '#06c0c0';
 const BLUE = '#1616d5';
+const PURPLE = '#8224c6';
 
-export const PLAYER_COLORS = [RED, GREEN, ORANGE, YELLOW, PINK, CYAN, BLUE];
+export const PLAYER_COLORS = [
+  RED,
+  GREEN,
+  APPLE_GREEN,
+  ORANGE,
+  YELLOW,
+  PINK,
+  CYAN,
+  BLUE,
+  PURPLE,
+];

@@ -4,6 +4,7 @@ import { getGameState } from 'backend/database/matchStore';
 import {
   EndPeekPayload,
   MoveCardPayload,
+  MoveCardsGroupPayload,
   PeekPayload,
   SOCKET_MSG_GAME,
   SOCKET_MSG_GENERAL,
@@ -60,6 +61,10 @@ const gameSocketActions = (io: Server) => {
 
     socket.on(SOCKET_MSG_GAME.MOVE_CARD, (payload: MoveCardPayload) => {
       currentGames[currentGameId].moveCard(socket, payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.MOVE_CARDS_GROUP, (payload: MoveCardsGroupPayload) => {
+      currentGames[currentGameId].moveCardGroup(payload);
     });
 
     socket.on(SOCKET_MSG_GAME.PEEK, (payload: PeekPayload) => {

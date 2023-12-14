@@ -8,6 +8,7 @@ import {
 import {
   EndPeekPayload,
   MoveCardPayload,
+  MoveCardsGroupPayload,
   PeekPayload,
   SOCKET_MSG_GAME,
   SearchLibraryPayload,
@@ -125,6 +126,15 @@ export default class Game {
     };
   }
 
+  static fixPosition(position?: { x: number; y: number }) {
+    if (!position) return position;
+
+    return {
+      x: Math.max(0, Math.min(100, position.x)),
+      y: Math.max(0, Math.min(100, position.y)),
+    };
+  }
+
   obfuscateGameState(playerId: string): GameState {
     const obfuscatedPlayers = this.gameState.players.map((player) => {
       const isSelf = player.id === playerId;
@@ -205,7 +215,7 @@ export default class Game {
       )
     );
 
-    const newCard = { ...cardToMove!, position };
+    const newCard = { ...cardToMove!, position: Game.fixPosition(position) };
     if (fromPlayer!.id !== to.playerId && !newCard.ownerId) {
       newCard.ownerId = fromPlayer!.id;
     }
@@ -249,6 +259,42 @@ export default class Game {
         },
       },
     });
+  }
+
+  moveCardGroup(payload: MoveCardsGroupPayload) {
+    const { cardIds, battlefieldPlayerId, delta } = payload;
+
+    const cardsToMove: VisibleCard[] = [];
+
+    const playerTo = this.getPlayerById(battlefieldPlayerId);
+    const playerFrom = this.gameState.players.find(({ zones }) =>
+      zones.battlefield.some((card) => cardIds.includes(card.clashId))
+    )!;
+
+    playerFrom.zones.battlefield = playerFrom.zones.battlefield.filter((card) => {
+      if (cardIds.includes(card.clashId)) {
+        cardsToMove.push(card);
+        return false;
+      }
+      return true;
+    });
+
+    const updatedCards = cardsToMove.map((card) => {
+      return {
+        ...card,
+        position: Game.fixPosition({
+          x: card.position!.x + delta.x,
+          y: card.position!.y + delta.y,
+        }),
+      };
+    });
+
+    playerTo.zones.battlefield.push(...updatedCards);
+
+    this.emitPlayerUpdate(playerTo);
+    if (playerFrom.id !== playerTo.id) {
+      this.emitPlayerUpdate(playerFrom);
+    }
   }
 
   peek(socket: Socket, payload: PeekPayload) {

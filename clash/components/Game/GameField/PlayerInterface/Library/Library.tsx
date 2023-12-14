@@ -3,12 +3,13 @@ import React, { useContext } from 'react';
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import LibraryImage from 'public/assets/icons/library.svg';
 import useGameActions from 'components/Game/useGameActions';
-import Dropzone, { DropCard } from 'components/Game/Dropzone/Dropzone';
+import Dropzone from 'components/Game/Dropzone/Dropzone';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import GameStateContext from 'components/Game/GameStateContext';
 import ZoneCardsPopover from 'components/GameComponents/ZoneCardsPopover/ZoneCardsPopover';
 import { pluralizeCards } from 'components/Game/Menu/Chat/ChatMessages/util';
 import { Tooltip } from 'antd';
+import { DropCard } from 'types/dnd.types';
 import CardStack from '../CardStack/CardStack';
 import useLibraryActions from './useLibraryActions';
 

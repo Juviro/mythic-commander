@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from 'react';
 import { DragSourceMonitor, useDrag } from 'react-dnd';
 import classNames from 'classnames';
 import { Tooltip } from 'antd';
+import { getEmptyImage } from 'react-dnd-html5-backend';
 import { TooltipPlacement } from 'antd/es/tooltip';
 
 import { Card as CardType, Zone } from 'backend/database/gamestate.types';
 import { getImageUrl } from 'utils/getImageUrl';
-import { DropCard } from 'components/Game/Dropzone/Dropzone';
-import { getEmptyImage } from 'react-dnd-html5-backend';
+import { DndItemTypes, DropCard } from 'types/dnd.types';
 import useAnimateCardPositionChange from './useAnimateCardPositionChange';
 
 import styles from './Card.module.css';
@@ -20,7 +20,7 @@ interface Props {
   enlargeOnHover?: boolean;
   noAnimation?: boolean;
   tooltipPlacement?: TooltipPlacement;
-  dropType?: 'CARD' | 'LIST_CARD';
+  dropType?: DndItemTypes.CARD | DndItemTypes.LIST_CARD;
   onDropEnd?: (item: DropCard, monitor: DragSourceMonitor<DropCard>) => void;
 }
 
@@ -33,7 +33,7 @@ const Card = ({
   noAnimation,
   tooltipPlacement,
   onDropEnd,
-  dropType = 'CARD',
+  dropType = DndItemTypes.CARD,
 }: Props) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
 
@@ -52,7 +52,7 @@ const Card = ({
   const hidden = !('id' in card);
 
   useEffect(() => {
-    if (dropType !== 'CARD') return;
+    if (dropType !== DndItemTypes.CARD) return;
     preview(getEmptyImage(), { captureDraggingState: true });
   });
 

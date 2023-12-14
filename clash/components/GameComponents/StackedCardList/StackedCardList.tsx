@@ -1,7 +1,7 @@
 import React, { CSSProperties } from 'react';
 
 import { VisibleCard } from 'backend/database/gamestate.types';
-import { DropCard } from 'components/Game/Dropzone/Dropzone';
+import { DndItemTypes, DropCard } from 'types/dnd.types';
 import Card from '../Card/Card';
 
 import styles from './StackedCardList.module.css';
@@ -35,7 +35,7 @@ const StackedCardList = ({ cards, draggable, onDrop, color }: Props) => {
               <Card
                 card={card}
                 draggable={draggable}
-                dropType="LIST_CARD"
+                dropType={DndItemTypes.LIST_CARD}
                 noAnimation
                 enlargeOnHover
                 zone="library"

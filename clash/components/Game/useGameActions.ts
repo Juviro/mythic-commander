@@ -11,6 +11,7 @@ import {
   PeekPayload,
   SearchLibraryPayload,
   EndPeekPayload,
+  MoveCardsGroupPayload,
 } from 'backend/constants/wsEvents';
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
@@ -34,6 +35,19 @@ const useGameActions = () => {
       ...details,
     };
     socket?.emit(SOCKET_MSG_GAME.MOVE_CARD, payload);
+  };
+
+  const onMoveCardsGroup = (
+    cardIds: string[],
+    battlefieldPlayerId: string,
+    delta: { x: number; y: number }
+  ) => {
+    const payload: MoveCardsGroupPayload = {
+      cardIds,
+      battlefieldPlayerId,
+      delta,
+    };
+    socket?.emit(SOCKET_MSG_GAME.MOVE_CARDS_GROUP, payload);
   };
 
   const onPeek = (playerId: string, zone: Zone, amount: number) => {
@@ -84,6 +98,7 @@ const useGameActions = () => {
   return {
     onDrawCard,
     onMoveCard,
+    onMoveCardsGroup,
     onPeek,
     onEndPeek,
     onSearchLibrary,

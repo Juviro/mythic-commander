@@ -43,7 +43,7 @@ const PlayerInterfaces = () => {
           </div>
         ))}
         <div style={{ gridArea: `player${gameState.players.length}` }}>
-          <PlayerInterface player={player} isSelf />
+          <PlayerInterface player={player} isSelf isFlipped={false} />
         </div>
         <Menu />
       </div>

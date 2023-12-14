@@ -2,6 +2,7 @@
 
 # Current feature
 
+
 # MVP
 
 - card actions
@@ -15,10 +16,9 @@
 
 - battlefield
   - emblems
-  - select multiple cards
-    - tap
-    - move to different zone
+  - tap (single & selection)
   - context menu
+    - move to different zone
     - create token
 
 - library:
@@ -35,6 +35,8 @@
 
 # Backlog
 
+
+* save gamestate whenever a player leaves
 
 - defeated player / ff
 
@@ -66,6 +68,12 @@
   - no stored game state in backend
   - reloading resets the game (destroy game state on socket disconnect)
 
+- don't animate card move on battlefield when done by yourself
+
+# Optimizations
+
+* prevent re-render of interface components when menu changes, e.g. when changing life
+
 # Backlog Bugs
 
 - cards from other players have wrong sleeve color in hand
@@ -73,3 +81,5 @@
 - on page load, cards in exile are animated
 - milling action animation is wrong on flipped board
 - prevent interacting with own lib when someone is peeking it (self or opponent)
+* display which players are connected
+  * display connect / disconnect messages

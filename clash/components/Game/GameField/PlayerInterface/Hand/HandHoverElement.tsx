@@ -1,10 +1,11 @@
 import React from 'react';
-
 import { useDrop } from 'react-dnd';
 import classNames from 'classnames';
+
 import useGameActions from 'components/Game/useGameActions';
-import { DropCard } from 'components/Game/Dropzone/Dropzone';
 import { Player, ZONES } from 'backend/database/gamestate.types';
+import { DndItemTypes, DropCard } from 'types/dnd.types';
+
 import styles from './Hand.module.css';
 
 interface Props {
@@ -20,7 +21,7 @@ const HandHoverElement = ({ index, isLast, player }: Props) => {
   };
 
   const [{ isOver, canDrop }, dropRef] = useDrop({
-    accept: ['CARD', 'LIST_CARD'],
+    accept: [DndItemTypes.CARD, DndItemTypes.LIST_CARD],
     drop: onDrop,
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
