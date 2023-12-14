@@ -1,13 +1,7 @@
 # Bugs
 
-
-
 # Current feature
 
-* moving card selection onto flipped board is bugged
-
-* random crashes after dropping card on battlefield
-  - SEEMS TO BE FIXED
 
 # MVP
 

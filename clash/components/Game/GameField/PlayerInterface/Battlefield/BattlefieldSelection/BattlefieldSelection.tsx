@@ -13,9 +13,11 @@ import SelectionRectangle from './SelectionRectangle';
 
 import styles from './BattlefieldSelection.module.css';
 
-type Props = PropsWithChildren;
+interface Props extends PropsWithChildren {
+  isFlipped: boolean;
+}
 
-const BattlefieldSelection = ({ children }: Props) => {
+const BattlefieldSelection = ({ children, isFlipped }: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [startingPoint, setStartingPoint] = useState<XYCoord | null>(null);
   const [currentPoint, setCurrentPoint] = useState<XYCoord | null>(null);
@@ -66,7 +68,11 @@ const BattlefieldSelection = ({ children }: Props) => {
           wrapperRef={wrapperRef}
         />
       )}
-      <SelectionRectangle selectedCardIds={selectedCardIds} wrapperRef={wrapperRef} />
+      <SelectionRectangle
+        selectedCardIds={selectedCardIds}
+        wrapperRef={wrapperRef}
+        isFlipped={isFlipped}
+      />
       {children}
     </div>
   );

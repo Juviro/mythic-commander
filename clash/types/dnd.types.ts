@@ -9,9 +9,17 @@ export interface DropCard {
   ownerId?: string;
 }
 
+export interface DropCardGroupOffset {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  isFlipped: boolean;
+}
+
 export interface DropCardGroup {
   cardIds: string[];
-  offset: { x: number; y: number };
+  offset: DropCardGroupOffset;
 }
 
 export { DndItemTypes };

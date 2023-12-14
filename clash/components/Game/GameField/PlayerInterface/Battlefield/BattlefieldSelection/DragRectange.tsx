@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 
 import { XYCoord } from 'react-dnd';
+import classNames from 'classnames';
 import styles from './BattlefieldSelection.module.css';
 import useSelection from './useSelection';
 
@@ -32,7 +33,13 @@ const DragRectange = ({ currentPoint, startingPoint, wrapperRef }: Props) => {
     return null;
   }
 
-  return <div className={styles.drag_rectangle} style={rect} ref={rectRef} />;
+  return (
+    <div
+      className={classNames(styles.drag_rectangle, 'drag_rectangle')}
+      style={rect}
+      ref={rectRef}
+    />
+  );
 };
 
 export default DragRectange;

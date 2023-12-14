@@ -7,6 +7,12 @@
   --size-card-width: var(--battlefield-card-width);
   border: 1px solid transparent;
   --size-card-padding: 2px;
+  border: 2px solid transparent;
+}
+
+.wrapper:has( :global(.drag_rectangle)) {
+  border-color:var(--color-dropzone-border);
+  border-radius: 8px;
 }
 
 .card {

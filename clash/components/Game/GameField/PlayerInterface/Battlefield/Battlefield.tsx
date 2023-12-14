@@ -10,7 +10,7 @@ import { BattlefieldSelectionContextProvider } from './BattlefieldSelection/Batt
 
 interface Props {
   player: Player;
-  isFlipped?: boolean;
+  isFlipped: boolean;
 }
 
 const Battlefield = ({ player, isFlipped }: Props) => {
@@ -21,7 +21,7 @@ const Battlefield = ({ player, isFlipped }: Props) => {
   return (
     <BattlefieldSelectionContextProvider player={player}>
       <div className={styles.wrapper} ref={wrapperRef}>
-        <BattlefieldSelection>
+        <BattlefieldSelection isFlipped={isFlipped}>
           <BattlefieldDropzone
             player={player}
             isFlipped={isFlipped}

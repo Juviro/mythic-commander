@@ -26,22 +26,24 @@ const BattlefieldCard = ({ card }: Props) => {
     '--player-color': getPlayerColor(card.ownerId),
   } as CSSProperties;
 
+  const isHovered = hoveredCardIds?.includes(card.clashId);
+  const isSelected = selectedCardIds?.includes(card.clashId);
+
   const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!e.ctrlKey && !e.metaKey) return;
+    if (!e.ctrlKey && !e.metaKey && !e.shiftKey) return;
     toggleCardSelection(card.clashId);
   };
 
   const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!e.ctrlKey && !e.metaKey) return;
+    if (!e.ctrlKey && !e.metaKey && !e.shiftKey) return;
     e.preventDefault();
     e.stopPropagation();
   };
+
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isSelected) return;
     e.stopPropagation();
   };
-
-  const isHovered = hoveredCardIds?.includes(card.clashId);
-  const isSelected = selectedCardIds?.includes(card.clashId);
 
   const component = (
     <div

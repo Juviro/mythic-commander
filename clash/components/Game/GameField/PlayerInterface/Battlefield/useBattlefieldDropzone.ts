@@ -10,7 +10,7 @@ import { DropCard, DropCardGroup } from 'types/dnd.types';
 
 interface Props {
   player: Player;
-  isFlipped?: boolean;
+  isFlipped: boolean;
   wrapperRef: RefObject<HTMLDivElement>;
 }
 
@@ -49,11 +49,20 @@ const useBattlefieldDropzone = ({ player, wrapperRef, isFlipped }: Props) => {
     clientOffset.x -= diffX;
     clientOffset.y -= diffY;
 
-    const deltaX = clientOffset.x - offset.x;
-    const deltaY = clientOffset.y - offset.y;
+    const hasGroupFlipped = isFlipped !== offset.isFlipped;
 
-    let relativeX = (deltaX / wrapperRef.current.clientWidth) * 100;
-    let relativeY = (deltaY / wrapperRef.current.clientHeight) * 100;
+    const { clientWidth, clientHeight } = wrapperRef.current;
+
+    const offsetX = hasGroupFlipped ? clientWidth - (offset.x + offset.width) : offset.x;
+    const offsetY = hasGroupFlipped
+      ? clientHeight - (offset.y + offset.height)
+      : offset.y;
+
+    const deltaX = clientOffset.x - offsetX;
+    const deltaY = clientOffset.y - offsetY;
+
+    let relativeX = (deltaX / clientWidth) * 100;
+    let relativeY = (deltaY / clientHeight) * 100;
 
     if (isFlipped) {
       relativeX *= -1;

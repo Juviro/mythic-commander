@@ -2,7 +2,7 @@ import React, { RefObject, useContext, useLayoutEffect, useState } from 'react';
 import { useDrag } from 'react-dnd';
 import classNames from 'classnames';
 
-import { DndItemTypes } from 'types/dnd.types';
+import { DndItemTypes, DropCardGroupOffset } from 'types/dnd.types';
 import useWindowSize from 'hooks/useWindowSize';
 import styles from './BattlefieldSelection.module.css';
 import BattlefieldSelectionContext from './BattlefieldSelectionContext';
@@ -49,11 +49,12 @@ const getRectangle = (cardIds: string[]) => {
 interface Props {
   selectedCardIds: string[];
   wrapperRef: RefObject<HTMLDivElement>;
+  isFlipped: boolean;
 }
 
-const SelectionRectangle = ({ selectedCardIds, wrapperRef }: Props) => {
+const SelectionRectangle = ({ selectedCardIds, wrapperRef, isFlipped }: Props) => {
   const { selectionRectangleRef } = useContext(BattlefieldSelectionContext);
-  const [offset, setOffset] = useState<{ x: number; y: number } | null>(null);
+  const [offset, setOffset] = useState<DropCardGroupOffset | null>(null);
 
   useWindowSize();
 
@@ -69,17 +70,21 @@ const SelectionRectangle = ({ selectedCardIds, wrapperRef }: Props) => {
 
     const top = rect.marginTop - wrapperTop;
     const left = rect.marginLeft - wrapperLeft;
+    const { width, height } = rect;
 
     style.marginTop = `${top}px`;
     style.marginLeft = `${left}px`;
-    style.width = `${rect.width}px`;
-    style.height = `${rect.height}px`;
+    style.width = `${width}px`;
+    style.height = `${height}px`;
 
     if (offset?.x === left && offset?.y === top) return;
 
     setOffset({
       x: left,
       y: top,
+      width,
+      height,
+      isFlipped: Boolean(isFlipped),
     });
   });
 

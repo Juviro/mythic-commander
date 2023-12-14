@@ -12,7 +12,7 @@ import Exile from './Exile/Exile';
 interface Props {
   player: Player;
   isSelf?: boolean;
-  isFlipped?: boolean;
+  isFlipped: boolean;
 }
 
 const PlayerInterface = ({ player, isSelf, isFlipped }: Props) => {
