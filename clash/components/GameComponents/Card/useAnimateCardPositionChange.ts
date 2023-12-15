@@ -10,7 +10,7 @@ const ANIMATION_THRESHOLD = 10;
 
 const storeCardPosition = (
   cardRef: React.RefObject<HTMLDivElement>,
-  clashId: string,
+  card: Card,
   isVisible: boolean,
   cardPositions: CardPositions,
   zone?: Zone
@@ -19,12 +19,13 @@ const storeCardPosition = (
   const parent = cardRef.current.parentNode as HTMLDivElement;
   const { width, x, y } = parent.getBoundingClientRect();
   // eslint-disable-next-line no-param-reassign
-  cardPositions.current[clashId] = {
+  cardPositions.current[card.clashId] = {
     isVisible,
     width,
     x,
     y,
     zone,
+    tapped: 'tapped' in card && card.tapped,
   };
 };
 
@@ -33,9 +34,21 @@ const animateDirectPositionChange = (
   cardRef: React.RefObject<HTMLDivElement>
 ) => {
   const { width, x, y } = cardRef.current!.getBoundingClientRect();
-  const deltaX = storedPosition.x - x;
-  const deltaY = storedPosition.y - y;
+  let deltaX = storedPosition.x - x;
+  let deltaY = storedPosition.y - y;
   const deltaWidth = storedPosition.width / width;
+
+  // prevent animation after clearing selection
+  const isTapped = Boolean(cardRef.current!.closest("[data-tapped='true']"));
+  const wasTapped = storedPosition.tapped;
+  if (wasTapped !== isTapped) {
+    return Promise.resolve(true);
+  }
+
+  if (isTapped) {
+    deltaY = (storedPosition.x - x) * -1;
+    deltaX = storedPosition.y - y;
+  }
 
   const isWithinThreshold =
     Math.abs(deltaX) < ANIMATION_THRESHOLD &&
@@ -129,12 +142,12 @@ const animateArcPositionChange = (
 
 const animateCardPositionChange = async (
   cardRef: React.RefObject<HTMLDivElement>,
-  clashId: string,
+  card: Card,
   cardPositions: CardPositions,
   isVisible: boolean,
   zone?: Zone
 ) => {
-  const storedPosition = cardPositions.current[clashId];
+  const storedPosition = cardPositions.current[card.clashId];
   if (!cardRef.current || !storedPosition) return;
 
   const shouldAnimateInArc = () => {
@@ -150,7 +163,7 @@ const animateCardPositionChange = async (
     await animateDirectPositionChange(storedPosition, cardRef);
   }
 
-  storeCardPosition(cardRef, clashId, isVisible, cardPositions, zone);
+  storeCardPosition(cardRef, card, isVisible, cardPositions, zone);
 };
 
 interface Props {
@@ -162,17 +175,23 @@ interface Props {
 
 const useAnimateCardPositionChange = ({ card, cardRef, noAnimation, zone }: Props) => {
   const { cardPositions } = useContext(CardPositionContext);
-  const cardPosition = 'position' in card ? card.position : undefined;
+
+  const cardPosition = 'position' in card ? card.position : { x: 0, y: 0 };
   const isVisible = 'id' in card;
+  const isTapped = 'tapped' in card && card.tapped;
   const { clashId } = card;
 
+  const positionSum = Math.round((cardPosition?.x || 0) + (cardPosition?.y || 0));
+
   useLayoutEffect(() => {
-    if (cardPositions.current[clashId] && cardRef.current && !noAnimation) {
-      animateCardPositionChange(cardRef, clashId, cardPositions, isVisible, zone);
-    } else if (!noAnimation) {
-      storeCardPosition(cardRef, clashId, isVisible, cardPositions, zone);
+    if (noAnimation) return;
+
+    if (cardPositions.current[clashId] && cardRef.current) {
+      animateCardPositionChange(cardRef, card, cardPositions, isVisible, zone);
+    } else {
+      storeCardPosition(cardRef, card, isVisible, cardPositions, zone);
     }
-  }, [JSON.stringify(cardPosition)]);
+  }, [positionSum, isTapped]);
 };
 
 export default useAnimateCardPositionChange;

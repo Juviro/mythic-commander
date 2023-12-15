@@ -1,4 +1,5 @@
 import {
+  BattlefieldCard,
   Card,
   GameState,
   Player,
@@ -16,6 +17,7 @@ import {
   SetCommanderTimesCastedPayload,
   SetPhasePayload,
   SetPlayerLifePayload,
+  TapPayload,
 } from 'backend/constants/wsEvents';
 import { Server, Socket } from 'socket.io';
 import { User as DatabaseUser } from 'backend/database/getUser';
@@ -264,7 +266,7 @@ export default class Game {
   moveCardGroup(payload: MoveCardsGroupPayload) {
     const { cardIds, battlefieldPlayerId, delta } = payload;
 
-    const cardsToMove: VisibleCard[] = [];
+    const cardsToMove: BattlefieldCard[] = [];
 
     const playerTo = this.getPlayerById(battlefieldPlayerId);
     const playerFrom = this.gameState.players.find(({ zones }) =>
@@ -295,6 +297,26 @@ export default class Game {
     if (playerFrom.id !== playerTo.id) {
       this.emitPlayerUpdate(playerFrom);
     }
+  }
+
+  tapCards(payload: TapPayload) {
+    const { cardIds, playerId, tapped: overwriteTapped } = payload;
+
+    const player = this.getPlayerById(playerId);
+
+    const areAnyCardsUntapped = player.zones.battlefield.some(({ clashId, tapped }) => {
+      return cardIds.includes(clashId) ? !tapped : false;
+    });
+
+    const tapped = overwriteTapped ?? areAnyCardsUntapped;
+
+    player.zones.battlefield.forEach((card) => {
+      if (!cardIds.includes(card.clashId)) return;
+      // eslint-disable-next-line no-param-reassign
+      card.tapped = tapped;
+    });
+
+    this.emitPlayerUpdate(player);
   }
 
   peek(socket: Socket, payload: PeekPayload) {

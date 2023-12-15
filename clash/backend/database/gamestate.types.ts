@@ -14,6 +14,9 @@ export interface VisibleCard extends HiddenCard {
   clashId: string;
   id: string;
   name: string;
+}
+export interface BattlefieldCard extends VisibleCard {
+  tapped?: boolean;
   position?: {
     x: number;
     y: number;
@@ -27,7 +30,7 @@ export interface Commander extends Omit<VisibleCard, 'ownerId' | 'position'> {
   timesCasted: number;
 }
 
-export type Card = HiddenCard | VisibleCard;
+export type Card = HiddenCard | VisibleCard | BattlefieldCard;
 
 // ##################### Zone #####################
 interface Zones {
@@ -36,7 +39,7 @@ interface Zones {
   exile: VisibleCard[];
   graveyard: VisibleCard[];
   commandZone: VisibleCard[];
-  battlefield: VisibleCard[];
+  battlefield: BattlefieldCard[];
 }
 
 export type Zone = keyof Zones;

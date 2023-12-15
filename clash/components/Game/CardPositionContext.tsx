@@ -7,6 +7,7 @@ export interface CardPosition {
   width: number;
   isVisible: boolean;
   zone?: Zone;
+  tapped?: boolean;
 }
 
 export interface HoveredBattlefield {

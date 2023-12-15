@@ -7,6 +7,7 @@ enum DndItemTypes {
 export interface DropCard {
   clashId: string;
   ownerId?: string;
+  tapped?: boolean;
 }
 
 export interface DropCardGroupOffset {
