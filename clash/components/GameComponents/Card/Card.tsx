@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { DragSourceMonitor, useDrag } from 'react-dnd';
 import classNames from 'classnames';
-import { Tooltip } from 'antd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { TooltipPlacement } from 'antd/es/tooltip';
 
@@ -11,6 +10,7 @@ import { DndItemTypes, DropCard } from 'types/dnd.types';
 import useAnimateCardPositionChange from './useAnimateCardPositionChange';
 
 import styles from './Card.module.css';
+import CardPreview from './CardPreview';
 
 interface Props {
   card: CardType;
@@ -76,15 +76,13 @@ const Card = ({
   if (!enlargeOnHover || hidden) return cardComponent;
 
   return (
-    <Tooltip
-      title={!hidden && <img className={styles.image} src={getImageUrl(card.id)} />}
-      trigger={['contextMenu']}
-      overlayClassName={styles.tooltip_wrapper}
+    <CardPreview
+      card={card}
+      tooltipPlacement={tooltipPlacement}
       open={isDragging ? false : undefined}
-      placement={tooltipPlacement}
     >
       {cardComponent}
-    </Tooltip>
+    </CardPreview>
   );
 };
 

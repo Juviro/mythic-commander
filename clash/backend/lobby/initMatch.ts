@@ -19,6 +19,7 @@ const initMatch = async (lobby: Lobby) => {
           commanders.push({
             id: card.id,
             name: card.name,
+            flippable: card.flippable,
             clashId: uniqid(),
           });
           return false;
@@ -33,6 +34,7 @@ const initMatch = async (lobby: Lobby) => {
             id: card.id,
             name: card.name,
             manaValue: card.manaValue,
+            flippable: card.flippable,
             clashId: uniqid(),
           });
         }
