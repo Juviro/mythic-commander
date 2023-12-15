@@ -1,14 +1,16 @@
-import React, { CSSProperties, useContext } from 'react';
+import React, { CSSProperties, useContext, useRef } from 'react';
+import classNames from 'classnames';
+import { createPortal } from 'react-dom';
 
 import { BattlefieldCard, Player } from 'backend/database/gamestate.types';
 import Card from 'components/GameComponents/Card/Card';
-
 import GameStateContext from 'components/Game/GameStateContext';
-import classNames from 'classnames';
-import { createPortal } from 'react-dom';
 import useGameActions from 'components/Game/useGameActions';
-import styles from './Battlefield.module.css';
+import SHORTCUTS from 'constants/shortcuts';
+import useShortcut from 'hooks/useShortcut';
 import BattlefieldSelectionContext from './BattlefieldSelection/BattlefieldSelectionContext';
+
+import styles from './Battlefield.module.css';
 
 interface Props {
   card: BattlefieldCard;
@@ -16,10 +18,23 @@ interface Props {
 }
 
 const BattlefieldCard = ({ card, player }: Props) => {
+  const cardRef = useRef<HTMLDivElement>(null);
   const { getPlayerColor } = useContext(GameStateContext);
   const { onTapCards } = useGameActions();
   const { hoveredCardIds, selectedCardIds, selectionRectangleRef, toggleCardSelection } =
     useContext(BattlefieldSelectionContext);
+
+  const tapCard = () => {
+    onTapCards({
+      cardIds: [card.clashId],
+      playerId: player.id,
+    });
+  };
+
+  useShortcut(SHORTCUTS.TAP, tapCard, {
+    disabled: Boolean(selectedCardIds.length),
+    whenHovering: cardRef,
+  });
 
   const { x, y } = card.position!;
 
@@ -36,10 +51,7 @@ const BattlefieldCard = ({ card, player }: Props) => {
     if (e.ctrlKey || e.metaKey || e.shiftKey) {
       toggleCardSelection(card.clashId);
     } else {
-      onTapCards({
-        cardIds: [card.clashId],
-        playerId: player.id,
-      });
+      tapCard();
     }
   };
 
@@ -57,6 +69,7 @@ const BattlefieldCard = ({ card, player }: Props) => {
   const component = (
     <div
       style={style}
+      ref={cardRef}
       onClick={onClick}
       onMouseDown={onMouseDown}
       onMouseMove={onMouseMove}

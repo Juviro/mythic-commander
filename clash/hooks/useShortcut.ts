@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 
 export const isInputField = (event: any) => {
   const { nodeName, type } = event.target;
@@ -17,15 +17,20 @@ export const isModifierKey = (event: KeyboardEvent) => {
 
 interface Options {
   disabled?: boolean;
+  whenHovering?: RefObject<HTMLElement>;
 }
 
 const useShortcut = (key: string, action: () => void, options: Options = {}) => {
-  const { disabled = false } = options;
+  const { disabled = false, whenHovering } = options;
+
+  const [isHovering, setIsHovering] = useState(false);
 
   const onKeyDown = (event: KeyboardEvent) => {
     if (disabled || !action || isInputField(event) || isModifierKey(event)) {
       return;
     }
+
+    if (whenHovering?.current && !isHovering) return;
 
     if (event.key === key) {
       event.preventDefault();
@@ -37,7 +42,22 @@ const useShortcut = (key: string, action: () => void, options: Options = {}) => 
   useEffect(() => {
     document.addEventListener('keydown', onKeyDown, false);
     return () => document.removeEventListener('keydown', onKeyDown, false);
-  });
+  }, [key, action, disabled]);
+
+  useEffect(() => {
+    if (!whenHovering?.current) return undefined;
+
+    const onMouseEnter = () => setIsHovering(true);
+    const onMouseLeave = () => setIsHovering(false);
+
+    whenHovering.current.addEventListener('mouseenter', onMouseEnter, false);
+    whenHovering.current.addEventListener('mouseleave', onMouseLeave, false);
+
+    return () => {
+      whenHovering.current?.removeEventListener('mouseenter', onMouseEnter, false);
+      whenHovering.current?.removeEventListener('mouseleave', onMouseLeave, false);
+    };
+  }, [whenHovering?.current]);
 };
 
 export default useShortcut;
