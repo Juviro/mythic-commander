@@ -49,7 +49,7 @@ const Exile = ({ player }: Props) => {
   const title = `Exile: ${pluralizeCards(cards.length, 'one')}`;
 
   return (
-    <Tooltip title={title}>
+    <Tooltip title={title} mouseEnterDelay={0.5}>
       <Popover
         trigger="click"
         title={title}

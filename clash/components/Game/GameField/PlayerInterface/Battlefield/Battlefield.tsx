@@ -4,9 +4,9 @@ import { Player } from 'backend/database/gamestate.types';
 import BattlefieldCard from './BattlefieldCard';
 import BattlefieldDropzone from './BattlefieldDropzone';
 import BattlefieldSelection from './BattlefieldSelection/BattlefieldSelection';
+import { BattlefieldSelectionContextProvider } from './BattlefieldSelection/BattlefieldSelectionContext';
 
 import styles from './Battlefield.module.css';
-import { BattlefieldSelectionContextProvider } from './BattlefieldSelection/BattlefieldSelectionContext';
 
 interface Props {
   player: Player;
@@ -28,7 +28,7 @@ const Battlefield = ({ player, isFlipped }: Props) => {
             wrapperRef={wrapperRef}
           >
             {cards.map((card) => (
-              <BattlefieldCard card={card} key={card.clashId} />
+              <BattlefieldCard card={card} key={card.clashId} player={player} />
             ))}
           </BattlefieldDropzone>
         </BattlefieldSelection>

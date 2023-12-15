@@ -13,6 +13,7 @@ import {
   SetCommanderTimesCastedPayload,
   SetPhasePayload,
   SetPlayerLifePayload,
+  TapPayload,
 } from '../constants/wsEvents';
 import Game from './Game';
 
@@ -65,6 +66,10 @@ const gameSocketActions = (io: Server) => {
 
     socket.on(SOCKET_MSG_GAME.MOVE_CARDS_GROUP, (payload: MoveCardsGroupPayload) => {
       currentGames[currentGameId].moveCardGroup(payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.TAP_CARDS, (payload: TapPayload) => {
+      currentGames[currentGameId].tapCards(payload);
     });
 
     socket.on(SOCKET_MSG_GAME.PEEK, (payload: PeekPayload) => {

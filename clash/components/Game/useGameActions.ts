@@ -12,6 +12,7 @@ import {
   SearchLibraryPayload,
   EndPeekPayload,
   MoveCardsGroupPayload,
+  TapPayload,
 } from 'backend/constants/wsEvents';
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
@@ -48,6 +49,10 @@ const useGameActions = () => {
       delta,
     };
     socket?.emit(SOCKET_MSG_GAME.MOVE_CARDS_GROUP, payload);
+  };
+
+  const onTapCards = (payload: TapPayload) => {
+    socket?.emit(SOCKET_MSG_GAME.TAP_CARDS, payload);
   };
 
   const onPeek = (playerId: string, zone: Zone, amount: number) => {
@@ -99,6 +104,7 @@ const useGameActions = () => {
     onDrawCard,
     onMoveCard,
     onMoveCardsGroup,
+    onTapCards,
     onPeek,
     onEndPeek,
     onSearchLibrary,

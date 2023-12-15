@@ -33,7 +33,7 @@ const Graveyard = ({ player }: Props) => {
   const title = `Graveyard: ${pluralizeCards(graveyard.length, 'one')}`;
 
   return (
-    <Tooltip title={title}>
+    <Tooltip title={title} mouseEnterDelay={0.5}>
       <Popover
         trigger="click"
         placement="topLeft"

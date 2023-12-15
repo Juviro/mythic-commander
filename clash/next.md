@@ -2,17 +2,20 @@
 
 # Current feature
 
+* add delay for lib/etc tooltip (X cards in exile...)
 
-# MVP
+* tap card on hover + "t"
 
 - card actions
-  - tap
   - flip
   - counter
     - +1/+1
     - -1/-1
     - loyalty / chapter(?) (maybe automatically)
     - ??? maybe retrieve from database (search for "XXX counter")
+
+# MVP
+
 
 - battlefield
   - emblems
@@ -33,10 +36,13 @@
 - game
   - mulligan
 
+* dragging a card briefly shows the card in the original position (prod only because of latency)
+
 # Backlog
 
 
 * save gamestate whenever a player leaves
+
 
 - defeated player / ff
 
@@ -68,11 +74,15 @@
   - no stored game state in backend
   - reloading resets the game (destroy game state on socket disconnect)
 
-- don't animate card move on battlefield when done by yourself
+* display which players are connected
+  * display connect / disconnect messages
+
+- prevent interacting with own lib when someone is peeking it (self or opponent)
 
 # Optimizations
 
 * prevent re-render of interface components when menu changes, e.g. when changing life
+* use transform to set card position on battlefield
 
 # Backlog Bugs
 
@@ -80,6 +90,4 @@
 - when moving a peeking card into hand, the draw animation is used
 - on page load, cards in exile are animated
 - milling action animation is wrong on flipped board
-- prevent interacting with own lib when someone is peeking it (self or opponent)
-* display which players are connected
-  * display connect / disconnect messages
+- reduce ANIMATION_THRESHOLD again, prevent animating when removing selection on tapped cards

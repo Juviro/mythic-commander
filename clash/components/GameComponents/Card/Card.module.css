@@ -1,4 +1,4 @@
-.wrapper {
+.card {
   padding: var(--size-card-padding);
   display: flex;
   border: 1px solid black;
@@ -12,22 +12,23 @@
   backface-visibility: hidden;
 }
 
-.wrapper__dynamic_size {
+.card__dynamic_size {
   width: auto;
   border: unset;
 }
 
-.wrapper__draggable {
+.card__draggable {
   cursor: grab;
 }
 
-.wrapper__dragging {
+
+.card__dragging {
   opacity: 0.01;
   transform-style: unset;
   backface-visibility: unset;
 }
 
-:global(.add_backside).wrapper::after {
+:global(.add_backside).card::after {
   position: absolute;
   content: '';
   width: 100%;
@@ -47,7 +48,7 @@
   pointer-events: none;
 }
 
-.wrapper__draggable .image {
+.card__draggable .image {
   pointer-events: all;
 }
 

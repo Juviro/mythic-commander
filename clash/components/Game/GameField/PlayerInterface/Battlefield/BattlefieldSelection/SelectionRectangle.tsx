@@ -10,21 +10,18 @@ import BattlefieldSelectionContext from './BattlefieldSelectionContext';
 const PADDING = 15;
 const BORDER_WIDTH = 2;
 
-const getRectangle = (cardIds: string[]) => {
-  const cards = cardIds
-    .map((id) => document.querySelector(`[data-card-id="${id}"]`))
-    .filter(Boolean) as Element[];
-
+const getRectangle = (cards: Element[]) => {
   if (cards.length === 0) return {};
 
   const bounds = cards.reduce(
     (acc, card) => {
-      const { x, y } = card.getBoundingClientRect();
+      const { top, left, width, height } = card.getBoundingClientRect();
+
       return {
-        top: Math.min(acc.top, y),
-        left: Math.min(acc.left, x),
-        width: Math.max(acc.width, x + card.clientWidth),
-        height: Math.max(acc.height, y + card.clientHeight),
+        top: Math.min(acc.top, top),
+        left: Math.min(acc.left, left),
+        width: Math.max(acc.width, left + width),
+        height: Math.max(acc.height, top + height),
       };
     },
     {
@@ -58,9 +55,15 @@ const SelectionRectangle = ({ selectedCardIds, wrapperRef, isFlipped }: Props) =
 
   useWindowSize();
 
-  useLayoutEffect(() => {
-    if (!selectionRectangleRef.current) return;
-    const rect = getRectangle(selectedCardIds);
+  const setRectangle = () => {
+    if (!selectionRectangleRef.current || !selectedCardIds.length) return;
+    const cards = selectedCardIds
+      .map((id) => document.querySelector(`[data-card-id="${id}"]`))
+      .filter(Boolean) as Element[];
+
+    cards.at(0)?.addEventListener('transitionend', setRectangle);
+
+    const rect = getRectangle(cards);
     const { style } = selectionRectangleRef.current;
 
     if (!rect.width || !rect.height) return;
@@ -86,6 +89,10 @@ const SelectionRectangle = ({ selectedCardIds, wrapperRef, isFlipped }: Props) =
       height,
       isFlipped: Boolean(isFlipped),
     });
+  };
+
+  useLayoutEffect(() => {
+    setRectangle();
   });
 
   const [{ isDragging }, dragRef] = useDrag({

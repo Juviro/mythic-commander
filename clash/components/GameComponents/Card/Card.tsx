@@ -58,10 +58,10 @@ const Card = ({
 
   const cardComponent = (
     <div
-      className={classNames(styles.wrapper, 'card', {
-        [styles.wrapper__dynamic_size]: dynamicSize,
-        [styles.wrapper__draggable]: draggable,
-        [styles.wrapper__dragging]: isDragging,
+      className={classNames(styles.card, 'card', {
+        [styles.card__dynamic_size]: dynamicSize,
+        [styles.card__draggable]: draggable,
+        [styles.card__dragging]: isDragging,
         card__dragging: isDragging,
       })}
       ref={(val) => {

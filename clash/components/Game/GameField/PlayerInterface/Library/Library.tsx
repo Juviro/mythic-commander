@@ -42,6 +42,7 @@ const Library = ({ player, isSelf }: Props) => {
     <Tooltip
       title={`Library: ${pluralizeCards(library.length, 'one')}`}
       open={isPeeking ? false : undefined}
+      mouseEnterDelay={0.5}
     >
       <div className={styles.wrapper}>
         <div className={styles.popover_wrapper}>

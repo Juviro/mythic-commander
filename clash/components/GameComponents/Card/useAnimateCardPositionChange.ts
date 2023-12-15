@@ -6,7 +6,7 @@ import CardPositionContext, {
   CardPositions,
 } from 'components/Game/CardPositionContext';
 
-const ANIMATION_THRESHOLD = 10;
+const ANIMATION_THRESHOLD = 40;
 
 const storeCardPosition = (
   cardRef: React.RefObject<HTMLDivElement>,
@@ -33,9 +33,16 @@ const animateDirectPositionChange = (
   cardRef: React.RefObject<HTMLDivElement>
 ) => {
   const { width, x, y } = cardRef.current!.getBoundingClientRect();
-  const deltaX = storedPosition.x - x;
-  const deltaY = storedPosition.y - y;
+  let deltaX = storedPosition.x - x;
+  let deltaY = storedPosition.y - y;
   const deltaWidth = storedPosition.width / width;
+
+  const isTapped = Boolean(cardRef.current!.closest("[data-tapped='true']"));
+
+  if (isTapped) {
+    deltaY = (storedPosition.x - x) * -1;
+    deltaX = storedPosition.y - y;
+  }
 
   const isWithinThreshold =
     Math.abs(deltaX) < ANIMATION_THRESHOLD &&
@@ -162,17 +169,22 @@ interface Props {
 
 const useAnimateCardPositionChange = ({ card, cardRef, noAnimation, zone }: Props) => {
   const { cardPositions } = useContext(CardPositionContext);
-  const cardPosition = 'position' in card ? card.position : undefined;
+
+  const cardPosition = 'position' in card ? card.position : { x: 0, y: 0 };
   const isVisible = 'id' in card;
   const { clashId } = card;
 
+  const positionSum = Math.round((cardPosition?.x || 0) + (cardPosition?.y || 0));
+
   useLayoutEffect(() => {
-    if (cardPositions.current[clashId] && cardRef.current && !noAnimation) {
+    if (noAnimation) return;
+
+    if (cardPositions.current[clashId] && cardRef.current) {
       animateCardPositionChange(cardRef, clashId, cardPositions, isVisible, zone);
-    } else if (!noAnimation) {
+    } else {
       storeCardPosition(cardRef, clashId, isVisible, cardPositions, zone);
     }
-  }, [JSON.stringify(cardPosition)]);
+  }, [positionSum]);
 };
 
 export default useAnimateCardPositionChange;
