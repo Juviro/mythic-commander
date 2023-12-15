@@ -49,7 +49,7 @@ export const BattlefieldSelectionContextProvider = ({ children, player }: Props)
     disabled,
   });
 
-  useShortcut('Escape', () => setSelectedCardsIds([]), {
+  useShortcut(SHORTCUTS.CANCEL, () => setSelectedCardsIds([]), {
     disabled,
   });
 
