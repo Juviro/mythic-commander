@@ -40,12 +40,13 @@ const useShortcut = (key: string, action: () => void, options: Options = {}) => 
   };
 
   useEffect(() => {
+    if (disabled) return undefined;
     document.addEventListener('keydown', onKeyDown, false);
     return () => document.removeEventListener('keydown', onKeyDown, false);
   }, [key, action, disabled]);
 
   useEffect(() => {
-    if (!whenHovering?.current) return undefined;
+    if (!whenHovering?.current || disabled) return undefined;
 
     const onMouseEnter = () => setIsHovering(true);
     const onMouseLeave = () => setIsHovering(false);

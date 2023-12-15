@@ -2,9 +2,8 @@
 
 # Current feature
 
-* add delay for lib/etc tooltip (X cards in exile...)
+- reduce ANIMATION_THRESHOLD again, prevent animating when removing selection on tapped cards
 
-* tap card on hover + "t"
 
 - card actions
   - flip
@@ -90,4 +89,4 @@
 - when moving a peeking card into hand, the draw animation is used
 - on page load, cards in exile are animated
 - milling action animation is wrong on flipped board
-- reduce ANIMATION_THRESHOLD again, prevent animating when removing selection on tapped cards
+

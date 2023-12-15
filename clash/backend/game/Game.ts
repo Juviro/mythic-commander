@@ -300,7 +300,7 @@ export default class Game {
   }
 
   tapCards(payload: TapPayload) {
-    const { cardIds, playerId } = payload;
+    const { cardIds, playerId, tapped: overwriteTapped } = payload;
 
     const player = this.getPlayerById(playerId);
 
@@ -308,10 +308,12 @@ export default class Game {
       return cardIds.includes(clashId) ? !tapped : false;
     });
 
+    const tapped = overwriteTapped ?? areAnyCardsUntapped;
+
     player.zones.battlefield.forEach((card) => {
       if (!cardIds.includes(card.clashId)) return;
       // eslint-disable-next-line no-param-reassign
-      card.tapped = areAnyCardsUntapped;
+      card.tapped = tapped;
     });
 
     this.emitPlayerUpdate(player);

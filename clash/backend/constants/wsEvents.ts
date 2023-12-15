@@ -63,6 +63,7 @@ export interface MoveCardsGroupPayload {
 export interface TapPayload {
   cardIds: string[];
   playerId: string;
+  tapped?: boolean;
 }
 
 export interface PeekPayload {
