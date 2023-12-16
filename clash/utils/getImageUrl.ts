@@ -1,7 +1,7 @@
 type Size = 'small' | 'normal' | 'large';
-type Face = 'front' | 'back';
 
-export const getImageUrl = (id: string, size: Size = 'normal', face: Face = 'front') => {
+export const getImageUrl = (id: string, flipped?: boolean, size: Size = 'normal') => {
   const baseUrl = 'https://mythic-commander.com/';
+  const face = flipped ? 'back' : 'front';
   return `${baseUrl}img/${id}_${size}_${face}.avif`;
 };

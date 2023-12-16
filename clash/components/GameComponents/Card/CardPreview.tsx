@@ -23,14 +23,12 @@ const CardPreview = ({ card, children, tooltipPlacement, open }: Props) => {
         <div className={styles.tooltip_images}>
           <img className={styles.tooltip_image} src={getImageUrl(card.id)} />
           {flippable && (
-            <img
-              className={styles.tooltip_image}
-              src={getImageUrl(card.id, 'normal', 'back')}
-            />
+            <img className={styles.tooltip_image} src={getImageUrl(card.id, true)} />
           )}
         </div>
       }
-      trigger={['contextMenu']}
+      // trigger={['contextMenu']}
+      mouseEnterDelay={1}
       overlayClassName={classNames(styles.tooltip_wrapper, {
         [styles.tooltip_wrapper__flippable]: flippable,
       })}

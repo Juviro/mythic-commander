@@ -18,6 +18,7 @@ export interface VisibleCard extends HiddenCard {
 }
 export interface BattlefieldCard extends VisibleCard {
   tapped?: boolean;
+  flipped?: boolean;
   position?: {
     x: number;
     y: number;

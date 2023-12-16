@@ -1,5 +1,7 @@
 # Bugs
 
+* animate card when moved from any zone to battlefield
+
 # Current feature
 
 * flip

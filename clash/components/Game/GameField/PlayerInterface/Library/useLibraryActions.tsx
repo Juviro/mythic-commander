@@ -55,11 +55,13 @@ const useLibraryActions = (player: Player) => {
     {
       key: 'search',
       label: 'Search Library...',
+      disabled: !player.zones.library.length,
       onClick: () => onSearchLibrary(player.id),
     },
     {
       key: 'peek',
       label: 'Look at...',
+      disabled: !player.zones.library.length,
       children: getPeekSubItems(onPeekCard, player.zones.library.length),
     },
   ];
@@ -68,6 +70,7 @@ const useLibraryActions = (player: Player) => {
     items.unshift({
       key: 'shuffle',
       label: 'Shuffle',
+      disabled: !player.zones.library.length,
       onClick: onShuffle,
     });
   }

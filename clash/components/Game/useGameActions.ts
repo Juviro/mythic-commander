@@ -12,7 +12,8 @@ import {
   SearchLibraryPayload,
   EndPeekPayload,
   MoveCardsGroupPayload,
-  TapPayload,
+  TapCardsPayload,
+  FlipCardsPayload,
 } from 'backend/constants/wsEvents';
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
@@ -51,8 +52,12 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.MOVE_CARDS_GROUP, payload);
   };
 
-  const onTapCards = (payload: TapPayload) => {
+  const onTapCards = (payload: TapCardsPayload) => {
     socket?.emit(SOCKET_MSG_GAME.TAP_CARDS, payload);
+  };
+
+  const onFlipCards = (payload: FlipCardsPayload) => {
+    socket?.emit(SOCKET_MSG_GAME.FLIP_CARDS, payload);
   };
 
   const onPeek = (playerId: string, zone: Zone, amount: number) => {
@@ -105,6 +110,7 @@ const useGameActions = () => {
     onMoveCard,
     onMoveCardsGroup,
     onTapCards,
+    onFlipCards,
     onPeek,
     onEndPeek,
     onSearchLibrary,

@@ -58,7 +58,7 @@ const DragLayer = () => {
           [styles.card__flipped]: shouldFlip,
         })}
       >
-        <Card card={item} noAnimation />
+        <Card card={item} noAnimation flipped={item.flipped} />
       </div>
     </div>
   );

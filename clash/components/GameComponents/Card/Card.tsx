@@ -21,6 +21,7 @@ interface Props {
   noAnimation?: boolean;
   tooltipPlacement?: TooltipPlacement;
   dropType?: DndItemTypes.CARD | DndItemTypes.LIST_CARD;
+  flipped?: boolean;
   onDropEnd?: (item: DropCard, monitor: DragSourceMonitor<DropCard>) => void;
 }
 
@@ -33,6 +34,7 @@ const Card = ({
   noAnimation,
   tooltipPlacement,
   onDropEnd,
+  flipped,
   dropType = DndItemTypes.CARD,
 }: Props) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -49,7 +51,7 @@ const Card = ({
 
   useAnimateCardPositionChange({ card, cardRef, zone, noAnimation });
 
-  const hidden = !('id' in card);
+  const hidden = !('id' in card) || (flipped && 'flippable' in card && !card.flippable);
 
   useEffect(() => {
     if (dropType !== DndItemTypes.CARD) return;
@@ -69,7 +71,7 @@ const Card = ({
         cardRef.current = val!;
       }}
     >
-      {!hidden && <img className={styles.image} src={getImageUrl(card.id)} />}
+      {!hidden && <img className={styles.image} src={getImageUrl(card.id, flipped)} />}
     </div>
   );
 
