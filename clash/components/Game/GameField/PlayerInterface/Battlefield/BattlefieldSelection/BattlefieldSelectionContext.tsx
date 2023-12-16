@@ -39,7 +39,7 @@ export const BattlefieldSelectionContextProvider = ({ children, player }: Props)
   const tapCards = () => {
     onTapCards({
       cardIds: selectedCardIds,
-      playerId: player.id,
+      battlefieldPlayerId: player.id,
     });
   };
 

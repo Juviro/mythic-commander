@@ -4,8 +4,8 @@ import { Player } from 'backend/database/gamestate.types';
 import useShortcut from 'hooks/useShortcut';
 import SHORTCUTS from 'constants/shortcuts';
 import useGameActions from 'components/Game/useGameActions';
-import BattlefieldCard from './BattlefieldCard';
-import BattlefieldDropzone from './BattlefieldDropzone';
+import BattlefieldCard from './BattlefieldCard/BattlefieldCard';
+import BattlefieldDropzone from './BattlefieldDropzone/BattlefieldDropzone';
 import BattlefieldSelection from './BattlefieldSelection/BattlefieldSelection';
 import { BattlefieldSelectionContextProvider } from './BattlefieldSelection/BattlefieldSelectionContext';
 
@@ -27,7 +27,7 @@ const Battlefield = ({ player, isFlipped, isSelf }: Props) => {
   const untapCards = () => {
     onTapCards({
       cardIds: cards.map((card) => card.clashId),
-      playerId: player.id,
+      battlefieldPlayerId: player.id,
       tapped: false,
     });
   };
@@ -39,7 +39,7 @@ const Battlefield = ({ player, isFlipped, isSelf }: Props) => {
   return (
     <BattlefieldSelectionContextProvider player={player}>
       <div className={styles.wrapper} ref={wrapperRef}>
-        <BattlefieldSelection isFlipped={isFlipped}>
+        <BattlefieldSelection isFlipped={isFlipped} player={player}>
           <BattlefieldDropzone
             player={player}
             isFlipped={isFlipped}

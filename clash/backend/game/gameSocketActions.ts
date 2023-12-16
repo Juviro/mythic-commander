@@ -3,6 +3,7 @@ import getUser, { User } from 'backend/database/getUser';
 import { getGameState } from 'backend/database/matchStore';
 import {
   EndPeekPayload,
+  FlipCardsPayload,
   MoveCardPayload,
   MoveCardsGroupPayload,
   PeekPayload,
@@ -13,7 +14,7 @@ import {
   SetCommanderTimesCastedPayload,
   SetPhasePayload,
   SetPlayerLifePayload,
-  TapPayload,
+  TapCardsPayload,
 } from '../constants/wsEvents';
 import Game from './Game';
 
@@ -68,8 +69,12 @@ const gameSocketActions = (io: Server) => {
       currentGames[currentGameId].moveCardGroup(payload);
     });
 
-    socket.on(SOCKET_MSG_GAME.TAP_CARDS, (payload: TapPayload) => {
+    socket.on(SOCKET_MSG_GAME.TAP_CARDS, (payload: TapCardsPayload) => {
       currentGames[currentGameId].tapCards(payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.FLIP_CARDS, (payload: FlipCardsPayload) => {
+      currentGames[currentGameId].flipCards(payload);
     });
 
     socket.on(SOCKET_MSG_GAME.PEEK, (payload: PeekPayload) => {

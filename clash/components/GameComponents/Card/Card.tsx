@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { DragSourceMonitor, useDrag } from 'react-dnd';
 import classNames from 'classnames';
-import { Tooltip } from 'antd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { TooltipPlacement } from 'antd/es/tooltip';
 
@@ -11,6 +10,7 @@ import { DndItemTypes, DropCard } from 'types/dnd.types';
 import useAnimateCardPositionChange from './useAnimateCardPositionChange';
 
 import styles from './Card.module.css';
+import CardPreview from './CardPreview';
 
 interface Props {
   card: CardType;
@@ -21,6 +21,7 @@ interface Props {
   noAnimation?: boolean;
   tooltipPlacement?: TooltipPlacement;
   dropType?: DndItemTypes.CARD | DndItemTypes.LIST_CARD;
+  flipped?: boolean;
   onDropEnd?: (item: DropCard, monitor: DragSourceMonitor<DropCard>) => void;
 }
 
@@ -33,6 +34,7 @@ const Card = ({
   noAnimation,
   tooltipPlacement,
   onDropEnd,
+  flipped,
   dropType = DndItemTypes.CARD,
 }: Props) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -49,7 +51,7 @@ const Card = ({
 
   useAnimateCardPositionChange({ card, cardRef, zone, noAnimation });
 
-  const hidden = !('id' in card);
+  const hidden = !('id' in card) || (flipped && 'flippable' in card && !card.flippable);
 
   useEffect(() => {
     if (dropType !== DndItemTypes.CARD) return;
@@ -69,22 +71,20 @@ const Card = ({
         cardRef.current = val!;
       }}
     >
-      {!hidden && <img className={styles.image} src={getImageUrl(card.id)} />}
+      {!hidden && <img className={styles.image} src={getImageUrl(card.id, flipped)} />}
     </div>
   );
 
   if (!enlargeOnHover || hidden) return cardComponent;
 
   return (
-    <Tooltip
-      title={!hidden && <img className={styles.image} src={getImageUrl(card.id)} />}
-      trigger={['contextMenu']}
-      overlayClassName={styles.tooltip_wrapper}
+    <CardPreview
+      card={card}
+      tooltipPlacement={tooltipPlacement}
       open={isDragging ? false : undefined}
-      placement={tooltipPlacement}
     >
       {cardComponent}
-    </Tooltip>
+    </CardPreview>
   );
 };
 

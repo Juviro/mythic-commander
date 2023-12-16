@@ -8,6 +8,7 @@ import {
 } from 'backend/database/gamestate.types';
 import {
   EndPeekPayload,
+  FlipCardsPayload,
   MoveCardPayload,
   MoveCardsGroupPayload,
   PeekPayload,
@@ -17,7 +18,7 @@ import {
   SetCommanderTimesCastedPayload,
   SetPhasePayload,
   SetPlayerLifePayload,
-  TapPayload,
+  TapCardsPayload,
 } from 'backend/constants/wsEvents';
 import { Server, Socket } from 'socket.io';
 import { User as DatabaseUser } from 'backend/database/getUser';
@@ -299,10 +300,10 @@ export default class Game {
     }
   }
 
-  tapCards(payload: TapPayload) {
-    const { cardIds, playerId, tapped: overwriteTapped } = payload;
+  tapCards(payload: TapCardsPayload) {
+    const { cardIds, battlefieldPlayerId, tapped: overwriteTapped } = payload;
 
-    const player = this.getPlayerById(playerId);
+    const player = this.getPlayerById(battlefieldPlayerId);
 
     const areAnyCardsUntapped = player.zones.battlefield.some(({ clashId, tapped }) => {
       return cardIds.includes(clashId) ? !tapped : false;
@@ -314,6 +315,20 @@ export default class Game {
       if (!cardIds.includes(card.clashId)) return;
       // eslint-disable-next-line no-param-reassign
       card.tapped = tapped;
+    });
+
+    this.emitPlayerUpdate(player);
+  }
+
+  flipCards(payload: FlipCardsPayload) {
+    const { cardIds, battlefieldPlayerId, flipped: overwriteFlipped } = payload;
+
+    const player = this.getPlayerById(battlefieldPlayerId);
+
+    player.zones.battlefield.forEach((card) => {
+      if (!cardIds.includes(card.clashId)) return;
+      // eslint-disable-next-line no-param-reassign
+      card.flipped = overwriteFlipped ?? !card.flipped;
     });
 
     this.emitPlayerUpdate(player);

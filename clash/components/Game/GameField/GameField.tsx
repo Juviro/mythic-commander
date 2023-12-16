@@ -7,8 +7,12 @@ import PlayerInterfaces from './PlayerInterfaces';
 const GameField = () => {
   const { isInitialized } = useContext(GameStateContext);
 
+  const onContextMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+  };
+
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} onContextMenu={onContextMenu}>
       {isInitialized ? <PlayerInterfaces /> : <h1>Loading Match...</h1>}
     </div>
   );

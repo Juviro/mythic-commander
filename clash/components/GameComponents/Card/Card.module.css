@@ -52,19 +52,23 @@
   pointer-events: all;
 }
 
-.tooltip_wrapper {
-  width: 250px;
-  max-width: unset;
-
-  @media (min-height: 900px) {
-    width: 300px;
-  }
-  @media (min-height: 1200px) {
-    width: 350px;
-  }
+.tooltip_wrapper :global(.ant-popover-inner),
+.tooltip_wrapper :global(.ant-popover-arrow):before {
+  color: var(--color-text-light);
+  background-color: var(--color-card-preview-background);
 }
 
-.tooltip_wrapper :global(.ant-tooltip-inner),
-.tooltip_wrapper :global(.ant-tooltip-arrow):before {
-  color: var(--color-text-light);
+.tooltip_wrapper :global(.ant-popover-inner){
+  padding: 8px;
+}
+
+.tooltip_images {
+  display: flex;
+  gap: 8px;
+}
+
+.tooltip_image {
+  border-radius: 4%;
+  width: var(--size-card-width);
+  aspect-ratio: var(--card-aspect-ratio);
 }

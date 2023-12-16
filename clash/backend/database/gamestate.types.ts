@@ -14,9 +14,11 @@ export interface VisibleCard extends HiddenCard {
   clashId: string;
   id: string;
   name: string;
+  flippable?: boolean;
 }
 export interface BattlefieldCard extends VisibleCard {
   tapped?: boolean;
+  flipped?: boolean;
   position?: {
     x: number;
     y: number;
