@@ -1,7 +1,7 @@
-import { MenuProps } from 'antd';
-import { BattlefieldCard, Player } from 'backend/database/gamestate.types';
-import useGameActions from 'components/Game/useGameActions';
 import { useContext } from 'react';
+
+import { BattlefieldCard, Player } from 'backend/database/gamestate.types';
+import useGetCardActions from 'hooks/useGetCardActions';
 import BattlefieldSelectionContext from '../BattlefieldSelection/BattlefieldSelectionContext';
 
 interface Props {
@@ -11,21 +11,10 @@ interface Props {
 }
 
 const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
-  const { onTapCards, onFlipCards } = useGameActions();
-
-  const flipCard = () => {
-    onFlipCards({
-      cardIds: [card.clashId],
-      battlefieldPlayerId: player.id,
-    });
-  };
-
-  const tapCard = () => {
-    onTapCards({
-      cardIds: [card.clashId],
-      battlefieldPlayerId: player.id,
-    });
-  };
+  const { contextMenuItems, tapCards, flipCards } = useGetCardActions({
+    cardIds: [card.clashId],
+    battlefieldPlayerId: player.id,
+  });
 
   const { toggleCardSelection } = useContext(BattlefieldSelectionContext);
 
@@ -33,7 +22,7 @@ const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
     if (e.ctrlKey || e.metaKey || e.shiftKey) {
       toggleCardSelection(card.clashId);
     } else {
-      tapCard();
+      tapCards();
     }
   };
 
@@ -48,21 +37,9 @@ const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
     e.stopPropagation();
   };
 
-  const contextMenuItems: MenuProps['items'] = [
-    {
-      key: 'tap',
-      label: card.tapped ? 'Untap' : 'Tap',
-      onClick: tapCard,
-    },
-    {
-      key: 'flip',
-      label: 'Flip',
-      onClick: flipCard,
-    },
-  ];
-
   return {
-    tapCard,
+    tapCards,
+    flipCards,
     onClick,
     onMouseDown,
     onMouseMove,

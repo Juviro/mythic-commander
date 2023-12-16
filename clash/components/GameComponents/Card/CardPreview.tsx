@@ -27,7 +27,6 @@ const CardPreview = ({ card, children, tooltipPlacement, open }: Props) => {
           )}
         </div>
       }
-      // trigger={['contextMenu']}
       mouseEnterDelay={1}
       overlayClassName={classNames(styles.tooltip_wrapper, {
         [styles.tooltip_wrapper__flippable]: flippable,

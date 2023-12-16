@@ -4,8 +4,6 @@
 
 # Current feature
 
-* flip
-
 * card actions
   * counter
     * +1/+1

@@ -4,6 +4,9 @@ import classNames from 'classnames';
 
 import { DndItemTypes, DropCardGroupOffset } from 'types/dnd.types';
 import useWindowSize from 'hooks/useWindowSize';
+import { Player } from 'backend/database/gamestate.types';
+import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
+import useGetCardActions from 'hooks/useGetCardActions';
 import styles from './BattlefieldSelection.module.css';
 import BattlefieldSelectionContext from './BattlefieldSelectionContext';
 
@@ -47,13 +50,24 @@ interface Props {
   selectedCardIds: string[];
   wrapperRef: RefObject<HTMLDivElement>;
   isFlipped: boolean;
+  player: Player;
 }
 
-const SelectionRectangle = ({ selectedCardIds, wrapperRef, isFlipped }: Props) => {
+const SelectionRectangle = ({
+  selectedCardIds,
+  wrapperRef,
+  isFlipped,
+  player,
+}: Props) => {
   const { selectionRectangleRef } = useContext(BattlefieldSelectionContext);
   const [offset, setOffset] = useState<DropCardGroupOffset | null>(null);
 
   useWindowSize();
+
+  const { contextMenuItems } = useGetCardActions({
+    cardIds: selectedCardIds,
+    battlefieldPlayerId: player.id,
+  });
 
   const setRectangle = () => {
     if (!selectionRectangleRef.current || !selectedCardIds.length) return;
@@ -111,17 +125,19 @@ const SelectionRectangle = ({ selectedCardIds, wrapperRef, isFlipped }: Props) =
       onMouseDown={(e) => e.stopPropagation()}
       className={styles.selection_rectangle_wrapper}
     >
-      <div
-        ref={(val) => {
-          dragRef(val);
-          // @ts-ignore
-          selectionRectangleRef.current = val;
-        }}
-        className={classNames(styles.selection_rectangle, {
-          [styles.selection_rectangle__visible]: selectedCardIds.length,
-          [styles.selection_rectangle__dragging]: isDragging,
-        })}
-      />
+      <ContextMenu items={contextMenuItems}>
+        <div
+          ref={(val) => {
+            dragRef(val);
+            // @ts-ignore
+            selectionRectangleRef.current = val;
+          }}
+          className={classNames(styles.selection_rectangle, {
+            [styles.selection_rectangle__visible]: selectedCardIds.length,
+            [styles.selection_rectangle__dragging]: isDragging,
+          })}
+        />
+      </ContextMenu>
     </div>
   );
 };

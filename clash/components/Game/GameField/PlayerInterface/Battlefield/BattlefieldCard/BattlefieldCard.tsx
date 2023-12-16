@@ -29,10 +29,15 @@ const BattlefieldCard = ({ card, player }: Props) => {
   const isHovered = hoveredCardIds?.includes(card.clashId);
   const isSelected = selectedCardIds?.includes(card.clashId);
 
-  const { tapCard, contextMenuItems, onClick, onMouseDown, onMouseMove } =
+  const { tapCards, flipCards, contextMenuItems, onClick, onMouseDown, onMouseMove } =
     useBattlefieldCardActions({ card, player, isSelected });
 
-  useShortcut(SHORTCUTS.TAP, tapCard, {
+  useShortcut(SHORTCUTS.TAP, tapCards, {
+    disabled: Boolean(selectedCardIds.length),
+    whenHovering: cardRef,
+  });
+
+  useShortcut(SHORTCUTS.FLIP, flipCards, {
     disabled: Boolean(selectedCardIds.length),
     whenHovering: cardRef,
   });
@@ -46,7 +51,7 @@ const BattlefieldCard = ({ card, player }: Props) => {
   } as CSSProperties;
 
   const component = (
-    <ContextMenu items={contextMenuItems}>
+    <ContextMenu items={isSelected ? null : contextMenuItems}>
       <div
         style={style}
         ref={cardRef}

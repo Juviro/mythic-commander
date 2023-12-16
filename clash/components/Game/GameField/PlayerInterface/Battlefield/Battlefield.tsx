@@ -39,7 +39,7 @@ const Battlefield = ({ player, isFlipped, isSelf }: Props) => {
   return (
     <BattlefieldSelectionContextProvider player={player}>
       <div className={styles.wrapper} ref={wrapperRef}>
-        <BattlefieldSelection isFlipped={isFlipped}>
+        <BattlefieldSelection isFlipped={isFlipped} player={player}>
           <BattlefieldDropzone
             player={player}
             isFlipped={isFlipped}

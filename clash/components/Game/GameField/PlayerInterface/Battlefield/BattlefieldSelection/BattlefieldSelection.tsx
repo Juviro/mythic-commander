@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import { XYCoord } from 'react-dnd';
 
+import { Player } from 'backend/database/gamestate.types';
 import DragRectange from './DragRectange';
 import BattlefieldSelectionContext from './BattlefieldSelectionContext';
 import SelectionRectangle from './SelectionRectangle';
@@ -15,9 +16,10 @@ import styles from './BattlefieldSelection.module.css';
 
 interface Props extends PropsWithChildren {
   isFlipped: boolean;
+  player: Player;
 }
 
-const BattlefieldSelection = ({ children, isFlipped }: Props) => {
+const BattlefieldSelection = ({ children, isFlipped, player }: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [startingPoint, setStartingPoint] = useState<XYCoord | null>(null);
   const [currentPoint, setCurrentPoint] = useState<XYCoord | null>(null);
@@ -72,6 +74,7 @@ const BattlefieldSelection = ({ children, isFlipped }: Props) => {
         selectedCardIds={selectedCardIds}
         wrapperRef={wrapperRef}
         isFlipped={isFlipped}
+        player={player}
       />
       {children}
     </div>
