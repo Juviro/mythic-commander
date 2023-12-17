@@ -3,7 +3,6 @@ import { DropTargetMonitor } from 'react-dnd';
 
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import CardPositionContext from 'components/Game/CardPositionContext';
-import GameStateContext from 'components/Game/GameStateContext';
 import useGameActions from 'components/Game/useGameActions';
 
 import { DropCard, DropCardGroup } from 'types/dnd.types';
@@ -17,7 +16,6 @@ interface Props {
 const useBattlefieldDropzone = ({ player, wrapperRef, isFlipped }: Props) => {
   const { onMoveCard, onMoveCardsGroup } = useGameActions();
   const { snapChoords, cardPositions } = useContext(CardPositionContext);
-  const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
 
   const getRelativePosition = (clientOffset: { x: number; y: number } | null) => {
     if (!clientOffset || !wrapperRef.current) return { x: 0, y: 0 };
@@ -79,12 +77,6 @@ const useBattlefieldDropzone = ({ player, wrapperRef, isFlipped }: Props) => {
     const { clashId } = card;
     cardPositions.current[clashId] = null;
     let { x, y } = monitor.getClientOffset()!;
-    const { x: sourceX, y: sourceY } = monitor.getSourceClientOffset()!;
-
-    const factorX = (battlefieldCardWidth - (x - sourceX)) / battlefieldCardWidth;
-    const factorY = (battlefieldCardHeight - (y - sourceY)) / battlefieldCardHeight;
-    x += (2 * factorX - 1) * battlefieldCardWidth * 0.5;
-    y += (2 * factorY - 1) * battlefieldCardHeight * 0.5;
 
     if (snapChoords.current.x !== null) {
       x = snapChoords.current.x;

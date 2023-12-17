@@ -69,7 +69,7 @@
 }
 
 .hover_element:hover + .card_wrapper .card {
-    transform: rotate(calc(var(--rotation) * -1deg)) translateY(calc(var(--size-card-width) * -1.4)) scale(1.5);
+    transform: rotate(calc(var(--rotation) * -1deg)) translateY(calc(var(--size-card-width) * -1.2)) scale(1.5);
 }
 
 .hover_element:hover + .card_wrapper,

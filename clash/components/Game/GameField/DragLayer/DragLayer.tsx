@@ -13,13 +13,13 @@ import AlignIndicator from './AlignIndicator';
 import useDragAlign from './useDragAlign';
 
 const DragLayer = () => {
-  const { battlefieldCardWidth } = useContext(GameStateContext);
+  const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
   const { hoveredBattlefield } = useContext(CardPositionContext);
 
   const { isDragging, item, currentOffset, itemType } = useDragLayer((monitor) => ({
     item: monitor.getItem(),
     itemType: monitor.getItemType(),
-    currentOffset: monitor.getSourceClientOffset(),
+    currentOffset: monitor.getClientOffset(),
     isDragging: monitor.isDragging(),
   }));
 
@@ -37,24 +37,23 @@ const DragLayer = () => {
     '--size-card-width': `${battlefieldCardWidth}px`,
   } as CSSProperties;
 
+  const offsetY = cardToAlign.y
+    ? cardToAlign.y.element.getBoundingClientRect().y + battlefieldCardHeight / 2
+    : currentOffset.y;
+  const offsetX = cardToAlign.x
+    ? cardToAlign.x.element.getBoundingClientRect().x + battlefieldCardWidth / 2
+    : currentOffset.x;
+
   return (
     <div style={style} className={styles.wrapper}>
       {cardToAlign?.x && !cardToAlign.stack && (
-        <AlignIndicator
-          element={cardToAlign.x.element}
-          offset={cardToAlign.y?.element.getBoundingClientRect().y ?? currentOffset.y}
-          property="x"
-        />
+        <AlignIndicator element={cardToAlign.x.element} offset={offsetY} property="x" />
       )}
       {cardToAlign?.y && !cardToAlign.stack && (
-        <AlignIndicator
-          element={cardToAlign.y.element}
-          offset={cardToAlign.x?.element.getBoundingClientRect().x ?? currentOffset.x}
-          property="y"
-        />
+        <AlignIndicator element={cardToAlign.y.element} offset={offsetX} property="y" />
       )}
       <div
-        className={classNames({
+        className={classNames(styles.card, {
           [styles.card__flipped]: shouldFlip,
         })}
       >

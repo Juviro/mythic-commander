@@ -4,10 +4,6 @@
 
 # Current feature
 
-* card preview when dragging from hand should be centered on mouse pointer
-  * in DragLayer, use getClientOffset instead of getSourceClientOffset
-  * then, add half card width/height to top/left
-
 * card context menu
   * StackedCardList, Hand, Battlefield, Exile
   * actions:
@@ -27,6 +23,10 @@
 
 # MVP
 
+* dragging a card briefly shows the card in the original position (prod only because of latency)
+  * add context that stores new card positions whenever they are dropped in BattlefieldDropzone.
+  * check for that position in BattlefieldCard and overwrite original position
+  * delete it from that context whenever the cardId is in an update
 
 * battlefield
   * emblems
@@ -44,8 +44,6 @@
 
 * game
   * mulligan
-
-* dragging a card briefly shows the card in the original position (prod only because of latency)
 
 # Backlog
 
@@ -91,6 +89,8 @@
 
 * keep cards tapped when moving them to battlefield
   * allow aligning as if the cards was untapped
+
+* distinguish between flipped and face-down. There can be a two-faced card that is face-down and therefore not visible
 
 # Optimizations
 
