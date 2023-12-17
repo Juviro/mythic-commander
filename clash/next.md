@@ -4,6 +4,20 @@
 
 # Current feature
 
+* card preview when dragging from hand should be centered on mouse pointer
+  * in DragLayer, use getClientOffset instead of getSourceClientOffset
+  * then, add half card width/height to top/left
+
+* card context menu
+  * StackedCardList, Hand, Battlefield, Exile
+  * actions:
+    * move to different zone
+      * hand
+      * library (top, button, nth position)
+      * graveyard
+      * exile
+      * battlefield (face down)
+
 * card actions
   * counter
     * +1/+1
@@ -16,9 +30,7 @@
 
 * battlefield
   * emblems
-  * tap (single & selection)
   * context menu
-    * move to different zone
     * create token
 
 * library:
@@ -40,6 +52,7 @@
 
 * save gamestate whenever a player leaves
 
+* add notes to card
 
 * defeated player / ff
 
