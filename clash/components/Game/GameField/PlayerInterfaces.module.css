@@ -2,36 +2,41 @@
   width: 100%;
   height: 100%;
   display: grid;
-  --menu-width: 500px;
+  background: var(--color-menu-base-background);
+
+  --size-background-margin-right: var(--size-menu-width);
 }
 
 /* one player */
-.wrapper:has(> :last-child:nth-child(2)) {
-  grid-template-columns: 1fr var(--menu-width);
+.wrapper:has(> :last-child:nth-child(3)) {
+  grid-template-columns: 1fr var(--size-menu-width);
   grid-template-areas: 
     'player1 menu'
 }
 
 /* two players */
-.wrapper:has(> :last-child:nth-child(3)) {
-  grid-template-columns: 1fr var(--menu-width);
+.wrapper:has(> :last-child:nth-child(4)) {
+  grid-template-columns: 1fr var(--size-menu-width);
   grid-template-areas: 
     'player1 menu'
     'player2 menu';
 }
 
 /* three players */
-.wrapper:has(> :last-child:nth-child(4)) {
+.wrapper:has(> :last-child:nth-child(5)) {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-template-areas: 
     'player1 player2'
     'player3 menu';
+
+  --size-background-margin-right: 0px;
+  --color-menu-background: rgb(0 0 0 / 50%);
 }
 
 /* four players */
-.wrapper:has(> :last-child:nth-child(5)) {
-  grid-template-columns: 1fr 1fr var(--menu-width);
+.wrapper:has(> :last-child:nth-child(6)) {
+  grid-template-columns: 1fr 1fr var(--size-menu-width);
   grid-template-areas: 
     'player1 player2 menu'
     'player4 player3 menu';
@@ -71,4 +76,20 @@
 :global(.flipped) .interface {
   grid-template-columns: 6cqw auto 110px 110px;
   grid-template-areas: 'exile hand library graveyard';
+}
+
+
+.bg_image {
+  background: url(/assets/images/match_bg.png);
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  bottom: 0;
+  opacity: 0.4;
+  transform: translateY(12px);
+  right: var(--size-background-margin-right);
+  filter: sepia(100%) hue-rotate(330deg) saturate(50%);
 }

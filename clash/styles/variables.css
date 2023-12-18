@@ -10,7 +10,8 @@
     --color-dropzone-border: blue;
     --color-dropzone-can-drop: #1313e624;
     --color-dropzone-is-over: #1313e65b;
-    --color-menu-background: rgb(0 0 0 / 50%);
+    --color-menu-base-background: #3b3b3b;
+    --color-menu-background: var(--color-menu-base-background);
     --color-chat-background: #fff;
     --color-text-light: #fff;
     --color-active: #145bd8;
@@ -22,6 +23,7 @@
     --size-card-width: var(--size-card-base-width);
     --size-card-base-padding: 4px;
     --size-card-padding: var(--size-card-base-padding);
+    --size-menu-width: 500px;
     
     --card-aspect-ratio: 301 / 419;
 }
