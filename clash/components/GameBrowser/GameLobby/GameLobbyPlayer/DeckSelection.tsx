@@ -22,23 +22,36 @@ interface Props {
   isReady: boolean;
 }
 
+interface Decks {
+  ownDecks: OwnDeck[];
+  publicDecks: Deck[];
+}
+
 const DeckSelection = ({ canSelectDeck, playerId, deck, isReady }: Props) => {
   const { onSelectDeck } = useContext(GameBrowserContext);
   const [initialDeckId, setInitialDeckId] = useLocalStorage<string>('initial-deck');
 
-  const { data, isLoading } = useQuery<OwnDeck[]>(`decks-${playerId}`, getDecks, {
+  const { data, isLoading } = useQuery<Decks>(`decks-${playerId}`, getDecks, {
     enabled: canSelectDeck,
     refetchInterval: Infinity,
     staleTime: Infinity,
   });
 
-  const options = data?.map(({ name, id }) => ({
+  const ownDecks = data?.ownDecks.map(({ name, id }) => ({
+    label: name,
+    value: id,
+  }));
+
+  const publicDecks = data?.publicDecks.map(({ name, id }) => ({
     label: name,
     value: id,
   }));
 
   const onSubmitSelection = (deckId: string) => {
-    const selectedDeck = data?.find((d) => d.id === deckId);
+    const allDecks: Deck[] | OwnDeck[] | undefined = data?.publicDecks.concat(
+      data?.ownDecks
+    );
+    const selectedDeck = allDecks?.find((d) => d.id === deckId);
 
     if (!selectedDeck) return;
 
@@ -47,7 +60,10 @@ const DeckSelection = ({ canSelectDeck, playerId, deck, isReady }: Props) => {
     onSelectDeck({
       id: selectedDeck.id,
       imgSrc: selectedDeck.imgSrc,
-      name: selectedDeck.publicName,
+      name:
+        'publicName' in selectedDeck
+          ? (selectedDeck.publicName as string)
+          : selectedDeck.name,
     });
   };
 
@@ -94,14 +110,27 @@ const DeckSelection = ({ canSelectDeck, playerId, deck, isReady }: Props) => {
       }
       placeholder="Select your deck"
     >
-      {options?.map((option) => (
-        <Select.Option key={option.value} value={option.value}>
-          <DeckLabel
-            deck={data?.find((d) => d.id === option.value) as Deck}
-            deckName={data?.find((d) => d.id === option.value)?.name}
-          />
-        </Select.Option>
-      ))}
+      <Select.OptGroup key="Your Decks">
+        {ownDecks?.map((option) => (
+          <Select.Option key={option.value} value={option.value}>
+            <DeckLabel
+              deck={data?.ownDecks?.find((d) => d.id === option.value) as Deck}
+              deckName={data?.ownDecks?.find((d) => d.id === option.value)?.name}
+            />
+          </Select.Option>
+        ))}
+      </Select.OptGroup>
+      <Select.OptGroup key="Public Decks">
+        {publicDecks?.map((option) => {
+          const currentDeck = data?.publicDecks?.find((d) => d.id === option.value);
+
+          return (
+            <Select.Option key={option.value} value={option.value}>
+              <DeckLabel deck={currentDeck!} deckOwner={currentDeck!.ownerName} />
+            </Select.Option>
+          );
+        })}
+      </Select.OptGroup>
     </Select>
   );
 };
