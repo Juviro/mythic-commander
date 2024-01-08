@@ -15,6 +15,7 @@
 
 # credentials
 /backend/.env*
+/clash/.env*
 
 # misc
 .DS_Store
