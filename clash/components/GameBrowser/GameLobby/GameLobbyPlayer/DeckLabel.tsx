@@ -17,10 +17,9 @@ interface Props {
   deck: Deck;
   displayTooltip?: boolean;
   deckName?: string;
-  deckOwner?: string;
 }
 
-const DeckLabel = ({ deck, displayTooltip, deckName, deckOwner }: Props) => {
+const DeckLabel = ({ deck, displayTooltip, deckName }: Props) => {
   const usedName = deckName || deck.name;
 
   return (
@@ -30,7 +29,9 @@ const DeckLabel = ({ deck, displayTooltip, deckName, deckOwner }: Props) => {
         <Tooltip title={usedName} open={displayTooltip ? undefined : false}>
           <span className={styles.label}>{usedName}</span>
         </Tooltip>
-        {deckOwner && <span className={styles.deck_owner}>{`by ${deckOwner}`}</span>}
+        {deck.ownerName && (
+          <span className={styles.deck_owner}>{`by ${deck.ownerName}`}</span>
+        )}
       </div>
     </div>
   );
