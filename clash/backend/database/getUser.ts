@@ -14,7 +14,7 @@ const getUser = async (cookie?: string): Promise<User> => {
   const {
     rows: [user],
   } = await db.raw(
-    `SELECT users.username, users.id, users.avatar
+    `SELECT users.username, users.id, users.avatar, users.name
     FROM users 
     INNER JOIN sessions 
     ON users.id = sessions."userId" 
@@ -25,7 +25,13 @@ const getUser = async (cookie?: string): Promise<User> => {
 
   if (!user) throw new Error('Not logged in');
 
-  return user;
+  const userWithUsername = {
+    ...user,
+    name: undefined,
+    username: user.username || user.name?.split(' ')[0],
+  };
+
+  return userWithUsername;
 };
 
 export default getUser;
