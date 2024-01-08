@@ -5,6 +5,7 @@ import { Card } from 'backend/database/gamestate.types';
 import CardPositionContext, {
   HoveredBattlefield,
 } from 'components/Game/CardPositionContext';
+import GameStateContext from 'components/Game/GameStateContext';
 
 const MIN_DISTANCE_ALIGN = 20;
 const MIN_DISTANCE_STACK = 40;
@@ -45,9 +46,10 @@ const getClosestCards = (currentOffset: XYCoord, cards: Element[]) => {
   return cards.reduce(
     (closest: ClosesCards, card: Element) => {
       const cardOffsetX = card.getBoundingClientRect().x;
-      const cardOffsetY = card.getBoundingClientRect().y;
       const diffX = cardOffsetX - currentOffset.x;
       const distanceX = Math.abs(diffX);
+
+      const cardOffsetY = card.getBoundingClientRect().y;
       const diffY = cardOffsetY - currentOffset.y;
       const distanceY = Math.abs(diffY);
 
@@ -123,14 +125,23 @@ const getCardsToAlign = (
 };
 
 const useDragAlign = (item: Card, currentOffset: XYCoord | null) => {
+  const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
   const { hoveredBattlefield, snapChoords } = useContext(CardPositionContext);
+
+  const transformedOffset = currentOffset
+    ? {
+        x: currentOffset.x - battlefieldCardWidth / 2,
+        y: currentOffset.y - battlefieldCardHeight / 2,
+      }
+    : null;
+
   const { x, y, stack } = getCardsToAlign(
     item,
-    currentOffset,
+    transformedOffset,
     hoveredBattlefield.current!
   );
 
-  let top = currentOffset?.y ?? 0;
+  let top = transformedOffset?.y ?? 0;
   if (stack) {
     const factor = stack.position === 'topLeft' ? -1 : 1;
     top = stack.element.getBoundingClientRect().top + STACK_DISTANCE_Y * factor;
@@ -138,7 +149,7 @@ const useDragAlign = (item: Card, currentOffset: XYCoord | null) => {
     top = y.element.getBoundingClientRect().top;
   }
 
-  let left = currentOffset?.x ?? 0;
+  let left = transformedOffset?.x ?? 0;
   if (stack) {
     const factor = stack.position === 'topLeft' ? -1 : 1;
     left = stack.element.getBoundingClientRect().left + STACK_DISTANCE_X * factor;
@@ -148,9 +159,9 @@ const useDragAlign = (item: Card, currentOffset: XYCoord | null) => {
 
   const getChoord = (element: Element | null | undefined, property: 'x' | 'y') => {
     if (!element) return null;
-    const { x: valX, y: valY, width, height } = element.getBoundingClientRect();
-    if (property === 'x') return valX + width / 2;
-    return valY + height / 2;
+    const { x: valX, y: valY } = element.getBoundingClientRect();
+    if (property === 'x') return valX + (battlefieldCardWidth - 4) / 2;
+    return valY + (battlefieldCardHeight - 4) / 2;
   };
 
   useEffect(() => {

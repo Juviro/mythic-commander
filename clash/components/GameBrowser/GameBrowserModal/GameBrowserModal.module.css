@@ -8,7 +8,7 @@
   margin: 0;
   padding: 1rem;
   color: var(--color-text-light);
-  background-color: var(--color-primary);
+  background: linear-gradient(90deg, var(--color-primary) 0%, color-mix(in srgb, var(--color-primary) 60%, transparent) 100%);
 }
 
 .inner {

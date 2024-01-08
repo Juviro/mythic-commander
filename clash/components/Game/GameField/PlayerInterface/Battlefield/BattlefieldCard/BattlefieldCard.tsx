@@ -51,7 +51,7 @@ const BattlefieldCard = ({ card, player }: Props) => {
   } as CSSProperties;
 
   const component = (
-    <ContextMenu items={isSelected ? null : contextMenuItems}>
+    <ContextMenu items={isSelected ? null : contextMenuItems} placement="bottomLeft">
       <div
         style={style}
         ref={cardRef}

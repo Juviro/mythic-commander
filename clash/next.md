@@ -1,8 +1,20 @@
 # Bugs
 
 * animate card when moved from any zone to battlefield
+* bigger card previews
+* card preview for hand? to see backside
 
 # Current feature
+
+* card context menu
+  * StackedCardList, Hand, Battlefield, Exile
+  * actions:
+    * move to different zone
+      * hand
+      * library (top, button, nth position)
+      * graveyard
+      * exile
+      * battlefield (face down)
 
 * card actions
   * counter
@@ -13,12 +25,14 @@
 
 # MVP
 
+* dragging a card briefly shows the card in the original position (prod only because of latency)
+  * add context that stores new card positions whenever they are dropped in BattlefieldDropzone.
+  * check for that position in BattlefieldCard and overwrite original position
+  * delete it from that context whenever the cardId is in an update
 
 * battlefield
   * emblems
-  * tap (single & selection)
   * context menu
-    * move to different zone
     * create token
 
 * library:
@@ -33,13 +47,14 @@
 * game
   * mulligan
 
-* dragging a card briefly shows the card in the original position (prod only because of latency)
+* when aligning a card stacked with lower x/y, put it behind the other card
 
 # Backlog
 
 
 * save gamestate whenever a player leaves
 
+* add notes to card
 
 * defeated player / ff
 
@@ -79,6 +94,10 @@
 * keep cards tapped when moving them to battlefield
   * allow aligning as if the cards was untapped
 
+* distinguish between flipped and face-down. There can be a two-faced card that is face-down and therefore not visible
+
+* shuffle library animation
+
 # Optimizations
 
 * prevent re-render of interface components when menu changes, e.g. when changing life
@@ -91,4 +110,5 @@
 * when moving a peeking card into hand, the draw animation is used
 * on page load, cards in exile are animated
 * milling action animation is wrong on flipped board
+* align indicator when aligning both x and y not in center of card when it's left and/or top aligned
 

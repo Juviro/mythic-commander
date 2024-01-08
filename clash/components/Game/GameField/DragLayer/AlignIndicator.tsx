@@ -1,4 +1,6 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, useContext } from 'react';
+
+import GameStateContext from 'components/Game/GameStateContext';
 
 import styles from './DragLayer.module.css';
 
@@ -9,6 +11,7 @@ interface Props {
 }
 
 const AlignIndicator = ({ element, offset, property }: Props) => {
+  const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
   if (!element) return null;
 
   const style: CSSProperties = {};
@@ -17,14 +20,14 @@ const AlignIndicator = ({ element, offset, property }: Props) => {
     const { width, height, y, x } = element.getBoundingClientRect();
     const top = offset < y ? offset : y;
 
-    style.height = Math.abs(offset - y);
+    style.height = Math.abs(offset - y) - battlefieldCardHeight / 2;
     style.top = top + height / 2;
     style.left = x + width / 2;
   } else {
     const { width, height, y, x } = element.getBoundingClientRect();
     const left = offset < x ? offset : x;
 
-    style.width = Math.abs(offset - x);
+    style.width = Math.abs(offset - x) - battlefieldCardWidth / 2;
     style.top = y + height / 2;
     style.left = left + width / 2;
   }

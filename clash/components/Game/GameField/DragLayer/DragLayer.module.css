@@ -16,6 +16,13 @@
     z-index: 1;
 }
 
+.card {
+    /* same as battlefield card */
+    --size-card-padding: 2px;
+    /* card padding or something, not sure why this is necessary */
+    transform: translateX(2px, 2px);
+}
+
 .card__flipped {
-    transform: rotate(180deg);
+    transform: translateX(2px, 2px) rotate(180deg);
 }

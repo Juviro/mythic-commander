@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   grid-area: hand;
-  transform: translateY(5cqh);
+  transform: translateY(2cqh);
   transition: transform 0.1s;
   --size-card-width: min(17cqw, 240px);
   height: 200%;
@@ -22,11 +22,6 @@
 
 .wrapper__is_self {
   cursor: grab;
-}
-
-.wrapper__is_over,
-.wrapper:has(.hover_element:hover) {
-  transform: translateY(-8cqw);
 }
 
 .hover_element__can_drop {
@@ -74,7 +69,7 @@
 }
 
 .hover_element:hover + .card_wrapper .card {
-    transform: rotate(calc(var(--rotation) * -1deg)) translateY(-7cqw) scale(1.5);
+    transform: rotate(calc(var(--rotation) * -1deg)) translateY(calc(var(--size-card-width) * -1.2)) scale(1.5);
 }
 
 .hover_element:hover + .card_wrapper,
