@@ -17,17 +17,21 @@ interface Props {
   deck: Deck;
   displayTooltip?: boolean;
   deckName?: string;
+  deckOwner?: string;
 }
 
-const DeckLabel = ({ deck, displayTooltip, deckName }: Props) => {
+const DeckLabel = ({ deck, displayTooltip, deckName, deckOwner }: Props) => {
   const usedName = deckName || deck.name;
 
   return (
     <div className={styles.wrapper}>
       <img src={getImgSrc(deck.imgSrc)} alt="" className={styles.image} />
-      <Tooltip title={usedName} open={displayTooltip ? undefined : false}>
-        <span className={styles.label}>{usedName}</span>
-      </Tooltip>
+      <div className={styles.deck_name}>
+        <Tooltip title={usedName} open={displayTooltip ? undefined : false}>
+          <span className={styles.label}>{usedName}</span>
+        </Tooltip>
+        {deckOwner && <span className={styles.deck_owner}>{`by ${deckOwner}`}</span>}
+      </div>
     </div>
   );
 };
