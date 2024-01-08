@@ -31,7 +31,7 @@ const PlayerInterfaces = () => {
   return (
     <>
       <div className={styles.wrapper}>
-      <div className={styles.bg_image}/>
+        <div className={styles.bg_image} />
         {opponents.map((opponent, index) => (
           <div
             key={opponent.id}

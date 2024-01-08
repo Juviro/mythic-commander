@@ -1,6 +1,8 @@
 # Bugs
 
 * animate card when moved from any zone to battlefield
+* bigger card previews
+* card preview for hand? to see backside
 
 # Current feature
 
@@ -44,6 +46,8 @@
 
 * game
   * mulligan
+
+* when aligning a card stacked with lower x/y, put it behind the other card
 
 # Backlog
 
@@ -92,6 +96,8 @@
 
 * distinguish between flipped and face-down. There can be a two-faced card that is face-down and therefore not visible
 
+* shuffle library animation
+
 # Optimizations
 
 * prevent re-render of interface components when menu changes, e.g. when changing life
@@ -104,4 +110,5 @@
 * when moving a peeking card into hand, the draw animation is used
 * on page load, cards in exile are animated
 * milling action animation is wrong on flipped board
+* align indicator when aligning both x and y not in center of card when it's left and/or top aligned
 

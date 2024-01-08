@@ -7,11 +7,11 @@ import React, {
   useState,
 } from 'react';
 
-import { Player } from 'backend/database/gamestate.types';
+import { Player, ZONES } from 'backend/database/gamestate.types';
 import useClickedOutside from 'hooks/useClickedOutside';
 import useShortcut from 'hooks/useShortcut';
 import SHORTCUTS from 'constants/shortcuts';
-import useGameActions from 'components/Game/useGameActions';
+import useGetCardActions from 'hooks/useGetCardActions';
 
 interface ContextValue {
   hoveredCardIds: string[];
@@ -34,18 +34,18 @@ export const BattlefieldSelectionContextProvider = ({ children, player }: Props)
   const [hoveredCardIds, setHoveredCardIds] = useState<string[]>([]);
   const [selectedCardIds, setSelectedCardsIds] = useState<string[]>([]);
 
-  const { onTapCards } = useGameActions();
-
-  const tapCards = () => {
-    onTapCards({
-      cardIds: selectedCardIds,
-      battlefieldPlayerId: player.id,
-    });
-  };
+  const { tapCards, flipCards } = useGetCardActions({
+    cardIds: selectedCardIds,
+    battlefieldPlayerId: player.id,
+    zone: ZONES.BATTLEFIELD,
+  });
 
   const disabled = !selectedCardIds.length;
 
   useShortcut(SHORTCUTS.TAP, tapCards, {
+    disabled,
+  });
+  useShortcut(SHORTCUTS.FLIP, flipCards, {
     disabled,
   });
 

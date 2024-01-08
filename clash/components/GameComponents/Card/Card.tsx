@@ -51,7 +51,8 @@ const Card = ({
 
   useAnimateCardPositionChange({ card, cardRef, zone, noAnimation });
 
-  const hidden = !('id' in card) || (flipped && 'flippable' in card && !card.flippable);
+  const hidden = !('id' in card);
+  const faceDown = flipped && 'flippable' in card && !card.flippable;
 
   useEffect(() => {
     if (dropType !== DndItemTypes.CARD) return;
@@ -71,7 +72,10 @@ const Card = ({
         cardRef.current = val!;
       }}
     >
-      {!hidden && <img className={styles.image} src={getImageUrl(card.id, flipped)} />}
+      {!hidden && !faceDown && (
+        <img className={styles.image} src={getImageUrl(card.id, flipped)} />
+      )}
+      {faceDown && <img className={styles.image} src="/assets/images/card_back.webp" />}
     </div>
   );
 

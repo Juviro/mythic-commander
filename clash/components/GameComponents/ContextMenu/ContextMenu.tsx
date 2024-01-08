@@ -1,11 +1,12 @@
 import React, { PropsWithChildren } from 'react';
-import { Dropdown, MenuProps } from 'antd';
+import { Dropdown, DropdownProps, MenuProps } from 'antd';
 
 interface Props extends PropsWithChildren {
   items: MenuProps['items'] | null;
+  placement?: DropdownProps['placement'];
 }
 
-const ContextMenu = ({ children, items }: Props) => {
+const ContextMenu = ({ children, items, placement = 'top' }: Props) => {
   // eslint-disable-next-line react/jsx-no-useless-fragment
   if (!items) return <>{children}</>;
 
@@ -13,7 +14,7 @@ const ContextMenu = ({ children, items }: Props) => {
     <Dropdown
       trigger={['contextMenu']}
       menu={{ items }}
-      placement="top"
+      placement={placement}
       destroyPopupOnHide
     >
       {children}
