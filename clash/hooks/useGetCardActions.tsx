@@ -1,8 +1,16 @@
+import { useContext } from 'react';
 import { Input, MenuProps } from 'antd';
+
 import { ZONES, Zone } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
 import useGameActions from 'components/Game/useGameActions';
-import { useContext } from 'react';
+import ContextMenuIcon from 'components/GameComponents/ContextMenu/ContextMenuIcon';
+
+import ExileIcon from 'public/assets/icons/exile.svg';
+import LibraryIcon from 'public/assets/icons/library.svg';
+import GraveyardIcon from 'public/assets/icons/graveyard.svg';
+import HandIcon from 'public/assets/icons/hand.svg';
+import BattlefieldIcon from 'public/assets/icons/phase_combat.svg';
 
 const getCustomLibraryPositionItem = (
   onMoveToLibrary: (index: number) => () => void,
@@ -115,34 +123,64 @@ const useGetCardActions = ({
       children: [
         {
           key: 'battlefield',
+          icon: (
+            <ContextMenuIcon>
+              <BattlefieldIcon />
+            </ContextMenuIcon>
+          ),
           label: 'Battlefield',
           hidden: zone === 'battlefield',
           onClick: onMoveToBattlefield,
         },
         {
           key: 'hand',
+          icon: (
+            <ContextMenuIcon>
+              <HandIcon />
+            </ContextMenuIcon>
+          ),
           label: 'Hand',
           hidden: zone === 'hand',
           onClick: onMoveToZone(ZONES.HAND),
         },
         {
           key: 'graveyard',
+          icon: (
+            <ContextMenuIcon>
+              <GraveyardIcon />
+            </ContextMenuIcon>
+          ),
           label: 'Graveyard',
           hidden: zone === 'graveyard',
           onClick: onMoveToZone(ZONES.GRAVEYARD),
         },
         {
           key: 'library-top',
+          icon: (
+            <ContextMenuIcon>
+              <LibraryIcon />
+            </ContextMenuIcon>
+          ),
           label: 'Top of Library',
           onClick: onMoveToLibrary(player!.zones.library.length || 0),
         },
         {
           key: 'library-bottom',
+          icon: (
+            <ContextMenuIcon>
+              <LibraryIcon />
+            </ContextMenuIcon>
+          ),
           label: 'Bottom of Library',
           onClick: onMoveToLibrary(0),
         },
         {
           key: 'library-nth',
+          icon: (
+            <ContextMenuIcon>
+              <LibraryIcon />
+            </ContextMenuIcon>
+          ),
           label: 'Nth position of Library',
           children: getCustomLibraryPositionItem(
             onMoveToLibrary,
@@ -151,6 +189,11 @@ const useGetCardActions = ({
         },
         {
           key: 'exile',
+          icon: (
+            <ContextMenuIcon>
+              <ExileIcon />
+            </ContextMenuIcon>
+          ),
           label: 'Exile',
           hidden: zone === 'exile',
           onClick: onMoveToZone(ZONES.EXILE),

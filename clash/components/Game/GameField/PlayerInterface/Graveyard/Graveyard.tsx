@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
+import { Popover, Tooltip } from 'antd';
 
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import GraveyardImage from 'public/assets/icons/graveyard.svg';
 import Dropzone from 'components/Game/Dropzone/Dropzone';
 import useGameActions from 'components/Game/useGameActions';
-import { Popover, Tooltip } from 'antd';
 import { pluralizeCards } from 'components/Game/Menu/Chat/ChatMessages/util';
 import StackedCardList from 'components/GameComponents/StackedCardList/StackedCardList';
 import GameStateContext from 'components/Game/GameStateContext';
