@@ -3,8 +3,13 @@
 * animate card when moved from any zone to battlefield
 * bigger card previews
 * card preview for hand? to see backside
+* it's possible to have a card selection on multiple battlefields
 
 # Current feature
+
+* Bugs:
+  * right clicking a card that's within a selection doesn't show the context menu
+  * correct log message when putting card on bottom or nth position of library
 
 * card context menu
   * StackedCardList, Hand, Battlefield, Exile
