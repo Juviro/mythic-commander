@@ -4,6 +4,7 @@ import { Button, Checkbox, Input, Space } from 'antd';
 import GameStateContext from 'components/Game/GameStateContext';
 import { normalizeName } from 'utils/normalizeName';
 import useGameActions from 'components/Game/useGameActions';
+import { Zone } from 'backend/database/gamestate.types';
 import PopoverCardList from './PopoverCardList';
 import usePopoverCards from './usePopoverCards';
 
@@ -11,9 +12,10 @@ import styles from './ZoneCardsPopover.module.css';
 
 interface Props {
   color?: string;
+  zone: Zone;
 }
 
-const PopoverContent = ({ color }: Props) => {
+const PopoverContent = ({ color, zone }: Props) => {
   const { peekingCards, setPeekingCards } = useContext(GameStateContext);
   const style = { '--player-color': color };
 
@@ -59,6 +61,7 @@ const PopoverContent = ({ color }: Props) => {
   return (
     <div className={styles.content} style={style as CSSProperties}>
       <PopoverCardList
+        zone={zone}
         cards={cardsToBottom}
         onDrop={onDropBottom}
         title="Bottom of Library"
@@ -74,6 +77,7 @@ const PopoverContent = ({ color }: Props) => {
       />
       {isSearch && (
         <PopoverCardList
+          zone={zone}
           onDrop={onDropLibrary}
           cards={filteredCards}
           empty="No cards found"
@@ -92,6 +96,7 @@ const PopoverContent = ({ color }: Props) => {
         />
       )}
       <PopoverCardList
+        zone={zone}
         cards={cardsToTop}
         onDrop={onDropTop}
         title="Top of Library"

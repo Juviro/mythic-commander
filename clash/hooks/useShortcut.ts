@@ -42,23 +42,29 @@ const useShortcut = (key: string, action: () => void, options: Options = {}) => 
   useEffect(() => {
     if (disabled) return undefined;
     document.addEventListener('keydown', onKeyDown, false);
-    return () => document.removeEventListener('keydown', onKeyDown, false);
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown, false);
+    };
   }, [key, action, disabled]);
 
   useEffect(() => {
-    if (!whenHovering?.current || disabled) return undefined;
+    if (!whenHovering?.current || disabled) {
+      setIsHovering(false);
+      return undefined;
+    }
 
     const onMouseEnter = () => setIsHovering(true);
     const onMouseLeave = () => setIsHovering(false);
 
-    whenHovering.current.addEventListener('mouseenter', onMouseEnter, false);
-    whenHovering.current.addEventListener('mouseleave', onMouseLeave, false);
+    whenHovering.current.addEventListener('mouseenter', onMouseEnter);
+    whenHovering.current.addEventListener('mouseleave', onMouseLeave);
 
     return () => {
-      whenHovering.current?.removeEventListener('mouseenter', onMouseEnter, false);
-      whenHovering.current?.removeEventListener('mouseleave', onMouseLeave, false);
+      whenHovering.current?.removeEventListener('mouseenter', onMouseEnter);
+      whenHovering.current?.removeEventListener('mouseleave', onMouseLeave);
     };
-  }, [whenHovering?.current]);
+  }, [whenHovering?.current, setIsHovering, disabled]);
 };
 
 export default useShortcut;

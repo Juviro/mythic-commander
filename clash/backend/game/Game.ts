@@ -7,8 +7,10 @@ import {
   Zone,
 } from 'backend/database/gamestate.types';
 import {
+  DiscardRandomCardPayload,
   EndPeekPayload,
   FlipCardsPayload,
+  MillPayload,
   MoveCardPayload,
   MoveCardsGroupPayload,
   PeekPayload,
@@ -246,6 +248,13 @@ export default class Game {
       shouldRevealCardName = false;
     }
 
+    const getLibraryPosition = () => {
+      if (typeof index !== 'number' || to.zone !== 'library') return null;
+      if (index === 0) return 'bottom';
+      if (index === toPlayer.zones.library.length - 1) return 'top';
+      return toPlayer.zones.library.length - index;
+    };
+
     const playerId = this.getPlayerBySocket(socket).id;
     this.logAction({
       playerId,
@@ -259,6 +268,7 @@ export default class Game {
         to: {
           zone: to.zone,
           playerId: toPlayer.id,
+          libraryPosition: getLibraryPosition(),
         },
       },
     });
@@ -300,6 +310,26 @@ export default class Game {
     }
   }
 
+  discardRandomCard(payload: DiscardRandomCardPayload) {
+    const { playerId } = payload;
+    const player = this.getPlayerById(playerId);
+
+    const randomIndex = Math.floor(Math.random() * player.zones.hand.length);
+    const card = player.zones.hand.splice(randomIndex, 1)[0] as VisibleCard;
+    if (!card) return;
+
+    player.zones.graveyard.push(card);
+
+    this.emitPlayerUpdate(player);
+    this.logAction({
+      playerId,
+      logKey: LOG_MESSAGES.DISCARD_RANDOM_CARD,
+      payload: {
+        cardName: card.name,
+      },
+    });
+  }
+
   tapCards(payload: TapCardsPayload) {
     const { cardIds, battlefieldPlayerId, tapped: overwriteTapped } = payload;
 
@@ -332,6 +362,26 @@ export default class Game {
     });
 
     this.emitPlayerUpdate(player);
+  }
+
+  mill(socket: Socket, payload: MillPayload) {
+    const { amount, playerId } = payload;
+    const millingPlayer = this.getPlayerBySocket(socket);
+    const player = this.getPlayerById(playerId);
+
+    const milledCards = player.zones.library.splice(-amount) as VisibleCard[];
+    player.zones.graveyard.push(...milledCards);
+
+    this.emitPlayerUpdate(player);
+
+    this.logAction({
+      playerId: millingPlayer.id,
+      logKey: LOG_MESSAGES.MILL,
+      payload: {
+        peekedPlayerId: player.id,
+        amount,
+      },
+    });
   }
 
   peek(socket: Socket, payload: PeekPayload) {

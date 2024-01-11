@@ -2,12 +2,14 @@ import React, {
   MouseEvent,
   PropsWithChildren,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from 'react';
 import { XYCoord } from 'react-dnd';
 
 import { Player } from 'backend/database/gamestate.types';
+import useClickedOutside from 'hooks/useClickedOutside';
 import DragRectange from './DragRectange';
 import BattlefieldSelectionContext from './BattlefieldSelectionContext';
 import SelectionRectangle from './SelectionRectangle';
@@ -28,21 +30,22 @@ const BattlefieldSelection = ({ children, isFlipped, player }: Props) => {
     BattlefieldSelectionContext
   );
 
+  useClickedOutside(wrapperRef, () => {
+    setStartingPoint(null);
+    setCurrentPoint(null);
+    setSelectedCardsIds([]);
+  });
+
   const onMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     setStartingPoint({ x: e.clientX, y: e.clientY });
   };
 
-  const onMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+  const onMouseMove = (e: MouseEventInit) => {
     if (!startingPoint) return;
-    setCurrentPoint({ x: e.clientX, y: e.clientY });
+    setCurrentPoint({ x: e.clientX ?? 0, y: e.clientY ?? 0 });
 
     if (!selectedCardIds.length) return;
     setSelectedCardsIds([]);
-  };
-
-  const onMouseLeave = () => {
-    setStartingPoint(null);
-    setCurrentPoint(null);
   };
 
   const onMouseUp = () => {
@@ -53,14 +56,21 @@ const BattlefieldSelection = ({ children, isFlipped, player }: Props) => {
     setSelectedCardsIds(hoveredCardIds);
   };
 
+  useEffect(() => {
+    window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('mousemove', onMouseMove);
+
+    return () => {
+      window.removeEventListener('mouseup', onMouseUp);
+      window.removeEventListener('mousemove', onMouseMove);
+    };
+  }, [startingPoint, currentPoint]);
+
   return (
     <div
       className={styles.selection}
       onMouseDown={onMouseDown}
       onDrag={onMouseUp}
-      onMouseMove={onMouseMove}
-      onMouseUp={onMouseUp}
-      onMouseLeave={onMouseLeave}
       ref={wrapperRef}
     >
       {startingPoint && currentPoint && (

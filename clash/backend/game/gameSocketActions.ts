@@ -2,8 +2,10 @@ import { Server } from 'socket.io';
 import getUser, { User } from 'backend/database/getUser';
 import { getGameState } from 'backend/database/matchStore';
 import {
+  DiscardRandomCardPayload,
   EndPeekPayload,
   FlipCardsPayload,
+  MillPayload,
   MoveCardPayload,
   MoveCardsGroupPayload,
   PeekPayload,
@@ -69,12 +71,23 @@ const gameSocketActions = (io: Server) => {
       currentGames[currentGameId].moveCardGroup(payload);
     });
 
+    socket.on(
+      SOCKET_MSG_GAME.DISCARD_RANDOM_CARD,
+      (payload: DiscardRandomCardPayload) => {
+        currentGames[currentGameId].discardRandomCard(payload);
+      }
+    );
+
     socket.on(SOCKET_MSG_GAME.TAP_CARDS, (payload: TapCardsPayload) => {
       currentGames[currentGameId].tapCards(payload);
     });
 
     socket.on(SOCKET_MSG_GAME.FLIP_CARDS, (payload: FlipCardsPayload) => {
       currentGames[currentGameId].flipCards(payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.MILL, (payload: MillPayload) => {
+      currentGames[currentGameId].mill(socket, payload);
     });
 
     socket.on(SOCKET_MSG_GAME.PEEK, (payload: PeekPayload) => {

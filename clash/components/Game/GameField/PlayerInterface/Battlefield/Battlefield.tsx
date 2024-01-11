@@ -4,12 +4,14 @@ import { Player } from 'backend/database/gamestate.types';
 import useShortcut from 'hooks/useShortcut';
 import SHORTCUTS from 'constants/shortcuts';
 import useGameActions from 'components/Game/useGameActions';
+import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import BattlefieldCard from './BattlefieldCard/BattlefieldCard';
 import BattlefieldDropzone from './BattlefieldDropzone/BattlefieldDropzone';
 import BattlefieldSelection from './BattlefieldSelection/BattlefieldSelection';
 import { BattlefieldSelectionContextProvider } from './BattlefieldSelection/BattlefieldSelectionContext';
 
 import styles from './Battlefield.module.css';
+import useBattlefieldActions from './useBattlefieldActions';
 
 interface Props {
   player: Player;
@@ -20,9 +22,13 @@ interface Props {
 const Battlefield = ({ player, isFlipped, isSelf }: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  const { onTapCards } = useGameActions();
-
   const cards = player.zones.battlefield;
+
+  const { onTapCards } = useGameActions();
+  const battlefieldActions = useBattlefieldActions({
+    cardIds: cards.map((card) => card.clashId),
+    player,
+  });
 
   const untapCards = () => {
     onTapCards({
@@ -38,19 +44,21 @@ const Battlefield = ({ player, isFlipped, isSelf }: Props) => {
 
   return (
     <BattlefieldSelectionContextProvider player={player}>
-      <div className={styles.wrapper} ref={wrapperRef}>
-        <BattlefieldSelection isFlipped={isFlipped} player={player}>
-          <BattlefieldDropzone
-            player={player}
-            isFlipped={isFlipped}
-            wrapperRef={wrapperRef}
-          >
-            {cards.map((card) => (
-              <BattlefieldCard card={card} key={card.clashId} player={player} />
-            ))}
-          </BattlefieldDropzone>
-        </BattlefieldSelection>
-      </div>
+      <ContextMenu items={battlefieldActions}>
+        <div className={styles.wrapper} ref={wrapperRef}>
+          <BattlefieldSelection isFlipped={isFlipped} player={player}>
+            <BattlefieldDropzone
+              player={player}
+              isFlipped={isFlipped}
+              wrapperRef={wrapperRef}
+            >
+              {cards.map((card) => (
+                <BattlefieldCard card={card} key={card.clashId} player={player} />
+              ))}
+            </BattlefieldDropzone>
+          </BattlefieldSelection>
+        </div>
+      </ContextMenu>
     </BattlefieldSelectionContextProvider>
   );
 };

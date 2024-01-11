@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
 import { BattlefieldCard, Player, ZONES } from 'backend/database/gamestate.types';
-import useGetCardActions from 'hooks/useGetCardActions';
+import useCardActions from 'components/GameComponents/Card/cardActions/useCardActions';
 import BattlefieldSelectionContext from '../BattlefieldSelection/BattlefieldSelectionContext';
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
-  const { contextMenuItems, tapCards, flipCards } = useGetCardActions({
+  const { contextMenuItems, tapCards, flipCards } = useCardActions({
     cardIds: [card.clashId],
     battlefieldPlayerId: player.id,
     zone: ZONES.BATTLEFIELD,

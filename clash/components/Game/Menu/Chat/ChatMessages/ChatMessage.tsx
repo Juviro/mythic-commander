@@ -14,6 +14,8 @@ import MessagePeek from './Message/MessagePeek';
 import MessageSearchLibrary from './Message/MessageSearchLibrary';
 import MessageEndPeek from './Message/MessageEndPeek';
 import MessageShuffleLibrary from './Message/MessageShuffleLibrary';
+import MessageDiscardRandomCard from './Message/MessageDiscardRandomCard';
+import MessageMill from './Message/MessageMill';
 
 interface Props {
   message: GameLog;
@@ -27,6 +29,12 @@ const ChatMessage = ({ message }: Props) => {
   }
   if (logKey === 'MOVE_CARD') {
     return <MessageMove playerId={playerId} payload={payload} />;
+  }
+  if (logKey === 'DISCARD_RANDOM_CARD') {
+    return <MessageDiscardRandomCard playerId={playerId} payload={payload} />;
+  }
+  if (logKey === 'MILL') {
+    return <MessageMill playerId={playerId} payload={payload} />;
   }
   if (logKey === 'PEEK') {
     return <MessagePeek playerId={playerId} payload={payload} />;

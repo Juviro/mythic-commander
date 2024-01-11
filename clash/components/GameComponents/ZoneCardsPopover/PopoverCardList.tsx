@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import { VisibleCard } from 'backend/database/gamestate.types';
+import { VisibleCard, Zone } from 'backend/database/gamestate.types';
 import Dropzone from 'components/Game/Dropzone/Dropzone';
 import { DropCard } from 'types/dnd.types';
 import StackedCardList from '../StackedCardList/StackedCardList';
@@ -14,9 +14,18 @@ interface Props {
   titleRight?: ReactNode;
   bottom?: ReactNode;
   empty?: string;
+  zone: Zone;
 }
 
-const PopoverCardList = ({ cards, title, titleRight, empty, onDrop, bottom }: Props) => {
+const PopoverCardList = ({
+  cards,
+  title,
+  titleRight,
+  empty,
+  onDrop,
+  bottom,
+  zone,
+}: Props) => {
   return (
     <div className={styles.card_list_wrapper}>
       <h4 className={styles.title}>
@@ -26,7 +35,7 @@ const PopoverCardList = ({ cards, title, titleRight, empty, onDrop, bottom }: Pr
       <Dropzone onDrop={(card) => onDrop(card, 0)} disabled={Boolean(cards.length)}>
         <div className={styles.cards_list}>
           {empty && <div className={styles.cards_list_empty}>{empty}</div>}
-          <StackedCardList cards={cards} draggable onDrop={onDrop} />
+          <StackedCardList cards={cards} draggable onDrop={onDrop} zone={zone} />
         </div>
       </Dropzone>
       {bottom}
