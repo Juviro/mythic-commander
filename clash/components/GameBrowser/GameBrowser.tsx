@@ -5,6 +5,7 @@ import styles from './GameBrowser.module.css';
 import GameList from './GameList/GameList';
 import GameLobby from './GameLobby/GameLobby';
 import GameBrowserContext from './GameBrowserContext';
+import BrowserWarning from './BrowserWarning/BrowserWarning';
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const GameBrowser = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <BrowserWarning />
       <div className={styles.wrapper}>
         <div className={styles.inner}>{currentLobby ? <GameLobby /> : <GameList />}</div>
       </div>
