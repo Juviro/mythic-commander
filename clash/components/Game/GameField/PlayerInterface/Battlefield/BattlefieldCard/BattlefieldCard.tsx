@@ -1,6 +1,5 @@
 import React, { CSSProperties, useContext, useRef } from 'react';
 import classNames from 'classnames';
-import { createPortal } from 'react-dom';
 
 import { BattlefieldCard, Player } from 'backend/database/gamestate.types';
 import Card from 'components/GameComponents/Card/Card';
@@ -16,15 +15,14 @@ import useBattlefieldCardActions from './useBattlefieldCardActions';
 interface Props {
   card: BattlefieldCard;
   player: Player;
+  inSelection?: boolean;
 }
 
-const BattlefieldCard = ({ card, player }: Props) => {
+const BattlefieldCard = ({ card, player, inSelection }: Props) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const { getPlayerColor } = useContext(GameStateContext);
 
-  const { hoveredCardIds, selectedCardIds, selectionRectangleRef } = useContext(
-    BattlefieldSelectionContext
-  );
+  const { hoveredCardIds, selectedCardIds } = useContext(BattlefieldSelectionContext);
 
   const isHovered = hoveredCardIds?.includes(card.clashId);
   const isSelected = selectedCardIds?.includes(card.clashId);
@@ -50,39 +48,41 @@ const BattlefieldCard = ({ card, player }: Props) => {
     '--player-color': getPlayerColor(card.ownerId),
   } as CSSProperties;
 
-  const component = (
-    <ContextMenu items={isSelected ? null : contextMenuItems} placement="bottomLeft">
-      <div
-        style={style}
-        ref={cardRef}
-        onClick={onClick}
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        className={classNames(styles.card, 'battlefield_card', {
-          [styles.card__hovered]: isHovered,
-          [styles.card__selected]: isSelected,
-          [styles.card__tapped]: card.tapped,
-        })}
-        data-card-id={card.clashId}
-        data-tapped={card.tapped}
-        data-card-x={x}
-        data-card-y={y}
-      >
-        <Card
-          card={card}
-          flipped={card.flipped}
-          draggable={!isSelected}
-          zone="battlefield"
-          enlargeOnHover
-          noAnimation={isSelected}
-        />
-      </div>
-    </ContextMenu>
+  if (isSelected && !inSelection) {
+    return null;
+  }
+
+  return (
+    <div onContextMenu={inSelection ? undefined : (e) => e.stopPropagation()}>
+      <ContextMenu items={isSelected ? null : contextMenuItems} placement="bottomLeft">
+        <div
+          style={style}
+          ref={cardRef}
+          onClick={onClick}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          className={classNames(styles.card, 'battlefield_card', {
+            [styles.card__hovered]: isHovered,
+            [styles.card__selected]: isSelected,
+            [styles.card__tapped]: card.tapped,
+          })}
+          data-card-id={card.clashId}
+          data-tapped={card.tapped}
+          data-card-x={x}
+          data-card-y={y}
+        >
+          <Card
+            card={card}
+            flipped={card.flipped}
+            draggable={!isSelected}
+            zone="battlefield"
+            enlargeOnHover
+            noAnimation={isSelected}
+          />
+        </div>
+      </ContextMenu>
+    </div>
   );
-
-  if (!isSelected || !selectionRectangleRef.current) return component;
-
-  return <>{createPortal(component, selectionRectangleRef.current)}</>;
 };
 
 export default BattlefieldCard;

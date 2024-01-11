@@ -9,6 +9,7 @@ import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import useCardActions from 'components/GameComponents/Card/cardActions/useCardActions';
 import styles from './BattlefieldSelection.module.css';
 import BattlefieldSelectionContext from './BattlefieldSelectionContext';
+import BattlefieldCard from '../BattlefieldCard/BattlefieldCard';
 
 const PADDING = 15;
 const BORDER_WIDTH = 2;
@@ -121,6 +122,10 @@ const SelectionRectangle = ({
     }),
   });
 
+  const selectedCards = player.zones.battlefield.filter((card) =>
+    selectedCardIds.includes(card.clashId)
+  );
+
   return (
     <div
       onMouseDown={(e) => e.stopPropagation()}
@@ -137,7 +142,11 @@ const SelectionRectangle = ({
             [styles.selection_rectangle__visible]: selectedCardIds.length,
             [styles.selection_rectangle__dragging]: isDragging,
           })}
-        />
+        >
+          {selectedCards.map((card) => (
+            <BattlefieldCard card={card} key={card.clashId} player={player} inSelection />
+          ))}
+        </div>
       </ContextMenu>
     </div>
   );

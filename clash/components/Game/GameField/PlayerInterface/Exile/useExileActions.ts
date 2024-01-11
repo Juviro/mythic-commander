@@ -14,7 +14,7 @@ const useExileActions = ({ cardIds, player }: Props) => {
     zone: ZONES.EXILE,
   });
 
-  const graveyardActions: MenuProps['items'] = [
+  const exileActions: MenuProps['items'] = [
     {
       key: 'move to',
       label: 'Move all cards to...',
@@ -23,7 +23,7 @@ const useExileActions = ({ cardIds, player }: Props) => {
     },
   ];
 
-  return graveyardActions;
+  return exileActions;
 };
 
 export default useExileActions;

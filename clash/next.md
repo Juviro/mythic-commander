@@ -8,7 +8,6 @@
 # Current feature
 
 * Bugs:
-  * right clicking a card that's within a selection doesn't show the context menu
   * correct log message when putting card on bottom or nth position of library
 
 * card actions
@@ -103,4 +102,4 @@
 * on page load, cards in exile are animated
 * milling action animation is wrong on flipped board
 * align indicator when aligning both x and y not in center of card when it's left and/or top aligned
-
+* after moving all cards from graveyard -> library, whenever you draw a card after that, an animation is played fom graveyard to library

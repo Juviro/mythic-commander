@@ -14,7 +14,7 @@ const useBattlefieldActions = ({ cardIds, player }: Props) => {
     zone: ZONES.BATTLEFIELD,
   });
 
-  const graveyardActions: MenuProps['items'] = [
+  const battlefieldActions: MenuProps['items'] = [
     {
       key: 'move to',
       label: 'Move all cards to...',
@@ -23,7 +23,7 @@ const useBattlefieldActions = ({ cardIds, player }: Props) => {
     },
   ];
 
-  return graveyardActions;
+  return battlefieldActions;
 };
 
 export default useBattlefieldActions;
