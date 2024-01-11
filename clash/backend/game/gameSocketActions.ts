@@ -5,6 +5,7 @@ import {
   DiscardRandomCardPayload,
   EndPeekPayload,
   FlipCardsPayload,
+  MillPayload,
   MoveCardPayload,
   MoveCardsGroupPayload,
   PeekPayload,
@@ -83,6 +84,10 @@ const gameSocketActions = (io: Server) => {
 
     socket.on(SOCKET_MSG_GAME.FLIP_CARDS, (payload: FlipCardsPayload) => {
       currentGames[currentGameId].flipCards(payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.MILL, (payload: MillPayload) => {
+      currentGames[currentGameId].mill(socket, payload);
     });
 
     socket.on(SOCKET_MSG_GAME.PEEK, (payload: PeekPayload) => {

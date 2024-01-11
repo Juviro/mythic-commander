@@ -6,7 +6,7 @@ import { DndItemTypes, DropCardGroupOffset } from 'types/dnd.types';
 import useWindowSize from 'hooks/useWindowSize';
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
-import useGetCardActions from 'hooks/useGetCardActions';
+import useCardActions from 'components/GameComponents/Card/cardActions/useCardActions';
 import styles from './BattlefieldSelection.module.css';
 import BattlefieldSelectionContext from './BattlefieldSelectionContext';
 
@@ -64,7 +64,7 @@ const SelectionRectangle = ({
 
   useWindowSize();
 
-  const { contextMenuItems } = useGetCardActions({
+  const { contextMenuItems } = useCardActions({
     cardIds: selectedCardIds,
     battlefieldPlayerId: player.id,
     zone: ZONES.BATTLEFIELD,

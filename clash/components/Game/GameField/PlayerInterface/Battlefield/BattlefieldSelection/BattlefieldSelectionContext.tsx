@@ -11,7 +11,7 @@ import { Player, ZONES } from 'backend/database/gamestate.types';
 import useClickedOutside from 'hooks/useClickedOutside';
 import useShortcut from 'hooks/useShortcut';
 import SHORTCUTS from 'constants/shortcuts';
-import useGetCardActions from 'hooks/useGetCardActions';
+import useCardActions from 'components/GameComponents/Card/cardActions/useCardActions';
 
 interface ContextValue {
   hoveredCardIds: string[];
@@ -34,7 +34,7 @@ export const BattlefieldSelectionContextProvider = ({ children, player }: Props)
   const [hoveredCardIds, setHoveredCardIds] = useState<string[]>([]);
   const [selectedCardIds, setSelectedCardsIds] = useState<string[]>([]);
 
-  const { tapCards, flipCards } = useGetCardActions({
+  const { tapCards, flipCards } = useCardActions({
     cardIds: selectedCardIds,
     battlefieldPlayerId: player.id,
     zone: ZONES.BATTLEFIELD,

@@ -10,6 +10,7 @@ import {
   DiscardRandomCardPayload,
   EndPeekPayload,
   FlipCardsPayload,
+  MillPayload,
   MoveCardPayload,
   MoveCardsGroupPayload,
   PeekPayload,
@@ -353,6 +354,26 @@ export default class Game {
     });
 
     this.emitPlayerUpdate(player);
+  }
+
+  mill(socket: Socket, payload: MillPayload) {
+    const { amount, playerId } = payload;
+    const millingPlayer = this.getPlayerBySocket(socket);
+    const player = this.getPlayerById(playerId);
+
+    const milledCards = player.zones.library.splice(-amount) as VisibleCard[];
+    player.zones.graveyard.push(...milledCards);
+
+    this.emitPlayerUpdate(player);
+
+    this.logAction({
+      playerId: millingPlayer.id,
+      logKey: LOG_MESSAGES.MILL,
+      payload: {
+        peekedPlayerId: player.id,
+        amount,
+      },
+    });
   }
 
   peek(socket: Socket, payload: PeekPayload) {

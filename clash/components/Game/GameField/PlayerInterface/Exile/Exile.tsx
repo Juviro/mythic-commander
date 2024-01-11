@@ -12,7 +12,9 @@ import StackedCardList from 'components/GameComponents/StackedCardList/StackedCa
 import GameStateContext from 'components/Game/GameStateContext';
 import { DndItemTypes, DropCard } from 'types/dnd.types';
 
+import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import styles from './Exile.module.css';
+import useExileActions from './useExileActions';
 
 interface Props {
   player: Player;
@@ -31,6 +33,11 @@ const Exile = ({ player }: Props) => {
       isOver: !!monitor.isOver(),
       canDrop: !!monitor.canDrop(),
     }),
+  });
+
+  const exileActions = useExileActions({
+    player,
+    cardIds: player.zones.exile.map(({ clashId }) => clashId),
   });
 
   const onDrop = (card: DropCard) => {
@@ -62,18 +69,20 @@ const Exile = ({ player }: Props) => {
           />
         }
       >
-        <div className={styles.wrapper}>
-          <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id}>
-            <div className={styles.inner}>
-              <ExileImage />
-              {cards.map((card) => (
-                <div key={card.clashId} className={styles.card}>
-                  <Card card={card} dynamicSize zone="exile" />
-                </div>
-              ))}
-            </div>
-          </Dropzone>
-        </div>
+        <ContextMenu items={exileActions}>
+          <div className={styles.wrapper}>
+            <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id}>
+              <div className={styles.inner}>
+                <ExileImage />
+                {cards.map((card) => (
+                  <div key={card.clashId} className={styles.card}>
+                    <Card card={card} dynamicSize zone="exile" />
+                  </div>
+                ))}
+              </div>
+            </Dropzone>
+          </div>
+        </ContextMenu>
       </Popover>
     </Tooltip>
   );

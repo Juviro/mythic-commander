@@ -34,6 +34,7 @@ export const SOCKET_MSG_GAME = {
   DISCARD_RANDOM_CARD: 'discard_random_card',
   TAP_CARDS: 'tap_cards',
   FLIP_CARDS: 'flip_cards',
+  MILL: 'mill',
   PEEK: 'peek',
   END_PEEK: 'end_peek',
   SEARCH_LIBRARY: 'search_library',
@@ -76,6 +77,11 @@ export interface FlipCardsPayload {
   cardIds: string[];
   battlefieldPlayerId: string;
   flipped?: boolean;
+}
+
+export interface MillPayload {
+  playerId: string;
+  amount: number;
 }
 
 export interface PeekPayload {

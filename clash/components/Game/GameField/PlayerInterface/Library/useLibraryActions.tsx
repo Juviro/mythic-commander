@@ -6,14 +6,18 @@ import { pluralizeCards } from 'components/Game/Menu/Chat/ChatMessages/util';
 import useGameActions from 'components/Game/useGameActions';
 import { useContext } from 'react';
 
-const getPeekSubItems = (onClick: (amount: number) => void, count: number) => {
+const getPeekSubItems = (
+  onClick: (amount: number) => void,
+  count: number,
+  key: string
+) => {
   const maxPeekCount = Math.min(count, 10);
 
   const items: ItemType[] = new Array(maxPeekCount).fill(0).map((_, index) => {
     const label = `...top ${pluralizeCards(index + 1)}`;
 
     return {
-      key: `peek-${index}`,
+      key: `${key}-${index}`,
       label,
       onClick: () => onClick(index + 1),
     };
@@ -24,7 +28,7 @@ const getPeekSubItems = (onClick: (amount: number) => void, count: number) => {
       type: 'divider',
     });
     items.push({
-      key: 'peek-custom',
+      key: `${key}-custom`,
       label: (
         <Input
           placeholder="Custom amount..."
@@ -44,9 +48,13 @@ const getPeekSubItems = (onClick: (amount: number) => void, count: number) => {
 
 const useLibraryActions = (player: Player) => {
   const { player: self } = useContext(GameStateContext);
-  const { onPeek, onSearchLibrary, onShuffle } = useGameActions();
-  const onPeekCard = (amount: number) => {
+  const { onPeek, onMill, onSearchLibrary, onShuffle } = useGameActions();
+
+  const onPeekCards = (amount: number) => {
     onPeek(player.id, 'library', amount);
+  };
+  const onMillCards = (amount: number) => {
+    onMill(player.id, amount);
   };
 
   const isSelf = player.id === self!.id;
@@ -62,7 +70,13 @@ const useLibraryActions = (player: Player) => {
       key: 'peek',
       label: 'Look at...',
       disabled: !player.zones.library.length,
-      children: getPeekSubItems(onPeekCard, player.zones.library.length),
+      children: getPeekSubItems(onPeekCards, player.zones.library.length, 'peek'),
+    },
+    {
+      key: 'mill',
+      label: 'Mill cards...',
+      disabled: !player.zones.library.length,
+      children: getPeekSubItems(onMillCards, player.zones.library.length, 'mill'),
     },
   ];
 

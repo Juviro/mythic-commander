@@ -12,6 +12,7 @@ export const LOG_MESSAGES = {
   MOVE_CARD: 'MOVE_CARD',
   DISCARD_RANDOM_CARD: 'DISCARD_RANDOM_CARD',
   PEEK: 'PEEK',
+  MILL: 'MILL',
   END_PEEK: 'END_PEEK',
   SEARCH_LIBRARY: 'SEARCH_LIBRARY',
   SHUFFLE_LIBRARY: 'SHUFFLE_LIBRARY',
@@ -38,6 +39,11 @@ export interface LogPayloadMoveZone {
 
 export interface LogPayloadDiscardRandomCard {
   cardName: string;
+}
+
+export interface LogPayloadMill {
+  amount: number;
+  peekedPlayerId: string;
 }
 
 export interface LogPayloadPeek {
@@ -101,6 +107,11 @@ interface LogMessageDiscardRandomCard extends LogMessageWithPlayer {
   payload: LogPayloadDiscardRandomCard;
 }
 
+interface LogMill extends LogMessageWithPlayer {
+  logKey: 'MILL';
+  payload: LogPayloadMill;
+}
+
 interface LogPeek extends LogMessageWithPlayer {
   logKey: 'PEEK';
   payload: LogPayloadPeek;
@@ -152,6 +163,7 @@ export type LogMessage =
   | LogMessageDraw
   | LogMessageMove
   | LogMessageDiscardRandomCard
+  | LogMill
   | LogPeek
   | LogEndPeek
   | LogSearchLibrary

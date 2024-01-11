@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useGetCardActions from 'hooks/useGetCardActions';
+import useCardActions from 'components/GameComponents/Card/cardActions/useCardActions';
 import { VisibleCard, Zone } from 'backend/database/gamestate.types';
 import { DndItemTypes } from 'types/dnd.types';
 import ContextMenu from '../ContextMenu/ContextMenu';
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const StackedCardListCard = ({ card, draggable, zone }: Props) => {
-  const { contextMenuItems } = useGetCardActions({
+  const { contextMenuItems } = useCardActions({
     cardIds: [card.clashId],
     contextMenuTitle: card.name,
     zone,

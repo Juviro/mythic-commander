@@ -11,16 +11,6 @@
   * right clicking a card that's within a selection doesn't show the context menu
   * correct log message when putting card on bottom or nth position of library
 
-* card context menu
-  * StackedCardList, Hand, Battlefield, Exile
-  * actions:
-    * move to different zone
-      * hand
-      * library (top, button, nth position)
-      * graveyard
-      * exile
-      * battlefield (face down)
-
 * card actions
   * counter
     * +1/+1
@@ -36,16 +26,12 @@
   * delete it from that context whenever the cardId is in an update
 
 * battlefield
-  * emblems
   * context menu
-    * create token
-
-* library:
-  * mill X
+    * move all cards to...
+    * create token, including emblems
 
 * hand
-  * discard random card
-  * play card face-down (e.g. fortell, morph)
+  * play card face-down (e.g. fortell, morph) -> type already defined: FaceDownCard
 
 * shortcuts for every action
 
@@ -107,6 +93,7 @@
 
 * prevent re-render of interface components when menu changes, e.g. when changing life
 * use transform to set card position on battlefield
+* when moving multiple cards, only send one request and update (e.g. move all cards from graveyard to exile)
 
 # Backlog Bugs
 

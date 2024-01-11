@@ -27,9 +27,7 @@ const useHandCardActions = (player: Player) => {
     },
   ];
 
-  return {
-    handActions,
-  };
+  return handActions;
 };
 
 export default useHandCardActions;

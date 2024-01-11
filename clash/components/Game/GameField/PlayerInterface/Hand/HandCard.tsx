@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Player, VisibleCard, ZONES } from 'backend/database/gamestate.types';
-import useGetCardActions from 'hooks/useGetCardActions';
+import useCardActions from 'components/GameComponents/Card/cardActions/useCardActions';
 import Card from 'components/GameComponents/Card/Card';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 
@@ -15,12 +15,12 @@ interface Props {
 }
 
 const HandCard = ({ card, isSelf, player }: Props) => {
-  const { contextMenuItems } = useGetCardActions({
+  const { contextMenuItems } = useCardActions({
     cardIds: [card.clashId],
     contextMenuTitle: card.name,
     zone: ZONES.HAND,
   });
-  const { handActions } = useHandCardActions(player);
+  const handActions = useHandCardActions(player);
 
   const allActions = [...contextMenuItems, ...handActions];
 
