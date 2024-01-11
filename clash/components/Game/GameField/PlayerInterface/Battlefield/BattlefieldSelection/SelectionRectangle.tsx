@@ -6,9 +6,10 @@ import { DndItemTypes, DropCardGroupOffset } from 'types/dnd.types';
 import useWindowSize from 'hooks/useWindowSize';
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
-import useGetCardActions from 'hooks/useGetCardActions';
+import useCardActions from 'components/GameComponents/Card/cardActions/useCardActions';
 import styles from './BattlefieldSelection.module.css';
 import BattlefieldSelectionContext from './BattlefieldSelectionContext';
+import BattlefieldCard from '../BattlefieldCard/BattlefieldCard';
 
 const PADDING = 15;
 const BORDER_WIDTH = 2;
@@ -64,7 +65,7 @@ const SelectionRectangle = ({
 
   useWindowSize();
 
-  const { contextMenuItems } = useGetCardActions({
+  const { contextMenuItems } = useCardActions({
     cardIds: selectedCardIds,
     battlefieldPlayerId: player.id,
     zone: ZONES.BATTLEFIELD,
@@ -121,6 +122,10 @@ const SelectionRectangle = ({
     }),
   });
 
+  const selectedCards = player.zones.battlefield.filter((card) =>
+    selectedCardIds.includes(card.clashId)
+  );
+
   return (
     <div
       onMouseDown={(e) => e.stopPropagation()}
@@ -137,7 +142,11 @@ const SelectionRectangle = ({
             [styles.selection_rectangle__visible]: selectedCardIds.length,
             [styles.selection_rectangle__dragging]: isDragging,
           })}
-        />
+        >
+          {selectedCards.map((card) => (
+            <BattlefieldCard card={card} key={card.clashId} player={player} inSelection />
+          ))}
+        </div>
       </ContextMenu>
     </div>
   );

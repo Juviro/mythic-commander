@@ -1,20 +1,21 @@
 import React, { CSSProperties } from 'react';
 
-import { VisibleCard } from 'backend/database/gamestate.types';
-import { DndItemTypes, DropCard } from 'types/dnd.types';
-import Card from '../Card/Card';
+import { VisibleCard, Zone } from 'backend/database/gamestate.types';
+import { DropCard } from 'types/dnd.types';
 
 import styles from './StackedCardList.module.css';
 import CardListHoverElement from './CardListHoverElement';
+import StackedCardListCard from './StackedCardListCard';
 
 interface Props {
   cards: VisibleCard[];
   draggable?: boolean;
   onDrop?: (item: DropCard, index: number) => void;
   color?: string;
+  zone: Zone;
 }
 
-const StackedCardList = ({ cards, draggable, onDrop, color }: Props) => {
+const StackedCardList = ({ cards, draggable, onDrop, color, zone }: Props) => {
   if (!cards.length) return null;
 
   const style = color ? ({ '--player-color': color } as CSSProperties) : undefined;
@@ -31,16 +32,7 @@ const StackedCardList = ({ cards, draggable, onDrop, color }: Props) => {
                 numberOfElements={cards.length + 1}
               />
             )}
-            <div className={styles.card}>
-              <Card
-                card={card}
-                draggable={draggable}
-                dropType={DndItemTypes.LIST_CARD}
-                noAnimation
-                enlargeOnHover
-                zone="library"
-              />
-            </div>
+            <StackedCardListCard card={card} draggable={draggable} zone={zone} />
           </React.Fragment>
         ))}
         {onDrop && (

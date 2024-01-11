@@ -1,20 +1,6 @@
-# Bugs
-
-* animate card when moved from any zone to battlefield
-* bigger card previews - maybe not in place but as chat overlay?
-* card preview for hand? to see backside
-
 # Current feature
 
-* card context menu
-  * StackedCardList, Hand, Battlefield, Exile
-  * actions:
-    * move to different zone
-      * hand
-      * library (top, button, nth position)
-      * graveyard
-      * exile
-      * battlefield (face down)
+* Bugs:
 
 * card actions
   * counter
@@ -23,24 +9,23 @@
     * loyalty / chapter(?) (maybe automatically)
     * ??? maybe retrieve from database (search for "XXX counter")
 
+# Bugs
+
+
+
 # MVP
 
-* dragging a card briefly shows the card in the original position (prod only because of latency)
-  * add context that stores new card positions whenever they are dropped in BattlefieldDropzone.
-  * check for that position in BattlefieldCard and overwrite original position
-  * delete it from that context whenever the cardId is in an update
+* card previews
+  * for hand to see backside  
+  * maybe display them over the chat instead of in-place?
+
 
 * battlefield
-  * emblems
   * context menu
-    * create token
-
-* library:
-  * mill X
+    * create token, including emblems
 
 * hand
-  * discard random card
-  * play card face-down (e.g. fortell, morph)
+  * play card face-down (e.g. fortell, morph) -> type already defined: FaceDownCard
 
 * shortcuts for every action
 
@@ -55,6 +40,12 @@
 
 # Backlog
 
+* animate card when moved from any zone to battlefield (?)
+
+* dragging a card briefly shows the card in the original position (prod only because of latency)
+  * add context that stores new card positions whenever they are dropped in BattlefieldDropzone.
+  * check for that position in BattlefieldCard and overwrite original position
+  * delete it from that context whenever the cardId is in an update
 
 * save gamestate whenever a player leaves
 
@@ -107,6 +98,7 @@
 
 * prevent re-render of interface components when menu changes, e.g. when changing life
 * use transform to set card position on battlefield
+* when moving multiple cards, only send one request and update (e.g. move all cards from graveyard to exile)
 
 # Backlog Bugs
 
@@ -116,4 +108,4 @@
 * on page load, cards in exile are animated
 * milling action animation is wrong on flipped board
 * align indicator when aligning both x and y not in center of card when it's left and/or top aligned
-
+* after moving all cards from graveyard -> library, whenever you draw a card after that, an animation is played fom graveyard to library

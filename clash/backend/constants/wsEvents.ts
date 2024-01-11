@@ -31,8 +31,10 @@ export const SOCKET_MSG_GAME = {
   DRAW_CARD: 'draw_card',
   MOVE_CARD: 'move_card',
   MOVE_CARDS_GROUP: 'move_cards_group',
+  DISCARD_RANDOM_CARD: 'discard_random_card',
   TAP_CARDS: 'tap_cards',
   FLIP_CARDS: 'flip_cards',
+  MILL: 'mill',
   PEEK: 'peek',
   END_PEEK: 'end_peek',
   SEARCH_LIBRARY: 'search_library',
@@ -61,6 +63,10 @@ export interface MoveCardsGroupPayload {
   delta: { x: number; y: number };
 }
 
+export interface DiscardRandomCardPayload {
+  playerId: string;
+}
+
 export interface TapCardsPayload {
   cardIds: string[];
   battlefieldPlayerId: string;
@@ -71,6 +77,11 @@ export interface FlipCardsPayload {
   cardIds: string[];
   battlefieldPlayerId: string;
   flipped?: boolean;
+}
+
+export interface MillPayload {
+  playerId: string;
+  amount: number;
 }
 
 export interface PeekPayload {

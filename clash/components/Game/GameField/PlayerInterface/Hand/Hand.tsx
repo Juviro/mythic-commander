@@ -2,12 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 import { useDrop } from 'react-dnd';
 
-import Card from 'components/GameComponents/Card/Card';
-import { Player } from 'backend/database/gamestate.types';
+import { Player, VisibleCard } from 'backend/database/gamestate.types';
 import { DndItemTypes } from 'types/dnd.types';
 import HandHoverElement from './HandHoverElement';
 
 import styles from './Hand.module.css';
+import HandCard from './HandCard';
 
 const getMaxDegree = (length: number) => {
   if (length === 2) return 2.5;
@@ -72,9 +72,7 @@ const Hand = ({ player, isSelf }: Props) => {
             className={styles.card_wrapper}
             style={getCardStyles(index, hand.length)}
           >
-            <div className={styles.card}>
-              <Card card={card} draggable={isSelf} zone="hand" />
-            </div>
+            <HandCard card={card as VisibleCard} isSelf={isSelf} player={player} />
           </div>
         </React.Fragment>
       ))}

@@ -8,7 +8,7 @@ interface Props extends PropsWithChildren {
 
 const ContextMenu = ({ children, items, placement = 'top' }: Props) => {
   // eslint-disable-next-line react/jsx-no-useless-fragment
-  if (!items) return <>{children}</>;
+  if (!items?.length) return <>{children}</>;
 
   return (
     <Dropdown

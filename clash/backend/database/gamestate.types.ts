@@ -16,13 +16,20 @@ export interface VisibleCard extends HiddenCard {
   name: string;
   flippable?: boolean;
 }
+
 export interface BattlefieldCard extends VisibleCard {
   tapped?: boolean;
   flipped?: boolean;
+  faceDown?: boolean;
   position?: {
     x: number;
     y: number;
   };
+}
+
+export interface FaceDownCard extends HiddenCard, Pick<BattlefieldCard, 'position'> {
+  tapped?: boolean;
+  faceDown?: boolean;
 }
 
 export interface Commander extends Omit<VisibleCard, 'ownerId' | 'position'> {

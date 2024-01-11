@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Tooltip } from 'antd';
 
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import LibraryImage from 'public/assets/icons/library.svg';
@@ -8,7 +9,6 @@ import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import GameStateContext from 'components/Game/GameStateContext';
 import ZoneCardsPopover from 'components/GameComponents/ZoneCardsPopover/ZoneCardsPopover';
 import { pluralizeCards } from 'components/Game/Menu/Chat/ChatMessages/util';
-import { Tooltip } from 'antd';
 import { DropCard } from 'types/dnd.types';
 import CardStack from '../CardStack/CardStack';
 import useLibraryActions from './useLibraryActions';
@@ -46,7 +46,10 @@ const Library = ({ player, isSelf }: Props) => {
     >
       <div className={styles.wrapper}>
         <div className={styles.popover_wrapper}>
-          <ZoneCardsPopover cards={isPeeking ? peekingCards.cards : null} />
+          <ZoneCardsPopover
+            cards={isPeeking ? peekingCards.cards : null}
+            zone={ZONES.LIBRARY}
+          />
         </div>
         <ContextMenu items={items}>
           <div
