@@ -1,9 +1,10 @@
 import { Input, MenuProps } from 'antd';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
-import { Player } from 'backend/database/gamestate.types';
+import { Player, ZONES } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
 import { pluralizeCards } from 'components/Game/Menu/Chat/ChatMessages/util';
 import useGameActions from 'components/Game/useGameActions';
+import useMoveCardActions from 'components/GameComponents/Card/cardActions/useMoveCardActions';
 import { useContext } from 'react';
 
 const getPeekSubItems = (
@@ -50,6 +51,14 @@ const useLibraryActions = (player: Player) => {
   const { player: self } = useContext(GameStateContext);
   const { onPeek, onMill, onSearchLibrary, onShuffle } = useGameActions();
 
+  const cardIds = player.zones.library.map((card) => card.clashId);
+
+  const moveCardActions = useMoveCardActions({
+    cardIds,
+    player,
+    zone: ZONES.BATTLEFIELD,
+  });
+
   const onPeekCards = (amount: number) => {
     onPeek(player.id, 'library', amount);
   };
@@ -77,6 +86,12 @@ const useLibraryActions = (player: Player) => {
       label: 'Mill cards...',
       disabled: !player.zones.library.length,
       children: getPeekSubItems(onMillCards, player.zones.library.length, 'mill'),
+    },
+    {
+      key: 'move',
+      label: 'Move all cards to...',
+      disabled: !player.zones.library.length,
+      children: moveCardActions,
     },
   ];
 

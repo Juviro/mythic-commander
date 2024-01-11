@@ -76,7 +76,7 @@ const useCardActions = ({
     },
     {
       key: 'move',
-      label: 'Move to...',
+      label: `Move ${cardIds.length === 1 ? 'card' : 'all cards'} to...`,
       children: moveCardActions,
     },
   ];

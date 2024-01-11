@@ -7,11 +7,11 @@ interface Props {
   player: Player;
 }
 
-const useExileActions = ({ cardIds, player }: Props) => {
+const useBattlefieldActions = ({ cardIds, player }: Props) => {
   const moveCardActions = useMoveCardActions({
     cardIds,
     player,
-    zone: ZONES.EXILE,
+    zone: ZONES.BATTLEFIELD,
   });
 
   const graveyardActions: MenuProps['items'] = [
@@ -26,4 +26,4 @@ const useExileActions = ({ cardIds, player }: Props) => {
   return graveyardActions;
 };
 
-export default useExileActions;
+export default useBattlefieldActions;

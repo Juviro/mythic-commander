@@ -18,6 +18,7 @@ const useGraveyardActions = ({ cardIds, player }: Props) => {
     {
       key: 'move to',
       label: 'Move all cards to...',
+      disabled: !cardIds.length,
       children: moveCardActions,
     },
   ];
