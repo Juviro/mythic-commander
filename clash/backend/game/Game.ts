@@ -248,6 +248,13 @@ export default class Game {
       shouldRevealCardName = false;
     }
 
+    const getLibraryPosition = () => {
+      if (typeof index !== 'number' || to.zone !== 'library') return null;
+      if (index === 0) return 'bottom';
+      if (index === toPlayer.zones.library.length - 1) return 'top';
+      return toPlayer.zones.library.length - index;
+    };
+
     const playerId = this.getPlayerBySocket(socket).id;
     this.logAction({
       playerId,
@@ -261,6 +268,7 @@ export default class Game {
         to: {
           zone: to.zone,
           playerId: toPlayer.id,
+          libraryPosition: getLibraryPosition(),
         },
       },
     });

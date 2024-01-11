@@ -1,14 +1,6 @@
-# Bugs
-
-* animate card when moved from any zone to battlefield
-* bigger card previews
-* card preview for hand? to see backside
-* it's possible to have a card selection on multiple battlefields
-
 # Current feature
 
 * Bugs:
-  * correct log message when putting card on bottom or nth position of library
 
 * card actions
   * counter
@@ -17,16 +9,21 @@
     * loyalty / chapter(?) (maybe automatically)
     * ??? maybe retrieve from database (search for "XXX counter")
 
+  # Bugs
+
+  * animate card when moved from any zone to battlefield (?)
+  * it's possible to have a card selection on multiple battlefields
+
+
 # MVP
 
-* dragging a card briefly shows the card in the original position (prod only because of latency)
-  * add context that stores new card positions whenever they are dropped in BattlefieldDropzone.
-  * check for that position in BattlefieldCard and overwrite original position
-  * delete it from that context whenever the cardId is in an update
+* card previews
+  * for hand to see backside  
+  * maybe display them over the chat instead of in-place?
+
 
 * battlefield
   * context menu
-    * move all cards to...
     * create token, including emblems
 
 * hand
@@ -39,8 +36,13 @@
 
 * when aligning a card stacked with lower x/y, put it behind the other card
 
+
 # Backlog
 
+* dragging a card briefly shows the card in the original position (prod only because of latency)
+  * add context that stores new card positions whenever they are dropped in BattlefieldDropzone.
+  * check for that position in BattlefieldCard and overwrite original position
+  * delete it from that context whenever the cardId is in an update
 
 * save gamestate whenever a player leaves
 

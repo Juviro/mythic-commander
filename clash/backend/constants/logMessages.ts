@@ -30,7 +30,9 @@ export type LogKey = typeof LOG_MESSAGES[keyof typeof LOG_MESSAGES];
 interface MoveCardLocation {
   zone: Zone;
   playerId: string;
+  libraryPosition?: 'top' | 'bottom' | number | null;
 }
+
 export interface LogPayloadMoveZone {
   cardName: string | null;
   from: MoveCardLocation;

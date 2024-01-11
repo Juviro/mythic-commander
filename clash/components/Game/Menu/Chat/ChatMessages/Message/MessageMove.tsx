@@ -4,6 +4,7 @@ import { LogPayloadMoveZone } from 'backend/constants/logMessages';
 import ColoredPlayerName from '../../../../../GameComponents/ColoredPlayerName/ColoredPlayerName';
 
 import styles from '../../Chat.module.css';
+import { getNthLabel } from '../util';
 
 const getZoneLabelFrom = (zone: string, playerId?: string | null) => {
   if (playerId) {
@@ -86,6 +87,29 @@ const MessageMove = ({ payload, playerId }: Props) => {
   if (payload.to.zone === 'exile') {
     action = 'exiled';
     actionSuffix = `from ${getZoneLabelFrom(payload.from.zone)}`;
+  }
+
+  if (payload.to.zone === 'library' && payload.to.libraryPosition !== null) {
+    action = 'put';
+
+    if (typeof payload.to.libraryPosition === 'number') {
+      actionSuffix = (
+        <>
+          <span>into their library </span>
+          <b>{getNthLabel(payload.to.libraryPosition + 1)}</b>
+          <span> from the top</span>
+        </>
+      );
+    } else {
+      actionSuffix = (
+        <>
+          <span>on</span>
+          <span>{payload.to.libraryPosition === 'bottom' && ' the'}</span>
+          <b>{` ${payload.to.libraryPosition} `}</b>
+          <span>of their library</span>
+        </>
+      );
+    }
   }
 
   if (!action) {
