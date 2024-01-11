@@ -45,6 +45,7 @@ export const BattlefieldSelectionContextProvider = ({ children, player }: Props)
   useShortcut(SHORTCUTS.TAP, tapCards, {
     disabled,
   });
+
   useShortcut(SHORTCUTS.FLIP, flipCards, {
     disabled,
   });

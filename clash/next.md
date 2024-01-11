@@ -9,10 +9,8 @@
     * loyalty / chapter(?) (maybe automatically)
     * ??? maybe retrieve from database (search for "XXX counter")
 
-  # Bugs
+# Bugs
 
-  * animate card when moved from any zone to battlefield (?)
-  * it's possible to have a card selection on multiple battlefields
 
 
 # MVP
@@ -38,6 +36,8 @@
 
 
 # Backlog
+
+* animate card when moved from any zone to battlefield (?)
 
 * dragging a card briefly shows the card in the original position (prod only because of latency)
   * add context that stores new card positions whenever they are dropped in BattlefieldDropzone.
