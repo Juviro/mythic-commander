@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { ReactNode, useContext } from 'react';
 import { Input, MenuProps } from 'antd';
 
 import { ZONES, Zone } from 'backend/database/gamestate.types';
@@ -42,6 +42,7 @@ interface Props {
   battlefieldPlayerId?: string;
   hiddenActionKeys?: string[];
   zone?: Zone;
+  contextMenuTitle?: ReactNode;
 }
 
 const useGetCardActions = ({
@@ -49,6 +50,7 @@ const useGetCardActions = ({
   battlefieldPlayerId,
   hiddenActionKeys,
   zone,
+  contextMenuTitle,
 }: Props) => {
   const { player } = useContext(GameStateContext);
   const { onTapCards, onFlipCards, onMoveCard } = useGameActions();
@@ -91,11 +93,13 @@ const useGetCardActions = ({
     });
   };
 
+  const hideTitle = cardIds.length <= 1 && !contextMenuTitle;
+
   const contextMenuItems = [
     {
       key: 'title',
-      label: `${cardIds.length} cards selected`,
-      hidden: cardIds.length <= 1,
+      label: contextMenuTitle || `${cardIds.length} cards selected`,
+      hidden: hideTitle,
       style: {
         backgroundColor: 'white',
         cursor: 'default',
@@ -103,7 +107,7 @@ const useGetCardActions = ({
     },
     {
       type: 'divider' as const,
-      hidden: cardIds.length <= 1,
+      hidden: hideTitle,
     },
     {
       key: 'tap',
@@ -162,6 +166,7 @@ const useGetCardActions = ({
             </ContextMenuIcon>
           ),
           label: 'Top of Library',
+          hidden: zone === 'library',
           onClick: onMoveToLibrary(player!.zones.library.length || 0),
         },
         {
@@ -172,6 +177,7 @@ const useGetCardActions = ({
             </ContextMenuIcon>
           ),
           label: 'Bottom of Library',
+          hidden: zone === 'library',
           onClick: onMoveToLibrary(0),
         },
         {
@@ -182,6 +188,7 @@ const useGetCardActions = ({
             </ContextMenuIcon>
           ),
           label: 'Nth position of Library',
+          hidden: zone === 'library',
           children: getCustomLibraryPositionItem(
             onMoveToLibrary,
             player!.zones.library.length

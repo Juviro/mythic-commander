@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import { LogPlayoadMoveZone } from 'backend/constants/logMessages';
+import { LogPayloadMoveZone } from 'backend/constants/logMessages';
 import ColoredPlayerName from '../../../../../GameComponents/ColoredPlayerName/ColoredPlayerName';
 
 import styles from '../../Chat.module.css';
@@ -54,7 +54,7 @@ const getZoneLabelTo = (zone: string) => {
 
 interface Props {
   playerId: string;
-  payload: LogPlayoadMoveZone;
+  payload: LogPayloadMoveZone;
 }
 
 const MessageMove = ({ payload, playerId }: Props) => {

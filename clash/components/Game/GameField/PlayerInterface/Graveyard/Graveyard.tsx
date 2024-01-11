@@ -40,7 +40,12 @@ const Graveyard = ({ player }: Props) => {
         title={title}
         open={cards.length ? undefined : false}
         content={
-          <StackedCardList cards={cards} draggable color={getPlayerColor(player.id)} />
+          <StackedCardList
+            cards={cards}
+            draggable
+            color={getPlayerColor(player.id)}
+            zone={ZONES.GRAVEYARD}
+          />
         }
       >
         <div className={styles.wrapper}>

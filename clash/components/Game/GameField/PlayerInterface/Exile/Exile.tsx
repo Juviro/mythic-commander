@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Popover, Tooltip } from 'antd';
 import { useDrop } from 'react-dnd';
 
-import { Player } from 'backend/database/gamestate.types';
+import { Player, ZONES } from 'backend/database/gamestate.types';
 import ExileImage from 'public/assets/icons/exile.svg';
 import Dropzone from 'components/Game/Dropzone/Dropzone';
 import useGameActions from 'components/Game/useGameActions';
@@ -54,7 +54,12 @@ const Exile = ({ player }: Props) => {
         trigger="click"
         title={title}
         content={
-          <StackedCardList cards={cards} draggable color={getPlayerColor(player.id)} />
+          <StackedCardList
+            cards={cards}
+            draggable
+            color={getPlayerColor(player.id)}
+            zone={ZONES.EXILE}
+          />
         }
       >
         <div className={styles.wrapper}>

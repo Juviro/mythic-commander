@@ -1,16 +1,17 @@
 import React, { PropsWithChildren, useContext } from 'react';
 import { Popover } from 'antd';
 
-import { VisibleCard } from 'backend/database/gamestate.types';
+import { VisibleCard, Zone } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
 import PopoverContent from './PopoverContent';
 
 interface Props extends PropsWithChildren {
   cards?: VisibleCard[] | null;
   trigger?: 'click' | 'hover';
+  zone: Zone;
 }
 
-const ZoneCardsPopover = ({ children, cards, trigger }: Props) => {
+const ZoneCardsPopover = ({ children, cards, trigger, zone }: Props) => {
   const { getPlayerColor } = useContext(GameStateContext);
   if (!cards?.length) {
     // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -21,7 +22,7 @@ const ZoneCardsPopover = ({ children, cards, trigger }: Props) => {
 
   return (
     <Popover
-      content={<PopoverContent color={color} />}
+      content={<PopoverContent color={color} zone={zone} />}
       open={trigger ? undefined : true}
       placement="topLeft"
       trigger={trigger}

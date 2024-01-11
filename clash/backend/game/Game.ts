@@ -7,6 +7,7 @@ import {
   Zone,
 } from 'backend/database/gamestate.types';
 import {
+  DiscardRandomCardPayload,
   EndPeekPayload,
   FlipCardsPayload,
   MoveCardPayload,
@@ -298,6 +299,26 @@ export default class Game {
     if (playerFrom.id !== playerTo.id) {
       this.emitPlayerUpdate(playerFrom);
     }
+  }
+
+  discardRandomCard(payload: DiscardRandomCardPayload) {
+    const { playerId } = payload;
+    const player = this.getPlayerById(playerId);
+
+    const randomIndex = Math.floor(Math.random() * player.zones.hand.length);
+    const card = player.zones.hand.splice(randomIndex, 1)[0] as VisibleCard;
+    if (!card) return;
+
+    player.zones.graveyard.push(card);
+
+    this.emitPlayerUpdate(player);
+    this.logAction({
+      playerId,
+      logKey: LOG_MESSAGES.DISCARD_RANDOM_CARD,
+      payload: {
+        cardName: card.name,
+      },
+    });
   }
 
   tapCards(payload: TapCardsPayload) {

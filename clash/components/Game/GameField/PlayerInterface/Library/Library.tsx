@@ -46,7 +46,10 @@ const Library = ({ player, isSelf }: Props) => {
     >
       <div className={styles.wrapper}>
         <div className={styles.popover_wrapper}>
-          <ZoneCardsPopover cards={isPeeking ? peekingCards.cards : null} />
+          <ZoneCardsPopover
+            cards={isPeeking ? peekingCards.cards : null}
+            zone={ZONES.LIBRARY}
+          />
         </div>
         <ContextMenu items={items}>
           <div

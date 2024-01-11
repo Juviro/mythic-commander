@@ -10,6 +10,7 @@ import {
 export const LOG_MESSAGES = {
   DRAW_CARD: 'DRAW_CARD',
   MOVE_CARD: 'MOVE_CARD',
+  DISCARD_RANDOM_CARD: 'DISCARD_RANDOM_CARD',
   PEEK: 'PEEK',
   END_PEEK: 'END_PEEK',
   SEARCH_LIBRARY: 'SEARCH_LIBRARY',
@@ -29,10 +30,14 @@ interface MoveCardLocation {
   zone: Zone;
   playerId: string;
 }
-export interface LogPlayoadMoveZone {
+export interface LogPayloadMoveZone {
   cardName: string | null;
   from: MoveCardLocation;
   to: MoveCardLocation;
+}
+
+export interface LogPayloadDiscardRandomCard {
+  cardName: string;
 }
 
 export interface LogPayloadPeek {
@@ -88,7 +93,12 @@ interface LogMessageDraw extends LogMessageWithPlayer {
 
 interface LogMessageMove extends LogMessageWithPlayer {
   logKey: 'MOVE_CARD';
-  payload: LogPlayoadMoveZone;
+  payload: LogPayloadMoveZone;
+}
+
+interface LogMessageDiscardRandomCard extends LogMessageWithPlayer {
+  logKey: 'DISCARD_RANDOM_CARD';
+  payload: LogPayloadDiscardRandomCard;
 }
 
 interface LogPeek extends LogMessageWithPlayer {
@@ -141,6 +151,7 @@ interface LogMessageSetActivePlayer extends LogMessageWithPlayer {
 export type LogMessage =
   | LogMessageDraw
   | LogMessageMove
+  | LogMessageDiscardRandomCard
   | LogPeek
   | LogEndPeek
   | LogSearchLibrary

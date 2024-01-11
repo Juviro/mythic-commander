@@ -52,6 +52,10 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.MOVE_CARDS_GROUP, payload);
   };
 
+  const onDiscardRandomCard = (playerId: string) => {
+    socket?.emit(SOCKET_MSG_GAME.DISCARD_RANDOM_CARD, { playerId });
+  };
+
   const onTapCards = (payload: TapCardsPayload) => {
     socket?.emit(SOCKET_MSG_GAME.TAP_CARDS, payload);
   };
@@ -109,6 +113,7 @@ const useGameActions = () => {
     onDrawCard,
     onMoveCard,
     onMoveCardsGroup,
+    onDiscardRandomCard,
     onTapCards,
     onFlipCards,
     onPeek,
