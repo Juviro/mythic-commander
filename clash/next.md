@@ -1,7 +1,7 @@
 # Bugs
 
 * animate card when moved from any zone to battlefield
-* bigger card previews
+* bigger card previews - maybe not in place but as chat overlay?
 * card preview for hand? to see backside
 
 # Current feature
@@ -49,10 +49,16 @@
 
 * when aligning a card stacked with lower x/y, put it behind the other card
 
+* flip coin, roll dice
+  * chat commands? /coin, /dice 3d6
+
+
 # Backlog
 
 
 * save gamestate whenever a player leaves
+
+* put reminder token onto library (e.g. for Mana Crypt)
 
 * add notes to card
 
@@ -67,7 +73,6 @@
   * active player changes
   * animated (grow)
 
-* flip coin, roll dice
 
 * long clicking life buttons adds in 10s
 

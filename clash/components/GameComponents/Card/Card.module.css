@@ -69,6 +69,6 @@
 
 .tooltip_image {
   border-radius: 4%;
-  width: var(--size-card-width);
+  width: 300px;
   aspect-ratio: var(--card-aspect-ratio);
 }
