@@ -11,6 +11,7 @@ import BattlefieldSelectionContext from '../BattlefieldSelection/BattlefieldSele
 
 import styles from './BattlefieldCard.module.css';
 import useBattlefieldCardActions from './useBattlefieldCardActions';
+import CardCounters from './CardCounters/CardCounters';
 
 interface Props {
   card: BattlefieldCard;
@@ -79,6 +80,7 @@ const BattlefieldCard = ({ card, player, inSelection }: Props) => {
             enlargeOnHover
             noAnimation={isSelected}
           />
+          <CardCounters card={card} />
         </div>
       </ContextMenu>
     </div>
