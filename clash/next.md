@@ -8,6 +8,7 @@
     * -1/-1
     * loyalty / chapter(?) (maybe automatically)
     * ??? maybe retrieve from database (search for "XXX counter")
+  * add icons for ability counters, e.g. lifelink
 
 # Bugs
 
@@ -58,7 +59,7 @@
 * adjust colors to work on every background
   * black and red are too dark
 
-* track commander damage
+* track commander + infect damage
 
 * message in the center of the screen for
   * active player changes

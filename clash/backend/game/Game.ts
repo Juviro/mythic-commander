@@ -7,6 +7,7 @@ import {
   Zone,
 } from 'backend/database/gamestate.types';
 import {
+  AddCountersPayload,
   DiscardRandomCardPayload,
   EndPeekPayload,
   FlipCardsPayload,
@@ -35,6 +36,7 @@ interface User {
   socket: Socket;
 }
 
+/* eslint-disable no-param-reassign */
 export default class Game {
   server: Server;
 
@@ -330,6 +332,40 @@ export default class Game {
     });
   }
 
+  addCounters(_socket: Socket, payload: AddCountersPayload) {
+    const { cardIds, battlefieldPlayerId, amount, type, subtract } = payload;
+
+    const player = this.getPlayerById(battlefieldPlayerId);
+
+    player.zones.battlefield.forEach((card) => {
+      if (!cardIds.includes(card.clashId)) return;
+      if (!card.counters) card.counters = {};
+
+      if (type === 'm1/m1' || type === 'p1/p1') {
+        const p1Counters = card.counters['p1/p1'] || 0;
+        const m1Counters = card.counters['m1/m1'] || 0;
+        const totalModification = p1Counters - m1Counters;
+        const delta = type === 'p1/p1' ? amount : -amount;
+        const newTotal = totalModification + (subtract ? -delta : delta);
+
+        if (newTotal < 0) {
+          card.counters['m1/m1'] = -newTotal;
+          delete card.counters['p1/p1'];
+        } else if (newTotal > 0) {
+          card.counters['p1/p1'] = newTotal;
+          delete card.counters['m1/m1'];
+        } else {
+          delete card.counters['p1/p1'];
+          delete card.counters['m1/m1'];
+        }
+        return;
+      }
+      card.counters[type] = (card.counters[type] || 0) + (subtract ? -amount : amount);
+    });
+
+    this.emitPlayerUpdate(player);
+  }
+
   tapCards(payload: TapCardsPayload) {
     const { cardIds, battlefieldPlayerId, tapped: overwriteTapped } = payload;
 
@@ -343,7 +379,6 @@ export default class Game {
 
     player.zones.battlefield.forEach((card) => {
       if (!cardIds.includes(card.clashId)) return;
-      // eslint-disable-next-line no-param-reassign
       card.tapped = tapped;
     });
 
@@ -357,7 +392,6 @@ export default class Game {
 
     player.zones.battlefield.forEach((card) => {
       if (!cardIds.includes(card.clashId)) return;
-      // eslint-disable-next-line no-param-reassign
       card.flipped = overwriteFlipped ?? !card.flipped;
     });
 
@@ -513,7 +547,6 @@ export default class Game {
     player.commanders.forEach((commander) => {
       if (commander.clashId !== payload.commanderClashId) return;
       previousTotal = commander.timesCasted;
-      // eslint-disable-next-line no-param-reassign
       commander.timesCasted = payload.total;
       commanderName = commander.name;
     })!;
@@ -537,7 +570,6 @@ export default class Game {
     this.gameState.players.forEach((p) => {
       if (p.id !== payload.forPlayerId) return;
       previousTotal = p.life;
-      // eslint-disable-next-line no-param-reassign
       p.life = payload.total;
     });
 

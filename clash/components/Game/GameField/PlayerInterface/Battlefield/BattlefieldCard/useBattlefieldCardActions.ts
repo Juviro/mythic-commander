@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { BattlefieldCard, Player, ZONES } from 'backend/database/gamestate.types';
 import useCardActions from 'components/GameComponents/Card/cardActions/useCardActions';
 import BattlefieldSelectionContext from '../BattlefieldSelection/BattlefieldSelectionContext';
+import useBattlefieldOnlyCardActions from './useBattlefieldOnlyCardActions';
 
 interface Props {
   card: BattlefieldCard;
@@ -15,6 +16,11 @@ const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
     cardIds: [card.clashId],
     battlefieldPlayerId: player.id,
     zone: ZONES.BATTLEFIELD,
+  });
+
+  const additionalBattlefieldContextMenuItems = useBattlefieldOnlyCardActions({
+    card,
+    player,
   });
 
   const { toggleCardSelection } = useContext(BattlefieldSelectionContext);
@@ -44,7 +50,7 @@ const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
     onClick,
     onMouseDown,
     onMouseMove,
-    contextMenuItems,
+    contextMenuItems: [...contextMenuItems, ...additionalBattlefieldContextMenuItems],
   };
 };
 

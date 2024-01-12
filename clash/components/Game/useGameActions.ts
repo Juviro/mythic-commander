@@ -15,6 +15,7 @@ import {
   TapCardsPayload,
   FlipCardsPayload,
   MillPayload,
+  AddCountersPayload,
 } from 'backend/constants/wsEvents';
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
@@ -55,6 +56,10 @@ const useGameActions = () => {
 
   const onDiscardRandomCard = (playerId: string) => {
     socket?.emit(SOCKET_MSG_GAME.DISCARD_RANDOM_CARD, { playerId });
+  };
+
+  const onAddCounters = (payload: AddCountersPayload) => {
+    socket?.emit(SOCKET_MSG_GAME.ADD_COUNTER, payload);
   };
 
   const onTapCards = (payload: TapCardsPayload) => {
@@ -120,6 +125,7 @@ const useGameActions = () => {
     onMoveCard,
     onMoveCardsGroup,
     onDiscardRandomCard,
+    onAddCounters,
     onTapCards,
     onFlipCards,
     onMill,

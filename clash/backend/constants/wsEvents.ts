@@ -32,6 +32,7 @@ export const SOCKET_MSG_GAME = {
   MOVE_CARD: 'move_card',
   MOVE_CARDS_GROUP: 'move_cards_group',
   DISCARD_RANDOM_CARD: 'discard_random_card',
+  ADD_COUNTER: 'add_counter',
   TAP_CARDS: 'tap_cards',
   FLIP_CARDS: 'flip_cards',
   MILL: 'mill',
@@ -65,6 +66,14 @@ export interface MoveCardsGroupPayload {
 
 export interface DiscardRandomCardPayload {
   playerId: string;
+}
+
+export interface AddCountersPayload {
+  cardIds: string[];
+  type: string;
+  amount: number;
+  subtract?: boolean;
+  battlefieldPlayerId: string;
 }
 
 export interface TapCardsPayload {
