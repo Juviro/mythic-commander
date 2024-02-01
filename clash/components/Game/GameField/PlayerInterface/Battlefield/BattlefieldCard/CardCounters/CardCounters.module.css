@@ -52,12 +52,28 @@
     background: radial-gradient(circle at 30% 30%, #00ff00, #000);
 }
 
+.counter_bubble__yellow {
+    background: radial-gradient(circle at 30% 30%, #ffff00, #000);
+    color: black;
+}
+
+.counter_bubble__red {
+    background: radial-gradient(circle at 30% 30%, #ff0000, #000);
+}
+
 .counter_bubble__blue {
     background: radial-gradient(circle at 30% 30%, #5cabff, #000);
 }
 
 .counter_bubble__blue ~ .counter_bubble__green {
     margin-top: 32px;
+}
+
+.counter_bubble__bottom_left {
+    bottom: 14px;
+    left: 24px;
+    right: unset;
+    top: unset;
 }
 
 .counter_bubble__minus:before {
@@ -78,8 +94,7 @@
 
 .counter_loyalty_icon {
     color: #0a0a08;
-    width: 48px;
-    height: 30px;
+    width: 54px;
 }
 
 .counter_loyalty_amount {
@@ -104,6 +119,7 @@
     height: 100%;
     margin-bottom: -3px;
 }
+
 
 .tooltip {
     display: flex;

@@ -15,7 +15,7 @@ const initMatch = async (lobby: Lobby) => {
 
     const cards = deck.cards
       .filter((card) => {
-        if (deck.commanderIds.includes(card.id)) {
+        if (deck.commanderIds?.includes(card.id)) {
           commanders.push({
             id: card.id,
             name: card.name,
@@ -49,7 +49,7 @@ const initMatch = async (lobby: Lobby) => {
       id: deck.id,
       name: deck.name,
       cards: randomizedCards,
-      commanders: commanders!,
+      commanders,
     };
   });
 

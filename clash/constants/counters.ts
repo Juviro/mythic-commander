@@ -292,5 +292,9 @@ export const getIconType = (counter: string) => {
 };
 
 export const getCountersLabel = (type: string) => {
-  return DEFAULT_COUNTERS.find((counter) => counter.type === type)?.label || type;
+  const capitalizeType = () => type.charAt(0).toUpperCase() + type.slice(1);
+
+  return (
+    DEFAULT_COUNTERS.find((counter) => counter.type === type)?.label || capitalizeType()
+  );
 };

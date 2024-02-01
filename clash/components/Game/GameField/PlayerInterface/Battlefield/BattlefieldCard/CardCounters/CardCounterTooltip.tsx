@@ -1,9 +1,10 @@
 import React, { MouseEvent, ReactNode } from 'react';
-
 import { Tooltip } from 'antd';
+
 import { getCountersLabel } from 'constants/counters';
 import { DeleteOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import useGameActions from 'components/Game/useGameActions';
+
 import styles from './CardCounters.module.css';
 
 interface Props {
@@ -34,6 +35,10 @@ const CardCounterTooltip = ({ children, type, amount, clashId }: Props) => {
     });
   };
 
+  const stopPropagation = (e: MouseEvent) => {
+    e.stopPropagation();
+  };
+
   const getLabelWithP1P1 = () => {
     if (type !== 'p1/p1' && type !== 'm1/m1') return getCountersLabel(type);
 
@@ -43,7 +48,7 @@ const CardCounterTooltip = ({ children, type, amount, clashId }: Props) => {
   };
 
   const tooltipContent = (
-    <div className={styles.tooltip}>
+    <div className={styles.tooltip} onClick={stopPropagation}>
       <div className={styles.tooltip_title}>
         {getLabelWithP1P1()}
         <DeleteOutlined onClick={onDelete} />

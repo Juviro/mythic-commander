@@ -7,7 +7,6 @@
 
 # Bugs
 
-* remove flags like "tapped", "counters" when card leaves battlefield
 
 # MVP
 
@@ -44,6 +43,8 @@
 
 * Allow selecting non-active decks as well
 
+* defeated player / ff
+
 # Easter Eggs
 
 * paw icon in front of name when playing with cat or dog commander
@@ -63,8 +64,6 @@
 
 * add notes to card
 
-* defeated player / ff
-
 * adjust colors to work on every background
   * black and red are too dark
 
@@ -73,7 +72,6 @@
 * message in the center of the screen for
   * active player changes
   * animated (grow)
-
 
 * long clicking life buttons adds in 10s
 
@@ -101,7 +99,7 @@
 
 * prevent interacting with own lib when someone is peeking it (self or opponent)
 
-* keep cards tapped when moving them to battlefield
+* keep cards visually tapped when moving them to battlefield
   * allow aligning as if the cards was untapped
 
 * distinguish between flipped and face-down. There can be a two-faced card that is face-down and therefore not visible
@@ -109,6 +107,8 @@
 * shuffle library animation
 
 * add option to play with planechase
+
+* allow rotating cards by 90, 180deg. Auto rotate battles
 
 # Optimizations
 

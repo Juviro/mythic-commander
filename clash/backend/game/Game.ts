@@ -30,6 +30,7 @@ import { getGameState, storeGameState } from 'backend/database/matchStore';
 import initMatch from 'backend/lobby/initMatch';
 import { randomizeArray } from 'utils/randomizeArray';
 import addLogEntry from './addLogEntry';
+import getInitialCardProps from './utils/getInitialCardProps';
 
 interface User {
   name: string;
@@ -199,7 +200,7 @@ export default class Game {
     });
   }
 
-  moveCard(socket: Socket, payload: MoveCardPayload) {
+  async moveCard(socket: Socket, payload: MoveCardPayload) {
     const { clashId, to, position, index } = payload;
     const playersToUpdate = new Set<string>([to.playerId]);
 
@@ -222,7 +223,20 @@ export default class Game {
       )
     );
 
-    const newCard = { ...cardToMove!, position: Game.fixPosition(position) };
+    let newCard = { ...cardToMove!, position: Game.fixPosition(position) };
+
+    if (to.zone === 'battlefield' && fromZone! !== 'battlefield') {
+      const additionalProps = await getInitialCardProps(newCard.id);
+      newCard = { ...newCard, ...additionalProps };
+    }
+    if (to.zone !== 'battlefield' && fromZone! === 'battlefield') {
+      delete (newCard as BattlefieldCard).counters;
+      delete (newCard as BattlefieldCard).tapped;
+      delete (newCard as BattlefieldCard).flipped;
+      delete (newCard as BattlefieldCard).faceDown;
+      delete (newCard as BattlefieldCard).position;
+    }
+
     if (fromPlayer!.id !== to.playerId && !newCard.ownerId) {
       newCard.ownerId = fromPlayer!.id;
     }

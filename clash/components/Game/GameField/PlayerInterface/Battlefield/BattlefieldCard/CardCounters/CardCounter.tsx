@@ -14,10 +14,21 @@ interface Props {
 }
 
 const CardCounter = ({ amount, type, clashId }: Props) => {
-  if (type === 'generic') {
+  if (type === 'generic' || type === 'lore' || type === 'defense') {
+    const colors = {
+      generic: 'green',
+      lore: 'yellow',
+      defense: 'red',
+    };
+    const colorClassName = `counter_bubble__${colors[type]}`;
+
     return (
       <CardCounterTooltip type={type} amount={amount} clashId={clashId}>
-        <div className={classNames(styles.counter_bubble, styles.counter_bubble__green)}>
+        <div
+          className={classNames(styles.counter_bubble, styles[colorClassName], {
+            [styles.counter_bubble__bottom_left]: type === 'defense',
+          })}
+        >
           <span>{amount}</span>
         </div>
       </CardCounterTooltip>
@@ -39,7 +50,7 @@ const CardCounter = ({ amount, type, clashId }: Props) => {
       </CardCounterTooltip>
     );
   }
-  if (type.toLowerCase() === 'loyalty') {
+  if (type === 'loyalty') {
     return (
       <CardCounterTooltip type={type} amount={amount} clashId={clashId}>
         <div className={classNames(styles.counter_loyalty)}>
@@ -63,7 +74,7 @@ const CardCounter = ({ amount, type, clashId }: Props) => {
         <div className={styles.counter_icon_wrapper}>
           {amount > 1 && <span>{amount}</span>}
           <SVG
-            src={`/assets/mtgicons/${namePrefix}-${type.toLowerCase()}.svg`}
+            src={`/assets/mtgicons/${namePrefix}-${type}.svg`}
             className={styles.counter_icon}
           />
         </div>
