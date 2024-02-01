@@ -1,20 +1,21 @@
 import React from 'react';
 
-import { BattlefieldCard } from 'backend/database/gamestate.types';
-import { DEFAULT_COUNTERS } from 'constants/counters';
-import PlusMinusCounter from './PlusMinusCounter';
+import { BattlefieldCard, Card } from 'backend/database/gamestate.types';
 
+import { getIconType } from 'constants/counters';
 import styles from './CardCounters.module.css';
+import CardCounter from './CardCounter';
 
 interface Props {
-  card: BattlefieldCard;
+  card: Card;
 }
 
-const getCountersLabel = (type: string) => {
-  return DEFAULT_COUNTERS.find((counter) => counter.type === type)?.label || type;
+const isBattlefieldCard = (card: Card): card is BattlefieldCard => {
+  return 'counters' in card;
 };
 
 const CardCounters = ({ card }: Props) => {
+  if (!isBattlefieldCard(card)) return null;
   if (!card.counters) return null;
 
   const counters = Object.entries(card.counters)
@@ -25,23 +26,20 @@ const CardCounters = ({ card }: Props) => {
     .sort((a, b) => {
       if (a.type === 'p1/p1' || a.type === 'm1/m1') return -1;
       if (b.type === 'p1/p1' || b.type === 'm1/m1') return 1;
-      return 0;
+
+      const hasIconA = getIconType(a.type);
+      const hasIconB = getIconType(b.type);
+
+      if (hasIconA && !hasIconB) return -1;
+      if (!hasIconA && hasIconB) return 1;
+      return a.type.localeCompare(b.type);
     });
 
   return (
     <div className={styles.wrapper}>
-      {counters.map(({ type, amount }) => {
-        if (type === 'p1/p1' || type === 'm1/m1') {
-          return <PlusMinusCounter key={type} type={type} amount={amount} />;
-        }
-
-        return (
-          <div key={type} className={styles.counter}>
-            {amount > 1 && <span>{amount}</span>}
-            <span className={styles.counter_label}>{getCountersLabel(type)}</span>
-          </div>
-        );
-      })}
+      {counters.map(({ type, amount }) => (
+        <CardCounter key={type} type={type} amount={amount} />
+      ))}
     </div>
   );
 };

@@ -1,9 +1,10 @@
 import { MouseEvent } from 'react';
-import { Input, MenuProps } from 'antd';
+import { MenuProps } from 'antd';
 
 import { BattlefieldCard, Player } from 'backend/database/gamestate.types';
 import useGameActions from 'components/Game/useGameActions';
-import { DEFAULT_COUNTERS } from 'constants/counters';
+import { ALL_COUNTERS, DEFAULT_COUNTERS } from 'constants/counters';
+import SubmittableSelect from 'components/GameComponents/ContextMenu/SubmittableSelect';
 
 interface Props {
   card: BattlefieldCard;
@@ -23,6 +24,11 @@ const useBattlefieldOnlyCardActions = ({ card, player }: Props) => {
     });
   };
 
+  const otherCounterOptions = ALL_COUNTERS.map((label) => ({
+    label,
+    value: label,
+  }));
+
   const additionalBattlefieldContextMenuItems: MenuProps['items'] = [
     {
       type: 'divider',
@@ -38,10 +44,9 @@ const useBattlefieldOnlyCardActions = ({ card, player }: Props) => {
       })).concat({
         key: 'custom-counter',
         label: (
-          <Input
-            placeholder="Custom Counter"
-            onPressEnter={(e) => onAddCounter(e.currentTarget.value)()}
-            onClick={(e) => e.stopPropagation()}
+          <SubmittableSelect
+            onSelect={(value) => onAddCounter(value)()}
+            options={otherCounterOptions}
           />
         ),
       }),

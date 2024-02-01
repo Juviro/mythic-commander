@@ -1,32 +1,39 @@
 # Current feature
 
+* add "generic" counters
+* display amount for icon counters
+
+
 * Bugs:
+  * cards not draggable anymore after selection rect changes
 
 * card actions
   * counter
-    * +1/+1
-    * -1/-1
-    * loyalty / chapter(?) (maybe automatically)
+    * loyalty / chapter / battle(?) counters automatically
     * ??? maybe retrieve from database (search for "XXX counter")
-  * add icons for ability counters, e.g. lifelink
+  * ability to remove or reduce counters
+  * remove all counters when card leaves battlefield
 
 # Bugs
 
-
+* remove flags like "tapped" when card leaves battlefield
 
 # MVP
 
 * card previews
   * for hand to see backside  
-  * maybe display them over the chat instead of in-place?
+  * display them over the chat or something instead of in-place
 
 
 * battlefield
   * context menu
     * create token, including emblems
+  * allow dragging card selection into graveyard, exile, hand
 
-* hand
-  * play card face-down (e.g. fortell, morph) -> type already defined: FaceDownCard
+* play card face-down (e.g. fortell, morph) -> type already defined: FaceDownCard
+  * from hand
+  * on battlefield
+  * from anywhere in library
 
 * shortcuts for every action
 
@@ -35,9 +42,20 @@
 
 * when aligning a card stacked with lower x/y, put it behind the other card
 
+
+* icons for card actions:
+  * tap (tap)
+  * flip (dfc-front, dfc-back)
+  * turn face-down (dfc-facedown)
+
 * flip coin, roll dice
   * chat commands? /coin, /dice 3d6
 
+* Allow selecting non-active decks as well
+
+# Easter Eggs
+
+* paw icon in front of name when playing with cat or dog commander
 
 # Backlog
 
@@ -68,6 +86,10 @@
 
 * long clicking life buttons adds in 10s
 
+* select all lands -> click "organize" -> all lands are neatly organized
+
+* when searching lib, add quick filter for lands with basic land types
+
 * stack ?
   * movable popup?
   * only visible when it contains cards or when dragging
@@ -94,6 +116,8 @@
 * distinguish between flipped and face-down. There can be a two-faced card that is face-down and therefore not visible
 
 * shuffle library animation
+
+* add option to play with planechase
 
 # Optimizations
 

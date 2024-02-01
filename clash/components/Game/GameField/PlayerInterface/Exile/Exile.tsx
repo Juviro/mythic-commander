@@ -57,19 +57,19 @@ const Exile = ({ player }: Props) => {
 
   return (
     <Tooltip title={title} mouseEnterDelay={0.5}>
-      <Popover
-        trigger="click"
-        title={title}
-        content={
-          <StackedCardList
-            cards={cards}
-            draggable
-            color={getPlayerColor(player.id)}
-            zone={ZONES.EXILE}
-          />
-        }
-      >
-        <ContextMenu items={exileActions}>
+      <ContextMenu items={exileActions}>
+        <Popover
+          trigger="click"
+          title={title}
+          content={
+            <StackedCardList
+              cards={cards}
+              draggable
+              color={getPlayerColor(player.id)}
+              zone={ZONES.EXILE}
+            />
+          }
+        >
           <div className={styles.wrapper}>
             <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id}>
               <div className={styles.inner}>
@@ -82,8 +82,8 @@ const Exile = ({ player }: Props) => {
               </div>
             </Dropzone>
           </div>
-        </ContextMenu>
-      </Popover>
+        </Popover>
+      </ContextMenu>
     </Tooltip>
   );
 };

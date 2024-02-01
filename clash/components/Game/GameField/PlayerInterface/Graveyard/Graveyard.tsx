@@ -41,21 +41,21 @@ const Graveyard = ({ player }: Props) => {
 
   return (
     <Tooltip title={title} mouseEnterDelay={0.5}>
-      <Popover
-        trigger="click"
-        placement="topLeft"
-        title={title}
-        open={cards.length ? undefined : false}
-        content={
-          <StackedCardList
-            cards={cards}
-            draggable
-            color={getPlayerColor(player.id)}
-            zone={ZONES.GRAVEYARD}
-          />
-        }
-      >
-        <ContextMenu items={graveyardActions}>
+      <ContextMenu items={graveyardActions}>
+        <Popover
+          trigger="click"
+          placement="topLeft"
+          title={title}
+          open={cards.length ? undefined : false}
+          content={
+            <StackedCardList
+              cards={cards}
+              draggable
+              color={getPlayerColor(player.id)}
+              zone={ZONES.GRAVEYARD}
+            />
+          }
+        >
           <div className={styles.wrapper}>
             <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id}>
               <CardStack
@@ -67,8 +67,8 @@ const Graveyard = ({ player }: Props) => {
               />
             </Dropzone>
           </div>
-        </ContextMenu>
-      </Popover>
+        </Popover>
+      </ContextMenu>
     </Tooltip>
   );
 };

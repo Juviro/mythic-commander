@@ -80,7 +80,6 @@ const BattlefieldCard = ({ card, player, inSelection }: Props) => {
             enlargeOnHover
             noAnimation={isSelected}
           />
-          <CardCounters card={card} />
         </div>
       </ContextMenu>
     </div>

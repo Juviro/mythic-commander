@@ -1,37 +1,84 @@
 .wrapper {
     position: absolute;
-    top: 4px;
+    top: calc(var(--size-card-width) * 0.12);
     left: 0;
     bottom: 4px;
+    right: 0;
     overflow: auto;
     color: white;
-    padding: 8px;
+    padding: 8px 40px 8px 8px;
     user-select: none;
     font-size: 14px;
-
     -ms-overflow-style: none;
     scrollbar-width: none;
+    display: inline;
 }
 
 .wrapper::-webkit-scrollbar {
     display: none;
-  }
+}
 
 .counter {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 2px 4px;
     display: flex;
-    gap: 4px;
     width: fit-content;
+    gap: 4px;
 }
-
-.counter:first-child {
-    margin-top: calc(var(--size-card-width) * 0.09);
-}
-
 
 .counter_label {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.counter_bubble {
+    position: absolute;
+    line-height: 1;
+    right: 8px;
+    top: calc(var(--size-card-width) * 0.07);
+    border-radius: 50%;
+    font-size: 18px;
+    min-width: 28px;
+    aspect-ratio: 1;
+    padding: 4px 4px 4px 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: black;
+}
+
+.counter_bubble__green {
+    background: radial-gradient(circle at 30% 30%, #00ff00, #000);
+}
+
+.counter_bubble__blue {
+    background: radial-gradient(circle at 30% 30%, #5cabff, #000);
+}
+
+.counter_bubble__blue ~ .counter_bubble__green {
+    margin-top: 32px;
+}
+
+.counter_bubble__minus:before {
+    content: "-";
+    position: absolute;
+    left: 0;
+}
+
+.counter_icon_wrapper {
+    height: 32px;
+    width: fit-content;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.counter_icon {
+    color: white;
+    width: 32px;
+    height: 100%;
+    margin-bottom: -3px;
 }

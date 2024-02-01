@@ -7,6 +7,7 @@ import { TooltipPlacement } from 'antd/es/tooltip';
 import { Card as CardType, Zone } from 'backend/database/gamestate.types';
 import { getImageUrl } from 'utils/getImageUrl';
 import { DndItemTypes, DropCard } from 'types/dnd.types';
+import CardCounters from 'components/Game/GameField/PlayerInterface/Battlefield/BattlefieldCard/CardCounters/CardCounters';
 import useAnimateCardPositionChange from './useAnimateCardPositionChange';
 
 import styles from './Card.module.css';
@@ -76,6 +77,7 @@ const Card = ({
         <img className={styles.image} src={getImageUrl(card.id, flipped)} />
       )}
       {faceDown && <img className={styles.image} src="/assets/images/card_back.webp" />}
+      <CardCounters card={card} />
     </div>
   );
 

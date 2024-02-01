@@ -4646,6 +4646,18 @@ react-dom@18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+react-from-dom@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/react-from-dom/-/react-from-dom-0.6.2.tgz#9da903a508c91c013b55afcd59348b8b0a39bdb4"
+  integrity sha512-qvWWTL/4xw4k/Dywd41RBpLQUSq97csuv15qrxN+izNeLYlD9wn5W8LspbfYe5CWbaSdkZ72BsaYBPQf2x4VbQ==
+
+react-inlinesvg@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/react-inlinesvg/-/react-inlinesvg-4.1.0.tgz#5afc978f8a43e9a94aabb1fa4a5cd21a18fbe14f"
+  integrity sha512-S7kSE6ldKVpumEYTNXmCs4pAKoDzklP6TklI8oBx23fw8/+VBwO5X0M7/Ii0weieO1DqElUJg5EI8cq7zo5oPg==
+  dependencies:
+    react-from-dom "^0.6.2"
+
 react-is@^16.12.0, react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
