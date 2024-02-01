@@ -1,0 +1,1 @@
+from https://mana.andrewgioia.com/icons.html
