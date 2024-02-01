@@ -1,22 +1,13 @@
 # Current feature
 
-* add "generic" counters
-* display amount for icon counters
-
-
-* Bugs:
-  * cards not draggable anymore after selection rect changes
-
 * card actions
   * counter
     * loyalty / chapter / battle(?) counters automatically
     * ??? maybe retrieve from database (search for "XXX counter")
-  * ability to remove or reduce counters
-  * remove all counters when card leaves battlefield
 
 # Bugs
 
-* remove flags like "tapped" when card leaves battlefield
+* remove flags like "tapped", "counters" when card leaves battlefield
 
 # MVP
 

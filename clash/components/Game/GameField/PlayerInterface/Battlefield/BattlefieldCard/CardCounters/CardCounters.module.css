@@ -66,6 +66,28 @@
     left: 0;
 }
 
+.counter_loyalty {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+}
+
+.counter_loyalty_icon {
+    color: #0a0a08;
+    width: 48px;
+    height: 30px;
+}
+
+.counter_loyalty_amount {
+    position: absolute;
+    color: white;
+    margin-top: 6px;
+}
+
 .counter_icon_wrapper {
     height: 32px;
     width: fit-content;

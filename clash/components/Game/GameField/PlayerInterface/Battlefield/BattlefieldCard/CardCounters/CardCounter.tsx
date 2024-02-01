@@ -39,6 +39,19 @@ const CardCounter = ({ amount, type, clashId }: Props) => {
       </CardCounterTooltip>
     );
   }
+  if (type.toLowerCase() === 'loyalty') {
+    return (
+      <CardCounterTooltip type={type} amount={amount} clashId={clashId}>
+        <div className={classNames(styles.counter_loyalty)}>
+          <SVG
+            src="/assets/mtgicons/counter-loyalty.svg"
+            className={styles.counter_loyalty_icon}
+          />
+          <span className={styles.counter_loyalty_amount}>{amount}</span>
+        </div>
+      </CardCounterTooltip>
+    );
+  }
 
   const iconType = getIconType(type);
 
