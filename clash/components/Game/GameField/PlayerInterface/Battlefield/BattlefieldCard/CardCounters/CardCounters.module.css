@@ -82,3 +82,23 @@
     height: 100%;
     margin-bottom: -3px;
 }
+
+.tooltip {
+    display: flex;
+    gap: 4px;
+    flex-direction: column;
+    user-select: none;
+}
+
+.tooltip__input_wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.tooltip_button_minus {
+    padding: 0 12px 0 8px;
+}
+
+.tooltip_button_plus {
+    padding: 0 8px 0 12px;
+}

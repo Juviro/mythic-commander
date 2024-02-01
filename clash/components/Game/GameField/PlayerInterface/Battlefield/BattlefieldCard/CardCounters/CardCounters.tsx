@@ -38,7 +38,7 @@ const CardCounters = ({ card }: Props) => {
   return (
     <div className={styles.wrapper}>
       {counters.map(({ type, amount }) => (
-        <CardCounter key={type} type={type} amount={amount} />
+        <CardCounter key={type} type={type} amount={amount} clashId={card.clashId} />
       ))}
     </div>
   );

@@ -83,15 +83,17 @@ const Card = ({
 
   if (!enlargeOnHover || hidden) return cardComponent;
 
-  return (
-    <CardPreview
-      card={card}
-      tooltipPlacement={tooltipPlacement}
-      open={isDragging ? false : undefined}
-    >
-      {cardComponent}
-    </CardPreview>
-  );
+  return cardComponent;
+
+  // return (
+  //   <CardPreview
+  //     card={card}
+  //     tooltipPlacement={tooltipPlacement}
+  //     open={isDragging ? false : undefined}
+  //   >
+  //     {cardComponent}
+  //   </CardPreview>
+  // );
 };
 
 export default Card;

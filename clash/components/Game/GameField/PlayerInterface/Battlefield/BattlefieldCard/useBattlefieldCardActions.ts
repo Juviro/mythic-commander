@@ -20,7 +20,6 @@ const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
 
   const additionalBattlefieldContextMenuItems = useBattlefieldOnlyCardActions({
     card,
-    player,
   });
 
   const { toggleCardSelection } = useContext(BattlefieldSelectionContext);

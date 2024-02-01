@@ -73,7 +73,6 @@ export interface AddCountersPayload {
   type: string;
   amount: number;
   subtract?: boolean;
-  battlefieldPlayerId: string;
 }
 
 export interface TapCardsPayload {

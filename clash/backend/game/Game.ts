@@ -333,7 +333,11 @@ export default class Game {
   }
 
   addCounters(_socket: Socket, payload: AddCountersPayload) {
-    const { cardIds, battlefieldPlayerId, amount, type, subtract } = payload;
+    const { cardIds, amount, type, subtract } = payload;
+
+    const battlefieldPlayerId = this.gameState.players.find(({ zones }) =>
+      zones.battlefield.some((card) => cardIds.includes(card.clashId))
+    )!.id;
 
     const player = this.getPlayerById(battlefieldPlayerId);
 
@@ -360,7 +364,13 @@ export default class Game {
         }
         return;
       }
-      card.counters[type] = (card.counters[type] || 0) + (subtract ? -amount : amount);
+
+      const newAmount = (card.counters[type] || 0) + (subtract ? -amount : amount);
+      if (newAmount <= 0) {
+        delete card.counters[type];
+        return;
+      }
+      card.counters[type] = newAmount;
     });
 
     this.emitPlayerUpdate(player);
