@@ -90,6 +90,13 @@
     user-select: none;
 }
 
+.tooltip_title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
 .tooltip__input_wrapper {
     display: flex;
     align-items: center;

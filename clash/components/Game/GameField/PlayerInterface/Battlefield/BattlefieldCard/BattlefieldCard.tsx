@@ -11,7 +11,6 @@ import BattlefieldSelectionContext from '../BattlefieldSelection/BattlefieldSele
 
 import styles from './BattlefieldCard.module.css';
 import useBattlefieldCardActions from './useBattlefieldCardActions';
-import CardCounters from './CardCounters/CardCounters';
 
 interface Props {
   card: BattlefieldCard;

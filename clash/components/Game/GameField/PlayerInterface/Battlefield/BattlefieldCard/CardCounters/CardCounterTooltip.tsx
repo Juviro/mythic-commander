@@ -2,7 +2,7 @@ import React, { MouseEvent, ReactNode } from 'react';
 
 import { Tooltip } from 'antd';
 import { getCountersLabel } from 'constants/counters';
-import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import useGameActions from 'components/Game/useGameActions';
 import styles from './CardCounters.module.css';
 
@@ -25,9 +25,29 @@ const CardCounterTooltip = ({ children, type, amount, clashId }: Props) => {
     });
   };
 
+  const onDelete = (e: MouseEvent) => {
+    e.stopPropagation();
+    onAddCounters({
+      cardIds: [clashId],
+      type,
+      amount: -amount,
+    });
+  };
+
+  const getLabelWithP1P1 = () => {
+    if (type !== 'p1/p1' && type !== 'm1/m1') return getCountersLabel(type);
+
+    const prefix = type === 'm1/m1' ? '-' : '+';
+    const label = `${prefix}${amount} / ${prefix}${amount}`;
+    return label;
+  };
+
   const tooltipContent = (
     <div className={styles.tooltip}>
-      {getCountersLabel(type)}
+      <div className={styles.tooltip_title}>
+        {getLabelWithP1P1()}
+        <DeleteOutlined onClick={onDelete} />
+      </div>
       <div className={styles.tooltip__input_wrapper}>
         <MinusOutlined
           onClick={onClickPlusMins(true)}
