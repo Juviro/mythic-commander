@@ -34,8 +34,6 @@
 
 * defeated player / ff
 
-* save gamestate whenever a player leaves
-
 # Easter Eggs
 
 # Backlog

@@ -143,6 +143,11 @@ const gameSocketActions = (io: Server) => {
     socket.on(SOCKET_MSG_GAME.SET_PHASE, (payload: SetPhasePayload) => {
       currentGames[currentGameId].setPhase(socket, payload);
     });
+
+    socket.on('disconnect', () => {
+      if (!currentGames[currentGameId]) return;
+      currentGames[currentGameId].storeGameState();
+    });
   });
 };
 
