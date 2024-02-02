@@ -22,19 +22,19 @@ const getInitialCardProps = async (cardId: string): Promise<Partial<BattlefieldC
 
   if (card.loyalty) {
     initialProps.counters = {
-      loyalty: Number(card.loyalty),
+      Loyalty: Number(card.loyalty),
     };
   }
 
   if (card.type_line?.split('//')[0].includes('Saga')) {
     initialProps.counters = {
-      lore: 1,
+      Lore: 1,
     };
   }
 
   if (card.card_faces?.[0].defense) {
     initialProps.counters = {
-      defense: Number(card.card_faces[0].defense),
+      Defense: Number(card.card_faces[0].defense),
     };
   }
 

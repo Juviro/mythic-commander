@@ -10,10 +10,11 @@ import CardCounterTooltip from './CardCounterTooltip';
 interface Props {
   type: string;
   amount: number;
+  isLabel?: boolean;
   clashId: string;
 }
 
-const CardCounter = ({ amount, type, clashId }: Props) => {
+const CardCounter = ({ amount, type, clashId, isLabel }: Props) => {
   const lowerCaseType = type.toLowerCase();
   if (
     lowerCaseType === 'generic' ||
@@ -88,7 +89,7 @@ const CardCounter = ({ amount, type, clashId }: Props) => {
   }
 
   return (
-    <CardCounterTooltip type={type} amount={amount} clashId={clashId}>
+    <CardCounterTooltip type={type} amount={amount} clashId={clashId} hidden={isLabel}>
       <div className={styles.counter}>
         {amount > 1 && <span>{`${amount}x`}</span>}
         <span className={styles.counter_label}>{getCountersLabel(type)}</span>

@@ -11,6 +11,7 @@ import {
 } from 'backend/database/gamestate.types';
 import {
   AddCountersPayload,
+  CopyCardPayload,
   CreateTokenPayload,
   DiscardRandomCardPayload,
   EndPeekPayload,
@@ -416,6 +417,39 @@ export default class Game {
 
     player.zones.battlefield.push(token);
 
+    this.emitPlayerUpdate(player);
+  }
+
+  copyCard(payload: CopyCardPayload) {
+    const { amount, battlefieldPlayerId, clashId } = payload;
+
+    const player = this.getPlayerById(battlefieldPlayerId);
+    const originalCard = player.zones.battlefield.find(
+      (card) => card.clashId === clashId
+    )!;
+
+    const offsetX = 1;
+    const offsetY = 2;
+
+    for (let i = 0; i < amount; i += 1) {
+      const newPosition = {
+        x: originalCard.position!.x + offsetX * (i + 1),
+        y: originalCard.position!.y + offsetY * (i + 1),
+      };
+      const newCard: BattlefieldCard = {
+        id: originalCard.id,
+        clashId: uniqid(),
+        name: originalCard.name,
+        ownerId: originalCard.ownerId,
+        meta: {
+          ...originalCard.meta,
+          isCardCopy: !originalCard.isToken || originalCard.meta?.isCardCopy,
+        },
+        position: Game.fixPosition(newPosition),
+        isToken: true,
+      };
+      player.zones.battlefield.push(newCard);
+    }
     this.emitPlayerUpdate(player);
   }
 

@@ -10,15 +10,21 @@ interface Props {
   card: Card;
 }
 
+interface CardCounter {
+  type: string;
+  amount: number;
+  isLabel?: boolean;
+}
+
 const isBattlefieldCard = (card: Card): card is BattlefieldCard => {
-  return 'counters' in card;
+  return Boolean('counters' in card || ('meta' in card && card.meta?.isCardCopy));
 };
 
 const CardCounters = ({ card }: Props) => {
   if (!isBattlefieldCard(card)) return null;
-  if (!card.counters) return null;
+  if (!card.counters && !card.meta?.isCardCopy) return null;
 
-  const counters = Object.entries(card.counters)
+  const counters: CardCounter[] = Object.entries(card.counters ?? [])
     .map(([type, amount]) => ({
       type,
       amount,
@@ -35,10 +41,25 @@ const CardCounters = ({ card }: Props) => {
       return a.type.localeCompare(b.type);
     });
 
+  const cardLabels: CardCounter[] = [];
+
+  if (card.meta?.isCardCopy) {
+    // add invisible space to prevent users to cause a key collision
+    cardLabels.push({ type: 'Token Copy‎', isLabel: true, amount: 1 });
+  }
+
+  const countersAndLabels = cardLabels.concat(counters);
+
   return (
     <div className={styles.wrapper}>
-      {counters.map(({ type, amount }) => (
-        <CardCounter key={type} type={type} amount={amount} clashId={card.clashId} />
+      {countersAndLabels.map(({ type, amount, isLabel }) => (
+        <CardCounter
+          key={type}
+          type={type}
+          amount={amount}
+          isLabel={isLabel}
+          clashId={card.clashId}
+        />
       ))}
     </div>
   );

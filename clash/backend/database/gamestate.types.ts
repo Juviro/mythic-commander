@@ -19,6 +19,7 @@ export interface RelatedCards {
 
 export interface CardMeta {
   relatedCards?: RelatedCards[];
+  isCardCopy?: boolean;
 }
 
 export interface VisibleCard extends HiddenCard {

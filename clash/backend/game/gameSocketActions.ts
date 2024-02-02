@@ -3,6 +3,7 @@ import getUser, { User } from 'backend/database/getUser';
 import { getGameState } from 'backend/database/matchStore';
 import {
   AddCountersPayload,
+  CopyCardPayload,
   CreateTokenPayload,
   DiscardRandomCardPayload,
   EndPeekPayload,
@@ -86,6 +87,10 @@ const gameSocketActions = (io: Server) => {
 
     socket.on(SOCKET_MSG_GAME.CREATE_TOKEN, (payload: CreateTokenPayload) => {
       currentGames[currentGameId].createToken(payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.COPY_CARD, (payload: CopyCardPayload) => {
+      currentGames[currentGameId].copyCard(payload);
     });
 
     socket.on(SOCKET_MSG_GAME.TAP_CARDS, (payload: TapCardsPayload) => {

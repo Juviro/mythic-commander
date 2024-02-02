@@ -54,19 +54,19 @@ const CardPreview = () => {
 
   if (!hoveredCard) return null;
 
-  const currentCardUrl = cardPreviews[displayedCardIndex];
+  const currentCard = cardPreviews[displayedCardIndex];
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.inner}>
-        <img src={currentCardUrl?.src} className={styles.image} />
-        {cardPreviews.length > 1 && (
+        <img src={currentCard?.src} className={styles.image} />
+        {cardPreviews.length > 1 && currentCard && (
           <div className={styles.scroll_hint}>
             <span>
               <span>
                 {displayedCardIndex + 1} / {cardPreviews.length}
               </span>
-              <span>{` - ${currentCardUrl.title}`}</span>
+              <span>{` - ${currentCard.title}`}</span>
             </span>
             <span>scroll to see all</span>
           </div>

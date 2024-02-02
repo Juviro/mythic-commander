@@ -1,12 +1,5 @@
 # Current feature
 
-* battlefield
-  * context menu
-    * copy cards
-    * copy -> amount selector
-
-* bugs
-  * token creation position based on click, not base menu position
 
 # Bugs
 
