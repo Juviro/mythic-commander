@@ -6,13 +6,6 @@
 
 # MVP
 
-
-* battlefield
-  * context menu
-    * create token, including emblems
-      * fetch related tokens from db
-  * allow dragging card selection into graveyard, exile, hand
-
 * play card face-down (e.g. fortell, morph) -> type already defined: FaceDownCard
   * from hand
   * on battlefield
@@ -41,13 +34,11 @@
 
 * defeated player / ff
 
-* save gamestate whenever a player leaves
-
 # Easter Eggs
 
-* paw icon in front of name when playing with cat or dog commander
-
 # Backlog
+
+* allow dragging card selection into graveyard, exile, hand
 
 * animate card when moved from any zone to battlefield (?)
 
@@ -108,6 +99,10 @@
 * add option to play with planechase
 
 * allow rotating cards by 90, 180deg. Auto rotate battles
+
+* allow sorting cards in hand
+
+* Instead of hard-coding available counters, fetch them from the db (very low prio)
 
 # Optimizations
 

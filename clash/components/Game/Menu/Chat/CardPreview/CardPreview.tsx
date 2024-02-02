@@ -9,22 +9,40 @@ const CardPreview = () => {
   const { hoveredCard } = useContext(CardPositionContext);
   const [displayedCardIndex, setDisplayedCardIndex] = useState(0);
 
-  const cardUrls = hoveredCard ? [getImageUrl(hoveredCard.id)] : [''];
+  const cardPreviews = hoveredCard
+    ? [
+        {
+          src: getImageUrl(hoveredCard.id),
+          title: 'Front',
+        },
+      ]
+    : [];
 
   if (hoveredCard?.flippable) {
-    cardUrls.push(getImageUrl(hoveredCard.id, true));
+    cardPreviews.push({
+      src: getImageUrl(hoveredCard.id, true),
+      title: 'Back',
+    });
+  }
+
+  if (hoveredCard?.meta?.relatedCards?.length) {
+    hoveredCard.meta.relatedCards.forEach((relatedCard) => {
+      cardPreviews.push({
+        src: getImageUrl(relatedCard.id),
+        title: relatedCard.type,
+      });
+    });
   }
 
   useEffect(() => {
     setDisplayedCardIndex(0);
     const onScroll = (e: any) => {
       const scrollDirection = e.deltaY > 0 ? 1 : -1;
-      const maxIndex = cardUrls.length - 1;
-      const newIndex = Math.min(
-        maxIndex,
-        Math.max(0, displayedCardIndex + scrollDirection)
-      );
-      setDisplayedCardIndex(newIndex);
+      const maxIndex = cardPreviews.length - 1;
+
+      setDisplayedCardIndex((currentIndex) => {
+        return Math.min(maxIndex, Math.max(0, currentIndex + scrollDirection));
+      });
     };
 
     document.addEventListener('wheel', onScroll);
@@ -36,18 +54,21 @@ const CardPreview = () => {
 
   if (!hoveredCard) return null;
 
-  const currentCardUrl = cardUrls[displayedCardIndex];
+  const currentCard = cardPreviews[displayedCardIndex];
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.inner}>
-        <img src={currentCardUrl} className={styles.image} />
-        {cardUrls.length > 1 && (
+        <img src={currentCard?.src} className={styles.image} />
+        {cardPreviews.length > 1 && currentCard && (
           <div className={styles.scroll_hint}>
             <span>
-              {displayedCardIndex + 1} / {cardUrls.length}
+              <span>
+                {displayedCardIndex + 1} / {cardPreviews.length}
+              </span>
+              <span>{` - ${currentCard.title}`}</span>
             </span>
-            <span>scroll to see all sides</span>
+            <span>scroll to see all</span>
           </div>
         )}
       </div>

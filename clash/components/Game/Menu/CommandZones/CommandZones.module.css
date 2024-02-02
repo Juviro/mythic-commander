@@ -129,6 +129,14 @@
   color: var(--player-color);
   padding: 0px;
   margin: 8px;
+  gap: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.player_icon {
+  height: 18px;
+  width: 16px;
 }
 
 .player_name__active {

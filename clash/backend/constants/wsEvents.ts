@@ -40,6 +40,8 @@ export const SOCKET_MSG_GAME = {
   END_PEEK: 'end_peek',
   SEARCH_LIBRARY: 'search_library',
   SHUFFLE_LIBRARY: 'shuffle_library',
+  CREATE_TOKEN: 'create_token',
+  COPY_CARD: 'copy_card',
 
   SET_COMMANDER_TIMES_CASTED: 'set_commander_times_casted',
   SET_PLAYER_LIFE: 'set_player_life',
@@ -73,6 +75,19 @@ export interface AddCountersPayload {
   type: string;
   amount: number;
   subtract?: boolean;
+}
+
+export interface CreateTokenPayload {
+  cardId: string;
+  name: string;
+  battlefieldPlayerId: string;
+  position?: { x: number; y: number };
+}
+
+export interface CopyCardPayload {
+  clashId: string;
+  battlefieldPlayerId: string;
+  amount: number;
 }
 
 export interface TapCardsPayload {

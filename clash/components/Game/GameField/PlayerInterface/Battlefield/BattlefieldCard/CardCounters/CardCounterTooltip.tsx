@@ -12,10 +12,18 @@ interface Props {
   type: string;
   amount: number;
   clashId: string;
+  hidden?: boolean;
 }
 
-const CardCounterTooltip = ({ children, type, amount, clashId }: Props) => {
+const CardCounterTooltip = ({ children, type, amount, clashId, hidden }: Props) => {
   const { onAddCounters } = useGameActions();
+
+  if (hidden) {
+    return (
+      // eslint-disable-next-line react/jsx-no-useless-fragment
+      <>{children}</>
+    );
+  }
 
   const onClickPlusMins = (isMinus: boolean) => (e: MouseEvent) => {
     e.stopPropagation();

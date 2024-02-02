@@ -7,15 +7,16 @@ import useGameActions from 'components/Game/useGameActions';
 import useMoveCardActions from 'components/GameComponents/Card/cardActions/useMoveCardActions';
 import { useContext } from 'react';
 
-const getPeekSubItems = (
+export const getPeekSubItems = (
   onClick: (amount: number) => void,
   count: number,
-  key: string
+  key: string,
+  getLabel = (index: number) => `...top ${pluralizeCards(index + 1)}`
 ) => {
   const maxPeekCount = Math.min(count, 10);
 
   const items: ItemType[] = new Array(maxPeekCount).fill(0).map((_, index) => {
-    const label = `...top ${pluralizeCards(index + 1)}`;
+    const label = getLabel(index);
 
     return {
       key: `${key}-${index}`,

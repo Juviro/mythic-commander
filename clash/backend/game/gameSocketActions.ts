@@ -3,6 +3,8 @@ import getUser, { User } from 'backend/database/getUser';
 import { getGameState } from 'backend/database/matchStore';
 import {
   AddCountersPayload,
+  CopyCardPayload,
+  CreateTokenPayload,
   DiscardRandomCardPayload,
   EndPeekPayload,
   FlipCardsPayload,
@@ -80,7 +82,15 @@ const gameSocketActions = (io: Server) => {
     );
 
     socket.on(SOCKET_MSG_GAME.ADD_COUNTER, (payload: AddCountersPayload) => {
-      currentGames[currentGameId].addCounters(socket, payload);
+      currentGames[currentGameId].addCounters(payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.CREATE_TOKEN, (payload: CreateTokenPayload) => {
+      currentGames[currentGameId].createToken(payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.COPY_CARD, (payload: CopyCardPayload) => {
+      currentGames[currentGameId].copyCard(payload);
     });
 
     socket.on(SOCKET_MSG_GAME.TAP_CARDS, (payload: TapCardsPayload) => {
@@ -132,6 +142,11 @@ const gameSocketActions = (io: Server) => {
 
     socket.on(SOCKET_MSG_GAME.SET_PHASE, (payload: SetPhasePayload) => {
       currentGames[currentGameId].setPhase(socket, payload);
+    });
+
+    socket.on('disconnect', () => {
+      if (!currentGames[currentGameId]) return;
+      currentGames[currentGameId].storeGameState();
     });
   });
 };

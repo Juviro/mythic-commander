@@ -1,9 +1,9 @@
-import uniqid from 'uniqid';
-
 import { getDecks, storeGameState } from 'backend/database/matchStore';
 import { Lobby } from 'backend/lobby/GameLobby.types';
-import { Card, GameState, Player, VisibleCard } from 'backend/database/gamestate.types';
+import { Card, GameState, Player } from 'backend/database/gamestate.types';
 import { randomizeArray } from 'utils/randomizeArray';
+import getInitialCards from './getInitialCards';
+import getTokens from './getTokens';
 
 const STARTING_LIFE = 40;
 
@@ -11,45 +11,17 @@ const initMatch = async (lobby: Lobby) => {
   const decks = await getDecks(lobby);
 
   const decksWithSpreadedCards = decks.map((deck) => {
-    const commanders: Omit<VisibleCard, 'ownerId'>[] = [];
-
-    const cards = deck.cards
-      .filter((card) => {
-        if (deck.commanderIds?.includes(card.id)) {
-          commanders.push({
-            id: card.id,
-            name: card.name,
-            flippable: card.flippable,
-            clashId: uniqid(),
-          });
-          return false;
-        }
-
-        return true;
-      })
-      .map((card) => {
-        const spreadeCards = [];
-        for (let i = 0; i < card.amount; i += 1) {
-          spreadeCards.push({
-            id: card.id,
-            name: card.name,
-            manaValue: card.manaValue,
-            flippable: card.flippable,
-            clashId: uniqid(),
-          });
-        }
-
-        return spreadeCards;
-      })
-      .flat();
-
-    const randomizedCards = randomizeArray(cards);
+    const { cards, commanders, isFurryFriend } = getInitialCards(
+      deck.cards,
+      deck.commanderIds
+    );
 
     return {
       id: deck.id,
       name: deck.name,
-      cards: randomizedCards,
+      cards,
       commanders,
+      isFurryFriend,
     };
   });
 
@@ -87,6 +59,9 @@ const initMatch = async (lobby: Lobby) => {
       color: player.color!,
       commanders,
       life: STARTING_LIFE,
+      additionalPlayerInfo: {
+        isFurryFriend: deck.isFurryFriend,
+      },
       zones: {
         hand,
         library,
@@ -100,6 +75,10 @@ const initMatch = async (lobby: Lobby) => {
 
   const randomizedPlayers = randomizeArray(players);
 
+  const tokens = await getTokens();
+
+  const resources = { tokens };
+
   const initialGameState: GameState = {
     hostId: lobby.hostId,
     gameId: lobby.id,
@@ -108,6 +87,7 @@ const initMatch = async (lobby: Lobby) => {
     phase: 'beginning',
     activePlayerId: randomizedPlayers[0].id,
     gameLog: [],
+    resources,
   };
 
   await storeGameState(lobby.id, initialGameState, lobby);

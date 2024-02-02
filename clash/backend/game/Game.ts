@@ -1,3 +1,6 @@
+import uniqid from 'uniqid';
+import { Server, Socket } from 'socket.io';
+
 import {
   BattlefieldCard,
   Card,
@@ -8,6 +11,8 @@ import {
 } from 'backend/database/gamestate.types';
 import {
   AddCountersPayload,
+  CopyCardPayload,
+  CreateTokenPayload,
   DiscardRandomCardPayload,
   EndPeekPayload,
   FlipCardsPayload,
@@ -23,11 +28,10 @@ import {
   SetPlayerLifePayload,
   TapCardsPayload,
 } from 'backend/constants/wsEvents';
-import { Server, Socket } from 'socket.io';
 import { User as DatabaseUser } from 'backend/database/getUser';
 import { GameLog, LOG_MESSAGES, LogMessage } from 'backend/constants/logMessages';
 import { getGameState, storeGameState } from 'backend/database/matchStore';
-import initMatch from 'backend/lobby/initMatch';
+import initMatch from 'backend/lobby/initMatch/initMatch';
 import { randomizeArray } from 'utils/randomizeArray';
 import addLogEntry from './addLogEntry';
 import getInitialCardProps from './utils/getInitialCardProps';
@@ -229,12 +233,17 @@ export default class Game {
       const additionalProps = await getInitialCardProps(newCard.id);
       newCard = { ...newCard, ...additionalProps };
     }
+    let shouldDeleteCard = false;
     if (to.zone !== 'battlefield' && fromZone! === 'battlefield') {
-      delete (newCard as BattlefieldCard).counters;
-      delete (newCard as BattlefieldCard).tapped;
-      delete (newCard as BattlefieldCard).flipped;
-      delete (newCard as BattlefieldCard).faceDown;
-      delete (newCard as BattlefieldCard).position;
+      const card = newCard as BattlefieldCard;
+      if (card.isToken) {
+        shouldDeleteCard = true;
+      }
+      delete card.counters;
+      delete card.tapped;
+      delete card.flipped;
+      delete card.faceDown;
+      delete card.position;
     }
 
     if (fromPlayer!.id !== to.playerId && !newCard.ownerId) {
@@ -243,12 +252,15 @@ export default class Game {
 
     playersToUpdate.add(fromPlayer!.id);
     const toPlayer = this.getPlayerById(to.playerId);
-    if (typeof index === 'number') {
-      const isMovingToSameZone = fromZone! === to.zone && fromPlayer!.id === to.playerId;
-      const addIndex = spliceIndex < index && isMovingToSameZone ? index - 1 : index;
-      toPlayer.zones[to.zone].splice(addIndex, 0, newCard);
-    } else {
-      toPlayer.zones[to.zone].push(newCard);
+    if (!shouldDeleteCard) {
+      if (typeof index === 'number') {
+        const isMovingToSameZone =
+          fromZone! === to.zone && fromPlayer!.id === to.playerId;
+        const addIndex = spliceIndex < index && isMovingToSameZone ? index - 1 : index;
+        toPlayer.zones[to.zone].splice(addIndex, 0, newCard);
+      } else {
+        toPlayer.zones[to.zone].push(newCard);
+      }
     }
 
     playersToUpdate.forEach((playerId) => {
@@ -346,7 +358,7 @@ export default class Game {
     });
   }
 
-  addCounters(_socket: Socket, payload: AddCountersPayload) {
+  addCounters(payload: AddCountersPayload) {
     const { cardIds, amount, type, subtract } = payload;
 
     const battlefieldPlayerId = this.gameState.players.find(({ zones }) =>
@@ -387,6 +399,57 @@ export default class Game {
       card.counters[type] = newAmount;
     });
 
+    this.emitPlayerUpdate(player);
+  }
+
+  createToken(payload: CreateTokenPayload) {
+    const { cardId, battlefieldPlayerId, name, position = { x: 50, y: 50 } } = payload;
+    const player = this.getPlayerById(battlefieldPlayerId);
+
+    const token: BattlefieldCard = {
+      clashId: uniqid(),
+      id: cardId,
+      name,
+      ownerId: player.id,
+      isToken: true,
+      position: Game.fixPosition(position),
+    };
+
+    player.zones.battlefield.push(token);
+
+    this.emitPlayerUpdate(player);
+  }
+
+  copyCard(payload: CopyCardPayload) {
+    const { amount, battlefieldPlayerId, clashId } = payload;
+
+    const player = this.getPlayerById(battlefieldPlayerId);
+    const originalCard = player.zones.battlefield.find(
+      (card) => card.clashId === clashId
+    )!;
+
+    const offsetX = 1;
+    const offsetY = 2;
+
+    for (let i = 0; i < amount; i += 1) {
+      const newPosition = {
+        x: originalCard.position!.x + offsetX * (i + 1),
+        y: originalCard.position!.y + offsetY * (i + 1),
+      };
+      const newCard: BattlefieldCard = {
+        id: originalCard.id,
+        clashId: uniqid(),
+        name: originalCard.name,
+        ownerId: originalCard.ownerId,
+        meta: {
+          ...originalCard.meta,
+          isCardCopy: !originalCard.isToken || originalCard.meta?.isCardCopy,
+        },
+        position: Game.fixPosition(newPosition),
+        isToken: true,
+      };
+      player.zones.battlefield.push(newCard);
+    }
     this.emitPlayerUpdate(player);
   }
 
