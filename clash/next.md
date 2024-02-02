@@ -2,10 +2,8 @@
 
 * battlefield
   * context menu
-    * create token, including emblems
-    * create multiple tokens at once
-    * create copy of card
-    * duplicate all tokens in selection?
+    * copy cards
+    * copy -> amount selector
     * delete tokens when they leave the battlefield
 
 * bugs

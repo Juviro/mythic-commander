@@ -23,7 +23,11 @@ const getTokens = async () => {
       AND 
         name NOT ilike '%//%'
       AND
+        lang = 'en'
+      AND
         type_line != 'Sorcery'
+      AND
+        set != 'tdag'
       AND
         type_line != 'Artifact'
       AND

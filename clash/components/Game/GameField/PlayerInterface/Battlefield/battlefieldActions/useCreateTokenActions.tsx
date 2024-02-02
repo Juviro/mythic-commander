@@ -4,6 +4,7 @@ import { BattlefieldCard, Player, TokenOption } from 'backend/database/gamestate
 import GameStateContext from 'components/Game/GameStateContext';
 import useGameActions from 'components/Game/useGameActions';
 import CardPositionContext from 'components/Game/CardPositionContext';
+import { MenuProps, Select } from 'antd';
 import { getRelativePosition } from '../BattlefieldDropzone/useBattlefieldDropzone';
 
 const MAX_ORACLE_TEXT_LENGTH = 20;
@@ -67,24 +68,68 @@ const useCreateTokenActions = ({ cards, player, battlefieldRef }: Props) => {
       .slice(0, MAX_SUGGESTED_TOKENS) as TokenOptionWithId[];
   }, [suggestedTokenIds.join(',')]);
 
-  const suggestedTokenActions = suggestedTokens.map((token) => ({
+  const onCreateToken = (token: TokenOptionWithId) => {
+    const position = contextMenuPosition.current
+      ? getRelativePosition(contextMenuPosition.current, battlefieldRef.current!)
+      : undefined;
+
+    createToken({
+      cardId: token.id,
+      battlefieldPlayerId: player.id,
+      name: token.name,
+      position,
+    });
+  };
+
+  const suggestedTokenActions: MenuProps['items'] = suggestedTokens.map((token) => ({
     key: `create-token-${token.id}`,
     label: getTokenName(token),
-    onClick: () => {
-      const position = contextMenuPosition.current
-        ? getRelativePosition(contextMenuPosition.current, battlefieldRef.current!)
-        : undefined;
-
-      createToken({
-        cardId: token.id,
-        battlefieldPlayerId: player.id,
-        name: token.name,
-        position,
-      });
-    },
+    onClick: () => onCreateToken(token),
   }));
 
-  return suggestedTokenActions;
+  const otherCounterOptions = allTokens
+    .sort((a, b) => {
+      return (a.powerToughness ?? '999').localeCompare(b.powerToughness ?? '999');
+    })
+    .map((token, index) => ({
+      label: getTokenName(token),
+      value: index,
+    }));
+
+  const otherTokenAction = {
+    key: 'custom-token',
+    label: (
+      <Select
+        autoFocus
+        onSelect={(index) => {
+          const token = allTokens[index];
+          onCreateToken({ ...token, id: token.ids[0] });
+        }}
+        style={{ width: '100%', minWidth: 250 }}
+        placeholder="Search token..."
+        options={otherCounterOptions}
+        showSearch
+        filterOption={(value, { label }: { label: string } = { label: '' }) => {
+          const unifyLabel = (val: string) =>
+            val.toLowerCase().replace('/', '').split(' ');
+
+          const labelTerms = unifyLabel(label);
+          const lowerCaseTerms = unifyLabel(value);
+
+          return lowerCaseTerms.every((term) =>
+            labelTerms.some((labelTerm) => labelTerm.includes(term))
+          );
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') return;
+          e.stopPropagation();
+        }}
+        onClick={(e) => e.stopPropagation()}
+      />
+    ),
+  };
+
+  return suggestedTokenActions.concat(otherTokenAction);
 };
 
 export default useCreateTokenActions;

@@ -1,13 +1,20 @@
 import { Select } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
-import React, { useRef, useState } from 'react';
+import React, { CSSProperties, useRef, useState } from 'react';
 
 interface Props {
+  placeholder?: string;
   options: DefaultOptionType[];
   onSelect: (value: string) => void;
+  style?: CSSProperties;
 }
 
-const SubmittableSelect = ({ options, onSelect }: Props) => {
+const SubmittableSelect = ({
+  options,
+  onSelect,
+  placeholder = 'More...',
+  style,
+}: Props) => {
   const selectRef = useRef<any>(null);
   const [currentValue, setCurrentValue] = useState('');
 
@@ -31,10 +38,10 @@ const SubmittableSelect = ({ options, onSelect }: Props) => {
     <Select
       autoFocus
       ref={selectRef}
-      placeholder="More..."
+      placeholder={placeholder}
       options={optionsWithCurrentValue}
       showSearch
-      style={{ minWidth: 150 }}
+      style={{ minWidth: 150, ...style }}
       onSelect={(value) => {
         onSelect(value);
       }}
