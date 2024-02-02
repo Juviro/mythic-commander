@@ -4,7 +4,6 @@
   * context menu
     * copy cards
     * copy -> amount selector
-    * delete tokens when they leave the battlefield
 
 * bugs
   * token creation position based on click, not base menu position

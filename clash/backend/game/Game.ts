@@ -232,12 +232,17 @@ export default class Game {
       const additionalProps = await getInitialCardProps(newCard.id);
       newCard = { ...newCard, ...additionalProps };
     }
+    let shouldDeleteCard = false;
     if (to.zone !== 'battlefield' && fromZone! === 'battlefield') {
-      delete (newCard as BattlefieldCard).counters;
-      delete (newCard as BattlefieldCard).tapped;
-      delete (newCard as BattlefieldCard).flipped;
-      delete (newCard as BattlefieldCard).faceDown;
-      delete (newCard as BattlefieldCard).position;
+      const card = newCard as BattlefieldCard;
+      if (card.isToken) {
+        shouldDeleteCard = true;
+      }
+      delete card.counters;
+      delete card.tapped;
+      delete card.flipped;
+      delete card.faceDown;
+      delete card.position;
     }
 
     if (fromPlayer!.id !== to.playerId && !newCard.ownerId) {
@@ -246,12 +251,15 @@ export default class Game {
 
     playersToUpdate.add(fromPlayer!.id);
     const toPlayer = this.getPlayerById(to.playerId);
-    if (typeof index === 'number') {
-      const isMovingToSameZone = fromZone! === to.zone && fromPlayer!.id === to.playerId;
-      const addIndex = spliceIndex < index && isMovingToSameZone ? index - 1 : index;
-      toPlayer.zones[to.zone].splice(addIndex, 0, newCard);
-    } else {
-      toPlayer.zones[to.zone].push(newCard);
+    if (!shouldDeleteCard) {
+      if (typeof index === 'number') {
+        const isMovingToSameZone =
+          fromZone! === to.zone && fromPlayer!.id === to.playerId;
+        const addIndex = spliceIndex < index && isMovingToSameZone ? index - 1 : index;
+        toPlayer.zones[to.zone].splice(addIndex, 0, newCard);
+      } else {
+        toPlayer.zones[to.zone].push(newCard);
+      }
     }
 
     playersToUpdate.forEach((playerId) => {
