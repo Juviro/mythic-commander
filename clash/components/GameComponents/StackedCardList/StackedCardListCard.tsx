@@ -29,7 +29,6 @@ const StackedCardListCard = ({ card, draggable, zone }: Props) => {
           draggable={draggable}
           dropType={DndItemTypes.LIST_CARD}
           noAnimation
-          enlargeOnHover
           zone="library"
         />
       </div>

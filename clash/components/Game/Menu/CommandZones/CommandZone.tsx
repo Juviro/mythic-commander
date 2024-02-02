@@ -45,7 +45,6 @@ const CommandZone = ({ player, isSelf }: Props) => {
                 {card && (
                   <Card
                     card={card}
-                    enlargeOnHover
                     draggable={isSelf}
                     dynamicSize
                     zone={ZONES.COMMAND_ZONE}

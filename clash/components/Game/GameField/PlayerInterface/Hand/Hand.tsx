@@ -66,7 +66,7 @@ const Hand = ({ player, isSelf }: Props) => {
     >
       {hand.map((card, index) => (
         <React.Fragment key={card.clashId}>
-          <HandHoverElement index={index} player={player} />
+          <HandHoverElement index={index} player={player} card={card as VisibleCard} />
           <div
             key={card.clashId}
             className={styles.card_wrapper}

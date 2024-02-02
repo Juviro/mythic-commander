@@ -1,23 +1,16 @@
 # Current feature
 
-* card actions
-  * counter
-    * loyalty / chapter / battle(?) counters automatically
-    * ??? maybe retrieve from database (search for "XXX counter")
 
 # Bugs
 
 
 # MVP
 
-* card previews
-  * for hand to see backside  
-  * display them over the chat or something instead of in-place
-
 
 * battlefield
   * context menu
     * create token, including emblems
+      * fetch related tokens from db
   * allow dragging card selection into graveyard, exile, hand
 
 * play card face-down (e.g. fortell, morph) -> type already defined: FaceDownCard
@@ -26,6 +19,9 @@
   * from anywhere in library
 
 * shortcuts for every action
+  * draw [d]
+  * shuffle library [s]
+  * 
 
 * game
   * mulligan
@@ -45,6 +41,8 @@
 
 * defeated player / ff
 
+* save gamestate whenever a player leaves
+
 # Easter Eggs
 
 * paw icon in front of name when playing with cat or dog commander
@@ -53,12 +51,13 @@
 
 * animate card when moved from any zone to battlefield (?)
 
+* in card previed, show related cards as well
+
 * dragging a card briefly shows the card in the original position (prod only because of latency)
   * add context that stores new card positions whenever they are dropped in BattlefieldDropzone.
   * check for that position in BattlefieldCard and overwrite original position
   * delete it from that context whenever the cardId is in an update
 
-* save gamestate whenever a player leaves
 
 * put reminder token onto library (e.g. for Mana Crypt)
 
