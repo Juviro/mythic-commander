@@ -1,71 +1,82 @@
 # Current feature
 
-* Bugs:
-
-* card actions
-  * counter
-    * +1/+1
-    * -1/-1
-    * loyalty / chapter(?) (maybe automatically)
-    * ??? maybe retrieve from database (search for "XXX counter")
 
 # Bugs
 
 
-
 # MVP
-
-* card previews
-  * for hand to see backside  
-  * maybe display them over the chat instead of in-place?
 
 
 * battlefield
   * context menu
     * create token, including emblems
+      * fetch related tokens from db
+  * allow dragging card selection into graveyard, exile, hand
 
-* hand
-  * play card face-down (e.g. fortell, morph) -> type already defined: FaceDownCard
+* play card face-down (e.g. fortell, morph) -> type already defined: FaceDownCard
+  * from hand
+  * on battlefield
+  * from anywhere in library
 
 * shortcuts for every action
+  * draw [d]
+  * shuffle library [s]
+  * 
 
 * game
   * mulligan
 
 * when aligning a card stacked with lower x/y, put it behind the other card
 
+
+* icons for card actions:
+  * tap (tap)
+  * flip (dfc-front, dfc-back)
+  * turn face-down (dfc-facedown)
+
 * flip coin, roll dice
   * chat commands? /coin, /dice 3d6
 
+* Allow selecting non-active decks as well
+
+* defeated player / ff
+
+* save gamestate whenever a player leaves
+
+# Easter Eggs
+
+* paw icon in front of name when playing with cat or dog commander
 
 # Backlog
 
 * animate card when moved from any zone to battlefield (?)
+
+* in card previed, show related cards as well
 
 * dragging a card briefly shows the card in the original position (prod only because of latency)
   * add context that stores new card positions whenever they are dropped in BattlefieldDropzone.
   * check for that position in BattlefieldCard and overwrite original position
   * delete it from that context whenever the cardId is in an update
 
-* save gamestate whenever a player leaves
 
 * put reminder token onto library (e.g. for Mana Crypt)
 
 * add notes to card
 
-* defeated player / ff
-
 * adjust colors to work on every background
   * black and red are too dark
 
-* track commander damage
+* track commander + infect damage
 
 * message in the center of the screen for
   * active player changes
   * animated (grow)
 
-
 * long clicking life buttons adds in 10s
+
+* select all lands -> click "organize" -> all lands are neatly organized
+
+* when searching lib, add quick filter for lands with basic land types
 
 * stack ?
   * movable popup?
@@ -87,12 +98,16 @@
 
 * prevent interacting with own lib when someone is peeking it (self or opponent)
 
-* keep cards tapped when moving them to battlefield
+* keep cards visually tapped when moving them to battlefield
   * allow aligning as if the cards was untapped
 
 * distinguish between flipped and face-down. There can be a two-faced card that is face-down and therefore not visible
 
 * shuffle library animation
+
+* add option to play with planechase
+
+* allow rotating cards by 90, 180deg. Auto rotate battles
 
 # Optimizations
 

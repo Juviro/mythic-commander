@@ -11,17 +11,9 @@ interface Props {
   emptyImage?: ReactNode;
   draggable?: boolean;
   zone: Zone;
-  canHover?: boolean;
 }
 
-const CardStack = ({
-  cards,
-  emptyText,
-  emptyImage,
-  draggable,
-  zone,
-  canHover,
-}: Props) => {
+const CardStack = ({ cards, emptyText, emptyImage, draggable, zone }: Props) => {
   return (
     <div className={styles.wrapper}>
       {cards.map((card, index) => (
@@ -30,13 +22,7 @@ const CardStack = ({
           className={styles.card}
           style={{ '--rotation': cards.length - index * (index % 2) } as CSSProperties}
         >
-          <Card
-            card={card}
-            draggable={draggable}
-            zone={zone}
-            enlargeOnHover={canHover && index + 1 === cards.length}
-            tooltipPlacement="topRight"
-          />
+          <Card card={card} draggable={draggable} zone={zone} />
         </div>
       ))}
       {!cards.length && <div className={styles.empty}>{emptyImage || emptyText}</div>}

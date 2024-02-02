@@ -2,6 +2,7 @@ import { Server } from 'socket.io';
 import getUser, { User } from 'backend/database/getUser';
 import { getGameState } from 'backend/database/matchStore';
 import {
+  AddCountersPayload,
   DiscardRandomCardPayload,
   EndPeekPayload,
   FlipCardsPayload,
@@ -77,6 +78,10 @@ const gameSocketActions = (io: Server) => {
         currentGames[currentGameId].discardRandomCard(payload);
       }
     );
+
+    socket.on(SOCKET_MSG_GAME.ADD_COUNTER, (payload: AddCountersPayload) => {
+      currentGames[currentGameId].addCounters(socket, payload);
+    });
 
     socket.on(SOCKET_MSG_GAME.TAP_CARDS, (payload: TapCardsPayload) => {
       currentGames[currentGameId].tapCards(payload);

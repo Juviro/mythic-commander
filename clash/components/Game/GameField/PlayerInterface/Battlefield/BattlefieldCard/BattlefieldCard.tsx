@@ -76,7 +76,6 @@ const BattlefieldCard = ({ card, player, inSelection }: Props) => {
             flipped={card.flipped}
             draggable={!isSelected}
             zone="battlefield"
-            enlargeOnHover
             noAnimation={isSelected}
           />
         </div>

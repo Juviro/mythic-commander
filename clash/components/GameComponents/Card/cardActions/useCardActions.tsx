@@ -75,6 +75,10 @@ const useCardActions = ({
       onClick: flipCards,
     },
     {
+      type: 'divider' as const,
+      hidden: !battlefieldPlayerId,
+    },
+    {
       key: 'move',
       label: `Move ${cardIds.length === 1 ? 'card' : 'all cards'} to...`,
       children: moveCardActions,

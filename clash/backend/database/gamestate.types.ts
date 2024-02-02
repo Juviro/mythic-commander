@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-cycle
+/* eslint-disable import/no-cycle */
 import { GameLog } from 'backend/constants/logMessages';
 
 export const PHASES = ['beginning', 'main1', 'combat', 'main2', 'end'] as const;
@@ -24,6 +24,9 @@ export interface BattlefieldCard extends VisibleCard {
   position?: {
     x: number;
     y: number;
+  };
+  counters?: {
+    [key: string]: number;
   };
 }
 

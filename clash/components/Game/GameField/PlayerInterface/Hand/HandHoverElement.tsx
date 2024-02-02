@@ -1,21 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useDrop } from 'react-dnd';
 import classNames from 'classnames';
 
 import useGameActions from 'components/Game/useGameActions';
-import { Player, ZONES } from 'backend/database/gamestate.types';
+import { Player, VisibleCard, ZONES } from 'backend/database/gamestate.types';
 import { DndItemTypes, DropCard } from 'types/dnd.types';
 
+import CardPositionContext from 'components/Game/CardPositionContext';
 import styles from './Hand.module.css';
 
 interface Props {
   player: Player;
   index: number;
   isLast?: boolean;
+  card?: VisibleCard;
 }
 
-const HandHoverElement = ({ index, isLast, player }: Props) => {
+const HandHoverElement = ({ index, isLast, player, card }: Props) => {
   const { onMoveCard } = useGameActions();
+  const { setHoveredCard } = useContext(CardPositionContext);
   const onDrop = ({ clashId }: DropCard) => {
     onMoveCard(clashId, ZONES.HAND, player.id, { index });
   };
@@ -36,6 +39,8 @@ const HandHoverElement = ({ index, isLast, player }: Props) => {
         [styles.hover_element__can_drop]: canDrop,
         [styles.hover_element__last]: isLast,
       })}
+      onMouseEnter={card ? () => setHoveredCard(card) : undefined}
+      onMouseLeave={() => setHoveredCard(null)}
       ref={dropRef}
     />
   );

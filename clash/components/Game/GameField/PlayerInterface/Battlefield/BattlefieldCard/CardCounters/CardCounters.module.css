@@ -1,0 +1,149 @@
+.wrapper {
+    position: absolute;
+    top: calc(var(--size-card-width) * 0.12);
+    left: 0;
+    bottom: 4px;
+    right: 0;
+    overflow: auto;
+    color: white;
+    padding: 8px 40px 8px 8px;
+    user-select: none;
+    font-size: 14px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    display: inline;
+}
+
+.wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.counter {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2px 4px;
+    display: flex;
+    width: fit-content;
+    gap: 4px;
+}
+
+.counter_label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.counter_bubble {
+    position: absolute;
+    line-height: 1;
+    right: 8px;
+    top: calc(var(--size-card-width) * 0.07);
+    border-radius: 50%;
+    font-size: 18px;
+    min-width: 28px;
+    aspect-ratio: 1;
+    padding: 4px 4px 4px 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: black;
+}
+
+.counter_bubble__green {
+    background: radial-gradient(circle at 30% 30%, #00ff00, #000);
+}
+
+.counter_bubble__yellow {
+    background: radial-gradient(circle at 30% 30%, #ffff00, #000);
+    color: black;
+}
+
+.counter_bubble__red {
+    background: radial-gradient(circle at 30% 30%, #ff0000, #000);
+}
+
+.counter_bubble__blue {
+    background: radial-gradient(circle at 30% 30%, #5cabff, #000);
+}
+
+.counter_bubble__blue ~ .counter_bubble__green {
+    margin-top: 32px;
+}
+
+.counter_bubble__bottom_left {
+    bottom: 14px;
+    left: 24px;
+    right: unset;
+    top: unset;
+}
+
+.counter_bubble__minus:before {
+    content: "-";
+    position: absolute;
+    left: 0;
+}
+
+.counter_loyalty {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+}
+
+.counter_loyalty_icon {
+    color: #0a0a08;
+    width: 54px;
+}
+
+.counter_loyalty_amount {
+    position: absolute;
+    color: white;
+    margin-top: 6px;
+}
+
+.counter_icon_wrapper {
+    height: 32px;
+    width: fit-content;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.counter_icon {
+    color: white;
+    width: 32px;
+    height: 100%;
+    margin-bottom: -3px;
+}
+
+
+.tooltip {
+    display: flex;
+    gap: 4px;
+    flex-direction: column;
+    user-select: none;
+}
+
+.tooltip_title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.tooltip__input_wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.tooltip_button_minus {
+    padding: 0 12px 0 8px;
+}
+
+.tooltip_button_plus {
+    padding: 0 8px 0 12px;
+}
