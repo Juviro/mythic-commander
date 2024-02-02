@@ -1,3 +1,6 @@
+import uniqid from 'uniqid';
+import { Server, Socket } from 'socket.io';
+
 import {
   BattlefieldCard,
   Card,
@@ -8,6 +11,7 @@ import {
 } from 'backend/database/gamestate.types';
 import {
   AddCountersPayload,
+  CreateTokenPayload,
   DiscardRandomCardPayload,
   EndPeekPayload,
   FlipCardsPayload,
@@ -23,11 +27,10 @@ import {
   SetPlayerLifePayload,
   TapCardsPayload,
 } from 'backend/constants/wsEvents';
-import { Server, Socket } from 'socket.io';
 import { User as DatabaseUser } from 'backend/database/getUser';
 import { GameLog, LOG_MESSAGES, LogMessage } from 'backend/constants/logMessages';
 import { getGameState, storeGameState } from 'backend/database/matchStore';
-import initMatch from 'backend/lobby/initMatch';
+import initMatch from 'backend/lobby/initMatch/initMatch';
 import { randomizeArray } from 'utils/randomizeArray';
 import addLogEntry from './addLogEntry';
 import getInitialCardProps from './utils/getInitialCardProps';
@@ -346,7 +349,7 @@ export default class Game {
     });
   }
 
-  addCounters(_socket: Socket, payload: AddCountersPayload) {
+  addCounters(payload: AddCountersPayload) {
     const { cardIds, amount, type, subtract } = payload;
 
     const battlefieldPlayerId = this.gameState.players.find(({ zones }) =>
@@ -386,6 +389,24 @@ export default class Game {
       }
       card.counters[type] = newAmount;
     });
+
+    this.emitPlayerUpdate(player);
+  }
+
+  createToken(payload: CreateTokenPayload) {
+    const { cardId, battlefieldPlayerId, name, position = { x: 50, y: 50 } } = payload;
+    const player = this.getPlayerById(battlefieldPlayerId);
+
+    const token: BattlefieldCard = {
+      clashId: uniqid(),
+      id: cardId,
+      name,
+      ownerId: player.id,
+      isToken: true,
+      position: Game.fixPosition(position),
+    };
+
+    player.zones.battlefield.push(token);
 
     this.emitPlayerUpdate(player);
   }

@@ -2,20 +2,28 @@ import { Lobby } from 'backend/lobby/GameLobby.types';
 import { GameState } from './gamestate.types';
 import db from './db';
 
-interface Card {
+interface Part {
+  id: string;
+  name: string;
+  component: string;
+  type_line: string;
+}
+
+export interface InitMatchCard {
   id: string;
   name: string;
   amount: number;
   manaValue: number;
   flippable: boolean;
   type_line: string;
+  all_parts: Part[];
 }
 
 interface Deck {
   id: string;
   name: string;
   commanderIds: string[];
-  cards: Card[];
+  cards: InitMatchCard[];
 }
 
 export const getDecks = async (lobby: Lobby): Promise<Deck[]> => {
@@ -44,6 +52,7 @@ export const getDecks = async (lobby: Lobby): Promise<Deck[]> => {
                     'amount', "cardToDeck".amount,
                     'name', cards.name,
                     'type_line', cards.type_line,
+                    'all_parts', cards.all_parts,
                     'flippable', cards.card_faces IS NOT NULL
                 )
             ) as cards

@@ -10,17 +10,30 @@ interface HiddenCard {
   clashId: string;
   ownerId: string;
 }
+
+export interface RelatedCards {
+  id: string;
+  name: string;
+  type: 'Token' | 'Emblem' | 'Dungeon';
+}
+
+export interface CardMeta {
+  relatedCards?: RelatedCards[];
+}
+
 export interface VisibleCard extends HiddenCard {
   clashId: string;
   id: string;
   name: string;
   flippable?: boolean;
+  meta?: CardMeta;
 }
 
 export interface BattlefieldCard extends VisibleCard {
   tapped?: boolean;
   flipped?: boolean;
   faceDown?: boolean;
+  isToken?: boolean;
   position?: {
     x: number;
     y: number;
@@ -78,7 +91,22 @@ export interface Player {
   commanders: Commander[];
   zones: Zones;
   life: number;
-  additionalPlayerInfo: AdditionalPlayerInfo;
+  additionalPlayerInfo?: AdditionalPlayerInfo;
+}
+
+// ##################### Meta #####################
+
+export interface TokenOption {
+  ids: string[];
+  name: string;
+  powerToughness: string;
+  colors: string;
+  oracle_text: string;
+  layout: 'token' | 'emblem';
+}
+
+export interface Resources {
+  tokens: TokenOption[];
 }
 
 // ##################### GameState #####################
@@ -91,4 +119,5 @@ export interface GameState {
   phase: Phase;
   activePlayerId: string;
   gameLog: GameLog[];
+  resources?: Resources;
 }

@@ -13,11 +13,24 @@ interface Props {
   wrapperRef: RefObject<HTMLDivElement>;
 }
 
+export const getRelativePosition = (
+  { x, y }: { x: number; y: number },
+  battlefieldElement: HTMLDivElement
+) => {
+  const { left, top } = battlefieldElement.getBoundingClientRect();
+  const relativeX = x - left;
+  const relativeY = y - top;
+  const posX = (relativeX / battlefieldElement.clientWidth) * 100;
+  const posY = (relativeY / battlefieldElement.clientHeight) * 100;
+
+  return { x: posX, y: posY };
+};
+
 const useBattlefieldDropzone = ({ player, wrapperRef, isFlipped }: Props) => {
   const { onMoveCard, onMoveCardsGroup } = useGameActions();
   const { snapChoords, cardPositions } = useContext(CardPositionContext);
 
-  const getRelativePosition = (clientOffset: { x: number; y: number } | null) => {
+  const getRelativeMonitorPosition = (clientOffset: { x: number; y: number } | null) => {
     if (!clientOffset || !wrapperRef.current) return { x: 0, y: 0 };
 
     const { left, top } = wrapperRef.current!.getBoundingClientRect();
@@ -36,9 +49,9 @@ const useBattlefieldDropzone = ({ player, wrapperRef, isFlipped }: Props) => {
       cardPositions.current[cardId] = null;
     });
 
-    const clientOffset = getRelativePosition(monitor.getClientOffset());
-    const initialOffset = getRelativePosition(monitor.getInitialClientOffset());
-    const initialSourceOffset = getRelativePosition(
+    const clientOffset = getRelativeMonitorPosition(monitor.getClientOffset());
+    const initialOffset = getRelativeMonitorPosition(monitor.getInitialClientOffset());
+    const initialSourceOffset = getRelativeMonitorPosition(
       monitor.getInitialSourceClientOffset()
     );
 
@@ -87,11 +100,7 @@ const useBattlefieldDropzone = ({ player, wrapperRef, isFlipped }: Props) => {
       snapChoords.current.y = null;
     }
 
-    const { left, top } = wrapperRef.current.getBoundingClientRect();
-    const relativeX = x - left;
-    const relativeY = y - top;
-    let posX = (relativeX / wrapperRef.current.clientWidth) * 100;
-    let posY = (relativeY / wrapperRef.current.clientHeight) * 100;
+    let { x: posX, y: posY } = getRelativePosition({ x, y }, wrapperRef.current);
 
     if (isFlipped) {
       posX = 100 - posX;

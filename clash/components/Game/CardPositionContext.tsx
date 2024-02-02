@@ -24,6 +24,11 @@ export interface SnapChoords {
   y: number | null;
 }
 
+interface Point {
+  x: number;
+  y: number;
+}
+
 interface CardPositionContextValue {
   cardPositions: CardPositions;
   hoveredBattlefield: {
@@ -33,6 +38,9 @@ interface CardPositionContextValue {
     current: SnapChoords;
   };
   hoveredCard: VisibleCard | BattlefieldCard | null;
+  contextMenuPosition: {
+    current: Point | null;
+  };
   setHoveredCard: React.Dispatch<React.SetStateAction<VisibleCard | null>>;
 }
 
@@ -46,6 +54,7 @@ export const CardPositionContextProvider = ({ children }: PropsWithChildren) => 
   const cardPositions = useRef<CardPositions['current']>({});
   const hoveredBattlefield = useRef<HoveredBattlefield | null>(null);
   const snapChoords = useRef<SnapChoords>({ x: null, y: null });
+  const contextMenuPosition = useRef<Point | null>(null);
   const [hoveredCard, setHoveredCard] = useState<VisibleCard | BattlefieldCard | null>(
     null
   );
@@ -57,6 +66,7 @@ export const CardPositionContextProvider = ({ children }: PropsWithChildren) => 
       snapChoords,
       hoveredCard,
       setHoveredCard,
+      contextMenuPosition,
     };
   }, [hoveredCard]);
 

@@ -16,7 +16,7 @@ const PlayerName = ({ player }: Props) => {
   const { gameState } = useContext(GameStateContext);
   const isActivePlayer = gameState?.activePlayerId === player.id;
 
-  const displayPawIcon = player.additionalPlayerInfo.isFurryFriend;
+  const displayPawIcon = player.additionalPlayerInfo?.isFurryFriend;
 
   const pawIcon = (
     <SVG src="/assets/mtgicons/counter-paw.svg" className={styles.player_icon} />

@@ -3,8 +3,13 @@
 * battlefield
   * context menu
     * create token, including emblems
-      * fetch related tokens from db
+    * create multiple tokens at once
     * create copy of card
+    * duplicate all tokens in selection?
+    * delete tokens when they leave the battlefield
+
+* bugs
+  * token creation position based on click, not base menu position
 
 # Bugs
 

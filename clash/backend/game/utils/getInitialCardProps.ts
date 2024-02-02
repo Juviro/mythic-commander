@@ -1,8 +1,22 @@
 import db from 'backend/database/db';
 import { BattlefieldCard } from 'backend/database/gamestate.types';
 
+interface Card {
+  loyalty: string;
+  type_line: string;
+  card_faces: {
+    defense: string;
+  }[];
+  all_parts: {
+    id: string;
+    name: string;
+    component: string;
+    type_line: string;
+  }[];
+}
+
 const getInitialCardProps = async (cardId: string): Promise<Partial<BattlefieldCard>> => {
-  const card = await db('cards').where({ id: cardId }).first();
+  const card: Card = await db('cards').where({ id: cardId }).first();
 
   const initialProps: Partial<BattlefieldCard> = {};
 
