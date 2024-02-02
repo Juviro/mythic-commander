@@ -1,16 +1,16 @@
 # Current feature
 
+* battlefield
+  * context menu
+    * create token, including emblems
+      * fetch related tokens from db
+    * create copy of card
 
 # Bugs
 
 
 # MVP
 
-
-* battlefield
-  * context menu
-    * create token, including emblems
-      * fetch related tokens from db
   * allow dragging card selection into graveyard, exile, hand
 
 * play card face-down (e.g. fortell, morph) -> type already defined: FaceDownCard
@@ -108,6 +108,8 @@
 * add option to play with planechase
 
 * allow rotating cards by 90, 180deg. Auto rotate battles
+
+* allow sorting cards in hand
 
 # Optimizations
 

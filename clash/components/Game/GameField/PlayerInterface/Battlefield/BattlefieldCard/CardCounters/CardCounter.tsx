@@ -14,19 +14,24 @@ interface Props {
 }
 
 const CardCounter = ({ amount, type, clashId }: Props) => {
-  if (type === 'generic' || type === 'lore' || type === 'defense') {
+  const lowerCaseType = type.toLowerCase();
+  if (
+    lowerCaseType === 'generic' ||
+    lowerCaseType === 'lore' ||
+    lowerCaseType === 'defense'
+  ) {
     const colors = {
       generic: 'green',
       lore: 'yellow',
       defense: 'red',
     };
-    const colorClassName = `counter_bubble__${colors[type]}`;
+    const colorClassName = `counter_bubble__${colors[lowerCaseType]}`;
 
     return (
       <CardCounterTooltip type={type} amount={amount} clashId={clashId}>
         <div
           className={classNames(styles.counter_bubble, styles[colorClassName], {
-            [styles.counter_bubble__bottom_left]: type === 'defense',
+            [styles.counter_bubble__bottom_left]: lowerCaseType === 'defense',
           })}
         >
           <span>{amount}</span>
@@ -35,8 +40,8 @@ const CardCounter = ({ amount, type, clashId }: Props) => {
     );
   }
 
-  if (type === 'p1/p1' || type === 'm1/m1') {
-    const isMinus = type === 'm1/m1';
+  if (lowerCaseType === 'p1/p1' || lowerCaseType === 'm1/m1') {
+    const isMinus = lowerCaseType === 'm1/m1';
 
     return (
       <CardCounterTooltip type={type} amount={amount} clashId={clashId}>
@@ -50,7 +55,7 @@ const CardCounter = ({ amount, type, clashId }: Props) => {
       </CardCounterTooltip>
     );
   }
-  if (type === 'loyalty') {
+  if (lowerCaseType === 'loyalty') {
     return (
       <CardCounterTooltip type={type} amount={amount} clashId={clashId}>
         <div className={classNames(styles.counter_loyalty)}>
@@ -64,7 +69,7 @@ const CardCounter = ({ amount, type, clashId }: Props) => {
     );
   }
 
-  const iconType = getIconType(type);
+  const iconType = getIconType(lowerCaseType);
 
   if (iconType) {
     const namePrefix = iconType === 'counter' ? 'counter' : 'ability';
