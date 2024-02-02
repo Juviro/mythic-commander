@@ -8,6 +8,7 @@ interface Card {
   amount: number;
   manaValue: number;
   flippable: boolean;
+  type_line: string;
 }
 
 interface Deck {
@@ -42,6 +43,7 @@ export const getDecks = async (lobby: Lobby): Promise<Deck[]> => {
                     'manaValue', cards.cmc,
                     'amount', "cardToDeck".amount,
                     'name', cards.name,
+                    'type_line', cards.type_line,
                     'flippable', cards.card_faces IS NOT NULL
                 )
             ) as cards

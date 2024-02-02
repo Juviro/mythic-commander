@@ -56,6 +56,10 @@ export const COUNTERS_WITH_ICONS = [
   'stun',
 ];
 
+// Counters taken from DB with this query:
+// eslint-disable-next-line max-len
+// SELECT DISTINCT substring(oracle_text from '[A-z]{2,}\scounters?'), ARRAY_AGG(oracle_text) FROM cards GROUP BY substring(oracle_text from '[A-z]{2,}\scounters?');
+
 export const ABILITIE_COUNTERS_WITH_ICONS = [
   'deathtouch',
   'devotion',

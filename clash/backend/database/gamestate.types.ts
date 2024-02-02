@@ -66,6 +66,11 @@ export const ZONES = {
 } as const;
 
 // ##################### Player #####################
+
+interface AdditionalPlayerInfo {
+  isFurryFriend?: boolean;
+}
+
 export interface Player {
   id: string;
   name: string;
@@ -73,6 +78,7 @@ export interface Player {
   commanders: Commander[];
   zones: Zones;
   life: number;
+  additionalPlayerInfo: AdditionalPlayerInfo;
 }
 
 // ##################### GameState #####################

@@ -7,15 +7,24 @@ import { randomizeArray } from 'utils/randomizeArray';
 
 const STARTING_LIFE = 40;
 
+const isCatOrDog = (card: { type_line: string }) => {
+  const types = card.type_line.split(' ');
+  return types.includes('Cat') || types.includes('Dog');
+};
+
 const initMatch = async (lobby: Lobby) => {
   const decks = await getDecks(lobby);
 
   const decksWithSpreadedCards = decks.map((deck) => {
     const commanders: Omit<VisibleCard, 'ownerId'>[] = [];
+    let isFurryFriend = false;
 
     const cards = deck.cards
       .filter((card) => {
         if (deck.commanderIds?.includes(card.id)) {
+          if (isCatOrDog(card)) {
+            isFurryFriend = true;
+          }
           commanders.push({
             id: card.id,
             name: card.name,
@@ -50,6 +59,7 @@ const initMatch = async (lobby: Lobby) => {
       name: deck.name,
       cards: randomizedCards,
       commanders,
+      isFurryFriend,
     };
   });
 
@@ -87,6 +97,9 @@ const initMatch = async (lobby: Lobby) => {
       color: player.color!,
       commanders,
       life: STARTING_LIFE,
+      additionalPlayerInfo: {
+        isFurryFriend: deck.isFurryFriend,
+      },
       zones: {
         hand,
         library,
