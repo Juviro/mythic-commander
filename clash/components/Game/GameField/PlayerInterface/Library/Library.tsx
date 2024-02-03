@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Tooltip } from 'antd';
+import { DropCard } from 'types/dnd.types';
 
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import LibraryImage from 'public/assets/icons/library.svg';
@@ -8,8 +9,7 @@ import Dropzone from 'components/Game/Dropzone/Dropzone';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import GameStateContext from 'components/Game/GameStateContext';
 import ZoneCardsPopover from 'components/GameComponents/ZoneCardsPopover/ZoneCardsPopover';
-import { pluralizeCards } from 'components/Game/Menu/Chat/ChatMessages/util';
-import { DropCard } from 'types/dnd.types';
+import { pluralizeCards } from 'utils/i18nUtils';
 import CardStack from '../CardStack/CardStack';
 import useLibraryActions from './useLibraryActions';
 
@@ -38,6 +38,8 @@ const Library = ({ player, isSelf }: Props) => {
     onMoveCard(clashId, ZONES.LIBRARY, player.id);
   };
 
+  const noAnimation = !player.mulligan.cardsAccepted;
+
   return (
     <Tooltip
       title={`Library: ${pluralizeCards(library.length, 'one')}`}
@@ -59,6 +61,7 @@ const Library = ({ player, isSelf }: Props) => {
             <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id} disabled={isPeeking}>
               <CardStack
                 cards={cards}
+                noAnimation={noAnimation}
                 emptyImage={<LibraryImage />}
                 draggable={isSelf}
                 zone="library"

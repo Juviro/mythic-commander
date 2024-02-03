@@ -35,7 +35,9 @@ const CardPreview = () => {
   }
 
   useEffect(() => {
-    setDisplayedCardIndex(0);
+    const newInitialIndex =
+      hoveredCard && 'flipped' in hoveredCard && hoveredCard.flipped ? 1 : 0;
+    setDisplayedCardIndex(newInitialIndex);
     const onScroll = (e: any) => {
       const scrollDirection = e.deltaY > 0 ? 1 : -1;
       const maxIndex = cardPreviews.length - 1;

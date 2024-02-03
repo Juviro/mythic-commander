@@ -191,7 +191,7 @@ const useAnimateCardPositionChange = ({ card, cardRef, noAnimation, zone }: Prop
     } else {
       storeCardPosition(cardRef, card, isVisible, cardPositions, zone);
     }
-  }, [positionSum, isTapped]);
+  }, [positionSum, isTapped, noAnimation]);
 };
 
 export default useAnimateCardPositionChange;

@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
 
 import { LogPayloadMoveZone } from 'backend/constants/logMessages';
+import { getCardinalNumberLabel } from 'utils/i18nUtils';
 import ColoredPlayerName from '../../../../../GameComponents/ColoredPlayerName/ColoredPlayerName';
 
 import styles from '../../Chat.module.css';
-import { getNthLabel } from '../util';
 
 const getZoneLabelFrom = (zone: string, playerId?: string | null) => {
   if (playerId) {
@@ -96,7 +96,7 @@ const MessageMove = ({ payload, playerId }: Props) => {
       actionSuffix = (
         <>
           <span>into their library </span>
-          <b>{getNthLabel(payload.to.libraryPosition + 1)}</b>
+          <b>{getCardinalNumberLabel(payload.to.libraryPosition + 1)}</b>
           <span> from the top</span>
         </>
       );

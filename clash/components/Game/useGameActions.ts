@@ -18,12 +18,21 @@ import {
   AddCountersPayload,
   CreateTokenPayload,
   CopyCardPayload,
+  AcceptHandPayload,
 } from 'backend/constants/wsEvents';
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
 
 const useGameActions = () => {
   const { socket } = useContext(SocketContext);
+
+  const onAcceptHand = (payload: AcceptHandPayload) => {
+    socket?.emit(SOCKET_MSG_GAME.ACCEPT_HAND, payload);
+  };
+
+  const onTakeMulligan = () => {
+    socket?.emit(SOCKET_MSG_GAME.TAKE_MULLIGAN);
+  };
 
   const onDrawCard = () => {
     socket?.emit(SOCKET_MSG_GAME.DRAW_CARD);
@@ -131,6 +140,8 @@ const useGameActions = () => {
   };
 
   return {
+    onAcceptHand,
+    onTakeMulligan,
     onDrawCard,
     onMoveCard,
     onMoveCardsGroup,

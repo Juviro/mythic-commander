@@ -16,6 +16,8 @@ import MessageEndPeek from './Message/MessageEndPeek';
 import MessageShuffleLibrary from './Message/MessageShuffleLibrary';
 import MessageDiscardRandomCard from './Message/MessageDiscardRandomCard';
 import MessageMill from './Message/MessageMill';
+import MessageTakeMulligan from './Message/MessageTakeMulligan';
+import MessageAcceptHand from './Message/MessageAcceptHand';
 
 interface Props {
   message: GameLog;
@@ -24,6 +26,12 @@ interface Props {
 const ChatMessage = ({ message }: Props) => {
   const { logKey, payload, playerId } = message;
 
+  if (logKey === 'ACCEPT_HAND') {
+    return <MessageAcceptHand playerId={playerId} payload={payload} />;
+  }
+  if (logKey === 'TAKE_MULLIGAN') {
+    return <MessageTakeMulligan playerId={playerId} payload={payload} />;
+  }
   if (logKey === 'DRAW_CARD') {
     return <MessageDraw playerId={playerId} payload={payload} />;
   }

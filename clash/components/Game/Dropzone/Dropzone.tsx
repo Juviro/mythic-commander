@@ -2,7 +2,7 @@ import React, { ReactNode, useContext, useEffect, useRef } from 'react';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
 
 import classNames from 'classnames';
-import { DndItemTypes, DropCard } from 'types/dnd.types';
+import { DndItemType, DndItemTypes, DropCard } from 'types/dnd.types';
 import styles from './Dropzone.module.css';
 import CardPositionContext from '../CardPositionContext';
 
@@ -13,7 +13,7 @@ interface Props {
   acceptFromPlayerId?: string;
   acceptedIds?: string[];
   playerId?: string;
-  accept?: DndItemTypes[];
+  accept?: DndItemType[];
 }
 
 const Dropzone = ({

@@ -18,6 +18,7 @@
     --color-icon-light: #ffffff70;
     --color-card-align: var(--color-primary);
     --color-card-preview-background: #000000;
+    --color-modal-backdrop: #00000050;
 
     --size-card-base-width: 248px;
     --size-card-width: var(--size-card-base-width);

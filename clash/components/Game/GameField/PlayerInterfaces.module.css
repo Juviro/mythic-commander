@@ -77,8 +77,9 @@
   top: 0;
   left: 0;
   bottom: 0;
-  transform: translateY(12px);
   right: var(--size-background-margin-right);
-  /* opacity: 0.5;
+  /* 
+  used for alternative bg:
+  opacity: 0.5;
   filter: sepia(100%) hue-rotate(160deg) saturate(90%); */
 }

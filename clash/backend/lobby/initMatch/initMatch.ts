@@ -30,17 +30,16 @@ const initMatch = async (lobby: Lobby) => {
       (spreadDeck) => spreadDeck.id === player.deck!.id
     )!;
 
-    const removeManaValue = (card: Omit<Card, 'ownerId'>) => ({
+    const addOwnerId = (card: Omit<Card, 'ownerId'>) => ({
       ...card,
       ownerId: player.id,
-      manaValue: undefined,
     });
 
     const hand = deck.cards
       .slice(0, 7)
       .sort((a, b) => a.manaValue - b.manaValue)
-      .map(removeManaValue);
-    const library = deck.cards.slice(7).map(removeManaValue);
+      .map(addOwnerId);
+    const library = deck.cards.slice(7).map(addOwnerId);
 
     const commandZone = deck.commanders.map((commander) => ({
       ...commander,
@@ -61,6 +60,10 @@ const initMatch = async (lobby: Lobby) => {
       life: STARTING_LIFE,
       additionalPlayerInfo: {
         isFurryFriend: deck.isFurryFriend,
+      },
+      mulligan: {
+        mulligansTaken: 0,
+        cardsAccepted: false,
       },
       zones: {
         hand,
