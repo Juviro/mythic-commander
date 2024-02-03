@@ -43,9 +43,13 @@
 
 * card selection: display how many cards are selected
 
+* allow joining lobby via url (e.g. http://localhost:1235/#4fqufdulls6ckz15)
+
 # Easter Eggs
 
 # Backog
+
+* display warning for users with small screens
 
 * special sleeve for commander, visible in lib as well?
 
