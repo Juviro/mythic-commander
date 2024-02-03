@@ -7,12 +7,12 @@ import ExileImage from 'public/assets/icons/exile.svg';
 import Dropzone from 'components/Game/Dropzone/Dropzone';
 import useGameActions from 'components/Game/useGameActions';
 import Card from 'components/GameComponents/Card/Card';
-import { pluralizeCards } from 'components/Game/Menu/Chat/ChatMessages/util';
 import StackedCardList from 'components/GameComponents/StackedCardList/StackedCardList';
 import GameStateContext from 'components/Game/GameStateContext';
 import { DndItemTypes, DropCard } from 'types/dnd.types';
 
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
+import { pluralizeCards } from 'utils/i18nUtils';
 import styles from './Exile.module.css';
 import useExileActions from './useExileActions';
 

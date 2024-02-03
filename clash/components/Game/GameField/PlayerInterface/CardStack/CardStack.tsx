@@ -11,9 +11,17 @@ interface Props {
   emptyImage?: ReactNode;
   draggable?: boolean;
   zone: Zone;
+  noAnimation?: boolean;
 }
 
-const CardStack = ({ cards, emptyText, emptyImage, draggable, zone }: Props) => {
+const CardStack = ({
+  cards,
+  emptyText,
+  emptyImage,
+  draggable,
+  zone,
+  noAnimation,
+}: Props) => {
   return (
     <div className={styles.wrapper}>
       {cards.map((card, index) => (
@@ -22,7 +30,7 @@ const CardStack = ({ cards, emptyText, emptyImage, draggable, zone }: Props) => 
           className={styles.card}
           style={{ '--rotation': cards.length - index * (index % 2) } as CSSProperties}
         >
-          <Card card={card} draggable={draggable} zone={zone} />
+          <Card card={card} draggable={draggable} zone={zone} noAnimation={noAnimation} />
         </div>
       ))}
       {!cards.length && <div className={styles.empty}>{emptyImage || emptyText}</div>}

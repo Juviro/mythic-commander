@@ -28,6 +28,7 @@ export interface VisibleCard extends HiddenCard {
   name: string;
   flippable?: boolean;
   meta?: CardMeta;
+  manaValue: number;
 }
 
 export interface BattlefieldCard extends VisibleCard {
@@ -85,6 +86,11 @@ interface AdditionalPlayerInfo {
   isFurryFriend?: boolean;
 }
 
+interface Mulligan {
+  mulligansTaken: number;
+  cardsAccepted: boolean;
+}
+
 export interface Player {
   id: string;
   name: string;
@@ -93,6 +99,7 @@ export interface Player {
   zones: Zones;
   life: number;
   additionalPlayerInfo?: AdditionalPlayerInfo;
+  mulligan: Mulligan;
 }
 
 // ##################### Meta #####################

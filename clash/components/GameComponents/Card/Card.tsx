@@ -5,7 +5,7 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 
 import { Card as CardType, Zone } from 'backend/database/gamestate.types';
 import { getImageUrl } from 'utils/getImageUrl';
-import { DndItemTypes, DropCard } from 'types/dnd.types';
+import { DndItemType, DndItemTypes, DropCard } from 'types/dnd.types';
 import CardCounters from 'components/Game/GameField/PlayerInterface/Battlefield/BattlefieldCard/CardCounters/CardCounters';
 import CardPositionContext from 'components/Game/CardPositionContext';
 import useAnimateCardPositionChange from './useAnimateCardPositionChange';
@@ -18,7 +18,7 @@ interface Props {
   dynamicSize?: boolean;
   zone?: Zone;
   noAnimation?: boolean;
-  dropType?: DndItemTypes.CARD | DndItemTypes.LIST_CARD;
+  dropType?: DndItemType;
   flipped?: boolean;
   onDropEnd?: (item: DropCard, monitor: DragSourceMonitor<DropCard>) => void;
 }

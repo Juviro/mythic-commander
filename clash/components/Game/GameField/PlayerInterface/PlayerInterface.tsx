@@ -8,6 +8,7 @@ import styles from '../PlayerInterfaces.module.css';
 import Graveyard from './Graveyard/Graveyard';
 import Battlefield from './Battlefield/Battlefield';
 import Exile from './Exile/Exile';
+import Mulligan from './Mulligan/Mulligan';
 
 interface Props {
   player: Player;
@@ -25,7 +26,11 @@ const PlayerInterface = ({ player, isSelf, isFlipped }: Props) => {
       <div className={styles.interface}>
         <Graveyard player={player} />
         <Library player={player} isSelf={isSelf} />
-        <Hand player={player} isSelf={isSelf} />
+        {player.mulligan.cardsAccepted ? (
+          <Hand player={player} isSelf={isSelf} />
+        ) : (
+          <Mulligan player={player} isSelf={isSelf} />
+        )}
         <Exile player={player} />
         <div />
       </div>

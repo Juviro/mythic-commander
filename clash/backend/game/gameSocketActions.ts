@@ -2,6 +2,7 @@ import { Server } from 'socket.io';
 import getUser, { User } from 'backend/database/getUser';
 import { getGameState } from 'backend/database/matchStore';
 import {
+  AcceptHandPayload,
   AddCountersPayload,
   CopyCardPayload,
   CreateTokenPayload,
@@ -60,6 +61,14 @@ const gameSocketActions = (io: Server) => {
 
     socket.on(SOCKET_MSG_GAME.RESTART_GAME, () => {
       currentGames[currentGameId].restartGame(socket);
+    });
+
+    socket.on(SOCKET_MSG_GAME.ACCEPT_HAND, (payload: AcceptHandPayload) => {
+      currentGames[currentGameId].acceptHand(socket, payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.TAKE_MULLIGAN, () => {
+      currentGames[currentGameId].takeMulligan(socket);
     });
 
     socket.on(SOCKET_MSG_GAME.DRAW_CARD, () => {

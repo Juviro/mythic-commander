@@ -27,6 +27,8 @@ export const SOCKET_MSG_GAME = {
   SEND_CHAT_MESSAGE: 'send_chat_message',
   SET_PHASE: 'set_phase',
   END_TURN: 'end_turn',
+  ACCEPT_HAND: 'ACCEPT_HAND',
+  TAKE_MULLIGAN: 'take_mulligan',
 
   DRAW_CARD: 'draw_card',
   MOVE_CARD: 'move_card',
@@ -46,6 +48,10 @@ export const SOCKET_MSG_GAME = {
   SET_COMMANDER_TIMES_CASTED: 'set_commander_times_casted',
   SET_PLAYER_LIFE: 'set_player_life',
 };
+
+export interface AcceptHandPayload {
+  cardIdsToLibrary: string[];
+}
 
 export interface MoveCardDetails {
   position?: { x: number; y: number };

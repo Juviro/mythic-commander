@@ -21,6 +21,7 @@ const getInitialCards = (cards: InitMatchCard[], commanderIds?: string[]) => {
           id: card.id,
           name: card.name,
           flippable: card.flippable,
+          manaValue: card.manaValue,
           clashId: uniqid(),
           meta: {
             relatedCards: getCardMeta(card),

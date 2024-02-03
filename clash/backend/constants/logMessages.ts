@@ -8,6 +8,8 @@ import {
 } from './wsEvents';
 
 export const LOG_MESSAGES = {
+  ACCEPT_HAND: 'ACCEPT_HAND',
+  TAKE_MULLIGAN: 'TAKE_MULLIGAN',
   DRAW_CARD: 'DRAW_CARD',
   MOVE_CARD: 'MOVE_CARD',
   DISCARD_RANDOM_CARD: 'DISCARD_RANDOM_CARD',
@@ -66,6 +68,14 @@ export interface LogPayloadSearchLibrary {
   libraryPlayerId: string;
 }
 
+export interface LogPayloadAcceptHand {
+  cardsKept: number;
+}
+
+export interface LogPayloadMulligan {
+  mulligansTaken: number;
+}
+
 export interface LogPayloadDraw {
   amount: number;
 }
@@ -92,6 +102,16 @@ export type LogPayloadSetActivePlayer = {
 
 interface LogMessageWithPlayer {
   playerId: string;
+}
+
+interface LogMessageAcceptHand extends LogMessageWithPlayer {
+  logKey: 'ACCEPT_HAND';
+  payload: LogPayloadAcceptHand;
+}
+
+interface LogMessageTakeMulligan extends LogMessageWithPlayer {
+  logKey: 'TAKE_MULLIGAN';
+  payload: LogPayloadMulligan;
 }
 
 interface LogMessageDraw extends LogMessageWithPlayer {
@@ -162,6 +182,8 @@ interface LogMessageSetActivePlayer extends LogMessageWithPlayer {
 // ############################### Log ###############################
 
 export type LogMessage =
+  | LogMessageAcceptHand
+  | LogMessageTakeMulligan
   | LogMessageDraw
   | LogMessageMove
   | LogMessageDiscardRandomCard

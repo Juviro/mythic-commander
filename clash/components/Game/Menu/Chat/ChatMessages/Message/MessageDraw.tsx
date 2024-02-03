@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { LogPayloadDraw } from 'backend/constants/logMessages';
+import { pluralizeCards } from 'utils/i18nUtils';
 import ColoredPlayerName from '../../../../../GameComponents/ColoredPlayerName/ColoredPlayerName';
-import { pluralizeCards } from '../util';
 
 import styles from '../../Chat.module.css';
 

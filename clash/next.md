@@ -1,10 +1,16 @@
 # Current feature
 
-
 # Bugs
 
 
 # MVP
+
+* allow copying selection?
+
+* logs for new actions?
+  * create tokens
+  * add counters
+  * copy card
 
 * play card face-down (e.g. fortell, morph) -> type already defined: FaceDownCard
   * from hand
@@ -14,10 +20,7 @@
 * shortcuts for every action
   * draw [d]
   * shuffle library [s]
-  * 
 
-* game
-  * mulligan
 
 * when aligning a card stacked with lower x/y, put it behind the other card
 
@@ -33,10 +36,20 @@
 * Allow selecting non-active decks as well
 
 * defeated player / ff
+  * remove all cards from all other players' zones
+  * move commander to command zone
+  * grey out commandzone, name
+  * write "Defeated" instead of life total
+
+* card selection: display how many cards are selected
 
 # Easter Eggs
 
-# Backlog
+# Backog
+
+* special sleeve for commander, visible in lib as well?
+
+* win animation when all opponents are defeated (maybe fireworks from todo app)
 
 * allow dragging card selection into graveyard, exile, hand
 
@@ -100,10 +113,6 @@
 
 * allow rotating cards by 90, 180deg. Auto rotate battles
 
-* allow sorting cards in hand
-
-* Instead of hard-coding available counters, fetch them from the db (very low prio)
-
 # Optimizations
 
 * prevent re-render of interface components when menu changes, e.g. when changing life
@@ -112,6 +121,7 @@
 
 # Backlog Bugs
 
+* sometimes tokens are suggested twice
 * when going back to gamebrowser, the url changes, making it impossible to use browser forward button to get back to game
 * cards from other players have wrong sleeve color in hand
 * when moving a peeking card into hand, the draw animation is used

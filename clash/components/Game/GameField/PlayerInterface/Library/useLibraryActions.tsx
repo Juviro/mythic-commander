@@ -2,10 +2,10 @@ import { Input, MenuProps } from 'antd';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
-import { pluralizeCards } from 'components/Game/Menu/Chat/ChatMessages/util';
 import useGameActions from 'components/Game/useGameActions';
 import useMoveCardActions from 'components/GameComponents/Card/cardActions/useMoveCardActions';
 import { useContext } from 'react';
+import { pluralizeCards } from 'utils/i18nUtils';
 
 export const getPeekSubItems = (
   onClick: (amount: number) => void,

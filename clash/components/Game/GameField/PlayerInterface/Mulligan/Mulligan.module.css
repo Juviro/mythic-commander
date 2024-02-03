@@ -1,0 +1,21 @@
+.modal {
+    --size-card-width: 200px;
+    bottom: -45%;
+    top: unset;
+}
+
+.modal_subtitle {
+    font-size: 20px;
+    font-weight: initial;
+    margin-bottom: 8px;
+}
+
+.modal :global(.ant-modal-title) {
+    font-size: 22px;
+    margin-top: -4px;
+}
+
+.content {
+    display: flex;
+    gap: 16px;
+}

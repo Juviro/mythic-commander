@@ -10,6 +10,7 @@ import {
   Zone,
 } from 'backend/database/gamestate.types';
 import {
+  AcceptHandPayload,
   AddCountersPayload,
   CopyCardPayload,
   CreateTokenPayload,
@@ -189,6 +190,57 @@ export default class Game {
   }
 
   // ##################### Actions #####################
+
+  acceptHand(socket: Socket, payload: AcceptHandPayload) {
+    const player = this.getPlayerBySocket(socket);
+    const { cardIdsToLibrary } = payload;
+
+    const { hand, library } = player.zones;
+
+    const newHand = hand.filter((card) => {
+      const isCardToLibrary = cardIdsToLibrary.includes(card.clashId);
+      if (isCardToLibrary) {
+        library.unshift(card);
+      }
+      return !isCardToLibrary;
+    });
+
+    player.zones.hand = newHand;
+
+    player.mulligan.cardsAccepted = true;
+
+    this.emitPlayerUpdate(player);
+    this.logAction({
+      playerId: player.id,
+      logKey: LOG_MESSAGES.ACCEPT_HAND,
+      payload: {
+        cardsKept: newHand.length,
+      },
+    });
+  }
+
+  takeMulligan(socket: Socket) {
+    const player = this.getPlayerBySocket(socket);
+    const { mulligansTaken } = player.mulligan;
+    const { hand, library } = player.zones;
+
+    const shuffledCards = randomizeArray(library.concat(hand)) as VisibleCard[];
+
+    const newHand = shuffledCards.splice(0, 7).sort((a, b) => a.manaValue - b.manaValue);
+    player.zones.library = shuffledCards;
+    player.zones.hand = newHand;
+
+    player.mulligan.mulligansTaken += 1;
+
+    this.emitPlayerUpdate(player);
+    this.logAction({
+      playerId: player.id,
+      logKey: LOG_MESSAGES.TAKE_MULLIGAN,
+      payload: {
+        mulligansTaken: mulligansTaken + 1,
+      },
+    });
+  }
 
   drawCard(socket: Socket) {
     const player = this.getPlayerBySocket(socket);
@@ -412,6 +464,7 @@ export default class Game {
       name,
       ownerId: player.id,
       isToken: true,
+      manaValue: 0,
       position: Game.fixPosition(position),
     };
 
@@ -441,6 +494,7 @@ export default class Game {
         clashId: uniqid(),
         name: originalCard.name,
         ownerId: originalCard.ownerId,
+        manaValue: originalCard.manaValue,
         meta: {
           ...originalCard.meta,
           isCardCopy: !originalCard.isToken || originalCard.meta?.isCardCopy,

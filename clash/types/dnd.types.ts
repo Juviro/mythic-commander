@@ -2,7 +2,10 @@ enum DndItemTypes {
   CARD = 'CARD',
   LIST_CARD = 'LIST_CARD',
   CARD_GROUP = 'CARD_GROUP',
+  MULLIGAN_CARD = 'MULLIGAN_CARD',
 }
+
+export type DndItemType = `${DndItemTypes}`;
 
 export interface DropCard {
   clashId: string;

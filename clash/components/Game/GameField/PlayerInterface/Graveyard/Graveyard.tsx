@@ -5,11 +5,11 @@ import { Player, ZONES } from 'backend/database/gamestate.types';
 import GraveyardImage from 'public/assets/icons/graveyard.svg';
 import Dropzone from 'components/Game/Dropzone/Dropzone';
 import useGameActions from 'components/Game/useGameActions';
-import { pluralizeCards } from 'components/Game/Menu/Chat/ChatMessages/util';
 import StackedCardList from 'components/GameComponents/StackedCardList/StackedCardList';
 import GameStateContext from 'components/Game/GameStateContext';
 import { DropCard } from 'types/dnd.types';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
+import { pluralizeCards } from 'utils/i18nUtils';
 import CardStack from '../CardStack/CardStack';
 
 import styles from './Graveyard.module.css';

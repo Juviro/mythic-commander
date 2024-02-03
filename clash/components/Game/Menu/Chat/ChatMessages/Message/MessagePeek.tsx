@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { LogPayloadPeek } from 'backend/constants/logMessages';
+import { pluralizeCards } from 'utils/i18nUtils';
 import ColoredPlayerName from '../../../../../GameComponents/ColoredPlayerName/ColoredPlayerName';
 
 import styles from '../../Chat.module.css';
-import { pluralizeCards } from '../util';
 
 interface Props {
   payload: LogPayloadPeek;

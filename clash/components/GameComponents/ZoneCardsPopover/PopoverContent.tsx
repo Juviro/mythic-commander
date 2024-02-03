@@ -10,6 +10,14 @@ import usePopoverCards from './usePopoverCards';
 
 import styles from './ZoneCardsPopover.module.css';
 
+const OrderLabel = () => (
+  <span>
+    <span>Bottom</span>
+    <span> → </span>
+    <span>Top</span>
+  </span>
+);
+
 interface Props {
   color?: string;
   zone: Zone;
@@ -81,6 +89,7 @@ const PopoverContent = ({ color, zone }: Props) => {
           onDrop={onDropLibrary}
           cards={filteredCards}
           empty="No cards found"
+          titleRight={<OrderLabel />}
           title={
             <Space size={16}>
               <span>Library</span>
@@ -101,13 +110,7 @@ const PopoverContent = ({ color, zone }: Props) => {
         onDrop={onDropTop}
         title="Top of Library"
         empty="Drag Cards here to put them on Top of the Library"
-        titleRight={
-          <span>
-            <span>Bottom</span>
-            <span> → </span>
-            <span>Top</span>
-          </span>
-        }
+        titleRight={<OrderLabel />}
         bottom={
           <Space size={16}>
             {isSearch && (
