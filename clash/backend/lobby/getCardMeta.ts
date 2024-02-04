@@ -25,6 +25,13 @@ const getCardMeta = (card: InitMatchCard) => {
           type: 'Dungeon',
         };
       }
+      if (component === 'meld_result') {
+        return {
+          id,
+          name,
+          type: 'Melded',
+        };
+      }
 
       return null;
     })
