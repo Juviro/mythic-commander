@@ -3,7 +3,7 @@ import { DragSourceMonitor, useDrag } from 'react-dnd';
 import classNames from 'classnames';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 
-import { Card as CardType, Zone } from 'backend/database/gamestate.types';
+import { Card as CardType, VisibleCard, Zone } from 'backend/database/gamestate.types';
 import { getImageUrl } from 'utils/getImageUrl';
 import { DndItemType, DndItemTypes, DropCard } from 'types/dnd.types';
 import CardCounters from 'components/Game/GameField/PlayerInterface/Battlefield/BattlefieldCard/CardCounters/CardCounters';
@@ -49,7 +49,7 @@ const Card = ({
   useAnimateCardPositionChange({ card, cardRef, zone, noAnimation });
 
   const hidden = !('id' in card);
-  const faceDown = flipped && 'flippable' in card && !card.flippable;
+  const faceDown = flipped && !(card as VisibleCard).flippable;
 
   useEffect(() => {
     if (dropType !== DndItemTypes.CARD) return;

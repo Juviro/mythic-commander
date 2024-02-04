@@ -457,6 +457,7 @@ export default class Game {
       ownerId: player.id,
       isToken: true,
       manaValue: 0,
+      flippable: name.includes('//'),
       position: Game.fixPosition(position),
     };
 

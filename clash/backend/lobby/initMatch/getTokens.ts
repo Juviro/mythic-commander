@@ -20,8 +20,9 @@ const getTokens = async () => {
         cards 
       WHERE 
         (set_type = 'token' OR layout = 'token')
-      AND 
-        name NOT ilike '%//%'
+      AND
+      ${/* The one ring is the only double faced token we want to display */ ''}
+        (name NOT ilike '%//%' OR id = '7215460e-8c06-47d0-94e5-d1832d0218af')
       AND
         lang = 'en'
       AND

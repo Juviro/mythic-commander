@@ -47,20 +47,21 @@ const useCreateTokenActions = ({ cards, player, battlefieldRef }: Props) => {
 
   const allTokens = gameState?.resources?.tokens || [];
 
-  const suggestedTokenIds = cards
+  const suggestedTokens = cards
     .map(({ meta }) => {
-      return meta?.relatedCards?.map(({ id }) => id) ?? [];
+      return meta?.relatedCards ?? [];
     })
     .flat();
-  const uniqueSuggestedTokenIds = [...new Set(suggestedTokenIds)];
+  const uniqueSuggestedTokens = suggestedTokens.filter(
+    ({ id }, index, self) => self.findIndex((t) => t.id === id) === index
+  );
 
-  const suggestedTokens = useMemo(() => {
-    return uniqueSuggestedTokenIds
-      .map((id) => {
-        return {
-          ...allTokens.find(({ ids }) => ids.includes(id)),
-          id,
-        };
+  const suggestedTokenIds = uniqueSuggestedTokens.map(({ id }) => id);
+
+  const suggestedTokensWithFullData = useMemo(() => {
+    return uniqueSuggestedTokens
+      .map(({ id, ...rest }) => {
+        return { ...rest, ...allTokens.find(({ ids }) => ids.includes(id)), id };
       })
       .sort((a, b) => {
         return (a.powerToughness ?? '999').localeCompare(b.powerToughness ?? '999');
@@ -81,11 +82,13 @@ const useCreateTokenActions = ({ cards, player, battlefieldRef }: Props) => {
     });
   };
 
-  const suggestedTokenActions: MenuProps['items'] = suggestedTokens.map((token) => ({
-    key: `create-token-${token.id}`,
-    label: getTokenName(token),
-    onClick: () => onCreateToken(token),
-  }));
+  const suggestedTokenActions: MenuProps['items'] = suggestedTokensWithFullData.map(
+    (token) => ({
+      key: `create-token-${token.id}`,
+      label: getTokenName(token),
+      onClick: () => onCreateToken(token),
+    })
+  );
 
   const otherCounterOptions = allTokens
     .sort((a, b) => {

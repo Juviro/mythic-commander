@@ -8,6 +8,7 @@
 
 # Bugs
 
+* when having a selection, "Move cards to" should only apply to selection
 
 # MVP
 
