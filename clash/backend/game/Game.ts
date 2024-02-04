@@ -168,7 +168,8 @@ export default class Game {
     console.log('getPlayerBySocket', this.users);
     const userId = Object.entries(this.users).find(
       ([, { socket: s }]) => s === socket
-    )![0];
+    )?.[0];
+    if (!userId) throw new Error('User not found');
     return this.getPlayerById(userId);
   }
 
