@@ -88,6 +88,8 @@ export default class Game {
   }
 
   join(socket: Socket, user: DatabaseUser) {
+    // eslint-disable-next-line no-console
+    console.log('join', user.id);
     this.users[user.id] = {
       name: user.username,
       socket,
@@ -162,6 +164,8 @@ export default class Game {
   }
 
   getPlayerBySocket(socket: Socket): Player {
+    // eslint-disable-next-line no-console
+    console.log('getPlayerBySocket', this.users);
     const userId = Object.entries(this.users).find(
       ([, { socket: s }]) => s === socket
     )![0];
