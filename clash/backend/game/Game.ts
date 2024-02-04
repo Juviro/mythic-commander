@@ -88,8 +88,6 @@ export default class Game {
   }
 
   join(socket: Socket, user: DatabaseUser) {
-    // eslint-disable-next-line no-console
-    console.log('join', user.id);
     this.users[user.id] = {
       name: user.username,
       socket,
@@ -106,8 +104,8 @@ export default class Game {
     storeGameState(this.gameState.gameId, this.gameState);
   }
 
-  async restartGame(socket: Socket) {
-    const player = this.getPlayerBySocket(socket);
+  async restartGame(playerId: string) {
+    const player = this.getPlayerById(playerId);
     if (player.id !== this.gameState.hostId) return;
 
     const { lobby } = await getGameState(this.gameState.gameId);
@@ -116,11 +114,11 @@ export default class Game {
 
     this.gameState = newGameState;
 
-    newGameState.players.forEach(({ id: playerId }) => {
-      const user = this.users[playerId];
+    newGameState.players.forEach(({ id }) => {
+      const user = this.users[id];
       // might be undefined if player is not connected
       if (!user) return;
-      this.emitGameState(user.socket, playerId);
+      this.emitGameState(user.socket, id);
     });
   }
 
@@ -163,16 +161,6 @@ export default class Game {
     return this.gameState.players.find(({ id }) => id === playerId) as Player;
   }
 
-  getPlayerBySocket(socket: Socket): Player {
-    // eslint-disable-next-line no-console
-    console.log('getPlayerBySocket', this.users);
-    const userId = Object.entries(this.users).find(
-      ([, { socket: s }]) => s === socket
-    )?.[0];
-    if (!userId) throw new Error('User not found');
-    return this.getPlayerById(userId);
-  }
-
   logAction(log: LogMessage) {
     const { logKey, payload, playerId } = log;
     if (logKey === 'MOVE_CARD' && payload.to.zone === payload.from.zone) return;
@@ -196,8 +184,8 @@ export default class Game {
 
   // ##################### Actions #####################
 
-  acceptHand(socket: Socket, payload: AcceptHandPayload) {
-    const player = this.getPlayerBySocket(socket);
+  acceptHand(playerId: string, payload: AcceptHandPayload) {
+    const player = this.getPlayerById(playerId);
     const { cardIdsToLibrary } = payload;
 
     const { hand, library } = player.zones;
@@ -224,8 +212,8 @@ export default class Game {
     });
   }
 
-  takeMulligan(socket: Socket) {
-    const player = this.getPlayerBySocket(socket);
+  takeMulligan(playerId: string) {
+    const player = this.getPlayerById(playerId);
     const { mulligansTaken } = player.mulligan;
     const { hand, library } = player.zones;
 
@@ -247,8 +235,8 @@ export default class Game {
     });
   }
 
-  drawCard(socket: Socket) {
-    const player = this.getPlayerBySocket(socket);
+  drawCard(playerId: string) {
+    const player = this.getPlayerById(playerId);
     const card = player.zones.library.pop();
     if (!card) return;
 
@@ -261,7 +249,7 @@ export default class Game {
     });
   }
 
-  async moveCard(socket: Socket, payload: MoveCardPayload) {
+  async moveCard(playerId: string, payload: MoveCardPayload) {
     const { clashId, to, position, index } = payload;
     const playersToUpdate = new Set<string>([to.playerId]);
 
@@ -320,8 +308,8 @@ export default class Game {
       }
     }
 
-    playersToUpdate.forEach((playerId) => {
-      const player = this.getPlayerById(playerId);
+    playersToUpdate.forEach((playerToUpdateId) => {
+      const player = this.getPlayerById(playerToUpdateId);
       this.emitPlayerUpdate(player);
     });
 
@@ -340,7 +328,6 @@ export default class Game {
       return toPlayer.zones.library.length - index;
     };
 
-    const playerId = this.getPlayerBySocket(socket).id;
     this.logAction({
       playerId,
       logKey: LOG_MESSAGES.MOVE_CARD,
@@ -544,9 +531,9 @@ export default class Game {
     this.emitPlayerUpdate(player);
   }
 
-  mill(socket: Socket, payload: MillPayload) {
+  mill(millingPlayerId: string, payload: MillPayload) {
     const { amount, playerId } = payload;
-    const millingPlayer = this.getPlayerBySocket(socket);
+    const millingPlayer = this.getPlayerById(millingPlayerId);
     const player = this.getPlayerById(playerId);
 
     const milledCards = player.zones.library.splice(-amount) as VisibleCard[];
@@ -564,12 +551,14 @@ export default class Game {
     });
   }
 
-  peek(socket: Socket, payload: PeekPayload) {
+  peek(peekingPlayerId: string, payload: PeekPayload) {
     const { amount, zone, playerId } = payload;
-    const peekingPlayer = this.getPlayerBySocket(socket);
+    const peekingPlayer = this.getPlayerById(peekingPlayerId);
     const player = this.getPlayerById(playerId);
 
     const peekedCards = player.zones[zone].slice(-amount);
+
+    const socket = this.users[peekingPlayerId]?.socket;
 
     socket.emit(SOCKET_MSG_GAME.PEEK, {
       zone,
@@ -588,8 +577,8 @@ export default class Game {
     });
   }
 
-  endPeek(socket: Socket, payload: EndPeekPayload) {
-    const peekingPlayer = this.getPlayerBySocket(socket);
+  endPeek(peekingPlayerId: string, payload: EndPeekPayload) {
+    const peekingPlayer = this.getPlayerById(peekingPlayerId);
     const {
       playerId,
       cardsToBottom: cardIdsToBottom,
@@ -636,10 +625,12 @@ export default class Game {
     });
   }
 
-  searchLibrary(socket: Socket, payload: SearchLibraryPayload) {
+  searchLibrary(searchingPlayerId: string, payload: SearchLibraryPayload) {
     const { playerId } = payload;
-    const searchingPlayer = this.getPlayerBySocket(socket);
+    const searchingPlayer = this.getPlayerById(searchingPlayerId);
     const player = this.getPlayerById(playerId);
+
+    const socket = this.users[searchingPlayerId]?.socket;
 
     socket.emit(SOCKET_MSG_GAME.PEEK, {
       zone: 'library',
@@ -657,8 +648,8 @@ export default class Game {
     });
   }
 
-  shuffleLibrary(socket: Socket) {
-    const player = this.getPlayerBySocket(socket);
+  shuffleLibrary(playerId: string) {
+    const player = this.getPlayerById(playerId);
     player.zones.library = randomizeArray(player.zones.library);
 
     this.emitPlayerUpdate(player);
@@ -670,8 +661,8 @@ export default class Game {
     });
   }
 
-  sendChatMessage(socket: Socket, { message }: SendMessagePayload) {
-    const player = this.getPlayerBySocket(socket);
+  sendChatMessage(playerId: string, { message }: SendMessagePayload) {
+    const player = this.getPlayerById(playerId);
     this.logAction({
       playerId: player.id,
       logKey: LOG_MESSAGES.CHAT_MESSAGE,
@@ -679,8 +670,8 @@ export default class Game {
     });
   }
 
-  setCommanderTimesCasted(socket: Socket, payload: SetCommanderTimesCastedPayload) {
-    const player = this.getPlayerBySocket(socket);
+  setCommanderTimesCasted(playerId: string, payload: SetCommanderTimesCastedPayload) {
+    const player = this.getPlayerById(playerId);
 
     const isOwnCommander = player.commanders.some(
       ({ clashId }) => clashId === payload.commanderClashId
@@ -709,8 +700,8 @@ export default class Game {
     });
   }
 
-  setPlayerLife(socket: Socket, payload: SetPlayerLifePayload) {
-    const player = this.getPlayerBySocket(socket);
+  setPlayerLife(playerId: string, payload: SetPlayerLifePayload) {
+    const player = this.getPlayerById(playerId);
 
     let previousTotal = 0;
     this.gameState.players.forEach((p) => {
@@ -733,8 +724,8 @@ export default class Game {
     });
   }
 
-  endTurn(socket: Socket) {
-    const player = this.getPlayerBySocket(socket);
+  endTurn(playerId: string) {
+    const player = this.getPlayerById(playerId);
     const { players, activePlayerId } = this.gameState;
     const activePlayerIndex = players.findIndex(({ id }) => id === activePlayerId);
 
@@ -760,8 +751,8 @@ export default class Game {
     });
   }
 
-  setPhase(socket: Socket, payload: SetPhasePayload) {
-    const player = this.getPlayerBySocket(socket);
+  setPhase(playerId: string, payload: SetPhasePayload) {
+    const player = this.getPlayerById(playerId);
     this.gameState.phase = payload.phase;
 
     const activePlayer = this.getPlayerById(this.gameState.activePlayerId);

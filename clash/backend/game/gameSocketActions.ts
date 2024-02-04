@@ -60,23 +60,23 @@ const gameSocketActions = (io: Server) => {
     });
 
     socket.on(SOCKET_MSG_GAME.RESTART_GAME, () => {
-      currentGames[currentGameId].restartGame(socket);
+      currentGames[currentGameId].restartGame(user.id);
     });
 
     socket.on(SOCKET_MSG_GAME.ACCEPT_HAND, (payload: AcceptHandPayload) => {
-      currentGames[currentGameId].acceptHand(socket, payload);
+      currentGames[currentGameId].acceptHand(user.id, payload);
     });
 
     socket.on(SOCKET_MSG_GAME.TAKE_MULLIGAN, () => {
-      currentGames[currentGameId].takeMulligan(socket);
+      currentGames[currentGameId].takeMulligan(user.id);
     });
 
     socket.on(SOCKET_MSG_GAME.DRAW_CARD, () => {
-      currentGames[currentGameId].drawCard(socket);
+      currentGames[currentGameId].drawCard(user.id);
     });
 
     socket.on(SOCKET_MSG_GAME.MOVE_CARD, (payload: MoveCardPayload) => {
-      currentGames[currentGameId].moveCard(socket, payload);
+      currentGames[currentGameId].moveCard(user.id, payload);
     });
 
     socket.on(SOCKET_MSG_GAME.MOVE_CARDS_GROUP, (payload: MoveCardsGroupPayload) => {
@@ -111,46 +111,46 @@ const gameSocketActions = (io: Server) => {
     });
 
     socket.on(SOCKET_MSG_GAME.MILL, (payload: MillPayload) => {
-      currentGames[currentGameId].mill(socket, payload);
+      currentGames[currentGameId].mill(user.id, payload);
     });
 
     socket.on(SOCKET_MSG_GAME.PEEK, (payload: PeekPayload) => {
-      currentGames[currentGameId].peek(socket, payload);
+      currentGames[currentGameId].peek(user.id, payload);
     });
 
     socket.on(SOCKET_MSG_GAME.END_PEEK, (payload: EndPeekPayload) => {
-      currentGames[currentGameId].endPeek(socket, payload);
+      currentGames[currentGameId].endPeek(user.id, payload);
     });
 
     socket.on(SOCKET_MSG_GAME.SEARCH_LIBRARY, (payload: SearchLibraryPayload) => {
-      currentGames[currentGameId].searchLibrary(socket, payload);
+      currentGames[currentGameId].searchLibrary(user.id, payload);
     });
 
     socket.on(SOCKET_MSG_GAME.SHUFFLE_LIBRARY, () => {
-      currentGames[currentGameId].shuffleLibrary(socket);
+      currentGames[currentGameId].shuffleLibrary(user.id);
     });
 
     socket.on(SOCKET_MSG_GAME.SEND_CHAT_MESSAGE, (message: SendMessagePayload) => {
-      currentGames[currentGameId].sendChatMessage(socket, message);
+      currentGames[currentGameId].sendChatMessage(user.id, message);
     });
 
     socket.on(
       SOCKET_MSG_GAME.SET_COMMANDER_TIMES_CASTED,
       (payload: SetCommanderTimesCastedPayload) => {
-        currentGames[currentGameId].setCommanderTimesCasted(socket, payload);
+        currentGames[currentGameId].setCommanderTimesCasted(user.id, payload);
       }
     );
 
     socket.on(SOCKET_MSG_GAME.SET_PLAYER_LIFE, (payload: SetPlayerLifePayload) => {
-      currentGames[currentGameId].setPlayerLife(socket, payload);
+      currentGames[currentGameId].setPlayerLife(user.id, payload);
     });
 
     socket.on(SOCKET_MSG_GAME.END_TURN, () => {
-      currentGames[currentGameId].endTurn(socket);
+      currentGames[currentGameId].endTurn(user.id);
     });
 
     socket.on(SOCKET_MSG_GAME.SET_PHASE, (payload: SetPhasePayload) => {
-      currentGames[currentGameId].setPhase(socket, payload);
+      currentGames[currentGameId].setPhase(user.id, payload);
     });
 
     socket.on('disconnect', () => {
