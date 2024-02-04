@@ -1,21 +1,22 @@
 # Current feature
 
+* play card face-down (e.g. fortell, morph) -> type already defined: FaceDownCard
+  * from hand
+  * on battlefield
+  * from anywhere in library
+* allow putting card on battlefield face-up
+
 # Bugs
 
 
 # MVP
 
-* allow copying selection?
 
 * logs for new actions?
   * create tokens
   * add counters
   * copy card
 
-* play card face-down (e.g. fortell, morph) -> type already defined: FaceDownCard
-  * from hand
-  * on battlefield
-  * from anywhere in library
 
 * shortcuts for every action
   * draw [d]
@@ -34,6 +35,7 @@
   * chat commands? /coin, /dice 3d6
 
 * Allow selecting non-active decks as well
+* display link in lobby to create a deck
 
 * defeated player / ff
   * remove all cards from all other players' zones
@@ -43,11 +45,16 @@
 
 * card selection: display how many cards are selected
 
-* allow joining lobby via url (e.g. http://localhost:1235/#4fqufdulls6ckz15)
 
 # Easter Eggs
 
 # Backog
+
+* add to battlefield actions: untap all [u]
+
+* allow joining lobby via url (e.g. http://localhost:1235/#4fqufdulls6ckz15)
+
+* allow copying selection?
 
 * display warning for users with small screens
 
@@ -116,6 +123,8 @@
 * add option to play with planechase
 
 * allow rotating cards by 90, 180deg. Auto rotate battles
+
+* document all shortcuts
 
 # Optimizations
 
