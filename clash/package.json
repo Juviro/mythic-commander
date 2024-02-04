@@ -26,7 +26,7 @@
     "react-dom": "18.2.0",
     "react-inlinesvg": "^4.1.0",
     "react-query": "3.39.3",
-    "socket.io": "4.5.4",
+    "socket.io": "^4.7.4",
     "socket.io-client": "4.5.4",
     "typescript": "4.9.4",
     "uniqid": "5.4.0"
