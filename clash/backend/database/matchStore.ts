@@ -97,11 +97,11 @@ export const storeGameState = async (
 export const getGameState = async (
   gameId: string
 ): Promise<{ gameState: GameState; lobby: Lobby }> => {
-  const { state, lobby }: { state: GameState; lobby: Lobby } = await db('gameStates')
+  const { state, lobby }: { state: GameState; lobby: Lobby } = (await db('gameStates')
     .where({
       id: gameId,
     })
-    .first();
+    .first()) || { gameState: null, lobby: null };
 
   return {
     gameState: state,
