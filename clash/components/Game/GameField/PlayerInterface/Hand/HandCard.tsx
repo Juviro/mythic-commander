@@ -15,6 +15,11 @@ interface Props {
 }
 
 const HandCard = ({ card, isSelf, player }: Props) => {
+  const hiddenActionKeys: string[] = [];
+  if (!card.flippable) {
+    hiddenActionKeys.push('flip');
+  }
+
   const { contextMenuItems } = useCardActions({
     cardIds: [card.clashId],
     contextMenuTitle: card.name,

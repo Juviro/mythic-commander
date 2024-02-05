@@ -21,6 +21,7 @@ import {
   SetPhasePayload,
   SetPlayerLifePayload,
   TapCardsPayload,
+  TurnCardsFaceDownPayload,
 } from '../constants/wsEvents';
 import Game from './Game';
 
@@ -108,6 +109,10 @@ const gameSocketActions = (io: Server) => {
 
     socket.on(SOCKET_MSG_GAME.FLIP_CARDS, (payload: FlipCardsPayload) => {
       currentGames[currentGameId].flipCards(payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.TURN_FACE_DOWN, (payload: TurnCardsFaceDownPayload) => {
+      currentGames[currentGameId].turnCardsFaceDown(payload);
     });
 
     socket.on(SOCKET_MSG_GAME.MILL, (payload: MillPayload) => {

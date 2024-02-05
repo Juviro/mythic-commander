@@ -48,8 +48,10 @@ const Card = ({
 
   useAnimateCardPositionChange({ card, cardRef, zone, noAnimation });
 
-  const hidden = !('id' in card);
-  const faceDown = flipped && !(card as VisibleCard).flippable;
+  const hidden = !('id' in card) || ('faceDown' in card && card.faceDown);
+  const faceDown =
+    ('faceDown' in card && card.faceDown) ||
+    (flipped && !(card as VisibleCard).flippable);
 
   useEffect(() => {
     if (dropType !== DndItemTypes.CARD) return;
@@ -71,9 +73,7 @@ const Card = ({
       onMouseEnter={hidden ? undefined : () => setHoveredCard(card)}
       onMouseLeave={hidden ? undefined : () => setHoveredCard(null)}
     >
-      {!hidden && !faceDown && (
-        <img className={styles.image} src={getImageUrl(card.id, flipped)} />
-      )}
+      {!hidden && <img className={styles.image} src={getImageUrl(card.id, flipped)} />}
       {faceDown && <img className={styles.image} src="/assets/images/card_back.webp" />}
       <CardCounters card={card} />
     </div>

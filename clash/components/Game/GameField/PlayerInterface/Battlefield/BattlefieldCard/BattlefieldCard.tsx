@@ -73,7 +73,7 @@ const BattlefieldCard = ({ card, player, inSelection }: Props) => {
       >
         <Card
           card={card}
-          flipped={card.flipped}
+          flipped={'flipped' in card && card.flipped}
           draggable={!isSelected}
           zone="battlefield"
           noAnimation={isSelected}

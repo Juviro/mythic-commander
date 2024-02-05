@@ -9,9 +9,9 @@ import { pluralizeCards } from 'utils/i18nUtils';
 
 export const getPeekSubItems = (
   onClick: (amount: number) => void,
-  count: number,
   key: string,
-  getLabel = (index: number) => `...top ${pluralizeCards(index + 1)}`
+  getLabel = (index: number) => `...top ${pluralizeCards(index + 1)}`,
+  count = 10
 ) => {
   const maxPeekCount = Math.min(count, 10);
 
@@ -80,13 +80,23 @@ const useLibraryActions = (player: Player) => {
       key: 'peek',
       label: 'Look at...',
       disabled: !player.zones.library.length,
-      children: getPeekSubItems(onPeekCards, player.zones.library.length, 'peek'),
+      children: getPeekSubItems(
+        onPeekCards,
+        'peek',
+        undefined,
+        player.zones.library.length
+      ),
     },
     {
       key: 'mill',
       label: 'Mill cards...',
       disabled: !player.zones.library.length,
-      children: getPeekSubItems(onMillCards, player.zones.library.length, 'mill'),
+      children: getPeekSubItems(
+        onMillCards,
+        'mill',
+        undefined,
+        player.zones.library.length
+      ),
     },
     {
       key: 'move',

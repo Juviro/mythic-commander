@@ -31,7 +31,7 @@ export interface VisibleCard extends HiddenCard {
   manaValue: number;
 }
 
-export interface BattlefieldCard extends VisibleCard {
+export interface VisibleBattlefieldCard extends VisibleCard {
   tapped?: boolean;
   flipped?: boolean;
   faceDown?: boolean;
@@ -45,9 +45,13 @@ export interface BattlefieldCard extends VisibleCard {
   };
 }
 
-export interface FaceDownCard extends HiddenCard, Pick<BattlefieldCard, 'position'> {
-  tapped?: boolean;
-  faceDown?: boolean;
+export interface FaceDownCard
+  extends HiddenCard,
+    Pick<VisibleBattlefieldCard, 'position' | 'counters' | 'tapped' | 'meta'> {
+  faceDown: true;
+  flippable?: false;
+  flipped?: false;
+  isToken?: false;
 }
 
 export interface Commander extends Omit<VisibleCard, 'ownerId' | 'position'> {
@@ -57,7 +61,9 @@ export interface Commander extends Omit<VisibleCard, 'ownerId' | 'position'> {
   timesCasted: number;
 }
 
-export type Card = HiddenCard | VisibleCard | BattlefieldCard;
+export type Card = HiddenCard | VisibleCard | VisibleBattlefieldCard;
+
+export type BattlefieldCard = VisibleBattlefieldCard | FaceDownCard;
 
 // ##################### Zone #####################
 interface Zones {

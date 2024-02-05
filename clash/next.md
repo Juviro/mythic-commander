@@ -4,7 +4,8 @@
   * from hand
   * on battlefield
   * from anywhere in library
-* allow putting card on battlefield face-up
+* allow peeking at face-down cards
+* allow putting card on battlefield face-down
 
 # Bugs
 
