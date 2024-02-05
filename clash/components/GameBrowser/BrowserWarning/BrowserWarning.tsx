@@ -1,14 +1,22 @@
 import { Alert } from 'antd';
 import React, { useEffect, useState } from 'react';
 
+const MIN_SCREEN_WIDTH = 1400;
+
 const BrowserWarning = () => {
   const [shouldDisplayWarning, setShouldDisplayWarning] = useState(false);
 
-  // navigator is not defined in SSR, therefore we need an effect
+  const checkScreenSize = () => {
+    if (typeof window === 'undefined') return;
+    const isSmallScreen = window.innerWidth < MIN_SCREEN_WIDTH;
+    setShouldDisplayWarning(isSmallScreen);
+  };
+
   useEffect(() => {
-    if (typeof navigator === 'undefined') return;
-    const isFirefox = navigator.userAgent.includes('Firefox');
-    setShouldDisplayWarning(isFirefox);
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
   if (!shouldDisplayWarning) return null;
@@ -16,10 +24,10 @@ const BrowserWarning = () => {
   return (
     <Alert
       message={`
-        Error: The Firefox browser is not supported yet. 
-        Please use Chrome or Edge. Safari might work as well, but has some smaller issues.
+        Warning: Your browser window might be too small to display the game properly.
+        Please consider resizing your window or using a larger screen.
       `}
-      type="error"
+      type="warning"
       showIcon
       style={{ padding: '3rem 5rem', fontSize: '1rem' }}
     />

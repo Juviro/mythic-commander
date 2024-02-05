@@ -53,7 +53,10 @@ const BattlefieldCard = ({ card, player, inSelection }: Props) => {
   }
 
   return (
-    <div onContextMenu={inSelection ? undefined : (e) => e.stopPropagation()}>
+    <div
+      onContextMenu={inSelection ? undefined : (e) => e.stopPropagation()}
+      className={styles.wrapper}
+    >
       <ContextMenu items={isSelected ? null : contextMenuItems} placement="bottomLeft">
         <div
           style={style}

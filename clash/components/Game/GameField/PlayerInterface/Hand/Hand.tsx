@@ -1,20 +1,18 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import classNames from 'classnames';
-import { useDrop } from 'react-dnd';
 
 import { Player, VisibleCard } from 'backend/database/gamestate.types';
-import { DndItemTypes } from 'types/dnd.types';
-import HandHoverElement from './HandHoverElement';
 
 import styles from './Hand.module.css';
 import HandCard from './HandCard';
+import useHandHover from './useHandHover';
 
 const getMaxDegree = (length: number) => {
-  if (length === 2) return 2.5;
-  if (length === 3) return 5;
-  if (length === 4) return 7.5;
-  if (length === 5) return 10;
-  if (length === 6) return 12.5;
+  if (length === 2) return 4;
+  if (length === 3) return 7.5;
+  if (length === 4) return 10;
+  if (length === 5) return 12.5;
+  if (length === 6) return 13.5;
   if (length === 7) return 15;
   return 17.5;
 };
@@ -48,35 +46,64 @@ interface Props {
 const Hand = ({ player, isSelf }: Props) => {
   const { hand } = player.zones;
 
-  const [{ isOver }, dropRef] = useDrop({
-    accept: DndItemTypes.CARD,
-    drop: () => null,
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
-    }),
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const {
+    highlightedCardIndex,
+    onDragOver,
+    onMouseMove,
+    dropRef,
+    canDrop,
+    setHighlightedCardIndex,
+  } = useHandHover({
+    wrapperRef,
+    hand,
+    player,
   });
 
   return (
     <div
       className={classNames(styles.wrapper, {
         [styles.wrapper__is_self]: isSelf,
-        [styles.wrapper__is_over]: isOver,
+        [styles.wrapper__can_drop]: canDrop,
       })}
-      ref={dropRef}
+      onMouseMove={onMouseMove}
+      onDragOver={onDragOver}
+      onDragExit={() => setHighlightedCardIndex(-1)}
+      onMouseLeave={() => setHighlightedCardIndex(-1)}
+      ref={(val) => {
+        dropRef(val);
+        // @ts-ignore
+        wrapperRef.current = val;
+      }}
     >
       {hand.map((card, index) => (
         <React.Fragment key={card.clashId}>
-          <HandHoverElement index={index} player={player} card={card as VisibleCard} />
+          {(!index || index + 1 === hand.length) && (
+            <div
+              className={classNames(styles.spacing_element, 'spacing_element')}
+              style={getCardStyles(index, hand.length)}
+            />
+          )}
           <div
-            key={card.clashId}
-            className={styles.card_wrapper}
+            className={classNames(styles.card_wrapper, {
+              [styles.card_wrapper__hovered]: !canDrop && highlightedCardIndex === index,
+              [styles.card_wrapper__dragging]: canDrop && highlightedCardIndex === index,
+            })}
             style={getCardStyles(index, hand.length)}
           >
             <HandCard card={card as VisibleCard} isSelf={isSelf} player={player} />
           </div>
         </React.Fragment>
       ))}
-      <HandHoverElement index={hand.length} isLast player={player} />
+      {canDrop && (
+        <div
+          className={classNames({
+            [styles.card_wrapper__dragging]:
+              canDrop && highlightedCardIndex === hand.length,
+          })}
+        />
+      )}
     </div>
   );
 };
