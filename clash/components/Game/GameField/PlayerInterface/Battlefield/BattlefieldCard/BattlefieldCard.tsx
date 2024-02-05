@@ -54,34 +54,30 @@ const BattlefieldCard = ({ card, player, inSelection }: Props) => {
 
   return (
     <div
+      style={style}
+      ref={cardRef}
+      onClick={onClick}
+      onMouseDown={onMouseDown}
+      onMouseMove={onMouseMove}
+      className={classNames(styles.card, 'battlefield_card', {
+        [styles.card__hovered]: isHovered,
+        [styles.card__selected]: isSelected,
+        [styles.card__tapped]: card.tapped,
+      })}
       onContextMenu={inSelection ? undefined : (e) => e.stopPropagation()}
-      className={styles.wrapper}
+      data-card-id={card.clashId}
+      data-tapped={card.tapped}
+      data-card-x={x}
+      data-card-y={y}
     >
       <ContextMenu items={isSelected ? null : contextMenuItems} placement="bottomLeft">
-        <div
-          style={style}
-          ref={cardRef}
-          onClick={onClick}
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          className={classNames(styles.card, 'battlefield_card', {
-            [styles.card__hovered]: isHovered,
-            [styles.card__selected]: isSelected,
-            [styles.card__tapped]: card.tapped,
-          })}
-          data-card-id={card.clashId}
-          data-tapped={card.tapped}
-          data-card-x={x}
-          data-card-y={y}
-        >
-          <Card
-            card={card}
-            flipped={card.flipped}
-            draggable={!isSelected}
-            zone="battlefield"
-            noAnimation={isSelected}
-          />
-        </div>
+        <Card
+          card={card}
+          flipped={card.flipped}
+          draggable={!isSelected}
+          zone="battlefield"
+          noAnimation={isSelected}
+        />
       </ContextMenu>
     </div>
   );
