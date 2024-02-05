@@ -6,6 +6,7 @@
     transition: transform 0.2s;
     transform-origin: 50% 60%;
     z-index: 100;
+    user-select: none;
   }
   
   .card__tapped {

@@ -8,7 +8,13 @@
 
 # Bugs
 
-* when having a selection, "Move cards to" should only apply to selection
+* right clicking hand card not working on windows
+
+# FF Bugs:
+
+* Preview too big
+* dragging a card group will make cards invisible
+
 
 # MVP
 
@@ -47,6 +53,7 @@
 
 * card selection: display how many cards are selected
 
+* when going back to gamebrowser, the url changes, making it impossible to use browser forward button to get back to game
 
 # Easter Eggs
 
@@ -57,6 +64,8 @@
 * allow joining lobby via url (e.g. http://localhost:1235/#4fqufdulls6ckz15)
 
 * allow copying selection?
+
+* when dragging card over hand, it should have the hand card size
 
 * display warning for users with small screens
 
@@ -137,7 +146,7 @@
 # Backlog Bugs
 
 * sometimes tokens are suggested twice
-* when going back to gamebrowser, the url changes, making it impossible to use browser forward button to get back to game
+* when opening the card context menu on hand, sometines the next card is hovered due to the mouse moving
 * cards from other players have wrong sleeve color in hand
 * when moving a peeking card into hand, the draw animation is used
 * on page load, cards in exile are animated

@@ -4,15 +4,19 @@
   justify-content: center;
   align-items: center;
   grid-area: hand;
-  transform: translateY(2cqh);
-  transition: transform 0.1s;
   --size-card-width: min(17cqw, 240px);
-  height: 200%;
   width: 100%;
   max-width: 1280px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto 0;
   z-index: 1;
+  border: 2px solid transparent;
+  user-select: none;
+}
+
+.wrapper__can_drop {
+  border-color: var(--color-dropzone-border);
+  border-radius: 8px;
+  background: var(--color-dropzone-can-drop);
 }
 
 :global(.flipped) .wrapper {
@@ -20,13 +24,18 @@
 }
 
 
-.wrapper__is_self {
+.wrapper__is_self .card {
   cursor: grab;
+  transition: transform 0.1s;
 }
 
-.hover_element__can_drop {
-  border-radius: 8px;
-  background: var(--color-dropzone-can-drop);
+.spacing_element {
+  width: var(--size-card-width);
+  aspect-ratio: var(--card-aspect-ratio);
+  position: absolute;
+  transform-origin: 50% 160cqw;
+  transform: rotate(calc(var(--hover-rotation, var(--rotation)) * 1deg));
+  border-radius: 2px;
 }
 
 .card_wrapper {
@@ -43,63 +52,35 @@
   @media (min-width: 1440px) {
     --hover-rotation-scale: 1.1;
   }
+
   @media (min-width: 1800px) {
     --hover-rotation-scale: 0.7;
   }
+
   @media (min-width: 2200px) {
     --hover-rotation-scale: 0.3;
   }
+
   @media (min-width: 2560px) {
     --hover-rotation-scale: 0;
   }
 }
 
-.card_wrapper:has(~ .hover_element__is_over),
-.card_wrapper:has(~ .hover_element:not(.hover_element__last):hover) {
-  --hover-rotation: calc(
-    var(--rotation) - var(--hover-rotation-scale) - var(--additional-hover-rotation)
-  );
+.card_wrapper:has(~ .card_wrapper__hovered),
+.card_wrapper:has(~ .card_wrapper__dragging) {
+  --hover-rotation: calc(var(--rotation) - var(--hover-rotation-scale) - var(--additional-hover-rotation));
 }
 
-.hover_element__is_over ~ .card_wrapper,
-.hover_element:hover + .card_wrapper ~ .card_wrapper {
-  --hover-rotation: calc(
-    var(--rotation) + var(--hover-rotation-scale) + var(--additional-hover-rotation)
-  );
+.card_wrapper__hovered ~ .card_wrapper,
+.card_wrapper__dragging,
+.card_wrapper__dragging ~ .card_wrapper {
+  --hover-rotation: calc(var(--rotation) + var(--hover-rotation-scale) + var(--additional-hover-rotation));
 }
 
-.hover_element:hover + .card_wrapper .card {
-    transform: rotate(calc(var(--rotation) * -1deg)) translateY(calc(var(--size-card-width) * -1.2)) scale(1.5);
+.card_wrapper__hovered .card {
+  transform: rotate(calc(var(--rotation) * -1deg)) translateY(calc(var(--size-card-width) * -1.2)) scale(1.5);
 }
 
-.hover_element:hover + .card_wrapper,
-.hover_element:active + .card_wrapper {
+.card_wrapper__hovered {
   z-index: 1;
-}
-
-.hover_element__hiddden {
-  width: 0;
-}
-
-.card {
-  transition: transform 0.1s;
-}
-.wrapper__is_self .hover_element {
-  height: 100%;
-  z-index: 2;
-  flex: 1;
-  max-width: 150px;
-  user-select: none;
-}
-
-.hover_element:active {
-  pointer-events: none;
-}
-
-.card_wrapper:active {
-  --size-card-width: var(--battlefield-card-width);
-
-  .card {
-    transform: unset;
-  }
 }
