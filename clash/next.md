@@ -12,7 +12,6 @@
 
 # FF Bugs:
 
-* Preview too big
 * dragging a card group will make cards invisible
 
 
