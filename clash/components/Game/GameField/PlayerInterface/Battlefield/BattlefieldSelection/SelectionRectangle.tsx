@@ -129,6 +129,7 @@ const SelectionRectangle = ({
   return (
     <div
       onMouseDown={(e) => e.stopPropagation()}
+      onContextMenu={(e) => e.stopPropagation()}
       className={styles.selection_rectangle_wrapper}
     >
       <ContextMenu items={contextMenuItems}>

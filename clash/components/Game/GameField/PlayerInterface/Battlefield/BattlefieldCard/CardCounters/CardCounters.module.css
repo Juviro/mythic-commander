@@ -69,13 +69,6 @@
     margin-top: 32px;
 }
 
-.counter_bubble__bottom_left {
-    bottom: 14px;
-    left: 24px;
-    right: unset;
-    top: unset;
-}
-
 .counter_bubble__minus:before {
     content: "-";
     position: absolute;

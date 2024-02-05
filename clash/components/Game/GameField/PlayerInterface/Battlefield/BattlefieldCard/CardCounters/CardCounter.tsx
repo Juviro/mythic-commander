@@ -30,11 +30,7 @@ const CardCounter = ({ amount, type, clashId, isLabel }: Props) => {
 
     return (
       <CardCounterTooltip type={type} amount={amount} clashId={clashId}>
-        <div
-          className={classNames(styles.counter_bubble, styles[colorClassName], {
-            [styles.counter_bubble__bottom_left]: lowerCaseType === 'defense',
-          })}
-        >
+        <div className={classNames(styles.counter_bubble, styles[colorClassName])}>
           <span>{amount}</span>
         </div>
       </CardCounterTooltip>
