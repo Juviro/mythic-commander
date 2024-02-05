@@ -49,11 +49,17 @@ const useMoveCardActions = ({ zone, cardIds, player }: Props) => {
     });
   };
 
-  const onMoveToBattlefield = () => {
+  const onMoveToBattlefield = (faceDown: boolean) => () => {
     cardIds.forEach((cardId, index) => {
-      onMoveCard(cardId, ZONES.BATTLEFIELD, player!.id, {
-        position: { x: 50 + index, y: 50 + index },
-      });
+      onMoveCard(
+        cardId,
+        ZONES.BATTLEFIELD,
+        player!.id,
+        {
+          position: { x: 50 + index, y: 50 + index },
+        },
+        faceDown
+      );
     });
   };
 
@@ -75,7 +81,18 @@ const useMoveCardActions = ({ zone, cardIds, player }: Props) => {
       ),
       label: 'Battlefield',
       hidden: zone === ZONES.BATTLEFIELD,
-      onClick: onMoveToBattlefield,
+      onClick: onMoveToBattlefield(false),
+    },
+    {
+      key: 'battlefield-face-down',
+      icon: (
+        <ContextMenuIcon>
+          <BattlefieldIcon />
+        </ContextMenuIcon>
+      ),
+      label: 'Battlefield (Face Down)',
+      hidden: zone === ZONES.BATTLEFIELD,
+      onClick: onMoveToBattlefield(true),
     },
     {
       key: 'hand',

@@ -6,6 +6,7 @@ import {
   Card,
   GameState,
   Player,
+  VisibleBattlefieldCard,
   VisibleCard,
   Zone,
 } from 'backend/database/gamestate.types';
@@ -28,6 +29,7 @@ import {
   SetPhasePayload,
   SetPlayerLifePayload,
   TapCardsPayload,
+  TurnCardsFaceDownPayload,
 } from 'backend/constants/wsEvents';
 import { User as DatabaseUser } from 'backend/database/getUser';
 import { GameLog, LOG_MESSAGES, LogMessage } from 'backend/constants/logMessages';
@@ -128,12 +130,27 @@ export default class Game {
     const obfuscateCard = ({ clashId, ownerId }: Card) => ({ clashId, ownerId });
 
     const hand = isSelf ? player.zones.hand : player.zones.hand.map(obfuscateCard);
+    const battlefield: BattlefieldCard[] = player.zones.battlefield.map((card) => {
+      if (!card.faceDown) return card;
+
+      return {
+        clashId: card.clashId,
+        faceDown: true,
+        position: card.position,
+        tapped: card.tapped,
+        counters: card.counters,
+        ownerId: card.ownerId,
+      };
+    });
+
+    const library = player.zones.library.map(obfuscateCard);
 
     return {
       ...player,
       zones: {
         ...player.zones,
-        library: player.zones.library.map(obfuscateCard),
+        library,
+        battlefield,
         hand,
       },
     };
@@ -250,7 +267,7 @@ export default class Game {
   }
 
   async moveCard(playerId: string, payload: MoveCardPayload) {
-    const { clashId, to, position, index } = payload;
+    const { clashId, to, position, index, faceDown } = payload;
     const playersToUpdate = new Set<string>([to.playerId]);
 
     let fromPlayer: Player;
@@ -273,14 +290,20 @@ export default class Game {
     );
 
     let newCard = { ...cardToMove!, position: Game.fixPosition(position) };
+    const isCardFaceDown = faceDown ?? (cardToMove! as BattlefieldCard)?.faceDown;
 
-    if (to.zone === 'battlefield' && fromZone! !== 'battlefield') {
+    if (faceDown !== undefined) {
+      (newCard as BattlefieldCard).faceDown = faceDown;
+    }
+
+    if (to.zone === 'battlefield' && fromZone! !== 'battlefield' && !isCardFaceDown) {
       const additionalProps = await getInitialCardProps(newCard.id);
       newCard = { ...newCard, ...additionalProps };
     }
+
     let shouldDeleteCard = false;
     if (to.zone !== 'battlefield' && fromZone! === 'battlefield') {
-      const card = newCard as BattlefieldCard;
+      const card = newCard as VisibleBattlefieldCard;
       if (card.isToken) {
         shouldDeleteCard = true;
       }
@@ -313,14 +336,6 @@ export default class Game {
       this.emitPlayerUpdate(player);
     });
 
-    let shouldRevealCardName = true;
-    if (fromZone! === 'library' && to.zone === 'hand') {
-      shouldRevealCardName = false;
-    }
-    if (fromZone! === 'hand' && to.zone === 'library') {
-      shouldRevealCardName = false;
-    }
-
     const getLibraryPosition = () => {
       if (typeof index !== 'number' || to.zone !== 'library') return null;
       if (index === 0) return 'bottom';
@@ -328,11 +343,25 @@ export default class Game {
       return toPlayer.zones.library.length - index;
     };
 
+    const getCardName = () => {
+      if (isCardFaceDown) {
+        return 'a face down card';
+      }
+      let shouldRevealCardName = true;
+      if (fromZone! === 'library' && to.zone === 'hand') {
+        shouldRevealCardName = false;
+      }
+      if (fromZone! === 'hand' && to.zone === 'library') {
+        shouldRevealCardName = false;
+      }
+      return shouldRevealCardName ? cardToMove!.name : null;
+    };
+
     this.logAction({
       playerId,
       logKey: LOG_MESSAGES.MOVE_CARD,
       payload: {
-        cardName: shouldRevealCardName ? cardToMove!.name : null,
+        cardName: getCardName(),
         from: {
           zone: fromZone!,
           playerId: fromPlayer!.id,
@@ -478,11 +507,13 @@ export default class Game {
     const offsetY = 2;
 
     for (let i = 0; i < amount; i += 1) {
+      if (originalCard.faceDown) return;
+
       const newPosition = {
         x: originalCard.position!.x + offsetX * (i + 1),
         y: originalCard.position!.y + offsetY * (i + 1),
       };
-      const newCard: BattlefieldCard = {
+      const newCard: VisibleBattlefieldCard = {
         id: originalCard.id,
         clashId: uniqid(),
         name: originalCard.name,
@@ -526,7 +557,28 @@ export default class Game {
 
     player.zones.battlefield.forEach((card) => {
       if (!cardIds.includes(card.clashId)) return;
+      if (card.faceDown) return;
+      if (!card.flippable) return;
       card.flipped = overwriteFlipped ?? !card.flipped;
+    });
+
+    this.emitPlayerUpdate(player);
+  }
+
+  turnCardsFaceDown(payload: TurnCardsFaceDownPayload) {
+    const { cardIds, battlefieldPlayerId, faceDown: overwriteFlipped } = payload;
+
+    const player = this.getPlayerById(battlefieldPlayerId);
+
+    player.zones.battlefield.forEach((card) => {
+      if (!cardIds.includes(card.clashId)) return;
+      card.faceDown = overwriteFlipped ?? !card.faceDown;
+      card.clashId = uniqid();
+      if (card.faceDown) {
+        delete card.counters;
+        delete card.tapped;
+        delete card.flipped;
+      }
     });
 
     this.emitPlayerUpdate(player);

@@ -13,7 +13,7 @@ interface Props {
 }
 
 const useBattlefieldOnlyCardActions = ({ card, player }: Props) => {
-  const { onAddCounters, copyCard } = useGameActions();
+  const { onAddCounters, copyCard, onTurnFaceDown } = useGameActions();
 
   const onAddCounter = (type: string) => (e?: MouseEvent) => {
     e?.stopPropagation();
@@ -52,15 +52,17 @@ const useBattlefieldOnlyCardActions = ({ card, player }: Props) => {
     });
   };
 
-  const createCopiesSubItems = getPeekSubItems(
-    createCopies,
-    20,
-    'create-copy',
-    (index) => {
-      if (!index) return '1 Copy';
-      return `${index + 1} Copies`;
-    }
-  );
+  const turnFaceDown = () => {
+    onTurnFaceDown({
+      cardIds: [card.clashId],
+      battlefieldPlayerId: player.id,
+    });
+  };
+
+  const createCopiesSubItems = getPeekSubItems(createCopies, 'create-copy', (index) => {
+    if (!index) return '1 Copy';
+    return `${index + 1} Copies`;
+  });
 
   const additionalBattlefieldContextMenuItems: MenuProps['items'] = [
     {
@@ -71,12 +73,22 @@ const useBattlefieldOnlyCardActions = ({ card, player }: Props) => {
       label: 'Add counter...',
       children: addCounterOptions,
     },
-    {
+  ];
+
+  if (!card.isToken) {
+    additionalBattlefieldContextMenuItems.unshift({
+      key: 'turn-face-down',
+      label: card.faceDown ? 'Turn Face Up' : 'Turn Face Down',
+      onClick: turnFaceDown,
+    });
+  }
+  if (!card.faceDown) {
+    additionalBattlefieldContextMenuItems.push({
       key: 'create-copy',
       label: 'Create Copy...',
       children: createCopiesSubItems,
-    },
-  ];
+    });
+  }
 
   return additionalBattlefieldContextMenuItems;
 };

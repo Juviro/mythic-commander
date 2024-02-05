@@ -15,9 +15,16 @@ interface Props {
 }
 
 const HandCard = ({ card, isSelf, player }: Props) => {
+  const hiddenActionKeys: string[] = [];
+  if (!card.flippable) {
+    hiddenActionKeys.push('flip');
+  }
+
+  const frontCardName = card.name?.split(' //')[0];
+
   const { contextMenuItems } = useCardActions({
     cardIds: [card.clashId],
-    contextMenuTitle: card.name,
+    contextMenuTitle: frontCardName,
     zone: ZONES.HAND,
   });
   const handActions = useHandCardActions(player);
