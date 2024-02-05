@@ -14,7 +14,7 @@ interface HiddenCard {
 export interface RelatedCards {
   id: string;
   name: string;
-  type: 'Token' | 'Emblem' | 'Dungeon' | 'Melded';
+  type: 'Token' | 'Emblem' | 'Dungeon' | 'Melded' | 'Meld Part';
 }
 
 export interface CardMeta {

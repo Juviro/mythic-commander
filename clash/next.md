@@ -11,8 +11,6 @@
 
 # MVP
 
-* go through all all_parts for all cards and see if there are "component" values we do not take into account for related cards yet
-
 * logs for new actions?
   * create tokens
   * add counters

@@ -2,8 +2,13 @@ import { RelatedCards } from 'backend/database/gamestate.types';
 import { InitMatchCard } from 'backend/database/matchStore';
 
 const getCardMeta = (card: InitMatchCard) => {
-  return card.all_parts
-    ?.map(({ component, type_line, name, id }) => {
+  const relatedCards: (RelatedCards | null)[] = card.all_parts?.map(
+    ({ component, type_line, name, id }) => {
+      if (id === card.id) {
+        // melded cards have themselves as a part
+        return null;
+      }
+
       if (component === 'token') {
         return {
           id,
@@ -32,10 +37,19 @@ const getCardMeta = (card: InitMatchCard) => {
           type: 'Melded',
         };
       }
+      if (component === 'meld_part') {
+        return {
+          id,
+          name,
+          type: 'Meld Part',
+        };
+      }
 
       return null;
-    })
-    .filter(Boolean) as RelatedCards[];
+    }
+  );
+
+  return relatedCards?.filter(Boolean) as RelatedCards[];
 };
 
 export default getCardMeta;
