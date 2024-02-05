@@ -267,7 +267,7 @@ export default class Game {
   }
 
   async moveCard(playerId: string, payload: MoveCardPayload) {
-    const { clashId, to, position, index } = payload;
+    const { clashId, to, position, index, faceDown } = payload;
     const playersToUpdate = new Set<string>([to.playerId]);
 
     let fromPlayer: Player;
@@ -290,11 +290,17 @@ export default class Game {
     );
 
     let newCard = { ...cardToMove!, position: Game.fixPosition(position) };
+    const isCardFaceDown = faceDown ?? (cardToMove! as BattlefieldCard)?.faceDown;
 
-    if (to.zone === 'battlefield' && fromZone! !== 'battlefield') {
+    if (faceDown !== undefined) {
+      (newCard as BattlefieldCard).faceDown = faceDown;
+    }
+
+    if (to.zone === 'battlefield' && fromZone! !== 'battlefield' && !isCardFaceDown) {
       const additionalProps = await getInitialCardProps(newCard.id);
       newCard = { ...newCard, ...additionalProps };
     }
+
     let shouldDeleteCard = false;
     if (to.zone !== 'battlefield' && fromZone! === 'battlefield') {
       const card = newCard as VisibleBattlefieldCard;
@@ -330,14 +336,6 @@ export default class Game {
       this.emitPlayerUpdate(player);
     });
 
-    let shouldRevealCardName = true;
-    if (fromZone! === 'library' && to.zone === 'hand') {
-      shouldRevealCardName = false;
-    }
-    if (fromZone! === 'hand' && to.zone === 'library') {
-      shouldRevealCardName = false;
-    }
-
     const getLibraryPosition = () => {
       if (typeof index !== 'number' || to.zone !== 'library') return null;
       if (index === 0) return 'bottom';
@@ -345,11 +343,25 @@ export default class Game {
       return toPlayer.zones.library.length - index;
     };
 
+    const getCardName = () => {
+      if (isCardFaceDown) {
+        return 'a face down card';
+      }
+      let shouldRevealCardName = true;
+      if (fromZone! === 'library' && to.zone === 'hand') {
+        shouldRevealCardName = false;
+      }
+      if (fromZone! === 'hand' && to.zone === 'library') {
+        shouldRevealCardName = false;
+      }
+      return shouldRevealCardName ? cardToMove!.name : null;
+    };
+
     this.logAction({
       playerId,
       logKey: LOG_MESSAGES.MOVE_CARD,
       payload: {
-        cardName: shouldRevealCardName ? cardToMove!.name : null,
+        cardName: getCardName(),
         from: {
           zone: fromZone!,
           playerId: fromPlayer!.id,
@@ -562,6 +574,11 @@ export default class Game {
       if (!cardIds.includes(card.clashId)) return;
       card.faceDown = overwriteFlipped ?? !card.faceDown;
       card.clashId = uniqid();
+      if (card.faceDown) {
+        delete card.counters;
+        delete card.tapped;
+        delete card.flipped;
+      }
     });
 
     this.emitPlayerUpdate(player);

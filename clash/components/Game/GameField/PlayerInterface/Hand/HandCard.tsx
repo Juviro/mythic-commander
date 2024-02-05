@@ -20,9 +20,11 @@ const HandCard = ({ card, isSelf, player }: Props) => {
     hiddenActionKeys.push('flip');
   }
 
+  const frontCardName = card.name?.split(' //')[0];
+
   const { contextMenuItems } = useCardActions({
     cardIds: [card.clashId],
-    contextMenuTitle: card.name,
+    contextMenuTitle: frontCardName,
     zone: ZONES.HAND,
   });
   const handActions = useHandCardActions(player);

@@ -16,9 +16,10 @@ interface Props {
 }
 
 const StackedCardListCard = ({ card, draggable, zone, cardDropType }: Props) => {
+  const frontCardName = card.name.split(' //')[0];
   const { contextMenuItems } = useCardActions({
     cardIds: [card.clashId],
-    contextMenuTitle: card.name,
+    contextMenuTitle: frontCardName,
     zone,
   });
 

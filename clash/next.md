@@ -1,11 +1,5 @@
 # Current feature
 
-* play card face-down (e.g. fortell, morph) -> type already defined: FaceDownCard
-  * from hand
-  * on battlefield
-  * from anywhere in library
-* allow peeking at face-down cards
-* allow putting card on battlefield face-down
 
 # Bugs
 
@@ -16,6 +10,8 @@
   * create tokens
   * add counters
   * copy card
+  * flip card
+  * turn card face down/up
 
 
 * shortcuts for every action
@@ -128,6 +124,8 @@
 * allow rotating cards by 90, 180deg. Auto rotate battles
 
 * document all shortcuts
+
+* allow peeking at face-down cards
 
 # Optimizations
 

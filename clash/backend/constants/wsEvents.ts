@@ -61,6 +61,7 @@ export interface MoveCardDetails {
 
 export interface MoveCardPayload extends MoveCardDetails {
   clashId: string;
+  faceDown?: boolean;
   to: {
     zone: Zone;
     playerId: string;
