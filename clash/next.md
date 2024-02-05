@@ -8,12 +8,6 @@
 
 # Bugs
 
-* right clicking hand card not working on windows
-
-# FF Bugs:
-
-* dragging a card group will make cards invisible
-
 
 # MVP
 

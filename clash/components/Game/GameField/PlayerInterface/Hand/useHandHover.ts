@@ -21,7 +21,7 @@ const useHandHover = ({ hand, wrapperRef, player }: Props) => {
   };
 
   const [{ canDrop }, dropRef] = useDrop({
-    accept: [DndItemTypes.CARD, DndItemTypes.CARD_GROUP, DndItemTypes.LIST_CARD],
+    accept: [DndItemTypes.CARD, DndItemTypes.LIST_CARD],
     drop: onDrop,
     collect: (monitor) => ({
       canDrop: !!monitor.canDrop(),
