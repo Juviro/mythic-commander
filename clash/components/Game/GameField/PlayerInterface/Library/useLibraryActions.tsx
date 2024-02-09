@@ -4,6 +4,8 @@ import { Player, ZONES } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
 import useGameActions from 'components/Game/useGameActions';
 import useMoveCardActions from 'components/GameComponents/Card/cardActions/useMoveCardActions';
+import SHORTCUTS from 'constants/shortcuts';
+import useShortcut from 'hooks/useShortcut';
 import { useContext } from 'react';
 import { pluralizeCards } from 'utils/i18nUtils';
 
@@ -50,9 +52,18 @@ export const getPeekSubItems = (
 
 const useLibraryActions = (player: Player) => {
   const { player: self } = useContext(GameStateContext);
-  const { onPeek, onMill, onSearchLibrary, onShuffle } = useGameActions();
+  const { onPeek, onMill, onSearchLibrary, onShuffle, onDrawCard } = useGameActions();
 
   const cardIds = player.zones.library.map((card) => card.clashId);
+
+  const isSelf = player.id === self!.id;
+
+  useShortcut(SHORTCUTS.DRAW, onDrawCard, { disabled: !isSelf });
+  useShortcut(SHORTCUTS.SEARCH, () => onSearchLibrary(player.id), {
+    disabled: !isSelf,
+    modifierKeys: ['shift'],
+  });
+  useShortcut(SHORTCUTS.SHUFFLE, onShuffle, { disabled: !isSelf });
 
   const moveCardActions = useMoveCardActions({
     cardIds,
@@ -67,12 +78,10 @@ const useLibraryActions = (player: Player) => {
     onMill(player.id, amount);
   };
 
-  const isSelf = player.id === self!.id;
-
   const items: MenuProps['items'] = [
     {
       key: 'search',
-      label: 'Search Library...',
+      label: 'Search Library... [Shift + S]',
       disabled: !player.zones.library.length,
       onClick: () => onSearchLibrary(player.id),
     },
@@ -87,32 +96,45 @@ const useLibraryActions = (player: Player) => {
         player.zones.library.length
       ),
     },
-    {
-      key: 'mill',
-      label: 'Mill cards...',
-      disabled: !player.zones.library.length,
-      children: getPeekSubItems(
-        onMillCards,
-        'mill',
-        undefined,
-        player.zones.library.length
-      ),
-    },
-    {
-      key: 'move',
-      label: 'Move all cards to...',
-      disabled: !player.zones.library.length,
-      children: moveCardActions,
-    },
   ];
 
   if (isSelf) {
-    items.unshift({
-      key: 'shuffle',
-      label: 'Shuffle',
-      disabled: !player.zones.library.length,
-      onClick: onShuffle,
-    });
+    const primaryActions = [
+      {
+        key: 'draw',
+        label: 'Draw Card [D]',
+        disabled: !player.zones.library.length,
+        onClick: onDrawCard,
+      },
+      {
+        key: 'shuffle',
+        label: 'Shuffle [S]',
+        disabled: !player.zones.library.length,
+        onClick: onShuffle,
+      },
+    ];
+    items.unshift(...primaryActions);
+
+    const secondaryActions = [
+      {
+        key: 'mill',
+        label: 'Mill cards...',
+        disabled: !player.zones.library.length,
+        children: getPeekSubItems(
+          onMillCards,
+          'mill',
+          undefined,
+          player.zones.library.length
+        ),
+      },
+      {
+        key: 'move',
+        label: 'Move all cards to...',
+        disabled: !player.zones.library.length,
+        children: moveCardActions,
+      },
+    ];
+    items.push(...secondaryActions);
   }
 
   return {

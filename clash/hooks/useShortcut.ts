@@ -10,33 +10,53 @@ export const isInputField = (event: any) => {
   return false;
 };
 
-export const isModifierKey = (event: KeyboardEvent) => {
-  const { altKey, ctrlKey, metaKey, shiftKey } = event;
-  return altKey || ctrlKey || metaKey || shiftKey;
+export const getModifierKeys = (event: KeyboardEvent) => {
+  return ['alt', 'control', 'meta', 'shift'].filter((key) => {
+    const eventKey = `${key}Key` as 'altKey' | 'ctrlKey' | 'metaKey' | 'shiftKey';
+    return event[eventKey];
+  });
 };
+
+type ModifierKey = 'alt' | 'control' | 'meta' | 'shift';
 
 interface Options {
   disabled?: boolean;
   whenHovering?: RefObject<HTMLElement>;
+  modifierKeys?: ModifierKey[];
 }
 
-const useShortcut = (key: string, action: () => void, options: Options = {}) => {
-  const { disabled = false, whenHovering } = options;
+const useShortcut = (
+  keys: string | string[],
+  action: () => void,
+  options: Options = {}
+) => {
+  const keysArray = Array.isArray(keys) ? keys : [keys];
+  const { disabled = false, whenHovering, modifierKeys = [] } = options;
 
   const [isHovering, setIsHovering] = useState(false);
 
   const onKeyDown = (event: KeyboardEvent) => {
-    if (disabled || !action || isInputField(event) || isModifierKey(event)) {
+    if (disabled || !action || isInputField(event)) {
+      return;
+    }
+    const eventModifierKeys = getModifierKeys(event);
+
+    if (eventModifierKeys.length !== modifierKeys.length) return;
+    if (
+      modifierKeys.some(
+        (modifierKey) => !eventModifierKeys.includes(modifierKey as ModifierKey)
+      )
+    ) {
       return;
     }
 
     if (whenHovering?.current && !isHovering) return;
 
-    if (event.key === key) {
-      event.preventDefault();
-      event.stopPropagation();
-      action();
-    }
+    if (!keysArray.some((key) => key.toLowerCase() === event.key.toLowerCase())) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    action();
   };
 
   useEffect(() => {
@@ -46,7 +66,7 @@ const useShortcut = (key: string, action: () => void, options: Options = {}) => 
     return () => {
       document.removeEventListener('keydown', onKeyDown, false);
     };
-  }, [key, action, disabled]);
+  }, [keysArray.join(','), action, disabled]);
 
   useEffect(() => {
     if (!whenHovering?.current || disabled) {

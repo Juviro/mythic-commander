@@ -3,6 +3,11 @@
 
 # Bugs
 
+* opponet's hand have hover animation
+* hovered hand card is too high when playing with 4 players
+* windows (mac too): hand with a lot of cards; rightmost cards not draggable
+* don't allow selection rect with only one card
+* planeswalker copies don't enter with counters
 
 # MVP
 
@@ -12,11 +17,6 @@
   * copy card
   * flip card
   * turn card face down/up
-
-
-* shortcuts for every action
-  * draw [d]
-  * shuffle library [s]
 
 
 * when aligning a card stacked with lower x/y, put it behind the other card
@@ -30,8 +30,10 @@
 * flip coin, roll dice
   * chat commands? /coin, /dice 3d6
 
-* Allow selecting non-active decks as well
-* display link in lobby to create a deck
+* Lobby
+  * Allow selecting non-active decks as well
+  * display link in lobby to create a deck
+  * when going back to gamebrowser, the url changes, making it impossible to use browser forward button to get back to game
 
 * defeated player / ff
   * remove all cards from all other players' zones
@@ -39,9 +41,11 @@
   * grey out commandzone, name
   * write "Defeated" instead of life total
 
-* card selection: display how many cards are selected
+* card selection: 
+  * display how many cards are selected
+  * allow aligning selected cards, use top-left card for alignment
 
-* when going back to gamebrowser, the url changes, making it impossible to use browser forward button to get back to game
+
 
 # Easter Eggs
 
@@ -97,7 +101,6 @@
   * only visible when it contains cards or when dragging
 
 * allow setting stop point in phase in opponent's turn
-* display number of cards in hand, lib, graveyard, exile
 * when playing alone, display partner commanders next to each other
 * store currentGames (in redis?)
 
@@ -109,13 +112,13 @@
 
 * display which players are connected
   * display connect / disconnect messages
+  * show message when you are disconnected
+  * auto-reconnect
 
 * prevent interacting with own lib when someone is peeking it (self or opponent)
 
 * keep cards visually tapped when moving them to battlefield
   * allow aligning as if the cards was untapped
-
-* distinguish between flipped and face-down. There can be a two-faced card that is face-down and therefore not visible
 
 * shuffle library animation
 
@@ -126,6 +129,12 @@
 * document all shortcuts
 
 * allow peeking at face-down cards
+
+* add sounds
+  * when you become the active player
+  * drawing
+  * on chat message
+  * when a card is moved, flipped, tapped, untapped, turned face down/up ?
 
 # Optimizations
 
