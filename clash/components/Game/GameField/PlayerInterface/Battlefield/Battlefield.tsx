@@ -1,9 +1,6 @@
 import React, { useContext, useRef } from 'react';
 
 import { Player } from 'backend/database/gamestate.types';
-import useShortcut from 'hooks/useShortcut';
-import SHORTCUTS from 'constants/shortcuts';
-import useGameActions from 'components/Game/useGameActions';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import classNames from 'classnames';
 import CardPositionContext from 'components/Game/CardPositionContext';
@@ -28,27 +25,14 @@ const Battlefield = ({ player, isFlipped, isSelf }: Props) => {
 
   const cards = player.zones.battlefield;
 
-  const { onTapCards } = useGameActions();
   const battlefieldActions = useBattlefieldActions({
     cards,
     player,
     battlefieldRef: wrapperRef,
   });
 
-  const untapCards = () => {
-    onTapCards({
-      cardIds: cards.map((card) => card.clashId),
-      battlefieldPlayerId: player.id,
-      tapped: false,
-    });
-  };
-
-  useShortcut(SHORTCUTS.UNTAP, untapCards, {
-    disabled: !isSelf,
-  });
-
   return (
-    <BattlefieldSelectionContextProvider player={player}>
+    <BattlefieldSelectionContextProvider player={player} isSelf={isSelf}>
       <ContextMenu items={battlefieldActions}>
         <div
           className={classNames('battlefield', styles.wrapper)}
