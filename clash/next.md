@@ -1,7 +1,5 @@
 # Current feature
 
-* Lobby
-  * when going back to gamebrowser, the url changes, making it impossible to use browser forward button to get back to game
 
 # Bugs
 

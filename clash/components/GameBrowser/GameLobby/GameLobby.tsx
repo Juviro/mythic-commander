@@ -28,6 +28,7 @@ const GameLobby = () => {
   useEffect(() => {
     if (!isStartingMatch) return;
     setTimeout(() => {
+      router.replace('/');
       router.push(`/match/${lobby.id}`);
     }, 1500);
   }, [isStartingMatch]);

@@ -60,6 +60,7 @@
 
 .start_overlay_text {
     width: 170px;
+    white-space: nowrap;
 }
 
 .start_overlay_text::after {
