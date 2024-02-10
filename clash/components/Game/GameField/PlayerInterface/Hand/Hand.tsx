@@ -54,6 +54,7 @@ const Hand = ({ player, isSelf }: Props) => {
     onMouseMove,
     dropRef,
     canDrop,
+    isDragging,
     setHighlightedCardIndex,
   } = useHandHover({
     wrapperRef,
@@ -87,8 +88,8 @@ const Hand = ({ player, isSelf }: Props) => {
           )}
           <div
             className={classNames(styles.card_wrapper, {
-              [styles.card_wrapper__hovered]: !canDrop && highlightedCardIndex === index,
-              [styles.card_wrapper__dragging]: canDrop && highlightedCardIndex === index,
+              [styles.card_wrapper__hovered]: highlightedCardIndex === index && isSelf,
+              [styles.card_wrapper__highlighted]: !isDragging,
             })}
             style={getCardStyles(index, hand.length)}
           >

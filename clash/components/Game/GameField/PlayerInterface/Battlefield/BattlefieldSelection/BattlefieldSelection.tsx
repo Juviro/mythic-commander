@@ -8,8 +8,11 @@ import React, {
 } from 'react';
 import { XYCoord } from 'react-dnd';
 
-import { Player } from 'backend/database/gamestate.types';
+import { Player, ZONES } from 'backend/database/gamestate.types';
 import useClickedOutside from 'hooks/useClickedOutside';
+import useShortcut from 'hooks/useShortcut';
+import useGameActions from 'components/Game/useGameActions';
+import SHORTCUTS from 'constants/shortcuts';
 import DragRectange from './DragRectange';
 import BattlefieldSelectionContext from './BattlefieldSelectionContext';
 import SelectionRectangle from './SelectionRectangle';
@@ -25,10 +28,25 @@ const BattlefieldSelection = ({ children, isFlipped, player }: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [startingPoint, setStartingPoint] = useState<XYCoord | null>(null);
   const [currentPoint, setCurrentPoint] = useState<XYCoord | null>(null);
+  const { onMoveCard } = useGameActions();
 
   const { hoveredCardIds, selectedCardIds, setSelectedCardsIds } = useContext(
     BattlefieldSelectionContext
   );
+
+  const onDeleteSelectedCards = () => {
+    selectedCardIds.forEach((cardId) => {
+      onMoveCard(cardId, ZONES.GRAVEYARD, player.id);
+    });
+  };
+
+  useShortcut(SHORTCUTS.CANCEL, () => setSelectedCardsIds([]), {
+    disabled: !selectedCardIds.length,
+  });
+
+  useShortcut(SHORTCUTS.DELETE, onDeleteSelectedCards, {
+    disabled: !selectedCardIds.length,
+  });
 
   useClickedOutside(wrapperRef, () => {
     setStartingPoint(null);
@@ -52,7 +70,7 @@ const BattlefieldSelection = ({ children, isFlipped, player }: Props) => {
     if (!startingPoint) return;
     setStartingPoint(null);
     setCurrentPoint(null);
-    if (!hoveredCardIds.length) return;
+    if (hoveredCardIds.length <= 1) return;
     setSelectedCardsIds(hoveredCardIds);
   };
 

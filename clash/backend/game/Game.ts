@@ -495,7 +495,7 @@ export default class Game {
     this.emitPlayerUpdate(player);
   }
 
-  copyCard(payload: CopyCardPayload) {
+  async copyCard(payload: CopyCardPayload) {
     const { amount, battlefieldPlayerId, clashId } = payload;
 
     const player = this.getPlayerById(battlefieldPlayerId);
@@ -513,6 +513,8 @@ export default class Game {
         x: originalCard.position!.x + offsetX * (i + 1),
         y: originalCard.position!.y + offsetY * (i + 1),
       };
+      // eslint-disable-next-line no-await-in-loop
+      const additionalProps = await getInitialCardProps(originalCard.id);
       const newCard: VisibleBattlefieldCard = {
         id: originalCard.id,
         clashId: uniqid(),
@@ -525,6 +527,7 @@ export default class Game {
         },
         position: Game.fixPosition(newPosition),
         isToken: true,
+        ...additionalProps,
       };
       player.zones.battlefield.push(newCard);
     }

@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { DragSourceMonitor, useDrag } from 'react-dnd';
+import { useDrag } from 'react-dnd';
 import classNames from 'classnames';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 
 import { Card as CardType, VisibleCard, Zone } from 'backend/database/gamestate.types';
 import { getImageUrl } from 'utils/getImageUrl';
-import { DndItemType, DndItemTypes, DropCard } from 'types/dnd.types';
+import { DndItemType, DndItemTypes } from 'types/dnd.types';
 import CardCounters from 'components/Game/GameField/PlayerInterface/Battlefield/BattlefieldCard/CardCounters/CardCounters';
 import CardPositionContext from 'components/Game/CardPositionContext';
 import useAnimateCardPositionChange from './useAnimateCardPositionChange';
@@ -20,7 +20,6 @@ interface Props {
   noAnimation?: boolean;
   dropType?: DndItemType;
   flipped?: boolean;
-  onDropEnd?: (item: DropCard, monitor: DragSourceMonitor<DropCard>) => void;
 }
 
 const Card = ({
@@ -29,7 +28,6 @@ const Card = ({
   dynamicSize,
   zone,
   noAnimation,
-  onDropEnd,
   flipped,
   dropType = DndItemTypes.CARD,
 }: Props) => {
@@ -40,7 +38,6 @@ const Card = ({
     type: dropType,
     item: card,
     canDrag: Boolean(draggable),
-    end: onDropEnd,
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),

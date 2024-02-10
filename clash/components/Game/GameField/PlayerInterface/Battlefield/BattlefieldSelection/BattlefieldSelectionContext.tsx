@@ -12,6 +12,7 @@ import useClickedOutside from 'hooks/useClickedOutside';
 import useShortcut from 'hooks/useShortcut';
 import SHORTCUTS from 'constants/shortcuts';
 import useCardActions from 'components/GameComponents/Card/cardActions/useCardActions';
+import useGameActions from 'components/Game/useGameActions';
 
 interface ContextValue {
   hoveredCardIds: string[];
@@ -27,12 +28,19 @@ const BattlefieldSelectionContext = React.createContext<ContextValue>({});
 
 interface Props extends PropsWithChildren {
   player: Player;
+  isSelf?: boolean;
 }
 
-export const BattlefieldSelectionContextProvider = ({ children, player }: Props) => {
+export const BattlefieldSelectionContextProvider = ({
+  children,
+  player,
+  isSelf,
+}: Props) => {
   const selectionRectangleRef = useRef<HTMLDivElement>(null);
   const [hoveredCardIds, setHoveredCardIds] = useState<string[]>([]);
   const [selectedCardIds, setSelectedCardsIds] = useState<string[]>([]);
+
+  const { onTapCards } = useGameActions();
 
   const { tapCards, flipCards } = useCardActions({
     cardIds: selectedCardIds,
@@ -40,10 +48,25 @@ export const BattlefieldSelectionContextProvider = ({ children, player }: Props)
     zone: ZONES.BATTLEFIELD,
   });
 
+  const battlefieldCardIds = player.zones.battlefield.map((card) => card.clashId);
+
+  const untapCards = () => {
+    const cardIds = selectedCardIds.length ? selectedCardIds : battlefieldCardIds;
+    onTapCards({
+      cardIds,
+      battlefieldPlayerId: player.id,
+      tapped: false,
+    });
+  };
+
   const disabled = !selectedCardIds.length;
 
   useShortcut(SHORTCUTS.TAP, tapCards, {
     disabled,
+  });
+
+  useShortcut(SHORTCUTS.UNTAP, untapCards, {
+    disabled: !isSelf,
   });
 
   useShortcut(SHORTCUTS.FLIP, flipCards, {

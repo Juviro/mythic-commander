@@ -43,7 +43,7 @@
   height: 100%;
   position: absolute;
   transform-origin: 50% 160cqw;
-  transform: rotate(calc(var(--hover-rotation, var(--rotation)) * 1deg));
+  transform: rotate(calc(var(--hover-rotation, var(--rotation)) * 1deg)) translateY(30px);
   border-radius: 2px;
   transition: transform 0.1s;
 
@@ -66,21 +66,19 @@
   }
 }
 
-.card_wrapper:has(~ .card_wrapper__hovered),
-.card_wrapper:has(~ .card_wrapper__dragging) {
+.card_wrapper:has(~ .card_wrapper__hovered) {
   --hover-rotation: calc(var(--rotation) - var(--hover-rotation-scale) - var(--additional-hover-rotation));
 }
 
 .card_wrapper__hovered ~ .card_wrapper,
-.card_wrapper__dragging,
-.card_wrapper__dragging ~ .card_wrapper {
+.card_wrapper__hovered:not(.card_wrapper__highlighted) {
   --hover-rotation: calc(var(--rotation) + var(--hover-rotation-scale) + var(--additional-hover-rotation));
 }
 
-.card_wrapper__hovered .card {
+.card_wrapper__hovered.card_wrapper__highlighted .card {
   transform: rotate(calc(var(--rotation) * -1deg)) translateY(calc(var(--size-card-width) * -1.2)) scale(1.5);
 }
 
-.card_wrapper__hovered {
+.card_wrapper__hovered.card_wrapper__highlighted {
   z-index: 1;
 }
