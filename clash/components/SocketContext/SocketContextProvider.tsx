@@ -55,7 +55,7 @@ export const SocketContextProvider = ({ children }: Props) => {
     });
 
     socket.on(SOCKET_MSG_GENERAL.NOT_LOGGED_IN, () => {
-      const loginPath = process.env.NEXT_PUBLIC_LOGIN_URL;
+      const loginPath = `${process.env.NEXT_PUBLIC_MYTHIC_COMMANDER_URL}/login`;
       window.location.href = `${loginPath}?redirect=${window.location.href}`;
     });
   };

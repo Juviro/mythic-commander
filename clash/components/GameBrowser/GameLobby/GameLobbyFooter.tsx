@@ -26,8 +26,19 @@ const GameLobbyFooter = () => {
     tooltipText = 'Not all players have selected a deck';
   }
 
+  const decksUrl = `${process.env.NEXT_PUBLIC_MYTHIC_COMMANDER_URL}/my-decks`
+
   return (
     <div className={styles.wrapper}>
+      <Button
+          type="primary"
+          ghost
+          href={decksUrl}
+          target='_blank'
+          rel='noreferrer'
+        >
+          Your Decks
+        </Button>
       <Tooltip title={tooltipText} open={tooltipText ? undefined : false}>
         <Button
           type="primary"

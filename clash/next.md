@@ -1,7 +1,6 @@
 # Current feature
 
 * Lobby
-  * display link in lobby to create a deck
   * when going back to gamebrowser, the url changes, making it impossible to use browser forward button to get back to game
 
 # Bugs
