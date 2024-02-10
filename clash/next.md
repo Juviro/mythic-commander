@@ -14,8 +14,6 @@
   * turn card face down/up
 
 
-* when aligning a card stacked with lower x/y, put it behind the other card
-
 
 * icons for card actions:
   * tap (tap)

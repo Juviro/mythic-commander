@@ -2,7 +2,7 @@
   width: 100%;
   height: 100%;
   display: grid;
-  background: var(--color-menu-base-background);
+  background: transparent;
 
   --size-background-margin-right: var(--size-menu-width);
 }
@@ -73,6 +73,8 @@
   background-position: center;
   background-size: cover;
   position: absolute;
+  /* allows drag layer to display cards behind other cards from battlefield layer */
+  z-index: -1;
 
   top: 0;
   left: 0;

@@ -174,9 +174,12 @@ const useDragAlign = (item: Card, currentOffset: XYCoord | null) => {
       choordY = getChoord(stack.element, 'y')! + factor * STACK_DISTANCE_Y;
     }
 
+    const placeBehindOthers = stack?.position === 'topLeft';
+
     snapChoords.current = {
       x: choordX ?? null,
       y: choordY ?? null,
+      placeBehindOthers,
     };
   }, [x?.element, y?.element, stack?.element]);
 

@@ -26,6 +26,7 @@ export interface CardPositions {
 export interface SnapChoords {
   x: number | null;
   y: number | null;
+  placeBehindOthers?: boolean;
 }
 
 interface Point {

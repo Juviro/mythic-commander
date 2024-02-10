@@ -45,7 +45,12 @@ const DragLayer = () => {
     : currentOffset.x;
 
   return (
-    <div style={style} className={styles.wrapper}>
+    <div
+      style={style}
+      className={classNames(styles.wrapper, {
+        [styles.wrapper__stacked_behind]: cardToAlign.stack?.position === 'topLeft',
+      })}
+    >
       {cardToAlign?.x && !cardToAlign.stack && (
         <AlignIndicator element={cardToAlign.x.element} offset={offsetY} property="x" />
       )}

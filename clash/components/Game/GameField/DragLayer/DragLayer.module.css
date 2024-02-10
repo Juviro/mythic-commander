@@ -8,6 +8,10 @@
     aspect-ratio: var(--card-aspect-ratio);
 }
 
+.wrapper__stacked_behind {
+    z-index: -1;
+}
+
 .align_indicator {
     width: 1px;
     height: 1px;
@@ -21,6 +25,7 @@
     --size-card-padding: 2px;
     /* card padding or something, not sure why this is necessary */
     transform: translateX(2px, 2px);
+    z-index: -1;
 }
 
 .card__flipped {
