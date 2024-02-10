@@ -3,10 +3,6 @@
 
 # Bugs
 
-* opponet's hand have hover animation
-* hovered hand card is too high when playing with 4 players
-* don't allow selection rect with only one card
-* planeswalker copies don't enter with counters
 
 # MVP
 

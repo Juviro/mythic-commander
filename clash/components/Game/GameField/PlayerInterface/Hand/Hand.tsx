@@ -88,7 +88,7 @@ const Hand = ({ player, isSelf }: Props) => {
           )}
           <div
             className={classNames(styles.card_wrapper, {
-              [styles.card_wrapper__hovered]: highlightedCardIndex === index,
+              [styles.card_wrapper__hovered]: highlightedCardIndex === index && isSelf,
               [styles.card_wrapper__highlighted]: !isDragging,
             })}
             style={getCardStyles(index, hand.length)}

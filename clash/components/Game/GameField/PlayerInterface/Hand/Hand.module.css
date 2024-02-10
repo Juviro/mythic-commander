@@ -43,7 +43,7 @@
   height: 100%;
   position: absolute;
   transform-origin: 50% 160cqw;
-  transform: rotate(calc(var(--hover-rotation, var(--rotation)) * 1deg));
+  transform: rotate(calc(var(--hover-rotation, var(--rotation)) * 1deg)) translateY(30px);
   border-radius: 2px;
   transition: transform 0.1s;
 
