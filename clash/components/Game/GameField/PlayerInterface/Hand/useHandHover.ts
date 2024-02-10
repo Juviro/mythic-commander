@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
 
 import { Card, Player, ZONES } from 'backend/database/gamestate.types';
@@ -13,6 +13,7 @@ interface Props {
 
 const useHandHover = ({ hand, wrapperRef, player }: Props) => {
   const [highlightedCardIndex, setHighlightedCardIndex] = useState(-1);
+  const [isDragging, setIsDragging] = useState(false);
 
   const { onMoveCard } = useGameActions();
 
@@ -27,6 +28,13 @@ const useHandHover = ({ hand, wrapperRef, player }: Props) => {
       canDrop: !!monitor.canDrop(),
     }),
   });
+
+  // store canDrop to fix a bug in chrome where updating canDrop
+  // in the first render would cause the cards to the right would not be able
+  // to be dragged because the z-index would flicker when starting to drag.
+  useEffect(() => {
+    setIsDragging(canDrop);
+  }, [canDrop]);
 
   const getCardBounds = () => {
     const spacingElements = wrapperRef.current?.querySelectorAll('.spacing_element');
@@ -64,6 +72,7 @@ const useHandHover = ({ hand, wrapperRef, player }: Props) => {
     onDragOver,
     dropRef,
     canDrop,
+    isDragging,
     setHighlightedCardIndex,
   };
 };
