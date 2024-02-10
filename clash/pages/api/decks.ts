@@ -13,6 +13,7 @@ const decks = async (req: NextApiRequest, res: NextApiResponse) => {
       decks.id,
       decks."imgSrc",
       decks.name,
+      decks.status,
       commanders.name as "publicName"
     FROM 
       decks
@@ -36,8 +37,6 @@ const decks = async (req: NextApiRequest, res: NextApiResponse) => {
       commanders."deckId" = decks.id
     WHERE
       "userId" = ?
-    AND
-      decks.status = 'active'
     ORDER BY
       decks.name ASC
     `,

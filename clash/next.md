@@ -1,5 +1,8 @@
 # Current feature
 
+* Lobby
+  * display link in lobby to create a deck
+  * when going back to gamebrowser, the url changes, making it impossible to use browser forward button to get back to game
 
 # Bugs
 
@@ -23,10 +26,6 @@
 * flip coin, roll dice
   * chat commands? /coin, /dice 3d6
 
-* Lobby
-  * Allow selecting non-active decks as well
-  * display link in lobby to create a deck
-  * when going back to gamebrowser, the url changes, making it impossible to use browser forward button to get back to game
 
 * defeated player / ff
   * remove all cards from all other players' zones
@@ -128,6 +127,9 @@
   * drawing
   * on chat message
   * when a card is moved, flipped, tapped, untapped, turned face down/up ?
+
+* improve deck selection
+  * overlay with all decks, categorized by status & public
 
 # Optimizations
 

@@ -9,6 +9,7 @@ export interface Deck {
 
 export type OwnDeck = Deck & {
   publicName: string;
+  status: 'active' | 'draft' | 'archived';
 };
 
 export type Player = User & {

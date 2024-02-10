@@ -27,6 +27,17 @@ interface Decks {
   publicDecks: Deck[];
 }
 
+interface Option{
+  label: string;
+  value: string;
+}
+
+interface OwnDecksMap {
+  active: Option[];
+  draft: Option[];
+  archived: Option[];
+}
+
 const DeckSelection = ({ canSelectDeck, playerId, deck, isReady }: Props) => {
   const { onSelectDeck } = useContext(GameBrowserContext);
   const [initialDeckId, setInitialDeckId] = useLocalStorage<string>('initial-deck');
@@ -36,11 +47,21 @@ const DeckSelection = ({ canSelectDeck, playerId, deck, isReady }: Props) => {
     refetchInterval: Infinity,
     staleTime: Infinity,
   });
+  console.log('data', data);
 
-  const ownDecks = data?.ownDecks.map(({ name, id }) => ({
+  const ownDecks = data?.ownDecks.map(({ name, id, status }) => ({
     label: name,
     value: id,
-  }));
+    status
+  })).reduce((acc, deck) => ({
+    ...acc,
+    [deck.status]: [...acc[deck.status], deck]
+  }), {
+    active: [],
+    draft: [],
+    archived: []
+  }) as OwnDecksMap;
+  console.log('ownDecks', ownDecks)
 
   const publicDecks = data?.publicDecks.map(({ name, id }) => ({
     label: name,
@@ -113,8 +134,22 @@ const DeckSelection = ({ canSelectDeck, playerId, deck, isReady }: Props) => {
     >
       {data && (
         <>
-          <Select.OptGroup key="Your Decks">
-            {ownDecks?.map((option) => (
+          <Select.OptGroup key="Active Decks" >
+            {ownDecks?.active.map((option) => (
+              <Select.Option key={option.value} value={option.value}>
+                <DeckLabel deck={data.ownDecks.find((d) => d.id === option.value)!} />
+              </Select.Option>
+            ))}
+          </Select.OptGroup>
+          <Select.OptGroup key="Draft Decks" >
+            {ownDecks?.draft.map((option) => (
+              <Select.Option key={option.value} value={option.value}>
+                <DeckLabel deck={data.ownDecks.find((d) => d.id === option.value)!} />
+              </Select.Option>
+            ))}
+          </Select.OptGroup>
+          <Select.OptGroup key="Archived Decks" >
+            {ownDecks?.archived.map((option) => (
               <Select.Option key={option.value} value={option.value}>
                 <DeckLabel deck={data.ownDecks.find((d) => d.id === option.value)!} />
               </Select.Option>
