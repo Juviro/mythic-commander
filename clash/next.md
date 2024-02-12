@@ -1,10 +1,23 @@
 # Current feature
 
+* select all lands -> click "organize" -> all lands are neatly organized
 
 # Bugs
 
 
 # MVP
+
+* disable snapping when holding shift
+
+* show last games in lobby
+
+* rotate counters on flipped board?
+
+* defeated player / ff
+  * remove all cards from all other players' zones
+  * move commander to command zone
+  * grey out commandzone, name
+  * write "Defeated" instead of life total
 
 * logs for new actions?
   * create tokens
@@ -13,7 +26,9 @@
   * flip card
   * turn card face down/up
 
+* shortcut for "next phase" (space?)
 
+* allow dragging card group into graveyard, exile (hand?)
 
 * icons for card actions:
   * tap (tap)
@@ -24,23 +39,21 @@
   * chat commands? /coin, /dice 3d6
 
 
-* defeated player / ff
-  * remove all cards from all other players' zones
-  * move commander to command zone
-  * grey out commandzone, name
-  * write "Defeated" instead of life total
-
 * card selection: 
   * display how many cards are selected
   * allow aligning selected cards, use top-left card for alignment
 
+* when searching lib, add quick filter for lands with basic land types
 
 
 # Easter Eggs
 
 # Backog
 
-* add to battlefield actions: untap all [u]
+* inconsistent capitalization in context menus
+
+* move exile over / under graveyard (each at 50% height) so there is more space for the hand
+
 
 * allow joining lobby via url (e.g. http://localhost:1235/#4fqufdulls6ckz15)
 
@@ -81,9 +94,8 @@
 
 * long clicking life buttons adds in 10s
 
-* select all lands -> click "organize" -> all lands are neatly organized
 
-* when searching lib, add quick filter for lands with basic land types
+
 
 * stack ?
   * movable popup?
@@ -93,7 +105,7 @@
 * when playing alone, display partner commanders next to each other
 * store currentGames (in redis?)
 
-* show last games in lobby
+
 * display confirm when user closes tab
 * add route /playtest/:deckId
   * no stored game state in backend
