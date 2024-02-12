@@ -26,7 +26,6 @@
   * flip card
   * turn card face down/up
 
-* shortcut for "next phase" (space?)
 
 * allow dragging card group into graveyard, exile (hand?)
 

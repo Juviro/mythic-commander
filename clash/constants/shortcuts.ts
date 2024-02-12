@@ -6,6 +6,8 @@ const SHORTCUTS = {
   SHUFFLE: 's',
   SEARCH: 's',
   CANCEL: 'Escape',
+  SPACE: ' ',
+  ENTER: 'Enter',
   DELETE: ['Backspace', 'Delete'],
 };
 
