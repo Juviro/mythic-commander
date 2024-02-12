@@ -1,13 +1,11 @@
 # Current feature
 
-* select all lands -> click "organize" -> all lands are neatly organized
-
 # Bugs
 
 
 # MVP
 
-* disable snapping when holding shift
+* select all lands -> click "organize" -> all lands are neatly organized
 
 * show last games in lobby
 
@@ -19,10 +17,10 @@
   * grey out commandzone, name
   * write "Defeated" instead of life total
 
-* logs for new actions?
+* logs for new actions
   * create tokens
-  * add counters
   * copy card
+  * add counters
   * flip card
   * turn card face down/up
 
@@ -34,9 +32,6 @@
   * flip (dfc-front, dfc-back)
   * turn face-down (dfc-facedown)
 
-* flip coin, roll dice
-  * chat commands? /coin, /dice 3d6
-
 
 * card selection: 
   * display how many cards are selected
@@ -44,6 +39,8 @@
 
 * when searching lib, add quick filter for lands with basic land types
 
+* flip coin, roll dice
+  * chat commands? /coin, /dice 3d6
 
 # Easter Eggs
 

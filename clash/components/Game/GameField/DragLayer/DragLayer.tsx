@@ -23,7 +23,7 @@ const DragLayer = () => {
     isDragging: monitor.isDragging(),
   }));
 
-  const { cardToAlign, left, top } = useDragAlign(item, currentOffset);
+  const { cardToAlign, left, top, isSnapDisabled } = useDragAlign(item, currentOffset);
 
   if (!item || !currentOffset || !isDragging || itemType !== DndItemTypes.CARD) {
     return null;
@@ -64,6 +64,9 @@ const DragLayer = () => {
       >
         <Card card={item} noAnimation flipped={item.flipped} />
       </div>
+      {!isSnapDisabled && (
+        <div className={styles.shift_tooltip}>Hold Shift to disabled snapping</div>
+      )}
     </div>
   );
 };
