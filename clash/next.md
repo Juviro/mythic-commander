@@ -1,13 +1,11 @@
 # Current feature
 
+* show last games in lobby
+
 # Bugs
 
 
 # MVP
-
-* select all lands -> click "organize" -> all lands are neatly organized
-
-* show last games in lobby
 
 * rotate counters on flipped board?
 
@@ -41,6 +39,8 @@
 
 * flip coin, roll dice
   * chat commands? /coin, /dice 3d6
+
+* select all lands -> click "organize" -> all lands are neatly organized
 
 # Easter Eggs
 
