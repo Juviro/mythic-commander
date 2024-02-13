@@ -47,6 +47,11 @@
 
 # Backog
 
+* sort backlog
+  * qol
+  * features
+  * visual improvements
+
 * inconsistent capitalization in context menus
 
 * move exile over / under graveyard (each at 50% height) so there is more space for the hand
@@ -139,6 +144,8 @@
   * overlay with all decks, categorized by status & public
 
   * show loading overlay in game brwoser while bg image is loading
+
+* display error msg when app crashes
 
 # Optimizations
 

@@ -27,8 +27,7 @@ const GameSelection = () => {
   return (
     <GameBrowserModal title="Game Browser">
       <div className={styles.wrapper}>
-        {/* TODO: 0 */}
-        <Tabs defaultActiveKey={items[1].key} items={items} />
+        <Tabs defaultActiveKey={items[0].key} items={items} />
       </div>
     </GameBrowserModal>
   );
