@@ -1,9 +1,10 @@
 import { Button } from 'antd';
 import React, { useContext, useState } from 'react';
 
-import styles from './HostGame.module.css';
 import HostGameModal from './HostGameModal';
 import GameBrowserContext from '../GameBrowserContext';
+
+import styles from './HostGame.module.css';
 
 const HostGame = () => {
   const { user } = useContext(GameBrowserContext);

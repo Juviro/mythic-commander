@@ -22,7 +22,12 @@ const GameLobby = () => {
   const playerDummies = Array.from({ length: lobby!.maxNumberOfPlayers });
 
   const onClickLeaveLobby = () => {
-    setIsLeaving(true);
+    const isHost = lobby?.hostId === user?.id;
+    if (isHost) {
+      setIsLeaving(true);
+    } else {
+      onLeaveLobby();
+    }
   };
 
   useEffect(() => {
@@ -39,10 +44,11 @@ const GameLobby = () => {
         okButtonProps={{ danger: true }}
         open={isLeaving}
         onOk={onLeaveLobby}
+        okText="Close Lobby"
         onCancel={() => setIsLeaving(false)}
         style={{ top: 'calc(50% - 100px)' }}
       >
-        <p>Are you sure you want to leave the lobby?</p>
+        <p>Are you sure you want to close the lobby?</p>
       </Modal>
       <div
         className={

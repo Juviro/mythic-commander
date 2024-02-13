@@ -5,7 +5,7 @@ import { Deck } from 'backend/lobby/GameLobby.types';
 import styles from './DeckLabel.module.css';
 
 // image urls of new decks start with https://mythic-commander.com/, old ones don't
-const getImgSrc = (imgSrc: string) => {
+export const getDeckImgSrc = (imgSrc: string) => {
   if (imgSrc.startsWith('https://mythic-commander.com/')) {
     return imgSrc;
   }
@@ -24,7 +24,7 @@ const DeckLabel = ({ deck, displayTooltip, deckName }: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      <img src={getImgSrc(deck.imgSrc)} alt="" className={styles.image} />
+      <img src={getDeckImgSrc(deck.imgSrc)} alt="" className={styles.image} />
       <div className={styles.deck_name}>
         <Tooltip title={usedName} open={displayTooltip ? undefined : false}>
           <span className={styles.label}>{usedName}</span>

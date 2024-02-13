@@ -1,6 +1,7 @@
 # Current feature
 
 * show last games in lobby
+  * cron job to delete old games
 
 # Bugs
 
@@ -111,6 +112,7 @@
   * display connect / disconnect messages
   * show message when you are disconnected
   * auto-reconnect
+  * display online players in game browser -> last games
 
 * prevent interacting with own lib when someone is peeking it (self or opponent)
 
@@ -136,11 +138,14 @@
 * improve deck selection
   * overlay with all decks, categorized by status & public
 
+  * show loading overlay in game brwoser while bg image is loading
+
 # Optimizations
 
 * prevent re-render of interface components when menu changes, e.g. when changing life
 * use transform to set card position on battlefield
 * when moving multiple cards, only send one request and update (e.g. move all cards from graveyard to exile)
+* don't store "resources" in game log - maybe store in local storage?
 
 # Backlog Bugs
 
