@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { XYCoord } from 'react-dnd';
 
 import { Card } from 'backend/database/gamestate.types';
@@ -111,9 +111,10 @@ const getClosestCards = (currentOffset: XYCoord, cards: Element[]) => {
 const getCardsToAlign = (
   item: Card,
   currentOffset: XYCoord | null,
-  hoveredBattlefield: HoveredBattlefield | null
+  hoveredBattlefield: HoveredBattlefield | null,
+  disabled: boolean
 ) => {
-  if (!hoveredBattlefield || !currentOffset)
+  if (!hoveredBattlefield || !currentOffset || disabled)
     return {
       x: null,
       y: null,
@@ -125,8 +126,26 @@ const getCardsToAlign = (
 };
 
 const useDragAlign = (item: Card, currentOffset: XYCoord | null) => {
+  const [isSnapDisabled, setIsSnapDisabled] = useState(true);
   const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
   const { hoveredBattlefield, snapChoords } = useContext(CardPositionContext);
+
+  useEffect(() => {
+    const onDrag = (event: DragEvent) => {
+      const isSpacePressed = event.shiftKey;
+      setIsSnapDisabled(isSpacePressed);
+    };
+    const onDragEnd = () => {
+      setIsSnapDisabled(false);
+    };
+    document.addEventListener('drag', onDrag, false);
+    document.addEventListener('dragend', onDragEnd, false);
+
+    return () => {
+      document.removeEventListener('drag', onDrag, false);
+      document.removeEventListener('dragend', onDragEnd, false);
+    };
+  });
 
   const transformedOffset = currentOffset
     ? {
@@ -138,7 +157,8 @@ const useDragAlign = (item: Card, currentOffset: XYCoord | null) => {
   const { x, y, stack } = getCardsToAlign(
     item,
     transformedOffset,
-    hoveredBattlefield.current!
+    hoveredBattlefield.current!,
+    isSnapDisabled
   );
 
   let top = transformedOffset?.y ?? 0;
@@ -184,6 +204,7 @@ const useDragAlign = (item: Card, currentOffset: XYCoord | null) => {
   }, [x?.element, y?.element, stack?.element]);
 
   return {
+    isSnapDisabled,
     top,
     left,
     cardToAlign: {

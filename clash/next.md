@@ -1,28 +1,14 @@
 # Current feature
 
+* show last games in lobby
+  * cron job to delete old games
 
 # Bugs
 
 
 # MVP
 
-* logs for new actions?
-  * create tokens
-  * add counters
-  * copy card
-  * flip card
-  * turn card face down/up
-
-
-
-* icons for card actions:
-  * tap (tap)
-  * flip (dfc-front, dfc-back)
-  * turn face-down (dfc-facedown)
-
-* flip coin, roll dice
-  * chat commands? /coin, /dice 3d6
-
+* rotate counters on flipped board?
 
 * defeated player / ff
   * remove all cards from all other players' zones
@@ -30,17 +16,41 @@
   * grey out commandzone, name
   * write "Defeated" instead of life total
 
+* logs for new actions
+  * create tokens
+  * copy card
+  * add counters
+  * flip card
+  * turn card face down/up
+
+
+* allow dragging card group into graveyard, exile (hand?)
+
+* icons for card actions:
+  * tap (tap)
+  * flip (dfc-front, dfc-back)
+  * turn face-down (dfc-facedown)
+
+
 * card selection: 
   * display how many cards are selected
   * allow aligning selected cards, use top-left card for alignment
 
+* when searching lib, add quick filter for lands with basic land types
 
+* flip coin, roll dice
+  * chat commands? /coin, /dice 3d6
+
+* select all lands -> click "organize" -> all lands are neatly organized
 
 # Easter Eggs
 
 # Backog
 
-* add to battlefield actions: untap all [u]
+* inconsistent capitalization in context menus
+
+* move exile over / under graveyard (each at 50% height) so there is more space for the hand
+
 
 * allow joining lobby via url (e.g. http://localhost:1235/#4fqufdulls6ckz15)
 
@@ -81,9 +91,8 @@
 
 * long clicking life buttons adds in 10s
 
-* select all lands -> click "organize" -> all lands are neatly organized
 
-* when searching lib, add quick filter for lands with basic land types
+
 
 * stack ?
   * movable popup?
@@ -93,7 +102,7 @@
 * when playing alone, display partner commanders next to each other
 * store currentGames (in redis?)
 
-* show last games in lobby
+
 * display confirm when user closes tab
 * add route /playtest/:deckId
   * no stored game state in backend
@@ -103,6 +112,7 @@
   * display connect / disconnect messages
   * show message when you are disconnected
   * auto-reconnect
+  * display online players in game browser -> last games
 
 * prevent interacting with own lib when someone is peeking it (self or opponent)
 
@@ -128,11 +138,14 @@
 * improve deck selection
   * overlay with all decks, categorized by status & public
 
+  * show loading overlay in game brwoser while bg image is loading
+
 # Optimizations
 
 * prevent re-render of interface components when menu changes, e.g. when changing life
 * use transform to set card position on battlefield
 * when moving multiple cards, only send one request and update (e.g. move all cards from graveyard to exile)
+* don't store "resources" in game log - maybe store in local storage?
 
 # Backlog Bugs
 

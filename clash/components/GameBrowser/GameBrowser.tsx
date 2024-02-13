@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import styles from './GameBrowser.module.css';
-import GameList from './GameList/GameList';
+import GameSelection from './GameSelection/GameSelection';
 import GameLobby from './GameLobby/GameLobby';
 import GameBrowserContext from './GameBrowserContext';
 import BrowserWarning from './BrowserWarning/BrowserWarning';
@@ -34,7 +34,9 @@ const GameBrowser = () => {
     <QueryClientProvider client={queryClient}>
       <BrowserWarning />
       <div className={styles.wrapper}>
-        <div className={styles.inner}>{currentLobby ? <GameLobby /> : <GameList />}</div>
+        <div className={styles.inner}>
+          {currentLobby ? <GameLobby /> : <GameSelection />}
+        </div>
       </div>
     </QueryClientProvider>
   );

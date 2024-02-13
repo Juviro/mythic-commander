@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Alert } from 'antd';
 import React, { useEffect, useState } from 'react';
 
@@ -23,12 +24,10 @@ const BrowserWarning = () => {
 
   return (
     <Alert
-      message={`
-        Warning: Your browser window might be too small to display the game properly.
-        Please consider resizing your window or using a larger screen.
-      `}
+      message="Warning: Your browser window might be too small to display the game properly."
       type="warning"
       showIcon
+      description="Please consider resizing your window, use a larger screen or zoom out and use binoculars."
       style={{ padding: '3rem 5rem', fontSize: '1rem' }}
     />
   );

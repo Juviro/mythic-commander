@@ -1,0 +1,51 @@
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    overflow: auto;
+    min-height: 100%;
+    max-height: 550px;
+    padding: 0 16px 16px;
+    gap: 16px;
+}
+
+.players {
+    list-style: none;
+    padding: 0;
+}
+
+.player {
+    display: flex;
+    gap: 8px;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+}
+
+.player :global(.colorfield) {
+    margin: 0;
+}
+
+.player:not(:first-child) {
+    margin-top: 4px;
+}
+
+.player_image {
+    width: 45px;
+    height: 32px;
+    border-radius: 2px;
+}
+
+.player_name {
+    padding: 4px;
+    border-radius: 4px;
+    color: white;
+}
+
+.player_deck {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 400px;
+}

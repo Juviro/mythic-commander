@@ -1,5 +1,6 @@
 import React from 'react';
 
+import classNames from 'classnames';
 import styles from './ColorPicker.module.css';
 
 interface Props {
@@ -7,7 +8,12 @@ interface Props {
 }
 
 const ColorField = ({ color }: Props) => {
-  return <div className={styles.color} style={{ backgroundColor: color ?? '' }} />;
+  return (
+    <div
+      className={classNames(styles.color, 'colorfield')}
+      style={{ backgroundColor: color ?? '' }}
+    />
+  );
 };
 
 export default ColorField;

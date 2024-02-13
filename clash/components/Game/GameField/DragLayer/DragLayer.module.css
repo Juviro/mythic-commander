@@ -31,3 +31,18 @@
 .card__flipped {
     transform: translateX(2px, 2px) rotate(180deg);
 }
+
+.shift_tooltip {
+    position: absolute;
+    margin-top: 8px;
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    padding: 2px;
+    color: var(--color-text-light);
+    text-align: center;
+    font-size: 12px;
+    opacity: 0.8;
+    font-style: italic;
+    background: rgba(0, 0, 0, 0.8);
+}

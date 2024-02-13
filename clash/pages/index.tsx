@@ -3,10 +3,8 @@ import { GameBrowserContextProvider } from '../components/GameBrowser/GameBrowse
 
 export default function Home() {
   return (
-    <div>
-      <GameBrowserContextProvider>
-        <GameBrowser />
-      </GameBrowserContextProvider>
-    </div>
+    <GameBrowserContextProvider>
+      <GameBrowser />
+    </GameBrowserContextProvider>
   );
 }
