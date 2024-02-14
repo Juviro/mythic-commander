@@ -2,7 +2,6 @@
 
 # Bugs
 
-3p layout: "The Ur-Dragon Tax" is overflowing, tax buttons not fully visible
 
 # MVP
 

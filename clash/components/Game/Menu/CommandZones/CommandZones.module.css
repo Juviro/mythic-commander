@@ -68,6 +68,13 @@
   z-index: 1;
 }
 
+.commander_tax {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 44px;
+}
 
 .commander_casted:last-child {
   opacity: 1;

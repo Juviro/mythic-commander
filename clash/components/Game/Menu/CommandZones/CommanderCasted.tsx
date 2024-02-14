@@ -17,7 +17,7 @@ const CommanderCasted = ({ commander, isSelf }: Props) => {
 
   return (
     <div className={styles.commander_casted}>
-      <div>{`${commanderShortName} Tax`}</div>
+      <div className={styles.commander_tax}>{`${commanderShortName} Tax`}</div>
       <div className={styles.commander_casted_buttons}>
         {isSelf && (
           <MinusOutlined
