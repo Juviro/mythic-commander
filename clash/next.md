@@ -1,9 +1,5 @@
 # Current feature
 
-* message in the center of the screen for
-  * active player changes
-  * animated (grow)
-
 # Bugs
 
 * selection card groups of opponents can be put into own graveyard & exile, both when dragging and from context menu

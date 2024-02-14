@@ -12,3 +12,9 @@ const SHORTCUTS = {
 };
 
 export default SHORTCUTS;
+
+export const KEY_SYMBOLS = {
+  SPACE: '⎵',
+  ENTER: '↵',
+  DELETE: '⌫',
+};

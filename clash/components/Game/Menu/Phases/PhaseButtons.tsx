@@ -7,15 +7,13 @@ import GameStateContext from 'components/Game/GameStateContext';
 import { PHASES } from 'backend/database/gamestate.types';
 
 import useShortcut from 'hooks/useShortcut';
-import SHORTCUTS from 'constants/shortcuts';
+import SHORTCUTS, { KEY_SYMBOLS } from 'constants/shortcuts';
 import styles from './Phases.module.css';
 
 const PhaseButtons = () => {
-  const { gameState, player } = useContext(GameStateContext);
+  const { gameState } = useContext(GameStateContext);
   const { endTurn, setPhase } = useGameActions();
   const currentPhase = gameState!.phase;
-
-  const isOwnTurn = gameState?.activePlayerId === player?.id;
 
   const onNextPhase = () => {
     if (currentPhase === 'end') {
@@ -30,18 +28,13 @@ const PhaseButtons = () => {
     setPhase(PHASES[PHASES.indexOf(currentPhase) - 1]);
   };
 
-  useShortcut(SHORTCUTS.SPACE, onNextPhase, {
-    disabled: !isOwnTurn,
-  });
+  useShortcut(SHORTCUTS.SPACE, onNextPhase);
 
   useShortcut(SHORTCUTS.SPACE, onPreviousPhase, {
-    disabled: !isOwnTurn,
     modifierKeys: ['shift'],
   });
 
-  useShortcut(SHORTCUTS.ENTER, endTurn, {
-    disabled: !isOwnTurn,
-  });
+  useShortcut(SHORTCUTS.ENTER, endTurn);
 
   return (
     <div className={styles.phase_buttons}>
@@ -52,14 +45,14 @@ const PhaseButtons = () => {
         disabled={currentPhase === 'beginning'}
       >
         <LeftOutlined />
-        Previouse Phase
+        Phase
       </Button>
       <Button ghost type="primary" onClick={onNextPhase}>
-        Next Phase {isOwnTurn && '[⎵]'}
+        Phase {`[${KEY_SYMBOLS.SPACE}]`}
         <RightOutlined />
       </Button>
       <Button type="primary" onClick={endTurn}>
-        End Turn {isOwnTurn && '[↵]'}
+        End Turn {`[${KEY_SYMBOLS.ENTER}]`}
       </Button>
     </div>
   );
