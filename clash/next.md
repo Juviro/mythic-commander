@@ -1,5 +1,8 @@
 # Current feature
 
+* card selection: 
+  * allow aligning selected cards, use top-left card for alignment
+
 
 # Bugs
 
@@ -21,16 +24,11 @@
   * turn card face down/up
 
 
-
 * icons for card actions:
   * tap (tap)
   * flip (dfc-front, dfc-back)
   * turn face-down (dfc-facedown)
 
-
-* card selection: 
-  * display how many cards are selected
-  * allow aligning selected cards, use top-left card for alignment
 
 * when searching lib, add quick filter for lands with basic land types
 

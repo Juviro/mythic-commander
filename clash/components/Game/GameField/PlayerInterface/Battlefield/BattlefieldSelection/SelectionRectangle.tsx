@@ -7,6 +7,7 @@ import useWindowSize from 'hooks/useWindowSize';
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import useCardActions from 'components/GameComponents/Card/cardActions/useCardActions';
+import { pluralizeCards } from 'utils/i18nUtils';
 import styles from './BattlefieldSelection.module.css';
 import BattlefieldSelectionContext from './BattlefieldSelectionContext';
 import BattlefieldCard from '../BattlefieldCard/BattlefieldCard';
@@ -144,6 +145,9 @@ const SelectionRectangle = ({
             [styles.selection_rectangle__dragging]: isDragging,
           })}
         >
+          <div className={styles.selection_info}>
+            {`${pluralizeCards(selectedCardIds.length)} selected`}
+          </div>
           {selectedCards.map((card) => (
             <BattlefieldCard card={card} key={card.clashId} player={player} inSelection />
           ))}

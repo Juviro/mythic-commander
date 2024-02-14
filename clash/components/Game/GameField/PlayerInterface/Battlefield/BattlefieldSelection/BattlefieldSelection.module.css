@@ -28,6 +28,7 @@
 
 .selection_rectangle {
   display: none;
+  cursor: grab;
 }
 
 .selection_rectangle__visible {
@@ -43,6 +44,11 @@
   display: none;
 }
 
-.selection_rectangle {
-  cursor: grab;
+.selection_info {
+  transform: translate(-2px, -25px);
+  width: fit-content;
+  font-size: 12px;
+  padding: 4px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.2);
 }
