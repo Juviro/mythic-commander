@@ -1,14 +1,10 @@
 # Current feature
 
-* show last games in lobby
-  * cron job to delete old games
 
 # Bugs
 
 
 # MVP
-
-* rotate counters on flipped board?
 
 * defeated player / ff
   * remove all cards from all other players' zones
@@ -164,3 +160,4 @@
 * milling action animation is wrong on flipped board
 * align indicator when aligning both x and y not in center of card when it's left and/or top aligned
 * after moving all cards from graveyard -> library, whenever you draw a card after that, an animation is played fom graveyard to library
+* tabs indicator in game browser not aligned correctly. Might be related to ssr and styles not being loaded on first render

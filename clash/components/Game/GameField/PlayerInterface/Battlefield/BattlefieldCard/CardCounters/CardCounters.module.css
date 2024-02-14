@@ -14,6 +14,10 @@
     display: inline;
 }
 
+:global(.flipped) .wrapper {
+    transform: rotate(180deg);
+}
+
 .wrapper::-webkit-scrollbar {
     display: none;
 }
