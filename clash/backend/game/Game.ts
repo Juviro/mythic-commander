@@ -36,6 +36,7 @@ import { GameLog, LOG_MESSAGES, LogMessage } from 'backend/constants/logMessages
 import { getGameState, storeGameState } from 'backend/database/matchStore';
 import initMatch from 'backend/lobby/initMatch/initMatch';
 import { randomizeArray } from 'utils/randomizeArray';
+import db from 'backend/database/db';
 import addLogEntry from './addLogEntry';
 import getInitialCardProps from './utils/getInitialCardProps';
 
@@ -475,14 +476,17 @@ export default class Game {
     this.emitPlayerUpdate(player);
   }
 
-  createToken(payload: CreateTokenPayload) {
+  async createToken(payload: CreateTokenPayload) {
     const { cardId, battlefieldPlayerId, name, position = { x: 50, y: 50 } } = payload;
     const player = this.getPlayerById(battlefieldPlayerId);
+
+    const { type_line } = await db('cards').where({ id: cardId }).first();
 
     const token: BattlefieldCard = {
       clashId: uniqid(),
       id: cardId,
       name,
+      type_line,
       ownerId: player.id,
       isToken: true,
       manaValue: 0,
@@ -521,6 +525,7 @@ export default class Game {
         name: originalCard.name,
         ownerId: originalCard.ownerId,
         manaValue: originalCard.manaValue,
+        type_line: originalCard.type_line,
         meta: {
           ...originalCard.meta,
           isCardCopy: !originalCard.isToken || originalCard.meta?.isCardCopy,

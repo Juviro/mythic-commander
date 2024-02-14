@@ -6,6 +6,18 @@ import { VisibleCard } from 'backend/database/gamestate.types';
 import { isCatOrDog } from './easterEggs';
 import getCardMeta from '../getCardMeta';
 
+const getclashCardProps = (card: InitMatchCard): Omit<VisibleCard, 'ownerId'> => ({
+  id: card.id,
+  name: card.name,
+  manaValue: card.manaValue,
+  flippable: card.flippable,
+  type_line: card.type_line,
+  clashId: uniqid(),
+  meta: {
+    relatedCards: getCardMeta(card),
+  },
+});
+
 const getInitialCards = (cards: InitMatchCard[], commanderIds?: string[]) => {
   let isFurryFriend = false;
 
@@ -17,16 +29,7 @@ const getInitialCards = (cards: InitMatchCard[], commanderIds?: string[]) => {
         if (isCatOrDog(card)) {
           isFurryFriend = true;
         }
-        commanders.push({
-          id: card.id,
-          name: card.name,
-          flippable: card.flippable,
-          manaValue: card.manaValue,
-          clashId: uniqid(),
-          meta: {
-            relatedCards: getCardMeta(card),
-          },
-        });
+        commanders.push(getclashCardProps(card));
         return false;
       }
 
@@ -35,16 +38,7 @@ const getInitialCards = (cards: InitMatchCard[], commanderIds?: string[]) => {
     .map((card) => {
       const spreadeCards = [];
       for (let i = 0; i < card.amount; i += 1) {
-        spreadeCards.push({
-          id: card.id,
-          name: card.name,
-          manaValue: card.manaValue,
-          flippable: card.flippable,
-          clashId: uniqid(),
-          meta: {
-            relatedCards: getCardMeta(card),
-          },
-        });
+        spreadeCards.push(getclashCardProps(card));
       }
 
       return spreadeCards;

@@ -29,6 +29,7 @@ export interface VisibleCard extends HiddenCard {
   flippable?: boolean;
   meta?: CardMeta;
   manaValue: number;
+  type_line: string;
 }
 
 export interface VisibleBattlefieldCard extends VisibleCard {

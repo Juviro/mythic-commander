@@ -1,9 +1,5 @@
 # Current feature
 
-* card selection: 
-  * allow aligning selected cards, use top-left card for alignment
-
-
 # Bugs
 
 * selection card groups of opponents can be put into own graveyard & exile, both when dragging and from context menu
@@ -30,7 +26,6 @@
   * turn face-down (dfc-facedown)
 
 
-* when searching lib, add quick filter for lands with basic land types
 
 * flip coin, roll dice
   * chat commands? /coin, /dice 3d6
@@ -40,6 +35,9 @@
 # Easter Eggs
 
 # Backog
+
+* card selection: 
+  * allow aligning selected cards, use top-left card for alignment
 
 * onMoveCard should allow a list of cardIds
   * refactor wherever we forEach over cards to use this

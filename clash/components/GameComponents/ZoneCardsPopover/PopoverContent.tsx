@@ -5,6 +5,7 @@ import GameStateContext from 'components/Game/GameStateContext';
 import { normalizeName } from 'utils/normalizeName';
 import useGameActions from 'components/Game/useGameActions';
 import { Zone } from 'backend/database/gamestate.types';
+import { hasAnyBasicLandType } from 'utils/cardTypes';
 import PopoverCardList from './PopoverCardList';
 import usePopoverCards from './usePopoverCards';
 
@@ -25,6 +26,7 @@ interface Props {
 
 const PopoverContent = ({ color, zone }: Props) => {
   const { peekingCards, setPeekingCards } = useContext(GameStateContext);
+  const [landsOnly, setLandsOnly] = useState(false);
   const style = { '--player-color': color };
 
   const { onEndPeek } = useGameActions();
@@ -44,6 +46,7 @@ const PopoverContent = ({ color, zone }: Props) => {
   const { isSearch } = peekingCards!;
 
   const onSubmit = () => {
+    setLandsOnly(false);
     setPeekingCards(null);
 
     const shouldShuffleLibrary = isSearch ? shuffleLibrary : false;
@@ -59,12 +62,17 @@ const PopoverContent = ({ color, zone }: Props) => {
     });
   };
 
-  const filteredCards = cardsInLibrary.filter((card) => {
-    if (!search) return true;
-    const normalizedCardName = normalizeName(card.name).toLowerCase();
-    const normalizedSearch = normalizeName(search).toLowerCase();
-    return normalizedCardName.includes(normalizedSearch);
-  });
+  const filteredCards = cardsInLibrary
+    .filter((card) => {
+      if (!search) return true;
+      const normalizedCardName = normalizeName(card.name).toLowerCase();
+      const normalizedSearch = normalizeName(search).toLowerCase();
+      return normalizedCardName.includes(normalizedSearch);
+    })
+    .filter((card) => {
+      if (!landsOnly) return true;
+      return hasAnyBasicLandType(card.type_line);
+    });
 
   return (
     <div className={styles.content} style={style as CSSProperties}>
@@ -100,6 +108,13 @@ const PopoverContent = ({ color, zone }: Props) => {
                 allowClear
                 onChange={(e) => setSearch(e.target.value)}
               />
+              <Checkbox
+                checked={landsOnly}
+                onChange={(e) => setLandsOnly(e.target.checked)}
+                style={{ fontWeight: 'normal' }}
+              >
+                Only Lands with Basic Land Types
+              </Checkbox>
             </Space>
           }
         />
