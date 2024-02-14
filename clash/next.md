@@ -2,7 +2,6 @@
 
 # Bugs
 
-* selection card groups of opponents can be put into own graveyard & exile, both when dragging and from context menu
 
 # MVP
 
@@ -54,6 +53,9 @@
 * allow joining lobby via url (e.g. http://localhost:1235/#4fqufdulls6ckz15)
 
 * allow copying selection?
+
+* add card context menu action: see rules
+  * opens modal similar to MC mobile
 
 * when dragging card over hand, it should have the hand card size
 

@@ -320,7 +320,13 @@ export default class Game {
     }
 
     playersToUpdate.add(fromPlayer!.id);
-    const toPlayer = this.getPlayerById(to.playerId);
+    let toPlayer = this.getPlayerById(to.playerId);
+
+    if (to.zone === 'graveyard' || to.zone === 'exile') {
+      toPlayer = this.getPlayerById(newCard.ownerId);
+      playersToUpdate.add(toPlayer.id);
+    }
+
     if (!shouldDeleteCard) {
       if (typeof index === 'number') {
         const isMovingToSameZone =
