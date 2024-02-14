@@ -23,7 +23,7 @@ const DragLayer = () => {
     isDragging: monitor.isDragging(),
   }));
 
-  const { cardToAlign, left, top, isSnapDisabled } = useDragAlign(item, currentOffset);
+  const { cardToAlign, left, top } = useDragAlign(item, currentOffset);
 
   if (!item || !currentOffset || !isDragging || itemType !== DndItemTypes.CARD) {
     return null;
@@ -36,6 +36,8 @@ const DragLayer = () => {
     '--player-color': getColorVariable(item.ownerId),
     '--size-card-width': `${battlefieldCardWidth}px`,
   } as CSSProperties;
+
+  const isSnapping = Boolean(cardToAlign.x || cardToAlign.y || cardToAlign.stack);
 
   const offsetY = cardToAlign.y
     ? cardToAlign.y.element.getBoundingClientRect().y + battlefieldCardHeight / 2
@@ -64,7 +66,7 @@ const DragLayer = () => {
       >
         <Card card={item} noAnimation flipped={item.flipped} />
       </div>
-      {!isSnapDisabled && (
+      {isSnapping && (
         <div className={styles.shift_tooltip}>Hold Shift to disabled snapping</div>
       )}
     </div>

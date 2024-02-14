@@ -15,8 +15,10 @@ const MessageAcceptHand = ({ payload, playerId }: Props) => {
   return (
     <div className={styles.message}>
       <ColoredPlayerName id={playerId} />
-      {` choose their starting hand with `}
-      <b>{`${pluralizeCards(payload.cardsKept, 'one')}`}</b>
+      <span>
+        {` choose their starting hand with `}
+        <b>{`${pluralizeCards(payload.cardsKept, 'one')}`}</b>
+      </span>
     </div>
   );
 };

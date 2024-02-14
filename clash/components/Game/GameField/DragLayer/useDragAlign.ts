@@ -204,7 +204,6 @@ const useDragAlign = (item: Card, currentOffset: XYCoord | null) => {
   }, [x?.element, y?.element, stack?.element]);
 
   return {
-    isSnapDisabled,
     top,
     left,
     cardToAlign: {
