@@ -3,7 +3,7 @@ import { useDrop } from 'react-dnd';
 
 import { Card, Player, ZONES } from 'backend/database/gamestate.types';
 import useGameActions from 'components/Game/useGameActions';
-import { DndItemTypes, DropCard } from 'types/dnd.types';
+import { DndItemTypes, DropCard, DropCardGroup } from 'types/dnd.types';
 
 interface Props {
   hand: Card[];
@@ -17,12 +17,22 @@ const useHandHover = ({ hand, wrapperRef, player }: Props) => {
 
   const { onMoveCard } = useGameActions();
 
-  const onDrop = ({ clashId }: DropCard) => {
-    onMoveCard(clashId, ZONES.HAND, player.id, { index: highlightedCardIndex });
+  const onDrop = (dropElement: DropCard | DropCardGroup) => {
+    if ('cardIds' in dropElement) {
+      dropElement.cardIds.forEach((clashId, index) =>
+        onMoveCard(clashId, ZONES.HAND, player.id, {
+          index: highlightedCardIndex + index,
+        })
+      );
+      return;
+    }
+    onMoveCard(dropElement.clashId, ZONES.HAND, player.id, {
+      index: highlightedCardIndex,
+    });
   };
 
   const [{ canDrop }, dropRef] = useDrop({
-    accept: [DndItemTypes.CARD, DndItemTypes.LIST_CARD],
+    accept: [DndItemTypes.CARD, DndItemTypes.LIST_CARD, DndItemTypes.CARD_GROUP],
     drop: onDrop,
     collect: (monitor) => ({
       canDrop: !!monitor.canDrop(),

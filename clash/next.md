@@ -3,6 +3,7 @@
 
 # Bugs
 
+* selection card groups of opponents can be put into own graveyard & exile, both when dragging and from context menu
 
 # MVP
 
@@ -20,7 +21,6 @@
   * turn card face down/up
 
 
-* allow dragging card group into graveyard, exile (hand?)
 
 * icons for card actions:
   * tap (tap)
@@ -42,6 +42,9 @@
 # Easter Eggs
 
 # Backog
+
+* onMoveCard should allow a list of cardIds
+  * refactor wherever we forEach over cards to use this
 
 * sort backlog
   * qol

@@ -9,7 +9,7 @@ import useGameActions from 'components/Game/useGameActions';
 import Card from 'components/GameComponents/Card/Card';
 import StackedCardList from 'components/GameComponents/StackedCardList/StackedCardList';
 import GameStateContext from 'components/Game/GameStateContext';
-import { DndItemTypes, DropCard } from 'types/dnd.types';
+import { DndItemTypes, DropCard, DropCardGroup } from 'types/dnd.types';
 
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import { pluralizeCards } from 'utils/i18nUtils';
@@ -25,9 +25,12 @@ const Exile = ({ player }: Props) => {
   const { getPlayerColor } = useContext(GameStateContext);
 
   const [{ canDrop }] = useDrop({
-    accept: DndItemTypes.CARD,
-    canDrop: ({ ownerId }: DropCard) => {
-      return ownerId === player.id;
+    accept: [DndItemTypes.CARD, DndItemTypes.LIST_CARD, DndItemTypes.CARD_GROUP],
+    canDrop: (dropElement: DropCard | DropCardGroup) => {
+      if ('cardIds' in dropElement) {
+        return true;
+      }
+      return dropElement.ownerId === player.id;
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
@@ -40,8 +43,14 @@ const Exile = ({ player }: Props) => {
     cardIds: player.zones.exile.map(({ clashId }) => clashId),
   });
 
-  const onDrop = (card: DropCard) => {
-    onMoveCard(card.clashId, 'exile', player.id);
+  const onDrop = (dropElement: DropCard | DropCardGroup) => {
+    if ('cardIds' in dropElement) {
+      dropElement.cardIds.forEach((clashId) =>
+        onMoveCard(clashId, ZONES.EXILE, player.id)
+      );
+      return;
+    }
+    onMoveCard(dropElement.clashId, ZONES.EXILE, player.id);
   };
 
   const cards = player.zones.exile;
@@ -71,7 +80,15 @@ const Exile = ({ player }: Props) => {
           }
         >
           <div className={styles.wrapper}>
-            <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id}>
+            <Dropzone
+              onDrop={onDrop}
+              acceptFromPlayerId={player.id}
+              accept={[
+                DndItemTypes.CARD,
+                DndItemTypes.LIST_CARD,
+                DndItemTypes.CARD_GROUP,
+              ]}
+            >
               <div className={styles.inner}>
                 <ExileImage />
                 {cards.map((card) => (

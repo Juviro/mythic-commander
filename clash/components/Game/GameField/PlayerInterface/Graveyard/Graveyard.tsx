@@ -7,7 +7,7 @@ import Dropzone from 'components/Game/Dropzone/Dropzone';
 import useGameActions from 'components/Game/useGameActions';
 import StackedCardList from 'components/GameComponents/StackedCardList/StackedCardList';
 import GameStateContext from 'components/Game/GameStateContext';
-import { DropCard } from 'types/dnd.types';
+import { DndItemTypes, DropCard, DropCardGroup } from 'types/dnd.types';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import { pluralizeCards } from 'utils/i18nUtils';
 import CardStack from '../CardStack/CardStack';
@@ -28,8 +28,14 @@ const Graveyard = ({ player }: Props) => {
 
   const cards = graveyard.slice(-MAX_DISPLAYED_CARDS);
 
-  const onDrop = ({ clashId }: DropCard) => {
-    onMoveCard(clashId, ZONES.GRAVEYARD, player.id);
+  const onDrop = (dropElement: DropCard | DropCardGroup) => {
+    if ('cardIds' in dropElement) {
+      dropElement.cardIds.forEach((clashId) =>
+        onMoveCard(clashId, ZONES.GRAVEYARD, player.id)
+      );
+      return;
+    }
+    onMoveCard(dropElement.clashId, ZONES.GRAVEYARD, player.id);
   };
 
   const graveyardActions = useGraveyardActions({
@@ -57,7 +63,15 @@ const Graveyard = ({ player }: Props) => {
           }
         >
           <div className={styles.wrapper}>
-            <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id}>
+            <Dropzone
+              onDrop={onDrop}
+              acceptFromPlayerId={player.id}
+              accept={[
+                DndItemTypes.CARD,
+                DndItemTypes.LIST_CARD,
+                DndItemTypes.CARD_GROUP,
+              ]}
+            >
               <CardStack
                 cards={cards}
                 emptyImage={<GraveyardImage />}
