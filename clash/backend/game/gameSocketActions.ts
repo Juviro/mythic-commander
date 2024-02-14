@@ -64,6 +64,10 @@ const gameSocketActions = (io: Server) => {
       currentGames[currentGameId].restartGame(user.id);
     });
 
+    socket.on(SOCKET_MSG_GAME.RESIGN_GAME, () => {
+      currentGames[currentGameId].resign(user.id);
+    });
+
     socket.on(SOCKET_MSG_GAME.ACCEPT_HAND, (payload: AcceptHandPayload) => {
       currentGames[currentGameId].acceptHand(user.id, payload);
     });

@@ -32,10 +32,17 @@
   background-color: var(--player-color);
 }
 
-.card:hover  {
+.card:not(.card__resigned):hover  {
   z-index: 3;
 }
 
+.card__resigned {
+  filter: grayscale(1);
+}
+
+.card__resigned .commander_casted{
+  display: none;
+}
 
 /* Overlay */
 
@@ -61,12 +68,13 @@
   z-index: 1;
 }
 
+
 .commander_casted:last-child {
   opacity: 1;
   height: 100%;
 }
 
-.card:hover .commander_casted {
+.card:not(.card__resigned):hover .commander_casted {
   opacity: 1;
 }
 

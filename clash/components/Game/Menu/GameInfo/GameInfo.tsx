@@ -1,30 +1,24 @@
 import React, { useContext } from 'react';
+import { Dropdown } from 'antd';
+import { MenuOutlined } from '@ant-design/icons';
 
 import GameStateContext from 'components/Game/GameStateContext';
-import useGameActions from 'components/Game/useGameActions';
-import { Button } from 'antd';
+import useGameInfoActions from './useGameInfoActions';
+
 import styles from './GameInfo.module.css';
 
 const GameInfo = () => {
-  const { gameState, player } = useContext(GameStateContext);
-  const { restartGame } = useGameActions();
+  const { gameState } = useContext(GameStateContext);
 
-  const canRestartGame = player?.id === gameState!.hostId;
-
-  const onRestartGame = () => {
-    // eslint-disable-next-line no-restricted-globals, no-alert
-    const shouldRestart = confirm('Are you sure you want to restart the game?');
-    if (!shouldRestart) return;
-    restartGame();
-  };
+  const { items } = useGameInfoActions();
 
   return (
     <div className={styles.wrapper}>
       <div>{`Turn ${gameState?.turn}`}</div>
-      {canRestartGame && (
-        <Button ghost onClick={onRestartGame}>
-          Restart Game
-        </Button>
+      {Boolean(items.length) && (
+        <Dropdown menu={{ items }} trigger={['click']}>
+          <MenuOutlined className={styles.menu_icon} />
+        </Dropdown>
       )}
     </div>
   );

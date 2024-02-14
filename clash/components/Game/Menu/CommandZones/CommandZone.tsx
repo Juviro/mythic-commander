@@ -40,12 +40,17 @@ const CommandZone = ({ player, isSelf }: Props) => {
               ({ clashId }) => commander.clashId === clashId
             );
             return (
-              <div key={commander.clashId} className={styles.card}>
+              <div
+                key={commander.clashId}
+                className={classNames(styles.card, {
+                  [styles.card__resigned]: player.resigned,
+                })}
+              >
                 <CommanderCasted commander={commander} isSelf={isSelf} />
                 {card && (
                   <Card
                     card={card}
-                    draggable={isSelf}
+                    draggable={isSelf && !player.resigned}
                     dynamicSize
                     zone={ZONES.COMMAND_ZONE}
                   />

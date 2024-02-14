@@ -20,7 +20,7 @@
 }
 
 :global(.flipped) .wrapper {
-  transform: translateY(-20cqh) rotate(180deg);
+  transform: rotate(180deg);
 }
 
 

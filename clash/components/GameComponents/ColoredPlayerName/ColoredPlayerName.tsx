@@ -28,6 +28,7 @@ const ColoredPlayerName = ({ id, addGenetiveSuffix, name: providedName }: Props)
 
   const style: CSSProperties = {
     color: getColorVariable(id!),
+    whiteSpace: 'nowrap',
   };
 
   return <b style={style}>{getName()}</b>;

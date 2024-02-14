@@ -15,13 +15,21 @@ const LifeTotals = () => {
     <div className={styles.wrapper}>
       {gameState?.players.map((player) => (
         <div key={player.id} className={styles.player}>
-          <div className={styles.life}>
-            <span>{player.life}</span>
-          </div>
-          <div className={styles.buttons}>
-            <MinusOutlined onClick={() => setPlayerLife(player.id, player.life - 1)} />
-            <PlusOutlined onClick={() => setPlayerLife(player.id, player.life + 1)} />
-          </div>
+          {player.resigned ? (
+            <div className={styles.defeated}>Defeated</div>
+          ) : (
+            <>
+              <div className={styles.life}>
+                <span>{player.life}</span>
+              </div>
+              <div className={styles.buttons}>
+                <MinusOutlined
+                  onClick={() => setPlayerLife(player.id, player.life - 1)}
+                />
+                <PlusOutlined onClick={() => setPlayerLife(player.id, player.life + 1)} />
+              </div>
+            </>
+          )}
         </div>
       ))}
     </div>

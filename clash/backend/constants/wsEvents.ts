@@ -21,6 +21,7 @@ export const SOCKET_MSG_LOBBY = {
 export const SOCKET_MSG_GAME = {
   INITIALIZE: 'initialize_game',
   RESTART_GAME: 'restart_game',
+  RESIGN_GAME: 'resign_game',
   GAME_STATE: 'game_state',
   UPDATE_PLAYER: 'update_player',
   GAME_LOG: 'game_log',

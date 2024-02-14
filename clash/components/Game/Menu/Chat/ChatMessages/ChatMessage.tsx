@@ -18,6 +18,7 @@ import MessageDiscardRandomCard from './Message/MessageDiscardRandomCard';
 import MessageMill from './Message/MessageMill';
 import MessageTakeMulligan from './Message/MessageTakeMulligan';
 import MessageAcceptHand from './Message/MessageAcceptHand';
+import MessagePlayerDefeated from './Message/MessagePlayerDefeated';
 
 interface Props {
   message: GameLog;
@@ -26,6 +27,9 @@ interface Props {
 const ChatMessage = ({ message }: Props) => {
   const { logKey, payload, playerId } = message;
 
+  if (logKey === 'PLAYER_DEFEATED') {
+    return <MessagePlayerDefeated playerId={playerId} />;
+  }
   if (logKey === 'ACCEPT_HAND') {
     return <MessageAcceptHand playerId={playerId} payload={payload} />;
   }

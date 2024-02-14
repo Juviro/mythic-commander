@@ -23,6 +23,12 @@
   gap: 4px;
 }
 
+.message__important {
+  font-weight: bold;
+  font-size: 24px;
+  color: var(--color-red);
+}
+
 .message :global(.anticon) {
   margin-right: 4px;
 }

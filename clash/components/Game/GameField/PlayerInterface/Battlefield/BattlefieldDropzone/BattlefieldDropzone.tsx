@@ -31,6 +31,7 @@ const BattlefieldDropzone = ({ children, player, wrapperRef, isFlipped }: Props)
     <Dropzone
       onDrop={onDrop}
       playerId={player.id}
+      disabled={player.resigned}
       accept={[DndItemTypes.CARD, DndItemTypes.LIST_CARD, DndItemTypes.CARD_GROUP]}
     >
       {children}

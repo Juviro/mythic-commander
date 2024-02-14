@@ -29,8 +29,8 @@ const PlayerName = ({ player }: Props) => {
       })}
       style={{ '--player-color': getColorVariable(player.id) } as CSSProperties}
     >
-      {displayPawIcon && pawIcon}
       {player.name}
+      {displayPawIcon && pawIcon}
     </div>
   );
 };

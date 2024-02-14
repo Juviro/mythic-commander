@@ -16,6 +16,16 @@
   width: 100%;
   margin: -24px 0;
   user-select: none;
+  align-items: center;
+}
+
+.defeated {
+  color: var(--color-red);
+  padding: 4px;
+  border-radius: 4px;
+  border: 1px solid var(--color-red);
+  transform: rotate(-15deg);
+  height: fit-content;
 }
 
 .life {

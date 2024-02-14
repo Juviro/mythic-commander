@@ -146,6 +146,10 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.RESTART_GAME);
   };
 
+  const resignGame = () => {
+    socket?.emit(SOCKET_MSG_GAME.RESIGN_GAME);
+  };
+
   return {
     onAcceptHand,
     onTakeMulligan,
@@ -171,6 +175,7 @@ const useGameActions = () => {
     setPhase,
     endTurn,
     restartGame,
+    resignGame,
   };
 };
 

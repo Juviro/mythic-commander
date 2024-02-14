@@ -1,35 +1,48 @@
 import React, { useContext, useEffect, useState } from 'react';
+import classNames from 'classnames';
 
-import { Player } from 'backend/database/gamestate.types';
-import styles from './ScreenMessage.module.css';
 import GameStateContext from '../GameStateContext';
+
+import styles from './ScreenMessage.module.css';
 
 const ScreenMessage = () => {
   const { gameState } = useContext(GameStateContext);
-  const [activePlayer, setActivePlayer] = useState<Player | null>(null);
+  const [message, setMessage] = useState('');
 
   const hasGameStarted = gameState?.players.every(
     (player) => player.mulligan.cardsAccepted
   );
 
   useEffect(() => {
-    if (!gameState) return;
-    if (!hasGameStarted) return;
+    if (!gameState || !hasGameStarted || gameState?.winner) return;
 
-    const newActivePlayer = gameState.players.find(
+    const activePlayer = gameState.players.find(
       (player) => player.id === gameState.activePlayerId
-    );
+    )!;
 
-    setActivePlayer(newActivePlayer!);
+    setMessage(`It's ${activePlayer.name}'s Turn`);
   }, [gameState?.activePlayerId, hasGameStarted]);
 
-  if (!activePlayer) return null;
+  useEffect(() => {
+    if (!gameState?.winner) {
+      setMessage('');
+      return;
+    }
 
-  const message = `It's ${activePlayer.name}'s Turn`;
+    setMessage(`${gameState.winner} won the Game!`);
+  }, [gameState?.winner]);
+
+  if (!message) return null;
 
   return (
-    <div className={styles.wrapper} key={activePlayer.id}>
-      <h1 className={styles.message}>{message}</h1>
+    <div className={styles.wrapper} key={message}>
+      <h1
+        className={classNames(styles.message, {
+          [styles.message__winner]: gameState?.winner,
+        })}
+      >
+        {message}
+      </h1>
     </div>
   );
 };

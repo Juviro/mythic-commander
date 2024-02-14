@@ -91,6 +91,7 @@ const initMatch = async (lobby: Lobby) => {
     activePlayerId: randomizedPlayers[0].id,
     gameLog: [],
     resources,
+    winner: null,
   };
 
   await storeGameState(lobby.id, initialGameState, lobby);

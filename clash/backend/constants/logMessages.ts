@@ -8,6 +8,7 @@ import {
 } from './wsEvents';
 
 export const LOG_MESSAGES = {
+  PLAYER_DEFEATED: 'PLAYER_DEFEATED',
   ACCEPT_HAND: 'ACCEPT_HAND',
   TAKE_MULLIGAN: 'TAKE_MULLIGAN',
   DRAW_CARD: 'DRAW_CARD',
@@ -104,6 +105,11 @@ interface LogMessageWithPlayer {
   playerId: string;
 }
 
+interface LogMessagePlayerDefeated extends LogMessageWithPlayer {
+  logKey: 'PLAYER_DEFEATED';
+  payload: Record<string, never>;
+}
+
 interface LogMessageAcceptHand extends LogMessageWithPlayer {
   logKey: 'ACCEPT_HAND';
   payload: LogPayloadAcceptHand;
@@ -182,6 +188,7 @@ interface LogMessageSetActivePlayer extends LogMessageWithPlayer {
 // ############################### Log ###############################
 
 export type LogMessage =
+  | LogMessagePlayerDefeated
   | LogMessageAcceptHand
   | LogMessageTakeMulligan
   | LogMessageDraw

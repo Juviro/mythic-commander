@@ -73,8 +73,8 @@ export default class Game {
   }
 
   emitGameUpdate() {
-    const { activePlayerId, phase, turn } = this.gameState;
-    this.emitToAll(SOCKET_MSG_GAME.GAME_STATE, { activePlayerId, phase, turn });
+    const { activePlayerId, phase, turn, winner } = this.gameState;
+    this.emitToAll(SOCKET_MSG_GAME.GAME_STATE, { activePlayerId, phase, turn, winner });
   }
 
   emitPlayerUpdate(player: Player) {
@@ -122,6 +122,67 @@ export default class Game {
       // might be undefined if player is not connected
       if (!user) return;
       this.emitGameState(user.socket, id);
+    });
+  }
+
+  resign(playerId: string) {
+    const player = this.getPlayerById(playerId);
+    player.resigned = true;
+
+    const playersToUpdate = new Set<string>([playerId]);
+
+    // clear own zones
+    ['battlefield', 'hand', 'library', 'graveyard', 'exile'].forEach((zoneKey) => {
+      const zone = player.zones[zoneKey as Zone];
+      // give back cards to the owner
+      (zone as BattlefieldCard[]).forEach((card) => {
+        if (card.ownerId === player.id || card.isToken) return;
+        const owner = this.getPlayerById(card.ownerId);
+        if (owner.resigned) return;
+        owner.zones[zoneKey as Zone].push(card as VisibleCard);
+        playersToUpdate.add(card.ownerId);
+      });
+      player.zones[zoneKey as Zone] = [];
+    });
+
+    player.zones.commandZone = player.commanders.map((commander) => ({
+      ...commander,
+      ownerId: player.id,
+    }));
+
+    // remove owned cards from other players' zones
+    ['battlefield', 'hand'].forEach((zoneKey) => {
+      this.gameState.players.forEach((otherPlayer) => {
+        if (otherPlayer.id === player.id) return;
+        const zone = otherPlayer.zones[zoneKey as Zone];
+        // @ts-ignore
+        otherPlayer.zones[zoneKey as Zone] = zone.filter((card) => {
+          if (card.ownerId !== player.id) return true;
+          if ((card as BattlefieldCard).isToken) return true;
+          playersToUpdate.add(otherPlayer.id);
+          return false;
+        });
+      });
+    });
+
+    const alivePlayers = this.gameState.players.filter((p) => !p.resigned);
+    const isGameOver = alivePlayers.length <= 1;
+    if (isGameOver) {
+      this.gameState.winner = alivePlayers[0]?.name;
+      this.emitGameUpdate();
+    } else if (player.id === this.gameState.activePlayerId) {
+      this.endTurn(playerId);
+    }
+
+    playersToUpdate.forEach((playerToUpdateId) => {
+      const playerToUpdate = this.getPlayerById(playerToUpdateId);
+      this.emitPlayerUpdate(playerToUpdate);
+    });
+
+    this.logAction({
+      playerId: player.id,
+      logKey: LOG_MESSAGES.PLAYER_DEFEATED,
+      payload: {},
     });
   }
 
@@ -794,15 +855,16 @@ export default class Game {
   endTurn(playerId: string) {
     const player = this.getPlayerById(playerId);
     const { players, activePlayerId } = this.gameState;
-    const activePlayerIndex = players.findIndex(({ id }) => id === activePlayerId);
+    const alivePlayers = players.filter((p) => !p.resigned);
+    const activePlayerIndex = alivePlayers.findIndex(({ id }) => id === activePlayerId);
 
-    const newActivePlayerIndex = (activePlayerIndex + 1) % players.length;
+    const newActivePlayerIndex = (activePlayerIndex + 1) % alivePlayers.length;
 
     if (newActivePlayerIndex === 0) {
       this.gameState.turn += 1;
     }
 
-    this.gameState.activePlayerId = players[newActivePlayerIndex].id;
+    this.gameState.activePlayerId = alivePlayers[newActivePlayerIndex].id;
     this.gameState.phase = 'beginning';
 
     this.emitGameUpdate();

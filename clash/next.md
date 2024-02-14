@@ -2,14 +2,9 @@
 
 # Bugs
 
+3p layout: "The Ur-Dragon Tax" is overflowing, tax buttons not fully visible
 
 # MVP
-
-* defeated player / ff
-  * remove all cards from all other players' zones
-  * move commander to command zone
-  * grey out commandzone, name
-  * write "Defeated" instead of life total
 
 * logs for new actions
   * create tokens

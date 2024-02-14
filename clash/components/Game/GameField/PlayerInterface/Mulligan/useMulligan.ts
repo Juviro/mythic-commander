@@ -21,7 +21,7 @@ const useMulligan = ({ player }: Props) => {
     setLoading(false);
     setToHand(cards);
     setToLibrary([]);
-  }, [player.mulligan.mulligansTaken]);
+  }, [cards]);
 
   const onMoveCard = (to: 'hand' | 'library') => (dropCard: DropCard, index: number) => {
     const card = cards.find((c) => c.clashId === dropCard.clashId)!;

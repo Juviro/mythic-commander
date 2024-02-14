@@ -107,6 +107,7 @@ export interface Player {
   life: number;
   additionalPlayerInfo?: AdditionalPlayerInfo;
   mulligan: Mulligan;
+  resigned?: boolean;
 }
 
 // ##################### Meta #####################
@@ -135,4 +136,5 @@ export interface GameState {
   activePlayerId: string;
   gameLog: GameLog[];
   resources?: Resources;
+  winner?: string | null;
 }
