@@ -1,5 +1,9 @@
 # Current feature
 
+* message in the center of the screen for
+  * active player changes
+  * animated (grow)
+
 # Bugs
 
 * selection card groups of opponents can be put into own graveyard & exile, both when dragging and from context menu
@@ -16,7 +20,6 @@
   * create tokens
   * copy card
   * add counters
-  * flip card
   * turn card face down/up
 
 
@@ -26,15 +29,15 @@
   * turn face-down (dfc-facedown)
 
 
-
 * flip coin, roll dice
   * chat commands? /coin, /dice 3d6
 
-* select all lands -> click "organize" -> all lands are neatly organized
 
 # Easter Eggs
 
 # Backog
+
+* select all lands -> click "organize" -> all lands are neatly organized
 
 * card selection: 
   * allow aligning selected cards, use top-left card for alignment
@@ -85,9 +88,6 @@
 
 * track commander + infect damage
 
-* message in the center of the screen for
-  * active player changes
-  * animated (grow)
 
 * long clicking life buttons adds in 10s
 
