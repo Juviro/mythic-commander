@@ -18,7 +18,9 @@ export default ({ cards, onAddCard }) => {
     <Select value="Add a set..." onChange={onAddCard} style={{ marginTop: 16 }}>
       {cards.map(({ id, set_name, set: setKey }) => (
         <Select.Option value={id} key={id}>
-          <StyledSetIcon src={sets[setKey].icon_svg_uri} alt={set_name} />
+          {sets[setKey]?.icon_svg_uri && (
+            <StyledSetIcon src={sets[setKey].icon_svg_uri} alt={set_name} />
+          )}
           {set_name}
         </Select.Option>
       ))}
