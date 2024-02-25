@@ -1,5 +1,8 @@
 # Current feature
 
+* flip coin, roll dice
+  * chat commands? /coin, /dice 3d6
+
 # Bugs
 
 
@@ -16,14 +19,20 @@
   * tap (tap)
   * flip (dfc-front, dfc-back)
   * turn face-down (dfc-facedown)
+  
 
-
-* flip coin, roll dice
-  * chat commands? /coin, /dice 3d6
 
 
 # Easter Eggs
 
+
+# TODO
+
+* sort backlog
+  * qol
+  * features
+  * visual improvements
+  
 # Backog
 
 * select all lands -> click "organize" -> all lands are neatly organized
@@ -34,10 +43,6 @@
 * onMoveCard should allow a list of cardIds
   * refactor wherever we forEach over cards to use this
 
-* sort backlog
-  * qol
-  * features
-  * visual improvements
 
 * inconsistent capitalization in context menus
 

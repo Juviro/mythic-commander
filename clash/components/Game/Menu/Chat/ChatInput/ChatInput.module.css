@@ -1,0 +1,23 @@
+.input {
+    width: 100%;
+}
+
+/* .input :global(.ant-select-selection-search) {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+}
+
+.input :global(.ant-select-selection-search-input) {
+    width: fit-content;
+}
+
+.input :global(.ant-select-selection-search):after {
+    content: "ll [amount] [sides]";
+    display: flex;
+    display: flex;
+    white-space: nowrap;
+    margin-left: -74px;
+    font-style: italic;
+    color: gray;
+} */

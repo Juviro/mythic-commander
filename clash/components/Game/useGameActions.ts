@@ -20,6 +20,7 @@ import {
   CopyCardPayload,
   AcceptHandPayload,
   TurnCardsFaceDownPayload,
+  ChatCommandPayload,
 } from 'backend/constants/wsEvents';
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
@@ -123,6 +124,10 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.SEND_CHAT_MESSAGE, message);
   };
 
+  const onExecuteCommand = (command: ChatCommandPayload) => {
+    socket?.emit(SOCKET_MSG_GAME.EXECUTE_COMMAND, command);
+  };
+
   const onSetCommanderTimesCasted = (commanderClashId: string, total: number) => {
     const payload: SetCommanderTimesCastedPayload = { commanderClashId, total };
     socket?.emit(SOCKET_MSG_GAME.SET_COMMANDER_TIMES_CASTED, payload);
@@ -170,6 +175,7 @@ const useGameActions = () => {
     onShuffle,
 
     onSendChatMessage,
+    onExecuteCommand,
     onSetCommanderTimesCasted,
     setPlayerLife,
     setPhase,
