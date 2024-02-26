@@ -26,6 +26,7 @@ export const SOCKET_MSG_GAME = {
   UPDATE_PLAYER: 'update_player',
   GAME_LOG: 'game_log',
   SEND_CHAT_MESSAGE: 'send_chat_message',
+  EXECUTE_COMMAND: 'execute_command',
   SET_PHASE: 'set_phase',
   END_TURN: 'end_turn',
   ACCEPT_HAND: 'ACCEPT_HAND',
@@ -143,6 +144,18 @@ export interface SearchLibraryPayload {
 export interface SendMessagePayload {
   message: string;
 }
+
+interface RollDiceCommand {
+  command: 'roll';
+  args: { sides: number; numberOfDice: number };
+}
+
+interface FlipCoinCommand {
+  command: 'flip';
+  args: { numberOfCoins: number };
+}
+
+export type ChatCommandPayload = RollDiceCommand | FlipCoinCommand;
 
 export interface SetCommanderTimesCastedPayload {
   commanderClashId: string;

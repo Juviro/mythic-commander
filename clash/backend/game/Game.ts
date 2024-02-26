@@ -13,6 +13,7 @@ import {
 import {
   AcceptHandPayload,
   AddCountersPayload,
+  ChatCommandPayload,
   CopyCardPayload,
   CreateTokenPayload,
   DiscardRandomCardPayload,
@@ -23,6 +24,7 @@ import {
   MoveCardsGroupPayload,
   PeekPayload,
   SOCKET_MSG_GAME,
+  SOCKET_MSG_GENERAL,
   SearchLibraryPayload,
   SendMessagePayload,
   SetCommanderTimesCastedPayload,
@@ -796,6 +798,55 @@ export default class Game {
       logKey: LOG_MESSAGES.CHAT_MESSAGE,
       payload: { message: message.slice(0, 1000) },
     });
+  }
+
+  executeCommand(playerId: string, { args, command }: ChatCommandPayload) {
+    const player = this.getPlayerById(playerId);
+
+    const getRandomValue = (min: number, max: number) => {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+
+    if (command === 'flip') {
+      const numberOfCoins = Math.min(Math.max(args.numberOfCoins, 1), 100);
+      const results = Array.from({ length: numberOfCoins }, () => getRandomValue(0, 1));
+      const numberOfWonFlips = results.filter((result) => result === 1).length;
+
+      this.logAction({
+        playerId: player.id,
+        logKey: LOG_MESSAGES.EXECUTE_COMMAND,
+        payload: {
+          command,
+          numberOfCoins,
+          numberOfWonFlips,
+        },
+      });
+      return;
+    }
+
+    if (command === 'roll') {
+      const sides = Math.min(Math.max(args.sides, 2), 20);
+      const numberOfDice = Math.min(Math.max(args.numberOfDice, 1), 20);
+
+      const results = Array.from({ length: numberOfDice }, () =>
+        getRandomValue(1, sides)
+      );
+      this.logAction({
+        playerId: player.id,
+        logKey: LOG_MESSAGES.EXECUTE_COMMAND,
+        payload: {
+          command,
+          sides,
+          numberOfDice,
+          results,
+        },
+      });
+      return;
+    }
+
+    const socket = this.users[playerId]?.socket;
+
+    socket?.emit(SOCKET_MSG_GENERAL.ERROR, `Invalid command: ${command}`);
   }
 
   setCommanderTimesCasted(playerId: string, payload: SetCommanderTimesCastedPayload) {

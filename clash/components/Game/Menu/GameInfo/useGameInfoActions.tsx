@@ -7,7 +7,8 @@ const useGameInfoActions = () => {
   const { gameState, player: self } = useContext(GameStateContext);
   const { restartGame, resignGame } = useGameActions();
 
-  const canResignGame = !self?.resigned && !gameState?.winner;
+  const canResignGame =
+    !self?.resigned && !gameState?.winner && gameState!.players.length > 1;
   const canRestartGame = self?.id === gameState!.hostId;
 
   const onRestartGame = () => {
