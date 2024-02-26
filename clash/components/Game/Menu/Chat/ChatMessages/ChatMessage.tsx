@@ -19,6 +19,7 @@ import MessageMill from './Message/MessageMill';
 import MessageTakeMulligan from './Message/MessageTakeMulligan';
 import MessageAcceptHand from './Message/MessageAcceptHand';
 import MessagePlayerDefeated from './Message/MessagePlayerDefeated';
+import MessageExecuteCommand from './Message/MessageExecuteCommand';
 
 interface Props {
   message: GameLog;
@@ -63,6 +64,9 @@ const ChatMessage = ({ message }: Props) => {
 
   if (logKey === 'CHAT_MESSAGE') {
     return <MessageChat playerId={playerId} message={payload.message} />;
+  }
+  if (logKey === 'EXECUTE_COMMAND') {
+    return <MessageExecuteCommand playerId={playerId} payload={payload} />;
   }
   if (logKey === 'SET_COMMANDER_TIMES_CASTED') {
     return <MessageSetCommanderTimesCasted playerId={playerId} payload={payload} />;

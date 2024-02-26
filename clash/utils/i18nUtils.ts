@@ -5,6 +5,23 @@ export const pluralizeCards = (count: number, prefixOne = '') => {
   return count === 1 ? 'card' : ` ${count} cards`;
 };
 
+export const pluralize = (
+  count: number,
+  {
+    singular,
+    plural,
+  }: {
+    singular: string;
+    plural: string;
+  },
+  prefixOne = 'one'
+) => {
+  if (prefixOne) {
+    return count === 1 ? `${prefixOne} ${singular}` : ` ${count} ${plural}`;
+  }
+  return count === 1 ? singular : ` ${count} ${plural}`;
+};
+
 export const getCardinalNumberLabel = (number: number, long?: boolean): string => {
   switch (number) {
     case 1:

@@ -1,8 +1,5 @@
 # Current feature
 
-* flip coin, roll dice
-  * chat commands? /coin, /dice 3d6
-
 # Bugs
 
 

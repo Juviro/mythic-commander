@@ -9,16 +9,16 @@ const COMMANDS: Command[] = [
     label: '/roll',
     args: [
       {
-        label: 'sides',
-        key: 'sides',
-        type: 'number',
-        default: '6',
-      },
-      {
         label: 'number of dice',
         key: 'numberOfDice',
         type: 'number',
         default: '1',
+      },
+      {
+        label: 'sides',
+        key: 'sides',
+        type: 'number',
+        default: '6',
       },
     ],
     description: ({ numberOfDice, sides }) => {
@@ -28,7 +28,18 @@ const COMMANDS: Command[] = [
   },
   {
     label: '/flip',
-    description: () => 'Flip a coin',
+    args: [
+      {
+        label: 'number of coins',
+        key: 'numberOfCoins',
+        type: 'number',
+        default: '1',
+      },
+    ],
+    description: ({ numberOfCoins }) => {
+      if (!numberOfCoins) return 'Flip a coin';
+      return `Flip ${numberOfCoins || 1} coins`;
+    },
   },
 ];
 
@@ -49,7 +60,7 @@ const useChatInputCommands = () => {
     const passedArgs = getArguments(typedArgs, commandObject.args || []);
 
     const newError = commandObject.args?.reduce((acc, arg) => {
-      if (!arg.type) return acc;
+      if (!arg.type || !passedArgs[arg.key]) return acc;
       if (arg.type === 'number' && Number.isNaN(Number(passedArgs[arg.key]))) {
         return `"${arg.label}" must be a number`;
       }
@@ -61,7 +72,10 @@ const useChatInputCommands = () => {
       return;
     }
 
-    onExecuteCommand({ command, args: passedArgs } as unknown as ChatCommandPayload);
+    onExecuteCommand({
+      command: command.replace('/', ''),
+      args: passedArgs,
+    } as unknown as ChatCommandPayload);
 
     setInputValue('');
   };
@@ -97,15 +111,15 @@ const useChatInputCommands = () => {
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      return;
+    }
     if (options.length) {
       return;
     }
     if (e.key === 'ArrowUp' && !inputValue) {
       setInputValue('/');
-      return;
-    }
-    if (e.key === 'Tab') {
-      e.preventDefault();
       return;
     }
 

@@ -152,7 +152,7 @@ interface RollDiceCommand {
 
 interface FlipCoinCommand {
   command: 'flip';
-  args: Record<string, never>;
+  args: { numberOfCoins: number };
 }
 
 export type ChatCommandPayload = RollDiceCommand | FlipCoinCommand;

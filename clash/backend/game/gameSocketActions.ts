@@ -4,6 +4,7 @@ import { getGameState } from 'backend/database/matchStore';
 import {
   AcceptHandPayload,
   AddCountersPayload,
+  ChatCommandPayload,
   CopyCardPayload,
   CreateTokenPayload,
   DiscardRandomCardPayload,
@@ -141,6 +142,10 @@ const gameSocketActions = (io: Server) => {
 
     socket.on(SOCKET_MSG_GAME.SEND_CHAT_MESSAGE, (message: SendMessagePayload) => {
       currentGames[currentGameId].sendChatMessage(user.id, message);
+    });
+
+    socket.on(SOCKET_MSG_GAME.EXECUTE_COMMAND, (message: ChatCommandPayload) => {
+      currentGames[currentGameId].executeCommand(user.id, message);
     });
 
     socket.on(

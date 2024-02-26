@@ -21,6 +21,7 @@ export const LOG_MESSAGES = {
   SHUFFLE_LIBRARY: 'SHUFFLE_LIBRARY',
 
   CHAT_MESSAGE: 'CHAT_MESSAGE',
+  EXECUTE_COMMAND: 'EXECUTE_COMMAND',
   SET_COMMANDER_TIMES_CASTED: 'SET_COMMANDER_TIMES_CASTED',
   SET_LIFE: 'SET_LIFE',
   SET_PHASE: 'SET_PHASE',
@@ -99,6 +100,21 @@ export type LogPayloadSetActivePlayer = {
   activePlayerId: string;
 };
 
+interface RollDiceLogPayload {
+  command: 'roll';
+  sides: number;
+  numberOfDice: number;
+  results: number[];
+}
+
+interface FlipCoinLogPayload {
+  command: 'flip';
+  numberOfCoins: number;
+  numberOfWonFlips: number;
+}
+
+export type LogPayloadExecuteCommand = RollDiceLogPayload | FlipCoinLogPayload;
+
 // ############################### Messages ###############################
 
 interface LogMessageWithPlayer {
@@ -165,6 +181,11 @@ interface LogMessageChat extends LogMessageWithPlayer {
   payload: SendMessagePayload;
 }
 
+interface LogExecuteCommand extends LogMessageWithPlayer {
+  logKey: 'EXECUTE_COMMAND';
+  payload: LogPayloadExecuteCommand;
+}
+
 interface LogMessageSetCommanderTimesCasted extends LogMessageWithPlayer {
   logKey: 'SET_COMMANDER_TIMES_CASTED';
   payload: LogPayloadSetCommanderTimesCasted;
@@ -200,6 +221,7 @@ export type LogMessage =
   | LogSearchLibrary
   | LogShuffleLibrary
   | LogMessageChat
+  | LogExecuteCommand
   | LogMessageSetPlayerLife
   | LogMessageSetCommanderTimesCasted
   | LogMessageSetPhase
