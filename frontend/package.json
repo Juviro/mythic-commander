@@ -15,7 +15,7 @@
     "apollo-link-http": "^1.5.16",
     "apollo-link-retry": "^2.2.15",
     "customize-cra": "^1.0.0",
-    "graphql": "^16.5.0",
+    "graphql": "^16.8.1",
     "graphql-tag": "^2.10.1",
     "history": "^4.10.1",
     "js-cookie": "^3.0.1",
