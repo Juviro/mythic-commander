@@ -4,9 +4,10 @@ import { Dropdown, DropdownProps, MenuProps } from 'antd';
 interface Props extends PropsWithChildren {
   items: MenuProps['items'] | null;
   placement?: DropdownProps['placement'];
+  open?: boolean;
 }
 
-const ContextMenu = ({ children, items, placement = 'top' }: Props) => {
+const ContextMenu = ({ children, items, placement = 'top', open }: Props) => {
   // eslint-disable-next-line react/jsx-no-useless-fragment
   if (!items?.length) return <>{children}</>;
 
@@ -16,6 +17,7 @@ const ContextMenu = ({ children, items, placement = 'top' }: Props) => {
       menu={{ items }}
       placement={placement}
       destroyPopupOnHide
+      open={open}
     >
       {children}
     </Dropdown>

@@ -1,3 +1,4 @@
+import { ArrowRightOutlined } from '@ant-design/icons';
 import { MenuProps } from 'antd';
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
@@ -27,6 +28,7 @@ const useExileActions = ({ cardIds, player }: Props) => {
       label: 'Move all cards to...',
       disabled: !cardIds.length,
       children: moveCardActions,
+      icon: <ArrowRightOutlined />,
     },
   ];
 

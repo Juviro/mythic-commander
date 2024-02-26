@@ -1,12 +1,8 @@
-import ExileIcon from 'public/assets/icons/exile.svg';
-import LibraryIcon from 'public/assets/icons/library.svg';
-import GraveyardIcon from 'public/assets/icons/graveyard.svg';
-import HandIcon from 'public/assets/icons/hand.svg';
-import BattlefieldIcon from 'public/assets/icons/phase_combat.svg';
-import ContextMenuIcon from 'components/GameComponents/ContextMenu/ContextMenuIcon';
+import { Input } from 'antd';
+
 import { Player, ZONES, Zone } from 'backend/database/gamestate.types';
 import useGameActions from 'components/Game/useGameActions';
-import { Input } from 'antd';
+import MtgIcon from 'components/GameComponents/ClashIcon/ClashIcon';
 
 const getCustomLibraryPositionItem = (
   onMoveToLibrary: (index: number) => () => void,
@@ -74,77 +70,49 @@ const useMoveCardActions = ({ zone, cardIds, player }: Props) => {
   const moveCardActions = [
     {
       key: 'battlefield',
-      icon: (
-        <ContextMenuIcon>
-          <BattlefieldIcon />
-        </ContextMenuIcon>
-      ),
+      icon: <MtgIcon id="phase_combat" size={16} />,
       label: 'Battlefield',
       hidden: zone === ZONES.BATTLEFIELD,
       onClick: onMoveToBattlefield(false),
     },
     {
       key: 'battlefield-face-down',
-      icon: (
-        <ContextMenuIcon>
-          <BattlefieldIcon />
-        </ContextMenuIcon>
-      ),
+      icon: <MtgIcon id="phase_combat" size={16} />,
       label: 'Battlefield (Face Down)',
       hidden: zone === ZONES.BATTLEFIELD,
       onClick: onMoveToBattlefield(true),
     },
     {
       key: 'hand',
-      icon: (
-        <ContextMenuIcon>
-          <HandIcon />
-        </ContextMenuIcon>
-      ),
+      icon: <MtgIcon id="hand" size={16} />,
       label: 'Hand',
       hidden: zone === ZONES.HAND,
       onClick: onMoveToZone(ZONES.HAND),
     },
     {
       key: 'graveyard',
-      icon: (
-        <ContextMenuIcon>
-          <GraveyardIcon />
-        </ContextMenuIcon>
-      ),
+      icon: <MtgIcon id="graveyard" size={16} />,
       label: 'Graveyard',
       hidden: zone === ZONES.GRAVEYARD,
       onClick: onMoveToZone(ZONES.GRAVEYARD),
     },
     {
       key: 'library-top',
-      icon: (
-        <ContextMenuIcon>
-          <LibraryIcon />
-        </ContextMenuIcon>
-      ),
+      icon: <MtgIcon id="library" size={16} />,
       label: 'Top of Library',
       hidden: zone === ZONES.LIBRARY,
       onClick: onMoveToLibrary(player!.zones.library.length || 0),
     },
     {
       key: 'library-bottom',
-      icon: (
-        <ContextMenuIcon>
-          <LibraryIcon />
-        </ContextMenuIcon>
-      ),
+      icon: <MtgIcon id="library" size={16} />,
       label: 'Bottom of Library',
       hidden: zone === ZONES.LIBRARY,
       onClick: onMoveToLibrary(0),
     },
     {
       key: 'library-nth',
-      icon: (
-        <ContextMenuIcon>
-          <LibraryIcon />
-        </ContextMenuIcon>
-      ),
+      icon: <MtgIcon id="library" size={16} />,
       label: 'Nth position of Library',
       hidden: zone === ZONES.LIBRARY,
       children: getCustomLibraryPositionItem(
@@ -154,11 +122,7 @@ const useMoveCardActions = ({ zone, cardIds, player }: Props) => {
     },
     {
       key: 'exile',
-      icon: (
-        <ContextMenuIcon>
-          <ExileIcon />
-        </ContextMenuIcon>
-      ),
+      icon: <MtgIcon id="exile" size={16} />,
       label: 'Exile',
       hidden: zone === ZONES.EXILE,
       onClick: onMoveToZone(ZONES.EXILE),

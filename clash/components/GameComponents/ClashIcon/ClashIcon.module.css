@@ -1,0 +1,14 @@
+.icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+}
+
+:global(.ant-dropdown-menu-item) .icon {
+    margin-right: 8px;
+}
+
+:global(.ant-dropdown-menu-submenu-title):has( .icon) {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+}

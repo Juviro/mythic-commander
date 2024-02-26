@@ -5,6 +5,8 @@ import { Zone } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
 import useGameActions from 'components/Game/useGameActions';
 
+import { ArrowRightOutlined } from '@ant-design/icons';
+import ClashIcon from 'components/GameComponents/ClashIcon/ClashIcon';
 import useMoveCardActions from './useMoveCardActions';
 
 interface Props {
@@ -51,7 +53,7 @@ const useCardActions = ({
   const contextMenuItems = [
     {
       key: 'title',
-      label: contextMenuTitle || `${cardIds.length} cards selected`,
+      label: <b>{contextMenuTitle || `${cardIds.length} cards selected`}</b>,
       hidden: hideTitle,
       style: {
         backgroundColor: 'white',
@@ -67,12 +69,14 @@ const useCardActions = ({
       label: 'Tap [T]',
       hidden: !battlefieldPlayerId,
       onClick: tapCards,
+      icon: <ClashIcon id="tap" size={16} />,
     },
     {
       key: 'flip',
       label: 'Flip [F]',
       hidden: !battlefieldPlayerId,
       onClick: flipCards,
+      icon: <ClashIcon id="dfc-modal-back" size={16} />,
     },
     {
       type: 'divider' as const,
@@ -82,6 +86,7 @@ const useCardActions = ({
       key: 'move',
       label: `Move ${cardIds.length === 1 ? 'card' : 'all cards'} to...`,
       children: moveCardActions,
+      icon: <ArrowRightOutlined />,
     },
   ];
 

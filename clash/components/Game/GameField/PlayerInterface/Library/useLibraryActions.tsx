@@ -1,13 +1,16 @@
+import { useContext } from 'react';
 import { Input, MenuProps } from 'antd';
+import { ArrowRightOutlined, EyeOutlined, SearchOutlined } from '@ant-design/icons';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
+
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
 import useGameActions from 'components/Game/useGameActions';
 import useMoveCardActions from 'components/GameComponents/Card/cardActions/useMoveCardActions';
 import SHORTCUTS from 'constants/shortcuts';
 import useShortcut from 'hooks/useShortcut';
-import { useContext } from 'react';
 import { pluralizeCards } from 'utils/i18nUtils';
+import MtgIcon from 'components/GameComponents/ClashIcon/ClashIcon';
 
 export const getPeekSubItems = (
   onClick: (amount: number) => void,
@@ -84,6 +87,7 @@ const useLibraryActions = (player: Player) => {
       label: 'Search Library... [Shift + S]',
       disabled: !player.zones.library.length,
       onClick: () => onSearchLibrary(player.id),
+      icon: <SearchOutlined />,
     },
     {
       key: 'peek',
@@ -95,6 +99,7 @@ const useLibraryActions = (player: Player) => {
         undefined,
         player.zones.library.length
       ),
+      icon: <EyeOutlined />,
     },
   ];
 
@@ -105,12 +110,14 @@ const useLibraryActions = (player: Player) => {
         label: 'Draw Card [D]',
         disabled: !player.zones.library.length,
         onClick: onDrawCard,
+        icon: <MtgIcon id="draw" size={16} />,
       },
       {
         key: 'shuffle',
         label: 'Shuffle [S]',
         disabled: !player.zones.library.length,
         onClick: onShuffle,
+        icon: <MtgIcon id="shuffle" size={16} />,
       },
     ];
     items.unshift(...primaryActions);
@@ -126,12 +133,14 @@ const useLibraryActions = (player: Player) => {
           undefined,
           player.zones.library.length
         ),
+        icon: <MtgIcon id="graveyard" size={16} />,
       },
       {
         key: 'move',
         label: 'Move all cards to...',
         disabled: !player.zones.library.length,
         children: moveCardActions,
+        icon: <ArrowRightOutlined />,
       },
     ];
     items.push(...secondaryActions);

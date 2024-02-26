@@ -5,6 +5,8 @@ import { BattlefieldCard, Player } from 'backend/database/gamestate.types';
 import useGameActions from 'components/Game/useGameActions';
 import { ALL_COUNTERS, DEFAULT_COUNTERS } from 'constants/counters';
 import SubmittableSelect from 'components/GameComponents/ContextMenu/SubmittableSelect';
+import ClashIcon from 'components/GameComponents/ClashIcon/ClashIcon';
+import { SwapOutlined } from '@ant-design/icons';
 import { getPeekSubItems } from '../../Library/useLibraryActions';
 
 interface Props {
@@ -72,6 +74,7 @@ const useBattlefieldOnlyCardActions = ({ card, player }: Props) => {
       key: 'add-counter',
       label: 'Add counter...',
       children: addCounterOptions,
+      icon: <ClashIcon id="counter-shield" size={16} />,
     },
   ];
 
@@ -80,6 +83,7 @@ const useBattlefieldOnlyCardActions = ({ card, player }: Props) => {
       key: 'turn-face-down',
       label: card.faceDown ? 'Turn Face Up' : 'Turn Face Down',
       onClick: turnFaceDown,
+      icon: <SwapOutlined />,
     });
   }
   if (!card.faceDown) {
@@ -87,6 +91,7 @@ const useBattlefieldOnlyCardActions = ({ card, player }: Props) => {
       key: 'create-copy',
       label: 'Create Copy...',
       children: createCopiesSubItems,
+      icon: <ClashIcon id="ability-transform" size={16} />,
     });
   }
 

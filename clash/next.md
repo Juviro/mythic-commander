@@ -1,5 +1,6 @@
 # Current feature
 
+
 # Bugs
 
 
@@ -12,12 +13,8 @@
   * turn card face down/up
 
 
-* icons for card actions:
-  * tap (tap)
-  * flip (dfc-front, dfc-back)
-  * turn face-down (dfc-facedown)
-  
-
+* allow peeking face down cards
+* allow playing top card of library face down without looking at it
 
 
 # Easter Eggs
@@ -85,7 +82,7 @@
 
 * long clicking life buttons adds in 10s
 
-
+* allow deleting games from history?
 
 
 * stack ?

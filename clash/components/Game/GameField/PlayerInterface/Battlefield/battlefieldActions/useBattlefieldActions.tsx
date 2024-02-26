@@ -4,6 +4,8 @@ import { BattlefieldCard, Player, ZONES } from 'backend/database/gamestate.types
 import useMoveCardActions from 'components/GameComponents/Card/cardActions/useMoveCardActions';
 import { RefObject } from 'react';
 import useGameActions from 'components/Game/useGameActions';
+import { ArrowRightOutlined, CopyOutlined } from '@ant-design/icons';
+import ClashIcon from 'components/GameComponents/ClashIcon/ClashIcon';
 import useCreateTokenActions from './useCreateTokenActions';
 
 interface Props {
@@ -36,17 +38,20 @@ const useBattlefieldActions = ({ cards, player, battlefieldRef }: Props) => {
       key: 'untap-all',
       label: 'Untap board [U]',
       onClick: onUntapBoard,
+      icon: <ClashIcon id="untap" size={16} />,
     },
     {
       key: 'move-to',
       label: 'Move all cards to...',
       disabled: !cardIds.length,
       children: moveCardActions,
+      icon: <ArrowRightOutlined />,
     },
     {
       key: 'create-token',
       label: 'Create token',
       children: createTokenActions,
+      icon: <CopyOutlined />,
     },
   ];
 
