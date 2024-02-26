@@ -55,7 +55,7 @@ const Graveyard = ({ player }: Props) => {
           open={cards.length ? undefined : false}
           content={
             <StackedCardList
-              cards={cards}
+              cards={graveyard}
               draggable
               color={getPlayerColor(player.id)}
               zone={ZONES.GRAVEYARD}

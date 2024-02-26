@@ -51,18 +51,30 @@ const useHandHover = ({ hand, wrapperRef, player }: Props) => {
     const left = spacingElements?.[0]?.getBoundingClientRect().left ?? 0;
     const right =
       spacingElements?.[spacingElements.length - 1]?.getBoundingClientRect().right ?? 0;
-    return { left, right };
+    const top = spacingElements?.[0].getBoundingClientRect().top ?? 0;
+
+    return { left, right, top: top - 10 };
   };
 
   const onMouseMove = (event: MouseEvent<HTMLDivElement>) => {
     const numberOfSegments = canDrop ? hand.length + 1 : hand.length;
 
-    const { left, right } = getCardBounds();
+    const { left, right, top } = getCardBounds();
 
     const wrapperWidth = right - left;
 
     const x = event.clientX - left;
+
+    if (top > event.clientY && highlightedCardIndex === -1) {
+      return;
+    }
+
     const currentSegment = Math.floor((x / wrapperWidth) * numberOfSegments);
+
+    if (currentSegment > hand.length) {
+      setHighlightedCardIndex(-1);
+      return;
+    }
 
     setHighlightedCardIndex(currentSegment);
   };

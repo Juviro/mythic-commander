@@ -26,6 +26,7 @@
   * qol
   * features
   * visual improvements
+* prioritize
   
 # Backog
 
@@ -41,6 +42,21 @@
 * inconsistent capitalization in context menus
 
 * move exile over / under graveyard (each at 50% height) so there is more space for the hand
+
+
+* double click card: select all cards with same id?
+* shortcut to tap all lands?
+
+* allow declaring attackers
+  * maybe with arrows pointing to player/planeswalker
+  * allow declaring blockers?
+
+* add option to auto untap permanents and draw a card when it's your turn
+  * each activatable separately
+
+* add some way to "reveal until you reveal X", e.g. a creature
+* shortcut for copying permanent
+* allow selecting single card
 
 
 * allow joining lobby via url (e.g. http://localhost:1235/#4fqufdulls6ckz15)

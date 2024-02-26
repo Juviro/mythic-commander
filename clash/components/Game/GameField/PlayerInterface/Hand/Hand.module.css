@@ -34,16 +34,15 @@
   aspect-ratio: var(--card-aspect-ratio);
   position: absolute;
   transform-origin: 50% 160cqw;
-  transform: rotate(calc(var(--hover-rotation, var(--rotation)) * 1deg));
+  transform: rotate(calc(var(--hover-rotation, var(--rotation)) * 1deg)) translateY(100px);
   border-radius: 2px;
 }
 
 .card_wrapper {
   width: fit-content;
-  height: 100%;
   position: absolute;
   transform-origin: 50% 160cqw;
-  transform: rotate(calc(var(--hover-rotation, var(--rotation)) * 1deg)) translateY(30px);
+  transform: rotate(calc(var(--hover-rotation, var(--rotation)) * 1deg)) translateY(100px);
   border-radius: 2px;
   transition: transform 0.1s;
 
