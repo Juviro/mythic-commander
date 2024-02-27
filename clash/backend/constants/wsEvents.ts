@@ -40,8 +40,9 @@ export const SOCKET_MSG_GAME = {
   TAP_CARDS: 'tap_cards',
   FLIP_CARDS: 'flip_cards',
   TURN_FACE_DOWN: 'turn_face_down',
+  PEEK_FACE_DOWN: 'peek_face_down',
   MILL: 'mill',
-  PEEK: 'peek',
+  PEEK: 'peek_library',
   END_PEEK: 'end_peek',
   SEARCH_LIBRARY: 'search_library',
   SHUFFLE_LIBRARY: 'shuffle_library',
@@ -114,6 +115,11 @@ export interface FlipCardsPayload {
 export interface TurnCardsFaceDownPayload {
   cardIds: string[];
   faceDown?: boolean;
+  battlefieldPlayerId: string;
+}
+
+export interface PeekFaceDownPayload {
+  cardId: string;
   battlefieldPlayerId: string;
 }
 

@@ -53,6 +53,10 @@ export interface FaceDownCard
   flippable?: false;
   flipped?: false;
   isToken?: false;
+  visibleTo?: string[];
+  // these values are only set when the card is face down and visible to you
+  name?: string;
+  id?: string;
 }
 
 export interface Commander extends Omit<VisibleCard, 'ownerId' | 'position'> {
@@ -62,7 +66,7 @@ export interface Commander extends Omit<VisibleCard, 'ownerId' | 'position'> {
   timesCasted: number;
 }
 
-export type Card = HiddenCard | VisibleCard | VisibleBattlefieldCard;
+export type Card = HiddenCard | VisibleCard | VisibleBattlefieldCard | FaceDownCard;
 
 export type BattlefieldCard = VisibleBattlefieldCard | FaceDownCard;
 

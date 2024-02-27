@@ -21,8 +21,12 @@ const getTokens = async () => {
       WHERE 
         (set_type = 'token' OR layout = 'token')
       AND
-      ${/* The one ring is the only double faced token we want to display */ ''}
-        (name NOT ilike '%//%' OR id = '7215460e-8c06-47d0-94e5-d1832d0218af')
+      ${/* The one ring and the incubat tokens are the only dfc we want to display */ ''}
+        (
+          name NOT ilike '%//%' 
+          OR id = '7215460e-8c06-47d0-94e5-d1832d0218af' 
+          OR id = '2c5ed737-657b-43bf-b222-941da7579a4a'
+        )
       AND
         lang = 'en'
       AND

@@ -13,6 +13,7 @@ import {
   MillPayload,
   MoveCardPayload,
   MoveCardsGroupPayload,
+  PeekFaceDownPayload,
   PeekPayload,
   SOCKET_MSG_GAME,
   SOCKET_MSG_GENERAL,
@@ -118,6 +119,10 @@ const gameSocketActions = (io: Server) => {
 
     socket.on(SOCKET_MSG_GAME.TURN_FACE_DOWN, (payload: TurnCardsFaceDownPayload) => {
       currentGames[currentGameId].turnCardsFaceDown(user.id, payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.PEEK_FACE_DOWN, (payload: PeekFaceDownPayload) => {
+      currentGames[currentGameId].peekFaceDown(user.id, payload);
     });
 
     socket.on(SOCKET_MSG_GAME.MILL, (payload: MillPayload) => {

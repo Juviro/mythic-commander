@@ -7,6 +7,7 @@ import { Card as CardType, VisibleCard, Zone } from 'backend/database/gamestate.
 import { getImageUrl } from 'utils/getImageUrl';
 import { DndItemType, DndItemTypes } from 'types/dnd.types';
 import CardCounters from 'components/Game/GameField/PlayerInterface/Battlefield/BattlefieldCard/CardCounters/CardCounters';
+import CardVisibility from 'components/Game/GameField/PlayerInterface/Battlefield/BattlefieldCard/CardVisibility/CardVisibility';
 import CardPositionContext from 'components/Game/CardPositionContext';
 import useAnimateCardPositionChange from './useAnimateCardPositionChange';
 
@@ -45,10 +46,11 @@ const Card = ({
 
   useAnimateCardPositionChange({ card, cardRef, zone, noAnimation });
 
-  const hidden = !('id' in card) || ('faceDown' in card && card.faceDown);
+  const hidden = !('id' in card) || !card.id || ('faceDown' in card && card.faceDown);
   const faceDown =
     ('faceDown' in card && card.faceDown) ||
     (flipped && !(card as VisibleCard).flippable);
+  const isCardKnown = 'name' in card;
 
   useEffect(() => {
     if (dropType !== DndItemTypes.CARD) return;
@@ -67,12 +69,13 @@ const Card = ({
         dragRef(val);
         cardRef.current = val!;
       }}
-      onMouseEnter={hidden ? undefined : () => setHoveredCard(card)}
-      onMouseLeave={hidden ? undefined : () => setHoveredCard(null)}
+      onMouseEnter={!isCardKnown ? undefined : () => setHoveredCard(card)}
+      onMouseLeave={!isCardKnown ? undefined : () => setHoveredCard(null)}
     >
-      {!hidden && <img className={styles.image} src={getImageUrl(card.id, flipped)} />}
+      {!hidden && <img className={styles.image} src={getImageUrl(card.id!, flipped)} />}
       {faceDown && <img className={styles.image} src="/assets/images/card_back.webp" />}
       <CardCounters card={card} />
+      <CardVisibility card={card} />
     </div>
   );
 };

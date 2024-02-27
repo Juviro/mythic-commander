@@ -6,7 +6,7 @@ import useGameActions from 'components/Game/useGameActions';
 import { ALL_COUNTERS, DEFAULT_COUNTERS } from 'constants/counters';
 import SubmittableSelect from 'components/GameComponents/ContextMenu/SubmittableSelect';
 import ClashIcon from 'components/GameComponents/ClashIcon/ClashIcon';
-import { SwapOutlined } from '@ant-design/icons';
+import { EyeOutlined, SwapOutlined } from '@ant-design/icons';
 import { getPeekSubItems } from '../../Library/useLibraryActions';
 
 interface Props {
@@ -24,7 +24,7 @@ const useBattlefieldOnlyCardActions = ({
   isFaceDown,
   canTurnFaceDown,
 }: Props) => {
-  const { onAddCounters, copyCard, onTurnFaceDown } = useGameActions();
+  const { onAddCounters, copyCard, onTurnFaceDown, onPeekFaceDown } = useGameActions();
 
   const onAddCounter = (type: string) => (e?: MouseEvent) => {
     e?.stopPropagation();
@@ -72,6 +72,13 @@ const useBattlefieldOnlyCardActions = ({
     });
   };
 
+  const peekFaceDown = () => {
+    onPeekFaceDown({
+      cardId: cardIds[0],
+      battlefieldPlayerId: player.id,
+    });
+  };
+
   const createCopiesSubItems = getPeekSubItems(createCopies, 'create-copy', (index) => {
     if (!index) return '1 Copy';
     return `${index + 1} Copies`;
@@ -99,6 +106,14 @@ const useBattlefieldOnlyCardActions = ({
       label,
       onClick: turnFaceDown,
       icon: <SwapOutlined />,
+    });
+  }
+  if (isFaceDown && cardIds.length === 1) {
+    additionalBattlefieldContextMenuItems.unshift({
+      key: 'peek-face-down',
+      label: 'Peek at face down card',
+      onClick: peekFaceDown,
+      icon: <EyeOutlined />,
     });
   }
 

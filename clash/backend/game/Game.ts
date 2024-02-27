@@ -4,6 +4,7 @@ import { Server, Socket } from 'socket.io';
 import {
   BattlefieldCard,
   Card,
+  FaceDownCard,
   GameState,
   Player,
   VisibleBattlefieldCard,
@@ -22,6 +23,7 @@ import {
   MillPayload,
   MoveCardPayload,
   MoveCardsGroupPayload,
+  PeekFaceDownPayload,
   PeekPayload,
   SOCKET_MSG_GAME,
   SOCKET_MSG_GENERAL,
@@ -80,16 +82,14 @@ export default class Game {
   }
 
   emitPlayerUpdate(player: Player) {
-    // might be undefined if player is not connected
-    const thatPlayerId = this.users[player.id]?.socket.id;
-    const messageToThatPlayer = Game.obfuscatePlayer(player, true);
-    const messageToOtherPlayers = Game.obfuscatePlayer(player, false);
+    this.gameState.players.forEach(({ id: playerId }) => {
+      const obfuscatedGameState = Game.obfuscatePlayer(player, playerId);
+      // might be undefined if player is not connected
+      const socketId = this.users[playerId]?.socket.id;
+      if (!socketId) return;
 
-    this.server.to(thatPlayerId).emit(SOCKET_MSG_GAME.UPDATE_PLAYER, messageToThatPlayer);
-    this.server
-      .to(this.id)
-      .except(thatPlayerId)
-      .emit(SOCKET_MSG_GAME.UPDATE_PLAYER, messageToOtherPlayers);
+      this.server.to(socketId).emit(SOCKET_MSG_GAME.UPDATE_PLAYER, obfuscatedGameState);
+    });
   }
 
   join(socket: Socket, user: DatabaseUser) {
@@ -190,22 +190,38 @@ export default class Game {
 
   // ##################### Utils #####################
 
-  static obfuscatePlayer(player: Player, isSelf: boolean): Player {
+  static obfuscatePlayer(player: Player, selfId: string): Player {
     const obfuscateCard = ({ clashId, ownerId }: Card) => ({ clashId, ownerId });
 
+    const isSelf = player.id === selfId;
     const hand = isSelf ? player.zones.hand : player.zones.hand.map(obfuscateCard);
-    const battlefield: BattlefieldCard[] = player.zones.battlefield.map((card) => {
-      if (!card.faceDown) return card;
+    const battlefield = player.zones.battlefield.map((card) => {
+      const isFaceDownCard = (c: BattlefieldCard): c is FaceDownCard => {
+        return Boolean(c.faceDown);
+      };
 
-      return {
+      if (!isFaceDownCard(card)) return card;
+
+      const baseProps = {
         clashId: card.clashId,
         faceDown: true,
         position: card.position,
         tapped: card.tapped,
         counters: card.counters,
         ownerId: card.ownerId,
+        visibleTo: card.visibleTo,
       };
-    });
+
+      if (!card.visibleTo?.includes(selfId)) {
+        return baseProps;
+      }
+
+      return {
+        ...baseProps,
+        id: card.id,
+        name: card.name,
+      };
+    }) as BattlefieldCard[];
 
     const library = player.zones.library.map(obfuscateCard);
 
@@ -231,8 +247,7 @@ export default class Game {
 
   obfuscateGameState(playerId: string): GameState {
     const obfuscatedPlayers = this.gameState.players.map((player) => {
-      const isSelf = player.id === playerId;
-      return Game.obfuscatePlayer(player, isSelf);
+      return Game.obfuscatePlayer(player, playerId);
     });
 
     return { ...this.gameState, players: obfuscatedPlayers };
@@ -358,6 +373,15 @@ export default class Game {
 
     if (faceDown !== undefined) {
       (newCard as BattlefieldCard).faceDown = faceDown;
+      if (faceDown) {
+        const isFromVisibleZone = ['graveyard', 'battlefield', 'exile'].includes(
+          fromZone!
+        );
+        const visibleTo = isFromVisibleZone
+          ? this.gameState.players.map((p) => p.id)
+          : [playerId];
+        (newCard as unknown as FaceDownCard).visibleTo = visibleTo;
+      }
     }
 
     if (to.zone === 'battlefield' && fromZone! !== 'battlefield' && !isCardFaceDown) {
@@ -376,6 +400,7 @@ export default class Game {
       delete card.flipped;
       delete card.faceDown;
       delete card.position;
+      delete (card as FaceDownCard).visibleTo;
     }
 
     if (fromPlayer!.id !== to.playerId && !newCard.ownerId) {
@@ -693,6 +718,8 @@ export default class Game {
       if (card.faceDown) {
         delete card.tapped;
         delete card.flipped;
+        const playerIds = this.gameState.players.map((p) => p.id);
+        (card as FaceDownCard).visibleTo = playerIds;
       }
     });
 
@@ -705,6 +732,32 @@ export default class Game {
         battlefieldPlayerId,
         cardNames,
         faceDown: Boolean(faceDown),
+      },
+    });
+  }
+
+  peekFaceDown(playerId: string, payload: PeekFaceDownPayload) {
+    const { cardId, battlefieldPlayerId } = payload;
+
+    const player = this.getPlayerById(battlefieldPlayerId);
+
+    player.zones.battlefield.forEach((card) => {
+      if (card.clashId !== cardId) return;
+      const faceDownCard = card as FaceDownCard;
+      faceDownCard.visibleTo = faceDownCard.visibleTo || [];
+      if (!faceDownCard.visibleTo.includes(playerId)) {
+        faceDownCard.visibleTo.push(playerId);
+      }
+    });
+
+    this.emitPlayerUpdate(player);
+
+    this.logAction({
+      playerId,
+      logKey: LOG_MESSAGES.PEEK_FACE_DOWN,
+      payload: {
+        battlefieldPlayerId,
+        clashId: cardId,
       },
     });
   }

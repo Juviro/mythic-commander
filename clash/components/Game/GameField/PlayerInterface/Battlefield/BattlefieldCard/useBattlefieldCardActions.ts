@@ -62,11 +62,12 @@ const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
     ...additionalBattlefieldContextMenuItems,
   ];
 
-  const turnFaceDownCardActionIndex = contextMenuItems.findIndex(
-    (item) => item?.key === 'turn-face-down'
-  );
+  const moveIntoFirstBlock = (key: string) => {
+    const turnFaceDownCardActionIndex = contextMenuItems.findIndex(
+      (item) => item?.key === key
+    );
 
-  if (turnFaceDownCardActionIndex !== -1) {
+    if (turnFaceDownCardActionIndex === -1) return;
     const firstDividerIndex = contextMenuItems.findIndex((item) => !item?.key);
 
     // insert before the first divider
@@ -75,7 +76,10 @@ const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
       0,
       contextMenuItems.splice(turnFaceDownCardActionIndex, 1)[0]
     );
-  }
+  };
+
+  moveIntoFirstBlock('turn-face-down');
+  moveIntoFirstBlock('peek-face-down');
 
   return {
     tapCards,

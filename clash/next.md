@@ -1,13 +1,13 @@
 # Current feature
 
+* allow playing top card of library face down without looking at it
+
 # Bugs
 
 
 # MVP
 
 
-* allow peeking face down cards
-* allow playing top card of library face down without looking at it
 
 
 # Easter Eggs

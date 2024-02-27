@@ -21,6 +21,7 @@ import {
   AcceptHandPayload,
   TurnCardsFaceDownPayload,
   ChatCommandPayload,
+  PeekFaceDownPayload,
 } from 'backend/constants/wsEvents';
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
@@ -97,6 +98,10 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.TURN_FACE_DOWN, payload);
   };
 
+  const onPeekFaceDown = (payload: PeekFaceDownPayload) => {
+    socket?.emit(SOCKET_MSG_GAME.PEEK_FACE_DOWN, payload);
+  };
+
   const onMill = (playerId: string, amount: number) => {
     const payload: MillPayload = { playerId, amount };
     socket?.emit(SOCKET_MSG_GAME.MILL, payload);
@@ -168,6 +173,7 @@ const useGameActions = () => {
     onTapCards,
     onFlipCards,
     onTurnFaceDown,
+    onPeekFaceDown,
     onMill,
     onPeek,
     onEndPeek,

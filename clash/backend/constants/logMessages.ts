@@ -23,6 +23,7 @@ export const LOG_MESSAGES = {
   COPY_CARD: 'COPY_CARD',
   ADD_COUNTERS: 'ADD_COUNTERS',
   TURN_FACE_DOWN: 'TURN_FACE_DOWN',
+  PEEK_FACE_DOWN: 'PEEK_FACE_DOWN',
 
   CHAT_MESSAGE: 'CHAT_MESSAGE',
   EXECUTE_COMMAND: 'EXECUTE_COMMAND',
@@ -143,6 +144,11 @@ export interface LogPayloadTurnFaceDown {
   faceDown: boolean;
 }
 
+export interface LogPayloadPeekFaceDown {
+  clashId: string;
+  battlefieldPlayerId: string;
+}
+
 // ############################### Messages ###############################
 
 interface LogMessageWithPlayer {
@@ -254,6 +260,11 @@ interface LogMessageTurnFaceDown extends LogMessageWithPlayer {
   payload: LogPayloadTurnFaceDown;
 }
 
+interface LogMessagePeekFaceDown extends LogMessageWithPlayer {
+  logKey: 'PEEK_FACE_DOWN';
+  payload: LogPayloadPeekFaceDown;
+}
+
 // ############################### Log ###############################
 
 export type LogMessage =
@@ -277,7 +288,8 @@ export type LogMessage =
   | LogMessageCreateToken
   | LogMessageCopyCard
   | LogMessageAddCounters
-  | LogMessageTurnFaceDown;
+  | LogMessageTurnFaceDown
+  | LogMessagePeekFaceDown;
 
 export type GameLog = {
   timestamp: number;

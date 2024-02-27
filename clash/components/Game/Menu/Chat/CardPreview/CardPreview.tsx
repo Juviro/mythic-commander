@@ -9,7 +9,7 @@ const CardPreview = () => {
   const { hoveredCard } = useContext(CardPositionContext);
   const [displayedCardIndex, setDisplayedCardIndex] = useState(0);
 
-  const cardPreviews = hoveredCard
+  const cardPreviews = hoveredCard?.id
     ? [
         {
           src: getImageUrl(hoveredCard.id),
