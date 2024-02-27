@@ -41,6 +41,7 @@ export const SOCKET_MSG_GAME = {
   FLIP_CARDS: 'flip_cards',
   TURN_FACE_DOWN: 'turn_face_down',
   PEEK_FACE_DOWN: 'peek_face_down',
+  PLAY_TOP_CARD_FACE_DOWN: 'play_top_card_face_down',
   MILL: 'mill',
   PEEK: 'peek_library',
   END_PEEK: 'end_peek',
@@ -116,6 +117,9 @@ export interface TurnCardsFaceDownPayload {
   cardIds: string[];
   faceDown?: boolean;
   battlefieldPlayerId: string;
+}
+export interface PlayTopCardFaceDownPayload {
+  playerId: string;
 }
 
 export interface PeekFaceDownPayload {

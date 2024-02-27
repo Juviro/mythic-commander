@@ -1,7 +1,5 @@
 # Current feature
 
-* allow playing top card of library face down without looking at it
-
 # Bugs
 
 
@@ -24,6 +22,8 @@
 # Backog
 
 * track commander + infect damage
+
+* when putting a card onto the battlefield at 50, 50 (e.g. play top card face down), stack it with other cards at that position
 
 * select all lands -> click "organize" -> all lands are neatly organized
 

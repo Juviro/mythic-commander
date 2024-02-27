@@ -312,6 +312,7 @@ const MTG_ICON_IDS = [
 export const GENERIC_ICON_IDS = [
   'draw',
   'shuffle',
+  'flip',
   'exile',
   'hand',
   'phase_beginning',

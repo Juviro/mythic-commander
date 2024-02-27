@@ -762,6 +762,28 @@ export default class Game {
     });
   }
 
+  playTopCardFaceDown(executingPlayerId: string, libraryPlayerId: string) {
+    const player = this.getPlayerById(libraryPlayerId);
+
+    const card = player.zones.library.pop() as VisibleCard;
+    if (!card) return;
+    player.zones.battlefield.push({
+      ...card,
+      faceDown: true,
+      position: { x: 50, y: 50 },
+    });
+
+    this.emitPlayerUpdate(player);
+
+    this.logAction({
+      playerId: executingPlayerId,
+      logKey: LOG_MESSAGES.PLAY_TOP_CARD_FACE_DOWN,
+      payload: {
+        libraryPlayerId,
+      },
+    });
+  }
+
   mill(millingPlayerId: string, payload: MillPayload) {
     const { amount, playerId } = payload;
     const millingPlayer = this.getPlayerById(millingPlayerId);

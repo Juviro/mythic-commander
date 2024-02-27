@@ -10,7 +10,7 @@ import useMoveCardActions from 'components/GameComponents/Card/cardActions/useMo
 import SHORTCUTS from 'constants/shortcuts';
 import useShortcut from 'hooks/useShortcut';
 import { pluralizeCards } from 'utils/i18nUtils';
-import MtgIcon from 'components/GameComponents/ClashIcon/ClashIcon';
+import ClashIcon from 'components/GameComponents/ClashIcon/ClashIcon';
 
 export const getPeekSubItems = (
   onClick: (amount: number) => void,
@@ -55,7 +55,14 @@ export const getPeekSubItems = (
 
 const useLibraryActions = (player: Player) => {
   const { player: self } = useContext(GameStateContext);
-  const { onPeek, onMill, onSearchLibrary, onShuffle, onDrawCard } = useGameActions();
+  const {
+    onPeek,
+    onMill,
+    onSearchLibrary,
+    onPlayTopLibraryCardFaceDown,
+    onShuffle,
+    onDrawCard,
+  } = useGameActions();
 
   const cardIds = player.zones.library.map((card) => card.clashId);
 
@@ -90,6 +97,16 @@ const useLibraryActions = (player: Player) => {
       icon: <SearchOutlined />,
     },
     {
+      key: 'play-face-down',
+      label: 'Play top card face down',
+      disabled: !player.zones.library.length,
+      onClick: () =>
+        onPlayTopLibraryCardFaceDown({
+          playerId: player.id,
+        }),
+      icon: <ClashIcon id="flip" size={16} />,
+    },
+    {
       key: 'peek',
       label: 'Look at...',
       disabled: !player.zones.library.length,
@@ -110,14 +127,14 @@ const useLibraryActions = (player: Player) => {
         label: 'Draw Card [D]',
         disabled: !player.zones.library.length,
         onClick: onDrawCard,
-        icon: <MtgIcon id="draw" size={16} />,
+        icon: <ClashIcon id="draw" size={16} />,
       },
       {
         key: 'shuffle',
         label: 'Shuffle [S]',
         disabled: !player.zones.library.length,
         onClick: onShuffle,
-        icon: <MtgIcon id="shuffle" size={16} />,
+        icon: <ClashIcon id="shuffle" size={16} />,
       },
     ];
     items.unshift(...primaryActions);
@@ -133,7 +150,7 @@ const useLibraryActions = (player: Player) => {
           undefined,
           player.zones.library.length
         ),
-        icon: <MtgIcon id="graveyard" size={16} />,
+        icon: <ClashIcon id="graveyard" size={16} />,
       },
       {
         key: 'move',

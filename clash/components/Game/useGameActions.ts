@@ -22,6 +22,7 @@ import {
   TurnCardsFaceDownPayload,
   ChatCommandPayload,
   PeekFaceDownPayload,
+  PlayTopCardFaceDownPayload,
 } from 'backend/constants/wsEvents';
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
@@ -96,6 +97,10 @@ const useGameActions = () => {
 
   const onTurnFaceDown = (payload: TurnCardsFaceDownPayload) => {
     socket?.emit(SOCKET_MSG_GAME.TURN_FACE_DOWN, payload);
+  };
+
+  const onPlayTopLibraryCardFaceDown = (payload: PlayTopCardFaceDownPayload) => {
+    socket?.emit(SOCKET_MSG_GAME.PLAY_TOP_CARD_FACE_DOWN, payload);
   };
 
   const onPeekFaceDown = (payload: PeekFaceDownPayload) => {
@@ -173,6 +178,7 @@ const useGameActions = () => {
     onTapCards,
     onFlipCards,
     onTurnFaceDown,
+    onPlayTopLibraryCardFaceDown,
     onPeekFaceDown,
     onMill,
     onPeek,

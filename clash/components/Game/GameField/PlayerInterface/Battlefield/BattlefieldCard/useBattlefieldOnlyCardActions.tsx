@@ -6,7 +6,7 @@ import useGameActions from 'components/Game/useGameActions';
 import { ALL_COUNTERS, DEFAULT_COUNTERS } from 'constants/counters';
 import SubmittableSelect from 'components/GameComponents/ContextMenu/SubmittableSelect';
 import ClashIcon from 'components/GameComponents/ClashIcon/ClashIcon';
-import { EyeOutlined, SwapOutlined } from '@ant-design/icons';
+import { EyeOutlined } from '@ant-design/icons';
 import { getPeekSubItems } from '../../Library/useLibraryActions';
 
 interface Props {
@@ -105,7 +105,7 @@ const useBattlefieldOnlyCardActions = ({
       key: 'turn-face-down',
       label,
       onClick: turnFaceDown,
-      icon: <SwapOutlined />,
+      icon: <ClashIcon id="flip" size={16} />,
     });
   }
   if (isFaceDown && cardIds.length === 1) {

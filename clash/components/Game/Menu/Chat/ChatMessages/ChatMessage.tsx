@@ -25,6 +25,7 @@ import MessageCopyCard from './Message/MessageCopyCard';
 import MessageTurnFaceDown from './Message/MessageTurnFaceDown';
 import MessageAddCounters from './Message/MessageAddCounters';
 import MessagePeekFaceDown from './Message/MessagePeekFaceDown';
+import MessagePlayTopCardFaceDown from './Message/MessagePlayTopCardFaceDown';
 
 interface Props {
   message: GameLog;
@@ -80,6 +81,9 @@ const ChatMessage = ({ message }: Props) => {
   }
   if (logKey === 'PEEK_FACE_DOWN') {
     return <MessagePeekFaceDown playerId={playerId} payload={payload} />;
+  }
+  if (logKey === 'PLAY_TOP_CARD_FACE_DOWN') {
+    return <MessagePlayTopCardFaceDown playerId={playerId} payload={payload} />;
   }
 
   if (logKey === 'CHAT_MESSAGE') {
