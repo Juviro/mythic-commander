@@ -84,7 +84,6 @@ export interface AddCountersPayload {
   cardIds: string[];
   type: string;
   amount: number;
-  subtract?: boolean;
 }
 
 export interface CreateTokenPayload {

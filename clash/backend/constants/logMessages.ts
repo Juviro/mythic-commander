@@ -19,6 +19,10 @@ export const LOG_MESSAGES = {
   END_PEEK: 'END_PEEK',
   SEARCH_LIBRARY: 'SEARCH_LIBRARY',
   SHUFFLE_LIBRARY: 'SHUFFLE_LIBRARY',
+  CREATE_TOKEN: 'CREATE_TOKEN',
+  COPY_CARD: 'COPY_CARD',
+  ADD_COUNTERS: 'ADD_COUNTERS',
+  TURN_FACE_DOWN: 'TURN_FACE_DOWN',
 
   CHAT_MESSAGE: 'CHAT_MESSAGE',
   EXECUTE_COMMAND: 'EXECUTE_COMMAND',
@@ -115,6 +119,30 @@ interface FlipCoinLogPayload {
 
 export type LogPayloadExecuteCommand = RollDiceLogPayload | FlipCoinLogPayload;
 
+export interface LogPayloadCreateToken {
+  cardName: string;
+  battlefieldPlayerId: string;
+}
+export interface LogPayloadCopyCard {
+  amount: number;
+  cardName: string;
+  battlefieldPlayerId: string;
+}
+
+export interface LogPayloadAddCounters {
+  amount: number;
+  subtract: boolean;
+  cardNames: string[];
+  battlefieldPlayerId: string;
+  type: string;
+}
+
+export interface LogPayloadTurnFaceDown {
+  cardNames: string[];
+  battlefieldPlayerId: string;
+  faceDown: boolean;
+}
+
 // ############################### Messages ###############################
 
 interface LogMessageWithPlayer {
@@ -206,6 +234,26 @@ interface LogMessageSetActivePlayer extends LogMessageWithPlayer {
   payload: LogPayloadSetActivePlayer;
 }
 
+interface LogMessageCreateToken extends LogMessageWithPlayer {
+  logKey: 'CREATE_TOKEN';
+  payload: LogPayloadCreateToken;
+}
+
+interface LogMessageCopyCard extends LogMessageWithPlayer {
+  logKey: 'COPY_CARD';
+  payload: LogPayloadCopyCard;
+}
+
+interface LogMessageAddCounters extends LogMessageWithPlayer {
+  logKey: 'ADD_COUNTERS';
+  payload: LogPayloadAddCounters;
+}
+
+interface LogMessageTurnFaceDown extends LogMessageWithPlayer {
+  logKey: 'TURN_FACE_DOWN';
+  payload: LogPayloadTurnFaceDown;
+}
+
 // ############################### Log ###############################
 
 export type LogMessage =
@@ -225,7 +273,11 @@ export type LogMessage =
   | LogMessageSetPlayerLife
   | LogMessageSetCommanderTimesCasted
   | LogMessageSetPhase
-  | LogMessageSetActivePlayer;
+  | LogMessageSetActivePlayer
+  | LogMessageCreateToken
+  | LogMessageCopyCard
+  | LogMessageAddCounters
+  | LogMessageTurnFaceDown;
 
 export type GameLog = {
   timestamp: number;

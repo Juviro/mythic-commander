@@ -1,20 +1,15 @@
 # Current feature
 
-
 # Bugs
 
 
 # MVP
 
-* logs for new actions
-  * create tokens
-  * copy card
-  * add counters
-  * turn card face down/up
-
 
 * allow peeking face down cards
 * allow playing top card of library face down without looking at it
+* allow turning multiple cards face down/up at once (BE already supports this)
+* allow adding counters to multiple cards at once (BE already supports this)
 
 
 # Easter Eggs

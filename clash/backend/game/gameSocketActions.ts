@@ -97,15 +97,15 @@ const gameSocketActions = (io: Server) => {
     );
 
     socket.on(SOCKET_MSG_GAME.ADD_COUNTER, (payload: AddCountersPayload) => {
-      currentGames[currentGameId].addCounters(payload);
+      currentGames[currentGameId].addCounters(user.id, payload);
     });
 
     socket.on(SOCKET_MSG_GAME.CREATE_TOKEN, (payload: CreateTokenPayload) => {
-      currentGames[currentGameId].createToken(payload);
+      currentGames[currentGameId].createToken(user.id, payload);
     });
 
     socket.on(SOCKET_MSG_GAME.COPY_CARD, (payload: CopyCardPayload) => {
-      currentGames[currentGameId].copyCard(payload);
+      currentGames[currentGameId].copyCard(user.id, payload);
     });
 
     socket.on(SOCKET_MSG_GAME.TAP_CARDS, (payload: TapCardsPayload) => {
@@ -117,7 +117,7 @@ const gameSocketActions = (io: Server) => {
     });
 
     socket.on(SOCKET_MSG_GAME.TURN_FACE_DOWN, (payload: TurnCardsFaceDownPayload) => {
-      currentGames[currentGameId].turnCardsFaceDown(payload);
+      currentGames[currentGameId].turnCardsFaceDown(user.id, payload);
     });
 
     socket.on(SOCKET_MSG_GAME.MILL, (payload: MillPayload) => {

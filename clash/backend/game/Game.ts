@@ -501,8 +501,8 @@ export default class Game {
     });
   }
 
-  addCounters(payload: AddCountersPayload) {
-    const { cardIds, amount, type, subtract } = payload;
+  addCounters(playerId: string, payload: AddCountersPayload) {
+    const { cardIds, amount, type } = payload;
 
     const battlefieldPlayerId = this.gameState.players.find(({ zones }) =>
       zones.battlefield.some((card) => cardIds.includes(card.clashId))
@@ -510,16 +510,19 @@ export default class Game {
 
     const player = this.getPlayerById(battlefieldPlayerId);
 
+    const cardNames: string[] = [];
+
     player.zones.battlefield.forEach((card) => {
       if (!cardIds.includes(card.clashId)) return;
       if (!card.counters) card.counters = {};
+      cardNames.push((card as VisibleBattlefieldCard).name);
 
       if (type === 'm1/m1' || type === 'p1/p1') {
         const p1Counters = card.counters['p1/p1'] || 0;
         const m1Counters = card.counters['m1/m1'] || 0;
         const totalModification = p1Counters - m1Counters;
         const delta = type === 'p1/p1' ? amount : -amount;
-        const newTotal = totalModification + (subtract ? -delta : delta);
+        const newTotal = totalModification + delta;
 
         if (newTotal < 0) {
           card.counters['m1/m1'] = -newTotal;
@@ -534,7 +537,7 @@ export default class Game {
         return;
       }
 
-      const newAmount = (card.counters[type] || 0) + (subtract ? -amount : amount);
+      const newAmount = (card.counters[type] || 0) + amount;
       if (newAmount <= 0) {
         delete card.counters[type];
         return;
@@ -543,9 +546,21 @@ export default class Game {
     });
 
     this.emitPlayerUpdate(player);
+
+    this.logAction({
+      playerId,
+      logKey: LOG_MESSAGES.ADD_COUNTERS,
+      payload: {
+        cardNames,
+        battlefieldPlayerId,
+        amount,
+        subtract: amount < 0,
+        type,
+      },
+    });
   }
 
-  async createToken(payload: CreateTokenPayload) {
+  async createToken(playerId: string, payload: CreateTokenPayload) {
     const { cardId, battlefieldPlayerId, name, position = { x: 50, y: 50 } } = payload;
     const player = this.getPlayerById(battlefieldPlayerId);
 
@@ -566,9 +581,18 @@ export default class Game {
     player.zones.battlefield.push(token);
 
     this.emitPlayerUpdate(player);
+
+    this.logAction({
+      playerId,
+      logKey: LOG_MESSAGES.CREATE_TOKEN,
+      payload: {
+        cardName: name,
+        battlefieldPlayerId,
+      },
+    });
   }
 
-  async copyCard(payload: CopyCardPayload) {
+  async copyCard(playerId: string, payload: CopyCardPayload) {
     const { amount, battlefieldPlayerId, clashId } = payload;
 
     const player = this.getPlayerById(battlefieldPlayerId);
@@ -606,6 +630,16 @@ export default class Game {
       player.zones.battlefield.push(newCard);
     }
     this.emitPlayerUpdate(player);
+
+    this.logAction({
+      playerId,
+      logKey: LOG_MESSAGES.COPY_CARD,
+      payload: {
+        amount,
+        battlefieldPlayerId,
+        cardName: (originalCard as VisibleBattlefieldCard).name,
+      },
+    });
   }
 
   tapCards(payload: TapCardsPayload) {
@@ -642,23 +676,37 @@ export default class Game {
     this.emitPlayerUpdate(player);
   }
 
-  turnCardsFaceDown(payload: TurnCardsFaceDownPayload) {
+  turnCardsFaceDown(playerId: string, payload: TurnCardsFaceDownPayload) {
     const { cardIds, battlefieldPlayerId, faceDown: overwriteFlipped } = payload;
 
     const player = this.getPlayerById(battlefieldPlayerId);
 
+    const cardNames: string[] = [];
+    let faceDown = overwriteFlipped;
+
     player.zones.battlefield.forEach((card) => {
       if (!cardIds.includes(card.clashId)) return;
       card.faceDown = overwriteFlipped ?? !card.faceDown;
+      faceDown = card.faceDown;
       card.clashId = uniqid();
+      cardNames.push((card as VisibleBattlefieldCard).name);
       if (card.faceDown) {
-        delete card.counters;
         delete card.tapped;
         delete card.flipped;
       }
     });
 
     this.emitPlayerUpdate(player);
+
+    this.logAction({
+      playerId,
+      logKey: LOG_MESSAGES.TURN_FACE_DOWN,
+      payload: {
+        battlefieldPlayerId,
+        cardNames,
+        faceDown: Boolean(faceDown),
+      },
+    });
   }
 
   mill(millingPlayerId: string, payload: MillPayload) {

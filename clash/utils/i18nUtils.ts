@@ -7,13 +7,8 @@ export const pluralizeCards = (count: number, prefixOne = '') => {
 
 export const pluralize = (
   count: number,
-  {
-    singular,
-    plural,
-  }: {
-    singular: string;
-    plural: string;
-  },
+  singular: string,
+  plural: string,
   prefixOne = 'one'
 ) => {
   if (prefixOne) {

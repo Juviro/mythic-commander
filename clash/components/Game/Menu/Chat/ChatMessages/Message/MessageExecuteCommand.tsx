@@ -42,10 +42,7 @@ const MessageExecuteCommand = ({ payload, playerId }: Props) => {
           flipped
           <b>{` ${payload.numberOfCoins} coins `}</b>
           and won
-          <b>{` ${pluralize(payload.numberOfWonFlips, {
-            singular: 'time',
-            plural: 'times',
-          })}`}</b>
+          <b>{` ${pluralize(payload.numberOfWonFlips, 'time', 'times')}`}</b>
         </span>
       );
     }

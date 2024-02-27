@@ -20,6 +20,10 @@ import MessageTakeMulligan from './Message/MessageTakeMulligan';
 import MessageAcceptHand from './Message/MessageAcceptHand';
 import MessagePlayerDefeated from './Message/MessagePlayerDefeated';
 import MessageExecuteCommand from './Message/MessageExecuteCommand';
+import MessageCreateToken from './Message/MessageCreateToken';
+import MessageCopyCard from './Message/MessageCopyCard';
+import MessageTurnFaceDown from './Message/MessageTurnFaceDown';
+import MessageAddCounters from './Message/MessageAddCounters';
 
 interface Props {
   message: GameLog;
@@ -60,6 +64,18 @@ const ChatMessage = ({ message }: Props) => {
   }
   if (logKey === 'SEARCH_LIBRARY') {
     return <MessageSearchLibrary playerId={playerId} payload={payload} />;
+  }
+  if (logKey === 'CREATE_TOKEN') {
+    return <MessageCreateToken playerId={playerId} payload={payload} />;
+  }
+  if (logKey === 'COPY_CARD') {
+    return <MessageCopyCard playerId={playerId} payload={payload} />;
+  }
+  if (logKey === 'ADD_COUNTERS') {
+    return <MessageAddCounters playerId={playerId} payload={payload} />;
+  }
+  if (logKey === 'TURN_FACE_DOWN') {
+    return <MessageTurnFaceDown playerId={playerId} payload={payload} />;
   }
 
   if (logKey === 'CHAT_MESSAGE') {
