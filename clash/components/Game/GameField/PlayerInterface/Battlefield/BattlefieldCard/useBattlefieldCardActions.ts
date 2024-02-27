@@ -29,8 +29,11 @@ const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
   });
 
   const additionalBattlefieldContextMenuItems = useBattlefieldOnlyCardActions({
-    card,
+    cardIds: [card.clashId],
     player,
+    canTurnFaceDown: !card.isToken,
+    isFaceDown: card.faceDown,
+    canCopy: !card.faceDown,
   });
 
   const { toggleCardSelection } = useContext(BattlefieldSelectionContext);

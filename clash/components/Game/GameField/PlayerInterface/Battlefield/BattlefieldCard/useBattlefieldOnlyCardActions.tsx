@@ -1,7 +1,7 @@
 import { MouseEvent } from 'react';
 import { MenuProps } from 'antd';
 
-import { BattlefieldCard, Player } from 'backend/database/gamestate.types';
+import { Player } from 'backend/database/gamestate.types';
 import useGameActions from 'components/Game/useGameActions';
 import { ALL_COUNTERS, DEFAULT_COUNTERS } from 'constants/counters';
 import SubmittableSelect from 'components/GameComponents/ContextMenu/SubmittableSelect';
@@ -10,17 +10,26 @@ import { SwapOutlined } from '@ant-design/icons';
 import { getPeekSubItems } from '../../Library/useLibraryActions';
 
 interface Props {
-  card: BattlefieldCard;
+  cardIds: string[];
   player: Player;
+  canCopy?: boolean;
+  isFaceDown?: boolean;
+  canTurnFaceDown?: boolean;
 }
 
-const useBattlefieldOnlyCardActions = ({ card, player }: Props) => {
+const useBattlefieldOnlyCardActions = ({
+  cardIds,
+  player,
+  canCopy,
+  isFaceDown,
+  canTurnFaceDown,
+}: Props) => {
   const { onAddCounters, copyCard, onTurnFaceDown } = useGameActions();
 
   const onAddCounter = (type: string) => (e?: MouseEvent) => {
     e?.stopPropagation();
     onAddCounters({
-      cardIds: [card.clashId],
+      cardIds,
       type,
       amount: 1,
     });
@@ -47,16 +56,18 @@ const useBattlefieldOnlyCardActions = ({ card, player }: Props) => {
   });
 
   const createCopies = (amount: number) => {
-    copyCard({
-      clashId: card.clashId,
-      amount,
-      battlefieldPlayerId: player.id,
+    cardIds.forEach((clashId) => {
+      copyCard({
+        clashId,
+        amount,
+        battlefieldPlayerId: player.id,
+      });
     });
   };
 
   const turnFaceDown = () => {
     onTurnFaceDown({
-      cardIds: [card.clashId],
+      cardIds,
       battlefieldPlayerId: player.id,
     });
   };
@@ -78,15 +89,20 @@ const useBattlefieldOnlyCardActions = ({ card, player }: Props) => {
     },
   ];
 
-  if (!card.isToken) {
+  if (canTurnFaceDown) {
+    let label = 'Turn Face Up / Down';
+    if (typeof isFaceDown === 'boolean') {
+      label = isFaceDown ? 'Turn Face Up' : 'Turn Face Down';
+    }
     additionalBattlefieldContextMenuItems.unshift({
       key: 'turn-face-down',
-      label: card.faceDown ? 'Turn Face Up' : 'Turn Face Down',
+      label,
       onClick: turnFaceDown,
       icon: <SwapOutlined />,
     });
   }
-  if (!card.faceDown) {
+
+  if (canCopy) {
     additionalBattlefieldContextMenuItems.push({
       key: 'create-copy',
       label: 'Create Copy...',

@@ -8,8 +8,6 @@
 
 * allow peeking face down cards
 * allow playing top card of library face down without looking at it
-* allow turning multiple cards face down/up at once (BE already supports this)
-* allow adding counters to multiple cards at once (BE already supports this)
 
 
 # Easter Eggs
@@ -24,6 +22,8 @@
 * prioritize
   
 # Backog
+
+* track commander + infect damage
 
 * select all lands -> click "organize" -> all lands are neatly organized
 
@@ -88,7 +88,6 @@
 * adjust colors to work on every background
   * black and red are too dark
 
-* track commander + infect damage
 
 
 * long clicking life buttons adds in 10s
@@ -143,6 +142,10 @@
   * show loading overlay in game brwoser while bg image is loading
 
 * display error msg when app crashes
+
+# Refactorings
+
+* remove useBattlefieldOnlyCardActions? 
 
 # Optimizations
 
