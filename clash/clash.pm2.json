@@ -2,9 +2,7 @@
   "apps": [
     {
       "name": "clash",
-      "script": "yarn",
-      "args": "start",
-      "interpreter": "bash"
+      "script": "yarn start"
     }
   ]
 }
