@@ -2,7 +2,7 @@
   "apps": [
     {
       "name": "clash",
-      "script": "yarn start"
+      "script": "npm start"
     }
   ]
 }
