@@ -1,9 +1,9 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { getImageUrl } from 'utils/cardImage';
 import { primary } from '../../../../../../constants/colors';
 
-export const POISON_IMAGE =
-  'https://img.scryfall.com/cards/normal/front/8/5/856e308d-6268-4311-9667-c2f761db8f99.jpg?1562164863';
+export const POISON_IMAGE = getImageUrl('40255bfa-0004-45f1-a31b-17d385f09a95');
 
 const StyledAvatar = styled.div`
   background-color: ${({ color }) => color};
@@ -27,7 +27,7 @@ const StyledAvatar = styled.div`
           background-size: cover;
           background-position: center;
           background-repeat: no-repeat;
-          background-position: 0px -16px;
+          background-position: 0px -12px;
           background-image: url(${POISON_IMAGE});
         `
       : ''}

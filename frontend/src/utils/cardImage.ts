@@ -2,7 +2,7 @@ import { IS_DEV } from '../constants/network';
 
 const NO_IMG_URL = 'https://c2.scryfall.com/file/scryfall-errors/soon.jpg';
 
-export const getImageUrl = (id: string, key: string, size = 'small', face = 'front') => {
+export const getImageUrl = (id: string, _: string, size = 'small', face = 'front') => {
   if (!id) return NO_IMG_URL;
 
   const baseUrl = IS_DEV ? 'https://mythic-commander.com/' : '/';
