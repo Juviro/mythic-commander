@@ -47,7 +47,6 @@ export default (gameSettings, initialGameState) => {
   }, []);
 
   const [players, setPlayers] = useState(initialPlayers);
-  console.log('players', players);
   const { highlightedPlayerId, onSelectRandomPlayer, isLoading } = useSelectPlayer(
     initialPlayers,
     isRejoinedGame
