@@ -13,6 +13,7 @@ interface Props extends PropsWithChildren {
 
 const ZoneCardsPopover = ({ children, cards, trigger, zone }: Props) => {
   const { getPlayerColor } = useContext(GameStateContext);
+
   if (!cards?.length) {
     // eslint-disable-next-line react/jsx-no-useless-fragment
     return <>{children}</>;
