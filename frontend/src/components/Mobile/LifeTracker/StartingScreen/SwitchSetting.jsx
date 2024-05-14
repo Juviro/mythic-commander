@@ -9,7 +9,7 @@ export default ({ checked, onChange, label, tooltip = null, disabled = false }) 
       <Typography.Text style={{ fontWeight: 400, fontSize: 20 }}>
         <span style={{ marginRight: 8 }}>{label}</span>
         {tooltip && (
-          <Tooltip title={tooltip} placement="right">
+          <Tooltip title={tooltip} placement="top">
             <InfoCircleOutlined />
           </Tooltip>
         )}
