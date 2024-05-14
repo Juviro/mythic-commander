@@ -1,17 +1,17 @@
 import { Button } from 'antd';
 import Flex from 'components/Elements/Shared/Flex';
-import React from 'react';
+import React, { useContext } from 'react';
 import SettingSelection from './SettingSelection';
 import SwitchSetting from './SwitchSetting';
-import { GameSettings } from '../LifeTracker.types';
+import LifeTrackerContext from '../LifeTrackerContext';
 
-interface Props {
-  gameSettings: GameSettings;
-  setGameSetting: (setting: keyof GameSettings) => (value: any) => void;
-  onStartGame: () => void;
-}
+const StartNewGame = () => {
+  const { gameSettings, onStart, setGameSettings } = useContext(LifeTrackerContext);
 
-const StartNewGame = ({ gameSettings, setGameSetting, onStartGame }: Props) => {
+  const setGameSetting = (key) => (value) => {
+    setGameSettings({ ...gameSettings, [key]: value });
+  };
+
   return (
     <Flex direction="column" gap={16} style={{ height: '100%' }}>
       <SettingSelection
@@ -30,12 +30,24 @@ const StartNewGame = ({ gameSettings, setGameSetting, onStartGame }: Props) => {
       />
       <SwitchSetting
         checked={gameSettings.displayDamage}
-        label="Track Player Damage"
+        label="Display commander damage"
         onChange={() => setGameSetting('displayDamage')(!gameSettings.displayDamage)}
+      />
+      <SwitchSetting
+        checked={gameSettings.reduceLifeOnCommanderDmg}
+        disabled={!gameSettings.displayDamage}
+        label="Commander damage changes life"
+        // eslint-disable-next-line max-len
+        tooltip="When adding or removing commander damage for a player, the life total of that player will change as well."
+        onChange={() =>
+          setGameSetting('reduceLifeOnCommanderDmg')(
+            !gameSettings.reduceLifeOnCommanderDmg
+          )
+        }
       />
       <Button
         type="primary"
-        onClick={onStartGame}
+        onClick={onStart}
         style={{ width: '50%', alignSelf: 'flex-end', marginTop: 16, maxWidth: 250 }}
       >
         Start Game

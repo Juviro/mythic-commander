@@ -47,6 +47,7 @@ export default (gameSettings, initialGameState) => {
   }, []);
 
   const [players, setPlayers] = useState(initialPlayers);
+  console.log('players', players);
   const { highlightedPlayerId, onSelectRandomPlayer, isLoading } = useSelectPlayer(
     initialPlayers,
     isRejoinedGame
@@ -72,13 +73,19 @@ export default (gameSettings, initialGameState) => {
   const onSetLife = (playerId, life) => onUpdatePlayer(playerId, { life });
 
   const onTrackDamage = (playerId, newPlayerDamages) => {
+    let lifeDelta = 0;
     const updatedPlayers = players.map((player) => {
       if (player.id !== playerId) return player;
-      return {
+
+      const playerWithUpdatedDamage = {
         ...player,
         damageTaken: player.damageTaken.map((originPlayer) => {
           const updatedplayer = newPlayerDamages.find(({ id }) => id === originPlayer.id);
           if (!updatedplayer) return originPlayer;
+
+          if (updatedplayer.id !== INFECT) {
+            lifeDelta += updatedplayer.damage - originPlayer.damage;
+          }
 
           return {
             ...originPlayer,
@@ -86,7 +93,14 @@ export default (gameSettings, initialGameState) => {
           };
         }),
       };
+
+      if (gameSettings.reduceLifeOnCommanderDmg) {
+        playerWithUpdatedDamage.life -= lifeDelta;
+      }
+
+      return playerWithUpdatedDamage;
     });
+
     setPlayers(updatedPlayers);
   };
 

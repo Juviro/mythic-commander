@@ -4,6 +4,7 @@ export interface GameSettings {
   displayDamage: boolean;
   displayLife: boolean;
   useImages: boolean;
+  reduceLifeOnCommanderDmg: boolean;
 }
 
 export interface Player {

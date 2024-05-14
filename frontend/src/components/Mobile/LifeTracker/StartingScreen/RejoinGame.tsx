@@ -1,15 +1,15 @@
 import { Button, Typography } from 'antd';
 import Flex from 'components/Elements/Shared/Flex';
-import React from 'react';
+import React, { useContext } from 'react';
 import Avatar from '../GameScreen/PlayerField/PlayerName/Avatar';
-import { Player } from '../LifeTracker.types';
+import LifeTrackerContext from '../LifeTrackerContext';
 
-interface Props {
-  onRejoin: () => void;
-  players: Player[];
-}
+const RejoinGame = () => {
+  const {
+    gameState: { players },
+    onRejoin,
+  } = useContext(LifeTrackerContext);
 
-const RejoinGame = ({ onRejoin, players }: Props) => {
   return (
     <Flex direction="column" gap={16}>
       {players?.map((player) => (

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import useGameState from './useGameState';
@@ -7,16 +7,19 @@ import { FullscreenModalProvider } from '../../../Provider/FullscreenModalProvid
 import Menu from './Menu';
 import { LoadingScreen } from './LoadingScreen';
 import usePreventScreenLock from '../../../../hooks/usePreventScreenLock';
+import LifeTrackerContext from '../LifeTrackerContext';
 
-const GameScreen = ({
-  gameState: initialGameState,
-  setGameState,
-  gameSettings,
-  handle,
-}) => {
+const GameScreen = ({ handle }) => {
   const history = useHistory();
-  const displayDamage = gameSettings?.displayDamage;
   usePreventScreenLock();
+
+  const {
+    gameState: initialGameState,
+    setGameState,
+    gameSettings,
+  } = useContext(LifeTrackerContext);
+
+  const displayDamage = gameSettings?.displayDamage;
 
   const {
     players,
