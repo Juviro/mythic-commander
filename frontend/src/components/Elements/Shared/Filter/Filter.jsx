@@ -103,6 +103,8 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
             For example, &quot;land ? graveyard&quot; will find &quot;play lands from your
             graveyard&quot;.
           </div>
+          <br />
+          <div>The whole search text has to be in one paragraph.</div>
         </>
       ),
       component: (

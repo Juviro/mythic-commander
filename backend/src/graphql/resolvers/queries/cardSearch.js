@@ -128,7 +128,7 @@ export const addNameClause = (q, name) => {
 };
 
 const addTextClause = (q, text) => {
-  const searchPattern = text.replace(/\s?\?\s?/g, '.*');
+  const searchPattern = text.replace(/\s?\?\s?/g, '[^\n]*');
 
   q.where('oracle_text', '~*', `.*${searchPattern}.*`);
 };
