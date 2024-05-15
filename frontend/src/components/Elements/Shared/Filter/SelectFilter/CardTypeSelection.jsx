@@ -1,18 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import CardContext from '../../../../Provider/CardProvider';
+import { SUPER_TYPES } from 'components/Provider/CardProvider/staticTypes';
 import MultiSelectFilter from './MultiSelectFilter';
 
 export default ({ onChangeOption, value, size, onSearch }) => {
-  const { cardTypes } = useContext(CardContext);
-
   return (
     <MultiSelectFilter
       size={size}
       value={value}
       onSearch={onSearch}
       onChange={onChangeOption}
-      options={cardTypes}
+      options={SUPER_TYPES}
       placeholder={'e.g. "Planeswalker"'}
     />
   );

@@ -10,6 +10,14 @@ export const CARD_TYPES = [
   'Battle',
 ] as const;
 
+export const SUPER_TYPES = [
+  ...CARD_TYPES,
+  'Basic',
+  'Legendary',
+  'Snow',
+  'World',
+] as const;
+
 export type CardType = typeof CARD_TYPES[number];
 
 // Order determines order of deck categories

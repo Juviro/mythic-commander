@@ -118,7 +118,7 @@ export default ({ overwriteOracleId, defaultCardId }) => {
           <>
             <Divider>Reserved List</Divider>
             <Typography.Text strong style={{ marginBottom: 16 }}>
-              This Card is Part of the Reserved List
+              This card is part of the reserved list
             </Typography.Text>
           </>
         )}

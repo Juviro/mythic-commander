@@ -171,7 +171,11 @@ export default async (
         '~*',
         subTypes.map((type) => ` ${type}( |$)`).join('|')
       );
-    if (cardTypes?.length) q.where('type_line', '~*', cardTypes.join('|'));
+    if (cardTypes?.length) {
+      cardTypes.forEach((type) => {
+        q.where('type_line', '~*', type);
+      });
+    }
     if (sets?.length) q.whereIn('set', sets);
     if (isCommanderLegal === 'true')
       q.whereRaw("(legalities->>'commander')::text = 'legal'");
