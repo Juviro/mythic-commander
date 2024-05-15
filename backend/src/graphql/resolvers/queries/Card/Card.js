@@ -2,8 +2,9 @@ import { getImageKey } from './helper';
 
 // Mirrored from frontend/src/components/Elements/Shared/CommanderPicker/CommanderPicker.jsx
 const PARTNER_TYPES = {
-  ALL: 'ALL',
+  PARTNER: 'PARTNER',
   PARTNER_WITH: 'PARTNER_WITH',
+  FRIENDS_FOREVER: 'FRIENDS_FOREVER',
   DOCTOR: 'DOCTOR',
   DOCTORS_COMPANION: 'DOCTORS_COMPANION',
   BACKGROUND_ENCHANTMENT: 'BACKGROUND_ENCHANTMENT',
@@ -97,6 +98,14 @@ const resolver = {
       return {
         partnerType: PARTNER_TYPES.ALL,
         partnersWith: PARTNER_TYPES.ALL,
+      };
+    }
+
+    const isFriendsForever = oracle_text.includes('Friends forever');
+    if (isFriendsForever) {
+      return {
+        partnerType: PARTNER_TYPES.FRIENDS_FOREVER,
+        partnersWith: PARTNER_TYPES.FRIENDS_FOREVER,
       };
     }
 

@@ -11,8 +11,9 @@ import { setCommanderDesktop } from './queries';
 
 // Mirrored from backend/src/graphql/resolvers/queries/Card.js
 export const PARTNER_TYPES = {
-  ALL: 'ALL',
+  PARTNER: 'PARTNER',
   PARTNER_WITH: 'PARTNER_WITH',
+  FRIENDS_FOREVER: 'FRIENDS_FOREVER',
   DOCTOR: 'DOCTOR',
   DOCTORS_COMPANION: 'DOCTORS_COMPANION',
   BACKGROUND_ENCHANTMENT: 'BACKGROUND_ENCHANTMENT',
@@ -124,6 +125,9 @@ export default ({ deck }) => {
     }
     if (firstCommander?.partner?.partnersWith === PARTNER_TYPES.DOCTOR) {
       return 'Add a Doctor';
+    }
+    if (firstCommander?.partner?.partnersWith === PARTNER_TYPES.FRIENDS_FOREVER) {
+      return 'Add a Friend';
     }
     if (isPartnerWith) {
       return `Add "${firstCommander.partner.partnersWith}"`;
