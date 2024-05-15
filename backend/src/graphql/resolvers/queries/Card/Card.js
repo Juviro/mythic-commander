@@ -1,5 +1,15 @@
 import { getImageKey } from './helper';
 
+// Mirrored from frontend/src/components/Elements/Shared/CommanderPicker/CommanderPicker.jsx
+const PARTNER_TYPES = {
+  ALL: 'ALL',
+  PARTNER_WITH: 'PARTNER_WITH',
+  DOCTOR: 'DOCTOR',
+  DOCTORS_COMPANION: 'DOCTORS_COMPANION',
+  BACKGROUND_ENCHANTMENT: 'BACKGROUND_ENCHANTMENT',
+  BACKGROUND_CREATURE: 'BACKGROUND_CREATURE',
+};
+
 const getCard =
   (db) =>
   async ({ id }) => {
@@ -55,20 +65,65 @@ const resolver = {
     return card_faces[0].colors;
   },
 
-  possiblePartner({ oracle_text, type_line }) {
+  partner({ oracle_text, type_line }) {
+    const isBackground = type_line.endsWith('Background');
+    if (isBackground) {
+      return {
+        partnerType: PARTNER_TYPES.BACKGROUND_ENCHANTMENT,
+        partnersWith: PARTNER_TYPES.BACKGROUND_CREATURE,
+      };
+    }
+
     if (!oracle_text || !type_line || !type_line.startsWith('Legendary')) {
       return null;
     }
+
+    const isPartnerWith = oracle_text.includes('Partner with ');
+    if (isPartnerWith) {
+      const partner = oracle_text
+        .match(/Partner with ([\w, ]+)[(\n]+/)
+        ?.at(1)
+        ?.trim();
+      return {
+        partnerType: PARTNER_TYPES.PARTNER_WITH,
+        partnersWith: partner,
+      };
+    }
+
     const isGeneralPartner =
       oracle_text.includes('Partner (You can have') ||
       oracle_text.endsWith('Partner');
     if (isGeneralPartner) {
-      return 'ALL';
+      return {
+        partnerType: PARTNER_TYPES.ALL,
+        partnersWith: PARTNER_TYPES.ALL,
+      };
     }
-    const isPartnerWith = oracle_text.includes('Partner with ');
-    if (isPartnerWith) {
-      const partner = oracle_text.match(/Partner with ([\w, ]+)[(\n]+/);
-      return partner && partner[1].trim();
+
+    const isBackgroundCreature = oracle_text.includes('Choose a Background');
+    if (isBackgroundCreature) {
+      return {
+        partnerType: PARTNER_TYPES.BACKGROUND_CREATURE,
+        partnersWith: PARTNER_TYPES.BACKGROUND_ENCHANTMENT,
+      };
+    }
+
+    const isDoctorsCompanion =
+      oracle_text.includes("Doctor's companion (You can have") ||
+      oracle_text.endsWith("Doctor's companion");
+    if (isDoctorsCompanion) {
+      return {
+        partnerType: PARTNER_TYPES.DOCTORS_COMPANION,
+        partnersWith: PARTNER_TYPES.DOCTOR,
+      };
+    }
+
+    const isDoctor = type_line.endsWith('Doctor');
+    if (isDoctor) {
+      return {
+        partnerType: PARTNER_TYPES.DOCTOR,
+        partnersWith: PARTNER_TYPES.DOCTORS_COMPANION,
+      };
     }
 
     return null;

@@ -15,7 +15,10 @@ const CARD_FIELDS = `
       set_name
       mana_cost
       color_identity
-      possiblePartner
+      partner {
+        partnerType
+        partnersWith
+      }
       canBeCommander
       isModalDfcLand
       isTwoFaced

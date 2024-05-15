@@ -54,7 +54,7 @@ export type Card = {
   oracleCard: OracleCard;
   oracle_id: Scalars['String'];
   oracle_text?: Maybe<Scalars['String']>;
-  possiblePartner?: Maybe<Scalars['String']>;
+  partner?: Maybe<CommanderPartners>;
   priceEur: Scalars['Float'];
   priceUsd: Scalars['Float'];
   prices: Prices;
@@ -63,7 +63,6 @@ export type Card = {
   purchase_uris: PurchaseUris;
   rarity: Scalars['String'];
   relatedCards?: Maybe<Array<Card>>;
-  reserved: Scalars['Boolean'];
   rulings_uri: Scalars['String'];
   scryfall_uri?: Maybe<Scalars['String']>;
   set: Scalars['String'];
@@ -134,6 +133,12 @@ export type CollectionSnapshot = {
   missingPriceEur?: Maybe<Scalars['Int']>;
   value?: Maybe<Scalars['Int']>;
   valueEur?: Maybe<Scalars['Int']>;
+};
+
+export type CommanderPartners = {
+  __typename?: 'CommanderPartners';
+  partnerType?: Maybe<Scalars['String']>;
+  partnersWith?: Maybe<Scalars['String']>;
 };
 
 export type ContainingList = {
@@ -498,6 +503,7 @@ export type OracleCard = {
   minPriceUsd: Scalars['Float'];
   owned: Scalars['Boolean'];
   primaryTypes: Array<Scalars['String']>;
+  reserved: Scalars['Boolean'];
   subTypes: Array<Scalars['String']>;
   sumPriceEur?: Maybe<Scalars['Float']>;
   sumPriceUsd?: Maybe<Scalars['Float']>;

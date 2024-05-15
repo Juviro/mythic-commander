@@ -45,7 +45,7 @@ type Card {
   imgKey: String!
   amountOwned: Int!
   amountOwnedFoil: Int!
-  possiblePartner: String
+  partner: CommanderPartners
   canBeCommander: Boolean!
   isModalDfcLand: Boolean!
 
@@ -82,6 +82,11 @@ type ContainingList {
   name: String!
   amount: Int!
   deck: ContainingListDeck
+}
+
+type CommanderPartners {
+  partnerType: String
+  partnersWith: String
 }
 
 type PurchaseUris {

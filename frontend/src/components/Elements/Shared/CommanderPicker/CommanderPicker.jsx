@@ -9,6 +9,16 @@ import { CommanderPickerModal } from 'components/Elements/Shared/CommanderPicker
 import { useToggle } from '../../../Hooks';
 import { setCommanderDesktop } from './queries';
 
+// Mirrored from backend/src/graphql/resolvers/queries/Card.js
+export const PARTNER_TYPES = {
+  ALL: 'ALL',
+  PARTNER_WITH: 'PARTNER_WITH',
+  DOCTOR: 'DOCTOR',
+  DOCTORS_COMPANION: 'DOCTORS_COMPANION',
+  BACKGROUND_ENCHANTMENT: 'BACKGROUND_ENCHANTMENT',
+  BACKGROUND_CREATURE: 'BACKGROUND_CREATURE',
+};
+
 const StyledWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -29,16 +39,18 @@ const StyledLabel = styled.span`
 
 const getSecondCommanders = (cards, firstCommander) => {
   if (!firstCommander) return [];
-  const { possiblePartner } = firstCommander;
-  if (!possiblePartner) return [];
+  const { partner } = firstCommander;
+  if (!partner) return [];
 
-  if (possiblePartner === 'ALL') {
-    return cards.filter(
-      (card) => card.id !== firstCommander.id && card.possiblePartner === 'ALL'
-    );
+  const { partnersWith, partnerType } = partner;
+
+  const otherCards = cards.filter((card) => card.id !== firstCommander.id);
+
+  if (partnerType === PARTNER_TYPES.PARTNER_WITH) {
+    return otherCards.filter((card) => card.name === partnersWith);
   }
 
-  return cards.filter((card) => card.name === possiblePartner);
+  return otherCards.filter((card) => card.partner?.partnerType === partnersWith);
 };
 
 export default ({ deck }) => {
@@ -85,16 +97,47 @@ export default ({ deck }) => {
     ? possibleFirstCommanders
     : possibleSecondCommanders;
 
-  if (firstCommander && (secondCommander || !firstCommander.possiblePartner)) {
+  if (firstCommander && (secondCommander || !firstCommander.partner)) {
     return null;
   }
 
-  const label = isFirstCommander ? 'Pick your Commander' : 'Pick your Partner Commander';
+  const isPartnerWith =
+    firstCommander?.partner?.partnerType === PARTNER_TYPES.PARTNER_WITH;
+
+  const onEdit = () => {
+    if (isPartnerWith && possibleSecondCommanders.length === 1) {
+      onPickCommander(possibleSecondCommanders[0].id);
+      return;
+    }
+    toggleIsEditing();
+  };
+
+  const getLabel = () => {
+    if (!firstCommander) {
+      return 'Pick your Commander';
+    }
+    if (firstCommander?.partner?.partnersWith === PARTNER_TYPES.BACKGROUND_ENCHANTMENT) {
+      return 'Add a Background';
+    }
+    if (firstCommander?.partner?.partnersWith === PARTNER_TYPES.DOCTORS_COMPANION) {
+      return 'Add a Companion';
+    }
+    if (firstCommander?.partner?.partnersWith === PARTNER_TYPES.DOCTOR) {
+      return 'Add a Doctor';
+    }
+    if (isPartnerWith) {
+      return `Add "${firstCommander.partner.partnersWith}"`;
+    }
+
+    return 'Add a Partner Commander';
+  };
+
+  const label = getLabel();
 
   return (
     <>
       <StyledWrapper>
-        <StyledButton type="primary" ghost onClick={toggleIsEditing}>
+        <StyledButton type="primary" ghost onClick={onEdit}>
           <Space direction="vertical" size={24}>
             <PlusOutlined style={{ fontSize: 40 }} />
             <StyledLabel>{label}</StyledLabel>
