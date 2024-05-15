@@ -16,6 +16,7 @@ import RarityFilter from './RarityFilter';
 import Flex from '../Flex';
 import AddTagsInput from '../Tags/AddTagsInput';
 import VariantSelection from './SelectFilter/VariantSelection';
+import Hint from '../Hint';
 
 const SytledFilterWrapper = styled.div`
   width: 100%;
@@ -38,7 +39,7 @@ const getFontSize = (size) => {
   return sizes[size] ?? 14;
 };
 
-const FilterElement = ({ title, children, dividerAbove, size }) => (
+const FilterElement = ({ title, children, dividerAbove, size, infoText }) => (
   <>
     {dividerAbove && <Divider />}
     <Flex
@@ -46,7 +47,10 @@ const FilterElement = ({ title, children, dividerAbove, size }) => (
       align="flex-start"
       style={{ marginBottom: 24, fontSize: getFontSize(size) }}
     >
-      <StyledLabel strong>{title}</StyledLabel>
+      <StyledLabel strong>
+        {title}
+        {infoText && <Hint text={infoText} />}{' '}
+      </StyledLabel>
       <Flex direction="column" style={{ flex: 1 }}>
         {children}
       </Flex>
@@ -91,6 +95,16 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
     },
     {
       title: 'Card Text',
+      infoText: (
+        <>
+          <div>You can use a question mark (?) as a wildcard character.</div>
+          <br />
+          <div>
+            For example, &quot;land ? graveyard&quot; will find &quot;play lands from your
+            graveyard&quot;.
+          </div>
+        </>
+      ),
       component: (
         <OracleTextFilter
           value={text}
@@ -257,8 +271,14 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
 
   return (
     <SytledFilterWrapper>
-      {displayedFilter.map(({ title, component, dividerAbove }) => (
-        <FilterElement key={title} title={title} dividerAbove={dividerAbove} size={size}>
+      {displayedFilter.map(({ title, component, dividerAbove, infoText }) => (
+        <FilterElement
+          key={title}
+          title={title}
+          dividerAbove={dividerAbove}
+          size={size}
+          infoText={infoText}
+        >
           {component}
         </FilterElement>
       ))}

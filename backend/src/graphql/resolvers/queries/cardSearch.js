@@ -127,6 +127,12 @@ export const addNameClause = (q, name) => {
   q.where('normalized_name', 'ILIKE', `%${searchPattern}%`);
 };
 
+const addTextClause = (q, text) => {
+  const searchPattern = text.replace(/\s?\?\s?/g, '.*');
+
+  q.where('oracle_text', '~*', `.*${searchPattern}.*`);
+};
+
 export default async (
   _,
   { offset = 0, limit = 30, options = {} },
@@ -164,7 +170,7 @@ export default async (
   const where = (q) => {
     q.whereNot('set_type', 'token');
     if (name) addNameClause(q, name);
-    if (text) q.where('oracle_text', 'ILIKE', `%${text}%`);
+    if (text) addTextClause(q, text);
     if (subTypes?.length)
       q.where(
         'type_line',
