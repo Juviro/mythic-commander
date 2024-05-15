@@ -8,7 +8,9 @@ export const VARIANTS = {
   OIL_SLICK: 'Oil Slick',
   SERIALIZED: 'Serialized',
   DOUBLE_RAINBOW: 'Double Rainbow',
+  GALAXY_FOIL: 'Galaxy Foil',
   BORDERLESS: 'Borderless',
+  THICK: 'Thick',
   FULL_ART: 'Full Art',
   SHOWCASE: 'Showcase',
   EXTENDED_ART: 'Extended Art',
@@ -43,8 +45,14 @@ export const getCardVariants = ({
   if (promo_types?.includes('textured')) {
     variants.push(VARIANTS.TEXTURED);
   }
+  if (promo_types?.includes('thick')) {
+    variants.push(VARIANTS.THICK);
+  }
   if (promo_types?.includes('confettifoil')) {
     variants.push(VARIANTS.CONFETTI_FOIL);
+  }
+  if (promo_types?.includes('galaxyfoil')) {
+    variants.push(VARIANTS.GALAXY_FOIL);
   }
   if (promo_types?.includes('embossed')) {
     variants.push(VARIANTS.EMBOSSED);
@@ -64,7 +72,6 @@ export const getCardVariants = ({
   if (promo_types?.includes('buyabox')) {
     variants.push(VARIANTS.BUY_A_BOX);
   }
-
   if (promo_types?.includes('neonink')) {
     variants.push(VARIANTS.NEON_INK);
   }
