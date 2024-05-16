@@ -67,7 +67,7 @@ export class GameLobby {
     if (!lobby) return;
     if (lobby.players.length >= lobby.maxNumberOfPlayers) return;
     if (lobby.players.find((player) => player.id === user.id)) return;
-    if (lobby.starting) return;
+    if (lobby.gameLoading) return;
 
     this.openLobbies.forEach((l) => {
       l.players = l.players.filter((player) => player.id !== user.id);
@@ -106,14 +106,16 @@ export class GameLobby {
     this.updatePlayer(user, { isReady });
   }
 
-  startMatch(user: User) {
+  async startMatch(user: User) {
     const lobby = this.openLobbies.find(({ hostId }) => hostId === user.id);
 
     if (!lobby) return;
 
-    lobby.starting = true;
+    lobby.gameLoading = true;
     this.emitLobbiesUpdate();
 
-    initMatch(lobby);
+    await initMatch(lobby);
+    lobby.gameReady = true;
+    this.emitLobbiesUpdate();
   }
 }

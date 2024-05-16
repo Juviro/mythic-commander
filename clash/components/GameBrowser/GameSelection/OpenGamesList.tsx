@@ -13,7 +13,7 @@ interface Props {
 
 const OpenGamesList = ({ openLobbies, onJoinLobby }: Props) => {
   const games = openLobbies
-    ?.filter(({ starting }) => !starting)
+    ?.filter(({ gameLoading }) => !gameLoading)
     .map(({ id, name, players, maxNumberOfPlayers }) => ({
       id,
       name,

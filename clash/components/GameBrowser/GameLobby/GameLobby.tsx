@@ -17,7 +17,8 @@ const GameLobby = () => {
   const { currentLobby: lobby, user, onLeaveLobby } = useContext(GameBrowserContext);
   const router = useRouter();
 
-  const isStartingMatch = lobby?.starting;
+  const isStartingMatch = lobby?.gameLoading;
+  const isGameReady = lobby?.gameReady;
 
   const playerDummies = Array.from({ length: lobby!.maxNumberOfPlayers });
 
@@ -31,12 +32,10 @@ const GameLobby = () => {
   };
 
   useEffect(() => {
-    if (!isStartingMatch) return;
-    setTimeout(() => {
-      router.replace('/');
-      router.push(`/match/${lobby.id}`);
-    }, 1500);
-  }, [isStartingMatch]);
+    if (!isGameReady) return;
+    router.replace('/');
+    router.push(`/match/${lobby.id}`);
+  }, [isGameReady]);
 
   return (
     <>

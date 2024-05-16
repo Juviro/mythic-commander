@@ -24,7 +24,8 @@ export interface Lobby {
   players: Player[];
   maxNumberOfPlayers: number;
   hostId: string;
-  starting?: boolean;
+  gameLoading?: boolean;
+  gameReady?: boolean;
 }
 
 export interface GameOptions {
