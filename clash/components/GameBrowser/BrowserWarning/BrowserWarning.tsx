@@ -27,7 +27,7 @@ const BrowserWarning = () => {
       message="Warning: Your browser window might be too small to display the game properly."
       type="warning"
       showIcon
-      description="Please consider resizing your window, use a larger screen or zoom out and use binoculars."
+      description="Please consider resizing your window, use a larger screen or zoom out and use a loupe."
       style={{ padding: '3rem 5rem', fontSize: '1rem' }}
     />
   );

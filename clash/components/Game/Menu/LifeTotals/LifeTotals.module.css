@@ -56,6 +56,15 @@
   align-items: center;
   justify-content: center;
   font-size: 14px;
+  cursor: pointer;
+}
+
+.buttons :global(.anticon-minus) {
+  padding-right: 32px;
+}
+
+.buttons :global(.anticon-plus) {
+  padding-left: 32px;
 }
 
 .buttons :global(.anticon) :global(svg) {
