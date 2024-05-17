@@ -1,4 +1,4 @@
-import React, { CSSProperties, useContext, useEffect, useState } from 'react';
+import React, { CSSProperties, useContext, useEffect, useRef, useState } from 'react';
 
 import CardPositionContext from 'components/Game/CardPositionContext';
 import { getImageUrl } from 'utils/getImageUrl';
@@ -6,9 +6,12 @@ import { getImageUrl } from 'utils/getImageUrl';
 import classNames from 'classnames';
 import styles from './CardPreview.module.css';
 
+const SCROLL_DELAY = 500;
+
 const CardPreview = () => {
   const { hoveredCard } = useContext(CardPositionContext);
   const [displayedCardIndex, setDisplayedCardIndex] = useState(0);
+  const lastScroll = useRef(0);
 
   const cardPreviews = hoveredCard?.id
     ? [
@@ -42,8 +45,12 @@ const CardPreview = () => {
   useEffect(() => {
     setDisplayedCardIndex(initialIndex);
     const onScroll = (e: any) => {
+      const isMacTrackpad = e.deltaY % 1 === 0;
+      if (isMacTrackpad && Date.now() - lastScroll.current < SCROLL_DELAY) return;
+
       const scrollDirection = e.deltaY > 0 ? 1 : -1;
       const maxIndex = cardPreviews.length - 1;
+      lastScroll.current = Date.now();
 
       setDisplayedCardIndex((currentIndex) => {
         return Math.min(maxIndex, Math.max(0, currentIndex + scrollDirection));
