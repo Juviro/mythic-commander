@@ -80,6 +80,7 @@ const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
 
   moveIntoFirstBlock('turn-face-down');
   moveIntoFirstBlock('peek-face-down');
+  moveIntoFirstBlock('rotate');
 
   return {
     tapCards,

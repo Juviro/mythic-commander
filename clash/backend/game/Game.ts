@@ -25,6 +25,7 @@ import {
   MoveCardsGroupPayload,
   PeekFaceDownPayload,
   PeekPayload,
+  RotateCardsPayload,
   SOCKET_MSG_GAME,
   SOCKET_MSG_GENERAL,
   SearchLibraryPayload,
@@ -398,6 +399,7 @@ export default class Game {
       delete card.counters;
       delete card.tapped;
       delete card.flipped;
+      delete card.rotateDeg;
       delete card.faceDown;
       delete card.position;
       delete (card as FaceDownCard).visibleTo;
@@ -695,7 +697,23 @@ export default class Game {
       if (!cardIds.includes(card.clashId)) return;
       if (card.faceDown) return;
       if (!card.flippable) return;
+
       card.flipped = overwriteFlipped ?? !card.flipped;
+    });
+
+    this.emitPlayerUpdate(player);
+  }
+
+  rotateCards(payload: RotateCardsPayload) {
+    const { cardIds, battlefieldPlayerId, rotateLeft } = payload;
+
+    const player = this.getPlayerById(battlefieldPlayerId);
+
+    player.zones.battlefield.forEach((card) => {
+      if (!cardIds.includes(card.clashId)) return;
+      if (card.faceDown) return;
+      const delta = rotateLeft ? -90 : 90;
+      card.rotateDeg = (card.rotateDeg || 0) + delta;
     });
 
     this.emitPlayerUpdate(player);

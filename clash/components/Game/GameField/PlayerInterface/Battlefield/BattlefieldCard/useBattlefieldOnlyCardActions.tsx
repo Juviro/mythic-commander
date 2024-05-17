@@ -6,7 +6,7 @@ import useGameActions from 'components/Game/useGameActions';
 import { ALL_COUNTERS, DEFAULT_COUNTERS } from 'constants/counters';
 import SubmittableSelect from 'components/GameComponents/ContextMenu/SubmittableSelect';
 import ClashIcon from 'components/GameComponents/ClashIcon/ClashIcon';
-import { EyeOutlined } from '@ant-design/icons';
+import { EnterOutlined, EyeOutlined } from '@ant-design/icons';
 import { getPeekSubItems } from '../../Library/useLibraryActions';
 
 interface Props {
@@ -24,7 +24,8 @@ const useBattlefieldOnlyCardActions = ({
   isFaceDown,
   canTurnFaceDown,
 }: Props) => {
-  const { onAddCounters, copyCard, onTurnFaceDown, onPeekFaceDown } = useGameActions();
+  const { onAddCounters, copyCard, onTurnFaceDown, onPeekFaceDown, onRotateCards } =
+    useGameActions();
 
   const onAddCounter = (type: string) => (e?: MouseEvent) => {
     e?.stopPropagation();
@@ -72,6 +73,14 @@ const useBattlefieldOnlyCardActions = ({
     });
   };
 
+  const rotateCards = (event: any) => {
+    onRotateCards({
+      cardIds,
+      rotateLeft: event.domEvent.shiftKey,
+      battlefieldPlayerId: player.id,
+    });
+  };
+
   const peekFaceDown = () => {
     onPeekFaceDown({
       cardId: cardIds[0],
@@ -108,6 +117,14 @@ const useBattlefieldOnlyCardActions = ({
       icon: <ClashIcon id="flip" size={16} />,
     });
   }
+
+  additionalBattlefieldContextMenuItems.push({
+    key: 'rotate',
+    label: 'Rotate 90°',
+    onClick: rotateCards,
+    icon: <EnterOutlined style={{ transform: 'rotate(180deg)' }} />,
+  });
+
   if (isFaceDown && cardIds.length === 1) {
     additionalBattlefieldContextMenuItems.unshift({
       key: 'peek-face-down',
