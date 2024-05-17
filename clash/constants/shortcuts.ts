@@ -9,6 +9,8 @@ const SHORTCUTS = {
   SPACE: ' ',
   ENTER: 'Enter',
   DELETE: ['Backspace', 'Delete'],
+  PLUS: '+',
+  MINUS: '-',
 };
 
 export default SHORTCUTS;

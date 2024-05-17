@@ -22,6 +22,9 @@ interface BaseGameState {
 }
 export interface InitializedGameState extends BaseGameState {
   gameState: GameState;
+  /**
+   * The player object of the current user
+   * */
   player: Player;
   isInitialized: true;
 }
