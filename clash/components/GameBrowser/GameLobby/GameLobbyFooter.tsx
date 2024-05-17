@@ -14,7 +14,9 @@ const GameLobbyFooter = () => {
     return null;
   }
 
-  const allReady = currentLobby?.players.every(({ isReady }) => isReady);
+  const allReady = currentLobby?.players.every(
+    ({ isReady, id }) => isReady || id === currentLobby?.hostId
+  );
   const allDecksSelected = currentLobby?.players.every(({ deck }) => deck?.id);
 
   const canStart = allReady && allDecksSelected;

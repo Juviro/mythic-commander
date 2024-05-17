@@ -12,7 +12,13 @@ interface Props {
 }
 
 const PlayerReady = ({ player, isSelf }: Props) => {
-  const { onReady } = useContext(GameBrowserContext);
+  const { onReady, currentLobby } = useContext(GameBrowserContext);
+
+  const isHost = currentLobby?.hostId === player?.id;
+  if (isHost) {
+    return null;
+  }
+
   if (!isSelf && !player.isReady) {
     return null;
   }
