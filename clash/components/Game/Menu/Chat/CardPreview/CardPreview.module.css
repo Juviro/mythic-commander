@@ -29,6 +29,11 @@
     z-index: 1001;
 }
 
+.image__rotated {
+    transform: rotate(var(--rotation, 0deg));
+    max-width: 70%;
+}
+
 .scroll_hint {
     color: white;
     display: flex;

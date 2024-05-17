@@ -1,5 +1,5 @@
 import db from 'backend/database/db';
-import { BattlefieldCard } from 'backend/database/gamestate.types';
+import { VisibleBattlefieldCard } from 'backend/database/gamestate.types';
 
 interface Card {
   loyalty: string;
@@ -15,10 +15,12 @@ interface Card {
   }[];
 }
 
-const getInitialCardProps = async (cardId: string): Promise<Partial<BattlefieldCard>> => {
+const getInitialCardProps = async (
+  cardId: string
+): Promise<Partial<VisibleBattlefieldCard>> => {
   const card: Card = await db('cards').where({ id: cardId }).first();
 
-  const initialProps: Partial<BattlefieldCard> = {};
+  const initialProps: Partial<VisibleBattlefieldCard> = {};
 
   if (card.loyalty) {
     initialProps.counters = {
@@ -36,6 +38,7 @@ const getInitialCardProps = async (cardId: string): Promise<Partial<BattlefieldC
     initialProps.counters = {
       Defense: Number(card.card_faces[0].defense),
     };
+    initialProps.rotateDeg = 90;
   }
 
   return initialProps;

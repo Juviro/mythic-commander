@@ -42,15 +42,24 @@ const BattlefieldCard = ({ card, player, inSelection }: Props) => {
 
   const { x, y } = card.position!;
 
+  if (isSelected && !inSelection) {
+    return null;
+  }
+
+  let rotation = 0;
+  if ('rotateDeg' in card && card.rotateDeg) {
+    rotation = card.rotateDeg;
+  }
+  if (card.tapped) {
+    rotation += 90;
+  }
+
   const style = {
     '--x': x,
     '--y': y,
     '--player-color': getPlayerColor(card.ownerId),
+    '--rotation': `${rotation}deg`,
   } as CSSProperties;
-
-  if (isSelected && !inSelection) {
-    return null;
-  }
 
   return (
     <ContextMenu items={isSelected ? null : contextMenuItems} placement="bottomLeft">
@@ -63,7 +72,7 @@ const BattlefieldCard = ({ card, player, inSelection }: Props) => {
         className={classNames(styles.card, 'battlefield_card', {
           [styles.card__hovered]: isHovered,
           [styles.card__selected]: isSelected,
-          [styles.card__tapped]: card.tapped,
+          [styles.card__rotation]: rotation,
         })}
         onContextMenu={inSelection ? undefined : (e) => e.stopPropagation()}
         data-card-id={card.clashId}

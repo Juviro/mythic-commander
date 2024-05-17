@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { CSSProperties, useContext, useEffect, useState } from 'react';
 
 import CardPositionContext from 'components/Game/CardPositionContext';
 import { getImageUrl } from 'utils/getImageUrl';
 
+import classNames from 'classnames';
 import styles from './CardPreview.module.css';
 
 const CardPreview = () => {
@@ -34,10 +35,12 @@ const CardPreview = () => {
     });
   }
 
+  // Only rotate the card if we view the face that's on the battlefield
+  const initialIndex =
+    hoveredCard && 'flipped' in hoveredCard && hoveredCard.flipped ? 1 : 0;
+
   useEffect(() => {
-    const newInitialIndex =
-      hoveredCard && 'flipped' in hoveredCard && hoveredCard.flipped ? 1 : 0;
-    setDisplayedCardIndex(newInitialIndex);
+    setDisplayedCardIndex(initialIndex);
     const onScroll = (e: any) => {
       const scrollDirection = e.deltaY > 0 ? 1 : -1;
       const maxIndex = cardPreviews.length - 1;
@@ -58,10 +61,22 @@ const CardPreview = () => {
 
   const currentCard = cardPreviews[displayedCardIndex];
 
+  const cardRotation = ('rotateDeg' in hoveredCard && hoveredCard.rotateDeg) ?? 0;
+  const shouldRotateCard = cardRotation && displayedCardIndex === initialIndex;
+  const style = {
+    '--rotation': `${cardRotation}deg`,
+  } as CSSProperties;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.inner}>
-        <img src={currentCard?.src} className={styles.image} />
+        <img
+          src={currentCard?.src}
+          className={classNames(styles.image, {
+            [styles.image__rotated]: shouldRotateCard,
+          })}
+          style={style}
+        />
         {cardPreviews.length > 1 && currentCard && (
           <div className={styles.scroll_hint}>
             <span>

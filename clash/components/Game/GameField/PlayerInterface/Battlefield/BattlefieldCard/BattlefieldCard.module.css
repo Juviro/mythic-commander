@@ -8,9 +8,13 @@
     z-index: 100;
     user-select: none;
   }
+    
+  .card__rotation {
+    transform: translate(-50%, -50%) rotate(var(--rotation));
+  }
   
-  .card__tapped {
-    transform: translate(-50%, -50%) rotate(90deg);
+  .card_rotation {
+    transform: rotate(var(--rotation, 0deg));
   }
   
   .card__hovered {
