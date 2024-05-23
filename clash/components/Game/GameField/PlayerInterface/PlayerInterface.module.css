@@ -1,0 +1,42 @@
+.interface_wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+:global(.flipped) .interface_wrapper {
+  flex-direction: column-reverse;
+}
+
+.interface {
+  width: 100%;
+  padding: 0 16px;
+  display: grid;
+  container: interface / inline-size;
+  grid-template-columns: 110px 110px auto 6cqw;
+  grid-template-areas: 'graveyard library hand exile';
+}
+
+:global(.flipped) .interface {
+  grid-template-columns: 6cqw auto 110px 110px;
+  grid-template-areas: 'exile hand library graveyard';
+}
+
+
+.bg_image {
+  background: url(/assets/images/match_bg.webp);
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  /* allows drag layer to display cards behind other cards from battlefield layer */
+  z-index: -1;
+
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: var(--size-background-margin-right);
+  /* 
+  used for alternative bg:
+  opacity: 0.5;
+  filter: sepia(100%) hue-rotate(160deg) saturate(90%); */
+}

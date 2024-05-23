@@ -7,23 +7,20 @@
   --size-background-margin-right: var(--size-menu-width);
 }
 
-/* one player */
-.wrapper:has(> :last-child:nth-child(3)) {
+.one_player {
   grid-template-columns: 1fr var(--size-menu-width);
   grid-template-areas: 
     'player1 menu'
 }
 
-/* two players */
-.wrapper:has(> :last-child:nth-child(4)) {
+.two_players {
   grid-template-columns: 1fr var(--size-menu-width);
   grid-template-areas: 
     'player1 menu'
     'player2 menu';
 }
 
-/* three players */
-.wrapper:has(> :last-child:nth-child(5)) {
+.three_players {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-template-areas: 
@@ -34,39 +31,12 @@
   --color-menu-background: rgb(0 0 0 / 50%);
 }
 
-/* four players */
-.wrapper:has(> :last-child:nth-child(6)) {
+.four_players {
   grid-template-columns: 1fr 1fr var(--size-menu-width);
   grid-template-areas: 
     'player1 player2 menu'
     'player4 player3 menu';
 }
-
-/* single interface */
-.interface_wrapper {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-:global(.flipped) .interface_wrapper {
-  flex-direction: column-reverse;
-}
-
-.interface {
-  width: 100%;
-  padding: 0 16px;
-  display: grid;
-  container: interface / inline-size;
-  grid-template-columns: 110px 110px auto 6cqw;
-  grid-template-areas: 'graveyard library hand exile';
-}
-
-:global(.flipped) .interface {
-  grid-template-columns: 6cqw auto 110px 110px;
-  grid-template-areas: 'exile hand library graveyard';
-}
-
 
 .bg_image {
   background: url(/assets/images/match_bg.webp);

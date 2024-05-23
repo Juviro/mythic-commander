@@ -8,6 +8,8 @@ import PlayerInterface from './PlayerInterface/PlayerInterface';
 
 import styles from './PlayerInterfaces.module.css';
 import DragLayer from './DragLayer/DragLayer';
+import InfoBox from '../InfoBox/InfoBox';
+import CombatArrows from '../CombatArrows/CombatArrows';
 
 const PlayerInterfaces = () => {
   const { gameState, player } = useContext(GameStateContext) as InitializedGameState;
@@ -30,7 +32,14 @@ const PlayerInterfaces = () => {
 
   return (
     <>
-      <div className={styles.wrapper}>
+      <div
+        className={classNames(styles.wrapper, {
+          [styles.one_player]: gameState.players.length === 1,
+          [styles.two_players]: gameState.players.length === 2,
+          [styles.three_players]: gameState.players.length === 3,
+          [styles.four_players]: gameState.players.length === 4,
+        })}
+      >
         <div className={styles.bg_image} />
         {opponents.map((opponent, index) => (
           <div
@@ -47,6 +56,8 @@ const PlayerInterfaces = () => {
           <PlayerInterface player={player} isSelf isFlipped={false} />
         </div>
         <Menu />
+        <InfoBox />
+        <CombatArrows />
       </div>
       <DragLayer />
     </>

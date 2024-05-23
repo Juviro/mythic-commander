@@ -1,4 +1,5 @@
 const SHORTCUTS = {
+  ATTACK: 'a',
   TAP: 't',
   UNTAP: 'u',
   FLIP: 'f',

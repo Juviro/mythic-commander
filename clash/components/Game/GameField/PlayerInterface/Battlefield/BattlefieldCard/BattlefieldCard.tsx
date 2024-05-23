@@ -7,6 +7,7 @@ import GameStateContext from 'components/Game/GameStateContext';
 import SHORTCUTS from 'constants/shortcuts';
 import useShortcut from 'hooks/useShortcut';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
+import useCombatStore from 'store/combatStore';
 import BattlefieldSelectionContext from '../BattlefieldSelection/BattlefieldSelectionContext';
 
 import styles from './BattlefieldCard.module.css';
@@ -20,15 +21,22 @@ interface Props {
 
 const BattlefieldCard = ({ card, player, inSelection }: Props) => {
   const cardRef = useRef<HTMLDivElement>(null);
-  const { getPlayerColor } = useContext(GameStateContext);
+  const { gameState, getPlayerColor } = useContext(GameStateContext);
 
   const { hoveredCardIds, selectedCardIds } = useContext(BattlefieldSelectionContext);
+
+  const toggleSelectedAttackerId = useCombatStore(
+    (store) => store.toggleSelectedAttackerId
+  );
 
   const isHovered = hoveredCardIds?.includes(card.clashId);
   const isSelected = selectedCardIds?.includes(card.clashId);
 
   const { tapCards, flipCards, contextMenuItems, onClick, onMouseDown, onMouseMove } =
     useBattlefieldCardActions({ card, player, isSelected });
+
+  const isSelf = gameState?.activePlayerId === player.id;
+  const isInOwnCombatPhase = gameState?.phase === 'combat' && isSelf;
 
   useShortcut(SHORTCUTS.TAP, tapCards, {
     disabled: Boolean(selectedCardIds.length),
@@ -37,6 +45,11 @@ const BattlefieldCard = ({ card, player, inSelection }: Props) => {
 
   useShortcut(SHORTCUTS.FLIP, flipCards, {
     disabled: Boolean(selectedCardIds.length),
+    whenHovering: cardRef,
+  });
+
+  useShortcut(SHORTCUTS.ATTACK, () => toggleSelectedAttackerId(card.clashId), {
+    disabled: !isInOwnCombatPhase,
     whenHovering: cardRef,
   });
 
