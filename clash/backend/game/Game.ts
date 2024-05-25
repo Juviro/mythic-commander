@@ -579,9 +579,9 @@ export default class Game {
       logKey: LOG_MESSAGES.ADD_COUNTERS,
       payload: {
         cardNames,
+        cardIds,
         battlefieldPlayerId,
         amount,
-        subtract: amount < 0,
         type,
       },
     });

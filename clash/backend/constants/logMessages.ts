@@ -133,8 +133,8 @@ export interface LogPayloadCopyCard {
 
 export interface LogPayloadAddCounters {
   amount: number;
-  subtract: boolean;
   cardNames: string[];
+  cardIds: string[];
   battlefieldPlayerId: string;
   type: string;
 }
