@@ -13,6 +13,7 @@ export const VARIANTS = {
   THICK: 'Thick',
   FULL_ART: 'Full Art',
   SHOWCASE: 'Showcase',
+  INVERTED: 'Inverted',
   EXTENDED_ART: 'Extended Art',
   ETCHED_FOIL: 'Etched Foil',
   FUTURE_FRAME: 'Future Frame',
@@ -89,6 +90,9 @@ export const getCardVariants = ({
   }
   if (full_art === true) {
     variants.push(VARIANTS.FULL_ART);
+  }
+  if (frame_effects?.includes('inverted')) {
+    variants.push(VARIANTS.INVERTED);
   }
   if (frame_effects?.includes('showcase')) {
     variants.push(VARIANTS.SHOWCASE);
