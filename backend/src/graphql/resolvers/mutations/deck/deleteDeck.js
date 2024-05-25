@@ -1,7 +1,7 @@
-import { canAccessDeck } from '../../../../auth/authenticateUser';
+import { canEditDeck } from '../../../../auth/authenticateUser';
 
 export default async (_, { deckId }, { user, db }) => {
-  await canAccessDeck(user.id, deckId);
+  await canEditDeck(user.id, deckId);
 
   await db('decks').where({ id: deckId }).del();
 

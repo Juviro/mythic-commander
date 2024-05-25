@@ -161,7 +161,7 @@ export default ({ loading, cardsByType, deck, numberOfModalDfcLands }) => {
       showAddedBeforeFilter
       showCollectionFilters
       allTags={allTags}
-      onSetTags={onSetTags}
+      onSetTags={deck?.canEdit ? onSetTags : undefined}
       orderByParamName="orderByAdvanced"
       dragProps={{
         canDrag: true,

@@ -1,9 +1,9 @@
-import { canAccessDeck } from '../../../../auth/authenticateUser';
+import { canEditDeck } from '../../../../auth/authenticateUser';
 import { updateLastEdit } from './helper';
 import unifyCardFormat from '../../unifyCardFormat';
 
 export default async (_, { cardId, deckId, newProps }, { user, db }) => {
-  await canAccessDeck(user.id, deckId);
+  await canEditDeck(user.id, deckId);
 
   try {
     const { isDefault, ...cardProps } = newProps;

@@ -1,9 +1,9 @@
-import { canAccessDeck } from '../../../../auth/authenticateUser';
+import { canEditDeck } from '../../../../auth/authenticateUser';
 import { updateLastEdit } from './helper';
 
 export default async (_, { cardId, cardIds, deckId }, { user, db }) => {
   if (!cardId && !cardIds) throw new Error('No cards specified');
-  await canAccessDeck(user.id, deckId);
+  await canEditDeck(user.id, deckId);
 
   const ids = cardId ? [cardId] : cardIds;
 

@@ -181,7 +181,7 @@ const GridCard = ({
         )}
       </StyledImageWrapper>
       <CardInfo card={card} search={search} minimal={minimal} />
-      {onSetTags && <Tags onSetTags={onSetTags} card={card} allTags={allTags} />}
+      {allTags && <Tags onSetTags={onSetTags} card={card} allTags={allTags} />}
     </StyledCardWrapper>
   );
 };
