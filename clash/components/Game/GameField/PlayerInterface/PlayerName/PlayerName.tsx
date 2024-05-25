@@ -13,13 +13,14 @@ interface Props {
 }
 
 const PlayerName = ({ player, isSelf }: Props) => {
-  const selectedAttackerIds = useCombatStore((store) => store.selectedAttackerIds);
   const attackTarget = useCombatStore((store) => store.attackTarget);
   const attacks = useCombatStore((store) => store.attackers);
 
-  const isBeeingAttacked = attacks.some((attack) => attack.targetId === player.id);
+  const shouldDisplay = attacks.some(
+    (attack) => !attack.targetId || attack.targetId === player.id
+  );
 
-  if (!isBeeingAttacked && (isSelf || !selectedAttackerIds.length)) {
+  if (!shouldDisplay || isSelf) {
     return null;
   }
 

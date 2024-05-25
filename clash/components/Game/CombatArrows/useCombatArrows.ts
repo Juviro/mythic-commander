@@ -39,7 +39,7 @@ const addPositions = (attacker: Attacker | TemporaryAttacker) => {
   const querySelector =
     targetType === 'card'
       ? `[data-card-id="${targetId}"]`
-      : `#${getPlayerNameId(targetId)}`;
+      : `#${getPlayerNameId(targetId!)}`;
   const toElement = document.querySelector(querySelector);
 
   if (!toElement) throw new Error(`Element not found: ${querySelector}`);
@@ -53,7 +53,6 @@ const useCombatArrows = () => {
   const { gameState } = useContext(GameStateContext);
 
   const [mousePosition, setMousePosition] = useState({ x: 200, y: 200 });
-  const selectedAttackerIds = useCombatStore((store) => store.selectedAttackerIds);
   const attackers = useCombatStore((store) => store.attackers);
   /**
    * A string that represents the positions of all cards that have an arrow
@@ -65,13 +64,12 @@ const useCombatArrows = () => {
   const [windowWidth] = useWindowSize();
 
   const attackerIds = attackers.map((attacker) => attacker.id);
-  const cardsWithArrow = selectedAttackerIds.concat(attackerIds);
 
   // Update the cardPositionString whenever the gameState changes
   useEffect(() => {
     const allBattlefieldCards = gameState!.players
       .flatMap((player) => player.zones.battlefield)
-      .filter((card) => cardsWithArrow.includes(card.clashId));
+      .filter((card) => attackerIds.includes(card.clashId));
 
     const newCardPositionString = allBattlefieldCards.reduce((acc, card) => {
       return `${acc};${card.position?.x},${card.position?.y}`;
@@ -86,21 +84,19 @@ const useCombatArrows = () => {
     };
   }, [gameState]);
 
-  const temporaryAttackers: TemporaryAttacker[] = selectedAttackerIds.map((id) => ({
-    id,
-    isTemporary: true,
-  }));
-
-  const allAttackers = [...temporaryAttackers, ...attackers];
-
   const attackersWithPositions = useMemo(() => {
-    return allAttackers.map(addPositions).filter((e) => e !== null) as AttackerPosition[];
-  }, [windowWidth, cardPositionString, selectedAttackerIds]);
+    return attackers.map(addPositions).filter((e) => e !== null) as AttackerPosition[];
+  }, [windowWidth, cardPositionString, attackers]);
 
-  const attackersWithMousePosition = attackersWithPositions.map((attacker) => ({
-    ...attacker,
-    to: attacker.to ?? mousePosition,
-  }));
+  const attackersWithMousePosition = attackersWithPositions.map((attacker) => {
+    if (attacker.to) return attacker;
+
+    return {
+      ...attacker,
+      isTemporary: true,
+      to: attacker.to ?? mousePosition,
+    };
+  });
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {

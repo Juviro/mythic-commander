@@ -25,8 +25,8 @@ const BattlefieldCard = ({ card, player, inSelection }: Props) => {
 
   const { hoveredCardIds, selectedCardIds } = useContext(BattlefieldSelectionContext);
 
-  const toggleSelectedAttackerId = useCombatStore(
-    (store) => store.toggleSelectedAttackerId
+  const toggleAttacker = useCombatStore(
+    (store) => store.toggleAttacker
   );
 
   const isHovered = hoveredCardIds?.includes(card.clashId);
@@ -48,7 +48,7 @@ const BattlefieldCard = ({ card, player, inSelection }: Props) => {
     whenHovering: cardRef,
   });
 
-  useShortcut(SHORTCUTS.ATTACK, () => toggleSelectedAttackerId(card.clashId), {
+  useShortcut(SHORTCUTS.ATTACK, () => toggleAttacker(card.clashId), {
     disabled: !isInOwnCombatPhase,
     whenHovering: cardRef,
   });

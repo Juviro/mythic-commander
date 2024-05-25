@@ -8,15 +8,13 @@ import GameStateContext from '../GameStateContext';
 const CombatArrows = () => {
   const { attackers } = useCombatArrows();
   const { gameState } = useContext(GameStateContext);
-  const selectedAttackerIds = useCombatStore((store) => store.selectedAttackerIds);
-  const resetSelectedAttackerIds = useCombatStore(
-    (store) => store.resetSelectedAttackerIds
-  );
+  // const selectedAttackerIds = useCombatStore((store) => store.selectedAttackerIds);
+  // const resetAttackers = useCombatStore((store) => store.resetAttackers);
 
-  useEffect(() => {
-    if (!selectedAttackerIds.length) return;
-    resetSelectedAttackerIds();
-  }, [gameState?.phase]);
+  // useEffect(() => {
+  //   if (!selectedAttackerIds.length) return;
+  //   resetAttackers();
+  // }, [gameState?.phase]);
 
   const activePlayer = gameState?.players.find(
     (player) => player.id === gameState.activePlayerId

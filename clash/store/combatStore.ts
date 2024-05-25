@@ -2,20 +2,25 @@ import { create } from 'zustand';
 
 export type TargetType = 'player' | 'card';
 
-export interface Attacker {
+interface TemporaryAttacker {
+  id: string;
+  targetType?: TargetType;
+  targetId?: string;
+  blockerIds: string[];
+}
+
+interface PermanentAttacker {
   id: string;
   targetType: TargetType;
   targetId: string;
   blockerIds: string[];
 }
 
+export type Attacker = TemporaryAttacker | PermanentAttacker;
+
 interface CombatStore {
-  /**
-   * The ids of the attackers that don't have a target yet.
-   */
-  selectedAttackerIds: string[];
-  toggleSelectedAttackerId: (attackerId: string) => void;
-  resetSelectedAttackerIds: () => void;
+  toggleAttacker: (attackerId: string) => void;
+  resetAttackers: () => void;
 
   attackers: Attacker[];
   attackTarget: (targetId: string, targetType: TargetType) => void;
@@ -25,36 +30,24 @@ interface CombatStore {
 }
 
 const useCombatStore = create<CombatStore>((set) => ({
-  selectedAttackerIds: [],
-  toggleSelectedAttackerId: (attackerId: string) =>
-    set((state) => {
-      if (state.selectedAttackerIds.includes(attackerId)) {
-        return {
-          selectedAttackerIds: state.selectedAttackerIds.filter(
-            (id) => id !== attackerId
-          ),
-        };
-      }
-      return { selectedAttackerIds: [...state.selectedAttackerIds, attackerId] };
-    }),
-  resetSelectedAttackerIds: () => set({ selectedAttackerIds: [] }),
-
   attackers: [],
+  toggleAttacker: (attackerId: string) =>
+    set((state) => {
+      const filteredAttackers = state.attackers.filter(({ id }) => id !== attackerId);
+      if (filteredAttackers.length < state.attackers.length) {
+        return { attackers: filteredAttackers };
+      }
+      return { attackers: [...state.attackers, { id: attackerId, blockerIds: [] }] };
+    }),
+  resetAttackers: () => set({ attackers: [] }),
   attackTarget: (targetId: string, targetType: TargetType) =>
     set((state) => {
-      const cardIds = state.selectedAttackerIds;
-      const updatedAttackers = state.attackers.filter(
-        (attacker) => !cardIds.includes(attacker.id)
-      );
-      const newAttackers = cardIds.map((id) => ({
-        id,
-        targetId,
-        targetType,
-        blockerIds: [],
-      }));
+      const updatedAttackers = state.attackers.map((attacker) => {
+        if (attacker.targetId) return attacker;
+        return { ...attacker, targetId, targetType };
+      });
       return {
-        attackers: updatedAttackers.concat(newAttackers),
-        selectedAttackerIds: [],
+        attackers: updatedAttackers,
       };
     }),
 
