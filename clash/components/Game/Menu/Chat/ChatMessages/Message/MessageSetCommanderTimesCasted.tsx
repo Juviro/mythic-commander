@@ -11,6 +11,8 @@ interface Props {
 }
 
 const MessageSetCommanderTimesCasted = ({ payload, playerId }: Props) => {
+  if (payload.previousTotal === payload.total) return null;
+
   return (
     <div className={styles.message}>
       <ColoredPlayerName id={playerId} />
