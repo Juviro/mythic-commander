@@ -1,13 +1,7 @@
 import db from '../../../../database';
 import { canEditDeck } from '../../../../auth/authenticateUser';
 
-interface LandsSuggestionOptions {
-  numberOfLands: number;
-  onwnedLandsOnly: boolean;
-  minNumberOfBasics: number;
-}
-
-const getColorIdentity = async (deckId: string) => {
+const getColorIdentity = async (deckId) => {
   const { rows: colorIdentities } = await db.raw(
     `
         SELECT color_identity
@@ -26,15 +20,11 @@ const getColorIdentity = async (deckId: string) => {
   return [...new Set(colorIdentity)];
 };
 
-const getLandsSuggestion = async (
-  deckId: string,
-  options: LandsSuggestionOptions,
-  userId: string
-) => {
+const getLandsSuggestion = async (deckId, options, userId) => {
   await canEditDeck(userId, deckId);
 
+  // eslint-disable-next-line no-unused-vars
   const colorIdentity = await getColorIdentity(deckId);
-  console.log('colorIdentity', colorIdentity);
 
   return {
     groups: [],

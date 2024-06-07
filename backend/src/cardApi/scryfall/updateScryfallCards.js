@@ -61,10 +61,10 @@ export const updateScryfallCards = async (type, tableName) => {
       // remove trailing comma
       const parsableCard = line.replace(/,$/, '');
       const card = JSON.parse(parsableCard);
-      numberOfCards++;
+      numberOfCards += 1;
 
       if (shouldSkipCard(card)) {
-        numberOfSkippedCards++;
+        numberOfSkippedCards += 1;
         continue;
       }
       printProgress();
@@ -104,13 +104,13 @@ export const updateScryfallCards = async (type, tableName) => {
     }
   }
   console.info('updated scryfall cards, deleting file');
-  return new Promise((resolve, reject) =>
+  return new Promise((resolve, reject) => {
     fs.unlink(filePath, (err) => {
       if (err) {
         reject(err);
       } else {
         resolve();
       }
-    })
-  );
+    });
+  });
 };

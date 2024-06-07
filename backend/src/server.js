@@ -10,7 +10,7 @@ export default new ApolloServer({
       db,
     };
 
-    const authorization = ctx.request.header.authorization;
+    const { authorization } = ctx.request.header;
     if (!authorization) {
       return { ...context, user: {} };
     }

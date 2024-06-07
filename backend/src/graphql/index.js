@@ -1,6 +1,6 @@
-import { makeExecutableSchema } from 'graphql-tools';
 import { readFileSync } from 'fs';
 import { gql } from 'graphql-tag';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 
 import resolvers from './resolvers';
 

@@ -1,6 +1,7 @@
 import {
   canAccessDeck,
   canAccessWantsList,
+  canEditDeck,
   canEditWantsList,
 } from '../../../../auth/authenticateUser';
 

@@ -38,7 +38,7 @@ const sortSets = (a, b) => {
   return a.is_special - b.is_special;
 };
 
-export const getAllSets = async (oracle_id, userId = '', db) => {
+export const getAllSets = async (oracle_id, db, userId = '') => {
   const { rows: cards } = await db.raw(
     `
       SELECT 

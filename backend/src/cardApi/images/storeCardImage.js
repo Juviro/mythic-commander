@@ -1,8 +1,7 @@
 import fs from 'fs';
 import sharp from 'sharp';
-import fetch from 'node-fetch';
 
-const IMG_DIR = process.env.IMG_DIR;
+const { IMG_DIR } = process.env;
 
 const DIMENSIONS = {
   small: {

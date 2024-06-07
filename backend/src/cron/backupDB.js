@@ -8,7 +8,7 @@ const database = process.env.DB_NAME;
 const backupDir = process.env.BACKUP_DIR ? `${process.env.BACKUP_DIR}/` : '';
 
 const pad = (num) => {
-  return num < 10 ? '0' + num : num;
+  return num < 10 ? `0${num}` : num;
 };
 
 const getFilename = () => {
@@ -22,7 +22,7 @@ const getFilename = () => {
 const backupDB = () => {
   if (process.env.NODE_ENV === 'dev') {
     console.error('WRONG NODE_ENV FOR DB BACKUP');
-    return;
+    return null;
   }
   console.info(
     'Starting to backup DB',
