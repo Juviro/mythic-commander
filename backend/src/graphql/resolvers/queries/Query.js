@@ -11,6 +11,7 @@ import {
 import wantedCards from './wantedCards';
 import tokenFinder from './tokenFinder';
 import getEdhrecCards from './getEdhrecCards';
+// import getLandsSuggestion from './LandsSuggestion/getLandsSuggestion';
 import tokens from './tokens';
 import collectionBySet from './collectionBySet';
 import { VARIANTS } from './Card/cardVariants';
@@ -76,6 +77,11 @@ const resolver = {
 
   edhrecCards(_, { names, themeSuffix }, { user: { id: userId } }) {
     return getEdhrecCards(names, themeSuffix, userId);
+  },
+
+  // eslint-disable-next-line no-unused-vars
+  landsSuggestion(_, { deckId, options }, { user: { id: userId } }) {
+    // return getLandsSuggestion(deckId, options, userId);
   },
 
   async ownedCardNames(_, __, { db, user: { id: userId } }) {
