@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+echo -e "\e[44mSetting node version\e[0m"
+cd /opt/mtg && nvm install && nvm use
+
 echo -e "\e[44mBuilding Frontend\e[0m"
 cd /opt/mtg/frontend && yarn install --production=false --ignore-engines && rm -rf /opt/mtg/frontend/build/* && ./node_modules/.bin/react-scripts --max_old_space_size=4096 build
 
