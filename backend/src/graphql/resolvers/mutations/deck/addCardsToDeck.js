@@ -19,6 +19,7 @@ const addCardsToDeck = async (
     const [{ id }] = await db('decks')
       .insert({ userId, name: deckName, id: randomId() })
       .returning('id');
+    // eslint-disable-next-line no-param-reassign
     deckId = id;
   } else {
     await canEditDeck(userId, deckId);

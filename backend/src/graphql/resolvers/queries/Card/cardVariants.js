@@ -106,7 +106,10 @@ export const getCardVariants = ({
   if (frame === 'future') {
     variants.push(VARIANTS.FUTURE_FRAME);
   }
-  if (parseInt(frame) < 2000 && new Date(released_at).getFullYear() > 2020) {
+  if (
+    parseInt(frame, 10) < 2000 &&
+    new Date(released_at).getFullYear() > 2020
+  ) {
     variants.push(VARIANTS.RETRO_FRAME);
   }
   if (textless === true) {

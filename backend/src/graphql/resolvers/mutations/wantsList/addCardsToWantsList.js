@@ -26,6 +26,7 @@ export default async (
     const [{ id }] = await db('wantsLists')
       .insert({ userId, name: wantsListName, id: randomId() })
       .returning('id');
+    // eslint-disable-next-line no-param-reassign
     wantsListId = id;
   }
 

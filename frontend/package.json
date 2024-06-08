@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "private": true,
   "dependencies": {
-    "@ant-design/icons": "4.7.0",
+    "@ant-design/icons": "5.3.7",
     "@apollo/client": "^3.6.9",
     "@apollo/react-components": "^4.0.0",
     "@babel/eslint-parser": "^7.18.9",
@@ -58,6 +58,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-env": "^7.18.9",
     "@graphql-codegen/cli": "^2.11.3",
     "@graphql-codegen/introspection": "^2.2.0",

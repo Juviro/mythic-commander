@@ -32,8 +32,8 @@ const resolver = {
       .join('\n<cardface>\n');
   },
   prices({ prices }) {
-    prices.usd_foil = prices.usd_foil ?? prices.usd_etched;
-    return prices;
+    const usdFoil = prices.usd_foil ?? prices.usd_etched;
+    return { ...prices, usd_foil: usdFoil };
   },
   priceUsd({ prices: { usd, usd_foil, usd_etched } }) {
     return usd || usd_foil || usd_etched || 0;

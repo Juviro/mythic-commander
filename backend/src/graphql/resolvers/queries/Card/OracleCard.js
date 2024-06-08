@@ -1,6 +1,6 @@
 import { getAllSets, getTypes } from './helper';
 
-const sumPrice = async (currency, sumPrice, oracle_id, userId, db) => {
+const getSumPrice = async (currency, sumPrice, oracle_id, userId, db) => {
   if (typeof sumPrice === 'number') return sumPrice;
   if (!userId) return 0;
 
@@ -53,7 +53,7 @@ const resolver = {
   },
 
   allSets({ oracle_id }, _, { db, user: { id: userId } }) {
-    return getAllSets(oracle_id, userId, db);
+    return getAllSets(oracle_id, db, userId);
   },
 
   primaryTypes(card) {
@@ -109,11 +109,11 @@ const resolver = {
   },
 
   sumPriceUsd({ sumPriceUsd, oracle_id }, _, { db, user: { id: userId } }) {
-    return sumPrice('usd', sumPriceUsd, oracle_id, userId, db);
+    return getSumPrice('usd', sumPriceUsd, oracle_id, userId, db);
   },
 
   sumPriceEur({ sumPriceEur, oracle_id }, _, { db, user: { id: userId } }) {
-    return sumPrice('eur', sumPriceEur, oracle_id, userId, db);
+    return getSumPrice('eur', sumPriceEur, oracle_id, userId, db);
   },
 
   isCommanderLegal({ legalities }) {

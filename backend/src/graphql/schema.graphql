@@ -172,6 +172,29 @@ type DeckCard {
   tags: [String!]
 }
 
+################################# Land Suggestion #################################
+
+input LandsSuggestionInput {
+  numberOfLands: Int!
+  onwnedLandsOnly: Boolean!
+  minNumberOfBasics: Int!
+}
+
+type LandsSuggestionCard {
+  id: String!
+  amount: Int!
+  selected: Boolean!
+}
+
+type LandsSuggestionGroup {
+  title: String!
+  cards: [LandsSuggestionCard!]!
+}
+
+type LandsSuggestionResponse {
+  groups: [LandsSuggestionGroup!]!
+}
+
 ################################# Collection #################################
 
 type Collection {
@@ -346,6 +369,7 @@ type Query {
 
   deck(id: String!): Deck
   decks: [Deck!]!
+  landsSuggestion(deckId: String! options: LandsSuggestionInput!): LandsSuggestionResponse!
 
   collection: Collection!
   paginatedCollection(
