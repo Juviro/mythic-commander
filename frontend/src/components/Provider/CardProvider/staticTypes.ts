@@ -18,7 +18,7 @@ export const SUPER_TYPES = [
   'World',
 ] as const;
 
-export type CardType = typeof CARD_TYPES[number];
+export type CardType = (typeof CARD_TYPES)[number];
 
 // Order determines order of deck categories
 export const CARD_TYPE_DECK_ORDER = [
