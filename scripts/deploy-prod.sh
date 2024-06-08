@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+. ~/.nvm/nvm.sh
 
 echo -e "\e[44mSetting node version\e[0m"
 cd /opt/mtg && nvm install && nvm use
