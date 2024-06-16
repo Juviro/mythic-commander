@@ -79,13 +79,15 @@ export default ({ wantsList, large }) => {
             {wantsList && `Link '${wantsList.name}' to a deck`}
           </Typography.Text>
         }
-        visible={modalVisible}
+        open={modalVisible}
         onCancel={() => toggleIsModalVisible(false)}
         footer={null}
         centered
-        bodyStyle={{
-          maxHeight: '70vh',
-          overflow: 'auto',
+        styles={{
+          body: {
+            maxHeight: '70vh',
+            overflow: 'auto',
+          },
         }}
       >
         <List loading={loading} style={{ width: '100%' }} className="hoverable">

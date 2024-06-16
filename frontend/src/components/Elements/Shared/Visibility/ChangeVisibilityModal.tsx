@@ -66,7 +66,7 @@ export default ({
   );
 
   return (
-    <Modal onOk={onClose} onCancel={onClose} visible={modalVisible} title={title}>
+    <Modal onOk={onClose} onCancel={onClose} open={modalVisible} title={title}>
       <Flex direction="column" style={style}>
         <Typography.Text style={{ fontSize: 12 }} strong>
           {description}

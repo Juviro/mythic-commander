@@ -14,7 +14,9 @@ export default ({ onCancel, text, onOk }) => {
       okText="Delete"
       okButtonProps={{ type: 'danger', onClick: onOk }}
       onCancel={onCancel}
-      bodyStyle={{ maxHeight: 400, overflowY: 'auto' }}
+      styles={{
+        body: { maxHeight: 400, overflowY: 'auto' },
+      }}
       focusId="modal.confirmDelete"
     >
       <Typography.Text>{text}</Typography.Text>

@@ -137,7 +137,7 @@ const WantsListMenu = ({ history, wantsList, canEdit }) => {
     </Menu>
   );
   return (
-    <Dropdown overlay={menu} visible={isOpen} onVisibleChange={toggleIsOpen}>
+    <Dropdown menu={menu} open={isOpen} onVisibleChange={toggleIsOpen}>
       <MoreOutlined onClick={toggleIsOpen} />
     </Dropdown>
   );

@@ -49,7 +49,7 @@ export default ({ deck }) => {
       <Typography.Title
         ellipsis
         level={3}
-        style={{ marginBottom: 0, display: 'flex' }}
+        style={{ margin: 0, display: 'flex' }}
         editable={editable}
       >
         {deck.name}

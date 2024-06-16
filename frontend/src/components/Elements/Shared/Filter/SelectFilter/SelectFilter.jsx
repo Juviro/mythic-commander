@@ -88,7 +88,7 @@ const SelectFilter = ({
     <AutoComplete
       value={currentValue}
       ref={inputRef}
-      dropdownMatchSelectWidth
+      popupMatchSelectWidth
       allowClear={allowClear}
       style={{ width: '100%' }}
       onSelect={onSelect}

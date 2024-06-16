@@ -14,7 +14,7 @@ const AddTagFooter = ({ onSave, onSaveAsDefault, onClose }: Props) => {
   const { hasFeatureFlag } = useContext(UserContext);
   return (
     <Flex justify="space-between">
-      <Button type="ghost" danger onClick={onClose} size="small">
+      <Button type="primary" ghost danger onClick={onClose} size="small">
         Cancel
       </Button>
       {onSaveAsDefault && hasFeatureFlag(FEATURE_FLAG_TAG) ? (

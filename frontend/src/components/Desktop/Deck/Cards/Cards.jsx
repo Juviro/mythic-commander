@@ -33,7 +33,7 @@ export default ({ deck, loading, onAddCards, view }) => {
 
   const cardsByType = getCards();
   const cardsByTypeWithoutEmpty = cardsByType?.filter(
-    ({ cards, type }) => cards.length || type === 'Commander'
+    ({ cards, type }) => cards.length || type === 'Commander' || type === 'Lands'
   );
 
   const onDrop = ({ id, name, amount = 1 }) => {

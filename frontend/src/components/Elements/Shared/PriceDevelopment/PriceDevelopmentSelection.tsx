@@ -32,7 +32,8 @@ const PriceDevelopmentSelection = ({
     <StyledSpace size={12}>
       {PRICE_KEYS.map((key) => (
         <Button
-          type={key === selectedKey ? 'primary' : 'ghost'}
+          type="primary"
+          ghost={key !== selectedKey}
           disabled={
             (foilOnly && !key.includes('Foil')) || (nonfoilOnly && key.includes('Foil'))
           }

@@ -44,9 +44,9 @@ export default () => {
 
   return (
     <Dropdown
-      overlay={menu}
-      visible={isOpen}
-      onVisibleChange={toggleIsOpen}
+      menu={menu}
+      open={isOpen}
+      onOpenChange={toggleIsOpen}
       trigger="click"
       style={{ width: 30 }}
     >

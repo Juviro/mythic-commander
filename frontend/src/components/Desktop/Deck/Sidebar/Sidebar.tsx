@@ -32,7 +32,7 @@ export default ({ currentTabId, setCurrentTabId, onAddCards, deck }: Props) => {
     <StyledDrawer
       width={510}
       mask={false}
-      visible={Boolean(currentTabId)}
+      open={Boolean(currentTabId)}
       onClose={() => setCurrentTabId(null)}
       zIndex={100}
       style={{
@@ -41,7 +41,11 @@ export default ({ currentTabId, setCurrentTabId, onAddCards, deck }: Props) => {
         paddingBottom: 6,
         overflow: !currentTabId ? 'hidden' : undefined,
       }}
-      bodyStyle={{ padding: 0 }}
+      styles={{
+        body: {
+          padding: 0,
+        },
+      }}
       closable={false}
     >
       {currentTabId && (

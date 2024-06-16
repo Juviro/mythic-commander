@@ -23,6 +23,7 @@ const StyledWrapper = styled.div`
   height: 100%;
   bottom: 0;
   padding: 12px 24px;
+  box-sizing: border-box;
   background: linear-gradient(to bottom, ${darkBackgroundTransparent}, ${darkBackground});
   animation: ${fadeIn} 0.2s ease-out;
 `;

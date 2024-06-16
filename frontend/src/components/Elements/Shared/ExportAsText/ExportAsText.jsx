@@ -52,9 +52,11 @@ export default ({
         title={title}
         footer={null}
         destroyOnClose
-        visible={exportViewOpen}
+        open={exportViewOpen}
         onCancel={toggleExportViewOpen}
-        bodyStyle={{ maxHeight: '80vh', overflow: 'auto' }}
+        styles={{
+          body: { maxHeight: '80vh', overflow: 'auto' },
+        }}
         style={{ top: 20 }}
         focusId="modal.exportAsText"
       >

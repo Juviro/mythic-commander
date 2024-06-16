@@ -18,7 +18,7 @@ const StyledSubtitle = styled.span`
   color: ${lightText};
 `;
 
-export default ({ loading, cardsByType, deck, numberOfModalDfcLands }) => {
+const CardLists = ({ loading, cardsByType, deck, numberOfModalDfcLands }) => {
   const [mutateDelete] = useMutation(deleteFromDeckDesktop);
   const [mutateEdit] = useMutation(editDeckCardDesktop);
 
@@ -171,3 +171,5 @@ export default ({ loading, cardsByType, deck, numberOfModalDfcLands }) => {
     />
   );
 };
+
+export default CardLists;

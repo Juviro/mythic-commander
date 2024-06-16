@@ -84,18 +84,22 @@ const CardModal = ({
 
   const modalProps = isDetailedCard
     ? {
-        bodyStyle: {
-          padding: '32px 0 0',
-          height: 'calc(100vh - 50px)',
-          overflow: 'auto',
+        styles: {
+          body: {
+            padding: '32px 0 0',
+            height: 'calc(100vh - 50px)',
+            overflow: 'auto',
+          },
         },
         closeIcon: <CardButton Icon={CloseOutlined} relative size="120%" />,
       }
     : {
-        bodyStyle: {
-          padding: 0,
-          borderRadius: '4%',
-          overflow: 'hidden',
+        styles: {
+          body: {
+            padding: 0,
+            borderRadius: '4%',
+            overflow: 'hidden',
+          },
         },
         wrapClassName: 'transparent-modal',
         closeIcon: <div />,

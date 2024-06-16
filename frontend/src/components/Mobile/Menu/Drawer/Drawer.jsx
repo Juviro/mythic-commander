@@ -31,7 +31,7 @@ export default ({ isVisible, onCloseDrawer }) => {
       placement="left"
       closable
       onClose={onCloseDrawer}
-      visible={isVisible}
+      open={isVisible}
       zIndex={1002}
       width="auto"
       headerStyle={{
@@ -39,12 +39,14 @@ export default ({ isVisible, onCloseDrawer }) => {
         padding: 0,
         borderRadius: 0,
       }}
-      bodyStyle={{
-        padding: 16,
-        display: 'flex',
-        flexDirection: 'column',
-        height: 'calc(100% - 53px)',
-        justifyContent: 'space-between',
+      styles={{
+        body: {
+          padding: 16,
+          display: 'flex',
+          flexDirection: 'column',
+          height: 'calc(100% - 53px)',
+          justifyContent: 'space-between',
+        },
       }}
     >
       <span>

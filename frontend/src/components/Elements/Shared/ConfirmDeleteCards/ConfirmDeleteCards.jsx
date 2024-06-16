@@ -18,9 +18,11 @@ export default ({ onCancel, cardsToDelete, numberOfSelectedCards, onDelete }) =>
       centered
       title={title}
       okText="Delete"
-      okButtonProps={{ type: 'danger', onClick: onDelete }}
+      okButtonProps={{ type: 'primary', danger: true, onClick: onDelete }}
       onCancel={onCancel}
-      bodyStyle={{ maxHeight: 400, overflowY: 'auto' }}
+      styles={{
+        body: { maxHeight: 400, overflowY: 'auto' },
+      }}
       focusId="modal.confirmDeleteCards"
     >
       <SimpleCardsList cards={cardsToDelete} />

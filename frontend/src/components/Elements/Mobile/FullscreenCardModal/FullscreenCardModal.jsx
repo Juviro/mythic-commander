@@ -20,11 +20,13 @@ export default ({ card, visible, onChangeIsOpen }) => {
     <Modal
       footer={null}
       closeIcon={<div />}
-      visible={visible}
-      bodyStyle={{
-        padding: 0,
-        borderRadius: '4%',
-        overflow: 'hidden',
+      open={visible}
+      styles={{
+        body: {
+          padding: 0,
+          borderRadius: '4%',
+          overflow: 'hidden',
+        },
       }}
       wrapClassName="transparent-modal"
       onCancel={onChangeIsOpen}
