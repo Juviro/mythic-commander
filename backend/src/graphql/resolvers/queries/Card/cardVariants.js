@@ -91,9 +91,6 @@ export const getCardVariants = ({
   if (full_art === true) {
     variants.push(VARIANTS.FULL_ART);
   }
-  if (frame_effects?.includes('inverted')) {
-    variants.push(VARIANTS.INVERTED);
-  }
   if (frame_effects?.includes('showcase')) {
     variants.push(VARIANTS.SHOWCASE);
   }
@@ -102,6 +99,9 @@ export const getCardVariants = ({
   }
   if (finishes?.length === 1 && finishes[0] === 'etched') {
     variants.push(VARIANTS.ETCHED_FOIL);
+  }
+  if (frame_effects?.includes('inverted')) {
+    variants.push(VARIANTS.INVERTED);
   }
   if (frame === 'future') {
     variants.push(VARIANTS.FUTURE_FRAME);
