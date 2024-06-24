@@ -138,7 +138,7 @@ export default class MultiInput extends React.Component {
         </Button>
         <Modal
           destroyOnClose
-          visible={isOpen}
+          open={isOpen}
           title="Import Card List"
           onCancel={() => this.setState({ isOpen: false })}
           footer={

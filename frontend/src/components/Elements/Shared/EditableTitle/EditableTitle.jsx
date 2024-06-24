@@ -7,7 +7,7 @@ const StyledWrapper = styled.span`
   width: 100%;
 `;
 
-export default ({ name, onChange, level = 4, canEdit = false }) => {
+const EditableTitle = ({ name, onChange, level = 4, canEdit = false }) => {
   if (name === undefined) return <CustomSkeleton.Line />;
 
   return (
@@ -16,10 +16,12 @@ export default ({ name, onChange, level = 4, canEdit = false }) => {
         ellipsis
         level={level}
         editable={canEdit && { onChange }}
-        style={{ display: 'block', marginLeft: 8, marginBottom: 0 }}
+        style={{ display: 'block', margin: '0 8px', height: 38 }}
       >
         {name}
       </Typography.Title>
     </StyledWrapper>
   );
 };
+
+export default EditableTitle;

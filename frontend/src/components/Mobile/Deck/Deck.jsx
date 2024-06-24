@@ -51,7 +51,7 @@ export default () => {
   return (
     <StyledDeck>
       <DeckHeader deck={unifiedDeck} loading={loading} />
-      <DeckMenu currentTab={currentTab} onSetTab={setCurrentTab} />
+      {deck?.canEdit && <DeckMenu currentTab={currentTab} onSetTab={setCurrentTab} />}
       <DeckBody loading={loading} deck={unifiedDeck} currentTab={currentTab} />
       <AddCardMobile
         onAddCard={onAddCard}

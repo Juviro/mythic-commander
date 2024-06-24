@@ -1,12 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { primary } from 'constants/colors';
 import mkmIcon from '../../../../assets/purchaseIcons/mkm.png';
 import edhrecIcon from '../../../../assets/purchaseIcons/edhrec.png';
 import tcgplayer from '../../../../assets/purchaseIcons/tcgplayer.svg';
 import scryfallIcon from '../../../../assets/purchaseIcons/scryfall.png';
 import cardKingdomIcon from '../../../../assets/purchaseIcons/cardKingdom.ico';
 import Hint from '../Hint';
+
+const StyledLink = styled.a`
+  text-decoration: none;
+  color: ${primary};
+  font-size: 14px;
+`;
 
 const StyledPurchaseIcon = styled.img`
   width: 18px;
@@ -102,7 +109,7 @@ export const PurchaseIcon = ({
   }
 
   return (
-    <a
+    <StyledLink
       href={uri}
       target="_blank"
       rel="noopener noreferrer"
@@ -110,6 +117,6 @@ export const PurchaseIcon = ({
       style={style}
     >
       {body}
-    </a>
+    </StyledLink>
   );
 };

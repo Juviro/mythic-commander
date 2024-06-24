@@ -16,7 +16,6 @@ const StyledWrapper = styled.div`
   user-select: none;
   position: absolute;
   left: -40px;
-  top: -2px;
   display: flex;
   flex-wrap: wrap;
   z-index: 9999;

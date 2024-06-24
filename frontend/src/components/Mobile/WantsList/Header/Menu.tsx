@@ -5,7 +5,7 @@ import {
   CopyOutlined,
   DisconnectOutlined,
 } from '@ant-design/icons';
-import { Dropdown, Menu, Popconfirm } from 'antd';
+import { Dropdown, MenuProps, Popconfirm } from 'antd';
 import { withRouter } from 'react-router';
 import { useMutation } from '@apollo/client';
 import UserContext from 'components/Provider/UserProvider';
@@ -16,7 +16,7 @@ import message from '../../../../utils/message';
 import { wantsListsForDeckMobile } from '../../Deck/LinkedWants/queries';
 import { useToggle } from '../../../Hooks';
 
-const WantsListMenu = ({ history, wantsList, canEdit }) => {
+const WantsListMenu = ({ history, wantsList, canEdit }: any) => {
   const { deck } = wantsList;
   const deckId = deck && deck.id;
   const wantsListId = wantsList.id;
@@ -46,7 +46,7 @@ const WantsListMenu = ({ history, wantsList, canEdit }) => {
       update: (cache) => {
         const existing = cache.readQuery({
           query: wantsLists,
-        });
+        }) as any;
         if (!existing) return;
 
         const newWantsLists = existing.wantsLists.filter(({ id }) => id !== wantsListId);
@@ -99,45 +99,58 @@ const WantsListMenu = ({ history, wantsList, canEdit }) => {
     message('Unlinked Deck');
   };
 
-  const menu = (
-    <Menu>
-      <Menu.Item key="1" onClick={onDuplicate}>
-        <CopyOutlined />
-        <span>Duplicate</span>
-      </Menu.Item>
-      {canUnlink && (
-        <Menu.Item key="2" onClick={onUnlink}>
-          <DisconnectOutlined />
-          <span>Unlink from Deck</span>
-        </Menu.Item>
-      )}
-      {canEdit && (
-        <>
-          <Menu.Item key="3">
-            <WantsListVisibility
-              visibility={wantsList?.visibility}
-              asListItem
-              callback={toggleIsOpen}
-            />
-          </Menu.Item>
-          <Menu.Item key="4">
-            <Popconfirm
-              placement="bottomRight"
-              title="Are you sure you want to delete this list?"
-              onConfirm={onDelete}
-              okText="Yes"
-              cancelText="No"
-            >
-              <DeleteOutlined />
-              <span>Delete</span>
-            </Popconfirm>
-          </Menu.Item>
-        </>
-      )}
-    </Menu>
-  );
+  const menuNew: MenuProps = {
+    items: [
+      {
+        key: '1',
+        icon: <CopyOutlined />,
+        label: 'Duplicate',
+        onClick: onDuplicate,
+      },
+    ],
+  };
+
+  if (canUnlink) {
+    menuNew.items.push({
+      key: '2',
+      icon: <DisconnectOutlined />,
+      label: 'Unlink from Deck',
+      onClick: onUnlink,
+    });
+  }
+  if (canEdit) {
+    menuNew.items.push(
+      {
+        key: '3',
+        label: (
+          <WantsListVisibility
+            visibility={wantsList?.visibility}
+            asListItem
+            callback={toggleIsOpen}
+          />
+        ),
+        onClick: toggleIsOpen,
+      },
+      {
+        key: '4',
+        icon: <DeleteOutlined />,
+        label: (
+          <Popconfirm
+            placement="bottomRight"
+            title="Are you sure you want to delete this list?"
+            onConfirm={onDelete}
+            okText="Yes"
+            cancelText="No"
+          >
+            <span>Delete</span>
+          </Popconfirm>
+        ),
+      }
+    );
+  }
+
   return (
-    <Dropdown overlay={menu} visible={isOpen} onVisibleChange={toggleIsOpen}>
+    <Dropdown menu={menuNew} open={isOpen} onOpenChange={toggleIsOpen}>
       <MoreOutlined onClick={toggleIsOpen} />
     </Dropdown>
   );

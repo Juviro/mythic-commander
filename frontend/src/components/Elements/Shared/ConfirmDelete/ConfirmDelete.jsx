@@ -12,9 +12,11 @@ export default ({ onCancel, text, onOk }) => {
       visible
       title="Are you sure?"
       okText="Delete"
-      okButtonProps={{ type: 'danger', onClick: onOk }}
+      okButtonProps={{ danger: true, onClick: onOk }}
       onCancel={onCancel}
-      bodyStyle={{ maxHeight: 400, overflowY: 'auto' }}
+      styles={{
+        body: { maxHeight: 400, overflowY: 'auto' },
+      }}
       focusId="modal.confirmDelete"
     >
       <Typography.Text>{text}</Typography.Text>

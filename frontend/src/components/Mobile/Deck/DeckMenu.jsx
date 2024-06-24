@@ -1,27 +1,46 @@
 import React from 'react';
 import { Affix, Menu } from 'antd';
+
 import styled from 'styled-components';
 
-const StyledMenuItem = styled(Menu.Item)`
-  flex-grow: 1;
-  display: flex !important;
-  justify-content: center;
+const StyledMenu = styled(Menu)`
+  & .ant-menu-item {
+    flex: 1;
+    justify-content: center;
+    display: flex;
+    padding: 0;
+  }
 `;
 
-export default ({ onSetTab, currentTab }) => {
+const DeckMenu = ({ onSetTab, currentTab }) => {
+  const items = [
+    {
+      key: 'cards',
+      label: 'Cards',
+      onClick: () => onSetTab('cards'),
+    },
+    {
+      key: 'wants',
+      label: 'Wants',
+      onClick: () => onSetTab('wants'),
+    },
+    {
+      key: 'edit',
+      label: 'Edit',
+      onClick: () => onSetTab('edit'),
+    },
+  ];
+
   return (
     <Affix offsetTop={50} style={{ width: '100%', zIndex: 200 }}>
-      <Menu selectedKeys={[currentTab]} mode="horizontal" style={{ display: 'flex' }}>
-        <StyledMenuItem key="cards" onClick={() => onSetTab('cards')}>
-          Cards
-        </StyledMenuItem>
-        <StyledMenuItem key="wants" onClick={() => onSetTab('wants')}>
-          Wants
-        </StyledMenuItem>
-        <StyledMenuItem key="edit" onClick={() => onSetTab('edit')}>
-          Edit
-        </StyledMenuItem>
-      </Menu>
+      <StyledMenu
+        selectedKeys={[currentTab]}
+        mode="horizontal"
+        style={{ display: 'flex' }}
+        items={items}
+      />
     </Affix>
   );
 };
+
+export default DeckMenu;

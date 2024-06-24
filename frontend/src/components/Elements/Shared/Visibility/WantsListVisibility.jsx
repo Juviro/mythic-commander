@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 import { changeWantsListVisibility } from './queries';
 import Visibility from './Visibility';
 
-export default ({ visibility, asListItem, callback }) => {
+export default ({ visibility, asListItem = false, callback = undefined }) => {
   const { id: wantsListId } = useParams();
   const [mutate] = useMutation(changeWantsListVisibility);
   if (!visibility) return null;

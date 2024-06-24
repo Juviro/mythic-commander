@@ -27,7 +27,7 @@ export default ({ playerDamage, onClose, playerId, onTrackDamage }) => {
 
   return (
     <Modal
-      visible
+      open
       onCancel={onClose}
       closable={false}
       title="Track Damage"

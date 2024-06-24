@@ -1,6 +1,6 @@
 import React from 'react';
 import { MoreOutlined } from '@ant-design/icons';
-import { Dropdown, Menu, Typography } from 'antd';
+import { Dropdown, MenuProps, Typography } from 'antd';
 import { DropDownProps } from 'antd/lib/dropdown';
 
 interface MenuAction {
@@ -22,27 +22,34 @@ const isMenuAction = (action: ActionType): action is MenuAction => {
 };
 
 export default ({ actions, placement, fontSize = 20 }: Props) => {
-  const menu = (
-    <Menu>
-      {actions.map((action) => {
-        if (!isMenuAction(action)) {
-          return <Menu.Item key={Math.random()}>{action}</Menu.Item>;
-        }
+  const menuItems = actions.map((action) => {
+    if (!isMenuAction(action)) {
+      return {
+        key: Math.random().toString(),
+        label: action,
+      };
+    }
 
-        const { key, icon, title, onClick } = action;
+    const { key, icon, title, onClick } = action;
 
-        return (
-          <Menu.Item key={key ?? title} onClick={onClick}>
-            {icon}
-            <Typography.Text>{title}</Typography.Text>
-          </Menu.Item>
-        );
-      })}
-    </Menu>
-  );
+    return {
+      key: key ?? title,
+      onClick,
+      label: (
+        <div>
+          {icon}
+          <Typography.Text>{title}</Typography.Text>
+        </div>
+      ),
+    };
+  });
+
+  const menu: MenuProps = {
+    items: menuItems,
+  };
 
   return (
-    <Dropdown overlay={menu} trigger={['click']} placement={placement}>
+    <Dropdown menu={menu} trigger={['click']} placement={placement}>
       <MoreOutlined style={{ fontSize }} />
     </Dropdown>
   );

@@ -33,7 +33,7 @@ export default ({ onClose }) => {
     : `${username} owns ${numberOfCards} cards you need`;
 
   return (
-    <Modal visible onCancel={onClose} title={title} footer={null} style={{ top: 20 }}>
+    <Modal open onCancel={onClose} title={title} footer={null} style={{ top: 20 }}>
       {loading ? (
         <Flex align="center" justify="center">
           <LoadingOutlined style={{ fontSize: 34 }} />

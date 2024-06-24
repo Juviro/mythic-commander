@@ -24,7 +24,11 @@ const CBSOptions = ({
     <PageCard
       title="Set Completion"
       extra={<CBSOptionsHeader groupBy={groupBy} setGroupBy={setGroupBy} />}
-      bodyStyle={{ padding: 0 }}
+      styles={{
+        body: {
+          padding: 0,
+        },
+      }}
     >
       <CBSOptionsFilter
         displayedSetTypes={displayedSetTypes}

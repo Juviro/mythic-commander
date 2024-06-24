@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown, Menu } from 'antd';
+import { Dropdown, MenuProps } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
 
 import { UnifiedCard } from 'types/unifiedTypes';
@@ -22,30 +22,30 @@ export default ({ menuItems, card }: Props) => {
   const [isMenuOpen, toggleIsMenuOpen] = useToggle();
   if (!menuItems.length) return null;
 
-  const menu = (
-    <Menu onClick={toggleIsMenuOpen}>
-      {menuItems.map(({ Icon, title, onClick }) => (
-        <Menu.Item
-          key={title}
-          onClick={({ domEvent }) => {
-            domEvent.stopPropagation();
-            onClick(card);
-          }}
-        >
+  const menu: MenuProps = {
+    onClick: toggleIsMenuOpen,
+    items: menuItems.map(({ Icon, title, onClick }) => ({
+      key: title,
+      onClick: ({ domEvent }) => {
+        domEvent.stopPropagation();
+        onClick(card);
+      },
+      label: (
+        <div>
           {Icon && <Icon style={{ color: primary }} />}
           {title}
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
+        </div>
+      ),
+    })),
+  };
 
   return (
     <Dropdown
-      overlay={menu}
+      menu={menu}
       trigger={['click']}
       placement="bottomRight"
-      visible={isMenuOpen}
-      onVisibleChange={toggleIsMenuOpen}
+      open={isMenuOpen}
+      onOpenChange={toggleIsMenuOpen}
       // @ts-ignore
       onClick={(e) => e.stopPropagation()}
     >

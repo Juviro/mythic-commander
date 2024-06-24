@@ -37,8 +37,10 @@ export default ({
         selectedCardId={selectedCardId}
         setSelectedCardId={setSelectedCardId}
       />
-      <UpdateCardImage cardId={usedCard.id} />
-      <ShowScryfallApiPage cardId={usedCard.id} />
+      <div>
+        <UpdateCardImage cardId={usedCard.id} />
+        <ShowScryfallApiPage cardId={usedCard.id} />
+      </div>
       <PriceDevelopment selectedCard={selectedCard} cardId={usedCard.id} />
       {user && <DecksAndWants card={usedCard} loading={loading} />}
       <AdditionalInfos card={usedCard} loading={loading} isFlipped={isFlipped} />

@@ -25,7 +25,9 @@ export default () => {
       title="Your Collection"
       style={{ width: '100%' }}
       extra={<CollectionVisibility />}
-      bodyStyle={{ padding: '0 24px' }}
+      styles={{
+        body: { padding: '0 24px' },
+      }}
     >
       <CollectionStats />
     </Card>

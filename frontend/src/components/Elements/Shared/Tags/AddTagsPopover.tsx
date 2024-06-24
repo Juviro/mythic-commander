@@ -64,7 +64,7 @@ const AddTagsPopover = ({
   return (
     <Popover
       content={menu}
-      visible={visible}
+      open={visible}
       placement="bottom"
       destroyTooltipOnHide
       overlayClassName="add-tag-popover"

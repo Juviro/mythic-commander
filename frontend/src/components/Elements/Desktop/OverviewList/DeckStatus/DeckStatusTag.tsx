@@ -17,7 +17,9 @@ export const StyledStatusTag = styled(Tag)<{ index: number; open?: boolean }>`
   text-align: center;
 
   z-index: ${({ index }) => 5 - index};
-  transition: all 0.2s ease-in-out, transform 0.3s ease-in-out;
+  transition:
+    all 0.2s ease-in-out,
+    transform 0.3s ease-in-out;
   transform: translateY(${({ index }) => index * 26}px);
 
   ${({ index }) => {

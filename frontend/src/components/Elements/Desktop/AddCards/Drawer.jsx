@@ -9,7 +9,7 @@ export default ({ isVisible, setIsVisible, onAddCards }) => {
       mask={false}
       placement="left"
       title="Add Cards"
-      visible={isVisible}
+      open={isVisible}
       maskClosable={false}
       onClose={() => setIsVisible(false)}
     >

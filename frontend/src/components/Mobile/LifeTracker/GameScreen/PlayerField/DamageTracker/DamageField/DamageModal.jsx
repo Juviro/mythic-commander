@@ -17,12 +17,14 @@ export default ({ onSubmit, damage, onCancel, player }) => {
 
   return (
     <Modal
-      visible
+      open
       getContainer={getContainer}
       title={`Track Damage from ${originName}`}
       onCancel={onCancel}
       onOk={onOk}
-      bodyStyle={{ padding: 0 }}
+      styles={{
+        body: { padding: 0 },
+      }}
       style={{ maxWidth: 340 }}
     >
       <DamageFieldBackground width="100%" height="100%" isInfect={!player} {...player}>

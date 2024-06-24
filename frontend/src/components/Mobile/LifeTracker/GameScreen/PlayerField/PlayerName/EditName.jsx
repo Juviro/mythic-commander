@@ -72,7 +72,7 @@ export default ({ player, onClose, onUpdatePlayer }) => {
 
   return (
     <Modal
-      visible
+      open
       onCancel={onClose}
       onOk={onOk}
       closable={false}

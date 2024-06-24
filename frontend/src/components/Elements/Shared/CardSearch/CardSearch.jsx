@@ -89,7 +89,9 @@ const getHighlightedOption = (
       </span>
       <span>
         {alreadyInList && (
-          <Typography.Text type="warning">already in list</Typography.Text>
+          <Typography.Text type="warning" style={{ marginLeft: 8 }}>
+            already in list
+          </Typography.Text>
         )}
         {owned && <OwnedBadge />}
       </span>

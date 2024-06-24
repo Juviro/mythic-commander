@@ -98,6 +98,7 @@ const GridCard = ({
   const [showMenu, toggleShowMenu] = useToggle();
 
   const [, dragRef] = useDrag({
+    type: 'CARD',
     item: { type: 'CARD', id: card.id, name: card.name, listId, amount: card.amount },
     canDrag,
     end: (_, monitor) => {

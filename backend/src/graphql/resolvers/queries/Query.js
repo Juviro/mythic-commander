@@ -194,7 +194,7 @@ const resolver = {
   },
 
   wantsLists(_, { deckId }, { user: { id: userId }, db }) {
-    if (!userId) return null;
+    if (!userId) return [];
     const where = { userId };
     if (deckId) where.deckId = deckId;
 

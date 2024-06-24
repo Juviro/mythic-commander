@@ -60,12 +60,14 @@ export default ({ currentSnapshot }) => {
         visible={visible}
         onCancel={toggleVisible}
         style={{ height: 500, top: 20 }}
-        bodyStyle={{
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          minHeight: 500,
+        styles={{
+          body: {
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            minHeight: 500,
+          },
         }}
         width={800}
         footer={null}
