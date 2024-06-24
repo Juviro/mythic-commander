@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { useDrop, DragObjectWithType } from 'react-dnd';
+import { useDrop } from 'react-dnd';
 
 import { primaryDrop, primaryLight } from '../../../../constants/colors';
 
@@ -34,7 +34,7 @@ const StyledDropzone = styled.div<DropzoneProps>`
 interface Props {
   children: any;
   listId?: string;
-  onDrop?: (card: DragObjectWithType) => void;
+  onDrop?: (card: any) => void;
   style?: React.CSSProperties;
   isOverStyle?: React.CSSProperties;
   canDropStyle?: React.CSSProperties;
