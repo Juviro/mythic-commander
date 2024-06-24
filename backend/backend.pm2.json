@@ -1,7 +1,8 @@
 {
   "apps": [
     {
-      "name": "backend"
+      "name": "backend",
+      "script":  "./dist/index.js"
     }
   ]
 }
