@@ -44,7 +44,8 @@ export default ({ currentTabId, setCurrentTabId, onAddCards, deck }: Props) => {
           padding: 0,
         },
         wrapper: {
-          height: 'calc(100% - 48px)',
+          // 48px navbar height, 64px action bar height
+          height: 'calc(100% - 48px - 64px)',
           marginTop: 48,
         },
       }}
