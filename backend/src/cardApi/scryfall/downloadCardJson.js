@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import fs from 'fs';
 // TODO: stream instead of download, maybe use scryfall-sdk
 
