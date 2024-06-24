@@ -1,3 +1,5 @@
+import fetch from 'node-fetch';
+
 import db from '../../../database';
 import { normalizeName } from '../../../utils/normalizeName';
 

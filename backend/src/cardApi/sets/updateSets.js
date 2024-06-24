@@ -1,4 +1,5 @@
 import { pick } from 'lodash';
+import fetch from 'node-fetch';
 
 import db from '../../database';
 
