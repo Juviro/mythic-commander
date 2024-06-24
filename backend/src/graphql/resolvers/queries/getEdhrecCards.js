@@ -55,7 +55,6 @@ const formatCards = async (cards, userId) => {
 };
 
 const fetchCards = async (url) => {
-  console.log('url', url);
   const result = await fetch(url);
   const json = await result.json();
 
