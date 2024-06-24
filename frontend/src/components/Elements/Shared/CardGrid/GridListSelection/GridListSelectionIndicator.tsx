@@ -13,7 +13,9 @@ const Styledindicator = styled.div<{ left: number; width: number; top }>`
   width: ${({ width }) => width}px;
   top: ${({ top }) => top}px;
 
-  transition: left 0.3s ease-out, width 0.3s ease-out;
+  transition:
+    left 0.3s ease-out,
+    width 0.3s ease-out;
 `;
 
 interface Props {

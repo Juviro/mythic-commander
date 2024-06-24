@@ -76,17 +76,20 @@ export const getCompletionGroup = (percentageOwned: number) => {
 
 const groupSets = (sets: Set[], property: GroupProperty) => {
   if (property === 'year') {
-    const setGroupsMap = sets.reduce((acc, set) => {
-      const year = set.released_at.split('-')[0];
+    const setGroupsMap = sets.reduce(
+      (acc, set) => {
+        const year = set.released_at.split('-')[0];
 
-      if (!acc[year]) {
-        acc[year] = [];
-      }
+        if (!acc[year]) {
+          acc[year] = [];
+        }
 
-      acc[year].push(set);
+        acc[year].push(set);
 
-      return acc;
-    }, {} as { [key: string]: Set[] });
+        return acc;
+      },
+      {} as { [key: string]: Set[] }
+    );
 
     return Object.entries(setGroupsMap)
       .map(([key, value]) => ({
@@ -96,17 +99,20 @@ const groupSets = (sets: Set[], property: GroupProperty) => {
       .sort((a, b) => Number(b.key) - Number(a.key));
   }
   if (property === 'completion') {
-    const setGroupsMap = sets.reduce((acc, set) => {
-      const completion = getCompletionGroup(set.percentageOwned);
+    const setGroupsMap = sets.reduce(
+      (acc, set) => {
+        const completion = getCompletionGroup(set.percentageOwned);
 
-      if (!acc[completion]) {
-        acc[completion] = [];
-      }
+        if (!acc[completion]) {
+          acc[completion] = [];
+        }
 
-      acc[completion].push(set);
+        acc[completion].push(set);
 
-      return acc;
-    }, {} as { [key: string]: Set[] });
+        return acc;
+      },
+      {} as { [key: string]: Set[] }
+    );
 
     return Object.entries(setGroupsMap)
       .sort(([a], [b]) => {

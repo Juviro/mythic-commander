@@ -21,10 +21,10 @@ export type UnifiedSingleCard = Omit<Card, '__typename' | 'oracleCard' | 'allSet
 export type UnifiedCardType<T> = T extends DeckCard
   ? UnifiedDeckCard
   : T extends CollectionCard
-  ? UnifiedCollectionCard
-  : T extends WantsListCard
-  ? UnifiedWantsListCard
-  : never;
+    ? UnifiedCollectionCard
+    : T extends WantsListCard
+      ? UnifiedWantsListCard
+      : never;
 
 export type UnifiedCard = UnifiedDeckCard | UnifiedCollectionCard | UnifiedWantsListCard;
 

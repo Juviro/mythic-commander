@@ -15,8 +15,8 @@ export default ({
   const amountLabel = !displayedAmount
     ? ''
     : displayedAmount > 1 || !hideOnes
-    ? `${displayedAmount}x`
-    : '';
+      ? `${displayedAmount}x`
+      : '';
 
   if (!amountLabel && !isEditing) return <span />;
 
