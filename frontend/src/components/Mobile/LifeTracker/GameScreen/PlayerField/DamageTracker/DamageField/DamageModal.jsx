@@ -17,7 +17,7 @@ export default ({ onSubmit, damage, onCancel, player }) => {
 
   return (
     <Modal
-      visible
+      open
       getContainer={getContainer}
       title={`Track Damage from ${originName}`}
       onCancel={onCancel}

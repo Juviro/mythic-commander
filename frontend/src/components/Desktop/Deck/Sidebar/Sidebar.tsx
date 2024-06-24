@@ -36,14 +36,16 @@ export default ({ currentTabId, setCurrentTabId, onAddCards, deck }: Props) => {
       onClose={() => setCurrentTabId(null)}
       zIndex={100}
       style={{
-        height: 'calc(100% - 48px)',
-        marginTop: 48,
         paddingBottom: 6,
         overflow: !currentTabId ? 'hidden' : undefined,
       }}
       styles={{
         body: {
           padding: 0,
+        },
+        wrapper: {
+          height: 'calc(100% - 48px)',
+          marginTop: 48,
         },
       }}
       closable={false}

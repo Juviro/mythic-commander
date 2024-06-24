@@ -52,7 +52,7 @@ const DeleteDeck = ({ history }) => {
         okText="Delete"
         onOk={onDeleteDeck}
         onCancel={() => toggleIsModalVisible(false)}
-        okButtonProps={{ type: 'danger' }}
+        okButtonProps={{ danger: true }}
         styles={{
           body: { padding: '8px 24px' },
         }}

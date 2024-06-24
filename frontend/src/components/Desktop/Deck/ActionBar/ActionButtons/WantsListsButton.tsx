@@ -70,7 +70,7 @@ export const WantsListsButton = ({ deck, currentTabId, setCurrentTabId }: Props)
     onDrop: null,
   };
 
-  const menuNew: MenuProps = {
+  const menu: MenuProps = {
     items: [...wantsListsItems, addWantsListItem].map(
       ({ id, title, onDrop, onClick }) => ({
         key: id,
@@ -104,7 +104,7 @@ export const WantsListsButton = ({ deck, currentTabId, setCurrentTabId }: Props)
     <Dropzone disabled>
       {({ canDrop }) => (
         <Dropdown
-          menu={menuNew}
+          menu={menu}
           placement="top"
           open={canDrop && !currentTabId ? true : undefined}
         >

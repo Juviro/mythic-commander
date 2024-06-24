@@ -107,7 +107,7 @@ const CardModal = ({
 
   return (
     <Modal
-      visible
+      open
       footer={null}
       onCancel={onClose}
       {...modalProps}

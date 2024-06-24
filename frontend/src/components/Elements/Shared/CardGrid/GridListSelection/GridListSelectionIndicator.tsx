@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { debounce } from 'lodash';
 import { primaryHover } from 'constants/colors';
@@ -22,15 +22,18 @@ interface Props {
 
 const calcPosition = (type: string) => {
   const element = document.getElementById(`indicator-${type}`);
-  const width = element?.getBoundingClientRect().width;
-  const left = element?.getBoundingClientRect().left;
-  const top = element?.getBoundingClientRect().top || 0 + 32;
+
+  if (!element) {
+    return { left: 0, width: 0, top: 32 };
+  }
+  const { width, left, top: elementTop, height } = element.getBoundingClientRect();
+  const top = elementTop + height || 32;
 
   return { left, width, top };
 };
 
 const GridListSelectionIndicator = ({ type }: Props) => {
-  const [position, setPosition] = React.useState(calcPosition(type));
+  const [position, setPosition] = useState(calcPosition(type));
 
   const debouncedCalcPosition = debounce(() => {
     setPosition(calcPosition(type));

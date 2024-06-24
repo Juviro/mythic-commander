@@ -34,11 +34,6 @@ export default ({ isVisible, onCloseDrawer }) => {
       open={isVisible}
       zIndex={1002}
       width="auto"
-      headerStyle={{
-        backgroundColor: darkBackground,
-        padding: 0,
-        borderRadius: 0,
-      }}
       styles={{
         body: {
           padding: 16,
@@ -46,6 +41,11 @@ export default ({ isVisible, onCloseDrawer }) => {
           flexDirection: 'column',
           height: 'calc(100% - 53px)',
           justifyContent: 'space-between',
+        },
+        header: {
+          backgroundColor: darkBackground,
+          padding: 0,
+          borderRadius: 0,
         },
       }}
     >

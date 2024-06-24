@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Dropdown, Menu } from 'antd';
+import { Dropdown } from 'antd';
 import styled from 'styled-components';
 
 import UserContext from 'components/Provider/UserProvider';
@@ -34,13 +34,14 @@ export default () => {
 
   if (!user) return avatarComponent;
 
-  const menu = (
-    <Menu>
-      <Menu.Item key="1">
-        <Logout />
-      </Menu.Item>
-    </Menu>
-  );
+  const menu = {
+    items: [
+      {
+        key: 'logout',
+        label: <Logout />,
+      },
+    ],
+  };
 
   return (
     <Dropdown

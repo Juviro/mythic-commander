@@ -17,8 +17,8 @@ const StyledLoadingWrapper = styled.div`
 
 const StyledButton = styled(Button)`
   width: 100%;
-  text-align: start;
-  height: 40px;
+  display: flex;
+  justify-content: flex-start;
 `;
 
 interface Props {

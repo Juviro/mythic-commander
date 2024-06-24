@@ -2,6 +2,19 @@
   "name": "mtg-frontend",
   "version": "0.1.1",
   "private": true,
+  "scripts": {
+    "start": "PORT=1234 react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject",
+    "lint": "yarn type && eslint '*/**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "eslint '*/**/*.{js,jsx,ts,tsx}' --fix",
+    "prettier": "prettier --check --write \"src/**/*.{js,jsx,ts,tsx}\"",
+    "install-prod": "yarn install --production=false",
+    "codegen": "graphql-codegen --config codegen.yml",
+    "type": "tsc --noEmit",
+    "type:watch": "tsc --noEmit -w"
+  },
   "dependencies": {
     "@ant-design/icons": "5.3.7",
     "@apollo/client": "^3.6.9",
@@ -34,22 +47,9 @@
     "react-router-dom": "^5.1.2",
     "react-spring": "^9.5.2",
     "recharts": "^2.13.0-alpha.4",
-    "scryfall-sdk": "3.3.0",
+    "scryfall-sdk": "4.2.2",
     "styled-components": "^5.3.5",
     "use-query-params": "^0.5.0"
-  },
-  "scripts": {
-    "start": "PORT=1234 react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
-    "eject": "react-scripts eject",
-    "lint": "eslint '*/**/*.{js,jsx,ts,tsx}'",
-    "lint:fix": "eslint '*/**/*.{js,jsx,ts,tsx}' --fix",
-    "prettier": "prettier --check --write \"src/**/*.{js,jsx,ts,tsx}\"",
-    "install-prod": "yarn install --production=false",
-    "codegen": "graphql-codegen --config codegen.yml",
-    "type": "tsc --noEmit",
-    "type:watch": "tsc --noEmit -w"
   },
   "browserslist": [
     ">0.2%",

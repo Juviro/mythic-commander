@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, message } from 'antd';
 import { useMutation } from '@apollo/client';
-
 import { RouteComponentProps, withRouter } from 'react-router';
 import { DeleteOutlined } from '@ant-design/icons';
+
 import { UnifiedWantsList } from 'types/unifiedTypes';
 import { getDeckDesktop } from 'components/Desktop/Deck/queries';
 import { useToggle } from '../../../Hooks';
@@ -14,6 +14,7 @@ import { deleteWantsListDesktop } from '../../../Desktop/WantsList/queries';
 interface Props extends RouteComponentProps {
   wantsList: UnifiedWantsList;
   onDelete?: () => void;
+  history: any;
 }
 
 const DeleteList = ({
@@ -21,11 +22,11 @@ const DeleteList = ({
   history,
   onDelete,
 }: Props) => {
-  const [isDeleting, toggleisDeleting] = useToggle();
+  const [isDeleting, toggleIsDeleting] = useToggle();
   const [mutate] = useMutation(deleteWantsListDesktop);
 
   const onDeleteList = async () => {
-    toggleisDeleting(false);
+    toggleIsDeleting(false);
     const refetchQueries = deck?.id && [
       {
         query: getDeckDesktop,
@@ -53,11 +54,11 @@ const DeleteList = ({
 
   return (
     <>
-      <Button type="link" danger onClick={toggleisDeleting} icon={<DeleteOutlined />}>
+      <Button type="link" danger onClick={toggleIsDeleting} icon={<DeleteOutlined />}>
         Delete
       </Button>
       {isDeleting && (
-        <ConfirmDelete onCancel={toggleisDeleting} onOk={onDeleteList} text={text} />
+        <ConfirmDelete onCancel={toggleIsDeleting} onOk={onDeleteList} text={text} />
       )}
     </>
   );

@@ -56,12 +56,16 @@ export default css`
   }
 
   .fullscreen-modal {
-    margin: 0;
+    margin: 0 !important;
     top: 50px;
     width: auto !important;
-    max-width: 100vw;
+    max-width: 100vw !important;
     padding-bottom: 0;
     position: fixed;
+
+    .ant-modal-content {
+      padding: 0;
+    }
   }
 
   /* Darken selected color of auto completes to improve clarity for ben's laptop */

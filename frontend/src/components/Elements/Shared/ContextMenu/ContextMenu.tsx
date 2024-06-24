@@ -22,7 +22,7 @@ export default ({ menuItems, card }: Props) => {
   const [isMenuOpen, toggleIsMenuOpen] = useToggle();
   if (!menuItems.length) return null;
 
-  const menuNew: MenuProps = {
+  const menu: MenuProps = {
     onClick: toggleIsMenuOpen,
     items: menuItems.map(({ Icon, title, onClick }) => ({
       key: title,
@@ -41,7 +41,7 @@ export default ({ menuItems, card }: Props) => {
 
   return (
     <Dropdown
-      menu={menuNew}
+      menu={menu}
       trigger={['click']}
       placement="bottomRight"
       open={isMenuOpen}

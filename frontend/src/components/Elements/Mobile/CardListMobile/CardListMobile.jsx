@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { List, BackTop, Typography } from 'antd';
+import { List, Typography, FloatButton } from 'antd';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useQueryParams, StringParam } from 'use-query-params';
@@ -128,7 +128,7 @@ const CardList = ({
           totalResults={totalResults}
         />
       )}
-      <BackTop style={{ left: 20, bottom: 20, ...backTopStyle }} />
+      <FloatButton.BackTop style={{ left: 20, bottom: 20, ...backTopStyle }} />
       <CardModal
         setDetailCard={setDetailCard}
         detailedCardId={detailCard?.id}

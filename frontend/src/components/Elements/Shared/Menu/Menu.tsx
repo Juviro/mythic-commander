@@ -44,12 +44,12 @@ export default ({ actions, placement, fontSize = 20 }: Props) => {
     };
   });
 
-  const menuNew: MenuProps = {
+  const menu: MenuProps = {
     items: menuItems,
   };
 
   return (
-    <Dropdown menu={menuNew} trigger={['click']} placement={placement}>
+    <Dropdown menu={menu} trigger={['click']} placement={placement}>
       <MoreOutlined style={{ fontSize }} />
     </Dropdown>
   );
