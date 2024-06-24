@@ -11459,7 +11459,7 @@ scroll-into-view-if-needed@^3.1.0:
   dependencies:
     compute-scroll-into-view "^3.0.2"
 
-scryfall-sdk@^3.1.0:
+scryfall-sdk@3.2.5:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/scryfall-sdk/-/scryfall-sdk-3.3.0.tgz#b13f2d5561c44d3c5330a8478e3995a5c00fd67b"
   integrity sha512-BIUayMeFTyBOO1y207AyuiT1hndiio2r5K7+4kgx4/YvDXcgkho/LMBFY+D2RiazUmLJTbeiZ3Y03tMn2WspGA==
