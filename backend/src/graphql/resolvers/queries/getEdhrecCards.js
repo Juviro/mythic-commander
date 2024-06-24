@@ -55,6 +55,7 @@ const formatCards = async (cards, userId) => {
 };
 
 const fetchCards = async (url) => {
+  console.log('url', url);
   const result = await fetch(url);
   const json = await result.json();
 
@@ -78,9 +79,9 @@ const getCardList = (json, userId) => {
 };
 
 const getThemes = (json) => {
-  const { themes } = json.panels.tribelinks;
+  const { tribelinks } = json.panels;
 
-  return themes?.map((theme) => ({
+  return tribelinks?.map((theme) => ({
     title: theme.value,
     urlSuffix: theme['href-suffix'],
     count: theme.count,
