@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon --exec babel-node -r dotenv/config ./src/index.js",
-    "start-prod": "pm2 start ./dist/index.js --name backend --interpreter ./node_modules/.bin/babel-node --node-args=\"-r dotenv/config\"",
+    "start-prod": "pm2 start backend.pm2.json",
     "stop-prod": "pm2 delete backend",
     "build": "yarn lint && babel src --out-dir dist",
     "create-migration": "babel-node -r dotenv/config node_modules/.bin/knex migrate:make new_migration",

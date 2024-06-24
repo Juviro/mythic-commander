@@ -34,7 +34,7 @@
     "react-router-dom": "^5.1.2",
     "react-spring": "^9.5.2",
     "recharts": "^2.13.0-alpha.4",
-    "scryfall-sdk": "3.2.5",
+    "scryfall-sdk": "3.3.0",
     "styled-components": "^5.3.5",
     "use-query-params": "^0.5.0"
   },

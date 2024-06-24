@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { Stream } from 'stream';
 // TODO: stream instead of download, maybe use scryfall-sdk
 
 // @Param type:
@@ -18,8 +19,8 @@ export default async (type) => {
 
   await new Promise((resolve, reject) => {
     const fileStream = fs.createWriteStream(filePath);
-    res.body.pipe(fileStream);
-    res.body.on('error', (err) => {
+    Stream.Readable.fromWeb(res.body).pipe(fileStream);
+    fileStream.on('error', (err) => {
       reject(err);
     });
     fileStream.on('finish', () => {
