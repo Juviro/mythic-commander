@@ -34,7 +34,7 @@ const downloadImage = async (filename, url, size, forceUpdate = false) => {
   }
 
   const response = await fetch(url);
-  const buffer = await response.buffer();
+  const buffer = await response.arrayBuffer();
 
   sharp(buffer)
     .resize(DIMENSIONS[size].width, DIMENSIONS[size].height)
