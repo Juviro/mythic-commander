@@ -105,8 +105,8 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
         onKeyDown={useBlurOnEsc}
         defaultActiveFirstOption
         onBlur={() => toggleIsOpen(false)}
-        popupMatchSelectWidth={false}
         listHeight={360}
+        popupMatchSelectWidth
         dropdownStyle={dropdownStyle}
         style={{ width: 'calc(100% - 16px)', ...style }}
         className={transparent ? 'transparent' : 'dark-placeholder'}
