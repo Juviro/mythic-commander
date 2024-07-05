@@ -1,6 +1,7 @@
 import { canEditDeck } from '../../../../auth/authenticateUser';
 import { updateLastEdit } from './helper';
 import unifyCardFormat from '../../unifyCardFormat';
+import logger from '../../../../logging/logger';
 
 export default async (_, { cardId, deckId, newProps }, { user, db }) => {
   await canEditDeck(user.id, deckId);
@@ -39,7 +40,7 @@ export default async (_, { cardId, deckId, newProps }, { user, db }) => {
 
     return unifyCardFormat(deckId)(updatedCard);
   } catch (e) {
-    console.error('Error editing card:', e);
+    logger.error('Error editing card:', e);
     throw new Error('That card edition already exists in this deck');
   }
 };

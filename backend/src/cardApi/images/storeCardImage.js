@@ -1,5 +1,6 @@
 import fs from 'fs';
 import sharp from 'sharp';
+import logger from '../../logging/logger';
 
 const { IMG_DIR } = process.env;
 
@@ -40,7 +41,7 @@ const downloadImage = async (filename, url, size, forceUpdate = false) => {
     .resize(DIMENSIONS[size].width, DIMENSIONS[size].height)
     .toFile(filename, (err) => {
       if (err) {
-        console.error(err);
+        logger.error(err);
       }
     });
 };
@@ -72,7 +73,7 @@ const storeCardImage = async (card, forceUpdate = false) => {
       await downloadAllImages(card, faces[1].image_uris, 'back', forceUpdate);
     }
   } catch (err) {
-    console.error(`Error fetching card image for ${card.id}: ${err}`);
+    logger.error(`Error fetching card image for ${card.id}: ${err}`);
   }
 };
 

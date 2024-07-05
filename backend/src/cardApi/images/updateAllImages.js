@@ -1,4 +1,5 @@
 import knex from '../../database';
+import logger from '../../logging/logger';
 import storeCardImage from './storeCardImage';
 
 const BATCH_SIZE = 10;
@@ -13,7 +14,7 @@ const printProgress = (offset) => {
 const updateAllImages = async () => {
   let offset = 0;
 
-  console.info('Updating all card images...');
+  logger.info('Updating all card images...');
 
   while (true) {
     const cards = await knex('cards')
@@ -34,7 +35,7 @@ const updateAllImages = async () => {
     printProgress(offset);
   }
 
-  console.info('All card images updated');
+  logger.info('All card images updated');
 };
 
 export default updateAllImages;

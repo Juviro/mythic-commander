@@ -2,6 +2,7 @@ import { ApolloServer } from 'apollo-server-koa';
 
 import schema from './graphql';
 import db from './database';
+import logger from './logging/logger';
 
 export default new ApolloServer({
   schema,
@@ -38,7 +39,7 @@ export default new ApolloServer({
     return { ...context, user: user ?? {} };
   },
   formatError: (error) => {
-    console.error('error', error);
+    logger.error(error);
     return {
       ...error,
       message: 'Internal server error',
