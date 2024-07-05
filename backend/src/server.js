@@ -39,7 +39,7 @@ export default new ApolloServer({
     return { ...context, user: user ?? {} };
   },
   formatError: (error) => {
-    logger.error(error);
+    logger.error('Graphql error:', error);
     return {
       ...error,
       message: 'Internal server error',

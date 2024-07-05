@@ -59,7 +59,7 @@ export const restore = () => {
       logger.info('Restored');
     })
     .catch((err) => {
-      logger.error(err);
+      logger.error('Error restoring database:', err);
     });
 };
 

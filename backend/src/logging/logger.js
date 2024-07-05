@@ -15,13 +15,11 @@ const logger = winston.createLogger({
   ],
 });
 
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(
-    new winston.transports.Console({
-      format: winston.format.simple(),
-    })
-  );
-}
-logger.info('Node environment is: ', process.env.NODE_ENV);
+// Log to console as well
+logger.add(
+  new winston.transports.Console({
+    format: winston.format.simple(),
+  })
+);
 
 export default logger;

@@ -41,7 +41,7 @@ const downloadImage = async (filename, url, size, forceUpdate = false) => {
     .resize(DIMENSIONS[size].width, DIMENSIONS[size].height)
     .toFile(filename, (err) => {
       if (err) {
-        logger.error(err);
+        logger.error('Error resizing image:', err);
       }
     });
 };
