@@ -2,6 +2,7 @@
   "apps": [
     {
       "name": "backend",
+      "time": true,
       "script":  "./dist/index.js"
     }
   ]
