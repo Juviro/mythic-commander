@@ -39,7 +39,12 @@ export default new ApolloServer({
   },
   formatError: (error) => {
     console.error('error', error);
-    return error;
+    return {
+      ...error,
+      message: 'Internal server error',
+      locations: null,
+      extensions: { ...error.extensions, exception: null },
+    };
   },
   tracing: true,
   introspection: true,
