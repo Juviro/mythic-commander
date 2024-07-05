@@ -18,7 +18,7 @@ const AddTagFooter = ({ onSave, onSaveAsDefault, onClose }: Props) => {
       {
         key: '1',
         onClick: onSaveAsDefault,
-        title: 'Save as default',
+        label: 'Save as default',
       },
     ],
   };
