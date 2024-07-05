@@ -22,5 +22,6 @@ if (process.env.NODE_ENV !== 'production') {
     })
   );
 }
+logger.info('Node environment is: ', process.env.NODE_ENV);
 
 export default logger;
