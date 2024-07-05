@@ -129,8 +129,14 @@ export const addNameClause = (q, name) => {
 
 const addTextClause = (q, text) => {
   const searchPattern = text.replace(/\s?\?\s?/g, '[^\n]*');
-
-  q.where('oracle_text', '~*', `.*${searchPattern}.*`);
+  try {
+    // Very basic regex check to see if the user is trying to use a regex.
+    // Still might fail because js regex are more robust than postgres regex.
+    new RegExp(searchPattern);
+    q.where('oracle_text', '~*', `.*${searchPattern}.*`);
+  } catch (e) {
+    q.where('oracle_text', 'ILIKE', `%${text}%`);
+  }
 };
 
 export default async (

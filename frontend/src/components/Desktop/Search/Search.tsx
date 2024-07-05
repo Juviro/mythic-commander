@@ -16,6 +16,7 @@ export default () => {
         {({
           isSearching,
           loading,
+          error,
           onSearch,
           onResetOptions,
           onChangeOption,
@@ -47,6 +48,7 @@ export default () => {
               >
                 <PaginatedCardList
                   loading={loading}
+                  error={error}
                   setSearch={null}
                   search={lastSearchOptions.name}
                   cards={currentCards}

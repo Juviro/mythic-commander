@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Divider, Empty, Pagination, Typography } from 'antd';
+import { Alert, Divider, Empty, Pagination, Typography } from 'antd';
 import styled from 'styled-components';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { EditOutlined, LoadingOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -52,6 +52,7 @@ export interface CardList {
 interface Props {
   cards?: UnifiedCard[];
   loading?: boolean;
+  error?: string;
   title?: string;
   numberOfCards?: number;
   search?: string;
@@ -81,6 +82,7 @@ const CardGrid = ({
   cards,
   title,
   loading = false,
+  error,
   numberOfCards,
   search,
   onEditCard,
@@ -192,6 +194,19 @@ const CardGrid = ({
     : undefined;
 
   const cardLists = passedCardLists ?? [{ title, key: 'main', cards }];
+
+  if (error) {
+    return (
+      <Alert
+        style={{
+          alignSelf: 'center',
+          margin: 64,
+        }}
+        message={error}
+        type="error"
+      />
+    );
+  }
 
   if (loading && detailCardIndex === null) {
     return (
