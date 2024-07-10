@@ -33,6 +33,7 @@
   align-items: center;
   justify-content: center;
   font-size: 24px;
+  z-index: 2;
 }
 
 .buttons {
@@ -43,6 +44,7 @@
   height: 100%;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
+  z-index: 2;
 }
 
 .buttons:hover {
@@ -77,4 +79,27 @@
 
 .buttons :global(.anticon):active :global(svg) {
   transform: scale(1.2);
+}
+
+.commander_damage {
+  opacity: 0;
+  background: white;
+  width: 100%;
+  height: 200px;
+  position: absolute;
+  bottom: 0;
+  border-radius: 4px;
+  z-index: 1;
+
+  transition: opacity 0.2s ease-in-out;
+  min-width: 200px;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.player:hover .commander_damage {
+  opacity: 1;
+}
+
+.player:hover {
+  color: var(--color-text);
 }

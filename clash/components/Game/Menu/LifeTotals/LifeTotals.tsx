@@ -1,14 +1,13 @@
 import React, { useContext } from 'react';
-import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 
 import GameStateContext from 'components/Game/GameStateContext';
 import useGameActions from 'components/Game/useGameActions';
 
-import LongPress from 'components/GameComponents/LongPress/LongPress';
 import { Player } from 'backend/database/gamestate.types';
 import useShortcut from 'hooks/useShortcut';
 import SHORTCUTS from 'constants/shortcuts';
 import styles from './LifeTotals.module.css';
+import LifeTotal from './LifeTotal';
 
 const LifeTotals = () => {
   const { gameState, player: self } = useContext(GameStateContext);
@@ -30,29 +29,7 @@ const LifeTotals = () => {
     <div className={styles.wrapper}>
       {gameState?.players.map((player) => (
         <div key={player.id} className={styles.player}>
-          {player.resigned ? (
-            <div className={styles.defeated}>Defeated</div>
-          ) : (
-            <>
-              <div className={styles.life}>
-                <span>{player.life}</span>
-              </div>
-              <div className={styles.buttons}>
-                <LongPress
-                  onLongPress={onChangeLife(player, -10)}
-                  onPress={onChangeLife(player, -1)}
-                >
-                  <MinusOutlined />
-                </LongPress>
-                <LongPress
-                  onLongPress={onChangeLife(player, 10)}
-                  onPress={onChangeLife(player, 1)}
-                >
-                  <PlusOutlined />
-                </LongPress>
-              </div>
-            </>
-          )}
+          <LifeTotal key={player.id} player={player} onChangeLife={onChangeLife} />
         </div>
       ))}
     </div>
