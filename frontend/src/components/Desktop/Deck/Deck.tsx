@@ -17,11 +17,11 @@ import unifyCardFormat from '../../../utils/unifyCardFormat';
 import { getDeckDesktop, addCardsToDeckDesktop } from './queries';
 import sumCardAmount from '../../../utils/sumCardAmount';
 import { DeckBreakdown } from './DeckBreakdown/DeckBreakdown';
-import DeckActions from './Header/DeckActions';
 import Title from './Header/Title';
 import { ActionBar } from './ActionBar/ActionBar';
 import { DeckSettings } from './DeckSettings/DeckSettings';
 import { DeckContextProvider } from './DeckProvider';
+import Header from './Header/Header';
 
 export type View = 'type' | 'tags';
 
@@ -82,11 +82,7 @@ export default () => {
         <PageLayout large>
           <PageCard
             title={<Title deck={unifiedDeck} />}
-            extra={
-              deck?.canEdit ? (
-                <DeckActions deck={unifiedDeck} onAddCards={onAddCards} />
-              ) : null
-            }
+            extra={<Header deck={unifiedDeck} onAddCards={onAddCards} />}
             style={{ height: 'calc(100% - 80px)', marginBottom: 70 }}
           >
             <DeckSettings view={view} setView={setView} />

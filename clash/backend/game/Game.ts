@@ -42,6 +42,7 @@ import { getGameState, storeGameState } from 'backend/database/matchStore';
 import initMatch from 'backend/lobby/initMatch/initMatch';
 import { randomizeArray } from 'utils/randomizeArray';
 import db from 'backend/database/db';
+import getPlaytestGamestate from 'backend/lobby/initMatch/getPlaytestGamestate';
 import addLogEntry from './addLogEntry';
 import getInitialCardProps from './utils/getInitialCardProps';
 
@@ -56,11 +57,17 @@ export default class Game {
 
   gameState: GameState;
 
+  isPlaytest: boolean;
+
+  deckId: string;
+
   users: { [userId: string]: User } = {};
 
-  constructor(gameState: GameState, server: Server) {
+  constructor(gameState: GameState, server: Server, isPlaytest = false, deckId = '') {
     this.server = server;
     this.gameState = gameState;
+    this.isPlaytest = isPlaytest;
+    this.deckId = deckId;
   }
 
   get id() {
@@ -106,6 +113,7 @@ export default class Game {
   // ##################### Game #####################
 
   storeGameState() {
+    if (this.isPlaytest) return;
     // currently, the game state is stored whenever the active player changes
     storeGameState(this.gameState.gameId, this.gameState);
   }
@@ -115,12 +123,21 @@ export default class Game {
     if (player.id !== this.gameState.hostId) return;
 
     const { lobby } = await getGameState(this.gameState.gameId);
-    await initMatch(lobby);
-    const { gameState: newGameState } = await getGameState(this.gameState.gameId);
+    if (this.isPlaytest) {
+      const newGameState = await getPlaytestGamestate(
+        this.gameState.gameId,
+        { ...player, avatar: '', username: player.name },
+        this.deckId
+      );
+      this.gameState = newGameState;
+    } else {
+      await initMatch(lobby);
+      const { gameState: newGameState } = await getGameState(this.gameState.gameId);
 
-    this.gameState = newGameState;
+      this.gameState = newGameState;
+    }
 
-    newGameState.players.forEach(({ id }) => {
+    this.gameState.players.forEach(({ id }) => {
       const user = this.users[id];
       // might be undefined if player is not connected
       if (!user) return;

@@ -3,7 +3,7 @@ import { User } from 'backend/database/getUser';
 export interface Deck {
   id: string;
   name?: string;
-  imgSrc: string;
+  imgSrc?: string;
   ownerName?: string;
 }
 

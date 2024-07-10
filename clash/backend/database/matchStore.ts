@@ -26,9 +26,7 @@ interface Deck {
   cards: InitMatchCard[];
 }
 
-export const getDecks = async (lobby: Lobby): Promise<Deck[]> => {
-  const deckIds = lobby.players.map((player) => player.deck!.id);
-
+export const getDecks = async (deckIds: string[]): Promise<Deck[]> => {
   const { rows: decks } = await db.raw(
     `
         SELECT 

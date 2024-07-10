@@ -20,6 +20,7 @@ export const SOCKET_MSG_LOBBY = {
 
 export const SOCKET_MSG_GAME = {
   INITIALIZE: 'initialize_game',
+  INITIALIZE_PLAYTEST: 'initialize_playtest',
   RESTART_GAME: 'restart_game',
   RESIGN_GAME: 'resign_game',
   GAME_STATE: 'game_state',

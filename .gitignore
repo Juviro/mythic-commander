@@ -17,6 +17,7 @@
 /backend/.env*
 !/backend/.env.example
 /clash/.env*
+/frontend/.env
 
 # misc
 .DS_Store
