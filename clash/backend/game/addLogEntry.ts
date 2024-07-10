@@ -1,12 +1,19 @@
 import { GameLog, LOG_MESSAGES } from 'backend/constants/logMessages';
 
-const { DRAW_CARD, SET_COMMANDER_TIMES_CASTED, SET_LIFE, ADD_COUNTERS } = LOG_MESSAGES;
+const {
+  DRAW_CARD,
+  SET_COMMANDER_TIMES_CASTED,
+  SET_LIFE,
+  ADD_COUNTERS,
+  SET_COMMANDER_DAMAGE,
+} = LOG_MESSAGES;
 
 const GROUPABLE_LOG_KEYS = [
   DRAW_CARD,
   SET_COMMANDER_TIMES_CASTED,
   SET_LIFE,
   ADD_COUNTERS,
+  SET_COMMANDER_DAMAGE,
 ] as string[];
 
 const addLogEntry = (currentLog: GameLog[], newLog: GameLog) => {
@@ -25,6 +32,14 @@ const addLogEntry = (currentLog: GameLog[], newLog: GameLog) => {
     newLastLog.logKey === SET_LIFE &&
     newLog.logKey === SET_LIFE &&
     newLastLog.payload.forPlayerId !== newLog.payload.forPlayerId
+  ) {
+    return [...currentLog, newLog];
+  }
+  if (
+    newLastLog.logKey === SET_COMMANDER_DAMAGE &&
+    newLog.logKey === SET_COMMANDER_DAMAGE &&
+    (newLastLog.payload.forPlayerId !== newLog.payload.forPlayerId ||
+      newLastLog.payload.commanderId !== newLog.payload.commanderId)
   ) {
     return [...currentLog, newLog];
   }

@@ -26,6 +26,7 @@ import MessageTurnFaceDown from './Message/MessageTurnFaceDown';
 import MessageAddCounters from './Message/MessageAddCounters';
 import MessagePeekFaceDown from './Message/MessagePeekFaceDown';
 import MessagePlayTopCardFaceDown from './Message/MessagePlayTopCardFaceDown';
+import MessageSetCommanderDamage from './Message/MessageSetCommanderDamage';
 
 interface Props {
   message: GameLog;
@@ -97,6 +98,9 @@ const ChatMessage = ({ message }: Props) => {
   }
   if (logKey === 'SET_LIFE') {
     return <MessageSetLife playerId={playerId} payload={payload} />;
+  }
+  if (logKey === 'SET_COMMANDER_DAMAGE') {
+    return <MessageSetCommanderDamage playerId={playerId} payload={payload} />;
   }
   if (logKey === 'SET_ACTIVE_PLAYER') {
     return <MessageSetActivePlayer payload={payload} />;
