@@ -6,7 +6,7 @@ import GameStateContext from '../GameStateContext';
 import styles from './ScreenMessage.module.css';
 
 const ScreenMessage = () => {
-  const { gameState } = useContext(GameStateContext);
+  const { gameState, player: self } = useContext(GameStateContext);
   const [message, setMessage] = useState('');
 
   const hasGameStarted = gameState?.players.every(
@@ -28,8 +28,9 @@ const ScreenMessage = () => {
       setMessage('');
       return;
     }
+    const winnerName = gameState.winner === self.name ? 'You' : gameState.winner;
 
-    setMessage(`${gameState.winner} won the Game!`);
+    setMessage(`${winnerName} won the Game!`);
   }, [gameState?.winner]);
 
   if (!message) return null;

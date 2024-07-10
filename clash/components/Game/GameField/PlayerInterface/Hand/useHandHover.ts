@@ -51,7 +51,7 @@ const useHandHover = ({ hand, wrapperRef, player }: Props) => {
     const left = spacingElements?.[0]?.getBoundingClientRect().left ?? 0;
     const right =
       spacingElements?.[spacingElements.length - 1]?.getBoundingClientRect().right ?? 0;
-    const top = spacingElements?.[0].getBoundingClientRect().top ?? 0;
+    const top = spacingElements?.[0]?.getBoundingClientRect()?.top ?? 0;
 
     return { left, right, top: top - 10 };
   };

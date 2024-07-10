@@ -6,6 +6,7 @@ import { GameStateContextProvider } from './GameStateContext';
 import GameField from './GameField/GameField';
 import { CardPositionContextProvider } from './CardPositionContext';
 import ScreenMessage from './ScreenMessage/ScreenMessage';
+import Fireworks from './ScreenMessage/Fireworks';
 
 const Game = () => {
   return (
@@ -14,6 +15,7 @@ const Game = () => {
         <DndProvider backend={HTML5Backend}>
           <GameField />
           <ScreenMessage />
+          <Fireworks />
         </DndProvider>
       </CardPositionContextProvider>
     </GameStateContextProvider>
