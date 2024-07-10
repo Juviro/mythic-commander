@@ -6,6 +6,9 @@ export const primaryDrop = '#1890ff4d';
 export const primaryHover = '#40a9ff';
 export const primaryActive = '#096dd9';
 
+export const clashPrimary = '#d5712d';
+export const clashPrimaryLight = '#e8a57a';
+
 export const secondary = '#b51b1b';
 export const secondaryHover = '#f35a5a';
 export const secondaryActive = '#821212';

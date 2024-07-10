@@ -5,6 +5,7 @@ import { UnifiedDeck } from 'types/unifiedTypes';
 import UserContext from 'components/Provider/UserProvider/UserProvider';
 import { Button, Space } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
+import { CLASH_BASE_URL } from 'constants/network';
 import DeckActions from './DeckActions';
 
 interface Props {
@@ -17,8 +18,7 @@ const Header = ({ deck, onAddCards }: Props) => {
 
   if (!deck) return null;
 
-  const baseUrl = process.env.REACT_APP_CLASH_URL || 'play.mythic-commander.com';
-  const url = `${baseUrl}/playtest/${deck.id}`;
+  const url = `${CLASH_BASE_URL}/playtest/${deck.id}`;
 
   return (
     <Space>

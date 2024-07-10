@@ -9,7 +9,6 @@ import { useToggle } from '../../Hooks';
 
 const StyledAvatarWrapper = styled.div`
   margin-right: 8px;
-  min-width: 60px;
 
   @media only screen and (max-width: 1200px) {
     min-width: unset;
