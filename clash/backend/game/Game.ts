@@ -1064,6 +1064,7 @@ export default class Game {
 
   setCommanderDamage(playerId: string, payload: SetCommanderDamagePayload) {
     const { commanderId, forPlayerId, total } = payload;
+
     const player = this.getPlayerById(playerId);
 
     let previousTotal = 0;
@@ -1079,6 +1080,10 @@ export default class Game {
         commanderName = commander.name;
       });
     });
+
+    if (previousTotal === 0 && total < 0) {
+      return;
+    }
 
     const forPlayer = this.getPlayerById(commanderOwnerId!);
     this.emitPlayerUpdate(forPlayer);
