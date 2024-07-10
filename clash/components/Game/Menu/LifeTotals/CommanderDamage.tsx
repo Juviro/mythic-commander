@@ -1,5 +1,5 @@
 import React, { CSSProperties, useContext } from 'react';
-import { Tooltip } from 'antd';
+import { Divider, Tooltip } from 'antd';
 
 import { Player } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
@@ -65,6 +65,7 @@ const CommanderDamage = ({ player }: Props) => {
           </div>
         </div>
       ))}
+      <Divider style={{ margin: '8px 0 0' }} />
     </div>
   );
 };

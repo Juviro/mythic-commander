@@ -5,4 +5,4 @@ export const SERVER_URL = IS_DEV
   : '/mtg-api/graphql';
 
 export const CLASH_BASE_URL =
-  process.env.REACT_APP_CLASH_URL || 'play.mythic-commander.com';
+  process.env.REACT_APP_CLASH_URL || 'https://play.mythic-commander.com';

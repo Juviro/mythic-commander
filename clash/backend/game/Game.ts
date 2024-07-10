@@ -1093,6 +1093,7 @@ export default class Game {
       logKey: LOG_MESSAGES.SET_COMMANDER_DAMAGE,
       payload: {
         ...payload,
+        total: Math.max(total, 0),
         previousTotal,
         commanderName: commanderName!,
         fromPlayerId: player.id,
