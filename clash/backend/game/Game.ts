@@ -30,6 +30,7 @@ import {
   SOCKET_MSG_GENERAL,
   SearchLibraryPayload,
   SendMessagePayload,
+  SetCommanderDamagePayload,
   SetCommanderTimesCastedPayload,
   SetPhasePayload,
   SetPlayerLifePayload,
@@ -1039,6 +1040,39 @@ export default class Game {
       payload: {
         ...payload,
         previousTotal,
+        fromPlayerId: player.id,
+      },
+    });
+  }
+
+  setCommanderDamage(playerId: string, payload: SetCommanderDamagePayload) {
+    const { commanderId, forPlayerId, total } = payload;
+    const player = this.getPlayerById(playerId);
+
+    let previousTotal = 0;
+    let commanderOwnerId: string;
+    let commanderName: string;
+
+    this.gameState.players.forEach((p) => {
+      p.commanders.forEach((commander) => {
+        if (commander.clashId !== commanderId) return;
+        previousTotal = commander.commanderDamageDealt[forPlayerId] || 0;
+        commander.commanderDamageDealt[forPlayerId] = Math.max(total, 0);
+        commanderOwnerId = p.id;
+        commanderName = commander.name;
+      });
+    });
+
+    const forPlayer = this.getPlayerById(commanderOwnerId!);
+    this.emitPlayerUpdate(forPlayer);
+
+    this.logAction({
+      playerId: player.id,
+      logKey: LOG_MESSAGES.SET_COMMANDER_DAMAGE,
+      payload: {
+        ...payload,
+        previousTotal,
+        commanderName: commanderName!,
         fromPlayerId: player.id,
       },
     });

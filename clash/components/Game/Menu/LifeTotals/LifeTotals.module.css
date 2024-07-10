@@ -37,17 +37,16 @@
 }
 
 .buttons {
-  margin: 0 16px;
   position: absolute;
   display: flex;
-  width: calc(100% - 16px);
+  width: 100%;
   height: 100%;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
   z-index: 2;
 }
 
-.buttons:hover {
+.player:hover .buttons, .buttons__always_visible {
   opacity: 1;
 }
 
@@ -83,23 +82,62 @@
 
 .commander_damage {
   opacity: 0;
-  background: white;
-  width: 100%;
-  height: 200px;
+  background: #ffffffeb;
   position: absolute;
   bottom: 0;
   border-radius: 4px;
   z-index: 1;
+  padding: 16px 8px 64px;
+  width: 100%;
+  min-width: 150px;
+  max-width: 200px;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  pointer-events: none;
 
   transition: opacity 0.2s ease-in-out;
-  min-width: 200px;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.commander_damage__title {
+  font-size: 13px;
+  margin-bottom: 8px;
+  text-align: left;
 }
 
 .player:hover .commander_damage {
   opacity: 1;
+  pointer-events: all;
 }
 
-.player:hover {
+.player:has(.commander_damage):hover {
   color: var(--color-text);
+}
+
+.commander_damage__row {
+  display: flex;
+  gap: 8px;
+  position: relative;
+}
+
+.commander_damage__row .buttons :global(.anticon-minus) {
+  padding-right: 24px;
+}
+
+.commander_damage__row .buttons :global(.anticon-plus) {
+  padding-left: 24px;
+}
+
+.commander_damage__img {
+  height: 32px;
+  border-radius: 4px;
+  border: 2px solid var(--player-color);
+}
+
+.commander_damage__buttons {
+  position: relative;
+  display: flex;
+  flex: 1;
+  justify-content: center;
 }

@@ -21,6 +21,7 @@ import {
   SOCKET_MSG_GENERAL,
   SearchLibraryPayload,
   SendMessagePayload,
+  SetCommanderDamagePayload,
   SetCommanderTimesCastedPayload,
   SetPhasePayload,
   SetPlayerLifePayload,
@@ -176,6 +177,13 @@ const gameSocketActions = (io: Server) => {
     socket.on(SOCKET_MSG_GAME.SET_PLAYER_LIFE, (payload: SetPlayerLifePayload) => {
       currentGames[currentGameId].setPlayerLife(user.id, payload);
     });
+
+    socket.on(
+      SOCKET_MSG_GAME.SET_COMMANDER_DAMAGE,
+      (payload: SetCommanderDamagePayload) => {
+        currentGames[currentGameId].setCommanderDamage(user.id, payload);
+      }
+    );
 
     socket.on(SOCKET_MSG_GAME.END_TURN, () => {
       currentGames[currentGameId].endTurn(user.id);

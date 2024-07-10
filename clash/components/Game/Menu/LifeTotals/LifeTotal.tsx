@@ -1,10 +1,9 @@
 import React from 'react';
-import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 
-import LongPress from 'components/GameComponents/LongPress/LongPress';
 import { Player } from 'backend/database/gamestate.types';
 import styles from './LifeTotals.module.css';
 import CommanderDamage from './CommanderDamage';
+import LifeButtons from './LifeButtons';
 
 interface LifeTotalProps {
   player: Player;
@@ -19,23 +18,10 @@ const LifeTotal = ({ player, onChangeLife }: LifeTotalProps) => {
   return (
     <>
       <CommanderDamage player={player} />
-      <div className={styles.life}>
-        <span>{player.life}</span>
-      </div>
-      <div className={styles.buttons}>
-        <LongPress
-          onLongPress={onChangeLife(player, -10)}
-          onPress={onChangeLife(player, -1)}
-        >
-          <MinusOutlined />
-        </LongPress>
-        <LongPress
-          onLongPress={onChangeLife(player, 10)}
-          onPress={onChangeLife(player, 1)}
-        >
-          <PlusOutlined />
-        </LongPress>
-      </div>
+      <LifeButtons
+        amount={player.life}
+        onChangeLife={(delta) => onChangeLife(player, delta)}
+      />
     </>
   );
 };

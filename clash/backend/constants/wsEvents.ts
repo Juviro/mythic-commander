@@ -53,6 +53,7 @@ export const SOCKET_MSG_GAME = {
 
   SET_COMMANDER_TIMES_CASTED: 'set_commander_times_casted',
   SET_PLAYER_LIFE: 'set_player_life',
+  SET_COMMANDER_DAMAGE: 'set_commander_damage',
 };
 
 export interface AcceptHandPayload {
@@ -180,6 +181,12 @@ export interface SetCommanderTimesCastedPayload {
 
 export interface SetPlayerLifePayload {
   forPlayerId: string;
+  total: number;
+}
+
+export interface SetCommanderDamagePayload {
+  forPlayerId: string;
+  commanderId: string;
   total: number;
 }
 
