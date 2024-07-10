@@ -30,7 +30,7 @@ export default async (_, { cards }, { user: { id: userId }, db }) => {
   const query = db('collection').insert(withFoil).toString();
 
   const { rows: newCardIds } = await db.raw(
-    query + ON_CONFLICT + ' returning id'
+    `${query + ON_CONFLICT} returning id`
   );
   const updatedCards = await db('collection')
     .leftJoin('cards', { 'cards.id': 'collection.id' })

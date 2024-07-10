@@ -1,4 +1,4 @@
-import { Button, Dropdown, Menu } from 'antd';
+import { Button, Dropdown } from 'antd';
 import { FEATURE_FLAG_TAG } from 'constants/featureFlags';
 import React, { useContext } from 'react';
 import UserContext from 'components/Provider/UserProvider';
@@ -12,9 +12,20 @@ interface Props {
 
 const AddTagFooter = ({ onSave, onSaveAsDefault, onClose }: Props) => {
   const { hasFeatureFlag } = useContext(UserContext);
+
+  const menu = {
+    items: [
+      {
+        key: '1',
+        onClick: onSaveAsDefault,
+        label: 'Save as default',
+      },
+    ],
+  };
+
   return (
     <Flex justify="space-between">
-      <Button type="ghost" danger onClick={onClose} size="small">
+      <Button type="primary" ghost danger onClick={onClose} size="small">
         Cancel
       </Button>
       {onSaveAsDefault && hasFeatureFlag(FEATURE_FLAG_TAG) ? (
@@ -22,13 +33,8 @@ const AddTagFooter = ({ onSave, onSaveAsDefault, onClose }: Props) => {
           type="primary"
           onClick={onSave}
           size="small"
-          overlay={
-            <Menu>
-              <Menu.Item key="1" onClick={onSaveAsDefault}>
-                Save as default
-              </Menu.Item>
-            </Menu>
-          }
+          style={{ marginLeft: 8 }}
+          menu={menu}
         >
           Save
         </Dropdown.Button>

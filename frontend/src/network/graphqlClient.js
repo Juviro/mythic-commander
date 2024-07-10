@@ -5,6 +5,7 @@ import { HttpLink } from 'apollo-link-http';
 import { RetryLink } from 'apollo-link-retry';
 import Cookies from 'js-cookie';
 
+import { message } from 'antd';
 import { SERVER_URL } from '../constants/network';
 
 const httpLink = new HttpLink({ uri: SERVER_URL });
@@ -22,12 +23,13 @@ const authLink = setContext((_, { headers }) => {
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     const isUnauthenticated = graphQLErrors.some(
-      (error) => error.extensions.code === 'UNAUTHENTICATED'
+      (error) => error.extensions?.code === 'UNAUTHENTICATED'
     );
-    console.warn('isUnauthenticated, graphQLErrors', isUnauthenticated, graphQLErrors);
+    console.error('isUnauthenticated, graphQLErrors', isUnauthenticated, graphQLErrors);
     if (!isUnauthenticated) {
-      const errorMessage = graphQLErrors.length ? graphQLErrors[0].message : '';
+      const errorMessage = graphQLErrors.length ? graphQLErrors[0]?.message : '';
       console.error('Graphql Error:', errorMessage);
+      message.error(`An error occurred: ${errorMessage}`);
     }
   }
 

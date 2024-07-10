@@ -14,6 +14,8 @@ interface Props {
 const MessageSetLife = ({ payload, playerId }: Props) => {
   const { gameState } = useContext(GameStateContext);
 
+  if (payload.previousTotal === payload.total) return null;
+
   const targetPlayer = gameState!.players.find((p) => p.id === payload.forPlayerId)!
     .name!;
 

@@ -56,12 +56,16 @@ export default css`
   }
 
   .fullscreen-modal {
-    margin: 0;
+    margin: 0 !important;
     top: 50px;
     width: auto !important;
-    max-width: 100vw;
+    max-width: 100vw !important;
     padding-bottom: 0;
     position: fixed;
+
+    .ant-modal-content {
+      padding: 0;
+    }
   }
 
   /* Darken selected color of auto completes to improve clarity for ben's laptop */
@@ -73,9 +77,11 @@ export default css`
     padding: 0 !important;
   }
 
-  /* for some reason, this prevents the dropdown to match the size of its parent */
-  .ant-select-dropdown {
-    max-width: 0;
+  /* center icons, images and text in dropdowns */
+  .ant-select-item-option-content,
+  .ant-select-selection-item {
+    display: flex;
+    align-items: center;
   }
 
   /* Fix bottom margin for divider, seems like their code for this changed */

@@ -7,8 +7,9 @@ import getTokens from './getTokens';
 
 const STARTING_LIFE = 40;
 
-const initMatch = async (lobby: Lobby) => {
-  const decks = await getDecks(lobby);
+const initMatch = async (lobby: Lobby, shouldStoreGameState = true) => {
+  const deckIds = lobby.players.map((player) => player.deck!.id);
+  const decks = await getDecks(deckIds);
 
   const decksWithSpreadedCards = decks.map((deck) => {
     const { cards, commanders, isFurryFriend } = getInitialCards(
@@ -94,7 +95,11 @@ const initMatch = async (lobby: Lobby) => {
     winner: null,
   };
 
-  await storeGameState(lobby.id, initialGameState, lobby);
+  if (shouldStoreGameState) {
+    await storeGameState(lobby.id, initialGameState, lobby);
+  }
+
+  return initialGameState;
 };
 
 export default initMatch;

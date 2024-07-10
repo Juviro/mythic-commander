@@ -27,11 +27,15 @@ export default ({
       height={100}
       placement="bottom"
       title="Add Cards"
-      visible={isVisible}
+      open={isVisible}
       onClose={onClose}
-      bodyStyle={{ padding: 4 }}
+      styles={{
+        body: {
+          padding: 4,
+        },
+      }}
       destroyOnClose
-      afterVisibleChange={afterVisibleChange}
+      afterOpenChange={afterVisibleChange}
     >
       <CardSearch
         alignTop

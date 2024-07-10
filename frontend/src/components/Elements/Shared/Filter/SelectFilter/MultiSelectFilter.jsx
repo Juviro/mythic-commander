@@ -84,7 +84,7 @@ const MultiSelectFilter = ({
     <SubmittableSelect
       mode="multiple"
       value={value}
-      dropdownMatchSelectWidth
+      popupMatchSelectWidth
       allowClear={allowClear}
       style={{ width: '100%' }}
       onChange={onChange}

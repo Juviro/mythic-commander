@@ -26,7 +26,7 @@ const UsernameModal = () => {
   return (
     <Modal
       title="Pick a username"
-      visible={isVisible}
+      open={isVisible}
       cancelText="Pick later"
       okText="Set Username"
       okButtonProps={{

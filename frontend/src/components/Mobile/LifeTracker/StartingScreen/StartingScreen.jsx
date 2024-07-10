@@ -13,13 +13,15 @@ const StartingScreen = () => {
 
   return (
     <Flex
-      style={{ height: 'calc(100% - 50px)', padding: '24px 24px 0' }}
+      style={{ height: '100%', padding: 24 }}
       justify="space-between"
       direction="column"
     >
       {canRejoin && (
         <Flex direction="column" gap={16} flex={1}>
-          <Typography.Title level={3}>Resume last Game</Typography.Title>
+          <Typography.Title level={3} style={{ marginTop: 0 }}>
+            Resume last Game
+          </Typography.Title>
           <RejoinGame />
         </Flex>
       )}

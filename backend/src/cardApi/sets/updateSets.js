@@ -1,7 +1,7 @@
-import fetch from 'node-fetch';
 import { pick } from 'lodash';
 
 import db from '../../database';
+import logger from '../../logging/logger';
 
 const SET_URL = 'https://api.scryfall.com/sets';
 
@@ -54,7 +54,7 @@ const updateSets = async () => {
 
     await db('sets').insert(sets).onConflict('id').merge();
   } catch (e) {
-    console.error('Error updating sets:', e);
+    logger.error('Error updating sets:', e);
   }
 };
 

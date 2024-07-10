@@ -11,7 +11,7 @@ const StyledWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  @media only screen and (max-width: 1200px) {
+  @media only screen and (max-width: 1400px) {
     & .username {
       display: none;
     }
@@ -26,7 +26,7 @@ const StyledAvatar = styled.img`
   font-size: 8px;
 `;
 
-export default ({ textPosition, onClick, textColor }) => {
+const UserAvatar = ({ textPosition, onClick, textColor }) => {
   const { user, loading } = useContext(UserContext);
   if (loading) return null;
 
@@ -81,3 +81,5 @@ export default ({ textPosition, onClick, textColor }) => {
     </StyledWrapper>
   );
 };
+
+export default UserAvatar;

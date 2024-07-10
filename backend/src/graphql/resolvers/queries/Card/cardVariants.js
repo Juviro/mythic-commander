@@ -13,6 +13,7 @@ export const VARIANTS = {
   THICK: 'Thick',
   FULL_ART: 'Full Art',
   SHOWCASE: 'Showcase',
+  INVERTED: 'Inverted',
   EXTENDED_ART: 'Extended Art',
   ETCHED_FOIL: 'Etched Foil',
   FUTURE_FRAME: 'Future Frame',
@@ -99,10 +100,16 @@ export const getCardVariants = ({
   if (finishes?.length === 1 && finishes[0] === 'etched') {
     variants.push(VARIANTS.ETCHED_FOIL);
   }
+  if (frame_effects?.includes('inverted')) {
+    variants.push(VARIANTS.INVERTED);
+  }
   if (frame === 'future') {
     variants.push(VARIANTS.FUTURE_FRAME);
   }
-  if (parseInt(frame) < 2000 && new Date(released_at).getFullYear() > 2020) {
+  if (
+    parseInt(frame, 10) < 2000 &&
+    new Date(released_at).getFullYear() > 2020
+  ) {
     variants.push(VARIANTS.RETRO_FRAME);
   }
   if (textless === true) {

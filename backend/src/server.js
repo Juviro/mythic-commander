@@ -2,6 +2,7 @@ import { ApolloServer } from 'apollo-server-koa';
 
 import schema from './graphql';
 import db from './database';
+import logger from './logging/logger';
 
 export default new ApolloServer({
   schema,
@@ -10,7 +11,7 @@ export default new ApolloServer({
       db,
     };
 
-    const authorization = ctx.request.header.authorization;
+    const { authorization } = ctx.request.header;
     if (!authorization) {
       return { ...context, user: {} };
     }
@@ -38,8 +39,13 @@ export default new ApolloServer({
     return { ...context, user: user ?? {} };
   },
   formatError: (error) => {
-    console.error('error', error);
-    return error;
+    logger.error('Graphql error:', error);
+    return {
+      ...error,
+      message: 'Internal server error',
+      locations: null,
+      extensions: { ...error.extensions, exception: null },
+    };
   },
   tracing: true,
   introspection: true,

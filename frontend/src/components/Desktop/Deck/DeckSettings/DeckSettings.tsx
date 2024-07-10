@@ -11,10 +11,20 @@ interface Props {
 export const DeckSettings = ({ view, setView }: Props) => {
   return (
     <Flex>
-      <Tabs activeKey={view} onChange={setView}>
-        <Tabs.TabPane tab="Group by Type" key="type" />
-        <Tabs.TabPane tab="Group by Tag" key="tags" />
-      </Tabs>
+      <Tabs
+        activeKey={view}
+        onChange={setView}
+        items={[
+          {
+            key: 'type',
+            label: 'Group by Type',
+          },
+          {
+            key: 'tags',
+            label: 'Group by Tag',
+          },
+        ]}
+      />
     </Flex>
   );
 };

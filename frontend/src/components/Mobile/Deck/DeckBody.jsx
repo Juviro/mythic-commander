@@ -11,16 +11,23 @@ export default ({ deck, currentTab, loading }) => {
       activeKey={currentTab}
       style={{ width: '100%' }}
       tabBarStyle={{ display: 'none' }}
-    >
-      <Tabs.TabPane tab="1" key="cards">
-        <CardList deck={deck} loading={loading} />
-      </Tabs.TabPane>
-      <Tabs.TabPane tab="2" key="wants">
-        <LinkedWants deck={deck} loading={loading} />
-      </Tabs.TabPane>
-      <Tabs.TabPane tab="3" key="edit">
-        <EditDeck deck={deck} loading={loading} />
-      </Tabs.TabPane>
-    </Tabs>
+      items={[
+        {
+          key: 'cards',
+          title: '1',
+          children: <CardList deck={deck} loading={loading} />,
+        },
+        {
+          key: 'wants',
+          title: '2',
+          children: <LinkedWants deck={deck} loading={loading} />,
+        },
+        {
+          key: 'edit',
+          title: '3',
+          children: <EditDeck deck={deck} loading={loading} />,
+        },
+      ]}
+    />
   );
 };

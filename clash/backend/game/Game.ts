@@ -30,6 +30,7 @@ import {
   SOCKET_MSG_GENERAL,
   SearchLibraryPayload,
   SendMessagePayload,
+  SetCommanderDamagePayload,
   SetCommanderTimesCastedPayload,
   SetPhasePayload,
   SetPlayerLifePayload,
@@ -42,6 +43,7 @@ import { getGameState, storeGameState } from 'backend/database/matchStore';
 import initMatch from 'backend/lobby/initMatch/initMatch';
 import { randomizeArray } from 'utils/randomizeArray';
 import db from 'backend/database/db';
+import getPlaytestGamestate from 'backend/lobby/initMatch/getPlaytestGamestate';
 import addLogEntry from './addLogEntry';
 import getInitialCardProps from './utils/getInitialCardProps';
 
@@ -56,11 +58,17 @@ export default class Game {
 
   gameState: GameState;
 
+  isPlaytest: boolean;
+
+  deckId: string;
+
   users: { [userId: string]: User } = {};
 
-  constructor(gameState: GameState, server: Server) {
+  constructor(gameState: GameState, server: Server, isPlaytest = false, deckId = '') {
     this.server = server;
     this.gameState = gameState;
+    this.isPlaytest = isPlaytest;
+    this.deckId = deckId;
   }
 
   get id() {
@@ -106,6 +114,7 @@ export default class Game {
   // ##################### Game #####################
 
   storeGameState() {
+    if (this.isPlaytest) return;
     // currently, the game state is stored whenever the active player changes
     storeGameState(this.gameState.gameId, this.gameState);
   }
@@ -115,12 +124,21 @@ export default class Game {
     if (player.id !== this.gameState.hostId) return;
 
     const { lobby } = await getGameState(this.gameState.gameId);
-    await initMatch(lobby);
-    const { gameState: newGameState } = await getGameState(this.gameState.gameId);
+    if (this.isPlaytest) {
+      const newGameState = await getPlaytestGamestate(
+        this.gameState.gameId,
+        { ...player, avatar: '', username: player.name },
+        this.deckId
+      );
+      this.gameState = newGameState;
+    } else {
+      await initMatch(lobby);
+      const { gameState: newGameState } = await getGameState(this.gameState.gameId);
 
-    this.gameState = newGameState;
+      this.gameState = newGameState;
+    }
 
-    newGameState.players.forEach(({ id }) => {
+    this.gameState.players.forEach(({ id }) => {
       const user = this.users[id];
       // might be undefined if player is not connected
       if (!user) return;
@@ -579,9 +597,9 @@ export default class Game {
       logKey: LOG_MESSAGES.ADD_COUNTERS,
       payload: {
         cardNames,
+        cardIds,
         battlefieldPlayerId,
         amount,
-        subtract: amount < 0,
         type,
       },
     });
@@ -1039,6 +1057,45 @@ export default class Game {
       payload: {
         ...payload,
         previousTotal,
+        fromPlayerId: player.id,
+      },
+    });
+  }
+
+  setCommanderDamage(playerId: string, payload: SetCommanderDamagePayload) {
+    const { commanderId, forPlayerId, total } = payload;
+
+    const player = this.getPlayerById(playerId);
+
+    let previousTotal = 0;
+    let commanderOwnerId: string;
+    let commanderName: string;
+
+    this.gameState.players.forEach((p) => {
+      p.commanders.forEach((commander) => {
+        if (commander.clashId !== commanderId) return;
+        previousTotal = commander.commanderDamageDealt[forPlayerId] || 0;
+        commander.commanderDamageDealt[forPlayerId] = Math.max(total, 0);
+        commanderOwnerId = p.id;
+        commanderName = commander.name;
+      });
+    });
+
+    if (previousTotal === 0 && total < 0) {
+      return;
+    }
+
+    const forPlayer = this.getPlayerById(commanderOwnerId!);
+    this.emitPlayerUpdate(forPlayer);
+
+    this.logAction({
+      playerId: player.id,
+      logKey: LOG_MESSAGES.SET_COMMANDER_DAMAGE,
+      payload: {
+        ...payload,
+        total: Math.max(total, 0),
+        previousTotal,
+        commanderName: commanderName!,
         fromPlayerId: player.id,
       },
     });

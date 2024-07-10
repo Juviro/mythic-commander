@@ -44,9 +44,9 @@ export const Tags = ({ onSetTags, card, allTags }: Props) => {
       {!isEditing ? (
         <>
           {card.tags?.map((tag) => (
-            <Tag tag={tag} key={tag} onDeleteTag={onDeleteTag} />
+            <Tag tag={tag} key={tag} onDeleteTag={onSetTags ? onDeleteTag : undefined} />
           ))}
-          <AddTagButton onClick={() => setIsEditing(true)} />
+          {onSetTags && <AddTagButton onClick={() => setIsEditing(true)} />}
         </>
       ) : (
         <AddTagsMenu

@@ -36,8 +36,9 @@ const DECK_FIELDS = `
     lastEdit
     imgSrc
     numberOfCards
+    canEdit
     cards {
-    ${CARD_FIELDS}
+      ${CARD_FIELDS}
     }
 `;
 

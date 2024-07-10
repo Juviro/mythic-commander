@@ -2,6 +2,7 @@
 import { Zone } from 'backend/database/gamestate.types';
 import {
   SendMessagePayload,
+  SetCommanderDamagePayload,
   SetCommanderTimesCastedPayload,
   SetPhasePayload,
   SetPlayerLifePayload,
@@ -30,6 +31,7 @@ export const LOG_MESSAGES = {
   EXECUTE_COMMAND: 'EXECUTE_COMMAND',
   SET_COMMANDER_TIMES_CASTED: 'SET_COMMANDER_TIMES_CASTED',
   SET_LIFE: 'SET_LIFE',
+  SET_COMMANDER_DAMAGE: 'SET_COMMANDER_DAMAGE',
   SET_PHASE: 'SET_PHASE',
   SET_ACTIVE_PLAYER: 'SET_ACTIVE_PLAYER',
 } as const;
@@ -98,6 +100,12 @@ export type LogPayloadSetPlayerLife = SetPlayerLifePayload & {
   previousTotal: number;
 };
 
+export type LogPayloadSetCommanderDamage = SetCommanderDamagePayload & {
+  fromPlayerId: string;
+  previousTotal: number;
+  commanderName: string;
+};
+
 export type LogPayloadSetPhase = SetPhasePayload & {
   activePlayerId: string;
 };
@@ -133,8 +141,8 @@ export interface LogPayloadCopyCard {
 
 export interface LogPayloadAddCounters {
   amount: number;
-  subtract: boolean;
   cardNames: string[];
+  cardIds: string[];
   battlefieldPlayerId: string;
   type: string;
 }
@@ -235,6 +243,11 @@ interface LogMessageSetPlayerLife extends LogMessageWithPlayer {
   payload: LogPayloadSetPlayerLife;
 }
 
+interface LogMessageSetCommanderDamage extends LogMessageWithPlayer {
+  logKey: 'SET_COMMANDER_DAMAGE';
+  payload: LogPayloadSetCommanderDamage;
+}
+
 interface LogMessageSetPhase extends LogMessageWithPlayer {
   logKey: 'SET_PHASE';
   payload: LogPayloadSetPhase;
@@ -292,6 +305,7 @@ export type LogMessage =
   | LogMessageChat
   | LogExecuteCommand
   | LogMessageSetPlayerLife
+  | LogMessageSetCommanderDamage
   | LogMessageSetCommanderTimesCasted
   | LogMessageSetPhase
   | LogMessageSetActivePlayer

@@ -1,6 +1,20 @@
-import { GameLog } from 'backend/constants/logMessages';
+import { GameLog, LOG_MESSAGES } from 'backend/constants/logMessages';
 
-const GROUPABLE_LOG_KEYS = ['DRAW_CARD', 'SET_COMMANDER_TIMES_CASTED', 'SET_LIFE'];
+const {
+  DRAW_CARD,
+  SET_COMMANDER_TIMES_CASTED,
+  SET_LIFE,
+  ADD_COUNTERS,
+  SET_COMMANDER_DAMAGE,
+} = LOG_MESSAGES;
+
+const GROUPABLE_LOG_KEYS = [
+  DRAW_CARD,
+  SET_COMMANDER_TIMES_CASTED,
+  SET_LIFE,
+  ADD_COUNTERS,
+  SET_COMMANDER_DAMAGE,
+] as string[];
 
 const addLogEntry = (currentLog: GameLog[], newLog: GameLog) => {
   const lastLog = currentLog.at(-1);
@@ -15,16 +29,32 @@ const addLogEntry = (currentLog: GameLog[], newLog: GameLog) => {
   const newLastLog = { ...lastLog, payload: { ...lastLog.payload } } as GameLog;
 
   if (
-    newLastLog.logKey === 'SET_LIFE' &&
-    newLog.logKey === 'SET_LIFE' &&
+    newLastLog.logKey === SET_LIFE &&
+    newLog.logKey === SET_LIFE &&
     newLastLog.payload.forPlayerId !== newLog.payload.forPlayerId
   ) {
     return [...currentLog, newLog];
   }
   if (
-    newLastLog.logKey === 'SET_COMMANDER_TIMES_CASTED' &&
-    newLog.logKey === 'SET_COMMANDER_TIMES_CASTED' &&
+    newLastLog.logKey === SET_COMMANDER_DAMAGE &&
+    newLog.logKey === SET_COMMANDER_DAMAGE &&
+    (newLastLog.payload.forPlayerId !== newLog.payload.forPlayerId ||
+      newLastLog.payload.commanderId !== newLog.payload.commanderId)
+  ) {
+    return [...currentLog, newLog];
+  }
+  if (
+    newLastLog.logKey === SET_COMMANDER_TIMES_CASTED &&
+    newLog.logKey === SET_COMMANDER_TIMES_CASTED &&
     newLastLog.payload.commanderClashId !== newLog.payload.commanderClashId
+  ) {
+    return [...currentLog, newLog];
+  }
+  if (
+    newLastLog.logKey === ADD_COUNTERS &&
+    newLog.logKey === ADD_COUNTERS &&
+    (newLastLog.payload.cardIds.join(',') !== newLog.payload.cardIds.join(',') ||
+      newLastLog.payload.type !== newLog.payload.type)
   ) {
     return [...currentLog, newLog];
   }

@@ -10,7 +10,6 @@ const StyledTitleWrapper = styled.div`
   margin-left: 16px;
   justify-content: space-between;
   align-items: center;
-  height: 24px;
 `;
 
 export default ({ deck }) => {
@@ -49,7 +48,7 @@ export default ({ deck }) => {
       <Typography.Title
         ellipsis
         level={3}
-        style={{ marginBottom: 0, display: 'flex' }}
+        style={{ margin: 0, display: 'flex', minWidth: 200 }}
         editable={editable}
       >
         {deck.name}

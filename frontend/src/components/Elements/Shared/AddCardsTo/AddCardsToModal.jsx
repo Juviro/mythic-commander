@@ -5,7 +5,7 @@ import AddCardsTo from './AddCardsTo';
 export default ({ onCancel, title = 'Add cards to...', visible, ...props }) => {
   return (
     <FocusedModal
-      visible={visible}
+      open={visible}
       title={title}
       footer={null}
       onCancel={onCancel}
@@ -13,7 +13,13 @@ export default ({ onCancel, title = 'Add cards to...', visible, ...props }) => {
       centered
       width={666}
       focusId="modal.addCardsTo"
-      bodyStyle={{ maxHeight: '70vh', overflowY: 'auto', padding: 16 }}
+      styles={{
+        body: {
+          maxHeight: '70vh',
+          overflowY: 'auto',
+          padding: 16,
+        },
+      }}
     >
       <AddCardsTo {...props} />
     </FocusedModal>

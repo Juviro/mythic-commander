@@ -2,6 +2,7 @@
   "apps": [
     {
       "name": "clash",
+      "time": true,
       "script": "npm start"
     }
   ]

@@ -9,7 +9,11 @@ export default () => {
     <PageCard
       title="Overview"
       extra={<CollectionVisibility />}
-      bodyStyle={{ padding: '0 24px' }}
+      styles={{
+        body: {
+          padding: '0 24px',
+        },
+      }}
     >
       <CollectionStats showCharts horizontal />
     </PageCard>

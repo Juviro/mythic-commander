@@ -1,7 +1,8 @@
 import db from '../database';
+import logger from '../logging/logger';
 
 const storeCardPrice = async () => {
-  console.info('Storing card price');
+  logger.info('Storing card price');
 
   // create entries for new cards
   await db.raw(`
@@ -38,7 +39,7 @@ const storeCardPrice = async () => {
         WHERE 
           new_values.id = "cardPrices".id
     `);
-  console.info('Stored card price');
+  logger.info('Stored card price');
 };
 
 export default storeCardPrice;

@@ -31,17 +31,20 @@ export const SocketContextProvider = ({ children }: Props) => {
 
   const ws = useRef<Socket | null>(null);
 
-  const initSocket = async (gameId?: string) => {
+  const initSocket = async ({ gameId, deckId }: { gameId?: string; deckId?: string }) => {
     await fetch('/api/socket');
     const socket = io();
     ws.current = socket;
 
-    const initializeMessage = gameId
-      ? SOCKET_MSG_GAME.INITIALIZE
-      : SOCKET_MSG_LOBBY.INITIALIZE;
+    let initializeMessage = SOCKET_MSG_LOBBY.INITIALIZE;
+    if (gameId) {
+      initializeMessage = SOCKET_MSG_GAME.INITIALIZE;
+    } else if (deckId) {
+      initializeMessage = SOCKET_MSG_GAME.INITIALIZE_PLAYTEST;
+    }
 
     socket.on('connect', () => {
-      socket.emit(initializeMessage, gameId);
+      socket.emit(initializeMessage, gameId ?? deckId);
     });
 
     socket.on(initializeMessage, (msg) => {
@@ -63,7 +66,8 @@ export const SocketContextProvider = ({ children }: Props) => {
   useEffect(() => {
     if (!router.isReady) return undefined;
     const gameId = router.query.gameId as string | undefined;
-    initSocket(gameId);
+    const deckId = router.query.deckId as string | undefined;
+    initSocket({ gameId, deckId });
 
     return () => {
       ws.current?.disconnect();

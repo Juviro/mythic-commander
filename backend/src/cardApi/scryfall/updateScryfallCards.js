@@ -11,6 +11,7 @@ import storeCardImage from '../images/storeCardImage';
 import downloadCardJson from './downloadCardJson';
 import { normalizeName } from '../../utils/normalizeName';
 import { getCardVariants } from '../../graphql/resolvers/queries/Card/cardVariants';
+import logger from '../../logging/logger';
 
 const updateClause = ALL_CARD_FIELDS.map(
   ({ key }) => `${key} = EXCLUDED.${key}`
@@ -41,7 +42,7 @@ export const updateScryfallCards = async (type, tableName) => {
     crlfDelay: Infinity,
   });
 
-  console.info('processing scryfall cards...');
+  logger.info('processing scryfall cards...');
 
   let numberOfCards = 0;
   let numberOfSkippedCards = 0;
@@ -61,10 +62,10 @@ export const updateScryfallCards = async (type, tableName) => {
       // remove trailing comma
       const parsableCard = line.replace(/,$/, '');
       const card = JSON.parse(parsableCard);
-      numberOfCards++;
+      numberOfCards += 1;
 
       if (shouldSkipCard(card)) {
-        numberOfSkippedCards++;
+        numberOfSkippedCards += 1;
         continue;
       }
       printProgress();
@@ -103,14 +104,14 @@ export const updateScryfallCards = async (type, tableName) => {
       // [ and ] are caught here, which are the first and last line of the json
     }
   }
-  console.info('updated scryfall cards, deleting file');
-  return new Promise((resolve, reject) =>
+  logger.info('updated scryfall cards, deleting file');
+  return new Promise((resolve, reject) => {
     fs.unlink(filePath, (err) => {
       if (err) {
         reject(err);
       } else {
         resolve();
       }
-    })
-  );
+    });
+  });
 };

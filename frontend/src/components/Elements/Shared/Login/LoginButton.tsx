@@ -13,12 +13,14 @@ export default () => {
       </Button>
       {/* z index of mobile drawer is 1002, make sure this is above it */}
       <Modal
-        visible={isOpen}
+        open={isOpen}
         onCancel={toggleIsOpen}
         title="Login"
         footer={null}
         zIndex={1003}
-        bodyStyle={{ height: 200, display: 'flex', justifyContent: 'center' }}
+        styles={{
+          body: { height: 200, display: 'flex', justifyContent: 'center' },
+        }}
       >
         <Login />
       </Modal>

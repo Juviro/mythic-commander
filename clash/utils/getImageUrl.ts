@@ -1,4 +1,4 @@
-type Size = 'small' | 'normal' | 'large';
+type Size = 'small' | 'normal' | 'large' | 'art_crop';
 
 export const getImageUrl = (id: string, flipped?: boolean, size: Size = 'normal') => {
   const baseUrl = 'https://mythic-commander.com/';

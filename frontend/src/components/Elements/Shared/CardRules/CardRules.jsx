@@ -65,7 +65,7 @@ export default ({ card = {}, loading }) => {
           {buttonText}
         </Button>
       </StyledRulesWrapper>
-      <Modal footer={null} visible={isOpen} onCancel={() => setIsOpen(false)} centered>
+      <Modal footer={null} open={isOpen} onCancel={() => setIsOpen(false)} centered>
         <List
           size="small"
           header={<span style={{ fontWeight: 600 }}>{`Rules for ${name}`}</span>}

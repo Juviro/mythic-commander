@@ -24,7 +24,9 @@ const DeckLabel = ({ deck, displayTooltip, deckName }: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      <img src={getDeckImgSrc(deck.imgSrc)} alt="" className={styles.image} />
+      {deck?.imgSrc && (
+        <img src={getDeckImgSrc(deck.imgSrc)} alt="" className={styles.image} />
+      )}
       <div className={styles.deck_name}>
         <Tooltip title={usedName} open={displayTooltip ? undefined : false}>
           <span className={styles.label}>{usedName}</span>

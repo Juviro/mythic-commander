@@ -38,9 +38,11 @@ const CardModalDesktop = ({
       footer={null}
       destroyOnClose
       width={1200}
-      bodyStyle={{
-        overflowY: 'scroll',
-        maxHeight: 'calc(100vh - 128px)',
+      styles={{
+        body: {
+          overflowY: 'scroll',
+          maxHeight: 'calc(100vh - 128px)',
+        },
       }}
       style={{ maxWidth: '100%' }}
       focusId="modal.cardDetails"

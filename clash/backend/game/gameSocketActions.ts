@@ -1,6 +1,9 @@
 import { Server } from 'socket.io';
+import uniqid from 'uniqid';
+
 import getUser, { User } from 'backend/database/getUser';
 import { getGameState } from 'backend/database/matchStore';
+import getPlaytestGamestate from 'backend/lobby/initMatch/getPlaytestGamestate';
 import {
   AcceptHandPayload,
   AddCountersPayload,
@@ -21,6 +24,7 @@ import {
   SOCKET_MSG_GENERAL,
   SearchLibraryPayload,
   SendMessagePayload,
+  SetCommanderDamagePayload,
   SetCommanderTimesCastedPayload,
   SetPhasePayload,
   SetPlayerLifePayload,
@@ -61,6 +65,24 @@ const gameSocketActions = (io: Server) => {
 
       const game = new Game(gameState, io);
       currentGames[gameId] = game;
+      game.join(socket, user);
+    });
+
+    socket.on(SOCKET_MSG_GAME.INITIALIZE_PLAYTEST, async (deckId: string) => {
+      try {
+        user = await getUser(socket.handshake.headers.cookie);
+        socket.emit(SOCKET_MSG_GAME.INITIALIZE_PLAYTEST, user);
+      } catch {
+        socket.emit(SOCKET_MSG_GENERAL.NOT_LOGGED_IN);
+        return;
+      }
+
+      currentGameId = uniqid();
+
+      const gameState = await getPlaytestGamestate(currentGameId, user, deckId);
+
+      const game = new Game(gameState, io, true, deckId);
+      currentGames[currentGameId] = game;
       game.join(socket, user);
     });
 
@@ -176,6 +198,13 @@ const gameSocketActions = (io: Server) => {
     socket.on(SOCKET_MSG_GAME.SET_PLAYER_LIFE, (payload: SetPlayerLifePayload) => {
       currentGames[currentGameId].setPlayerLife(user.id, payload);
     });
+
+    socket.on(
+      SOCKET_MSG_GAME.SET_COMMANDER_DAMAGE,
+      (payload: SetCommanderDamagePayload) => {
+        currentGames[currentGameId].setCommanderDamage(user.id, payload);
+      }
+    );
 
     socket.on(SOCKET_MSG_GAME.END_TURN, () => {
       currentGames[currentGameId].endTurn(user.id);

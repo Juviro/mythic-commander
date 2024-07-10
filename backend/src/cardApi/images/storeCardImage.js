@@ -1,8 +1,8 @@
 import fs from 'fs';
 import sharp from 'sharp';
-import fetch from 'node-fetch';
+import logger from '../../logging/logger';
 
-const IMG_DIR = process.env.IMG_DIR;
+const { IMG_DIR } = process.env;
 
 const DIMENSIONS = {
   small: {
@@ -35,13 +35,13 @@ const downloadImage = async (filename, url, size, forceUpdate = false) => {
   }
 
   const response = await fetch(url);
-  const buffer = await response.buffer();
+  const buffer = await response.arrayBuffer();
 
   sharp(buffer)
     .resize(DIMENSIONS[size].width, DIMENSIONS[size].height)
     .toFile(filename, (err) => {
       if (err) {
-        console.error(err);
+        logger.error('Error resizing image:', err);
       }
     });
 };
@@ -64,12 +64,16 @@ const downloadAllImages = async (card, imageUris, face, forceUpdate) => {
 const storeCardImage = async (card, forceUpdate = false) => {
   if (!process.env.IMG_DIR) return;
 
-  if (card.image_uris) {
-    await downloadAllImages(card, card.image_uris, 'front', forceUpdate);
-  } else {
-    const faces = card.card_faces;
-    await downloadAllImages(card, faces[0].image_uris, 'front', forceUpdate);
-    await downloadAllImages(card, faces[1].image_uris, 'back', forceUpdate);
+  try {
+    if (card.image_uris) {
+      await downloadAllImages(card, card.image_uris, 'front', forceUpdate);
+    } else {
+      const faces = card.card_faces;
+      await downloadAllImages(card, faces[0].image_uris, 'front', forceUpdate);
+      await downloadAllImages(card, faces[1].image_uris, 'back', forceUpdate);
+    }
+  } catch (err) {
+    logger.error(`Error fetching card image for ${card.id}: ${err}`);
   }
 };
 

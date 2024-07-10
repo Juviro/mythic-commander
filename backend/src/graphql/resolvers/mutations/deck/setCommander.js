@@ -1,7 +1,7 @@
-import { canAccessDeck } from '../../../../auth/authenticateUser';
+import { canEditDeck } from '../../../../auth/authenticateUser';
 
 export default async (_, { cardIds, deckId }, { user: { id: userId }, db }) => {
-  await canAccessDeck(userId, deckId);
+  await canEditDeck(userId, deckId);
 
   await db('cardToDeck')
     .where({ isCommander: true, deckId })

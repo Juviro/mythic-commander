@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "name": "backend",
+      "time": true,
+      "script": "./dist/index.js",
+      "node_args": "-r dotenv/config"
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 import {
   canAccessDeck,
   canAccessWantsList,
+  canEditDeck,
+  canEditWantsList,
 } from '../../../../auth/authenticateUser';
 
 const DECK = 'DECK';
@@ -14,6 +16,9 @@ const typeToRelation = {
 const canAccess = (userId, { id, type }) =>
   type === DECK ? canAccessDeck(userId, id) : canAccessWantsList(userId, id);
 
+const canEdit = (userId, { id, type }) =>
+  type === DECK ? canEditDeck(userId, id) : canEditWantsList(userId, id);
+
 const getUpdatedList = ({ type, id }, db) =>
   db(typeToRelation[type]).where({ id }).first();
 
@@ -23,7 +28,7 @@ export default async (
   { user: { id: userId }, db }
 ) => {
   await canAccess(userId, from);
-  await canAccess(userId, to);
+  await canEdit(userId, to);
 
   const currentCard =
     from.type === DECK

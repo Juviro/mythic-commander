@@ -30,7 +30,9 @@ export default ({
       okText={okText}
       okButtonProps={{ onClick: onOk }}
       onCancel={onCancel}
-      bodyStyle={{ display: text ? 'block' : 'none', maxHeight: 400, overflowY: 'auto' }}
+      styles={{
+        body: { display: text ? 'block' : 'none', maxHeight: 400, overflowY: 'auto' },
+      }}
       focusId="modal.confirm"
     >
       {text && <Typography.Text>{text}</Typography.Text>}

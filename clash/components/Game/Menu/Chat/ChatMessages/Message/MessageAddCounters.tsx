@@ -12,17 +12,22 @@ interface Props {
 }
 
 const MessageAddCounters = ({ payload, playerId }: Props) => {
+  const subtracted = payload.amount < 0;
+  if (!payload.amount) return null;
+
+  const absAmount = Math.abs(payload.amount);
+
   return (
     <div className={styles.message}>
       <ColoredPlayerName id={playerId} />
       <span>
-        {` ${payload.subtract ? 'removed' : 'added'} `}
-        {payload.amount > 1 ? (
-          <b>{`${payload.amount} ${getCountersLabel(payload.type)} counters`}</b>
+        {` ${subtracted ? 'removed' : 'added'} `}
+        {absAmount !== 1 ? (
+          <b>{`${Math.abs(absAmount)} ${getCountersLabel(payload.type)} counters`}</b>
         ) : (
           <b>{`a ${getCountersLabel(payload.type)} counter`}</b>
         )}
-        {` ${payload.subtract ? 'from' : 'to'} `}
+        {` ${subtracted ? 'from' : 'to'} `}
         <b>
           {payload.cardNames.length === 1
             ? payload.cardNames[0]

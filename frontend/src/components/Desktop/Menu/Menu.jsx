@@ -3,9 +3,17 @@ import styled from 'styled-components';
 import MythicCommanderBanner from 'components/Elements/Shared/MythicCommanderBanner';
 import Flex from 'components/Elements/Shared/Flex';
 import SearchBar from 'components/Elements/Shared/SearchBar';
-import { darkBackground, darkBackgroundLight } from '../../../constants/colors';
+import { CLASH_BASE_URL } from 'constants/network';
+import { Space } from 'antd';
+import {
+  clashPrimary,
+  clashPrimaryLight,
+  darkBackground,
+  darkBackgroundLight,
+} from '../../../constants/colors';
 import UserMenu from './UserMenu';
 import Navigation from './Navigation';
+import { ReactComponent as ExternalIcon } from '../../../assets/icons/arrow-right-top.svg';
 
 const StyledMenu = styled.div`
   width: 100%;
@@ -26,6 +34,25 @@ const StyledMenu = styled.div`
   }
 `;
 
+const StyledPlayButton = styled.a`
+  color: ${clashPrimary};
+  font-weight: bold;
+  text-decoration: none;
+  margin: 0 16px;
+  font-size: 22px;
+  display: flex;
+  align-items: end;
+
+  &:hover {
+    color: ${clashPrimaryLight};
+  }
+`;
+
+const StyledExternalIcon = styled(ExternalIcon)`
+  height: 22px;
+  width: 22px;
+`;
+
 const Menu = () => {
   return (
     <StyledMenu>
@@ -42,12 +69,18 @@ const Menu = () => {
             hideWhenSmall
           />
           <Navigation />
+          <StyledPlayButton href={CLASH_BASE_URL} target="_blank" rel="noreferrer">
+            Play
+            <StyledExternalIcon />
+          </StyledPlayButton>
         </Flex>
         <SearchBar
           hideLayover
           style={{ margin: '0 16px', width: '100%', maxWidth: 330 }}
         />
-        <UserMenu />
+        <Space>
+          <UserMenu />
+        </Space>
       </Flex>
     </StyledMenu>
   );

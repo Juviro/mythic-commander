@@ -8,6 +8,7 @@ import AdditionalInfos from './AdditionalInfos';
 import CardTitle from './CardTitle';
 import { useToggle } from '../../../../Hooks';
 import UpdateCardImage from './UpdateCardImage';
+import ShowScryfallApiPage from './ShowScryfallApiPage';
 
 export default ({
   card,
@@ -36,7 +37,10 @@ export default ({
         selectedCardId={selectedCardId}
         setSelectedCardId={setSelectedCardId}
       />
-      <UpdateCardImage cardId={usedCard.id} />
+      <div>
+        <UpdateCardImage cardId={usedCard.id} />
+        <ShowScryfallApiPage cardId={usedCard.id} />
+      </div>
       <PriceDevelopment selectedCard={selectedCard} cardId={usedCard.id} />
       {user && <DecksAndWants card={usedCard} loading={loading} />}
       <AdditionalInfos card={usedCard} loading={loading} isFlipped={isFlipped} />

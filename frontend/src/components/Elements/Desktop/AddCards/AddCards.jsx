@@ -37,7 +37,7 @@ const AddCards = ({
   onAddCards,
   isAdvanced = false,
   focusId,
-  alignTop,
+  alignTop = false,
   width = 500,
   allowFoilInput = true,
   additionalOptions = [],
@@ -75,10 +75,6 @@ const AddCards = ({
       )}
     </Flex>
   );
-};
-
-AddCards.defaultProps = {
-  alignTop: false,
 };
 
 export default AddCards;

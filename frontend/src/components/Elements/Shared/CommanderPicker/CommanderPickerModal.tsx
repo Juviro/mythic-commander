@@ -20,7 +20,7 @@ export const CommanderPickerModal = ({
   label,
 }: Props) => {
   return (
-    <Modal title={label} visible={visible} onCancel={onCancel} footer={null}>
+    <Modal title={label} open={visible} onCancel={onCancel} footer={null}>
       {commanderChoices.length ? (
         <CardGrid
           minimal

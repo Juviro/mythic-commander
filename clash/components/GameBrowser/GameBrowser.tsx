@@ -37,6 +37,7 @@ const GameBrowser = () => {
         <div className={styles.inner}>
           {currentLobby ? <GameLobby /> : <GameSelection />}
         </div>
+        <img src="/assets/images/lobby_bg.webp" className={styles.bg_image} alt="" />
       </div>
     </QueryClientProvider>
   );

@@ -38,7 +38,7 @@ const StyledHeader = styled.div`
 const StyledListItem = styled(List.Item)`
   display: flex;
   height: 71px;
-  padding: 12px 16px;
+  padding: 12px 16px !important;
   justify-content: space-between;
 `;
 

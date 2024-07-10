@@ -12,10 +12,11 @@ const StyledMenu = styled(Menu)`
   font-size: 16px;
   margin-left: 12px;
   flex: 2;
-  min-width: 450px;
+
+  min-width: 410px;
 
   @media (min-width: 1200px) {
-    min-width: 700px;
+    min-width: 540px;
   }
 
   .ant-menu-item,
@@ -36,14 +37,18 @@ const StyledMenu = styled(Menu)`
   .ant-menu-submenu-active {
     background-color: ${primary} !important;
   }
+
+  .ant-menu-overflow-item {
+    height: 100%;
+  }
 `;
 
 const StyledLink = styled(Link)`
   color: ${lightWhite} !important;
-  padding: 20px;
+  padding: 20px 16px;
 
   @media (min-width: 1200px) {
-    padding: 20px 48px;
+    padding: 20px 32px;
   }
 
   .ant-menu-item-selected &,

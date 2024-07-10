@@ -1,5 +1,5 @@
-import db from '../database';
 import { AuthenticationError } from 'apollo-server-koa';
+import db from '../database';
 
 export const throwAuthError = (message = 'Not authenticated') => {
   throw new AuthenticationError(message);

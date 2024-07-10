@@ -65,7 +65,6 @@ export default ({
       onKeyDown={useSubmitOnEnter(!isOpen && onSubmit)}
       onSelect={onSelectOption}
       showSearch
-      dropdownStyle={{ width }}
       onClick={(e) => e.stopPropagation()}
       onDropdownVisibleChange={toggleIsOpen}
       filterOption={filterOption}

@@ -28,7 +28,7 @@ const getColorTagProps =
         filter: none;
       `
       : `
-        border: 1px solid #333333;
+        border: 2px solid #333333;
         filter: grayscale(100%);
         opacity: 0.5;
       `;

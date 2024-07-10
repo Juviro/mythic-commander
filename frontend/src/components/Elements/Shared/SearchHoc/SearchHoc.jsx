@@ -12,6 +12,7 @@ import useLocalStorage from '../../../Hooks/useLocalStorage';
 export default ({ children, researchOnOrderChange, blockInitialSearch = false }) => {
   const [currentCards, setCurrentCards] = useState([]);
   const [loading, toggleLoading] = useToggle(false);
+  const [error, setError] = useState(null);
   const [queryResult, setQueryResult] = useState({});
   const [initialPageSize, setInitialPageSize] = useLocalStorage('pageSize', 20);
   const [lastSearchOptions, setLastSearchOptions] = useState({});
@@ -37,22 +38,26 @@ export default ({ children, researchOnOrderChange, blockInitialSearch = false })
       setLastSearchOptions({ ...searchOptions, orderBy, pageSize });
     }
 
-    const { data } = await client.query({
-      query: cardSearch,
-      variables: {
-        offset: offset || 0,
-        options: { ...searchOptions, orderBy },
-        limit: pageSize || Number(initialPageSize),
-      },
-    });
-    if (isPreload) return data.cardSearch.cards;
+    try {
+      const { data } = await client.query({
+        query: cardSearch,
+        variables: {
+          offset: offset || 0,
+          options: { ...searchOptions, orderBy },
+          limit: pageSize || Number(initialPageSize),
+        },
+      });
+      if (isPreload) return data.cardSearch.cards;
 
-    const { cards, totalResults } = data.cardSearch;
-    if (!cards.length && totalResults) return null;
+      const { cards, totalResults } = data.cardSearch;
+      if (!cards.length && totalResults) return null;
 
-    setQueryResult(data.cardSearch);
-    setCurrentCards(cards.map(unifySingleCard));
-    toggleLoading(false);
+      setQueryResult(data.cardSearch);
+      setCurrentCards(cards.map(unifySingleCard));
+      toggleLoading(false);
+    } catch (currentError) {
+      setError('Error fetching cards. Please try another search query');
+    }
     return null;
   };
 
@@ -145,6 +150,7 @@ export default ({ children, researchOnOrderChange, blockInitialSearch = false })
   return children({
     isSearching,
     loading,
+    error,
     onSearch,
     onResetOptions,
     onChangeOption,

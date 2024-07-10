@@ -66,7 +66,7 @@ export default ({
   );
 
   return (
-    <Modal onOk={onClose} onCancel={onClose} visible={modalVisible} title={title}>
+    <Modal onOk={onClose} onCancel={onClose} open={modalVisible} title={title}>
       <Flex direction="column" style={style}>
         <Typography.Text style={{ fontSize: 12 }} strong>
           {description}
@@ -75,11 +75,15 @@ export default ({
           style={{ width: '100%', marginTop: 8 }}
           defaultValue={visibility}
           onChange={onChange}
+          optionLabelProp=""
         >
           {visibilityOptions.map(({ title: option, value, icon }) => (
             <Select.Option key={value} value={value}>
               {icon}
-              <Typography.Text style={{ marginLeft: 8, fontSize: 12 }} strong>
+              <Typography.Text
+                style={{ marginLeft: 8, fontSize: 12, lineHeight: 1 }}
+                strong
+              >
                 {option}
               </Typography.Text>
             </Select.Option>

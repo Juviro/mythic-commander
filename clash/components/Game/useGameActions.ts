@@ -24,6 +24,7 @@ import {
   PeekFaceDownPayload,
   PlayTopCardFaceDownPayload,
   RotateCardsPayload,
+  SetCommanderDamagePayload,
 } from 'backend/constants/wsEvents';
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
@@ -153,6 +154,15 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.SET_PLAYER_LIFE, payload);
   };
 
+  const setCommanderDamage = (
+    total: number,
+    commanderId: string,
+    forPlayerId: string
+  ) => {
+    const payload: SetCommanderDamagePayload = { commanderId, total, forPlayerId };
+    socket?.emit(SOCKET_MSG_GAME.SET_COMMANDER_DAMAGE, payload);
+  };
+
   const setPhase = (phase: Phase) => {
     const payload: SetPhasePayload = { phase };
     socket?.emit(SOCKET_MSG_GAME.SET_PHASE, payload);
@@ -196,6 +206,7 @@ const useGameActions = () => {
     onExecuteCommand,
     onSetCommanderTimesCasted,
     setPlayerLife,
+    setCommanderDamage,
     setPhase,
     endTurn,
     restartGame,

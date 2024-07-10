@@ -9,6 +9,7 @@ const StyledOption = styled.div`
   flex-direction: row;
   padding-left: 3px;
   height: 36px;
+  width: 100%;
   align-items: center;
 `;
 

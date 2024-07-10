@@ -21,6 +21,7 @@ const StyledEmpty = styled(Empty)`
 interface Props {
   cards?: UnifiedCard[];
   loading?: boolean;
+  error?: string;
   numberOfCards?: number;
   search?: string;
   showAddedBeforeFilter?: boolean;
@@ -34,6 +35,7 @@ interface Props {
 export default ({
   cards,
   loading,
+  error,
   numberOfCards,
   setSearch,
   search,
@@ -58,6 +60,7 @@ export default ({
   const cardList =
     cards.length || loading ? (
       <CardGrid
+        error={error}
         search={search}
         cards={cards}
         loading={loading}

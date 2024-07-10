@@ -15,7 +15,7 @@ const StyledListSelection = styled.ol<{ visible: boolean; isSidebarOpen?: boolea
   z-index: 99;
   justify-content: center;
   padding: 4px;
-  top: ${NAVBAR_HEIGHT}px;
+  top: 32px;
   left: 0;
   right: 0;
   background-color: #fff;
