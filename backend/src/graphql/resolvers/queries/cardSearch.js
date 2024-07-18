@@ -128,14 +128,33 @@ export const addNameClause = (q, name) => {
 };
 
 const addTextClause = (q, text) => {
-  const searchPattern = text.replace(/\s?\?\s?/g, '[^\n]*');
+  const parts = text
+    .split(',')
+    .map((val) => val.trim())
+    .filter(Boolean);
+
   try {
+    const searchPatterns = parts.map((part) =>
+      part.replace(/\s?\?\s?/g, '[^\n]*')
+    );
     // Very basic regex check to see if the user is trying to use a regex.
     // Still might fail because js regex are more robust than postgres regex.
-    new RegExp(searchPattern);
-    q.where('oracle_text', '~*', `.*${searchPattern}.*`);
+    searchPatterns.forEach((pattern) => {
+      new RegExp(pattern);
+    });
+    q.whereRaw(
+      `(
+        ${parts.map(() => `oracle_text ~* ?`).join(' OR ')}
+      )`,
+      searchPatterns.map((val) => `.*${val}.*`)
+    );
   } catch (e) {
-    q.where('oracle_text', 'ILIKE', `%${text}%`);
+    q.whereRaw(
+      `(
+        ${parts.map(() => `oracle_text ILIKE ?`).join(' OR ')}
+      )`,
+      parts.map((val) => `%${val}%`)
+    );
   }
 };
 
@@ -174,7 +193,7 @@ export default async (
   }
 
   const where = (q) => {
-    q.whereNot('set_type', 'token');
+    // q.whereNot('set_type', 'token');
     if (name) addNameClause(q, name);
     if (text) addTextClause(q, text);
     if (subTypes?.length)

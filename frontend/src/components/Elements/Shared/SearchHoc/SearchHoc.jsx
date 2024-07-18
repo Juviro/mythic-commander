@@ -39,6 +39,7 @@ export default ({ children, researchOnOrderChange, blockInitialSearch = false })
     }
 
     try {
+      setError(null);
       const { data } = await client.query({
         query: cardSearch,
         variables: {
@@ -57,6 +58,7 @@ export default ({ children, researchOnOrderChange, blockInitialSearch = false })
       toggleLoading(false);
     } catch (currentError) {
       setError('Error fetching cards. Please try another search query');
+      toggleLoading(false);
     }
     return null;
   };

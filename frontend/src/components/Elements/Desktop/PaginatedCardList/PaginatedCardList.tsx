@@ -58,7 +58,7 @@ export default ({
   }, [pageSize]);
 
   const cardList =
-    cards.length || loading ? (
+    cards.length || loading || error ? (
       <CardGrid
         error={error}
         search={search}
