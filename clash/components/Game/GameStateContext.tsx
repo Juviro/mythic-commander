@@ -16,6 +16,7 @@ interface BaseGameState {
   getPlayerColor: (playerId?: string) => string | undefined;
   playerNames: { [key: string]: string };
   peekingCards: PeekingCards | null;
+  hasGameStarted: boolean;
   setPeekingCards: (peekingCards: PeekingCards | null) => void;
   battlefieldCardWidth: number;
   battlefieldCardHeight: number;
@@ -114,12 +115,16 @@ export const GameStateContextProvider = ({ children }: Props) => {
       {}
     ) ?? {};
 
+  const hasGameStarted =
+    gameState?.players.every(({ mulligan }) => mulligan.cardsAccepted) ?? false;
+
   const value: GameStateContextType = useMemo(() => {
     const baseState = {
       getPlayerColor,
       playerNames,
       peekingCards,
       setPeekingCards,
+      hasGameStarted,
       battlefieldCardWidth,
       battlefieldCardHeight: battlefieldCardWidth / CARD_ASPECT_RATIO,
     };

@@ -28,9 +28,14 @@ import {
 } from 'backend/constants/wsEvents';
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
+import useSound from 'hooks/useSound';
 
 const useGameActions = () => {
   const { socket } = useContext(SocketContext);
+
+  const [playShuffle] = useSound('SHUFFLE');
+  const [playDraw] = useSound('DRAW');
+  const [playPlayCard] = useSound('PLAY');
 
   const onAcceptHand = (payload: AcceptHandPayload) => {
     socket?.emit(SOCKET_MSG_GAME.ACCEPT_HAND, payload);
@@ -41,6 +46,7 @@ const useGameActions = () => {
   };
 
   const onDrawCard = () => {
+    playDraw();
     socket?.emit(SOCKET_MSG_GAME.DRAW_CARD);
   };
 
@@ -51,6 +57,7 @@ const useGameActions = () => {
     details?: MoveCardDetails,
     faceDown?: boolean
   ) => {
+    // playPlayCard();
     const payload: MoveCardPayload = {
       clashId,
       faceDown,
@@ -133,6 +140,7 @@ const useGameActions = () => {
   };
 
   const onShuffle = () => {
+    // playShuffle();
     socket?.emit(SOCKET_MSG_GAME.SHUFFLE_LIBRARY);
   };
 

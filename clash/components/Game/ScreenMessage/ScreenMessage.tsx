@@ -1,17 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
+import useSound from 'hooks/useSound';
 import GameStateContext from '../GameStateContext';
 
 import styles from './ScreenMessage.module.css';
 
 const ScreenMessage = () => {
-  const { gameState, player: self } = useContext(GameStateContext);
+  const { gameState, player: self, hasGameStarted } = useContext(GameStateContext);
   const [message, setMessage] = useState('');
-
-  const hasGameStarted = gameState?.players.every(
-    (player) => player.mulligan.cardsAccepted
-  );
+  // const [playSound] = useSound('ACTIVE_PLAYER');
 
   useEffect(() => {
     if (!gameState || !hasGameStarted || gameState?.winner) return;
@@ -20,7 +18,14 @@ const ScreenMessage = () => {
       (player) => player.id === gameState.activePlayerId
     )!;
 
-    setMessage(`It's ${activePlayer.name}'s Turn`);
+    const isSelf = activePlayer.id === self.id;
+    const playerName = isSelf ? 'Your' : `${activePlayer.name}'s`;
+
+    setMessage(`It's ${playerName} Turn`);
+
+    if (isSelf) {
+      // playSound();
+    }
   }, [gameState?.activePlayerId, hasGameStarted]);
 
   useEffect(() => {
