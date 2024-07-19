@@ -688,18 +688,32 @@ export default class Game {
   }
 
   tapCards(payload: TapCardsPayload) {
-    const { cardIds, battlefieldPlayerId, tapped: overwriteTapped } = payload;
+    const { type, battlefieldPlayerId, tapped: overwriteTapped } = payload;
+    let { cardIds } = payload;
+
+    if (!cardIds && !type) {
+      throw new Error('Either cardIds or type must be provided');
+    }
 
     const player = this.getPlayerById(battlefieldPlayerId);
 
+    if (type) {
+      cardIds = [];
+      player.zones.battlefield.forEach((card) => {
+        const supertype = (card as VisibleCard).type_line;
+        if (!supertype.includes(type)) return;
+        cardIds!.push(card.clashId);
+      });
+    }
+
     const areAnyCardsUntapped = player.zones.battlefield.some(({ clashId, tapped }) => {
-      return cardIds.includes(clashId) ? !tapped : false;
+      return cardIds!.includes(clashId) ? !tapped : false;
     });
 
     const tapped = overwriteTapped ?? areAnyCardsUntapped;
 
     player.zones.battlefield.forEach((card) => {
-      if (!cardIds.includes(card.clashId)) return;
+      if (!cardIds!.includes(card.clashId)) return;
       card.tapped = tapped;
     });
 

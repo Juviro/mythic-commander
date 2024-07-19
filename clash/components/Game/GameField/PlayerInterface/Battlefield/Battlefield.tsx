@@ -4,6 +4,9 @@ import { Player } from 'backend/database/gamestate.types';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import classNames from 'classnames';
 import CardPositionContext from 'components/Game/CardPositionContext';
+import useShortcut from 'hooks/useShortcut';
+import SHORTCUTS from 'constants/shortcuts';
+import useGameActions from 'components/Game/useGameActions';
 import BattlefieldCard from './BattlefieldCard/BattlefieldCard';
 import BattlefieldDropzone from './BattlefieldDropzone/BattlefieldDropzone';
 import BattlefieldSelection from './BattlefieldSelection/BattlefieldSelection';
@@ -22,6 +25,19 @@ const Battlefield = ({ player, isFlipped, isSelf }: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const { contextMenuPosition } = useContext(CardPositionContext);
+
+  const { onTapCards } = useGameActions();
+
+  const tapAllLands = () => {
+    onTapCards({
+      battlefieldPlayerId: player.id,
+      type: 'Land',
+    });
+  };
+
+  useShortcut(SHORTCUTS.TAP_ALL_LANDS, tapAllLands, {
+    disabled: !isSelf,
+  });
 
   const cards = player.zones.battlefield;
 
