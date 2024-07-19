@@ -3,6 +3,7 @@ import React, { CSSProperties } from 'react';
 import { VisibleCard, Zone } from 'backend/database/gamestate.types';
 import { DndItemType, DndItemTypes, DropCard } from 'types/dnd.types';
 
+import classNames from 'classnames';
 import styles from './StackedCardList.module.css';
 import CardListHoverElement from './CardListHoverElement';
 import StackedCardListCard from './StackedCardListCard';
@@ -14,6 +15,7 @@ interface Props {
   color?: string;
   zone: Zone;
   cardDropType?: DndItemType;
+  visibleOverflow?: boolean;
 }
 
 const StackedCardList = ({
@@ -22,6 +24,7 @@ const StackedCardList = ({
   onDrop,
   color,
   zone,
+  visibleOverflow,
   cardDropType = DndItemTypes.LIST_CARD,
 }: Props) => {
   if (!cards.length) return null;
@@ -30,7 +33,11 @@ const StackedCardList = ({
 
   return (
     <div className={styles.wrapper} style={style}>
-      <div className={styles.cards}>
+      <ul
+        className={classNames(styles.cards, {
+          [styles.cards__visible_overflow]: visibleOverflow,
+        })}
+      >
         {cards.map((card, index) => (
           <React.Fragment key={card.clashId}>
             {onDrop && (
@@ -57,7 +64,7 @@ const StackedCardList = ({
             numberOfElements={cards.length + 1}
           />
         )}
-      </div>
+      </ul>
     </div>
   );
 };

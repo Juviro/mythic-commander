@@ -25,7 +25,7 @@ const StackedCardListCard = ({ card, draggable, zone, cardDropType }: Props) => 
 
   return (
     <ContextMenu items={contextMenuItems}>
-      <div className={styles.card}>
+      <li className={styles.card}>
         <Card
           card={card}
           draggable={draggable}
@@ -33,7 +33,7 @@ const StackedCardListCard = ({ card, draggable, zone, cardDropType }: Props) => 
           noAnimation
           zone="library"
         />
-      </div>
+      </li>
     </ContextMenu>
   );
 };
