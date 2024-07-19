@@ -76,7 +76,7 @@ const CardCounter = ({ amount, type, clashId, isLabel }: Props) => {
         <div className={styles.counter_icon_wrapper}>
           {amount > 1 && <span>{amount}</span>}
           <SVG
-            src={`/assets/mtgicons/${namePrefix}-${type}.svg`}
+            src={`/assets/mtgicons/${namePrefix}-${type.toLowerCase()}.svg`}
             className={styles.counter_icon}
           />
         </div>
