@@ -36,12 +36,12 @@ const StyledMenu = styled.div`
 
 const StyledPlayButton = styled.a`
   color: ${clashPrimary};
-  font-weight: bold;
+  font-weight: 500;
   text-decoration: none;
-  margin: 0 16px;
+  margin: -2px 16px 0;
   font-size: 22px;
   display: flex;
-  align-items: end;
+  align-items: center;
 
   &:hover {
     color: ${clashPrimaryLight};
