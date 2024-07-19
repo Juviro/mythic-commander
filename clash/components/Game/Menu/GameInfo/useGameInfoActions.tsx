@@ -1,11 +1,13 @@
 import { MenuProps } from 'antd';
 import GameStateContext from 'components/Game/GameStateContext';
 import useGameActions from 'components/Game/useGameActions';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 const useGameInfoActions = () => {
   const { gameState, player: self } = useContext(GameStateContext);
   const { restartGame, resignGame } = useGameActions();
+
+  const [shouldShowHelpModal, setShouldShowHelpModal] = useState(true); // TODO: false
 
   const canResignGame =
     !self?.resigned && !gameState?.winner && gameState!.players.length > 1;
@@ -25,7 +27,13 @@ const useGameInfoActions = () => {
     resignGame();
   };
 
-  const items: MenuProps['items'] = [];
+  const items: MenuProps['items'] = [
+    {
+      key: 'guide',
+      label: 'Guide',
+      onClick: () => setShouldShowHelpModal(true),
+    },
+  ];
 
   if (canResignGame) {
     items.push({
@@ -44,6 +52,8 @@ const useGameInfoActions = () => {
 
   return {
     items,
+    shouldShowHelpModal,
+    onCloseHelpModal: () => setShouldShowHelpModal(false),
   };
 };
 
