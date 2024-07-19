@@ -7,7 +7,7 @@ const useGameInfoActions = () => {
   const { gameState, player: self } = useContext(GameStateContext);
   const { restartGame, resignGame } = useGameActions();
 
-  const [shouldShowHelpModal, setShouldShowHelpModal] = useState(true); // TODO: false
+  const [shouldShowHelpModal, setShouldShowHelpModal] = useState(false);
 
   const canResignGame =
     !self?.resigned && !gameState?.winner && gameState!.players.length > 1;
