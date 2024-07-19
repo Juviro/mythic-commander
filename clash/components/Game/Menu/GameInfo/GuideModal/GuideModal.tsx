@@ -4,6 +4,7 @@ import { Modal, Tabs } from 'antd';
 import GuideShortcuts from './GuideShortcuts';
 
 import styles from './GuideModal.module.css';
+import GuideCommands from './GuideCommands';
 
 interface Props {
   open: boolean;
@@ -17,6 +18,11 @@ const GuideModal = ({ open, onClose }: Props) => {
       label: 'Shortcuts',
       children: <GuideShortcuts />,
     },
+    {
+      key: 'commands',
+      label: 'Commands',
+      children: <GuideCommands />,
+    },
   ];
 
   return (
@@ -26,6 +32,11 @@ const GuideModal = ({ open, onClose }: Props) => {
       centered
       title="Guide"
       width={800}
+      styles={{
+        body: {
+          height: 600,
+        },
+      }}
       footer={null}
     >
       <Tabs items={items} tabPosition="left" className={styles.tabs} />

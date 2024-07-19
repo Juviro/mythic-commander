@@ -11,6 +11,11 @@
     margin: 0;
 }
 
+.shortcuts_table_description {
+    font-style: italic;
+    margin-bottom: 24px;
+}
+
 .shortcuts_table_title:not(:first-child) {
     margin-top: 32px;
 }
