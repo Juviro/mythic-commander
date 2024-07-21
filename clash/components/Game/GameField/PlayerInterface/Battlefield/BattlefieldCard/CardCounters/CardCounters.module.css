@@ -50,6 +50,7 @@
     align-items: center;
     justify-content: center;
     background: black;
+    transform: rotate(calc(var(--rotation) * -1));
 }
 
 .counter_bubble__green {
