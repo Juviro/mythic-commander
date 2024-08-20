@@ -37,6 +37,7 @@ const MythicCommanderBanner = ({
   hideWhenSmall,
 }) => {
   const navigateToCollection = () => history.push('/collection');
+
   return (
     <StyledWrapper
       style={{ ...style, cursor: showCollectionOnClick && 'pointer' }}

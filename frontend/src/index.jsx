@@ -7,7 +7,6 @@ import { QueryParamProvider } from 'use-query-params';
 import { createBrowserHistory } from 'history';
 import { createRoot } from 'react-dom/client';
 
-// import 'antd/dist/antd.min.css';
 import './index.css';
 
 import { UserContextProvider } from 'components/Provider/UserProvider';
