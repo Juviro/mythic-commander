@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, WheelEvent } from 'react';
 
 import { VisibleCard, Zone } from 'backend/database/gamestate.types';
 import { DndItemType, DndItemTypes, DropCard } from 'types/dnd.types';
@@ -27,9 +27,16 @@ const StackedCardList = ({
   visibleOverflow,
   cardDropType = DndItemTypes.LIST_CARD,
 }: Props) => {
+  const listRef = React.useRef<HTMLUListElement>(null);
   if (!cards.length) return null;
 
   const style = color ? ({ '--player-color': color } as CSSProperties) : undefined;
+
+  // Allow scrolling horizontally with the mouse wheel
+  const onWheel = (e: WheelEvent) => {
+    if (!listRef.current || e.deltaX) return;
+    listRef.current.scrollLeft += e.deltaY;
+  };
 
   return (
     <div className={styles.wrapper} style={style}>
@@ -37,6 +44,8 @@ const StackedCardList = ({
         className={classNames(styles.cards, {
           [styles.cards__visible_overflow]: visibleOverflow,
         })}
+        ref={listRef}
+        onWheel={onWheel}
       >
         {cards.map((card, index) => (
           <React.Fragment key={card.clashId}>
