@@ -15,7 +15,5 @@
 }
 
 :global(.ant-select-selector) .color {
-    height: 80%;
-    margin-top: 8%;
     margin-left: 0;
 }
