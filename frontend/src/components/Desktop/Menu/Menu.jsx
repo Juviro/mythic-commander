@@ -34,7 +34,7 @@ const StyledMenu = styled.div`
   }
 `;
 
-const StyledPlayButton = styled.a`
+const StyledPlayLink = styled.a`
   color: ${clashPrimary};
   font-weight: 500;
   text-decoration: none;
@@ -69,10 +69,10 @@ const Menu = () => {
             hideWhenSmall
           />
           <Navigation />
-          <StyledPlayButton href={CLASH_BASE_URL} target="_blank" rel="noreferrer">
+          <StyledPlayLink href={CLASH_BASE_URL} target="_blank" rel="noreferrer">
             Play
             <StyledExternalIcon />
-          </StyledPlayButton>
+          </StyledPlayLink>
         </Flex>
         <SearchBar
           hideLayover

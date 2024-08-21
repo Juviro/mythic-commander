@@ -11,10 +11,6 @@ class LongPress extends Component {
     touch: true,
   };
 
-  static defaultProps = {
-    time: 500,
-  };
-
   componentDidMount() {
     try {
       document.createEvent('TouchEvent');
@@ -29,7 +25,7 @@ class LongPress extends Component {
   }
 
   startTimeout = () => {
-    this.timeout = setInterval(this.longPressed, this.props.time);
+    this.timeout = setInterval(this.longPressed, this.props.time ?? 500);
   };
 
   longPressed = () => {
