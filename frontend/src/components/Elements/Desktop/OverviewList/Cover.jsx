@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import shimmer from 'components/Animations/shimmer';
 import SplitCover from 'components/Elements/Shared/SplitCover/SplitCover';
 import DeckStatus from 'components/Elements/Desktop/OverviewList/DeckStatus/DeckStatus';
+import { addBaseUrlToImg } from 'utils/cardImage';
 import DeckCoverLetter from './DeckCoverLetter';
 
 const StyledWrapper = styled.div`
@@ -36,7 +37,7 @@ export default ({ list }) => {
 
   const getCover = () => {
     if (imgSrc) {
-      return <StyledImage src={imgSrc} />;
+      return <StyledImage src={addBaseUrlToImg(imgSrc)} />;
     }
 
     if (cardPreviews?.length) {
