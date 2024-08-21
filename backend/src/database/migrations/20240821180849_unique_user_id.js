@@ -1,6 +1,5 @@
 import randomId from '../../utils/randomId';
 
-// tables to alter
 const TABLES_TO_ALTER = [
   'collection',
   'collectionSnapshot',

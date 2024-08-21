@@ -21,7 +21,7 @@
     "@apollo/react-components": "^4.0.0",
     "@babel/eslint-parser": "^7.18.9",
     "@types/js-cookie": "^3.0.2",
-    "antd": "5.18.3",
+    "antd": "5.20.2",
     "apollo-link": "^1.2.13",
     "apollo-link-context": "^1.0.19",
     "apollo-link-error": "^1.1.12",

@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import UserContext from 'components/Provider/UserProvider';
 import UserAvatar from 'components/Elements/Shared/UserAvatar';
 import Logout from 'components/Elements/Shared/Logout';
+import { LogoutOutlined, UsergroupAddOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router';
 import { useToggle } from '../../Hooks';
 
 const StyledAvatarWrapper = styled.div`
@@ -18,6 +20,7 @@ const StyledAvatarWrapper = styled.div`
 export default () => {
   const [isOpen, toggleIsOpen] = useToggle();
   const { user, loading } = useContext(UserContext);
+  const { push } = useHistory();
 
   if (loading) return <StyledAvatarWrapper />;
 
@@ -37,7 +40,14 @@ export default () => {
     items: [
       {
         key: 'logout',
-        label: <Logout />,
+        label: <Logout hideIcon />,
+        icon: <LogoutOutlined />,
+      },
+      {
+        key: 'friends',
+        label: 'Friends',
+        icon: <UsergroupAddOutlined />,
+        onClick: () => push('/friends'),
       },
     ],
   };

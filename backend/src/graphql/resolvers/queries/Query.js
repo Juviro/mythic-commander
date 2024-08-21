@@ -15,6 +15,8 @@ import getLandsSuggestion from './LandsSuggestion/getLandsSuggestion';
 import tokens from './tokens';
 import collectionBySet from './collectionBySet';
 import { VARIANTS } from './Card/cardVariants';
+import searchUsers from './Friends/searchUsers';
+import getFriends from './Friends/getFriends';
 
 const resolver = {
   user(_, __, { db, user: { id } }) {
@@ -226,6 +228,9 @@ const resolver = {
   },
 
   collectionBySet,
+
+  searchUsers,
+  friends: getFriends,
 
   ltPlayers(_, __, { user: { id: userId }, db }) {
     if (!userId) return null;

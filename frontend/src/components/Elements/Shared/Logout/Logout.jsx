@@ -9,7 +9,7 @@ import client from 'network/graphqlClient';
 import Flex from '../Flex';
 import { logout } from './queries';
 
-export default () => {
+export default ({ hideIcon }) => {
   const [mutate] = useMutation(logout);
   const { push } = useHistory();
 
@@ -23,8 +23,8 @@ export default () => {
 
   return (
     <Flex onClick={logOut} align="baseline">
-      <LogoutOutlined />
-      <Typography.Text style={{ marginLeft: 16 }}>Logout</Typography.Text>
+      {!hideIcon && <LogoutOutlined style={{ marginRight: 16 }} />}
+      <Typography.Text>Logout</Typography.Text>
     </Flex>
   );
 };

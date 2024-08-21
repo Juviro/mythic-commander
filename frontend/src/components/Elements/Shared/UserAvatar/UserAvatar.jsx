@@ -9,6 +9,7 @@ import LoginButton from '../Login/LoginButton';
 const StyledWrapper = styled.div`
   height: 30px;
   display: flex;
+  cursor: pointer;
   align-items: center;
 
   @media only screen and (max-width: 1400px) {

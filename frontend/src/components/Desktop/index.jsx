@@ -17,6 +17,7 @@ const Decks = React.lazy(() => import('./Decks'));
 const Deck = React.lazy(() => import('./Deck'));
 const CardView = React.lazy(() => import('./CardView'));
 const Proxy = React.lazy(() => import('./Proxy'));
+const Friends = React.lazy(() => import('./Friends/Friends'));
 
 const StyledBody = styled.div`
   padding-top: 46px;
@@ -39,6 +40,7 @@ const Desktop = () => {
             <Route path="/decks/:id" exact component={Deck} />
             <Route path="/my-wants" exact component={WantsLists} />
             <Route path="/proxy" exact component={Proxy} />
+            <Route path="/friends" exact component={Friends} />
             <Route path="/wants/:id" exact component={WantsList} />
             <Route path="/cards/:oracle_id" exact component={CardView} />
             <Redirect from="*" to="/collection" />

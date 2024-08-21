@@ -229,6 +229,15 @@ type User {
   featureFlags: [String]
 }
 
+type Friend {
+  id: String!
+  username: String!
+  avatar: String
+  canAccept: Boolean
+  canWithdraw: Boolean
+}
+
+
 ################################# Wants #################################
 
 type WantsList {
@@ -416,6 +425,9 @@ type Query {
   edhrecCards(names: [String!]!, themeSuffix: String): EDHRecData
 
   cardVariants: [String!]!
+
+  friends: [Friend]!
+  searchUsers(search: String!): [Friend!]
 }
 
 input CardsOptionsInput {
@@ -493,6 +505,11 @@ type Mutation {
   ########## Session ##########
   login(token: String!): LoginResponse!
   logout(sessionId: String!): Boolean
+
+  ########## Friends ##########
+  sendFriendRequest(userId: String!): Boolean!
+  acceptFriendRequest(userId: String!): Boolean!
+  removeFriend(userId: String!): Boolean
 
   ########## Wants ##########
   createWantsList(deckId: String): WantsList!

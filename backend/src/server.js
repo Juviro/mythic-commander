@@ -44,7 +44,6 @@ export default new ApolloServer({
     }
     return {
       ...error,
-      message: 'Internal server error',
       locations: null,
       extensions: { ...error.extensions, exception: null },
     };

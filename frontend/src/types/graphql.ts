@@ -247,6 +247,15 @@ export type EditWantsListFieldsInput = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+export type Friend = {
+  __typename?: 'Friend';
+  avatar?: Maybe<Scalars['String']>;
+  canAccept?: Maybe<Scalars['Boolean']>;
+  canWithdraw?: Maybe<Scalars['Boolean']>;
+  id: Scalars['String'];
+  username: Scalars['String'];
+};
+
 export type ImageUris = {
   __typename?: 'ImageUris';
   art_crop?: Maybe<Scalars['String']>;
@@ -260,6 +269,30 @@ export type LtPlayer = {
   img?: Maybe<Scalars['String']>;
   lastEdit?: Maybe<Scalars['String']>;
   name: Scalars['String'];
+};
+
+export type LandsSuggestionCard = {
+  __typename?: 'LandsSuggestionCard';
+  amount: Scalars['Int'];
+  id: Scalars['String'];
+  selected: Scalars['Boolean'];
+};
+
+export type LandsSuggestionGroup = {
+  __typename?: 'LandsSuggestionGroup';
+  cards: Array<LandsSuggestionCard>;
+  title: Scalars['String'];
+};
+
+export type LandsSuggestionInput = {
+  minNumberOfBasics: Scalars['Int'];
+  numberOfLands: Scalars['Int'];
+  onwnedLandsOnly: Scalars['Boolean'];
+};
+
+export type LandsSuggestionResponse = {
+  __typename?: 'LandsSuggestionResponse';
+  groups: Array<LandsSuggestionGroup>;
 };
 
 export type Legalities = {
@@ -299,6 +332,7 @@ export type Mutation = {
   addCardsToWantsList: Array<WantsListCard>;
   addTagsToCards: Array<DeckCard>;
   addToCollection: Array<CollectionCard>;
+  answerFriendRequest: Scalars['Boolean'];
   changeCollection?: Maybe<CollectionCard>;
   changeCollectionVisibility: Collection;
   changeDeckStatus: Deck;
@@ -323,6 +357,8 @@ export type Mutation = {
   login: LoginResponse;
   logout?: Maybe<Scalars['Boolean']>;
   moveCard: MoveCardReturnType;
+  removeFriend?: Maybe<Scalars['Boolean']>;
+  sendFriendRequest: Scalars['Boolean'];
   setCommander: Deck;
   setDefaultTags?: Maybe<Scalars['Boolean']>;
   setUsername: User;
@@ -351,6 +387,11 @@ export type MutationAddTagsToCardsArgs = {
 
 export type MutationAddToCollectionArgs = {
   cards: Array<InputMaybe<CardInputType>>;
+};
+
+export type MutationAnswerFriendRequestArgs = {
+  accept: Scalars['Boolean'];
+  fromUserId: Scalars['String'];
 };
 
 export type MutationChangeCollectionArgs = {
@@ -464,6 +505,14 @@ export type MutationMoveCardArgs = {
   to: MoveCardInputType;
 };
 
+export type MutationRemoveFriendArgs = {
+  userId: Scalars['String'];
+};
+
+export type MutationSendFriendRequestArgs = {
+  userId: Scalars['String'];
+};
+
 export type MutationSetCommanderArgs = {
   cardIds: Array<Scalars['String']>;
   deckId: Scalars['String'];
@@ -573,6 +622,8 @@ export type Query = {
   deck?: Maybe<Deck>;
   decks: Array<Deck>;
   edhrecCards?: Maybe<EdhRecData>;
+  friends: Array<Maybe<Friend>>;
+  landsSuggestion: LandsSuggestionResponse;
   ltPlayers?: Maybe<Array<LtPlayer>>;
   numberOfCachedCards: Scalars['Int'];
   ownedCardNames: Array<Scalars['String']>;
@@ -580,6 +631,7 @@ export type Query = {
   priceDevelopment: Array<PriceDevelopment>;
   proxies: Array<ProxyCard>;
   publicCollection?: Maybe<Array<CollectionCard>>;
+  searchUsers?: Maybe<Array<Friend>>;
   tokenFinder: Array<Card>;
   tokens: Array<Token>;
   user?: Maybe<User>;
@@ -623,6 +675,11 @@ export type QueryEdhrecCardsArgs = {
   themeSuffix?: InputMaybe<Scalars['String']>;
 };
 
+export type QueryLandsSuggestionArgs = {
+  deckId: Scalars['String'];
+  options: LandsSuggestionInput;
+};
+
 export type QueryPaginatedCollectionArgs = {
   addedWithin?: InputMaybe<Scalars['Int']>;
   limit: Scalars['Int'];
@@ -645,6 +702,10 @@ export type QueryProxiesArgs = {
 
 export type QueryPublicCollectionArgs = {
   username: Scalars['String'];
+};
+
+export type QuerySearchUsersArgs = {
+  search: Scalars['String'];
 };
 
 export type QueryWantedCardsArgs = {
