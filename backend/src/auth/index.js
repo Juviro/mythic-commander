@@ -18,7 +18,7 @@ export async function validateToken(token) {
   const { email } = payload;
   const avatar = payload.picture;
 
-  return { id, email, name, avatar };
+  return { googleId: id, email, name, avatar };
 }
 
 export const getSession = (userId) => {
