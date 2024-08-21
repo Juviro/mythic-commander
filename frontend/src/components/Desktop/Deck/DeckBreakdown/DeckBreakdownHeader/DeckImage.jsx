@@ -43,7 +43,7 @@ const StyledPlaceholder = styled.div`
   height: 100%;
 `;
 
-export default ({ deck }) => {
+const DeckImage = ({ deck }) => {
   const [isEditing, toggleIsEditing] = useToggle();
 
   if (!deck)
@@ -56,10 +56,12 @@ export default ({ deck }) => {
   return (
     <>
       <StyledWrapper>
-        <StyledEditIcon onClick={toggleIsEditing} />
+        {deck.canEdit && <StyledEditIcon onClick={toggleIsEditing} />}
         <StyledImage src={deck.imgSrc} />
       </StyledWrapper>
       <SetDeckImage visible={isEditing} onClose={toggleIsEditing} deck={deck} />
     </>
   );
 };
+
+export default DeckImage;
