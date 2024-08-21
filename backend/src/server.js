@@ -39,7 +39,9 @@ export default new ApolloServer({
     return { ...context, user: user ?? {} };
   },
   formatError: (error) => {
-    logger.error('Graphql error:', error);
+    if (error !== 'Not authenticated') {
+      logger.error('Graphql error:', error);
+    }
     return {
       ...error,
       message: 'Internal server error',
