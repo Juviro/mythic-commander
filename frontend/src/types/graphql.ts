@@ -328,11 +328,11 @@ export enum MoveToNameType {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  acceptFriendRequest: Scalars['Boolean'];
   addCardsToDeck: Deck;
   addCardsToWantsList: Array<WantsListCard>;
   addTagsToCards: Array<DeckCard>;
   addToCollection: Array<CollectionCard>;
-  answerFriendRequest: Scalars['Boolean'];
   changeCollection?: Maybe<CollectionCard>;
   changeCollectionVisibility: Collection;
   changeDeckStatus: Deck;
@@ -367,6 +367,10 @@ export type Mutation = {
   updateLtPlayer: LtPlayer;
 };
 
+export type MutationAcceptFriendRequestArgs = {
+  userId: Scalars['String'];
+};
+
 export type MutationAddCardsToDeckArgs = {
   cards: Array<CardInputType>;
   deckId: Scalars['String'];
@@ -387,11 +391,6 @@ export type MutationAddTagsToCardsArgs = {
 
 export type MutationAddToCollectionArgs = {
   cards: Array<InputMaybe<CardInputType>>;
-};
-
-export type MutationAnswerFriendRequestArgs = {
-  accept: Scalars['Boolean'];
-  fromUserId: Scalars['String'];
 };
 
 export type MutationChangeCollectionArgs = {
@@ -750,6 +749,7 @@ export type User = {
   featureFlags?: Maybe<Array<Maybe<Scalars['String']>>>;
   id: Scalars['String'];
   name: Scalars['String'];
+  openFriendRequests: Scalars['Int'];
   username?: Maybe<Scalars['String']>;
 };
 

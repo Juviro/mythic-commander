@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Spin, Typography } from 'antd';
+import { Badge, Spin, Typography } from 'antd';
 import styled from 'styled-components';
 
 import UserContext from 'components/Provider/UserProvider';
@@ -57,7 +57,13 @@ const UserAvatar = ({ textPosition, onClick, textColor }) => {
               {username}
             </Typography.Text>
           )}
-          <StyledAvatar src={user.avatar} alt="avatar" />
+          <Badge
+            count={textPosition === 'left' ? user.openFriendRequests : 0}
+            size="small"
+            style={{ transform: 'translate(30%, -30%)' }}
+          >
+            <StyledAvatar src={user.avatar} alt="avatar" />
+          </Badge>
           {textPosition === 'right' && (
             <Flex
               direction="column"

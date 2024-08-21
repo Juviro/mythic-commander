@@ -23,9 +23,7 @@ const StyledList = styled.ul`
   flex-direction: column;
   list-style: none;
   padding: 0;
-  gap: 16px;
   width: 100%;
-  max-width: 400px;
 `;
 
 const FriendsList = () => {

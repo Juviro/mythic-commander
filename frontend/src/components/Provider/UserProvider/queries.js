@@ -8,6 +8,7 @@ export const getUser = gql`
       avatar
       username
       featureFlags
+      openFriendRequests
     }
   }
 `;

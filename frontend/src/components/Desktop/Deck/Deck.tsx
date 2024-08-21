@@ -79,7 +79,7 @@ export default () => {
         focusId="deck.cards"
         style={{ overflow: 'auto', flex: 1, height: '100%' }}
       >
-        <PageLayout large>
+        <PageLayout size="large">
           <PageCard
             title={<Title deck={unifiedDeck} />}
             extra={<Header deck={unifiedDeck} onAddCards={onAddCards} />}

@@ -13,6 +13,7 @@ import { Friend } from 'types/graphql';
 import { error, success } from 'constants/colors';
 import { useMutation } from '@apollo/client';
 import message from 'utils/message';
+import getDynamicUrl from 'utils/getDynamicUrl';
 import { acceptFriendRequest, removeFriend } from './queries';
 
 const StyledListItem = styled.li`
@@ -20,6 +21,12 @@ const StyledListItem = styled.li`
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  padding: 8px 8px;
+  margin: 0 -8px;
+
+  &:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -27,6 +34,7 @@ const StyledLink = styled(Link)`
   align-items: center;
   gap: 16px;
   color: inherit;
+  text-decoration: none;
 `;
 
 const StyledAvatar = styled.img`
@@ -85,9 +93,11 @@ const FriendsListEntry = ({ friend }: Props) => {
     },
   ];
 
+  const url = getDynamicUrl(`/users/${encodeURIComponent(friend.username)}`);
+
   return (
     <StyledListItem>
-      <StyledLink to={`/users/${encodeURIComponent(friend.username)}`}>
+      <StyledLink to={url}>
         <StyledAvatar src={friend.avatar} alt={friend.username} />
         <div>{friend.username}</div>
         {friend.canWithdraw && <StyledTag color="blue">Pending</StyledTag>}

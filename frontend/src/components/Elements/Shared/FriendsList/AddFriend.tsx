@@ -39,7 +39,7 @@ const AddFriend = () => {
       defaultActiveFirstOption
       notFoundContent={notFoundContent}
       placeholder="Find new friends"
-      style={{ maxWidth: 400, width: '100%' }}
+      style={{ width: '100%' }}
       value={search}
       suffixIcon={<SearchOutlined />}
       onChange={(value) => setSearch(value)}

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Dropdown } from 'antd';
+import { Badge, Dropdown } from 'antd';
 import styled from 'styled-components';
 
 import UserContext from 'components/Provider/UserProvider';
@@ -46,7 +46,11 @@ export default () => {
       {
         key: 'friends',
         label: 'Friends',
-        icon: <UsergroupAddOutlined />,
+        icon: user.openFriendRequests ? (
+          <Badge count={user.openFriendRequests} size="small" />
+        ) : (
+          <UsergroupAddOutlined />
+        ),
         onClick: () => push('/friends'),
       },
     ],

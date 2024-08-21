@@ -19,10 +19,19 @@ import searchUsers from './Friends/searchUsers';
 import getFriends from './Friends/getFriends';
 
 const resolver = {
-  user(_, __, { db, user: { id } }) {
+  async user(_, __, { db, user: { id } }) {
     if (!id) return null;
 
-    return db('users').where({ id }).first();
+    const user = await db('users').where({ id }).first();
+    const { count: openFriendRequests } = await db('friends')
+      .where({ toUserId: id, accepted: false })
+      .count('fromUserId')
+      .first();
+
+    return {
+      ...user,
+      openFriendRequests,
+    };
   },
 
   card(_, { id }, { db }) {

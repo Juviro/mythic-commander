@@ -227,6 +227,7 @@ type User {
   email: String!
   username: String
   featureFlags: [String]
+  openFriendRequests: Int!
 }
 
 type Friend {

@@ -17,6 +17,7 @@ const Search = React.lazy(() => import('./Search'));
 const Collection = React.lazy(() => import('./Collection'));
 const WantsList = React.lazy(() => import('./WantsList'));
 const WantsLists = React.lazy(() => import('./WantsLists'));
+const Friends = React.lazy(() => import('./Friends/Friends'));
 
 const Mobile = () => {
   message.config({
@@ -39,6 +40,7 @@ const Mobile = () => {
           <Route path="/m/collection/:username" exact component={Collection} />
           <Route path="/m/collection" exact component={Collection} />
           <Route path="/m/my-wants" exact component={WantsLists} />
+          <Route path="/m/friends" exact component={Friends} />
           <Route path="/m/wants/:id" exact component={WantsList} />
           <Route path="/m/life-tracker" component={LifeTracker} />
           <Redirect from="*" to="/m/collection" />

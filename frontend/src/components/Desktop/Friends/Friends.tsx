@@ -5,7 +5,7 @@ import FriendsList from 'components/Elements/Shared/FriendsList/FriendsList';
 
 const Friends = () => {
   return (
-    <PageLayout>
+    <PageLayout size="small">
       <PageCard title="Your Friends">
         <FriendsList />
       </PageCard>

@@ -38,7 +38,7 @@ const getFriends = async (_, __, { user, db }) => {
         return a.canAccept ? -1 : 1;
       }
       if (a.canWithdraw !== b.canWithdraw) {
-        return a.canWithdraw ? -1 : 1;
+        return a.canWithdraw ? 1 : -1;
       }
       return a.username.localeCompare(b.username);
     });
