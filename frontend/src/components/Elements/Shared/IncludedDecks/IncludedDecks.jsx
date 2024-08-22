@@ -14,6 +14,8 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   margin-bottom: 16px;
+  max-height: 500px;
+  overflow: auto;
 `;
 
 const StyledDivider = styled(Divider)`

@@ -256,6 +256,23 @@ export type Friend = {
   username: Scalars['String'];
 };
 
+export type FriendsCollection = {
+  __typename?: 'FriendsCollection';
+  amountTotal: Scalars['Int'];
+  sets: Array<FriendsCollectionSet>;
+  userId: Scalars['String'];
+  username: Scalars['String'];
+};
+
+export type FriendsCollectionSet = {
+  __typename?: 'FriendsCollectionSet';
+  amount: Scalars['Int'];
+  amountFoil: Scalars['Int'];
+  id: Scalars['String'];
+  set: Scalars['String'];
+  set_name: Scalars['String'];
+};
+
 export type ImageUris = {
   __typename?: 'ImageUris';
   art_crop?: Maybe<Scalars['String']>;
@@ -546,6 +563,7 @@ export type OracleCard = {
   allSets: Array<Card>;
   containingDecks: Array<Deck>;
   containingWantsLists: Array<ContainingList>;
+  friendsCollection: Array<FriendsCollection>;
   isCommanderLegal: Scalars['Boolean'];
   minPriceEur: Scalars['Float'];
   minPriceUsd: Scalars['Float'];

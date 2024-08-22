@@ -71,6 +71,22 @@ type OracleCard {
 
   containingDecks: [Deck!]!
   containingWantsLists: [ContainingList!]!
+  friendsCollection: [FriendsCollection!]!
+}
+
+type FriendsCollection {
+  userId: String!
+  username: String!
+  amountTotal: Int!
+  sets: [FriendsCollectionSet!]!
+}
+
+type FriendsCollectionSet {
+  set: String!
+  id: String!
+  set_name: String!
+  amount: Int!
+  amountFoil: Int!
 }
 
 type ContainingListDeck {

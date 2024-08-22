@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Table } from 'antd';
 
 import UserContext from 'components/Provider/UserProvider';
+import isMobile from 'utils/isMobile';
 import columns from './columns';
 
 export default ({
@@ -15,6 +16,8 @@ export default ({
   maxHeight = 400,
 }) => {
   const { user } = useContext(UserContext);
+  const tableHeight = isMobile() ? 350 : 410;
+
   return (
     <Table
       dataSource={card?.allSets?.map((cardSet) => ({
@@ -27,7 +30,7 @@ export default ({
         onClick: () => onChangeSet(id),
       })}
       fixed
-      scroll={{ y: 370 }}
+      scroll={{ y: tableHeight }}
       align="center"
       showSorterTooltip={false}
       pagination={false}

@@ -13,6 +13,7 @@ import IncludedWants from 'components/Elements/Shared/IncludedWants';
 import CardLinks from 'components/Elements/Shared/CardLinks';
 import CardRules from 'components/Elements/Shared/CardRules';
 import OracleText from 'components/Elements/Shared/OracleText/OracleText';
+import FriendsCollection from 'components/Elements/Shared/FriendsCollection/FriendsCollection';
 import CardImage from './CardImage';
 import CardOwned from './CardOwned';
 import { getCardByOracleId } from './queries';
@@ -104,6 +105,11 @@ export default ({ overwriteOracleId, defaultCardId }) => {
             <IncludedWants card={card} />
             <Divider>Decks</Divider>
             <IncludedDecks card={card} />
+            <FriendsCollection
+              oracle_id={oracle_id}
+              selectedCardId={selectedCardId}
+              setSelectedCardId={setSelectedCardId}
+            />
           </>
         )}
         <Divider>Oracle Text & Rules</Divider>
