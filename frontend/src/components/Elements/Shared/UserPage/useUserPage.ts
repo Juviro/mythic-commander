@@ -18,7 +18,7 @@ const useUserPage = ({ username }: Props) => {
   });
 
   const onOpenDeck = (id: string) => {
-    push(getDynamicUrl(`/deck/${id}`));
+    push(getDynamicUrl(`/decks/${id}`));
   };
   const onOpenWantsList = (id: string) => {
     push(getDynamicUrl(`/wants/${id}`));
