@@ -3,6 +3,8 @@ import { Badge, Spin, Typography } from 'antd';
 import styled from 'styled-components';
 
 import UserContext from 'components/Provider/UserProvider';
+import { Link } from 'react-router-dom';
+import getDynamicUrl from 'utils/getDynamicUrl';
 import Flex from '../Flex';
 import LoginButton from '../Login/LoginButton';
 
@@ -25,6 +27,14 @@ const StyledAvatar = styled.img`
   border-radius: 50%;
   cursor: pointer;
   font-size: 8px;
+`;
+
+const StyledUserLink = styled(Link)`
+  display: flex;
+  flex-direction: column;
+  margin-left: 16px;
+  max-width: 190px;
+  min-width: 100px;
 `;
 
 const UserAvatar = ({ textPosition, onClick, textColor }) => {
@@ -64,11 +74,8 @@ const UserAvatar = ({ textPosition, onClick, textColor }) => {
           >
             <StyledAvatar src={user.avatar} alt="avatar" />
           </Badge>
-          {textPosition === 'right' && (
-            <Flex
-              direction="column"
-              style={{ marginLeft: 16, maxWidth: 190, minWidth: 100 }}
-            >
+          {textPosition === 'right' && username && (
+            <StyledUserLink to={getDynamicUrl(`/users/${user.username}`)}>
               <Typography.Text
                 type="secondary"
                 style={{ fontSize: 12, color: textColor }}
@@ -81,7 +88,7 @@ const UserAvatar = ({ textPosition, onClick, textColor }) => {
               >
                 {username}
               </Typography.Text>
-            </Flex>
+            </StyledUserLink>
           )}
         </>
       )}
