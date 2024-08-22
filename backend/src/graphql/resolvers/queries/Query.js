@@ -7,6 +7,7 @@ import {
   canAccessDeck,
   canAccessWantsList,
   isCollectionPublic,
+  throwAuthError,
 } from '../../../auth/authenticateUser';
 import wantedCards from './wantedCards';
 import tokenFinder from './tokenFinder';
@@ -17,6 +18,7 @@ import collectionBySet from './collectionBySet';
 import { VARIANTS } from './Card/cardVariants';
 import searchUsers from './Friends/searchUsers';
 import getFriends from './Friends/getFriends';
+import userPage from './User/userPage';
 
 const resolver = {
   async user(_, __, { db, user: { id } }) {
@@ -54,7 +56,10 @@ const resolver = {
   },
 
   decks(_, __, { user, db }) {
-    if (!user.id) return null;
+    if (!user.id) {
+      throwAuthError();
+    }
+
     return db('decks')
       .leftJoin('deckColors', { 'decks.id': 'deckColors.deckId' })
       .where({ userId: user.id })
@@ -240,6 +245,7 @@ const resolver = {
 
   searchUsers,
   friends: getFriends,
+  userPage,
 
   ltPlayers(_, __, { user: { id: userId }, db }) {
     if (!userId) return null;

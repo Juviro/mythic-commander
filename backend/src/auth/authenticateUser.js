@@ -42,7 +42,7 @@ export const isCollectionPublic = async (userId) => {
     .where({ userId })
     .first();
 
-  if (!collectionVisibility || collectionVisibility.visibility !== 'hidden') {
+  if (!collectionVisibility || collectionVisibility.visibility !== 'public') {
     throwAuthError('This collection is private.');
   }
 };

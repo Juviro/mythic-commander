@@ -634,6 +634,7 @@ export type Query = {
   tokenFinder: Array<Card>;
   tokens: Array<Token>;
   user?: Maybe<User>;
+  userPage: UserPage;
   wantedCards?: Maybe<WantedCards>;
   wantsList: WantsList;
   wantsLists: Array<WantsList>;
@@ -707,6 +708,10 @@ export type QuerySearchUsersArgs = {
   search: Scalars['String'];
 };
 
+export type QueryUserPageArgs = {
+  username: Scalars['String'];
+};
+
 export type QueryWantedCardsArgs = {
   username: Scalars['String'];
 };
@@ -751,6 +756,16 @@ export type User = {
   name: Scalars['String'];
   openFriendRequests: Scalars['Int'];
   username?: Maybe<Scalars['String']>;
+};
+
+export type UserPage = {
+  __typename?: 'UserPage';
+  canSendFriendRequest: Scalars['Boolean'];
+  decks: Array<Deck>;
+  isCollectionPublic: Scalars['Boolean'];
+  userId: Scalars['String'];
+  username: Scalars['String'];
+  wantsLists: Array<WantsList>;
 };
 
 export enum Visibility {

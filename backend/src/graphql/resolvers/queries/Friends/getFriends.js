@@ -1,4 +1,10 @@
+import { throwAuthError } from '../../../../auth/authenticateUser';
+
 const getFriends = async (_, __, { user, db }) => {
+  if (!user?.id) {
+    throwAuthError();
+  }
+
   const { rows: allFriends } = await db.raw(
     `
         SELECT 

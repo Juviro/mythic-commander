@@ -145,6 +145,27 @@ type PriceDevelopment {
   price: Float
 }
 
+
+input CardsOptionsInput {
+  name: String
+  colors: String
+  subTypes: [String!]
+  cardTypes: [String!]
+  tags: [String!]
+  isLegendary: String
+  isCommanderLegal: String
+  isOwned: String
+  text: String
+  cmc: String
+  rarity: String
+  power: String
+  toughness: String
+  sets: [String!]
+  orderBy: String
+  variants: [String]
+  displayAllVariants: Boolean
+}
+
 ################################# Deck #################################
 
 type Deck {
@@ -238,6 +259,14 @@ type Friend {
   canWithdraw: Boolean
 }
 
+type UserPage {
+  username: String!
+  userId: String!
+  decks: [Deck!]!
+  wantsLists: [WantsList!]!
+  isCollectionPublic: Boolean!
+  canSendFriendRequest: Boolean!
+}
 
 ################################# Wants #################################
 
@@ -429,26 +458,7 @@ type Query {
 
   friends: [Friend]!
   searchUsers(search: String!): [Friend!]
-}
-
-input CardsOptionsInput {
-  name: String
-  colors: String
-  subTypes: [String!]
-  cardTypes: [String!]
-  tags: [String!]
-  isLegendary: String
-  isCommanderLegal: String
-  isOwned: String
-  text: String
-  cmc: String
-  rarity: String
-  power: String
-  toughness: String
-  sets: [String!]
-  orderBy: String
-  variants: [String]
-  displayAllVariants: Boolean
+  userPage(username: String!): UserPage!
 }
 
 ################################# Mutations #################################

@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Empty } from 'antd';
 import { useQuery } from '@apollo/client';
 import { LoadingOutlined } from '@ant-design/icons';
 
 import { Query } from 'types/graphql';
+import UserContext from 'components/Provider/UserProvider/UserProvider';
 import FriendsListEntry from './FriendsListEntry';
 import AddFriend from './AddFriend';
 import { getFriends } from './queries';
+import { LoginRequired } from '../LoginRequired/LoginRequired';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -29,6 +31,12 @@ const StyledList = styled.ul`
 const FriendsList = () => {
   const { data, loading } = useQuery<Query>(getFriends);
   const friends = data?.friends;
+
+  const { user, loading: userLoading } = useContext(UserContext);
+
+  if (!user && !userLoading) {
+    return <LoginRequired message="Log in to see your friends" />;
+  }
 
   return (
     <StyledWrapper>

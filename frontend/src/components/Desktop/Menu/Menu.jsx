@@ -5,6 +5,7 @@ import Flex from 'components/Elements/Shared/Flex';
 import SearchBar from 'components/Elements/Shared/SearchBar';
 import { CLASH_BASE_URL } from 'constants/network';
 import { Space } from 'antd';
+import Externalicon from 'components/Elements/Shared/ExternalIcon/Externalicon';
 import {
   clashPrimary,
   clashPrimaryLight,
@@ -13,7 +14,6 @@ import {
 } from '../../../constants/colors';
 import UserMenu from './UserMenu';
 import Navigation from './Navigation';
-import { ReactComponent as ExternalIcon } from '../../../assets/icons/arrow-right-top.svg';
 
 const StyledMenu = styled.div`
   width: 100%;
@@ -48,11 +48,6 @@ const StyledPlayLink = styled.a`
   }
 `;
 
-const StyledExternalIcon = styled(ExternalIcon)`
-  height: 22px;
-  width: 22px;
-`;
-
 const Menu = () => {
   return (
     <StyledMenu>
@@ -71,7 +66,7 @@ const Menu = () => {
           <Navigation />
           <StyledPlayLink href={CLASH_BASE_URL} target="_blank" rel="noreferrer">
             Play
-            <StyledExternalIcon />
+            <Externalicon size={22} />
           </StyledPlayLink>
         </Flex>
         <SearchBar

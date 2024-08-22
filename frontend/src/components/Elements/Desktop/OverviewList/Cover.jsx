@@ -54,7 +54,7 @@ export default ({ list }) => {
   return (
     <StyledWrapper>
       {getCover()}
-      <DeckStatus status={status} deckId={id} deckName={name} />
+      <DeckStatus status={status} deckId={id} deckName={name} canEdit={list.canEdit} />
     </StyledWrapper>
   );
 };

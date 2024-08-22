@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import UserContext from 'components/Provider/UserProvider';
 import UserAvatar from 'components/Elements/Shared/UserAvatar';
 import Logout from 'components/Elements/Shared/Logout';
-import { LogoutOutlined, UsergroupAddOutlined } from '@ant-design/icons';
+import { LogoutOutlined, ProfileOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
 import { useToggle } from '../../Hooks';
 
@@ -39,9 +39,10 @@ export default () => {
   const menu = {
     items: [
       {
-        key: 'logout',
-        label: <Logout hideIcon />,
-        icon: <LogoutOutlined />,
+        key: 'profile',
+        label: 'Profile',
+        icon: <ProfileOutlined />,
+        onClick: () => push(`/users/${user.username}`),
       },
       {
         key: 'friends',
@@ -52,6 +53,11 @@ export default () => {
           <UsergroupAddOutlined />
         ),
         onClick: () => push('/friends'),
+      },
+      {
+        key: 'logout',
+        label: <Logout hideIcon />,
+        icon: <LogoutOutlined />,
       },
     ],
   };

@@ -6,6 +6,7 @@ import { primary } from 'constants/colors';
 import { useToggle } from 'components/Hooks';
 import SetDeckImage from 'components/Elements/Shared/SetDeckImage';
 import shimmer from 'components/Animations/shimmer';
+import { addBaseUrlToImg } from 'utils/cardImage';
 
 const StyledEditIcon = styled(EditOutlined)`
   opacity: 0;
@@ -57,7 +58,7 @@ const DeckImage = ({ deck }) => {
     <>
       <StyledWrapper>
         {deck.canEdit && <StyledEditIcon onClick={toggleIsEditing} />}
-        <StyledImage src={deck.imgSrc} />
+        <StyledImage src={addBaseUrlToImg(deck.imgSrc)} />
       </StyledWrapper>
       <SetDeckImage visible={isEditing} onClose={toggleIsEditing} deck={deck} />
     </>
