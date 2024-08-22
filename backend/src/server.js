@@ -39,14 +39,18 @@ export default new ApolloServer({
     return { ...context, user: user ?? {} };
   },
   formatError: (error) => {
-    if (error !== 'Not authenticated') {
+    const isNotAuthenticated = error.message === 'Not authenticated';
+    if (!isNotAuthenticated) {
       logger.error('Graphql error:', error);
     }
     return {
       ...error,
-      message: 'Internal server error',
       locations: null,
-      extensions: { ...error.extensions, exception: null },
+      extensions: {
+        ...error.extensions,
+        code: isNotAuthenticated ? 'UNAUTHENTICATED' : 'INTERNAL_SERVER_ERROR',
+        exception: null,
+      },
     };
   },
   tracing: true,

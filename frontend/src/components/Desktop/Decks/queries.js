@@ -6,6 +6,7 @@ export const getDecksDesktop = gql`
       id
       name
       lastEdit
+      canEdit
       imgSrc
       status
       colors

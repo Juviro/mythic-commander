@@ -1,4 +1,5 @@
-import { getAllSets, getTypes } from './helper';
+import getFriendIds from '../Friends/getFriendIds';
+import { getAllSets, getOwnedCardsByOracleId, getTypes } from './helper';
 
 const getSumPrice = async (currency, sumPrice, oracle_id, userId, db) => {
   if (typeof sumPrice === 'number') return sumPrice;
@@ -106,6 +107,33 @@ const resolver = {
         : undefined,
       id: wantsListId,
     }));
+  },
+
+  async friendsCollection({ oracle_id }, _, { db, user: { id: userId } }) {
+    const friends = await getFriendIds(userId);
+
+    const promises = friends.map(({ userId: friendUserId }) => {
+      return getOwnedCardsByOracleId(oracle_id, db, friendUserId);
+    });
+
+    const results = await Promise.all(promises);
+
+    const sumCards = (cards) => {
+      return cards.reduce(
+        (acc, { amount, amountFoil }) => acc + amount + amountFoil,
+        0
+      );
+    };
+
+    const friendsCollection = results
+      .map((cards, index) => ({
+        ...friends[index],
+        amountTotal: sumCards(cards),
+        sets: cards.sort((a, b) => a.set_name.localeCompare(b.set_name)),
+      }))
+      .filter(({ amountTotal }) => amountTotal);
+
+    return friendsCollection;
   },
 
   sumPriceUsd({ sumPriceUsd, oracle_id }, _, { db, user: { id: userId } }) {

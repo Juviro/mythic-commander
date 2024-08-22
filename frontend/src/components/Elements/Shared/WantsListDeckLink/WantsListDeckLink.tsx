@@ -4,6 +4,7 @@ import { Typography } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
 
 import { UnifiedWantsList } from 'types/unifiedTypes';
+import { addBaseUrlToImg } from 'utils/cardImage';
 import getDynamicUrl from '../../../../utils/getDynamicUrl';
 
 import LinkDeck from './LinkDeck';
@@ -44,7 +45,11 @@ const WantsListDeckLink = ({ wantsList, history, large, canEdit }: Props) => {
 
   return (
     <StyledDeckWrapper>
-      <DeckPreview src={deck.imgSrc} large={large} onClick={onClickDeck} />
+      <DeckPreview
+        src={addBaseUrlToImg(deck.imgSrc)}
+        large={large}
+        onClick={onClickDeck}
+      />
       <StyledLink large={large}>
         <Typography.Link
           ellipsis

@@ -26,9 +26,10 @@ interface Props {
   status?: DeckStatusType | null;
   deckId: string;
   deckName: string;
+  canEdit?: boolean;
 }
 
-const DeckStatus = ({ status, deckId, deckName }: Props) => {
+const DeckStatus = ({ status, deckId, deckName, canEdit }: Props) => {
   const [mutate] = useMutation(changeDeckStatus);
   if (!status) return null;
 
@@ -56,14 +57,15 @@ const DeckStatus = ({ status, deckId, deckName }: Props) => {
   return (
     <StyledWrapper onClick={(e) => e.stopPropagation()}>
       <DeckStatusTag index={0} status={status} />
-      {otherStatus.map((val, index) => (
-        <DeckStatusTag
-          key={val}
-          status={val}
-          index={index + 1}
-          onSelectStatus={(e) => onSelectStatus(e, val)}
-        />
-      ))}
+      {canEdit &&
+        otherStatus.map((val, index) => (
+          <DeckStatusTag
+            key={val}
+            status={val}
+            index={index + 1}
+            onSelectStatus={(e) => onSelectStatus(e, val)}
+          />
+        ))}
     </StyledWrapper>
   );
 };

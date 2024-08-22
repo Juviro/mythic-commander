@@ -1,5 +1,5 @@
-import React from 'react';
-import { List, Typography } from 'antd';
+import React, { useState } from 'react';
+import { Button, List, Typography } from 'antd';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
 import { PlusOutlined, RightOutlined } from '@ant-design/icons';
@@ -56,6 +56,13 @@ const StyledSplitCover = styled.div`
   margin-right: 16px;
 `;
 
+const StyledButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  width: 100%;
+`;
+
 const ListItem = ({
   onClick,
   image,
@@ -101,7 +108,16 @@ const ListItem = ({
   );
 };
 
-const OverviewList = ({ addElementText, onAddElement, elements, onClick, header }) => {
+const OverviewList = ({
+  addElementText,
+  onAddElement,
+  elements,
+  onClick,
+  header,
+  initialLimit = 100,
+}) => {
+  const [limit, setLimit] = useState(initialLimit);
+
   const listItems = elements?.map(
     ({ name, imgSrc, id, numberOfCards, additionalDescription, cardPreviews }) => (
       <ListItem
@@ -122,13 +138,25 @@ const OverviewList = ({ addElementText, onAddElement, elements, onClick, header 
 
   const dataSource = [addElementComponent, ...listItems].filter(Boolean);
 
+  const displayedList = dataSource?.slice(0, limit);
+  const hasMore = elements?.length > limit;
+
   return (
-    <List
-      header={<StyledHeader>{header}</StyledHeader>}
-      dataSource={dataSource}
-      style={{ width: '100%' }}
-      renderItem={(element) => element}
-    />
+    <>
+      <List
+        header={<StyledHeader>{header}</StyledHeader>}
+        dataSource={displayedList}
+        style={{ width: '100%' }}
+        renderItem={(element) => element}
+      />
+      {hasMore && (
+        <StyledButtonWrapper>
+          <Button onClick={() => setLimit(limit + 100)} type="primary">
+            Show more
+          </Button>
+        </StyledButtonWrapper>
+      )}
+    </>
   );
 };
 

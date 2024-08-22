@@ -1,16 +1,25 @@
 import { getSession, validateToken } from '../../../../auth';
+import randomId from '../../../../utils/randomId';
 
 export default async (_, { token }, { db }) => {
-  const user = await validateToken(token);
+  const googleUser = await validateToken(token);
 
-  const [dbUser] = await db('users').where({ id: user.id });
+  let dbUser = await db('users')
+    .where({ googleId: googleUser.googleId })
+    .first();
 
   if (!dbUser) {
-    await db('users').insert({ ...user, lastOnline: new Date() });
+    [dbUser] = await db('users')
+      .insert({
+        ...googleUser,
+        lastOnline: new Date(),
+        id: randomId(),
+      })
+      .returning('*');
   }
 
-  const session = getSession(user.id);
+  const session = getSession(dbUser.id);
   await db('sessions').insert(session);
 
-  return { session: session.sessionId, user: dbUser ?? user };
+  return { session: session.sessionId, user: dbUser };
 };

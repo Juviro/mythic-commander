@@ -6,6 +6,7 @@ import tags from './tags';
 import updateCards from './updateCards';
 import user from './user';
 import wantsList from './wantsList';
+import friends from './friends';
 
 export default {
   ...collection,
@@ -16,4 +17,5 @@ export default {
   ...updateCards,
   ...user,
   ...wantsList,
+  ...friends,
 };

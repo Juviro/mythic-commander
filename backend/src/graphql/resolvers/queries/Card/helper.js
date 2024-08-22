@@ -77,6 +77,17 @@ export const getAllSets = async (oracle_id, db, userId = '') => {
   });
 };
 
+export const getOwnedCardsByOracleId = async (oracle_id, db, userId) => {
+  const cards = await db('collectionWithOracle')
+    .where({
+      'cards.oracle_id': oracle_id,
+      userId,
+    })
+    .leftJoin('cards', 'cards.id', 'collectionWithOracle.id');
+
+  return cards;
+};
+
 export const getTypes = ({ type_line }) => {
   const [mainTypes, flipTypes] = type_line.split(' // ');
   const [primaryTypes, subTypes] = mainTypes

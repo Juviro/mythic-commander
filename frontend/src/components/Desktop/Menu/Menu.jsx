@@ -5,6 +5,7 @@ import Flex from 'components/Elements/Shared/Flex';
 import SearchBar from 'components/Elements/Shared/SearchBar';
 import { CLASH_BASE_URL } from 'constants/network';
 import { Space } from 'antd';
+import Externalicon from 'components/Elements/Shared/ExternalIcon/Externalicon';
 import {
   clashPrimary,
   clashPrimaryLight,
@@ -13,7 +14,6 @@ import {
 } from '../../../constants/colors';
 import UserMenu from './UserMenu';
 import Navigation from './Navigation';
-import { ReactComponent as ExternalIcon } from '../../../assets/icons/arrow-right-top.svg';
 
 const StyledMenu = styled.div`
   width: 100%;
@@ -34,7 +34,7 @@ const StyledMenu = styled.div`
   }
 `;
 
-const StyledPlayButton = styled.a`
+const StyledPlayLink = styled.a`
   color: ${clashPrimary};
   font-weight: 500;
   text-decoration: none;
@@ -46,11 +46,6 @@ const StyledPlayButton = styled.a`
   &:hover {
     color: ${clashPrimaryLight};
   }
-`;
-
-const StyledExternalIcon = styled(ExternalIcon)`
-  height: 22px;
-  width: 22px;
 `;
 
 const Menu = () => {
@@ -69,10 +64,10 @@ const Menu = () => {
             hideWhenSmall
           />
           <Navigation />
-          <StyledPlayButton href={CLASH_BASE_URL} target="_blank" rel="noreferrer">
+          <StyledPlayLink href={CLASH_BASE_URL} target="_blank" rel="noreferrer">
             Play
-            <StyledExternalIcon />
-          </StyledPlayButton>
+            <Externalicon size={22} />
+          </StyledPlayLink>
         </Flex>
         <SearchBar
           hideLayover

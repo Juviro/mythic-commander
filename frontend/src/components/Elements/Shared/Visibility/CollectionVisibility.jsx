@@ -23,7 +23,7 @@ export default () => {
       loading={loading}
       onChange={onChange}
       publicUrl={publicUrl}
-      hidePublic
+      hideHiddem
       title="Share your collection"
       description="Your collection is visible to:"
     />

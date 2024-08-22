@@ -60,6 +60,8 @@ export default ({ deck }) => {
   const commanders = deck.cards.filter(({ isCommander }) => isCommander);
   const [firstCommander, secondCommander] = commanders;
 
+  if (!deck?.canEdit) return null;
+
   const onSetCommanders = (cardIds) => {
     const newCards = deck.originalCards.map((card) => ({
       ...card,

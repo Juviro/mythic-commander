@@ -3,15 +3,12 @@ import { Modal, Typography, Input } from 'antd';
 import { useMutation } from '@apollo/client';
 
 import UserContext from 'components/Provider/UserProvider';
-import keyCodes from 'constants/keyCodes';
 import message from '../../../../utils/message';
 import { setUsername } from './queries';
-import { useToggle } from '../../../Hooks';
 
 const UsernameModal = () => {
   const { user, loading } = useContext(UserContext);
   const [mutate] = useMutation(setUsername);
-  const [isVisible, toggleIsVisible] = useToggle(true);
   const [value, setValue] = useState('');
 
   const onSubmit = async () => {
@@ -26,14 +23,17 @@ const UsernameModal = () => {
   return (
     <Modal
       title="Pick a username"
-      open={isVisible}
-      cancelText="Pick later"
+      open
+      closable={false}
       okText="Set Username"
       okButtonProps={{
         disabled: !isValid,
         onClick: onSubmit,
       }}
-      onCancel={toggleIsVisible}
+      cancelButtonProps={{
+        'aria-hidden': true,
+        style: { display: 'none' },
+      }}
     >
       <Typography.Text style={{ fontSize: 16 }}>
         Please pick a username. It will be visible to people you share your collection
@@ -48,7 +48,7 @@ const UsernameModal = () => {
         style={{ marginTop: 32 }}
         placeholder="Pick a username..."
         onKeyDown={(event) => {
-          if (event.keyCode !== keyCodes.ENTER || !isValid) return;
+          if (event.key !== 'Enter' || !isValid) return;
           onSubmit();
         }}
       />

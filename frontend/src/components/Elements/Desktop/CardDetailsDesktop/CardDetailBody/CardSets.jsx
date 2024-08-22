@@ -13,6 +13,7 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
 const StyledTitleWrapper = styled.div`
   display: flex;
   height: 38px;
@@ -43,7 +44,6 @@ export default ({
 
   useEffect(() => {
     onDiscard();
-    // eslint-disable-next-line
   }, [card.oracle_id]);
 
   const onSaveChanges = async () => {
