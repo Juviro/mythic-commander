@@ -3,6 +3,7 @@
 
 import { execute } from '@getvim/execute';
 import logger from '../logging/logger';
+import uploadDbBackupToDrive from './uploadDbBackupToDrive';
 
 const username = process.env.DB_USER;
 const database = process.env.DB_NAME;
@@ -20,7 +21,7 @@ const getFilename = () => {
   return `${backupDir}database-backup-${currentDate}.tar`;
 };
 
-const backupDB = () => {
+const backupDB = async () => {
   if (process.env.NODE_ENV === 'dev') {
     logger.error('WRONG NODE_ENV FOR DB BACKUP');
     return null;
@@ -32,7 +33,7 @@ const backupDB = () => {
 
   const fileName = getFilename();
 
-  return new Promise((resolve, reject) => {
+  await new Promise((resolve, reject) => {
     try {
       execute(
         `pg_dump -U ${username} -d ${database} -f ${fileName} -T "\\"cardPrices"\\"`
@@ -49,6 +50,14 @@ const backupDB = () => {
       logger.error('Error executing:', e);
     }
   });
+
+  console.info('Successfully backed up DB');
+  console.info('Uploading backup to Google Drive');
+
+  await uploadDbBackupToDrive(fileName);
+  console.info('Successfully uploaded backup to Google Drive');
+
+  return true;
 };
 
 export const restore = () => {
