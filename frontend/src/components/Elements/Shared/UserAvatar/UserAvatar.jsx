@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import UserContext from 'components/Provider/UserProvider';
 import { Link } from 'react-router-dom';
 import getDynamicUrl from 'utils/getDynamicUrl';
-import Flex from '../Flex';
 import LoginButton from '../Login/LoginButton';
 
 const StyledWrapper = styled.div`
