@@ -6,7 +6,6 @@ import UsernameModal from 'components/Elements/Shared/UsernameModal/UsernameModa
 import Menu from './Menu';
 
 import GlobalStyle from './GlobalStyle';
-import MobileRedirect from './MobileRedirect';
 import CollectionBySet from './CollectionBySet/CollectionBySet';
 
 const Search = React.lazy(() => import('./Search'));
@@ -27,7 +26,7 @@ const StyledBody = styled.div`
 
 const Desktop = () => {
   return (
-    <MobileRedirect>
+    <>
       <Menu />
       <UsernameModal />
       <StyledBody>
@@ -50,7 +49,7 @@ const Desktop = () => {
         </Suspense>
       </StyledBody>
       <GlobalStyle />
-    </MobileRedirect>
+    </>
   );
 };
 

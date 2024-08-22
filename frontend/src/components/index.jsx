@@ -8,6 +8,7 @@ import GlobalStyle from '../styles/GlobalStyle';
 import LoginPage from './Elements/Shared/Login/LoginPage';
 import SuspensePlaceholder from './Elements/Shared/SuspensePlaceholder/SuspensePlaceholder';
 import FadeIn from './Elements/Shared/FadeIn';
+import MobileRedirect from './Desktop/MobileRedirect';
 
 const Mobile = React.lazy(() => import('./Mobile'));
 const MobileWithSuspense = () => (
@@ -26,9 +27,11 @@ const App = () => {
             <Route path="/404" exact component={NotFound} />
             <Route path="/login" component={LoginPage} />
             <Route path="/m/" component={MobileWithSuspense} />
-            <Suspense fallback={<SuspensePlaceholder menu="desktop" />}>
-              <Route component={Desktop} />
-            </Suspense>
+            <MobileRedirect>
+              <Suspense fallback={<SuspensePlaceholder menu="desktop" />}>
+                <Route component={Desktop} />
+              </Suspense>
+            </MobileRedirect>
           </Switch>
         </FadeIn>
       </Suspense>
