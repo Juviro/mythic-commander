@@ -1,6 +1,8 @@
 import { useQuery } from '@apollo/client';
 import { useHistory } from 'react-router';
+
 import { Query } from 'types/graphql';
+import getDynamicUrl from 'utils/getDynamicUrl';
 import { userPage } from './queries';
 
 interface Props {
@@ -16,10 +18,10 @@ const useUserPage = ({ username }: Props) => {
   });
 
   const onOpenDeck = (id: string) => {
-    push(`/decks/${id}`);
+    push(getDynamicUrl(`/deck/${id}`));
   };
   const onOpenWantsList = (id: string) => {
-    push(`/wants/${id}`);
+    push(getDynamicUrl(`/wants/${id}`));
   };
 
   const decks = data?.userPage.decks.map((deck) => ({
