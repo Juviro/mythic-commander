@@ -21,8 +21,11 @@ const searchUsers = async (_, { search }, { user, db }) => {
 
   const users = await db('users')
     .whereNotIn('id', currentFriendsIds.concat(user.id))
-    .andWhere('name', 'ilike', `%${search}%`)
-    .orWhere('username', 'ilike', `%${search}%`)
+    .where((q) =>
+      q
+        .orWhere('name', 'ilike', `%${search}%`)
+        .orWhere('username', 'ilike', `%${search}%`)
+    )
     .select('id', 'username');
 
   const usersWithUsername = users.filter((u) => u.username);
