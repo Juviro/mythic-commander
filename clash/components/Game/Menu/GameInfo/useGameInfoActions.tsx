@@ -1,3 +1,4 @@
+import { BookOutlined, CloseSquareOutlined, UndoOutlined } from '@ant-design/icons';
 import { MenuProps } from 'antd';
 import GameStateContext from 'components/Game/GameStateContext';
 import useGameActions from 'components/Game/useGameActions';
@@ -31,6 +32,7 @@ const useGameInfoActions = () => {
     {
       key: 'guide',
       label: 'Guide',
+      icon: <BookOutlined />,
       onClick: () => setShouldShowHelpModal(true),
     },
   ];
@@ -39,6 +41,7 @@ const useGameInfoActions = () => {
     items.push({
       key: 'resign',
       label: 'Resign',
+      icon: <CloseSquareOutlined />,
       onClick: onResign,
     });
   }
@@ -46,6 +49,7 @@ const useGameInfoActions = () => {
     items.push({
       key: 'restart',
       label: 'Restart Game',
+      icon: <UndoOutlined />,
       onClick: onRestartGame,
     });
   }

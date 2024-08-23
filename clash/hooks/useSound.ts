@@ -13,7 +13,6 @@ interface Sounds {
 const SOUNDS: Sounds = {
   ACTIVE_PLAYER: {
     url: '/assets/sounds/gong2.wav',
-    volume: 0.5,
   },
   SHUFFLE: {
     url: '/assets/sounds/shuffle2.wav',
@@ -26,6 +25,7 @@ const SOUNDS: Sounds = {
   },
 };
 
+// TODO: correct type
 type SoundType = keyof typeof SOUNDS;
 
 const useSound = (sound: SoundType) => {

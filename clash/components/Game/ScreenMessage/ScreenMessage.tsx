@@ -9,7 +9,7 @@ import styles from './ScreenMessage.module.css';
 const ScreenMessage = () => {
   const { gameState, player: self, hasGameStarted } = useContext(GameStateContext);
   const [message, setMessage] = useState('');
-  // const [playSound] = useSound('ACTIVE_PLAYER');
+  const [playSound] = useSound('ACTIVE_PLAYER');
 
   useEffect(() => {
     if (!gameState || !hasGameStarted || gameState?.winner) return;
@@ -24,7 +24,7 @@ const ScreenMessage = () => {
     setMessage(`It's ${playerName} Turn`);
 
     if (isSelf) {
-      // playSound();
+      playSound();
     }
   }, [gameState?.activePlayerId, hasGameStarted]);
 
