@@ -9,11 +9,10 @@ import CardPositionContext from 'components/Game/CardPositionContext';
 import classNames from 'classnames';
 import { DndItemTypes } from 'types/dnd.types';
 import styles from './DragLayer.module.css';
-import AlignIndicator from './AlignIndicator';
 import useDragAlign from './useDragAlign';
 
 const DragLayer = () => {
-  const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
+  const { battlefieldCardWidth } = useContext(GameStateContext);
   const { hoveredBattlefield } = useContext(CardPositionContext);
 
   const { isDragging, item, currentOffset, itemType } = useDragLayer((monitor) => ({
@@ -37,28 +36,15 @@ const DragLayer = () => {
     '--size-card-width': `${battlefieldCardWidth}px`,
   } as CSSProperties;
 
-  const isSnapping = Boolean(cardToAlign.x || cardToAlign.y || cardToAlign.stack);
-
-  // const offsetY = cardToAlign.y
-  //   ? cardToAlign.y.element.getBoundingClientRect().y + battlefieldCardHeight / 2
-  //   : currentOffset.y;
-  // const offsetX = cardToAlign.x
-  //   ? cardToAlign.x.element.getBoundingClientRect().x + battlefieldCardWidth / 2
-  //   : currentOffset.x;
+  const isSnapping = Boolean(cardToAlign);
 
   return (
     <div
       style={style}
       className={classNames(styles.wrapper, {
-        [styles.wrapper__stacked_behind]: cardToAlign.stack?.position === 'topLeft',
+        [styles.wrapper__stacked_behind]: cardToAlign?.position === 'topLeft',
       })}
     >
-      {/* {cardToAlign?.x && !cardToAlign.stack && (
-        <AlignIndicator element={cardToAlign.x.element} offset={offsetY} property="x" />
-      )}
-      {cardToAlign?.y && !cardToAlign.stack && (
-        <AlignIndicator element={cardToAlign.y.element} offset={offsetX} property="y" />
-      )} */}
       <div
         className={classNames(styles.card, {
           [styles.card__flipped]: shouldFlip,
