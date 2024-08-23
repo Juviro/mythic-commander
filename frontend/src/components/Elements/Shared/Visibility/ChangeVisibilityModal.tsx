@@ -25,7 +25,7 @@ const VISIBILITY_OPTIONS = [
   },
 ];
 
-export default ({
+const ChangeVisibilityModal = ({
   style,
   visibile: modalVisible,
   onClose,
@@ -35,7 +35,7 @@ export default ({
   title,
   description,
   publicUrl,
-  hidePublic,
+  hideHiddem,
 }) => {
   const { user, loading: loadingUser } = useContext(UserContext);
 
@@ -62,7 +62,7 @@ export default ({
   }
 
   const visibilityOptions = VISIBILITY_OPTIONS.filter(
-    ({ value }) => !hidePublic || value !== 'public'
+    ({ value }) => !hideHiddem || value !== 'hidden'
   );
 
   return (
@@ -94,3 +94,5 @@ export default ({
     </Modal>
   );
 };
+
+export default ChangeVisibilityModal;

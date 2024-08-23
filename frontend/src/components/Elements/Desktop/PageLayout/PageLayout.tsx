@@ -14,7 +14,15 @@ const StyledBackground = styled.div`
   background-color: ${lightBackground};
 `;
 
-const StyledContent = styled.div<{ large: boolean }>`
+const sizes = {
+  small: '600px',
+  medium: '1250px',
+  large: '1800px',
+} as const;
+
+type Size = keyof typeof sizes;
+
+const StyledContent = styled.div<{ size: Size }>`
   width: 100%;
   box-shadow: 0px 0px 12px 0px #6f6f6f;
   background-color: white;
@@ -23,20 +31,21 @@ const StyledContent = styled.div<{ large: boolean }>`
   min-height: 100%;
   height: fit-content;
   position: relative;
-  max-width: ${({ large }) =>
-    large ? `${PAGE_WIDTH_LARGE}px` : `${PAGE_WIDTH_SMALL}px`};
+  max-width: ${({ size }) => sizes[size]};
 `;
 
 interface Props {
   children: React.ReactNode;
-  large?: boolean;
+  size?: 'small' | 'medium' | 'large';
   style?: React.CSSProperties;
 }
 
-export default ({ children, large, style }: Props) => {
+const PageLayout = ({ children, size = 'medium', style }: Props) => {
   return (
     <StyledBackground style={style}>
-      <StyledContent large={large}>{children}</StyledContent>
+      <StyledContent size={size}>{children}</StyledContent>
     </StyledBackground>
   );
 };
+
+export default PageLayout;

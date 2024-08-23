@@ -104,8 +104,18 @@ export interface CopyCardPayload {
   amount: number;
 }
 
+type CardType =
+  | 'Land'
+  | 'Creature'
+  | 'Planeswalker'
+  | 'Artifact'
+  | 'Enchantment'
+  | 'Instant'
+  | 'Battle';
+
 export interface TapCardsPayload {
-  cardIds: string[];
+  cardIds?: string[];
+  type?: CardType;
   battlefieldPlayerId: string;
   tapped?: boolean;
 }

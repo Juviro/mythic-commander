@@ -71,6 +71,22 @@ type OracleCard {
 
   containingDecks: [Deck!]!
   containingWantsLists: [ContainingList!]!
+  friendsCollection: [FriendsCollection!]!
+}
+
+type FriendsCollection {
+  userId: String!
+  username: String!
+  amountTotal: Int!
+  sets: [FriendsCollectionSet!]!
+}
+
+type FriendsCollectionSet {
+  set: String!
+  id: String!
+  set_name: String!
+  amount: Int!
+  amountFoil: Int!
 }
 
 type ContainingListDeck {
@@ -143,6 +159,27 @@ enum Currency {
 type PriceDevelopment {
   date: String!
   price: Float
+}
+
+
+input CardsOptionsInput {
+  name: String
+  colors: String
+  subTypes: [String!]
+  cardTypes: [String!]
+  tags: [String!]
+  isLegendary: String
+  isCommanderLegal: String
+  isOwned: String
+  text: String
+  cmc: String
+  rarity: String
+  power: String
+  toughness: String
+  sets: [String!]
+  orderBy: String
+  variants: [String]
+  displayAllVariants: Boolean
 }
 
 ################################# Deck #################################
@@ -227,6 +264,24 @@ type User {
   email: String!
   username: String
   featureFlags: [String]
+  openFriendRequests: Int!
+}
+
+type Friend {
+  id: String!
+  username: String!
+  avatar: String
+  canAccept: Boolean
+  canWithdraw: Boolean
+}
+
+type UserPage {
+  username: String!
+  userId: String!
+  decks: [Deck!]!
+  wantsLists: [WantsList!]!
+  isCollectionPublic: Boolean!
+  canSendFriendRequest: Boolean!
 }
 
 ################################# Wants #################################
@@ -416,26 +471,10 @@ type Query {
   edhrecCards(names: [String!]!, themeSuffix: String): EDHRecData
 
   cardVariants: [String!]!
-}
 
-input CardsOptionsInput {
-  name: String
-  colors: String
-  subTypes: [String!]
-  cardTypes: [String!]
-  tags: [String!]
-  isLegendary: String
-  isCommanderLegal: String
-  isOwned: String
-  text: String
-  cmc: String
-  rarity: String
-  power: String
-  toughness: String
-  sets: [String!]
-  orderBy: String
-  variants: [String]
-  displayAllVariants: Boolean
+  friends: [Friend]!
+  searchUsers(search: String!): [Friend!]
+  userPage(username: String!): UserPage!
 }
 
 ################################# Mutations #################################
@@ -493,6 +532,11 @@ type Mutation {
   ########## Session ##########
   login(token: String!): LoginResponse!
   logout(sessionId: String!): Boolean
+
+  ########## Friends ##########
+  sendFriendRequest(userId: String!): Boolean!
+  acceptFriendRequest(userId: String!): Boolean!
+  removeFriend(userId: String!): Boolean
 
   ########## Wants ##########
   createWantsList(deckId: String): WantsList!

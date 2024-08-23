@@ -42,7 +42,14 @@ export default ({
         <ShowScryfallApiPage cardId={usedCard.id} />
       </div>
       <PriceDevelopment selectedCard={selectedCard} cardId={usedCard.id} />
-      {user && <DecksAndWants card={usedCard} loading={loading} />}
+      {user && (
+        <DecksAndWants
+          card={usedCard}
+          loading={loading}
+          selectedCardId={selectedCardId}
+          setSelectedCardId={setSelectedCardId}
+        />
+      )}
       <AdditionalInfos card={usedCard} loading={loading} isFlipped={isFlipped} />
     </>
   );

@@ -247,6 +247,32 @@ export type EditWantsListFieldsInput = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+export type Friend = {
+  __typename?: 'Friend';
+  avatar?: Maybe<Scalars['String']>;
+  canAccept?: Maybe<Scalars['Boolean']>;
+  canWithdraw?: Maybe<Scalars['Boolean']>;
+  id: Scalars['String'];
+  username: Scalars['String'];
+};
+
+export type FriendsCollection = {
+  __typename?: 'FriendsCollection';
+  amountTotal: Scalars['Int'];
+  sets: Array<FriendsCollectionSet>;
+  userId: Scalars['String'];
+  username: Scalars['String'];
+};
+
+export type FriendsCollectionSet = {
+  __typename?: 'FriendsCollectionSet';
+  amount: Scalars['Int'];
+  amountFoil: Scalars['Int'];
+  id: Scalars['String'];
+  set: Scalars['String'];
+  set_name: Scalars['String'];
+};
+
 export type ImageUris = {
   __typename?: 'ImageUris';
   art_crop?: Maybe<Scalars['String']>;
@@ -260,6 +286,30 @@ export type LtPlayer = {
   img?: Maybe<Scalars['String']>;
   lastEdit?: Maybe<Scalars['String']>;
   name: Scalars['String'];
+};
+
+export type LandsSuggestionCard = {
+  __typename?: 'LandsSuggestionCard';
+  amount: Scalars['Int'];
+  id: Scalars['String'];
+  selected: Scalars['Boolean'];
+};
+
+export type LandsSuggestionGroup = {
+  __typename?: 'LandsSuggestionGroup';
+  cards: Array<LandsSuggestionCard>;
+  title: Scalars['String'];
+};
+
+export type LandsSuggestionInput = {
+  minNumberOfBasics: Scalars['Int'];
+  numberOfLands: Scalars['Int'];
+  onwnedLandsOnly: Scalars['Boolean'];
+};
+
+export type LandsSuggestionResponse = {
+  __typename?: 'LandsSuggestionResponse';
+  groups: Array<LandsSuggestionGroup>;
 };
 
 export type Legalities = {
@@ -295,6 +345,7 @@ export enum MoveToNameType {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  acceptFriendRequest: Scalars['Boolean'];
   addCardsToDeck: Deck;
   addCardsToWantsList: Array<WantsListCard>;
   addTagsToCards: Array<DeckCard>;
@@ -323,12 +374,18 @@ export type Mutation = {
   login: LoginResponse;
   logout?: Maybe<Scalars['Boolean']>;
   moveCard: MoveCardReturnType;
+  removeFriend?: Maybe<Scalars['Boolean']>;
+  sendFriendRequest: Scalars['Boolean'];
   setCommander: Deck;
   setDefaultTags?: Maybe<Scalars['Boolean']>;
   setUsername: User;
   unlinkWantsList: WantsList;
   updateCardImages?: Maybe<Scalars['Boolean']>;
   updateLtPlayer: LtPlayer;
+};
+
+export type MutationAcceptFriendRequestArgs = {
+  userId: Scalars['String'];
 };
 
 export type MutationAddCardsToDeckArgs = {
@@ -464,6 +521,14 @@ export type MutationMoveCardArgs = {
   to: MoveCardInputType;
 };
 
+export type MutationRemoveFriendArgs = {
+  userId: Scalars['String'];
+};
+
+export type MutationSendFriendRequestArgs = {
+  userId: Scalars['String'];
+};
+
 export type MutationSetCommanderArgs = {
   cardIds: Array<Scalars['String']>;
   deckId: Scalars['String'];
@@ -498,6 +563,7 @@ export type OracleCard = {
   allSets: Array<Card>;
   containingDecks: Array<Deck>;
   containingWantsLists: Array<ContainingList>;
+  friendsCollection: Array<FriendsCollection>;
   isCommanderLegal: Scalars['Boolean'];
   minPriceEur: Scalars['Float'];
   minPriceUsd: Scalars['Float'];
@@ -573,6 +639,8 @@ export type Query = {
   deck?: Maybe<Deck>;
   decks: Array<Deck>;
   edhrecCards?: Maybe<EdhRecData>;
+  friends: Array<Maybe<Friend>>;
+  landsSuggestion: LandsSuggestionResponse;
   ltPlayers?: Maybe<Array<LtPlayer>>;
   numberOfCachedCards: Scalars['Int'];
   ownedCardNames: Array<Scalars['String']>;
@@ -580,9 +648,11 @@ export type Query = {
   priceDevelopment: Array<PriceDevelopment>;
   proxies: Array<ProxyCard>;
   publicCollection?: Maybe<Array<CollectionCard>>;
+  searchUsers?: Maybe<Array<Friend>>;
   tokenFinder: Array<Card>;
   tokens: Array<Token>;
   user?: Maybe<User>;
+  userPage: UserPage;
   wantedCards?: Maybe<WantedCards>;
   wantsList: WantsList;
   wantsLists: Array<WantsList>;
@@ -623,6 +693,11 @@ export type QueryEdhrecCardsArgs = {
   themeSuffix?: InputMaybe<Scalars['String']>;
 };
 
+export type QueryLandsSuggestionArgs = {
+  deckId: Scalars['String'];
+  options: LandsSuggestionInput;
+};
+
 export type QueryPaginatedCollectionArgs = {
   addedWithin?: InputMaybe<Scalars['Int']>;
   limit: Scalars['Int'];
@@ -644,6 +719,14 @@ export type QueryProxiesArgs = {
 };
 
 export type QueryPublicCollectionArgs = {
+  username: Scalars['String'];
+};
+
+export type QuerySearchUsersArgs = {
+  search: Scalars['String'];
+};
+
+export type QueryUserPageArgs = {
   username: Scalars['String'];
 };
 
@@ -689,7 +772,18 @@ export type User = {
   featureFlags?: Maybe<Array<Maybe<Scalars['String']>>>;
   id: Scalars['String'];
   name: Scalars['String'];
+  openFriendRequests: Scalars['Int'];
   username?: Maybe<Scalars['String']>;
+};
+
+export type UserPage = {
+  __typename?: 'UserPage';
+  canSendFriendRequest: Scalars['Boolean'];
+  decks: Array<Deck>;
+  isCollectionPublic: Scalars['Boolean'];
+  userId: Scalars['String'];
+  username: Scalars['String'];
+  wantsLists: Array<WantsList>;
 };
 
 export enum Visibility {

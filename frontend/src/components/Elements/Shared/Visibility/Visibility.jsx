@@ -15,7 +15,7 @@ const StyledLabel = styled(Typography.Text)`
   margin-left: 8px;
 `;
 
-export default ({ asListItem, callback, ...props }) => {
+const Visibility = ({ asListItem, callback, ...props }) => {
   const [showModal, toggleShowModal] = useToggle();
   const { user } = useContext(UserContext);
 
@@ -50,3 +50,5 @@ export default ({ asListItem, callback, ...props }) => {
     </StyledWrapper>
   );
 };
+
+export default Visibility;

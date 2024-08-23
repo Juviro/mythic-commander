@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { List } from 'antd';
+import { Badge, List } from 'antd';
 import { Link } from 'react-router-dom';
 import UserContext from 'components/Provider/UserProvider';
 import FeatureFlag from 'components/Elements/Shared/FeatureFlag';
@@ -31,13 +31,18 @@ export default ({ onCloseDrawer }) => {
       href: '/m/life-tracker',
       title: 'Life Tracker',
     },
+    {
+      href: '/m/friends',
+      title: 'Your Friends',
+      badge: user?.openFriendRequests,
+    },
   ];
 
   const filteredOptions = options.filter(({ hidden }) => !hidden);
 
   return (
     <List>
-      {filteredOptions.map(({ href, title, flag }) => (
+      {filteredOptions.map(({ href, title, flag, badge }) => (
         <FeatureFlag flag={flag} key={title}>
           <List.Item onClick={onCloseDrawer} style={{ padding: 0 }}>
             <Link
@@ -48,7 +53,13 @@ export default ({ onCloseDrawer }) => {
                 padding: '12px 0',
               }}
             >
-              {title}
+              <Badge
+                count={badge}
+                style={{ transform: 'translate(15px, -50%)' }}
+                size="small"
+              >
+                {title}
+              </Badge>
             </Link>
           </List.Item>
         </FeatureFlag>

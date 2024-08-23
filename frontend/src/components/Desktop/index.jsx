@@ -6,7 +6,6 @@ import UsernameModal from 'components/Elements/Shared/UsernameModal/UsernameModa
 import Menu from './Menu';
 
 import GlobalStyle from './GlobalStyle';
-import MobileRedirect from './MobileRedirect';
 import CollectionBySet from './CollectionBySet/CollectionBySet';
 
 const Search = React.lazy(() => import('./Search'));
@@ -17,6 +16,8 @@ const Decks = React.lazy(() => import('./Decks'));
 const Deck = React.lazy(() => import('./Deck'));
 const CardView = React.lazy(() => import('./CardView'));
 const Proxy = React.lazy(() => import('./Proxy'));
+const Friends = React.lazy(() => import('./Friends/Friends'));
+const UserPage = React.lazy(() => import('./UserPage/UserPage'));
 
 const StyledBody = styled.div`
   padding-top: 46px;
@@ -25,7 +26,7 @@ const StyledBody = styled.div`
 
 const Desktop = () => {
   return (
-    <MobileRedirect>
+    <>
       <Menu />
       <UsernameModal />
       <StyledBody>
@@ -39,14 +40,16 @@ const Desktop = () => {
             <Route path="/decks/:id" exact component={Deck} />
             <Route path="/my-wants" exact component={WantsLists} />
             <Route path="/proxy" exact component={Proxy} />
+            <Route path="/friends" exact component={Friends} />
             <Route path="/wants/:id" exact component={WantsList} />
+            <Route path="/users/:username" exact component={UserPage} />
             <Route path="/cards/:oracle_id" exact component={CardView} />
             <Redirect from="*" to="/collection" />
           </Switch>
         </Suspense>
       </StyledBody>
       <GlobalStyle />
-    </MobileRedirect>
+    </>
   );
 };
 

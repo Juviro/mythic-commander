@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
-import { Spin, Typography } from 'antd';
+import { Badge, Spin, Typography } from 'antd';
 import styled from 'styled-components';
 
 import UserContext from 'components/Provider/UserProvider';
-import Flex from '../Flex';
+import { Link } from 'react-router-dom';
+import getDynamicUrl from 'utils/getDynamicUrl';
 import LoginButton from '../Login/LoginButton';
 
 const StyledWrapper = styled.div`
   height: 30px;
   display: flex;
+  cursor: pointer;
   align-items: center;
 
   @media only screen and (max-width: 1400px) {
@@ -24,6 +26,14 @@ const StyledAvatar = styled.img`
   border-radius: 50%;
   cursor: pointer;
   font-size: 8px;
+`;
+
+const StyledUserLink = styled(Link)`
+  display: flex;
+  flex-direction: column;
+  margin-left: 16px;
+  max-width: 190px;
+  min-width: 100px;
 `;
 
 const UserAvatar = ({ textPosition, onClick, textColor }) => {
@@ -56,12 +66,15 @@ const UserAvatar = ({ textPosition, onClick, textColor }) => {
               {username}
             </Typography.Text>
           )}
-          <StyledAvatar src={user.avatar} alt="avatar" />
-          {textPosition === 'right' && (
-            <Flex
-              direction="column"
-              style={{ marginLeft: 16, maxWidth: 190, minWidth: 100 }}
-            >
+          <Badge
+            count={textPosition === 'left' ? user.openFriendRequests : 0}
+            size="small"
+            style={{ transform: 'translate(30%, -30%)' }}
+          >
+            <StyledAvatar src={user.avatar} alt="avatar" />
+          </Badge>
+          {textPosition === 'right' && username && (
+            <StyledUserLink to={getDynamicUrl(`/users/${user.username}`)}>
               <Typography.Text
                 type="secondary"
                 style={{ fontSize: 12, color: textColor }}
@@ -74,7 +87,7 @@ const UserAvatar = ({ textPosition, onClick, textColor }) => {
               >
                 {username}
               </Typography.Text>
-            </Flex>
+            </StyledUserLink>
           )}
         </>
       )}

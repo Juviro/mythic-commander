@@ -6,6 +6,7 @@ import { primary } from 'constants/colors';
 import { useToggle } from 'components/Hooks';
 import SetDeckImage from 'components/Elements/Shared/SetDeckImage';
 import shimmer from 'components/Animations/shimmer';
+import { addBaseUrlToImg } from 'utils/cardImage';
 
 const StyledEditIcon = styled(EditOutlined)`
   opacity: 0;
@@ -43,7 +44,7 @@ const StyledPlaceholder = styled.div`
   height: 100%;
 `;
 
-export default ({ deck }) => {
+const DeckImage = ({ deck }) => {
   const [isEditing, toggleIsEditing] = useToggle();
 
   if (!deck)
@@ -56,10 +57,12 @@ export default ({ deck }) => {
   return (
     <>
       <StyledWrapper>
-        <StyledEditIcon onClick={toggleIsEditing} />
-        <StyledImage src={deck.imgSrc} />
+        {deck.canEdit && <StyledEditIcon onClick={toggleIsEditing} />}
+        <StyledImage src={addBaseUrlToImg(deck.imgSrc)} />
       </StyledWrapper>
       <SetDeckImage visible={isEditing} onClose={toggleIsEditing} deck={deck} />
     </>
   );
 };
+
+export default DeckImage;

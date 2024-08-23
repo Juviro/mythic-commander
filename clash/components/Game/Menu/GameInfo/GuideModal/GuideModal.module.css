@@ -1,0 +1,40 @@
+.tabs {
+    margin-top: 24px;
+}
+
+.tabs :global(.ant-tabs-tab) {
+    padding-left: 0 !important;
+}
+
+.shortcuts_table_title {
+    font-weight: bold;
+    margin: 0;
+}
+
+.shortcuts_table_description {
+    font-style: italic;
+    margin-bottom: 24px;
+}
+
+.shortcuts_table_title:not(:first-child) {
+    margin-top: 32px;
+}
+
+.shortcuts_table {
+    width: 100%;
+    margin-top: 16px;
+}
+
+.shortcuts_row:nth-child(odd) {
+    background-color: var(--color-table-background);
+}
+
+.shortcuts_label {
+    font-weight: bold;
+    padding: 0 8px;
+    width: 350px;
+}
+
+.shortcuts_value {
+    padding: 0 8px;
+}

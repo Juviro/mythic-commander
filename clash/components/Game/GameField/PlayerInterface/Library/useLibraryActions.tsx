@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { Input, MenuProps } from 'antd';
 import { ArrowRightOutlined, EyeOutlined, SearchOutlined } from '@ant-design/icons';
-import { ItemType } from 'antd/es/menu/hooks/useItems';
 
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
@@ -11,6 +10,7 @@ import SHORTCUTS from 'constants/shortcuts';
 import useShortcut from 'hooks/useShortcut';
 import { pluralizeCards } from 'utils/i18nUtils';
 import ClashIcon from 'components/GameComponents/ClashIcon/ClashIcon';
+import { ItemType } from 'antd/es/menu/interface';
 
 export const getPeekSubItems = (
   onClick: (amount: number) => void,

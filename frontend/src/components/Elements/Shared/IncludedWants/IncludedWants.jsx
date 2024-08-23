@@ -12,8 +12,9 @@ import Flex from '../Flex';
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   width: 100%;
+  max-height: 500px;
+  overflow: auto;
 `;
 
 const NEW_LIST_DUMMY_ID = 'new-wants-list';

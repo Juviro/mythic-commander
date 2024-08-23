@@ -78,7 +78,7 @@ const CardCounterTooltip = ({ children, type, amount, clashId, hidden }: Props) 
   return (
     <Tooltip
       title={tooltipContent}
-      showArrow={false}
+      arrow={false}
       mouseEnterDelay={0.5}
       overlayInnerStyle={{
         background: 'white',

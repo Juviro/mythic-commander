@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
-import { Dropdown } from 'antd';
+import { Badge, Dropdown } from 'antd';
 import styled from 'styled-components';
 
 import UserContext from 'components/Provider/UserProvider';
 import UserAvatar from 'components/Elements/Shared/UserAvatar';
 import Logout from 'components/Elements/Shared/Logout';
+import { LogoutOutlined, ProfileOutlined, UsergroupAddOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router';
 import { useToggle } from '../../Hooks';
 
 const StyledAvatarWrapper = styled.div`
@@ -18,6 +20,7 @@ const StyledAvatarWrapper = styled.div`
 export default () => {
   const [isOpen, toggleIsOpen] = useToggle();
   const { user, loading } = useContext(UserContext);
+  const { push } = useHistory();
 
   if (loading) return <StyledAvatarWrapper />;
 
@@ -36,8 +39,25 @@ export default () => {
   const menu = {
     items: [
       {
+        key: 'profile',
+        label: 'Profile',
+        icon: <ProfileOutlined />,
+        onClick: () => push(`/users/${user.username}`),
+      },
+      {
+        key: 'friends',
+        label: 'Friends',
+        icon: user.openFriendRequests ? (
+          <Badge count={user.openFriendRequests} size="small" />
+        ) : (
+          <UsergroupAddOutlined />
+        ),
+        onClick: () => push('/friends'),
+      },
+      {
         key: 'logout',
-        label: <Logout />,
+        label: <Logout hideIcon />,
+        icon: <LogoutOutlined />,
       },
     ],
   };

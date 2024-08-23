@@ -7,6 +7,7 @@ import {
   canAccessDeck,
   canAccessWantsList,
   isCollectionPublic,
+  throwAuthError,
 } from '../../../auth/authenticateUser';
 import wantedCards from './wantedCards';
 import tokenFinder from './tokenFinder';
@@ -15,12 +16,24 @@ import getLandsSuggestion from './LandsSuggestion/getLandsSuggestion';
 import tokens from './tokens';
 import collectionBySet from './collectionBySet';
 import { VARIANTS } from './Card/cardVariants';
+import searchUsers from './Friends/searchUsers';
+import getFriends from './Friends/getFriends';
+import userPage from './User/userPage';
 
 const resolver = {
-  user(_, __, { db, user: { id } }) {
+  async user(_, __, { db, user: { id } }) {
     if (!id) return null;
 
-    return db('users').where({ id }).first();
+    const user = await db('users').where({ id }).first();
+    const { count: openFriendRequests } = await db('friends')
+      .where({ toUserId: id, accepted: false })
+      .count('fromUserId')
+      .first();
+
+    return {
+      ...user,
+      openFriendRequests,
+    };
   },
 
   card(_, { id }, { db }) {
@@ -43,7 +56,10 @@ const resolver = {
   },
 
   decks(_, __, { user, db }) {
-    if (!user.id) return null;
+    if (!user.id) {
+      throwAuthError();
+    }
+
     return db('decks')
       .leftJoin('deckColors', { 'decks.id': 'deckColors.deckId' })
       .where({ userId: user.id })
@@ -226,6 +242,10 @@ const resolver = {
   },
 
   collectionBySet,
+
+  searchUsers,
+  friends: getFriends,
+  userPage,
 
   ltPlayers(_, __, { user: { id: userId }, db }) {
     if (!userId) return null;

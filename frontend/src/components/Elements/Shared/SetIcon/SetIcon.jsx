@@ -8,7 +8,7 @@ const StyledSetIcon = styled.img`
   margin-right: 6px;
 `;
 
-export default ({ setKey, style }) => {
+export default ({ setKey, style = null }) => {
   const { sets } = useContext(CardContext);
   const { icon_svg_uri, name } = sets[setKey];
 

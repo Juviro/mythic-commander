@@ -22,8 +22,6 @@ const Wants = ({ history }) => {
   const { user, loading: userLoading } = useContext(UserContext);
   useDocumentTitle('Your Decks');
 
-  const deckListssByType = useGroupByDeckType(data?.decks);
-
   if (!user && !userLoading) {
     return <LoginRequired message="Log in to create your own decks" />;
   }
@@ -58,6 +56,8 @@ const Wants = ({ history }) => {
   const filteredDecks = decks.filter(({ name }) =>
     name.toLowerCase().includes(search.toLowerCase())
   );
+
+  const deckListssByType = useGroupByDeckType(filteredDecks);
 
   const onOpenFirstDeck = () => {
     const firstDeck = filteredDecks[0];

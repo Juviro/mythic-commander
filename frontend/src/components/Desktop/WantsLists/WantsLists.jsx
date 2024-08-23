@@ -9,6 +9,7 @@ import PageLayout from 'components/Elements/Desktop/PageLayout';
 import OverviewList, {
   OverviewListHeader,
 } from 'components/Elements/Desktop/OverviewList';
+import { Divider } from 'antd';
 import { wantsListsDesktop as getWantsLists, createWantsListDesktop } from './queries';
 
 const Wants = ({ history }) => {
@@ -51,13 +52,27 @@ const Wants = ({ history }) => {
     });
     onOpenWantsList(id);
   };
+
   const wantsLists = data?.wantsLists ?? [];
   const displayedWantsLists = wantsLists
     .filter((list) => list.name.toLowerCase().includes(search.toLowerCase()))
     .map(({ deck, ...rest }) => ({
       ...rest,
+      deckId: deck?.id,
       imgSrc: deck?.imgSrc,
     }));
+
+  const [linkedLists, unlinkedLists] = displayedWantsLists.reduce(
+    (acc, list) => {
+      if (list.deckId) {
+        acc[0].push(list);
+      } else {
+        acc[1].push(list);
+      }
+      return acc;
+    },
+    [[], []]
+  );
 
   const onOpenFirstDeck = () => {
     const firstList = displayedWantsLists[0];
@@ -76,11 +91,19 @@ const Wants = ({ history }) => {
         onEnter={onOpenFirstDeck}
         title="Your Wants Lists"
       />
+      <Divider orientation="left">Unlinked</Divider>
       <OverviewList
         loading={loading}
-        lists={displayedWantsLists}
+        lists={unlinkedLists}
         onClick={onOpenWantsList}
         emptyText="No Wants Lists found"
+      />
+      <Divider orientation="left">Linked to Decks</Divider>
+      <OverviewList
+        loading={loading}
+        lists={linkedLists}
+        onClick={onOpenWantsList}
+        emptyText="No Linked Wants Lists found"
       />
     </PageLayout>
   );

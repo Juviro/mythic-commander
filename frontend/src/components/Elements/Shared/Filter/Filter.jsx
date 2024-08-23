@@ -97,13 +97,26 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
       title: 'Card Text',
       infoText: (
         <>
-          <div>You can use a question mark (?) as a wildcard character.</div>
+          <div>
+            You can use a{' '}
+            <b>
+              <i>comma </i>
+            </b>{' '}
+            (,) for an OR search. For example, &quot;draw, discard&quot; will find cards
+            that have either &quot;draw&quot; or &quot;discard&quot; in their text.
+          </div>
           <br />
+          <div>
+            You can use a{' '}
+            <b>
+              <i>question mark </i>
+            </b>{' '}
+            (?) as a wildcard character.
+          </div>
           <div>
             For example, &quot;land ? graveyard&quot; will find &quot;play lands from your
             graveyard&quot;.
           </div>
-          <br />
           <div>The whole search text has to be in one paragraph.</div>
         </>
       ),

@@ -8,3 +8,9 @@ export const getImageUrl = (id: string, _: string, size = 'small', face = 'front
   const baseUrl = IS_DEV ? 'https://mythic-commander.com/' : '/';
   return `${baseUrl}img/${id}_${size}_${face}.avif`;
 };
+
+export const addBaseUrlToImg = (url: string) => {
+  if (!IS_DEV) return url;
+  if (url.startsWith('http')) return url;
+  return `https://mythic-commander.com/${url}`;
+};

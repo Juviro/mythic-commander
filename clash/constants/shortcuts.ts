@@ -1,5 +1,6 @@
 const SHORTCUTS = {
   TAP: 't',
+  TAP_ALL_LANDS: 'a',
   UNTAP: 'u',
   FLIP: 'f',
   DRAW: 'd',
