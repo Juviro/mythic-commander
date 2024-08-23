@@ -39,12 +39,12 @@ const DragLayer = () => {
 
   const isSnapping = Boolean(cardToAlign.x || cardToAlign.y || cardToAlign.stack);
 
-  const offsetY = cardToAlign.y
-    ? cardToAlign.y.element.getBoundingClientRect().y + battlefieldCardHeight / 2
-    : currentOffset.y;
-  const offsetX = cardToAlign.x
-    ? cardToAlign.x.element.getBoundingClientRect().x + battlefieldCardWidth / 2
-    : currentOffset.x;
+  // const offsetY = cardToAlign.y
+  //   ? cardToAlign.y.element.getBoundingClientRect().y + battlefieldCardHeight / 2
+  //   : currentOffset.y;
+  // const offsetX = cardToAlign.x
+  //   ? cardToAlign.x.element.getBoundingClientRect().x + battlefieldCardWidth / 2
+  //   : currentOffset.x;
 
   return (
     <div
@@ -53,12 +53,12 @@ const DragLayer = () => {
         [styles.wrapper__stacked_behind]: cardToAlign.stack?.position === 'topLeft',
       })}
     >
-      {cardToAlign?.x && !cardToAlign.stack && (
+      {/* {cardToAlign?.x && !cardToAlign.stack && (
         <AlignIndicator element={cardToAlign.x.element} offset={offsetY} property="x" />
       )}
       {cardToAlign?.y && !cardToAlign.stack && (
         <AlignIndicator element={cardToAlign.y.element} offset={offsetX} property="y" />
-      )}
+      )} */}
       <div
         className={classNames(styles.card, {
           [styles.card__flipped]: shouldFlip,

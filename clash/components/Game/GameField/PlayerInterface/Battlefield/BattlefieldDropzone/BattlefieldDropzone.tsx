@@ -29,6 +29,7 @@ const BattlefieldDropzone = ({ children, player, wrapperRef, isFlipped }: Props)
 
   return (
     <Dropzone
+      noIsOverStyle
       onDrop={onDrop}
       playerId={player.id}
       disabled={player.resigned}

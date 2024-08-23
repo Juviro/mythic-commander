@@ -1,0 +1,45 @@
+.grid {
+    position: absolute;
+    pointer-events: none;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 0, 0, 0.0);
+    opacity: 0;
+    transition: opacity 0.1s;
+}
+
+:global(.dropzone--is_over) .grid {
+    opacity: 1;
+}
+
+.wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.wrapper_horizontal {
+    flex-direction: column;
+}
+
+.line_horizontal {
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-grid-line);
+}
+
+.wrapper_vertical {
+    flex-direction: row;
+}
+
+.line_vertical {
+    height: 100%;
+    width: 1px;
+    background-color: var(--color-grid-line);
+}

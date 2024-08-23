@@ -14,6 +14,7 @@ import { BattlefieldSelectionContextProvider } from './BattlefieldSelection/Batt
 
 import styles from './Battlefield.module.css';
 import useBattlefieldActions from './battlefieldActions/useBattlefieldActions';
+import BattlefieldGrid from './BattlefieldGrid/BattlefieldGrid';
 
 interface Props {
   player: Player;
@@ -66,6 +67,7 @@ const Battlefield = ({ player, isFlipped, isSelf }: Props) => {
               isFlipped={isFlipped}
               wrapperRef={wrapperRef}
             >
+              <BattlefieldGrid />
               {cards.map((card) => (
                 <BattlefieldCard card={card} key={card.clashId} player={player} />
               ))}
