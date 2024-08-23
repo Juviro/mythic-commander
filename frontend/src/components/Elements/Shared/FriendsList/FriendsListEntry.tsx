@@ -56,7 +56,7 @@ interface Props {
 const FriendsListEntry = ({ friend }: Props) => {
   const [accept] = useMutation(acceptFriendRequest, {
     variables: { userId: friend.id },
-    refetchQueries: ['friends'],
+    refetchQueries: ['friends', 'getUser'],
   });
   const [remove] = useMutation(removeFriend, {
     variables: { userId: friend.id },
