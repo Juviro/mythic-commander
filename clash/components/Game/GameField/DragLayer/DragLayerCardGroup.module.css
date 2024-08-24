@@ -1,0 +1,7 @@
+.wrapper {
+    position: fixed;
+    top: var(--top);
+    left: var(--left);
+    z-index: 100;
+    pointer-events: none;
+}

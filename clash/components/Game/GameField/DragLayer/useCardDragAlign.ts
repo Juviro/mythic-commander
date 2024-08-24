@@ -1,11 +1,13 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { XYCoord } from 'react-dnd';
 
 import { Card } from 'backend/database/gamestate.types';
 import CardPositionContext, {
   HoveredBattlefield,
 } from 'components/Game/CardPositionContext';
+import useIsShiftPressed from 'hooks/useIsShiftPressed';
 import GameStateContext from 'components/Game/GameStateContext';
+import { DropCardGroup } from 'types/dnd.types';
 import {
   HORIZONTAL_GRID_SIZE,
   VERTICAL_GRID_SIZE,
@@ -27,7 +29,7 @@ const getOtherCardsFromBattlefield = (
   });
 };
 
-interface StackedCard {
+export interface StackedCard {
   position: 'topLeft' | 'bottomRight';
   element: Element;
   distance: number;
@@ -78,23 +80,24 @@ const getClosestCards = (currentOffset: XYCoord, cards: Element[]) => {
 };
 
 const getCardsToAlign = (
-  item: Card,
+  item: Card | DropCardGroup,
   currentOffset: XYCoord | null,
   hoveredBattlefield: HoveredBattlefield | null,
   disabled: boolean
 ) => {
-  if (!hoveredBattlefield || !currentOffset || disabled) {
+  if (!hoveredBattlefield || !currentOffset || disabled || 'cardIds' in item) {
     return {
       cardToAlign: null,
     };
   }
+
   const cards = getOtherCardsFromBattlefield(hoveredBattlefield, item);
 
   return getClosestCards(currentOffset, cards);
 };
 
-const getGridAlign = (
-  currentOffset: XYCoord,
+export const getGridAlign = (
+  currentOffset: XYCoord | null,
   hoveredBattlefield: HoveredBattlefield | null,
   disabled: boolean
 ) => {
@@ -115,9 +118,6 @@ const getGridAlign = (
 
   const snappedX = getClosesGrid(relativeX, VERTICAL_GRID_SIZE);
   const snappedY = getClosesGrid(relativeY, HORIZONTAL_GRID_SIZE);
-  const distanceX = Math.abs(relativeX - snappedX);
-  const distanceY = Math.abs(relativeY - snappedY);
-  const distance = Math.sqrt(distanceX ** 2 + distanceY ** 2);
 
   const absoluteX =
     (snappedX / 100) * element.offsetWidth + element.getBoundingClientRect().x;
@@ -127,31 +127,13 @@ const getGridAlign = (
   return {
     x: absoluteX,
     y: absoluteY,
-    distance,
   };
 };
 
-const useDragAlign = (item: Card, currentOffset: XYCoord | null) => {
-  const [isSnapDisabled, setIsSnapDisabled] = useState(true);
+const useCardDragAlign = (item: Card | DropCardGroup, currentOffset: XYCoord | null) => {
+  const isSnapDisabled = useIsShiftPressed();
   const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
   const { hoveredBattlefield, snapChoords } = useContext(CardPositionContext);
-
-  useEffect(() => {
-    const onDrag = (event: DragEvent) => {
-      const isShiftPressed = event.shiftKey;
-      setIsSnapDisabled(isShiftPressed);
-    };
-    const onDragEnd = () => {
-      setIsSnapDisabled(false);
-    };
-    document.addEventListener('drag', onDrag, false);
-    document.addEventListener('dragend', onDragEnd, false);
-
-    return () => {
-      document.removeEventListener('drag', onDrag, false);
-      document.removeEventListener('dragend', onDragEnd, false);
-    };
-  });
 
   const transformedOffset = currentOffset
     ? {
@@ -167,11 +149,11 @@ const useDragAlign = (item: Card, currentOffset: XYCoord | null) => {
     isSnapDisabled
   );
 
-  const {
-    x: gridAlignX,
-    y: gridAlignY,
-    distance: gridDistance,
-  } = getGridAlign(transformedOffset!, hoveredBattlefield?.current, isSnapDisabled);
+  const { x: gridAlignX, y: gridAlignY } = getGridAlign(
+    transformedOffset,
+    hoveredBattlefield?.current,
+    isSnapDisabled
+  );
 
   let top = transformedOffset?.y ?? 0;
   let left = transformedOffset?.x ?? 0;
@@ -180,10 +162,11 @@ const useDragAlign = (item: Card, currentOffset: XYCoord | null) => {
     const factor = cardToAlign!.position === 'topLeft' ? -1 : 1;
     top = cardToAlign!.element.getBoundingClientRect().top + STACK_DISTANCE_Y * factor;
     left = cardToAlign!.element.getBoundingClientRect().left + STACK_DISTANCE_X * factor;
-  } else if (gridDistance) {
+  } else if (gridAlignX || gridAlignY) {
     top = gridAlignY!;
     left = gridAlignX!;
   }
+
   useEffect(() => {
     if (top === null || left === null) return;
 
@@ -203,7 +186,8 @@ const useDragAlign = (item: Card, currentOffset: XYCoord | null) => {
     top,
     left,
     cardToAlign,
+    isSnapping: !isSnapDisabled,
   };
 };
 
-export default useDragAlign;
+export default useCardDragAlign;

@@ -1,7 +1,10 @@
 import React, { CSSProperties, useContext, useRef } from 'react';
 import classNames from 'classnames';
 
-import { BattlefieldCard, Player } from 'backend/database/gamestate.types';
+import {
+  BattlefieldCard as BattlefieldCardType,
+  Player,
+} from 'backend/database/gamestate.types';
 import Card from 'components/GameComponents/Card/Card';
 import GameStateContext from 'components/Game/GameStateContext';
 import SHORTCUTS from 'constants/shortcuts';
@@ -13,7 +16,7 @@ import styles from './BattlefieldCard.module.css';
 import useBattlefieldCardActions from './useBattlefieldCardActions';
 
 interface Props {
-  card: BattlefieldCard;
+  card: BattlefieldCardType;
   player: Player;
   inSelection?: boolean;
 }
@@ -31,12 +34,12 @@ const BattlefieldCard = ({ card, player, inSelection }: Props) => {
     useBattlefieldCardActions({ card, player, isSelected });
 
   useShortcut(SHORTCUTS.TAP, tapCards, {
-    disabled: Boolean(selectedCardIds.length),
+    disabled: Boolean(selectedCardIds?.length),
     whenHovering: cardRef,
   });
 
   useShortcut(SHORTCUTS.FLIP, flipCards, {
-    disabled: Boolean(selectedCardIds.length),
+    disabled: Boolean(selectedCardIds?.length),
     whenHovering: cardRef,
   });
 

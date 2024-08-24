@@ -6,12 +6,15 @@
     width: 100%;
     height: 100%;
     background-color: rgba(255, 0, 0, 0.0);
-    opacity: 0;
-    transition: opacity 0.1s;
+    display: none;
 }
 
 :global(.dropzone--is_over) .grid {
-    opacity: 1;
+    display: block;
+}
+
+.grid_hidden {
+    display: none !important;
 }
 
 .wrapper {
