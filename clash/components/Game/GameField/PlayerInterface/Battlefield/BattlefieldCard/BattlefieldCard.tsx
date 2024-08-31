@@ -19,9 +19,10 @@ interface Props {
   card: BattlefieldCardType;
   player: Player;
   inSelection?: boolean;
+  inPreview?: boolean;
 }
 
-const BattlefieldCard = ({ card, player, inSelection }: Props) => {
+const BattlefieldCard = ({ card, player, inSelection, inPreview }: Props) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const { getPlayerColor } = useContext(GameStateContext);
 
@@ -78,8 +79,8 @@ const BattlefieldCard = ({ card, player, inSelection }: Props) => {
           [styles.card__rotation]: rotation,
         })}
         onContextMenu={inSelection ? undefined : (e) => e.stopPropagation()}
-        data-card-id={card.clashId}
-        data-tapped={card.tapped}
+        data-card-id={inPreview ? `${card.clashId}-preview` : card.clashId}
+        data-tapped={inPreview ? false : card.tapped}
         data-card-x={x}
         data-card-y={y}
       >
@@ -88,7 +89,7 @@ const BattlefieldCard = ({ card, player, inSelection }: Props) => {
           flipped={'flipped' in card && card.flipped}
           draggable={!isSelected}
           zone="battlefield"
-          noAnimation={isSelected}
+          noAnimation={isSelected || inPreview}
         />
       </div>
     </ContextMenu>

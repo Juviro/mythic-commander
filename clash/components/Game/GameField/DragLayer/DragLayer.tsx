@@ -1,20 +1,31 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useDragLayer } from 'react-dnd';
 
 import { DndItemTypes, DropCardGroup } from 'types/dnd.types';
 import { VisibleBattlefieldCard } from 'backend/database/gamestate.types';
+import CardPositionContext from 'components/Game/CardPositionContext';
 import DragLayerCard from './DragLayerCard';
 import DragLayerCardGroup from './DragLayerCardGroup';
 
 const DragLayer = () => {
-  const { isDragging, item, currentOffset, itemType } = useDragLayer((monitor) => ({
-    item: monitor.getItem() as VisibleBattlefieldCard | DropCardGroup,
-    itemType: monitor.getItemType() as DndItemTypes,
-    currentOffset: monitor.getClientOffset(),
-    isDragging: monitor.isDragging(),
-  }));
+  const { snapChoords } = useContext(CardPositionContext);
 
-  if (!item || !currentOffset || !isDragging) {
+  const { isDragging, item, currentOffset, itemType, differenceFromInitialOffset } =
+    useDragLayer((monitor) => ({
+      item: monitor.getItem() as VisibleBattlefieldCard | DropCardGroup,
+      itemType: monitor.getItemType() as DndItemTypes,
+      currentOffset: monitor.getClientOffset(),
+      isDragging: monitor.isDragging(),
+      differenceFromInitialOffset: monitor.getDifferenceFromInitialOffset(),
+    }));
+
+  // list cards don't snap to the grid, so we need to reset the snap coords
+  useEffect(() => {
+    if (itemType !== DndItemTypes.LIST_CARD) return;
+    snapChoords.current = {};
+  }, [itemType]);
+
+  if (!item || !currentOffset || !isDragging || !differenceFromInitialOffset) {
     return null;
   }
 
@@ -29,7 +40,10 @@ const DragLayer = () => {
 
   if (itemType === DndItemTypes.CARD_GROUP) {
     return (
-      <DragLayerCardGroup group={item as DropCardGroup} currentOffset={currentOffset} />
+      <DragLayerCardGroup
+        group={item as DropCardGroup}
+        differenceFromInitialOffset={differenceFromInitialOffset}
+      />
     );
   }
 

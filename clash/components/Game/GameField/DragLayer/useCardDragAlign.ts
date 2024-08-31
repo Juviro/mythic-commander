@@ -7,7 +7,6 @@ import CardPositionContext, {
 } from 'components/Game/CardPositionContext';
 import useIsShiftPressed from 'hooks/useIsShiftPressed';
 import GameStateContext from 'components/Game/GameStateContext';
-import { DropCardGroup } from 'types/dnd.types';
 import {
   HORIZONTAL_GRID_SIZE,
   VERTICAL_GRID_SIZE,
@@ -80,7 +79,7 @@ const getClosestCards = (currentOffset: XYCoord, cards: Element[]) => {
 };
 
 const getCardsToAlign = (
-  item: Card | DropCardGroup,
+  item: Card,
   currentOffset: XYCoord | null,
   hoveredBattlefield: HoveredBattlefield | null,
   disabled: boolean
@@ -96,6 +95,13 @@ const getCardsToAlign = (
   return getClosestCards(currentOffset, cards);
 };
 
+export const getClosesGrid = (value: number, gridSize: number) => {
+  const gridStep = 100 / gridSize;
+  const gridIndex = Math.round(value / gridStep);
+  const gridValue = gridIndex * gridStep;
+  return gridValue;
+};
+
 export const getGridAlign = (
   currentOffset: XYCoord | null,
   hoveredBattlefield: HoveredBattlefield | null,
@@ -108,13 +114,6 @@ export const getGridAlign = (
     ((currentOffset.x - element.getBoundingClientRect().x) / element.offsetWidth) * 100;
   const relativeY =
     ((currentOffset.y - element.getBoundingClientRect().y) / element.offsetHeight) * 100;
-
-  const getClosesGrid = (value: number, gridSize: number) => {
-    const gridStep = 100 / gridSize;
-    const gridIndex = Math.round(value / gridStep);
-    const gridValue = gridIndex * gridStep;
-    return gridValue;
-  };
 
   const snappedX = getClosesGrid(relativeX, VERTICAL_GRID_SIZE);
   const snappedY = getClosesGrid(relativeY, HORIZONTAL_GRID_SIZE);
@@ -130,7 +129,7 @@ export const getGridAlign = (
   };
 };
 
-const useCardDragAlign = (item: Card | DropCardGroup, currentOffset: XYCoord | null) => {
+const useCardDragAlign = (item: Card, currentOffset: XYCoord | null) => {
   const isSnapDisabled = useIsShiftPressed();
   const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
   const { hoveredBattlefield, snapChoords } = useContext(CardPositionContext);

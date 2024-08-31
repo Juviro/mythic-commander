@@ -14,10 +14,10 @@ import useBattlefieldOnlyCardActions from '../BattlefieldCard/useBattlefieldOnly
 
 import styles from './BattlefieldSelection.module.css';
 
-const PADDING = 15;
+const PADDING = 16;
 const BORDER_WIDTH = 2;
 
-const getRectangle = (cards: Element[]) => {
+export const getRectangle = (cards: Element[]) => {
   if (cards.length === 0) return {};
 
   const bounds = cards.reduce(
@@ -120,7 +120,7 @@ const SelectionRectangle = ({
     setRectangle();
   });
 
-  const [{ isDragging }, dragRef] = useDrag({
+  const [{ isDragging }, dragRef, preview] = useDrag({
     type: DndItemTypes.CARD_GROUP,
     item: {
       battlefieldPlayerId: player.id,
@@ -142,6 +142,7 @@ const SelectionRectangle = ({
       onContextMenu={(e) => e.stopPropagation()}
       className={styles.selection_rectangle_wrapper}
     >
+      <div ref={preview} />
       <ContextMenu items={contextMenuItems.concat(additionalBattlefieldContextMenuItems)}>
         <div
           ref={(val) => {

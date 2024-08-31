@@ -1,7 +1,29 @@
 .wrapper {
-    position: fixed;
-    top: var(--top);
-    left: var(--left);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: 100;
     pointer-events: none;
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.wrapper * {
+    pointer-events: none !important;
+}
+
+.selection_rectangle {
+    padding: 16px;
+    border: 2px solid var(--color-primary);
+    background-color: var(--color-selection-background);
+}
+
+.selection_info {
+  transform: translate(-18px, -40px);
+  width: fit-content;
+  font-size: 12px;
+  padding: 4px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.2);
 }

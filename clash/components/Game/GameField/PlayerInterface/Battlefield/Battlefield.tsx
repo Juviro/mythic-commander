@@ -54,6 +54,7 @@ const Battlefield = ({ player, isFlipped, isSelf }: Props) => {
         <div
           className={classNames('battlefield', styles.wrapper)}
           ref={wrapperRef}
+          id={`battlefield-${player.id}`}
           onContextMenu={(e) => {
             contextMenuPosition.current = {
               x: e.clientX,

@@ -1,13 +1,12 @@
 import React, { CSSProperties, useContext } from 'react';
 import classNames from 'classnames';
+import { XYCoord } from 'react-dnd';
 
 import { getColorVariable } from 'components/GameComponents/ColoredPlayerName/ColoredPlayerName';
 import Card from 'components/GameComponents/Card/Card';
-
 import { VisibleBattlefieldCard } from 'backend/database/gamestate.types';
 import CardPositionContext from 'components/Game/CardPositionContext';
 import GameStateContext from 'components/Game/GameStateContext';
-import { XYCoord } from 'react-dnd';
 import useCardDragAlign from './useCardDragAlign';
 
 import styles from './DragLayerCard.module.css';
@@ -44,7 +43,7 @@ const DragLayerCard = ({ item, currentOffset }: Props) => {
           [styles.card__flipped]: shouldFlip,
         })}
       >
-        <Card card={item} noAnimation flipped={item.flipped} />
+        <Card card={{ ...item, tapped: false }} noAnimation flipped={item.flipped} />
       </div>
       {isSnapping && (
         <div className={styles.shift_tooltip}>Hold Shift to disabled snapping</div>

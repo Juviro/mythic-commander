@@ -7,6 +7,7 @@
     height: 100%;
     background-color: rgba(255, 0, 0, 0.0);
     display: none;
+    z-index: -10;
 }
 
 :global(.dropzone--is_over) .grid {

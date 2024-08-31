@@ -24,11 +24,13 @@ const GameLobbyPlayer = ({ player, isSelf, isHost }: Props) => {
 
   return (
     <Card
-      bodyStyle={{
-        padding: '16px 24px 16px 16px',
-        minHeight: 66,
-        display: 'flex',
-        alignItems: 'center',
+      styles={{
+        body: {
+          padding: '16px 24px 16px 16px',
+          minHeight: 66,
+          display: 'flex',
+          alignItems: 'center',
+        },
       }}
       className={isSelf ? styles.card : ''}
     >
