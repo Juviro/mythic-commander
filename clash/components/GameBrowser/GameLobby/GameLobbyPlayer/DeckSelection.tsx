@@ -121,7 +121,7 @@ const DeckSelection = ({ canSelectDeck, playerId, deck, isReady }: Props) => {
       disabled={disabled}
       value={deck?.id}
       size="large"
-      bordered={false}
+      variant="borderless"
       suffixIcon={
         <DownOutlined
           color="black"

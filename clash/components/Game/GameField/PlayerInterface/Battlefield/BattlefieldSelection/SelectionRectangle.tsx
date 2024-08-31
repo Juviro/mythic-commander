@@ -10,7 +10,6 @@ import useCardActions from 'components/GameComponents/Card/cardActions/useCardAc
 import { pluralizeCards } from 'utils/i18nUtils';
 import BattlefieldSelectionContext from './BattlefieldSelectionContext';
 import BattlefieldCard from '../BattlefieldCard/BattlefieldCard';
-import useBattlefieldOnlyCardActions from '../BattlefieldCard/useBattlefieldOnlyCardActions';
 
 import styles from './BattlefieldSelection.module.css';
 
@@ -72,12 +71,8 @@ const SelectionRectangle = ({
     cardIds: selectedCardIds,
     battlefieldPlayerId: player.id,
     zone: ZONES.BATTLEFIELD,
-  });
-
-  const additionalBattlefieldContextMenuItems = useBattlefieldOnlyCardActions({
-    cardIds: selectedCardIds,
-    canTurnFaceDown: true,
     player,
+    canTurnFaceDown: true,
   });
 
   const setRectangle = () => {
@@ -143,7 +138,7 @@ const SelectionRectangle = ({
       className={styles.selection_rectangle_wrapper}
     >
       <div ref={preview} />
-      <ContextMenu items={contextMenuItems.concat(additionalBattlefieldContextMenuItems)}>
+      <ContextMenu items={contextMenuItems}>
         <div
           ref={(val) => {
             dragRef(val);

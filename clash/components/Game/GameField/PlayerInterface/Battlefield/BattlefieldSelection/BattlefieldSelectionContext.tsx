@@ -46,6 +46,7 @@ export const BattlefieldSelectionContextProvider = ({
     cardIds: selectedCardIds,
     battlefieldPlayerId: player.id,
     zone: ZONES.BATTLEFIELD,
+    player,
   });
 
   const battlefieldCardIds = player.zones.battlefield.map((card) => card.clashId);

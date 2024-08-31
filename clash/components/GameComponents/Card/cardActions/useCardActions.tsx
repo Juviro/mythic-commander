@@ -1,101 +1,98 @@
-import { ReactNode, useContext } from 'react';
+import { ReactNode } from 'react';
 import { MenuProps } from 'antd';
+import { ItemType } from 'antd/es/menu/interface';
 
-import { Zone } from 'backend/database/gamestate.types';
-import GameStateContext from 'components/Game/GameStateContext';
-import useGameActions from 'components/Game/useGameActions';
+import { Player, Zone, ZONES } from 'backend/database/gamestate.types';
 
-import { ArrowRightOutlined } from '@ant-design/icons';
-import ClashIcon from 'components/GameComponents/ClashIcon/ClashIcon';
-import useMoveCardActions from './useMoveCardActions';
+import useHandCardActions from './useHandCardActions';
+import useBaseCardActions from './useBaseCardActions';
+import useBattlefieldCardActions from './useBattlefieldCardActions';
 
 interface Props {
   cardIds: string[];
+  zone: Zone;
+  player: Player;
+
   battlefieldPlayerId?: string;
-  hiddenActionKeys?: string[];
-  zone?: Zone;
   contextMenuTitle?: ReactNode;
+  canCopy?: boolean;
+  isFaceDown?: boolean;
+  canFlip?: boolean;
+  canTurnFaceDown?: boolean;
 }
 
 const useCardActions = ({
   cardIds,
   battlefieldPlayerId,
-  hiddenActionKeys,
   zone,
   contextMenuTitle,
+  player,
+  isFaceDown,
+  canCopy,
+  canFlip,
+  canTurnFaceDown,
 }: Props) => {
-  const { player } = useContext(GameStateContext);
-  const { onTapCards, onFlipCards } = useGameActions();
-  const moveCardActions = useMoveCardActions({
-    zone,
+  const {
+    flipCards,
+    tapCards,
+    titleItem,
+    tapItem,
+    flipItem,
+    moveItem,
+    // rulesItem
+  } = useBaseCardActions({
     cardIds,
-    player: player!,
+    battlefieldPlayerId,
+    zone,
+    contextMenuTitle,
   });
 
-  const flipCards = () => {
-    if (!battlefieldPlayerId) return;
-    onFlipCards({
+  const { addCounterItem, turnFacDownItem, rotateItem, peekItem, copyItem } =
+    useBattlefieldCardActions({
       cardIds,
-      battlefieldPlayerId,
+      player,
+      isFaceDown,
     });
-  };
-
-  const tapCards = () => {
-    if (!battlefieldPlayerId) return;
-    onTapCards({
-      cardIds,
-      battlefieldPlayerId,
-    });
-  };
+  const { handActions } = useHandCardActions(player!);
 
   const hideTitle = cardIds.length <= 1 && !contextMenuTitle;
 
-  const contextMenuItems = [
-    {
-      key: 'title',
-      label: <b>{contextMenuTitle || `${cardIds.length} cards selected`}</b>,
-      hidden: hideTitle,
-      style: {
-        backgroundColor: 'white',
-        cursor: 'default',
-      },
-    },
-    {
-      type: 'divider' as const,
-      hidden: hideTitle,
-    },
-    {
-      key: 'tap',
-      label: 'Tap [T]',
-      hidden: !battlefieldPlayerId,
-      onClick: tapCards,
-      icon: <ClashIcon id="tap" size={16} />,
-    },
-    {
-      key: 'flip',
-      label: 'Flip [F]',
-      hidden: !battlefieldPlayerId,
-      onClick: flipCards,
-      icon: <ClashIcon id="dfc-modal-back" size={16} />,
-    },
-    {
-      type: 'divider' as const,
-      hidden: !battlefieldPlayerId,
-    },
-    {
-      key: 'move',
-      label: `Move ${cardIds.length === 1 ? 'card' : 'all cards'} to...`,
-      children: moveCardActions,
-      icon: <ArrowRightOutlined />,
-    },
-  ];
+  const contextMenuItems: MenuProps['items'] = [];
 
-  const filteredContextMenuItems: MenuProps['items'] = contextMenuItems
-    .map((item) => ({
-      ...item,
-      children: item.children?.filter((child) => !child?.hidden),
-    }))
-    .filter((item) => !item.hidden && !hiddenActionKeys?.includes(item.key as string));
+  const addDivider = () => {
+    contextMenuItems.push({
+      type: 'divider',
+    });
+  };
+
+  const addItem = (
+    item: ItemType,
+    hidden?: boolean,
+    dividerPosition?: 'before' | 'after'
+  ) => {
+    if (hidden) return;
+    if (dividerPosition === 'before') addDivider();
+    contextMenuItems.push(item);
+    if (dividerPosition === 'after') addDivider();
+  };
+
+  addItem(titleItem, hideTitle, 'after');
+  addItem(tapItem, zone !== ZONES.BATTLEFIELD);
+
+  addItem(flipItem, zone !== ZONES.BATTLEFIELD || !canFlip);
+  addItem(turnFacDownItem, zone !== ZONES.BATTLEFIELD || !canTurnFaceDown);
+  addItem(peekItem, zone !== ZONES.BATTLEFIELD || !isFaceDown || cardIds.length !== 1);
+  addItem(rotateItem, zone !== ZONES.BATTLEFIELD);
+  addItem(addCounterItem, zone !== ZONES.BATTLEFIELD || !battlefieldPlayerId, 'before');
+  addItem(copyItem, !canCopy || zone !== ZONES.BATTLEFIELD, 'after');
+
+  addItem(moveItem, false);
+
+  addItem(handActions, zone !== ZONES.HAND, 'before');
+  // addItem(rulesItem, cardIds.length !== 1, 'before');
+
+  // TODO: hide children if necessary
+  const filteredContextMenuItems: MenuProps['items'] = contextMenuItems;
 
   return {
     tapCards,
