@@ -14,7 +14,7 @@ jobs:
       with:
         node-version-file: '.nvmrc'
     - name: Install modules
-      run: yarn
+      run: yarn install-all
     - name: Run ESLint
       run: yarn lint
     - name: deploying changes
