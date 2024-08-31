@@ -6,6 +6,7 @@ on:
       - master
 jobs:
   build:
+    name: Build & Deploy
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -15,12 +16,8 @@ jobs:
     - name: Install modules
       run: yarn
     - name: Run ESLint
-      run: lint
-  deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-    steps:
-    - name: executing remote ssh commands using password
+      run: yarn lint
+    - name: deploying changes
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.HOST }}
