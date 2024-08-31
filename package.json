@@ -10,7 +10,7 @@
     "deploy-prod": "./scripts/deploy-prod.sh",
     "deploy-clash": "./scripts/deploy-clash.sh",
     "deploy-staging": "./scripts/deploy-staging.sh",
-    "lint": "cd ./backend && yarn lint && cd ../frontend && yarn lint"
+    "lint": "cd ./backend && yarn lint && cd ../frontend && yarn lint  && cd ../clash && yarn lint"
   },
   "devDependencies": {
     "concurrently": "^7.4.0",
