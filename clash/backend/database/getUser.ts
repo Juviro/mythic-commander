@@ -8,6 +8,8 @@ export interface User {
 
 const getUser = async (cookie?: string): Promise<User> => {
   const [__, authToken] = cookie?.match(/authToken=([\w\d]*)/) ?? [];
+  // eslint-disable-next-line no-console
+  console.log('authToken', authToken)
 
   if (!authToken) throw new Error('Not logged in');
 
@@ -24,6 +26,8 @@ const getUser = async (cookie?: string): Promise<User> => {
   );
 
   if (!user) throw new Error('Not logged in');
+  // eslint-disable-next-line no-console
+  console.log('user', user)
 
   const userWithUsername = {
     ...user,
