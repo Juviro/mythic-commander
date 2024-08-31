@@ -14,11 +14,7 @@ const lobbySocketActions = (io: Server) => {
     socket.on(SOCKET_MSG_LOBBY.INITIALIZE, async () => {
       socket.join('lobby');
       try {
-          /* eslint-disable no-console */
-          console.log('cookie', socket.handshake.headers.cookie)
           user = await getUser(socket.handshake.headers.cookie);
-          /* eslint-disable no-console */
-          console.log('user', user)
           socket.emit(SOCKET_MSG_LOBBY.INITIALIZE, user);
           Lobby.emitLobbiesUpdate(socket.id);
       } catch {
