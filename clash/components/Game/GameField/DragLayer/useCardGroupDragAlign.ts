@@ -44,7 +44,6 @@ const useCardGroupDragAlign = (
   differenceFromInitialOffset: XYCoord,
   cards: BattlefieldCard[]
 ) => {
-  console.log('differenceFromInitialOffset', differenceFromInitialOffset);
   const isSnapDisabled = useIsShiftPressed();
   const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
   const { snapChoords } = useContext(CardPositionContext);
