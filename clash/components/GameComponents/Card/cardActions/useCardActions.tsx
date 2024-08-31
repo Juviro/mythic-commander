@@ -32,21 +32,13 @@ const useCardActions = ({
   canFlip,
   canTurnFaceDown,
 }: Props) => {
-  const {
-    flipCards,
-    tapCards,
-    titleItem,
-    tapItem,
-    flipItem,
-    moveItem,
-    // rulesItem
-  } = useBaseCardActions({
-    cardIds,
-    battlefieldPlayerId,
-    zone,
-    contextMenuTitle,
-  });
-
+  const { flipCards, tapCards, titleItem, tapItem, flipItem, moveItem, rulesItem } =
+    useBaseCardActions({
+      cardIds,
+      battlefieldPlayerId,
+      zone,
+      contextMenuTitle,
+    });
   const { addCounterItem, turnFacDownItem, rotateItem, peekItem, copyItem } =
     useBattlefieldCardActions({
       cardIds,
@@ -89,9 +81,8 @@ const useCardActions = ({
   addItem(moveItem, false);
 
   addItem(handActions, zone !== ZONES.HAND, 'before');
-  // addItem(rulesItem, cardIds.length !== 1, 'before');
+  addItem(rulesItem, cardIds.length !== 1 || isFaceDown, 'before');
 
-  // TODO: hide children if necessary
   const filteredContextMenuItems: MenuProps['items'] = contextMenuItems;
 
   return {

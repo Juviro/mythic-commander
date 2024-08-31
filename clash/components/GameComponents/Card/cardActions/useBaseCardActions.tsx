@@ -1,12 +1,12 @@
 import { ReactNode, useContext } from 'react';
-import { ArrowRightOutlined } from '@ant-design/icons';
-// import { ArrowRightOutlined, BookOutlined } from '@ant-design/icons';
+import { ArrowRightOutlined, BookOutlined } from '@ant-design/icons';
 
 import { Zone } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
 import useGameActions from 'components/Game/useGameActions';
 import ClashIcon from 'components/GameComponents/ClashIcon/ClashIcon';
 
+import CardPositionContext from 'components/Game/CardPositionContext';
 import useMoveCardActions from './useMoveCardActions';
 
 interface Props {
@@ -22,6 +22,7 @@ const useBaseCardActions = ({
   zone,
   contextMenuTitle,
 }: Props) => {
+  const { setRulesCardId } = useContext(CardPositionContext);
   const { player } = useContext(GameStateContext);
   const { onTapCards, onFlipCards } = useGameActions();
 
@@ -77,12 +78,12 @@ const useBaseCardActions = ({
     icon: <ArrowRightOutlined />,
   };
 
-  // const rulesItem = {
-  //   key: 'rules',
-  //   label: 'Rules',
-  //   onClick: console.log,
-  //   icon: <BookOutlined />,
-  // };
+  const rulesItem = {
+    key: 'rules',
+    label: 'Rules',
+    onClick: () => setRulesCardId(cardIds.at(0)!),
+    icon: <BookOutlined />,
+  };
 
   return {
     flipCards,
@@ -91,7 +92,7 @@ const useBaseCardActions = ({
     tapItem,
     flipItem,
     moveItem,
-    // rulesItem,
+    rulesItem,
   };
 };
 
