@@ -28,14 +28,13 @@ const getPositionDelta = (
   cardSize: number,
   gridSize: number
 ) => {
-  const relativeChange = differenceFromInitialOffset / factor;
   const cardOffset = cardSize / 2 / factor;
+  const topLeft = cardPosition - cardOffset;
+  const relativeChange = differenceFromInitialOffset / factor;
 
-  const topLeft = cardPosition;
   const transformed = topLeft + relativeChange;
   const snapped = isSnapDisabled ? transformed : getClosesGrid(transformed, gridSize);
-  const newPosition = snapped + cardOffset;
-  const delta = newPosition - cardPosition;
+  const delta = snapped - topLeft;
 
   return delta;
 };
@@ -45,6 +44,7 @@ const useCardGroupDragAlign = (
   differenceFromInitialOffset: XYCoord,
   cards: BattlefieldCard[]
 ) => {
+  console.log('differenceFromInitialOffset', differenceFromInitialOffset);
   const isSnapDisabled = useIsShiftPressed();
   const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
   const { snapChoords } = useContext(CardPositionContext);
