@@ -75,6 +75,15 @@ const useBattlefieldDropzone = ({ player, wrapperRef, isFlipped }: Props) => {
     let relativeX = (deltaX / clientWidth) * 100;
     let relativeY = (deltaY / clientHeight) * 100;
 
+    if (typeof snapChoords.current.groupX === 'number') {
+      relativeX = snapChoords.current.groupX;
+      snapChoords.current.x = null;
+    }
+    if (typeof snapChoords.current.groupY === 'number') {
+      relativeY = snapChoords.current.groupY;
+      snapChoords.current.y = null;
+    }
+
     if (isFlipped) {
       relativeX *= -1;
       relativeY *= -1;
@@ -91,11 +100,11 @@ const useBattlefieldDropzone = ({ player, wrapperRef, isFlipped }: Props) => {
     cardPositions.current[clashId] = null;
     let { x, y } = monitor.getClientOffset()!;
 
-    if (snapChoords.current.x !== null) {
+    if (typeof snapChoords.current.x === 'number') {
       x = snapChoords.current.x;
       snapChoords.current.x = null;
     }
-    if (snapChoords.current.y !== null) {
+    if (typeof snapChoords.current.y === 'number') {
       y = snapChoords.current.y;
       snapChoords.current.y = null;
     }

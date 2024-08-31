@@ -134,11 +134,7 @@ export const GameStateContextProvider = ({ children }: Props) => {
 
     return {
       ...baseState,
-      gameState: {
-        ...gameState,
-        // TODO: remove at some point - currently used to easily debug 4 players
-        // players: [...gameState.players, gameState.players.at(-1)!],
-      },
+      gameState,
       player,
       isInitialized: true,
     };

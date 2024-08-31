@@ -22,6 +22,7 @@ export interface DropCardGroupOffset {
 }
 
 export interface DropCardGroup {
+  battlefieldPlayerId: string;
   cardIds: string[];
   offset: DropCardGroupOffset;
 }

@@ -8,15 +8,16 @@ import { Player, ZONES } from 'backend/database/gamestate.types';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import useCardActions from 'components/GameComponents/Card/cardActions/useCardActions';
 import { pluralizeCards } from 'utils/i18nUtils';
-import styles from './BattlefieldSelection.module.css';
 import BattlefieldSelectionContext from './BattlefieldSelectionContext';
 import BattlefieldCard from '../BattlefieldCard/BattlefieldCard';
 import useBattlefieldOnlyCardActions from '../BattlefieldCard/useBattlefieldOnlyCardActions';
 
-const PADDING = 15;
+import styles from './BattlefieldSelection.module.css';
+
+const PADDING = 16;
 const BORDER_WIDTH = 2;
 
-const getRectangle = (cards: Element[]) => {
+export const getRectangle = (cards: Element[]) => {
   if (cards.length === 0) return {};
 
   const bounds = cards.reduce(
@@ -80,7 +81,7 @@ const SelectionRectangle = ({
   });
 
   const setRectangle = () => {
-    if (!selectionRectangleRef.current || !selectedCardIds.length) return;
+    if (!selectionRectangleRef?.current || !selectedCardIds.length) return;
     const cards = selectedCardIds
       .map((id) => document.querySelector(`[data-card-id="${id}"]`))
       .filter(Boolean) as Element[];
@@ -119,9 +120,10 @@ const SelectionRectangle = ({
     setRectangle();
   });
 
-  const [{ isDragging }, dragRef] = useDrag({
+  const [{ isDragging }, dragRef, preview] = useDrag({
     type: DndItemTypes.CARD_GROUP,
     item: {
+      battlefieldPlayerId: player.id,
       cardIds: selectedCardIds,
       offset,
     },
@@ -140,12 +142,15 @@ const SelectionRectangle = ({
       onContextMenu={(e) => e.stopPropagation()}
       className={styles.selection_rectangle_wrapper}
     >
+      <div ref={preview} />
       <ContextMenu items={contextMenuItems.concat(additionalBattlefieldContextMenuItems)}>
         <div
           ref={(val) => {
             dragRef(val);
-            // @ts-ignore
-            selectionRectangleRef.current = val;
+            if (selectionRectangleRef) {
+              // @ts-ignore
+              selectionRectangleRef.current = val;
+            }
           }}
           className={classNames(styles.selection_rectangle, {
             [styles.selection_rectangle__visible]: selectedCardIds.length,

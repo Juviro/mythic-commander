@@ -20,8 +20,10 @@ export interface CardPositions {
 }
 
 export interface SnapChoords {
-  x: number | null;
-  y: number | null;
+  x?: number | null;
+  y?: number | null;
+  groupX?: number;
+  groupY?: number;
   placeBehindOthers?: boolean;
 }
 

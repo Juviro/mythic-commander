@@ -39,7 +39,7 @@ const CommanderDamage = ({ player }: Props) => {
       <span className={styles.commander_damage__title}>Commander Damage</span>
       {commanderDamage.map(({ player: p, commander, damage }) => (
         <div
-          key={commander.id}
+          key={commander.clashId}
           className={styles.commander_damage__row}
           style={
             {
