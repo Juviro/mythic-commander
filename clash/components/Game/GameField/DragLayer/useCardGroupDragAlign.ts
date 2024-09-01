@@ -26,11 +26,15 @@ const getPositionDelta = (
   cardPosition: number,
   isSnapDisabled: boolean,
   cardSize: number,
-  gridSize: number
+  gridSize: number,
+  shouldFlip: boolean
 ) => {
+  const differencFromOffs3et = shouldFlip
+    ? -differenceFromInitialOffset
+    : differenceFromInitialOffset;
   const cardOffset = cardSize / 2 / factor;
   const topLeft = cardPosition - cardOffset;
-  const relativeChange = differenceFromInitialOffset / factor;
+  const relativeChange = differencFromOffs3et / factor;
 
   const transformed = topLeft + relativeChange;
   const snapped = isSnapDisabled ? transformed : getClosesGrid(transformed, gridSize);
@@ -46,7 +50,9 @@ const useCardGroupDragAlign = (
 ) => {
   const isSnapDisabled = useIsShiftPressed();
   const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
-  const { snapChoords } = useContext(CardPositionContext);
+  const { snapChoords, hoveredBattlefield } = useContext(CardPositionContext);
+
+  const shouldFlip = Boolean(hoveredBattlefield.current?.element.closest('.flipped'));
 
   const { factorX, factorY } = getRelativeToAbsoluteFactor(battlefieldElement);
 
@@ -63,7 +69,8 @@ const useCardGroupDragAlign = (
     leftMostCard.position!.x,
     isSnapDisabled,
     battlefieldCardWidth,
-    VERTICAL_GRID_SIZE
+    VERTICAL_GRID_SIZE,
+    shouldFlip
   );
 
   const deltaY = getPositionDelta(
@@ -72,7 +79,8 @@ const useCardGroupDragAlign = (
     leftMostCard.position!.y,
     isSnapDisabled,
     battlefieldCardHeight,
-    HORIZONTAL_GRID_SIZE
+    HORIZONTAL_GRID_SIZE,
+    shouldFlip
   );
 
   useEffect(() => {
