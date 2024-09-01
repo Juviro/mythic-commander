@@ -32,3 +32,12 @@
 .message :global(.anticon) {
   margin-right: 4px;
 }
+
+.divider:before {
+  display: none;
+}
+
+.divider :global(.ant-divider-inner-text) {
+  padding-left: 0 !important;
+  font-weight: 900;
+}
