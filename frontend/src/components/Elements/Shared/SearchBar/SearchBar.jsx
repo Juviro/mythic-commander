@@ -29,19 +29,6 @@ const StyledBackground = styled.div`
   ${({ isVisible }) => (!isVisible ? 'pointer-events: none;' : '')};
 `;
 
-const blur = () => {
-  const field = document.createElement('input');
-  field.setAttribute('type', 'text');
-  document.body.appendChild(field);
-
-  setTimeout(() => {
-    field.focus();
-    setTimeout(() => {
-      field.setAttribute('style', 'display:none;');
-    }, 50);
-  }, 50);
-};
-
 const SearchBar = ({ history, transparent, style, hideLayover }) => {
   const inputEl = useRef(null);
   const [isOpen, toggleIsOpen] = useToggle(false);
@@ -51,7 +38,7 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
 
   const [query, setQuery] = useState('');
 
-  const focusInput = () => inputEl.current.focus();
+  const focusInput = () => inputEl.current?.focus();
   useShortcut('c', focusInput);
 
   const onSetSearch = (value = '') => {
@@ -60,9 +47,8 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
   };
 
   const onSelect = (oracleId) => {
-    blur();
     onSetSearch();
-    inputEl.current.blur();
+    toggleIsOpen(false);
     if (!oracleId) return;
 
     const shouldReplace = history.location.pathname.match(/\/cards\/.+/) && isMobile();
@@ -125,11 +111,4 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
   );
 };
 
-const areEqual = (prevProps, nextProps) => {
-  if (prevProps.transparent !== nextProps.transparent) return false;
-  if (prevProps.location.search !== nextProps.location.search) return false;
-
-  return true;
-};
-
-export default withRouter(React.memo(SearchBar, areEqual));
+export default withRouter(SearchBar);
