@@ -4,12 +4,14 @@ import classNames from 'classnames';
 import {
   BattlefieldCard as BattlefieldCardType,
   Player,
+  ZONES,
 } from 'backend/database/gamestate.types';
 import Card from 'components/GameComponents/Card/Card';
 import GameStateContext from 'components/Game/GameStateContext';
 import SHORTCUTS from 'constants/shortcuts';
 import useShortcut from 'hooks/useShortcut';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
+import useGameActions from 'components/Game/useGameActions';
 import BattlefieldSelectionContext from '../BattlefieldSelection/BattlefieldSelectionContext';
 
 import styles from './BattlefieldCard.module.css';
@@ -26,6 +28,8 @@ const BattlefieldCard = ({ card, player, inSelection, inPreview }: Props) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const { getPlayerColor } = useContext(GameStateContext);
 
+  const { onMoveCard } = useGameActions();
+
   const { hoveredCardIds, selectedCardIds } = useContext(BattlefieldSelectionContext);
 
   const isHovered = hoveredCardIds?.includes(card.clashId);
@@ -33,6 +37,14 @@ const BattlefieldCard = ({ card, player, inSelection, inPreview }: Props) => {
 
   const { tapCards, flipCards, contextMenuItems, onClick, onMouseDown, onMouseMove } =
     useBattlefieldCardActions({ card, player, isSelected });
+
+  const onMoveCardToGraveyard = () => {
+    onMoveCard(card.clashId, ZONES.GRAVEYARD, player.id);
+  };
+  useShortcut(SHORTCUTS.DELETE, onMoveCardToGraveyard, {
+    disabled: Boolean(selectedCardIds?.length),
+    whenHovering: cardRef,
+  });
 
   useShortcut(SHORTCUTS.TAP, tapCards, {
     disabled: Boolean(selectedCardIds?.length),
