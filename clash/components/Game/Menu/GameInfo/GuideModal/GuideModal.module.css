@@ -6,7 +6,7 @@
     padding-left: 0 !important;
 }
 
-.shortcuts_table_title {
+.guide_title {
     font-weight: bold;
     margin: 0;
 }
@@ -16,7 +16,7 @@
     margin-bottom: 24px;
 }
 
-.shortcuts_table_title:not(:first-child) {
+.guide_title:not(:first-child) {
     margin-top: 32px;
 }
 
@@ -37,4 +37,16 @@
 
 .shortcuts_value {
     padding: 0 8px;
+}
+
+.setting {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.setting:nth-child(odd) {
+    background-color: var(--color-table-background);
 }
