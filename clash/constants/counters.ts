@@ -57,13 +57,16 @@ export const COUNTERS_WITH_ICONS = [
 ];
 
 // Counters taken from DB with this query:
+// TODO: first strike, double strike not included in db export
 // eslint-disable-next-line max-len
 // SELECT DISTINCT substring(oracle_text from '[A-z]{2,}\scounters?'), ARRAY_AGG(oracle_text) FROM cards GROUP BY substring(oracle_text from '[A-z]{2,}\scounters?');
 
 export const ABILITIE_COUNTERS_WITH_ICONS = [
   'deathtouch',
   'devotion',
+  'double strike',
   'flying',
+  'first strike',
   'haste',
   'hexproof',
   'indestructible',
@@ -118,6 +121,7 @@ export const ALL_COUNTERS = [
   'Discovery',
   'Divinity',
   'Doom',
+  'Double Strike',
   'Dream',
   'Echo',
   'Egg',
@@ -136,6 +140,7 @@ export const ALL_COUNTERS = [
   'Fetch',
   'Filibuster',
   'Finality',
+  'First Strike',
   'Flame',
   'Flood',
   'Flying',
