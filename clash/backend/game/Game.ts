@@ -1105,6 +1105,14 @@ export default class Game {
         commander.commanderDamageDealt[forPlayerId] = Math.max(total, 0);
         commanderOwnerId = p.id;
         commanderName = commander.name;
+
+        const delta = total - previousTotal;
+
+        if (total >= 0) {
+          const damagedPlayer = this.getPlayerById(forPlayerId);
+          damagedPlayer.life -= delta;
+          this.emitPlayerUpdate(damagedPlayer);
+        }
       });
     });
 
