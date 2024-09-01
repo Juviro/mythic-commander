@@ -44,6 +44,7 @@ import initMatch from 'backend/lobby/initMatch/initMatch';
 import { randomizeArray } from 'utils/randomizeArray';
 import db from 'backend/database/db';
 import getPlaytestGamestate from 'backend/lobby/initMatch/getPlaytestGamestate';
+import { XYCoord } from 'react-dnd';
 import addLogEntry from './addLogEntry';
 import getInitialCardProps from './utils/getInitialCardProps';
 
@@ -261,6 +262,13 @@ export default class Game {
     return {
       x: Math.max(0, Math.min(100, position.x)),
       y: Math.max(0, Math.min(100, position.y)),
+    };
+  }
+
+  static getStackedPosition(position: XYCoord, index = 1) {
+    return {
+      x: position.x + index * 1,
+      y: position.y + index * 2,
     };
   }
 
@@ -611,6 +619,16 @@ export default class Game {
 
     const { type_line } = await db('cards').where({ id: cardId }).first();
 
+    const doesCardExistAtPosition = (newPosition: XYCoord) =>
+      player.zones.battlefield.some(
+        (card) => card.position?.x === newPosition.x && card.position?.y === newPosition.y
+      );
+
+    let stackedPosition = position;
+    while (doesCardExistAtPosition(stackedPosition)) {
+      stackedPosition = Game.getStackedPosition(stackedPosition);
+    }
+
     const token: BattlefieldCard = {
       clashId: uniqid(),
       id: cardId,
@@ -620,7 +638,7 @@ export default class Game {
       isToken: true,
       manaValue: 0,
       flippable: name.includes('//'),
-      position: Game.fixPosition(position),
+      position: Game.fixPosition(stackedPosition),
     };
 
     player.zones.battlefield.push(token);
@@ -645,16 +663,11 @@ export default class Game {
       (card) => card.clashId === clashId
     )!;
 
-    const offsetX = 1;
-    const offsetY = 2;
-
     for (let i = 0; i < amount; i += 1) {
       if (originalCard.faceDown) return;
 
-      const newPosition = {
-        x: originalCard.position!.x + offsetX * (i + 1),
-        y: originalCard.position!.y + offsetY * (i + 1),
-      };
+      const newPosition = Game.getStackedPosition(originalCard.position!, i + 1);
+
       // eslint-disable-next-line no-await-in-loop
       const additionalProps = await getInitialCardProps(originalCard.id);
       const newCard: VisibleBattlefieldCard = {
