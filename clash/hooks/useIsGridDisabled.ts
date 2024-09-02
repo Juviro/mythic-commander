@@ -1,7 +1,8 @@
-import Settings, {
-  SETTINGS_STORAGE_KEY,
-} from 'components/Game/Menu/GameInfo/GuideModal/Settings';
 import { useEffect, useState } from 'react';
+import {
+  Settings,
+  SETTINGS_STORAGE_KEY,
+} from 'components/Game/InitSettings/InitSettings';
 import useLocalStorage from './useLocalStorage';
 
 const useIsGridDisabled = () => {

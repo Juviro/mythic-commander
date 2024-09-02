@@ -84,9 +84,11 @@ const useCardGroupDragAlign = (
   );
 
   useEffect(() => {
+    const withFactor = (value: number) => value * (shouldFlip ? -1 : 1);
+
     snapChoords.current = {
-      groupX: isSnapDisabled ? undefined : deltaX,
-      groupY: isSnapDisabled ? undefined : deltaY,
+      groupX: isSnapDisabled ? undefined : withFactor(deltaX),
+      groupY: isSnapDisabled ? undefined : withFactor(deltaY),
     };
   }, [deltaX, deltaY, isSnapDisabled]);
 

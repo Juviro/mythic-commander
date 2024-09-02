@@ -1,43 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import useLocalStorage from 'hooks/useLocalStorage';
+import {
+  Settings as SettingsType,
+  SETTINGS_STORAGE_KEY,
+} from 'components/Game/InitSettings/InitSettings';
 import Setting from './Setting';
 
 import styles from './GuideModal.module.css';
 
-export const SETTINGS_STORAGE_KEY = 'settings';
-
-interface Settings {
-  autoUntap: boolean;
-  useGrid: boolean;
-  commanderDamageChangesLife: boolean;
-}
-
-const DEFAULT_SETTINGS: Settings = {
-  autoUntap: true,
-  useGrid: true,
-  commanderDamageChangesLife: true,
-};
-
 const Settings = () => {
-  const [settings, setSettings] = useLocalStorage<Settings>(
-    SETTINGS_STORAGE_KEY,
-    DEFAULT_SETTINGS
-  );
+  const [settings, setSettings] = useLocalStorage<SettingsType>(SETTINGS_STORAGE_KEY);
 
-  // make sure new settings are added to local storage
-  useEffect(() => {
-    const numberOfSettings = Object.keys(settings).filter(
-      // make sure we don't count old settings that are no longer used
-      (key) => DEFAULT_SETTINGS[key as keyof Settings] !== undefined
-    ).length;
-
-    if (numberOfSettings === Object.keys(DEFAULT_SETTINGS).length) return;
-
-    setSettings({ ...DEFAULT_SETTINGS, ...settings });
-  }, []);
-
-  const onChangeSetting = (key: keyof Settings) => (value: boolean) => {
+  const onChangeSetting = (key: keyof SettingsType) => (value: boolean) => {
     setSettings({ ...settings, [key]: value });
   };
 

@@ -3,7 +3,10 @@ import { useContext, useEffect } from 'react';
 import GameStateContext from 'components/Game/GameStateContext';
 import useLocalStorage from 'hooks/useLocalStorage';
 import useGameActions from 'components/Game/useGameActions';
-import Settings, { SETTINGS_STORAGE_KEY } from '../GameInfo/GuideModal/Settings';
+import {
+  Settings,
+  SETTINGS_STORAGE_KEY,
+} from 'components/Game/InitSettings/InitSettings';
 
 const useAutoUntapLands = () => {
   const { gameState, player } = useContext(GameStateContext);

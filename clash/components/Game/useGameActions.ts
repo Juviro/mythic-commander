@@ -29,7 +29,7 @@ import {
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
 import useLocalStorage from 'hooks/useLocalStorage';
-import Settings, { SETTINGS_STORAGE_KEY } from './Menu/GameInfo/GuideModal/Settings';
+import { Settings, SETTINGS_STORAGE_KEY } from './InitSettings/InitSettings';
 
 const useGameActions = () => {
   const { socket } = useContext(SocketContext);
