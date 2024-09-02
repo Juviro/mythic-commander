@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Tabs } from 'antd';
 
+import { BookOutlined, ReadOutlined, SettingOutlined } from '@ant-design/icons';
 import GuideShortcuts from './GuideShortcuts';
 
 import styles from './GuideModal.module.css';
 import GuideCommands from './GuideCommands';
+import Settings from './Settings';
 
 interface Props {
   open: boolean;
@@ -12,25 +14,37 @@ interface Props {
 }
 
 const GuideModal = ({ open, onClose }: Props) => {
+  const [currentTab, setCurrentTab] = useState('settings');
+
   const items = [
+    {
+      key: 'settings',
+      icon: <SettingOutlined />,
+      label: 'Settings',
+      children: <Settings />,
+    },
     {
       key: 'shortcuts',
       label: 'Shortcuts',
+      icon: <BookOutlined />,
       children: <GuideShortcuts />,
     },
     {
       key: 'commands',
       label: 'Commands',
+      icon: <ReadOutlined />,
       children: <GuideCommands />,
     },
   ];
+
+  const title = items.find((item) => item.key === currentTab)?.label;
 
   return (
     <Modal
       open={open}
       onCancel={onClose}
       centered
-      title="Guide"
+      title={title}
       width={800}
       styles={{
         body: {
@@ -39,7 +53,12 @@ const GuideModal = ({ open, onClose }: Props) => {
       }}
       footer={null}
     >
-      <Tabs items={items} tabPosition="left" className={styles.tabs} />
+      <Tabs
+        items={items}
+        tabPosition="left"
+        className={styles.tabs}
+        onChange={setCurrentTab}
+      />
     </Modal>
   );
 };

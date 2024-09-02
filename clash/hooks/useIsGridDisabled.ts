@@ -1,7 +1,12 @@
+import Settings, {
+  SETTINGS_STORAGE_KEY,
+} from 'components/Game/Menu/GameInfo/GuideModal/Settings';
 import { useEffect, useState } from 'react';
+import useLocalStorage from './useLocalStorage';
 
-const useIsShiftPressed = () => {
+const useIsGridDisabled = () => {
   const [isKeyPressed, setIsKeyPressed] = useState(true);
+  const [settings] = useLocalStorage<Settings>(SETTINGS_STORAGE_KEY);
 
   useEffect(() => {
     const onDrag = (event: DragEvent) => {
@@ -21,7 +26,7 @@ const useIsShiftPressed = () => {
     };
   });
 
-  return isKeyPressed;
+  return isKeyPressed || !settings.useGrid;
 };
 
-export default useIsShiftPressed;
+export default useIsGridDisabled;

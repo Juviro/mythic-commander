@@ -199,6 +199,7 @@ export interface SetCommanderDamagePayload {
   forPlayerId: string;
   commanderId: string;
   total: number;
+  changeLife: boolean;
 }
 
 export interface SetPhasePayload {

@@ -9,6 +9,7 @@ import { CardPositionContextProvider } from './CardPositionContext';
 import ScreenMessage from './ScreenMessage/ScreenMessage';
 import Fireworks from './ScreenMessage/Fireworks';
 import CardRules from './CardRules/CardRules';
+import GameDocumentTitle from './GameDocumentTitle/GameDocumentTitle';
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const Game = () => {
             <CardRules />
             <ScreenMessage />
             <Fireworks />
+            <GameDocumentTitle />
           </DndProvider>
         </QueryClientProvider>
       </CardPositionContextProvider>

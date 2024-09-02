@@ -1090,7 +1090,7 @@ export default class Game {
   }
 
   setCommanderDamage(playerId: string, payload: SetCommanderDamagePayload) {
-    const { commanderId, forPlayerId, total } = payload;
+    const { commanderId, forPlayerId, total, changeLife } = payload;
 
     const player = this.getPlayerById(playerId);
 
@@ -1106,13 +1106,12 @@ export default class Game {
         commanderOwnerId = p.id;
         commanderName = commander.name;
 
-        const delta = total - previousTotal;
+        if (!changeLife || total < 0) return;
 
-        if (total >= 0) {
-          const damagedPlayer = this.getPlayerById(forPlayerId);
-          damagedPlayer.life -= delta;
-          this.emitPlayerUpdate(damagedPlayer);
-        }
+        const delta = total - previousTotal;
+        const damagedPlayer = this.getPlayerById(forPlayerId);
+        damagedPlayer.life -= delta;
+        this.emitPlayerUpdate(damagedPlayer);
       });
     });
 

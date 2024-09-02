@@ -15,6 +15,12 @@ const CardRules = () => {
       open={Boolean(card)}
       onCancel={() => setRulesCardId(null)}
       footer={null}
+      styles={{
+        body: {
+          maxHeight: 'calc(100vh - 300px)',
+          overflow: 'auto',
+        },
+      }}
       centered
       loading={isLoading}
     >

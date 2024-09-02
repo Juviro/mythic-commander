@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import useIsShiftPressed from 'hooks/useIsShiftPressed';
+import useIsGridDisabled from 'hooks/useIsGridDisabled';
 import styles from './BattlefieldGrid.module.css';
 
 export const HORIZONTAL_GRID_SIZE = 20;
@@ -10,7 +10,7 @@ export const VERTICAL_GRID_SIZE = 50;
 const getLinesArray = (size: number) => Array.from({ length: size + 1 });
 
 const BattlefieldGrid = () => {
-  const hidden = useIsShiftPressed();
+  const hidden = useIsGridDisabled();
 
   return (
     <div

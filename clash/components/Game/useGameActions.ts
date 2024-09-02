@@ -28,9 +28,12 @@ import {
 } from 'backend/constants/wsEvents';
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
+import useLocalStorage from 'hooks/useLocalStorage';
+import Settings, { SETTINGS_STORAGE_KEY } from './Menu/GameInfo/GuideModal/Settings';
 
 const useGameActions = () => {
   const { socket } = useContext(SocketContext);
+  const [settings] = useLocalStorage<Settings>(SETTINGS_STORAGE_KEY);
 
   const onAcceptHand = (payload: AcceptHandPayload) => {
     socket?.emit(SOCKET_MSG_GAME.ACCEPT_HAND, payload);
@@ -159,7 +162,12 @@ const useGameActions = () => {
     commanderId: string,
     forPlayerId: string
   ) => {
-    const payload: SetCommanderDamagePayload = { commanderId, total, forPlayerId };
+    const payload: SetCommanderDamagePayload = {
+      commanderId,
+      total,
+      forPlayerId,
+      changeLife: settings.commanderDamageChangesLife,
+    };
     socket?.emit(SOCKET_MSG_GAME.SET_COMMANDER_DAMAGE, payload);
   };
 
