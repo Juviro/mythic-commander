@@ -28,7 +28,7 @@ const BattlefieldSelection = ({ children, isFlipped, player }: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [startingPoint, setStartingPoint] = useState<XYCoord | null>(null);
   const [currentPoint, setCurrentPoint] = useState<XYCoord | null>(null);
-  const { onMoveCard } = useGameActions();
+  const { onMoveCard, copyCard } = useGameActions();
 
   const { hoveredCardIds, selectedCardIds, setSelectedCardsIds } = useContext(
     BattlefieldSelectionContext
@@ -40,11 +40,25 @@ const BattlefieldSelection = ({ children, isFlipped, player }: Props) => {
     });
   };
 
+  const onCopySelectedCards = () => {
+    selectedCardIds.forEach((cardId) => {
+      copyCard({
+        clashId: cardId,
+        amount: 1,
+        battlefieldPlayerId: player.id,
+      });
+    });
+  };
+
   useShortcut(SHORTCUTS.CANCEL, () => setSelectedCardsIds([]), {
     disabled: !selectedCardIds.length,
   });
 
   useShortcut(SHORTCUTS.DELETE, onDeleteSelectedCards, {
+    disabled: !selectedCardIds.length,
+  });
+
+  useShortcut(SHORTCUTS.COPY, onCopySelectedCards, {
     disabled: !selectedCardIds.length,
   });
 

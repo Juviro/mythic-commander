@@ -3,6 +3,7 @@ const SHORTCUTS = {
   TAP_ALL_LANDS: 'a',
   UNTAP: 'u',
   FLIP: 'f',
+  COPY: 'c',
   DRAW: 'd',
   SHUFFLE: 's',
   SEARCH: 's',

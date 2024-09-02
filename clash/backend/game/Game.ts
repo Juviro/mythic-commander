@@ -256,6 +256,23 @@ export default class Game {
     };
   }
 
+  static getFirstAvailablePosition(
+    initalPosition: XYCoord,
+    battlefield: BattlefieldCard[]
+  ) {
+    const doesCardExistAtPosition = (newPosition: XYCoord) => {
+      return battlefield.some(
+        (card) => card.position?.x === newPosition.x && card.position?.y === newPosition.y
+      );
+    };
+
+    let stackedPosition = initalPosition;
+    while (doesCardExistAtPosition(stackedPosition)) {
+      stackedPosition = Game.getStackedPosition(stackedPosition);
+    }
+    return stackedPosition;
+  }
+
   static fixPosition(position?: { x: number; y: number }) {
     if (!position) return position;
 
@@ -619,15 +636,10 @@ export default class Game {
 
     const { type_line } = await db('cards').where({ id: cardId }).first();
 
-    const doesCardExistAtPosition = (newPosition: XYCoord) =>
-      player.zones.battlefield.some(
-        (card) => card.position?.x === newPosition.x && card.position?.y === newPosition.y
-      );
-
-    let stackedPosition = position;
-    while (doesCardExistAtPosition(stackedPosition)) {
-      stackedPosition = Game.getStackedPosition(stackedPosition);
-    }
+    const stackedPosition = Game.getFirstAvailablePosition(
+      position,
+      player.zones.battlefield
+    );
 
     const token: BattlefieldCard = {
       clashId: uniqid(),
@@ -666,7 +678,10 @@ export default class Game {
     for (let i = 0; i < amount; i += 1) {
       if (originalCard.faceDown) return;
 
-      const newPosition = Game.getStackedPosition(originalCard.position!, i + 1);
+      const newPosition = Game.getFirstAvailablePosition(
+        originalCard.position!,
+        player.zones.battlefield
+      );
 
       // eslint-disable-next-line no-await-in-loop
       const additionalProps = await getInitialCardProps(originalCard.id);
