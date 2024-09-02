@@ -5,6 +5,8 @@ import Setting from './Setting';
 
 import styles from './GuideModal.module.css';
 
+export const SETTINGS_STORAGE_KEY = 'settings';
+
 interface Settings {
   autoUntap: boolean;
   useGrid: boolean;
@@ -16,7 +18,10 @@ const DEFAULT_SETTINGS: Settings = {
 };
 
 const Settings = () => {
-  const [settings, setSettings] = useLocalStorage<Settings>('settings', DEFAULT_SETTINGS);
+  const [settings, setSettings] = useLocalStorage<Settings>(
+    SETTINGS_STORAGE_KEY,
+    DEFAULT_SETTINGS
+  );
 
   const onChangeSetting = (key: keyof Settings) => (value: boolean) => {
     setSettings({ ...settings, [key]: value });
