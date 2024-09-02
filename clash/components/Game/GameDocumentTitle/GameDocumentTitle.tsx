@@ -4,7 +4,7 @@ import GameStateContext from '../GameStateContext';
 
 const FALLBACK_TITLE = 'Game - Mythic-Commander';
 
-const BrowserTitle = () => {
+const GameDocumentTitle = () => {
   const { gameState } = useContext(GameStateContext);
 
   const getTitle = () => {
@@ -30,4 +30,4 @@ const BrowserTitle = () => {
   );
 };
 
-export default BrowserTitle;
+export default GameDocumentTitle;
