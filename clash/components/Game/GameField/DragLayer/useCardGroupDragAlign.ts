@@ -4,7 +4,7 @@ import { XYCoord } from 'react-dnd';
 import { BattlefieldCard } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
 import CardPositionContext from 'components/Game/CardPositionContext';
-import useIsShiftPressed from 'hooks/useIsShiftPressed';
+import useIsGridDisabled from 'hooks/useIsGridDisabled';
 import {
   HORIZONTAL_GRID_SIZE,
   VERTICAL_GRID_SIZE,
@@ -48,7 +48,7 @@ const useCardGroupDragAlign = (
   differenceFromInitialOffset: XYCoord,
   cards: BattlefieldCard[]
 ) => {
-  const isSnapDisabled = useIsShiftPressed();
+  const isSnapDisabled = useIsGridDisabled();
   const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
   const { snapChoords, hoveredBattlefield } = useContext(CardPositionContext);
 

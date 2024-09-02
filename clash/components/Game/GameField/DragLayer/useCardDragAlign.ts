@@ -5,7 +5,7 @@ import { Card } from 'backend/database/gamestate.types';
 import CardPositionContext, {
   HoveredBattlefield,
 } from 'components/Game/CardPositionContext';
-import useIsShiftPressed from 'hooks/useIsShiftPressed';
+import useIsGridDisabled from 'hooks/useIsGridDisabled';
 import GameStateContext from 'components/Game/GameStateContext';
 import {
   HORIZONTAL_GRID_SIZE,
@@ -130,7 +130,7 @@ export const getGridAlign = (
 };
 
 const useCardDragAlign = (item: Card, currentOffset: XYCoord | null) => {
-  const isSnapDisabled = useIsShiftPressed();
+  const isSnapDisabled = useIsGridDisabled();
   const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
   const { hoveredBattlefield, snapChoords } = useContext(CardPositionContext);
 
