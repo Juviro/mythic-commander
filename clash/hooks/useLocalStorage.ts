@@ -7,6 +7,7 @@ const useLocalStorage = <S>(
   initialValue?: S
 ): [S, (newValue: S) => void] => {
   const getDataFromStore = () => {
+    if (typeof window === 'undefined') return undefined;
     const item = window.localStorage.getItem(key);
 
     try {
@@ -21,6 +22,13 @@ const useLocalStorage = <S>(
   };
 
   const [storedValue, setStoredValue] = useState(getDataFromStore);
+
+  // Load the value from localStorage if the hook is mounted in the backend
+  const hasWindow = typeof window !== 'undefined';
+  useEffect(() => {
+    if (storedValue !== undefined || !window) return;
+    setStoredValue(getDataFromStore());
+  }, [hasWindow]);
 
   const setValue = (value: S) => {
     if (value === null || value === undefined) {
@@ -46,7 +54,9 @@ const useLocalStorage = <S>(
     };
   }, []);
 
-  return [storedValue, setValue];
+  const storedValueWithDefault = storedValue === undefined ? initialValue : storedValue;
+
+  return [storedValueWithDefault, setValue];
 };
 
 export default useLocalStorage;

@@ -4,13 +4,17 @@ import useLocalStorage from 'hooks/useLocalStorage';
 import {
   Settings as SettingsType,
   SETTINGS_STORAGE_KEY,
+  DEFAULT_SETTINGS,
 } from 'components/Game/InitSettings/InitSettings';
 import Setting from './Setting';
 
 import styles from './GuideModal.module.css';
 
 const Settings = () => {
-  const [settings, setSettings] = useLocalStorage<SettingsType>(SETTINGS_STORAGE_KEY);
+  const [settings, setSettings] = useLocalStorage<SettingsType>(
+    SETTINGS_STORAGE_KEY,
+    DEFAULT_SETTINGS
+  );
 
   const onChangeSetting = (key: keyof SettingsType) => (value: boolean) => {
     setSettings({ ...settings, [key]: value });

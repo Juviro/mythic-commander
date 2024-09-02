@@ -7,7 +7,7 @@ export interface Settings {
   commanderDamageChangesLife: boolean;
 }
 
-const DEFAULT_SETTINGS: Settings = {
+export const DEFAULT_SETTINGS: Settings = {
   autoUntap: true,
   useGrid: true,
   commanderDamageChangesLife: true,
