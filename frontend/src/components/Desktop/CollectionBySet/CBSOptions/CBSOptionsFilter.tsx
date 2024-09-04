@@ -1,4 +1,4 @@
-import { Checkbox, Collapse, Input, Typography } from 'antd';
+import { Checkbox, Collapse, CollapseProps, Input, Typography } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -54,40 +54,47 @@ const CBSOptionsFilter = ({
     panelHeader += ` (${displayedSetTypes.length})`;
   }
 
-  return (
-    <Collapse ghost style={{ marginBottom: -32 }}>
-      <Collapse.Panel key="1" header={panelHeader}>
-        <StyledSearch
-          placeholder="Search"
-          width={20}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <Flex gap={24} wrap="wrap">
-          <Flex flex={1}>
-            <Flex direction="column">
-              <StyledLabel strong>Set Types</StyledLabel>
-            </Flex>
+  const items: CollapseProps['items'] = [
+    {
+      key: '1',
+      label: panelHeader,
+      children: (
+        <>
+          <StyledSearch
+            placeholder="Search"
+            width={20}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <Flex gap={24} wrap="wrap">
+            <Flex flex={1}>
+              <Flex direction="column">
+                <StyledLabel strong>Set Types</StyledLabel>
+              </Flex>
 
-            <StyledCheckboxes
-              options={DISPLAYED_SET_TYPES_OPTIONS}
-              value={displayedSetTypes}
-              onChange={setDisplayedSetTypes}
-            />
+              <StyledCheckboxes
+                options={DISPLAYED_SET_TYPES_OPTIONS}
+                value={displayedSetTypes}
+                onChange={setDisplayedSetTypes}
+              />
+            </Flex>
+            <Checkbox
+              indeterminate={
+                displayedSetTypes.length > 0 &&
+                displayedSetTypes.length < SET_GROUPS.length
+              }
+              onChange={onCheckAllChange}
+              checked={displayedSetTypes.length === SET_GROUPS.length}
+              style={{ whiteSpace: 'nowrap', display: 'flex', alignItems: 'center' }}
+            >
+              Check all
+            </Checkbox>
           </Flex>
-          <Checkbox
-            indeterminate={
-              displayedSetTypes.length > 0 && displayedSetTypes.length < SET_GROUPS.length
-            }
-            onChange={onCheckAllChange}
-            checked={displayedSetTypes.length === SET_GROUPS.length}
-            style={{ whiteSpace: 'nowrap' }}
-          >
-            Check all
-          </Checkbox>
-        </Flex>
-      </Collapse.Panel>
-    </Collapse>
-  );
+        </>
+      ),
+    },
+  ];
+
+  return <Collapse ghost style={{ marginBottom: -32 }} items={items} />;
 };
 
 export default CBSOptionsFilter;

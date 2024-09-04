@@ -1,4 +1,4 @@
-.wrapper {
+.card_wrapper {
     position: fixed;
     top: var(--top);
     left: var(--left);
@@ -8,16 +8,8 @@
     aspect-ratio: var(--card-aspect-ratio);
 }
 
-.wrapper__stacked_behind {
+.card_wrapper__stacked_behind {
     z-index: -1;
-}
-
-.align_indicator {
-    width: 1px;
-    height: 1px;
-    border: 1px dashed var(--color-card-align);
-    position: fixed;
-    z-index: 1;
 }
 
 .card {

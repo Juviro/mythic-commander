@@ -1,29 +1,20 @@
 import { MouseEvent } from 'react';
-import { MenuProps } from 'antd';
+import { EnterOutlined, EyeOutlined } from '@ant-design/icons';
 
 import { Player } from 'backend/database/gamestate.types';
 import useGameActions from 'components/Game/useGameActions';
 import { ALL_COUNTERS, DEFAULT_COUNTERS } from 'constants/counters';
 import SubmittableSelect from 'components/GameComponents/ContextMenu/SubmittableSelect';
 import ClashIcon from 'components/GameComponents/ClashIcon/ClashIcon';
-import { EnterOutlined, EyeOutlined } from '@ant-design/icons';
-import { getPeekSubItems } from '../../Library/useLibraryActions';
+import { getPeekSubItems } from 'components/Game/GameField/PlayerInterface/Library/useLibraryActions';
 
 interface Props {
   cardIds: string[];
   player: Player;
-  canCopy?: boolean;
   isFaceDown?: boolean;
-  canTurnFaceDown?: boolean;
 }
 
-const useBattlefieldOnlyCardActions = ({
-  cardIds,
-  player,
-  canCopy,
-  isFaceDown,
-  canTurnFaceDown,
-}: Props) => {
+const useBattlefieldCardActions = ({ cardIds, player, isFaceDown }: Props) => {
   const { onAddCounters, copyCard, onTurnFaceDown, onPeekFaceDown, onRotateCards } =
     useGameActions();
 
@@ -93,57 +84,52 @@ const useBattlefieldOnlyCardActions = ({
     return `${index + 1} Copies`;
   });
 
-  const additionalBattlefieldContextMenuItems: MenuProps['items'] = [
-    {
-      type: 'divider',
-    },
-    {
-      key: 'add-counter',
-      label: 'Add counter...',
-      children: addCounterOptions,
-      icon: <ClashIcon id="counter-shield" size={16} />,
-    },
-  ];
+  const addCounterItem = {
+    key: 'add-counter',
+    label: 'Add counter...',
+    children: addCounterOptions,
+    icon: <ClashIcon id="counter-shield" size={16} />,
+  };
 
-  if (canTurnFaceDown) {
-    let label = 'Turn Face Up / Down';
-    if (typeof isFaceDown === 'boolean') {
-      label = isFaceDown ? 'Turn Face Up' : 'Turn Face Down';
-    }
-    additionalBattlefieldContextMenuItems.unshift({
-      key: 'turn-face-down',
-      label,
-      onClick: turnFaceDown,
-      icon: <ClashIcon id="flip" size={16} />,
-    });
+  let label = 'Turn Face Up / Down';
+  if (typeof isFaceDown === 'boolean') {
+    label = isFaceDown ? 'Turn Face Up' : 'Turn Face Down';
   }
+  const turnFacDownItem = {
+    key: 'turn-face-down',
+    label,
+    onClick: turnFaceDown,
+    icon: <ClashIcon id="flip" size={16} />,
+  };
 
-  additionalBattlefieldContextMenuItems.push({
+  const rotateItem = {
     key: 'rotate',
     label: 'Rotate 90°',
     onClick: rotateCards,
     icon: <EnterOutlined style={{ transform: 'rotate(180deg)' }} />,
-  });
+  };
 
-  if (isFaceDown && cardIds.length === 1) {
-    additionalBattlefieldContextMenuItems.unshift({
-      key: 'peek-face-down',
-      label: 'Peek at face down card',
-      onClick: peekFaceDown,
-      icon: <EyeOutlined />,
-    });
-  }
+  const peekItem = {
+    key: 'peek-face-down',
+    label: 'Peek at face down card',
+    onClick: peekFaceDown,
+    icon: <EyeOutlined />,
+  };
 
-  if (canCopy) {
-    additionalBattlefieldContextMenuItems.push({
-      key: 'create-copy',
-      label: 'Create Copy...',
-      children: createCopiesSubItems,
-      icon: <ClashIcon id="ability-transform" size={16} />,
-    });
-  }
+  const copyItem = {
+    key: 'create-copy',
+    label: 'Create Copy...',
+    children: createCopiesSubItems,
+    icon: <ClashIcon id="ability-transform" size={16} />,
+  };
 
-  return additionalBattlefieldContextMenuItems;
+  return {
+    addCounterItem,
+    turnFacDownItem,
+    rotateItem,
+    peekItem,
+    copyItem,
+  };
 };
 
-export default useBattlefieldOnlyCardActions;
+export default useBattlefieldCardActions;

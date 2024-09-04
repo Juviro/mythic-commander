@@ -21,7 +21,13 @@ export const VARIANTS = {
   TEXTLESS: 'Textless',
   CONFETTI_FOIL: 'Confetti Foil',
   EMBOSSED: 'Embossed',
+  GILDED: 'Gilded',
+  INVIBILE_INK: 'Invisible Ink',
   SURGE_FOIL: 'Surge Foil',
+  RAISED_FOIL: 'Raised Foil',
+  RAINBOW_FOIL: 'Rainbow Foil',
+  RIPPLEFOIL: 'Ripple Foil',
+  FRACTUREFOIL: 'Fracture Foil',
 };
 
 const HIDDEN_VARIANTS = {
@@ -60,6 +66,24 @@ export const getCardVariants = ({
   }
   if (promo_types?.includes('surgefoil')) {
     variants.push(VARIANTS.SURGE_FOIL);
+  }
+  if (promo_types?.includes('raisedfoil')) {
+    variants.push(VARIANTS.RAISED_FOIL);
+  }
+  if (promo_types?.includes('rainbowfoil')) {
+    variants.push(VARIANTS.RAINBOW_FOIL);
+  }
+  if (promo_types?.includes('invisibleink')) {
+    variants.push(VARIANTS.INVIBILE_INK);
+  }
+  if (promo_types?.includes('gilded')) {
+    variants.push(VARIANTS.GILDED);
+  }
+  if (promo_types?.includes('ripplefoil')) {
+    variants.push(VARIANTS.RIPPLEFOIL);
+  }
+  if (promo_types?.includes('fracturefoil')) {
+    variants.push(VARIANTS.FRACTUREFOIL);
   }
   if (promo_types?.includes('stepandcompleat')) {
     variants.push(VARIANTS.COMPLEAT);

@@ -14,6 +14,7 @@ interface Props {
   acceptedIds?: string[];
   playerId?: string;
   accept?: DndItemType[];
+  noIsOverStyle?: boolean;
 }
 
 const Dropzone = ({
@@ -24,6 +25,7 @@ const Dropzone = ({
   acceptedIds,
   playerId,
   accept = [DndItemTypes.CARD, DndItemTypes.LIST_CARD],
+  noIsOverStyle,
 }: Props) => {
   const { hoveredBattlefield } = useContext(CardPositionContext);
   const dropzoneRef = useRef<HTMLDivElement | null>(null);
@@ -66,7 +68,10 @@ const Dropzone = ({
 
   return (
     <div
-      className={styles.wrapper}
+      className={classNames(styles.wrapper, {
+        'dropzone--is_over': isOver && canDrop,
+        'dropzone--can_drop': canDrop,
+      })}
       ref={(val) => {
         dropRef(val);
         dropzoneRef.current = val!;
@@ -74,7 +79,7 @@ const Dropzone = ({
     >
       <div
         className={classNames(styles.dropzone, {
-          [styles.dropzone__is_over]: isOver && canDrop,
+          [styles.dropzone__is_over]: !noIsOverStyle && isOver && canDrop,
           [styles.dropzone__can_drop]: canDrop,
         })}
       />

@@ -44,6 +44,7 @@ import initMatch from 'backend/lobby/initMatch/initMatch';
 import { randomizeArray } from 'utils/randomizeArray';
 import db from 'backend/database/db';
 import getPlaytestGamestate from 'backend/lobby/initMatch/getPlaytestGamestate';
+import { XYCoord } from 'react-dnd';
 import addLogEntry from './addLogEntry';
 import getInitialCardProps from './utils/getInitialCardProps';
 
@@ -255,12 +256,36 @@ export default class Game {
     };
   }
 
+  static getFirstAvailablePosition(
+    initalPosition: XYCoord,
+    battlefield: BattlefieldCard[]
+  ) {
+    const doesCardExistAtPosition = (newPosition: XYCoord) => {
+      return battlefield.some(
+        (card) => card.position?.x === newPosition.x && card.position?.y === newPosition.y
+      );
+    };
+
+    let stackedPosition = initalPosition;
+    while (doesCardExistAtPosition(stackedPosition)) {
+      stackedPosition = Game.getStackedPosition(stackedPosition);
+    }
+    return stackedPosition;
+  }
+
   static fixPosition(position?: { x: number; y: number }) {
     if (!position) return position;
 
     return {
       x: Math.max(0, Math.min(100, position.x)),
       y: Math.max(0, Math.min(100, position.y)),
+    };
+  }
+
+  static getStackedPosition(position: XYCoord, index = 1) {
+    return {
+      x: position.x + index * 1,
+      y: position.y + index * 2,
     };
   }
 
@@ -611,6 +636,11 @@ export default class Game {
 
     const { type_line } = await db('cards').where({ id: cardId }).first();
 
+    const stackedPosition = Game.getFirstAvailablePosition(
+      position,
+      player.zones.battlefield
+    );
+
     const token: BattlefieldCard = {
       clashId: uniqid(),
       id: cardId,
@@ -620,7 +650,7 @@ export default class Game {
       isToken: true,
       manaValue: 0,
       flippable: name.includes('//'),
-      position: Game.fixPosition(position),
+      position: Game.fixPosition(stackedPosition),
     };
 
     player.zones.battlefield.push(token);
@@ -645,16 +675,14 @@ export default class Game {
       (card) => card.clashId === clashId
     )!;
 
-    const offsetX = 1;
-    const offsetY = 2;
-
     for (let i = 0; i < amount; i += 1) {
       if (originalCard.faceDown) return;
 
-      const newPosition = {
-        x: originalCard.position!.x + offsetX * (i + 1),
-        y: originalCard.position!.y + offsetY * (i + 1),
-      };
+      const newPosition = Game.getFirstAvailablePosition(
+        originalCard.position!,
+        player.zones.battlefield
+      );
+
       // eslint-disable-next-line no-await-in-loop
       const additionalProps = await getInitialCardProps(originalCard.id);
       const newCard: VisibleBattlefieldCard = {
@@ -701,7 +729,7 @@ export default class Game {
       cardIds = [];
       player.zones.battlefield.forEach((card) => {
         const supertype = (card as VisibleCard).type_line;
-        if (!supertype.includes(type)) return;
+        if (type !== 'All' && !supertype.includes(type)) return;
         cardIds!.push(card.clashId);
       });
     }
@@ -1077,7 +1105,7 @@ export default class Game {
   }
 
   setCommanderDamage(playerId: string, payload: SetCommanderDamagePayload) {
-    const { commanderId, forPlayerId, total } = payload;
+    const { commanderId, forPlayerId, total, changeLife } = payload;
 
     const player = this.getPlayerById(playerId);
 
@@ -1092,6 +1120,13 @@ export default class Game {
         commander.commanderDamageDealt[forPlayerId] = Math.max(total, 0);
         commanderOwnerId = p.id;
         commanderName = commander.name;
+
+        if (!changeLife || total < 0) return;
+
+        const delta = total - previousTotal;
+        const damagedPlayer = this.getPlayerById(forPlayerId);
+        damagedPlayer.life -= delta;
+        this.emitPlayerUpdate(damagedPlayer);
       });
     });
 

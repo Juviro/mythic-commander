@@ -20,8 +20,10 @@ export interface CardPositions {
 }
 
 export interface SnapChoords {
-  x: number | null;
-  y: number | null;
+  x?: number | null;
+  y?: number | null;
+  groupX?: number;
+  groupY?: number;
   placeBehindOthers?: boolean;
 }
 
@@ -38,13 +40,15 @@ interface CardPositionContextValue {
   snapChoords: {
     current: SnapChoords;
   };
-  hoveredCard: VisibleCard | BattlefieldCard | null;
   contextMenuPosition: {
     current: Point | null;
   };
+  hoveredCard: VisibleCard | BattlefieldCard | null;
   setHoveredCard: React.Dispatch<
     React.SetStateAction<VisibleCard | BattlefieldCard | null>
   >;
+  rulesCardId: string | null;
+  setRulesCardId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const CardPositionContext = React.createContext<CardPositionContextValue>(
@@ -58,9 +62,11 @@ export const CardPositionContextProvider = ({ children }: PropsWithChildren) => 
   const hoveredBattlefield = useRef<HoveredBattlefield | null>(null);
   const snapChoords = useRef<SnapChoords>({ x: null, y: null });
   const contextMenuPosition = useRef<Point | null>(null);
+
   const [hoveredCard, setHoveredCard] = useState<VisibleCard | BattlefieldCard | null>(
     null
   );
+  const [rulesCardId, setRulesCardId] = useState<string | null>(null);
 
   const value = useMemo(() => {
     return {
@@ -69,9 +75,11 @@ export const CardPositionContextProvider = ({ children }: PropsWithChildren) => 
       snapChoords,
       hoveredCard,
       setHoveredCard,
+      rulesCardId,
+      setRulesCardId,
       contextMenuPosition,
     };
-  }, [hoveredCard]);
+  }, [hoveredCard, rulesCardId]);
 
   return (
     <CardPositionContext.Provider value={value}>{children}</CardPositionContext.Provider>

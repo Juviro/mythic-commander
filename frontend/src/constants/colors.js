@@ -108,6 +108,8 @@ export const tagColors = [
   // {
   //   name: '???',
   //   color: 'gold',
+  //   fill: '#d4b106',
+  //   background: '#fffbe6',
   // },
   {
     name: 'Targeted Removal',
@@ -135,12 +137,12 @@ export const tagColors = [
     fill: '#389e0d',
     background: '#f6ffed',
   },
-  // {
-  //   name: '???',
-  //   color: 'cyan',
-  //   fill: '#08979c',
-  //   background: '#e6fffb',
-  // },
+  {
+    name: 'Win Condition',
+    color: 'cyan',
+    fill: '#08979c',
+    background: '#e6fffb',
+  },
   {
     name: 'Protection',
     color: 'blue',

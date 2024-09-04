@@ -96,7 +96,7 @@ const MessageMove = ({ payload, playerId }: Props) => {
       actionSuffix = (
         <>
           <span>into their library </span>
-          <b>{getCardinalNumberLabel(payload.to.libraryPosition + 1)}</b>
+          <b>{getCardinalNumberLabel(payload.to.libraryPosition)}</b>
           <span> from the top</span>
         </>
       );

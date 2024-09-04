@@ -23,10 +23,7 @@
 .selection_rectangle {
   pointer-events: all;
   border: 2px solid var(--color-primary);
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-.selection_rectangle {
+  background-color: var(--color-selection-background);
   display: none;
   cursor: grab;
 }

@@ -1,12 +1,12 @@
-type CardTypes =
+export type PermanentCardType =
   | 'Land'
   | 'Creature'
+  | 'Planeswalker'
   | 'Artifact'
   | 'Enchantment'
-  | 'Planeswalker'
-  | 'Instant'
-  | 'Sorcery'
   | 'Battle';
+
+type CardTypes = PermanentCardType | 'Instant' | 'Sorcery';
 
 type BasicLandTypes = 'Plains' | 'Island' | 'Swamp' | 'Mountain' | 'Forest' | 'Wastes';
 

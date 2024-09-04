@@ -1,0 +1,33 @@
+name: Auto deploy
+run-name: Deploying to prod
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v4
+      with:
+        node-version-file: '.nvmrc'
+    - name: Install modules
+      run: yarn install-all
+    - name: Run ESLint
+      run: yarn lint
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploying changes
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.ID_RSA_KEY }}
+        port: ${{ secrets.PORT }}
+        script: cd /opt/mtg && git pull && yarn deploy-prod
+

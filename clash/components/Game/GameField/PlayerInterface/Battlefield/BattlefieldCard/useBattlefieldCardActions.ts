@@ -3,7 +3,6 @@ import { useContext } from 'react';
 import { BattlefieldCard, Player, ZONES } from 'backend/database/gamestate.types';
 import useCardActions from 'components/GameComponents/Card/cardActions/useCardActions';
 import BattlefieldSelectionContext from '../BattlefieldSelection/BattlefieldSelectionContext';
-import useBattlefieldOnlyCardActions from './useBattlefieldOnlyCardActions';
 
 interface Props {
   card: BattlefieldCard;
@@ -12,25 +11,12 @@ interface Props {
 }
 
 const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
-  const hiddenActionKeys: string[] = [];
-  if (!card.flippable) {
-    hiddenActionKeys.push('flip');
-  }
-
-  const {
-    contextMenuItems: baseContextMenuitems,
-    tapCards,
-    flipCards,
-  } = useCardActions({
+  const { contextMenuItems, tapCards, flipCards } = useCardActions({
     cardIds: [card.clashId],
     battlefieldPlayerId: player.id,
     zone: ZONES.BATTLEFIELD,
-    hiddenActionKeys,
-  });
-
-  const additionalBattlefieldContextMenuItems = useBattlefieldOnlyCardActions({
-    cardIds: [card.clashId],
     player,
+    canFlip: card.flippable,
     canTurnFaceDown: !card.isToken,
     isFaceDown: card.faceDown,
     canCopy: !card.faceDown,
@@ -56,31 +42,6 @@ const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
     if (!isSelected) return;
     e.stopPropagation();
   };
-
-  const contextMenuItems = [
-    ...baseContextMenuitems,
-    ...additionalBattlefieldContextMenuItems,
-  ];
-
-  const moveIntoFirstBlock = (key: string) => {
-    const turnFaceDownCardActionIndex = contextMenuItems.findIndex(
-      (item) => item?.key === key
-    );
-
-    if (turnFaceDownCardActionIndex === -1) return;
-    const firstDividerIndex = contextMenuItems.findIndex((item) => !item?.key);
-
-    // insert before the first divider
-    contextMenuItems.splice(
-      firstDividerIndex,
-      0,
-      contextMenuItems.splice(turnFaceDownCardActionIndex, 1)[0]
-    );
-  };
-
-  moveIntoFirstBlock('turn-face-down');
-  moveIntoFirstBlock('peek-face-down');
-  moveIntoFirstBlock('rotate');
 
   return {
     tapCards,

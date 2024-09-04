@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "install-all": "yarn install && cd ./backend && yarn install && cd ../frontend && yarn install && cd ../clash && yarn install",
     "start": "NODE_ENV=dev concurrently \"cd ./backend && yarn start\" \"cd ./frontend && yarn start\"",
     "start-all": "NODE_ENV=dev concurrently \"cd ./backend && yarn start\" \"cd ./frontend && yarn start\" \"cd ./clash && yarn dev\"",
     "start-db": "brew services start postgresql@15",
@@ -10,7 +11,7 @@
     "deploy-prod": "./scripts/deploy-prod.sh",
     "deploy-clash": "./scripts/deploy-clash.sh",
     "deploy-staging": "./scripts/deploy-staging.sh",
-    "lint": "cd ./backend && yarn lint && cd ../frontend && yarn lint"
+    "lint": "cd ./backend && yarn lint && cd ../frontend && yarn lint  && cd ../clash && yarn lint"
   },
   "devDependencies": {
     "concurrently": "^7.4.0",

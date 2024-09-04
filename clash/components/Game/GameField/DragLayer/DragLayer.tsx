@@ -1,76 +1,53 @@
-import React, { CSSProperties, useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useDragLayer } from 'react-dnd';
 
-import { getColorVariable } from 'components/GameComponents/ColoredPlayerName/ColoredPlayerName';
-import GameStateContext from 'components/Game/GameStateContext';
-import Card from 'components/GameComponents/Card/Card';
-
+import { DndItemTypes, DropCardGroup } from 'types/dnd.types';
+import { VisibleBattlefieldCard } from 'backend/database/gamestate.types';
 import CardPositionContext from 'components/Game/CardPositionContext';
-import classNames from 'classnames';
-import { DndItemTypes } from 'types/dnd.types';
-import styles from './DragLayer.module.css';
-import AlignIndicator from './AlignIndicator';
-import useDragAlign from './useDragAlign';
+import DragLayerCard from './DragLayerCard';
+import DragLayerCardGroup from './DragLayerCardGroup';
 
 const DragLayer = () => {
-  const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
-  const { hoveredBattlefield } = useContext(CardPositionContext);
+  const { snapChoords } = useContext(CardPositionContext);
 
-  const { isDragging, item, currentOffset, itemType } = useDragLayer((monitor) => ({
-    item: monitor.getItem(),
-    itemType: monitor.getItemType(),
-    currentOffset: monitor.getClientOffset(),
-    isDragging: monitor.isDragging(),
-  }));
+  const { isDragging, item, currentOffset, itemType, differenceFromInitialOffset } =
+    useDragLayer((monitor) => ({
+      item: monitor.getItem() as VisibleBattlefieldCard | DropCardGroup,
+      itemType: monitor.getItemType() as DndItemTypes,
+      currentOffset: monitor.getClientOffset(),
+      isDragging: monitor.isDragging(),
+      differenceFromInitialOffset: monitor.getDifferenceFromInitialOffset(),
+    }));
 
-  const { cardToAlign, left, top } = useDragAlign(item, currentOffset);
+  // list cards don't snap to the grid, so we need to reset the snap coords
+  useEffect(() => {
+    if (itemType !== DndItemTypes.LIST_CARD) return;
+    snapChoords.current = {};
+  }, [itemType]);
 
-  if (!item || !currentOffset || !isDragging || itemType !== DndItemTypes.CARD) {
+  if (!item || !currentOffset || !isDragging || !differenceFromInitialOffset) {
     return null;
   }
-  const shouldFlip = Boolean(hoveredBattlefield.current?.element.closest('.flipped'));
 
-  const style = {
-    '--top': `${top}px`,
-    '--left': `${left}px`,
-    '--player-color': getColorVariable(item.ownerId),
-    '--size-card-width': `${battlefieldCardWidth}px`,
-  } as CSSProperties;
+  if (itemType === DndItemTypes.CARD) {
+    return (
+      <DragLayerCard
+        item={item as VisibleBattlefieldCard}
+        currentOffset={currentOffset}
+      />
+    );
+  }
 
-  const isSnapping = Boolean(cardToAlign.x || cardToAlign.y || cardToAlign.stack);
+  if (itemType === DndItemTypes.CARD_GROUP) {
+    return (
+      <DragLayerCardGroup
+        group={item as DropCardGroup}
+        differenceFromInitialOffset={differenceFromInitialOffset}
+      />
+    );
+  }
 
-  const offsetY = cardToAlign.y
-    ? cardToAlign.y.element.getBoundingClientRect().y + battlefieldCardHeight / 2
-    : currentOffset.y;
-  const offsetX = cardToAlign.x
-    ? cardToAlign.x.element.getBoundingClientRect().x + battlefieldCardWidth / 2
-    : currentOffset.x;
-
-  return (
-    <div
-      style={style}
-      className={classNames(styles.wrapper, {
-        [styles.wrapper__stacked_behind]: cardToAlign.stack?.position === 'topLeft',
-      })}
-    >
-      {cardToAlign?.x && !cardToAlign.stack && (
-        <AlignIndicator element={cardToAlign.x.element} offset={offsetY} property="x" />
-      )}
-      {cardToAlign?.y && !cardToAlign.stack && (
-        <AlignIndicator element={cardToAlign.y.element} offset={offsetX} property="y" />
-      )}
-      <div
-        className={classNames(styles.card, {
-          [styles.card__flipped]: shouldFlip,
-        })}
-      >
-        <Card card={item} noAnimation flipped={item.flipped} />
-      </div>
-      {isSnapping && (
-        <div className={styles.shift_tooltip}>Hold Shift to disabled snapping</div>
-      )}
-    </div>
-  );
+  return null;
 };
 
 export default DragLayer;

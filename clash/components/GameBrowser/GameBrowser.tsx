@@ -6,6 +6,7 @@ import GameSelection from './GameSelection/GameSelection';
 import GameLobby from './GameLobby/GameLobby';
 import GameBrowserContext from './GameBrowserContext';
 import BrowserWarning from './BrowserWarning/BrowserWarning';
+import GameBrowserDocumentTitle from './GameBrowserDocumentTitle/GameBrowserDocumentTitle';
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const GameBrowser = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <GameBrowserDocumentTitle currentLobby={currentLobby} />
       <BrowserWarning />
       <div className={styles.wrapper}>
         <div className={styles.inner}>

@@ -1,4 +1,4 @@
-import { RefObject, useContext, useMemo } from 'react';
+import { MouseEvent, RefObject, useContext, useMemo } from 'react';
 
 import { BattlefieldCard, Player, TokenOption } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
@@ -69,7 +69,8 @@ const useCreateTokenActions = ({ cards, player, battlefieldRef }: Props) => {
       .slice(0, MAX_SUGGESTED_TOKENS) as TokenOptionWithId[];
   }, [suggestedTokenIds.join(',')]);
 
-  const onCreateToken = (token: TokenOptionWithId) => {
+  const onCreateToken = (token: TokenOptionWithId, event?: MouseEvent) => {
+    event?.stopPropagation();
     const position = contextMenuPosition.current
       ? getRelativePosition(contextMenuPosition.current, battlefieldRef.current!)
       : undefined;
@@ -85,8 +86,9 @@ const useCreateTokenActions = ({ cards, player, battlefieldRef }: Props) => {
   const suggestedTokenActions: MenuProps['items'] = suggestedTokensWithFullData.map(
     (token) => ({
       key: `create-token-${token.id}`,
-      label: getTokenName(token),
-      onClick: () => onCreateToken(token),
+      label: (
+        <div onClick={(event) => onCreateToken(token, event)}>{getTokenName(token)}</div>
+      ),
     })
   );
 

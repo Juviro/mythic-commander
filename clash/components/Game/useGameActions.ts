@@ -29,9 +29,16 @@ import {
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
 import useSound from 'hooks/useSound';
+import useLocalStorage from 'hooks/useLocalStorage';
+import {
+  DEFAULT_SETTINGS,
+  Settings,
+  SETTINGS_STORAGE_KEY,
+} from './InitSettings/InitSettings';
 
 const useGameActions = () => {
   const { socket } = useContext(SocketContext);
+  const [settings] = useLocalStorage<Settings>(SETTINGS_STORAGE_KEY, DEFAULT_SETTINGS);
 
   const [playShuffle] = useSound('SHUFFLE');
   const [playDraw] = useSound('DRAW');
@@ -167,7 +174,12 @@ const useGameActions = () => {
     commanderId: string,
     forPlayerId: string
   ) => {
-    const payload: SetCommanderDamagePayload = { commanderId, total, forPlayerId };
+    const payload: SetCommanderDamagePayload = {
+      commanderId,
+      total,
+      forPlayerId,
+      changeLife: settings.commanderDamageChangesLife,
+    };
     socket?.emit(SOCKET_MSG_GAME.SET_COMMANDER_DAMAGE, payload);
   };
 

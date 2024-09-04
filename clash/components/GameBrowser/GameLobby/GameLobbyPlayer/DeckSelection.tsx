@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 
 import { Deck, OwnDeck } from 'backend/lobby/GameLobby.types';
 import { DownOutlined } from '@ant-design/icons';
-import useLocalStorage from '../../../../backend/hooks/useLocalStorage';
+import useLocalStorage from 'hooks/useLocalStorage';
 import GameBrowserContext from '../../GameBrowserContext';
 import DeckLabel from './DeckLabel';
 
@@ -121,7 +121,7 @@ const DeckSelection = ({ canSelectDeck, playerId, deck, isReady }: Props) => {
       disabled={disabled}
       value={deck?.id}
       size="large"
-      bordered={false}
+      variant="borderless"
       suffixIcon={
         <DownOutlined
           color="black"

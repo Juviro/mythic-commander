@@ -6,6 +6,7 @@
     --color-primary--light: #f1d3c0;
     --color-success: #196e3b;
     --color-line: #949494;
+    --color-grid-line: #978d75c4;
     --color-table-background: #f3efef;
     --color-overlay: #00000080;
     --color-dropzone-border: blue;
@@ -20,10 +21,8 @@
     --color-card-align: var(--color-primary);
     --color-card-preview-background: #000000;
     --color-modal-backdrop: #00000050;
+    --color-selection-background: #00000033;
     --color-red: #d32f2f;
-    /* --color-deck-active: #81c784;
-    --color-deck-archived: #64b5f6;
-    --color-deck-draft: #fff176; */
 
     --size-card-base-width: 248px;
     --size-card-width: var(--size-card-base-width);

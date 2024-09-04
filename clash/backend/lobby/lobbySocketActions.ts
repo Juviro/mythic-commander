@@ -14,9 +14,9 @@ const lobbySocketActions = (io: Server) => {
     socket.on(SOCKET_MSG_LOBBY.INITIALIZE, async () => {
       socket.join('lobby');
       try {
-        user = await getUser(socket.handshake.headers.cookie);
-        socket.emit(SOCKET_MSG_LOBBY.INITIALIZE, user);
-        Lobby.emitLobbiesUpdate(socket.id);
+          user = await getUser(socket.handshake.headers.cookie);
+          socket.emit(SOCKET_MSG_LOBBY.INITIALIZE, user);
+          Lobby.emitLobbiesUpdate(socket.id);
       } catch {
         socket.emit(SOCKET_MSG_GENERAL.NOT_LOGGED_IN);
       }
