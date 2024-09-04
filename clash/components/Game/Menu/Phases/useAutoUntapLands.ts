@@ -17,7 +17,17 @@ const useAutoUntapLands = () => {
 
   const { onTapCards } = useGameActions();
 
-  const { activePlayerId } = gameState!;
+  const { activePlayerId, turn, players } = gameState!;
+
+  const untapCards = () => {
+    const untapType = settings.autoUntapAll ? 'All' : 'Land';
+
+    onTapCards({
+      battlefieldPlayerId: player!.id,
+      tapped: false,
+      type: untapType,
+    });
+  };
 
   useEffect(() => {
     if (isInitialLoad) {
@@ -27,15 +37,20 @@ const useAutoUntapLands = () => {
 
     if (activePlayerId !== player?.id) return;
     if (!settings?.autoUntapLands) return;
-
-    const untapType = settings.autoUntapAll ? 'All' : 'Land';
-
-    onTapCards({
-      battlefieldPlayerId: player.id,
-      tapped: false,
-      type: untapType,
-    });
+    untapCards();
   }, [activePlayerId]);
+
+  // If there is only one player, untap un turn change instead of active player change
+  useEffect(() => {
+    if (isInitialLoad) {
+      return;
+    }
+
+    if (players.length > 1) return;
+    if (!settings?.autoUntapLands) return;
+
+    untapCards();
+  }, [turn]);
 };
 
 export default useAutoUntapLands;
