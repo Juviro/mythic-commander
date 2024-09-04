@@ -40,9 +40,9 @@ const useGameActions = () => {
   const { socket } = useContext(SocketContext);
   const [settings] = useLocalStorage<Settings>(SETTINGS_STORAGE_KEY, DEFAULT_SETTINGS);
 
-  const [playShuffle] = useSound('SHUFFLE');
-  const [playDraw] = useSound('DRAW');
-  const [playPlayCard] = useSound('PLAY');
+  // const [playShuffle] = useSound('SHUFFLE');
+  const playDraw = useSound('DRAW');
+  // const [playPlayCard] = useSound('PLAY');
 
   const onAcceptHand = (payload: AcceptHandPayload) => {
     socket?.emit(SOCKET_MSG_GAME.ACCEPT_HAND, payload);

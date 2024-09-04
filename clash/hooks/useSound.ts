@@ -1,40 +1,36 @@
-import useSoundHook from 'use-sound';
+import { createSoundStore } from '@davstack/sound';
 
 // TODO: allow setting this via settings
 const IS_ACTIVE = true;
 
-interface Sounds {
-  [key: string]: {
-    url: string;
-    volume?: number;
+// interface Sounds {
+//   [key: string]: {
+//     url: string;
+//     volume?: number;
+//   };
+// }
+
+// TODO: add zustand for this package to work
+
+const SOUND_BASE_PATH = '/assets/sounds';
+
+const soundStore = createSoundStore({
+  soundNameToPath: {
+    activePlayer: `${SOUND_BASE_PATH}/gong2.wav`,
+    shuffle: `${SOUND_BASE_PATH}/shuffle2.wav`,
+    draw: `${SOUND_BASE_PATH}/draw2.wav`,
+    play: `${SOUND_BASE_PATH}/play.wav`,
+  },
+});
+
+// TODO: type allowwed sounds
+const useSound = (sound: string) => {
+  const playSound = () => {
+    if (!IS_ACTIVE) return;
+    soundStore.play(sound);
   };
-}
 
-const SOUNDS: Sounds = {
-  ACTIVE_PLAYER: {
-    url: '/assets/sounds/gong2.wav',
-  },
-  SHUFFLE: {
-    url: '/assets/sounds/shuffle2.wav',
-  },
-  DRAW: {
-    url: '/assets/sounds/draw2.wav',
-  },
-  PLAY: {
-    url: '/assets/sounds/play.wav',
-  },
-};
-
-// TODO: correct type
-type SoundType = keyof typeof SOUNDS;
-
-const useSound = (sound: SoundType) => {
-  const { url, volume = 1 } = SOUNDS[sound];
-
-  return useSoundHook(url, {
-    volume,
-    soundEnabled: IS_ACTIVE,
-  });
+  return playSound;
 };
 
 export default useSound;
