@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import GameStateContext from 'components/Game/GameStateContext';
 import useLocalStorage from 'hooks/useLocalStorage';
@@ -13,11 +13,18 @@ const useAutoUntapLands = () => {
   const { gameState, player } = useContext(GameStateContext);
   const [settings] = useLocalStorage<Settings>(SETTINGS_STORAGE_KEY, DEFAULT_SETTINGS);
 
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+
   const { onTapCards } = useGameActions();
 
   const { activePlayerId } = gameState!;
 
   useEffect(() => {
+    if (isInitialLoad) {
+      setIsInitialLoad(false);
+      return;
+    }
+
     if (activePlayerId !== player?.id) return;
     if (!settings?.autoUntapLands) return;
 
