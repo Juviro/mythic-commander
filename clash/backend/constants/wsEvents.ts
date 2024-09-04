@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-cycle
 import { Phase, Zone } from 'backend/database/gamestate.types';
+import { PermanentCardType } from 'utils/cardTypes';
 
 export const SOCKET_MSG_GENERAL = {
   ERROR: 'error',
@@ -104,18 +105,9 @@ export interface CopyCardPayload {
   amount: number;
 }
 
-type CardType =
-  | 'Land'
-  | 'Creature'
-  | 'Planeswalker'
-  | 'Artifact'
-  | 'Enchantment'
-  | 'Instant'
-  | 'Battle';
-
 export interface TapCardsPayload {
   cardIds?: string[];
-  type?: CardType;
+  type?: PermanentCardType | 'All';
   battlefieldPlayerId: string;
   tapped?: boolean;
 }

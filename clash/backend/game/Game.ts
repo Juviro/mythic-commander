@@ -729,7 +729,7 @@ export default class Game {
       cardIds = [];
       player.zones.battlefield.forEach((card) => {
         const supertype = (card as VisibleCard).type_line;
-        if (!supertype.includes(type)) return;
+        if (type !== 'All' && !supertype.includes(type)) return;
         cardIds!.push(card.clashId);
       });
     }

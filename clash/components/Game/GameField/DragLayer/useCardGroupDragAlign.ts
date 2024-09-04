@@ -50,9 +50,9 @@ const useCardGroupDragAlign = (
 ) => {
   const isSnapDisabled = useIsGridDisabled();
   const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
-  const { snapChoords, hoveredBattlefield } = useContext(CardPositionContext);
+  const { snapChoords } = useContext(CardPositionContext);
 
-  const shouldFlip = Boolean(hoveredBattlefield.current?.element.closest('.flipped'));
+  const isInitiallyFlipped = Boolean(battlefieldElement.closest('.flipped'));
 
   const { factorX, factorY } = getRelativeToAbsoluteFactor(battlefieldElement);
 
@@ -70,7 +70,7 @@ const useCardGroupDragAlign = (
     isSnapDisabled,
     battlefieldCardWidth,
     VERTICAL_GRID_SIZE,
-    shouldFlip
+    isInitiallyFlipped
   );
 
   const deltaY = getPositionDelta(
@@ -80,15 +80,13 @@ const useCardGroupDragAlign = (
     isSnapDisabled,
     battlefieldCardHeight,
     HORIZONTAL_GRID_SIZE,
-    shouldFlip
+    isInitiallyFlipped
   );
 
   useEffect(() => {
-    const withFactor = (value: number) => value * (shouldFlip ? -1 : 1);
-
     snapChoords.current = {
-      groupX: isSnapDisabled ? undefined : withFactor(deltaX),
-      groupY: isSnapDisabled ? undefined : withFactor(deltaY),
+      groupX: isSnapDisabled ? undefined : deltaX,
+      groupY: isSnapDisabled ? undefined : deltaY,
     };
   }, [deltaX, deltaY, isSnapDisabled]);
 

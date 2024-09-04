@@ -2,13 +2,15 @@ import useLocalStorage from 'hooks/useLocalStorage';
 import { useEffect } from 'react';
 
 export interface Settings {
-  autoUntap: boolean;
+  autoUntapLands: boolean;
+  autoUntapAll: boolean;
   useGrid: boolean;
   commanderDamageChangesLife: boolean;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
-  autoUntap: true,
+  autoUntapLands: true,
+  autoUntapAll: true,
   useGrid: true,
   commanderDamageChangesLife: true,
 };

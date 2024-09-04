@@ -21,13 +21,29 @@ const Settings = () => {
   };
 
   return (
-    <div>
+    <div className={styles.settings}>
       <h2 className={styles.guide_title}>Game</h2>
       <Setting
-        label="Untap all lands at the beginngin of your turn"
-        checked={settings.autoUntap}
-        onChange={onChangeSetting('autoUntap')}
-      />
+        label={
+          <span>
+            Untap all <b>lands</b> at the beginngin of your turn
+          </span>
+        }
+        checked={settings.autoUntapLands}
+        onChange={onChangeSetting('autoUntapLands')}
+        disabled={settings.autoUntapAll}
+      >
+        <Setting
+          label={
+            <span>
+              Untap all <b>permanents</b> at the beginngin of your turn
+            </span>
+          }
+          checked={settings.autoUntapAll}
+          onChange={onChangeSetting('autoUntapAll')}
+          disabled={!settings.autoUntapLands}
+        />
+      </Setting>
       <Setting
         label="Snap cards to grid"
         checked={settings.useGrid}

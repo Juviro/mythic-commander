@@ -19,12 +19,14 @@ const useAutoUntapLands = () => {
 
   useEffect(() => {
     if (activePlayerId !== player?.id) return;
-    if (!settings?.autoUntap) return;
+    if (!settings?.autoUntapLands) return;
+
+    const untapType = settings.autoUntapAll ? 'All' : 'Land';
 
     onTapCards({
       battlefieldPlayerId: player.id,
       tapped: false,
-      type: 'Land',
+      type: untapType,
     });
   }, [activePlayerId]);
 };

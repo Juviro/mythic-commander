@@ -41,12 +41,13 @@
 
 .setting {
     padding: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
     cursor: pointer;
 }
 
-.setting:nth-child(odd) {
+.setting .setting {
+    padding: 8px 0 0 16px;
+}
+
+.settings > .setting:nth-child(odd) {
     background-color: var(--color-table-background);
 }
