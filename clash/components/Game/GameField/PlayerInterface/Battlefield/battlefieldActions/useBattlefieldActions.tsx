@@ -2,10 +2,14 @@ import { MenuProps } from 'antd';
 
 import { BattlefieldCard, Player, ZONES } from 'backend/database/gamestate.types';
 import useMoveCardActions from 'components/GameComponents/Card/cardActions/useMoveCardActions';
-import { RefObject } from 'react';
+import { RefObject, useContext } from 'react';
 import useGameActions from 'components/Game/useGameActions';
-import { ArrowRightOutlined, CopyOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, ArrowRightOutlined, CopyOutlined } from '@ant-design/icons';
 import ClashIcon from 'components/GameComponents/ClashIcon/ClashIcon';
+import useShortcut from 'hooks/useShortcut';
+import SHORTCUTS from 'constants/shortcuts';
+import GameStateContext from 'components/Game/GameStateContext';
+import useOrganizeLands from './useOrganizeLands';
 import useCreateTokenActions from './useCreateTokenActions';
 
 interface Props {
@@ -15,6 +19,7 @@ interface Props {
 }
 
 const useBattlefieldActions = ({ cards, player, battlefieldRef }: Props) => {
+  const { player: self } = useContext(GameStateContext);
   const cardIds = cards.map((card) => card.clashId);
   const { onTapCards } = useGameActions();
   const moveCardActions = useMoveCardActions({
@@ -30,6 +35,14 @@ const useBattlefieldActions = ({ cards, player, battlefieldRef }: Props) => {
       tapped: false,
     });
   };
+
+  const { organizeLands } = useOrganizeLands({ player, battlefieldRef });
+
+  const isSelf = player.id === self?.id;
+
+  useShortcut(SHORTCUTS.ORGANIZE_LANDS, organizeLands, {
+    disabled: !isSelf,
+  });
 
   const createTokenActions = useCreateTokenActions({ cards, player, battlefieldRef });
 
@@ -54,6 +67,15 @@ const useBattlefieldActions = ({ cards, player, battlefieldRef }: Props) => {
       icon: <CopyOutlined />,
     },
   ];
+
+  if (isSelf) {
+    battlefieldActions.push({
+      key: 'organize-lands',
+      label: 'Organize Lands [O]',
+      onClick: organizeLands,
+      icon: <AppstoreOutlined />,
+    });
+  }
 
   return battlefieldActions;
 };
