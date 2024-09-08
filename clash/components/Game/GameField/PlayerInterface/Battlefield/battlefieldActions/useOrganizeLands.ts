@@ -21,7 +21,7 @@ import {
 
 const MIN_STACKED_CARDS = 2;
 const PADDING_FACTOR = 1.5;
-const MIN_BATTLEFIELD_PADDING = 200;
+const MIN_BATTLEFIELD_PADDING = 150;
 
 interface Props {
   player: Player;
@@ -100,12 +100,14 @@ const useOrganizeLands = ({ battlefieldRef, player }: Props) => {
       (battlefieldRef.current!.clientHeight - battlefieldCardHeight * PADDING_FACTOR) /
       factorY;
 
+    // set index to make sure the cards are stacked in the correct order
+    let positionIndex = 0;
     const moveCard = (card: BattlefieldCard, x: number, y: number) => {
-      if (card.position!.x === x && card.position!.y === y) return;
-
       onMoveCard(card.clashId, ZONES.BATTLEFIELD, player.id, {
         position: { x, y },
+        index: positionIndex,
       });
+      positionIndex += 1;
     };
     const numberOfLandsPerColumn = Math.ceil(sortedLands.length / numberOfColumns);
 
