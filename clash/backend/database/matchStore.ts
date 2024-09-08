@@ -7,6 +7,7 @@ interface Part {
   name: string;
   component: string;
   type_line: string;
+  produced_mana: string[];
 }
 
 export interface InitMatchCard {
@@ -16,6 +17,7 @@ export interface InitMatchCard {
   manaValue: number;
   flippable: boolean;
   type_line: string;
+  produced_mana: string[];
   all_parts: Part[];
 }
 
@@ -50,6 +52,7 @@ export const getDecks = async (deckIds: string[]): Promise<Deck[]> => {
                     'amount', "cardToDeck".amount,
                     'name', cards.name,
                     'type_line', cards.type_line,
+                    'produced_mana', cards.produced_mana,
                     'all_parts', cards.all_parts,
                     'flippable', cards.card_faces IS NOT NULL
                 )

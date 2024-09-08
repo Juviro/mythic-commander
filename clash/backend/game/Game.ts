@@ -634,7 +634,7 @@ export default class Game {
     const { cardId, battlefieldPlayerId, name, position = { x: 50, y: 50 } } = payload;
     const player = this.getPlayerById(battlefieldPlayerId);
 
-    const { type_line } = await db('cards').where({ id: cardId }).first();
+    const { type_line, produced_mana } = await db('cards').where({ id: cardId }).first();
 
     const stackedPosition = Game.getFirstAvailablePosition(
       position,
@@ -646,6 +646,7 @@ export default class Game {
       id: cardId,
       name,
       type_line,
+      produced_mana,
       ownerId: player.id,
       isToken: true,
       manaValue: 0,
@@ -692,6 +693,7 @@ export default class Game {
         ownerId: originalCard.ownerId,
         manaValue: originalCard.manaValue,
         type_line: originalCard.type_line,
+        produced_mana: originalCard.produced_mana,
         meta: {
           ...originalCard.meta,
           isCardCopy: !originalCard.isToken || originalCard.meta?.isCardCopy,

@@ -30,6 +30,7 @@ export interface VisibleCard extends HiddenCard {
   meta?: CardMeta;
   manaValue: number;
   type_line: string;
+  produced_mana?: string[];
 }
 
 export interface VisibleBattlefieldCard extends VisibleCard {

@@ -13,8 +13,8 @@ import {
 } from '../PlayerInterface/Battlefield/BattlefieldGrid/BattlefieldGrid';
 
 const MIN_DISTANCE_STACK = 40;
-const STACK_DISTANCE_X = 15;
-const STACK_DISTANCE_Y = 25;
+export const STACK_DISTANCE_X = 15;
+export const STACK_DISTANCE_Y = 25;
 
 const getOtherCardsFromBattlefield = (
   hoveredBattlefield: HoveredBattlefield,

@@ -11,7 +11,9 @@ import {
 } from '../PlayerInterface/Battlefield/BattlefieldGrid/BattlefieldGrid';
 import { getClosesGrid } from './useCardDragAlign';
 
-const getRelativeToAbsoluteFactor = (battlefieldElement: HTMLDivElement | null) => {
+export const getRelativeToAbsoluteFactor = (
+  battlefieldElement: HTMLDivElement | null
+) => {
   const battlefieldRect = battlefieldElement?.getBoundingClientRect();
 
   return {
