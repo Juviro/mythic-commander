@@ -21,7 +21,7 @@ import {
 
 const MIN_STACKED_CARDS = 2;
 const PADDING_FACTOR = 1.5;
-const MIN_BATTLEFIELD_PADDING = 150;
+const MIN_BATTLEFIELD_PADDING = 100;
 
 interface Props {
   player: Player;
@@ -80,18 +80,17 @@ const useOrganizeLands = ({ battlefieldRef, player }: Props) => {
     const sortedLands = sortLandsByColor(lands);
 
     const minColumnWidth = battlefieldCardWidth * PADDING_FACTOR;
-
     const battlefieldWidth = battlefieldRef.current.clientWidth;
+    const columnWidth = getColumnWidth(minColumnWidth, battlefieldWidth);
+
     const maxNumberOfColumns = Math.floor(
-      (battlefieldWidth - 2 * MIN_BATTLEFIELD_PADDING) / minColumnWidth
+      (battlefieldWidth - 2 * MIN_BATTLEFIELD_PADDING) / columnWidth
     );
 
     const numberOfColumns = Math.min(
       Math.ceil(sortedLands.length / MIN_STACKED_CARDS),
       maxNumberOfColumns
     );
-
-    const columnWidth = getColumnWidth(minColumnWidth, battlefieldWidth);
 
     const totalWidth = columnWidth * numberOfColumns;
     const padding = (battlefieldWidth - totalWidth) / 2;
@@ -109,8 +108,11 @@ const useOrganizeLands = ({ battlefieldRef, player }: Props) => {
       });
       positionIndex += 1;
     };
+
     const numberOfLandsPerColumn = Math.ceil(sortedLands.length / numberOfColumns);
 
+    // We only need to calculate the very first card position.
+    // All other cards will be placed relative to this one.
     let firstCardPosition = { x: 0, y: 0 };
 
     for (let columnIndex = 0; columnIndex < numberOfColumns; columnIndex += 1) {
@@ -138,8 +140,8 @@ const useOrganizeLands = ({ battlefieldRef, player }: Props) => {
         const snappedX = getClosesGrid(relativeX, VERTICAL_GRID_SIZE);
         const snappedY = getClosesGrid(relativeY, HORIZONTAL_GRID_SIZE);
 
-        const fixedX = snappedX + battlefieldCardWidth / 2 / factorX;
-        const fixedY = snappedY + battlefieldCardHeight / 2 / factorY;
+        const fixedX = snappedX + (battlefieldCardWidth + 2) / 2 / factorX;
+        const fixedY = snappedY + (battlefieldCardHeight + 2) / 2 / factorY;
 
         firstCardPosition = { x: fixedX, y: fixedY };
 
