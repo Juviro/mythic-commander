@@ -1,7 +1,8 @@
 .wrapper {
     display: flex;
     position: relative;
-    padding: 16px 50px;
+    padding: 12px 50px;
+    overflow-y: hidden;
 }
 
 
@@ -12,10 +13,6 @@
     list-style: none;
     padding: 0;
     margin: 0;
-}
-
-.cards__visible_overflow {
-    overflow: visible;
 }
 
 .card {

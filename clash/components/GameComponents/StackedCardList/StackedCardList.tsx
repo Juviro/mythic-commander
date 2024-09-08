@@ -15,7 +15,6 @@ interface Props {
   color?: string;
   zone: Zone;
   cardDropType?: DndItemType;
-  visibleOverflow?: boolean;
 }
 
 const StackedCardList = ({
@@ -24,7 +23,6 @@ const StackedCardList = ({
   onDrop,
   color,
   zone,
-  visibleOverflow,
   cardDropType = DndItemTypes.LIST_CARD,
 }: Props) => {
   const listRef = React.useRef<HTMLUListElement>(null);
@@ -34,19 +32,13 @@ const StackedCardList = ({
 
   // Allow scrolling horizontally with the mouse wheel
   const onWheel = (e: WheelEvent) => {
-    if (!listRef.current || e.deltaX) return;
+    if (!listRef.current || !e.deltaY) return;
     listRef.current.scrollLeft += e.deltaY;
   };
 
   return (
     <div className={styles.wrapper} style={style}>
-      <ul
-        className={classNames(styles.cards, {
-          [styles.cards__visible_overflow]: visibleOverflow,
-        })}
-        ref={listRef}
-        onWheel={onWheel}
-      >
+      <ul className={classNames(styles.cards)} ref={listRef} onWheel={onWheel}>
         {cards.map((card, index) => (
           <React.Fragment key={card.clashId}>
             {onDrop && (

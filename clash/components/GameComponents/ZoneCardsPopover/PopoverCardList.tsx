@@ -44,7 +44,6 @@ const PopoverCardList = ({
         <div className={styles.cards_list}>
           {empty && <div className={styles.cards_list_empty}>{empty}</div>}
           <StackedCardList
-            visibleOverflow
             cards={cards}
             draggable
             onDrop={onDrop}

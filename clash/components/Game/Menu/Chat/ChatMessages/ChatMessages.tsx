@@ -37,7 +37,7 @@ const ChatMessages = ({ enabledTypes }: Props) => {
     const diff = scrollHeight - currentScroll;
 
     // auto scroll, but only if the user is already close to the bottom
-    if (diff < 1000) {
+    if (diff < 2000) {
       scrollToBottom();
     }
   }, [log.length]);
