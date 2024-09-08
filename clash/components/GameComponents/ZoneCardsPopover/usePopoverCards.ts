@@ -115,11 +115,17 @@ const usePopoverCards = () => {
     setCardsInLibrary(newCardsInLibrary);
   };
 
+  const onMoveRestToBottom = () => {
+    setCardsToBottom([...cardsToBottom, ...cardsToTop]);
+    setCardsToTop([]);
+  };
+
   return {
     cardsToTop,
     cardsToBottom,
     onDropBottom,
     onDropTop,
+    onMoveRestToBottom,
     cardsInLibrary,
     onDropLibrary,
   };

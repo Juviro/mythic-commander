@@ -42,6 +42,7 @@ const PopoverContent = ({ color, zone }: Props) => {
     cardsToBottom,
     onDropBottom,
     onDropTop,
+    onMoveRestToBottom,
     cardsInLibrary,
     onDropLibrary,
   } = usePopoverCards();
@@ -101,12 +102,19 @@ const PopoverContent = ({ color, zone }: Props) => {
           title="Bottom of Library"
           empty="Drag Cards here to put them on the Bottom of the Library"
           bottom={
-            <Checkbox
-              checked={randomizeBottomCards}
-              onChange={(e) => setRandomizeBottomCards(e.target.checked)}
-            >
-              Random order
-            </Checkbox>
+            <div className={styles.popover_content_buttons}>
+              <Checkbox
+                checked={randomizeBottomCards}
+                onChange={(e) => setRandomizeBottomCards(e.target.checked)}
+              >
+                Random order
+              </Checkbox>
+              {!isSearch && (
+                <Button type="primary" ghost onClick={onMoveRestToBottom}>
+                  Move all to Bottom
+                </Button>
+              )}
+            </div>
           }
         />
         {isSearch && (

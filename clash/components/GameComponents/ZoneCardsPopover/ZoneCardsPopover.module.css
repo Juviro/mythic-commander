@@ -94,3 +94,9 @@
   color: grey;
   font-style: italic;
 }
+
+.popover_content_buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
