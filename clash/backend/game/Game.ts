@@ -6,6 +6,8 @@ import {
   Card,
   FaceDownCard,
   GameState,
+  Phase,
+  PHASES,
   Player,
   VisibleBattlefieldCard,
   VisibleCard,
@@ -34,6 +36,7 @@ import {
   SetCommanderTimesCastedPayload,
   SetPhasePayload,
   SetPlayerLifePayload,
+  SetStopPointPayload,
   TapCardsPayload,
   TurnCardsFaceDownPayload,
 } from 'backend/constants/wsEvents';
@@ -65,6 +68,8 @@ export default class Game {
 
   users: { [userId: string]: User } = {};
 
+  requestedStopPoints: { [playerId: string]: Phase } = {};
+
   constructor(gameState: GameState, server: Server, isPlaytest = false, deckId = '') {
     this.server = server;
     this.gameState = gameState;
@@ -84,11 +89,24 @@ export default class Game {
 
   emitGameState(socket: Socket, playerId: string) {
     socket.emit(SOCKET_MSG_GAME.GAME_STATE, this.obfuscateGameState(playerId));
+
+    if (this.requestedStopPoints[playerId]) {
+      socket.emit(SOCKET_MSG_GAME.SET_STOP_POINT, {
+        phase: this.requestedStopPoints[playerId],
+      });
+    }
   }
 
   emitGameUpdate() {
-    const { activePlayerId, phase, turn, winner } = this.gameState;
-    this.emitToAll(SOCKET_MSG_GAME.GAME_STATE, { activePlayerId, phase, turn, winner });
+    const { activePlayerId, phase, turn, winner, phaseStopByPlayerId } = this.gameState;
+    this.emitToAll(SOCKET_MSG_GAME.GAME_STATE, {
+      activePlayerId,
+      phase,
+      turn,
+      winner,
+      phaseStopByPlayerId,
+    });
+    this.gameState.phaseStopByPlayerId = null;
   }
 
   emitPlayerUpdate(player: Player) {
@@ -193,7 +211,7 @@ export default class Game {
       this.gameState.winner = alivePlayers[0]?.name;
       this.emitGameUpdate();
     } else if (player.id === this.gameState.activePlayerId) {
-      this.endTurn(playerId);
+      this.endTurn(playerId, true);
     }
 
     playersToUpdate.forEach((playerToUpdateId) => {
@@ -1152,9 +1170,16 @@ export default class Game {
     });
   }
 
-  endTurn(playerId: string) {
+  endTurn(playerId: string, force = false) {
     const player = this.getPlayerById(playerId);
     const { players, activePlayerId } = this.gameState;
+    if (!force) {
+      const hasStopPoint = this.checkForStopPoints('end');
+      if (hasStopPoint) {
+        return;
+      }
+    }
+
     const alivePlayers = players.filter((p) => !p.resigned);
     const activePlayerIndex = alivePlayers.findIndex(({ id }) => id === activePlayerId);
 
@@ -1180,11 +1205,47 @@ export default class Game {
     });
   }
 
+  checkForStopPoints(nextPhase: Phase) {
+    const requestedStopPoints = Object.entries(this.requestedStopPoints)
+      .filter(([_, phase]) => PHASES.indexOf(phase) <= PHASES.indexOf(nextPhase))
+      .sort((a, b) => {
+        if (a[1] !== b[1]) {
+          return PHASES.indexOf(a[1]) - PHASES.indexOf(b[1]);
+        }
+
+        const activePlayerIndex = this.gameState.players.findIndex(
+          ({ id }) => id === this.gameState.activePlayerId
+        );
+        const aIndex = this.gameState.players.findIndex(({ id }) => id === a[0]);
+        const bIndex = this.gameState.players.findIndex(({ id }) => id === b[0]);
+
+        if (aIndex > activePlayerIndex === bIndex > activePlayerIndex) {
+          return aIndex - bIndex;
+        }
+        return bIndex - aIndex;
+      }) as [string, Phase][];
+
+    if (!requestedStopPoints.length) return false;
+
+    const [requesterId, inPhase] = requestedStopPoints[0];
+    this.gameState.phase = inPhase;
+    this.gameState.phaseStopByPlayerId = requesterId;
+    delete this.requestedStopPoints[requesterId];
+    this.emitGameUpdate();
+    return true;
+  }
+
   setPhase(playerId: string, payload: SetPhasePayload) {
     const player = this.getPlayerById(playerId);
+
     this.gameState.phase = payload.phase;
 
     const activePlayer = this.getPlayerById(this.gameState.activePlayerId);
+
+    const hasStopPoint = this.checkForStopPoints(payload.phase);
+    if (hasStopPoint) {
+      return;
+    }
 
     this.emitGameUpdate();
 
@@ -1195,6 +1256,29 @@ export default class Game {
         ...payload,
         activePlayerId: activePlayer.id,
       },
+    });
+  }
+
+  setStopPoint(playerId: string, payload: SetStopPointPayload) {
+    const stopPhaseIndex = PHASES.indexOf(payload.phase);
+    const currentPhaseIndex = PHASES.indexOf(this.gameState.phase);
+
+    if (stopPhaseIndex <= currentPhaseIndex) {
+      return;
+    }
+    if (this.gameState.activePlayerId === playerId) {
+      return;
+    }
+
+    if (this.requestedStopPoints[playerId] === payload.phase) {
+      delete this.requestedStopPoints[playerId];
+    } else {
+      this.requestedStopPoints[playerId] = payload.phase;
+    }
+
+    const socket = this.users[playerId]?.socket;
+    socket.emit(SOCKET_MSG_GAME.SET_STOP_POINT, {
+      phase: this.requestedStopPoints[playerId],
     });
   }
 }

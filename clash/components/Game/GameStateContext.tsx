@@ -1,7 +1,13 @@
 import React, { CSSProperties, useContext, useEffect, useMemo, useState } from 'react';
 
 import SocketContext from 'components/SocketContext/SocketContextProvider';
-import { GameState, Player, VisibleCard, Zone } from 'backend/database/gamestate.types';
+import {
+  GameState,
+  Phase,
+  Player,
+  VisibleCard,
+  Zone,
+} from 'backend/database/gamestate.types';
 import { GameLog } from 'backend/constants/logMessages';
 import { SOCKET_MSG_GAME } from '../../backend/constants/wsEvents';
 
@@ -19,6 +25,7 @@ interface BaseGameState {
   setPeekingCards: (peekingCards: PeekingCards | null) => void;
   battlefieldCardWidth: number;
   battlefieldCardHeight: number;
+  stopPoint: Phase | null;
 }
 export interface InitializedGameState extends BaseGameState {
   gameState: GameState;
@@ -48,6 +55,7 @@ export const GameStateContextProvider = ({ children }: Props) => {
   const { socket, user } = useContext(SocketContext);
   const [gameState, setGameState] = useState<GameState | null>(null);
   const [peekingCards, setPeekingCards] = useState<PeekingCards | null>(null);
+  const [stopPoint, setStopPoint] = useState<Phase | null>(null);
 
   useEffect(() => {
     if (!socket) return;
@@ -69,8 +77,13 @@ export const GameStateContextProvider = ({ children }: Props) => {
         };
       });
     });
+
     socket.on(SOCKET_MSG_GAME.PEEK, (peek: PeekingCards) => {
       setPeekingCards(peek);
+    });
+
+    socket.on(SOCKET_MSG_GAME.SET_STOP_POINT, ({ phase }: { phase: Phase }) => {
+      setStopPoint(phase);
     });
 
     socket.on(SOCKET_MSG_GAME.GAME_LOG, (newLogEntry: GameLog) => {
@@ -89,6 +102,11 @@ export const GameStateContextProvider = ({ children }: Props) => {
       });
     });
   }, [socket]);
+
+  useEffect(() => {
+    if (gameState?.phaseStopByPlayerId !== user?.id) return;
+    setStopPoint(null);
+  }, [gameState?.phaseStopByPlayerId]);
 
   const getPlayerColor = (playerId?: string) => {
     const player = gameState?.players.find(({ id }) => id === playerId);
@@ -117,6 +135,7 @@ export const GameStateContextProvider = ({ children }: Props) => {
   const value: GameStateContextType = useMemo(() => {
     const baseState = {
       getPlayerColor,
+      stopPoint,
       playerNames,
       peekingCards,
       setPeekingCards,
@@ -138,7 +157,7 @@ export const GameStateContextProvider = ({ children }: Props) => {
       player,
       isInitialized: true,
     };
-  }, [gameState, peekingCards]);
+  }, [gameState, peekingCards, stopPoint]);
 
   const globalCssStyle = useMemo<CSSProperties>(() => {
     if (!gameState?.players.length) return {};

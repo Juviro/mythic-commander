@@ -143,4 +143,5 @@ export interface GameState {
   gameLog: GameLog[];
   resources?: Resources;
   winner?: string | null;
+  phaseStopByPlayerId?: string | null;
 }

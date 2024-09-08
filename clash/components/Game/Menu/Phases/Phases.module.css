@@ -43,6 +43,11 @@
   background-color: var(--color-active);
 }
 
+.phase_icon__stop_requested {
+  box-shadow: 0 0 5px 12px var(--color-stop-requested);
+  background-color: var(--color-stop-requested);
+}
+
 .phase_buttons {
   display: flex;
   gap: 8px;

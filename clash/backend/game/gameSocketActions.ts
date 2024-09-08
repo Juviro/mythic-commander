@@ -28,6 +28,7 @@ import {
   SetCommanderTimesCastedPayload,
   SetPhasePayload,
   SetPlayerLifePayload,
+  SetStopPointPayload,
   TapCardsPayload,
   TurnCardsFaceDownPayload,
 } from '../constants/wsEvents';
@@ -212,6 +213,10 @@ const gameSocketActions = (io: Server) => {
 
     socket.on(SOCKET_MSG_GAME.SET_PHASE, (payload: SetPhasePayload) => {
       currentGames[currentGameId].setPhase(user.id, payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.SET_STOP_POINT, (payload: SetStopPointPayload) => {
+      currentGames[currentGameId].setStopPoint(user.id, payload);
     });
 
     socket.on('disconnect', () => {

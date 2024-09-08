@@ -25,6 +25,7 @@ import {
   PlayTopCardFaceDownPayload,
   RotateCardsPayload,
   SetCommanderDamagePayload,
+  SetStopPointPayload,
 } from 'backend/constants/wsEvents';
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
@@ -180,6 +181,11 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.SET_PHASE, payload);
   };
 
+  const setStopPoint = (phase: Phase) => {
+    const payload: SetStopPointPayload = { phase };
+    socket?.emit(SOCKET_MSG_GAME.SET_STOP_POINT, payload);
+  };
+
   const endTurn = () => {
     socket?.emit(SOCKET_MSG_GAME.END_TURN);
   };
@@ -220,6 +226,7 @@ const useGameActions = () => {
     setPlayerLife,
     setCommanderDamage,
     setPhase,
+    setStopPoint,
     endTurn,
     restartGame,
     resignGame,

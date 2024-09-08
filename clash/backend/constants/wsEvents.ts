@@ -30,6 +30,7 @@ export const SOCKET_MSG_GAME = {
   SEND_CHAT_MESSAGE: 'send_chat_message',
   EXECUTE_COMMAND: 'execute_command',
   SET_PHASE: 'set_phase',
+  SET_STOP_POINT: 'set_stop_point',
   END_TURN: 'end_turn',
   ACCEPT_HAND: 'ACCEPT_HAND',
   TAKE_MULLIGAN: 'take_mulligan',
@@ -195,5 +196,9 @@ export interface SetCommanderDamagePayload {
 }
 
 export interface SetPhasePayload {
+  phase: Phase;
+}
+
+export interface SetStopPointPayload {
   phase: Phase;
 }
