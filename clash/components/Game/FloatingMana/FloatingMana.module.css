@@ -1,0 +1,17 @@
+.floating_mana {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.mana {
+    padding-bottom: 24px;
+}
+
+.buttons {
+    position: relative;
+    position: relative;
+    display: flex;
+    flex: 1 1;
+    justify-content: center;
+}

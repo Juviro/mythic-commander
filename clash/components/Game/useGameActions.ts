@@ -26,6 +26,7 @@ import {
   RotateCardsPayload,
   SetCommanderDamagePayload,
   SetStopPointPayload,
+  TrackFloatingManaPayload,
 } from 'backend/constants/wsEvents';
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
@@ -139,6 +140,10 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.SHUFFLE_LIBRARY);
   };
 
+  const trackFloatingMana = (payload: TrackFloatingManaPayload) => {
+    socket?.emit(SOCKET_MSG_GAME.TRACK_FLOATING_MANA, payload);
+  };
+
   const onSendChatMessage = (message: SendMessagePayload) => {
     socket?.emit(SOCKET_MSG_GAME.SEND_CHAT_MESSAGE, message);
   };
@@ -214,7 +219,7 @@ const useGameActions = () => {
     onEndPeek,
     onSearchLibrary,
     onShuffle,
-
+    trackFloatingMana,
     onSendChatMessage,
     onExecuteCommand,
     onSetCommanderTimesCasted,

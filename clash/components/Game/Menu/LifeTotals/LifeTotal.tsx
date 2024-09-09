@@ -1,9 +1,10 @@
 import React from 'react';
 
 import { Player } from 'backend/database/gamestate.types';
-import styles from './LifeTotals.module.css';
+import PlusMinus from 'components/lib/PlusMinus/PlusMinus';
 import CommanderDamage from './CommanderDamage';
-import LifeButtons from './LifeButtons';
+
+import styles from './LifeTotals.module.css';
 
 interface LifeTotalProps {
   player: Player;
@@ -18,9 +19,10 @@ const LifeTotal = ({ player, onChangeLife }: LifeTotalProps) => {
   return (
     <>
       <CommanderDamage player={player} />
-      <LifeButtons
+      <PlusMinus
         amount={player.life}
-        onChangeLife={(delta) => onChangeLife(player, delta)}
+        onChange={(delta) => onChangeLife(player, delta)}
+        size="large"
       />
     </>
   );

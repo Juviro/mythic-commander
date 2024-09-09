@@ -26,6 +26,10 @@
   color: inherit;
 }
 
+.phase_icon:focus-visible {
+  outline: unset;
+}
+
 .phase_icon__clickable {
   cursor: pointer;
 }

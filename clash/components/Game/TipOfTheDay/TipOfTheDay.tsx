@@ -13,6 +13,7 @@ const TipOfTheDay = () => {
 
   if (!isInitialized) return null;
   if (!player.mulligan.cardsAccepted) return null;
+  if (process.env.NODE_ENV === 'development') return null;
 
   const getRandomTip = () => {
     const randomIndex = Math.floor(Math.random() * TIPS.length);

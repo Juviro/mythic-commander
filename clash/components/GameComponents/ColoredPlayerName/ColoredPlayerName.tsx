@@ -10,13 +10,26 @@ type Props = {
   addGenetiveSuffix?: boolean;
   id: string;
   name?: string;
+  isSelf?: boolean;
 };
 
-const ColoredPlayerName = ({ id, addGenetiveSuffix, name: providedName }: Props) => {
+const ColoredPlayerName = ({
+  id,
+  addGenetiveSuffix,
+  name: providedName,
+  isSelf,
+}: Props) => {
   const { playerNames } = useContext(GameStateContext);
   const name = providedName || playerNames[id!];
 
   const getName = () => {
+    if (isSelf && addGenetiveSuffix) {
+      return 'Your';
+    }
+    if (isSelf) {
+      return 'You';
+    }
+
     if (!addGenetiveSuffix) {
       return name;
     }

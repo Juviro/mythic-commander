@@ -4,20 +4,28 @@ const CHANGE_EVENT_NAME = 'localStorageChange';
 
 const useLocalStorage = <S>(
   key: string,
-  initialValue?: S
+  initialValue?: S | (() => S)
 ): [S, (newValue: S) => void] => {
   const getDataFromStore = () => {
     if (typeof window === 'undefined') return undefined;
     const item = window.localStorage.getItem(key);
 
+    const getInitialValue = () => {
+      if (typeof initialValue === 'function') {
+        return (initialValue as () => S)();
+      }
+
+      return initialValue;
+    };
+
     try {
       const value = JSON.parse(item ?? '');
 
-      if (value === null) return initialValue;
+      if (value === null) return getInitialValue();
 
       return value;
     } catch {
-      return item ?? initialValue;
+      return item ?? getInitialValue();
     }
   };
 

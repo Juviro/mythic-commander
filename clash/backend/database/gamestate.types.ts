@@ -114,6 +114,7 @@ export interface Player {
   additionalPlayerInfo?: AdditionalPlayerInfo;
   mulligan: Mulligan;
   resigned?: boolean;
+  activeUtils?: GameUtils;
 }
 
 // ##################### Meta #####################
@@ -129,6 +130,21 @@ export interface TokenOption {
 
 export interface Resources {
   tokens: TokenOption[];
+}
+
+// ##################### Game Utils #####################
+
+export interface FloatingMana {
+  w?: number;
+  u?: number;
+  b?: number;
+  r?: number;
+  g?: number;
+  c?: number;
+}
+
+interface GameUtils {
+  floatingMana?: FloatingMana;
 }
 
 // ##################### GameState #####################

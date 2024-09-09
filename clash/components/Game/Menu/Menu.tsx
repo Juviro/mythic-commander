@@ -24,12 +24,10 @@ const Menu = () => {
       {!isHorizontal && <GameInfo />}
       <Chat />
       <div className={styles.game_state}>
-        {isHorizontal && <GameInfo />}
-        <div>
-          <div className={styles.game_state_players}>
-            <CommandZones />
-            <LifeTotals />
-          </div>
+        <div className={styles.game_state_players}>
+          {isHorizontal && <GameInfo />}
+          <CommandZones />
+          <LifeTotals />
         </div>
         <Phases />
       </div>

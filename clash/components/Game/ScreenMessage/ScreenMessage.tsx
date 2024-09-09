@@ -14,6 +14,20 @@ const ScreenMessage = () => {
   );
 
   useEffect(() => {
+    if (!gameState?.phaseStopByPlayerId) {
+      setMessage('');
+      return;
+    }
+
+    const player = gameState.players.find(
+      ({ id }) => id === gameState.phaseStopByPlayerId
+    );
+    const playerName = player!.id === self.id ? 'You' : player!.name;
+
+    setMessage(`${playerName} requested priority`);
+  }, [gameState?.phaseStopByPlayerId]);
+
+  useEffect(() => {
     if (!gameState || !hasGameStarted || gameState?.winner) return;
 
     const activePlayer = gameState.players.find(
@@ -32,20 +46,6 @@ const ScreenMessage = () => {
 
     setMessage(`${winnerName} won the Game!`);
   }, [gameState?.winner]);
-
-  useEffect(() => {
-    if (!gameState?.phaseStopByPlayerId) {
-      setMessage('');
-      return;
-    }
-
-    const player = gameState.players.find(
-      ({ id }) => id === gameState.phaseStopByPlayerId
-    );
-    const playerName = player!.id === self.id ? 'You' : player!.name;
-
-    setMessage(`${playerName} requested priority`);
-  }, [gameState?.phaseStopByPlayerId]);
 
   if (!message) return null;
 

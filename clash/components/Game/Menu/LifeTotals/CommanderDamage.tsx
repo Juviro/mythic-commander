@@ -5,7 +5,7 @@ import { Player } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
 import { getImageUrl } from 'utils/getImageUrl';
 import useGameActions from 'components/Game/useGameActions';
-import LifeButtons from './LifeButtons';
+import PlusMinus from 'components/lib/PlusMinus/PlusMinus';
 
 import styles from './LifeTotals.module.css';
 
@@ -55,9 +55,9 @@ const CommanderDamage = ({ player }: Props) => {
             />
           </Tooltip>
           <div className={styles.commander_damage__buttons}>
-            <LifeButtons
+            <PlusMinus
               amount={damage}
-              onChangeLife={(delta) => () => {
+              onChange={(delta) => () => {
                 setCommanderDamage(damage + delta, commander.clashId, player.id);
               }}
               alwaysShowButtons

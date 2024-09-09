@@ -1,0 +1,36 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transform: translate(var(--x), var(--y));
+    box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),0 3px 6px -4px rgba(0, 0, 0, 0.12),0 9px 28px 8px rgba(0, 0, 0, 0.05);
+    
+    background-color: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    user-select: none;
+}
+
+.header {
+    cursor: move;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    font-size: 20px;
+    padding: 16px;
+    background-color: #e5e5e5;
+}
+
+.title {
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.modal_content {
+    padding: 16px;
+}

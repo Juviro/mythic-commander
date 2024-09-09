@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { Phase, Zone } from 'backend/database/gamestate.types';
+import { FloatingMana, Phase, Zone } from 'backend/database/gamestate.types';
 import { PermanentCardType } from 'utils/cardTypes';
 
 export const SOCKET_MSG_GENERAL = {
@@ -51,6 +51,7 @@ export const SOCKET_MSG_GAME = {
   END_PEEK: 'end_peek',
   SEARCH_LIBRARY: 'search_library',
   SHUFFLE_LIBRARY: 'shuffle_library',
+  TRACK_FLOATING_MANA: 'track_floating_mana',
   CREATE_TOKEN: 'create_token',
   COPY_CARD: 'copy_card',
 
@@ -164,6 +165,11 @@ export interface SearchLibraryPayload {
 
 export interface SendMessagePayload {
   message: string;
+}
+
+export interface TrackFloatingManaPayload {
+  visible?: boolean;
+  floatingMana?: FloatingMana;
 }
 
 interface RollDiceCommand {

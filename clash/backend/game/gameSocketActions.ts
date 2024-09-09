@@ -30,6 +30,7 @@ import {
   SetPlayerLifePayload,
   SetStopPointPayload,
   TapCardsPayload,
+  TrackFloatingManaPayload,
   TurnCardsFaceDownPayload,
 } from '../constants/wsEvents';
 import Game from './Game';
@@ -206,6 +207,10 @@ const gameSocketActions = (io: Server) => {
         currentGames[currentGameId].setCommanderDamage(user.id, payload);
       }
     );
+
+    socket.on(SOCKET_MSG_GAME.TRACK_FLOATING_MANA, (payload: TrackFloatingManaPayload) => {
+      currentGames[currentGameId].trackFloatingMana(user.id, payload);
+    });
 
     socket.on(SOCKET_MSG_GAME.END_TURN, () => {
       currentGames[currentGameId].endTurn(user.id);

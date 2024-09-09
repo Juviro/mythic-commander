@@ -38,6 +38,7 @@ import {
   SetPlayerLifePayload,
   SetStopPointPayload,
   TapCardsPayload,
+  TrackFloatingManaPayload,
   TurnCardsFaceDownPayload,
 } from 'backend/constants/wsEvents';
 import { User as DatabaseUser } from 'backend/database/getUser';
@@ -1168,6 +1169,29 @@ export default class Game {
         fromPlayerId: player.id,
       },
     });
+  }
+
+  trackFloatingMana(playerId: string, payload: TrackFloatingManaPayload) {
+    const { floatingMana, visible } = payload;
+
+    const player = this.getPlayerById(playerId);
+
+    if (typeof visible === 'boolean') {
+      if (!visible) {
+        delete player.activeUtils?.floatingMana;
+      } else if (!player.activeUtils?.floatingMana) {
+        player.activeUtils = { ...player.activeUtils, floatingMana: {} };
+      }
+    }
+
+    if (floatingMana && player.activeUtils?.floatingMana) {
+      player.activeUtils.floatingMana = {
+        ...player.activeUtils.floatingMana,
+        ...floatingMana,
+      };
+    }
+
+    this.emitPlayerUpdate(this.getPlayerById(playerId));
   }
 
   endTurn(playerId: string, force = false) {

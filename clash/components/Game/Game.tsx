@@ -11,6 +11,7 @@ import Fireworks from './ScreenMessage/Fireworks';
 import CardRules from './CardRules/CardRules';
 import GameDocumentTitle from './GameDocumentTitle/GameDocumentTitle';
 import TipOfTheDay from './TipOfTheDay/TipOfTheDay';
+import FloatingMana from './FloatingMana/FloatingMana';
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const Game = () => {
             <Fireworks />
             <GameDocumentTitle />
             <TipOfTheDay />
+            <FloatingMana />
           </DndProvider>
         </QueryClientProvider>
       </CardPositionContextProvider>
