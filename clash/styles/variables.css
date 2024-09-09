@@ -16,6 +16,7 @@
     --color-menu-background: var(--color-menu-base-background);
     --color-chat-background: #fff;
     --color-text-light: #fff;
+    --color-text-dark: #000;
     --color-active: #145bd8;
     --color-stop-requested: #d32f2f;
     --color-icon-light: #ffffff70;

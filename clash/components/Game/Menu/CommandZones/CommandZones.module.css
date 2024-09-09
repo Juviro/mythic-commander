@@ -161,3 +161,7 @@
   padding: 8px;
   margin: 0px;
 }
+
+.player_name__active.player_name__dark_text {
+  color: var(--color-text-dark);
+}

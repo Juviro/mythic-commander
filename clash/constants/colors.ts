@@ -8,6 +8,8 @@ const CYAN = '#06c0c0';
 const BLUE = '#1616d5';
 const PURPLE = '#8224c6';
 
+export const LIGHT_PLAYER_COLORS = [PINK, YELLOW, APPLE_GREEN];
+
 export const PLAYER_COLORS = [
   RED,
   GREEN,
