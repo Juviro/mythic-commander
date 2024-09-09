@@ -86,6 +86,7 @@ export const storeGameState = async (
   const valueToStore: any = {
     id: gameId,
     state: gameState,
+    lastUpdate: new Date(),
   };
 
   if (lobby) {
