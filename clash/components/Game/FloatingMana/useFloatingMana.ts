@@ -65,6 +65,7 @@ const useFloatingMana = ({ player, isSelf }: Props) => {
 
   const floatingMana = player.activeUtils?.floatingMana?.mana;
   const visible = player.activeUtils?.floatingMana?.visible;
+  const canReset = floatingMana && Object.values(floatingMana).some((value) => value > 0);
 
   return {
     initialPosition,
@@ -73,6 +74,7 @@ const useFloatingMana = ({ player, isSelf }: Props) => {
     floatingMana,
     onClose,
     onReset,
+    canReset,
   };
 };
 

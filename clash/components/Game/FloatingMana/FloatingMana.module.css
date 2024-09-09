@@ -1,6 +1,5 @@
 .reset_button {
-    padding-left: 0;
-    margin-top: 16px;
+    margin: -8px;
 }
 
 .floating_mana {

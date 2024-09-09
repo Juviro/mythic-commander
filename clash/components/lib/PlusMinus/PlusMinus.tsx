@@ -10,19 +10,19 @@ interface Props {
   amount: number;
   onChange: (delta: number) => () => void;
   alwaysShowButtons?: boolean;
-  canEdit?: boolean;
+  hideButtons?: boolean;
   size?: 'small' | 'medium' | 'large';
 }
 
-const PlusMinus = ({ onChange, amount, alwaysShowButtons, size, canEdit }: Props) => {
+const PlusMinus = ({ onChange, amount, alwaysShowButtons, size, hideButtons }: Props) => {
   return (
-    <>
+    <div className={styles.wrapper}>
       <div className={styles.plus_minus}>
         <span>{amount}</span>
       </div>
-      {canEdit && (
+      {!hideButtons && (
         <div
-          className={classNames('plus_minus_buttons', styles.buttons, {
+          className={classNames(styles.buttons, {
             [styles.buttons__always_visible]: alwaysShowButtons,
             [styles.buttons__small]: size === 'small',
             [styles.buttons__large]: size === 'large',
@@ -36,7 +36,7 @@ const PlusMinus = ({ onChange, amount, alwaysShowButtons, size, canEdit }: Props
           </LongPress>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

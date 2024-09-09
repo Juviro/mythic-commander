@@ -29,7 +29,7 @@ const LifeTotals = () => {
     <div className={styles.wrapper}>
       {gameState?.players.map((player) => (
         <div key={player.id} className={styles.player}>
-          <LifeTotal key={player.id} player={player} onChangeLife={onChangeLife} />
+          <LifeTotal player={player} onChangeLife={onChangeLife} />
         </div>
       ))}
     </div>

@@ -22,7 +22,7 @@ const LifeTotal = ({ player, onChangeLife }: LifeTotalProps) => {
       <PlusMinus
         amount={player.life}
         onChange={(delta) => onChangeLife(player, delta)}
-        size="large"
+        size="small"
       />
     </>
   );

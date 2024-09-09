@@ -15,11 +15,18 @@ interface Props {
 }
 
 const FloatingManaModal = ({ player, isSelf }: Props) => {
-  const { initialPosition, setInitialPosition, floatingMana, onClose, onReset, visible } =
-    useFloatingMana({
-      player,
-      isSelf,
-    });
+  const {
+    initialPosition,
+    setInitialPosition,
+    floatingMana,
+    onClose,
+    onReset,
+    visible,
+    canReset,
+  } = useFloatingMana({
+    player,
+    isSelf,
+  });
 
   if (!initialPosition || !visible) return null;
 
@@ -41,7 +48,12 @@ const FloatingManaModal = ({ player, isSelf }: Props) => {
       onClose={isSelf ? onClose : undefined}
     >
       <FloatingManaSymbols canEdit={Boolean(isSelf)} floatingMana={floatingMana!} />
-      <Button onClick={onReset} className={styles.reset_button} type="link">
+      <Button
+        onClick={onReset}
+        className={styles.reset_button}
+        type="link"
+        disabled={!canReset}
+      >
         Reset
       </Button>
     </DraggableModal>

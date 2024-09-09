@@ -69,11 +69,6 @@
   position: relative;
 }
 
-.player:hover :global(.plus_minus_buttons) {
-  opacity: 1;
-}
-
-
 .commander_damage__img {
   height: 32px;
   border-radius: 4px;

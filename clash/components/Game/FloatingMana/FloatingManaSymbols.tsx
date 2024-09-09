@@ -66,8 +66,7 @@ const FloatingManaSymbols = ({ canEdit, floatingMana }: Props) => {
             <PlusMinus
               amount={floatingMana?.[key] || 0}
               onChange={onChange(key)}
-              alwaysShowButtons
-              canEdit={canEdit}
+              hideButtons={!canEdit}
               size="small"
             />
           </div>
