@@ -7,7 +7,7 @@ import ManaRedIcon from 'public/assets/mtgicons/r_colored.svg';
 import ManaGreenIcon from 'public/assets/mtgicons/g_colored.svg';
 import ManaColorlessIcon from 'public/assets/mtgicons/c_colored.svg';
 
-import { FloatingMana } from 'backend/database/gamestate.types';
+import { FloatingManaValues } from 'backend/database/gamestate.types';
 import PlusMinus from 'components/lib/PlusMinus/PlusMinus';
 import useGameActions from '../useGameActions';
 
@@ -41,17 +41,17 @@ const COLORS = [
 ] as const;
 
 interface Props {
-  floatingMana: FloatingMana;
+  floatingMana: FloatingManaValues;
   canEdit: boolean;
 }
 
 const FloatingManaSymbols = ({ canEdit, floatingMana }: Props) => {
   const { trackFloatingMana } = useGameActions();
-  const onChange = (key: keyof FloatingMana) => (delta: number) => () => {
-    const newAmount = Math.max((floatingMana[key] || 0) + delta, 0);
+  const onChange = (key: keyof FloatingManaValues) => (delta: number) => () => {
+    const newAmount = Math.max((floatingMana?.[key] || 0) + delta, 0);
 
     trackFloatingMana({
-      floatingMana: {
+      mana: {
         [key]: newAmount,
       },
     });
@@ -64,7 +64,7 @@ const FloatingManaSymbols = ({ canEdit, floatingMana }: Props) => {
           {icon}
           <div className={styles.buttons}>
             <PlusMinus
-              amount={floatingMana[key] || 0}
+              amount={floatingMana?.[key] || 0}
               onChange={onChange(key)}
               alwaysShowButtons
               canEdit={canEdit}

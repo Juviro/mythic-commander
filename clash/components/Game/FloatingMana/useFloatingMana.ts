@@ -45,18 +45,34 @@ const useFloatingMana = ({ player, isSelf }: Props) => {
     setInitialPosition(getInitialPosition(player.id));
   }, []);
 
-  const floatingMana = player.activeUtils?.floatingMana;
-
   const onClose = () => {
     if (!isSelf) return;
     trackFloatingMana({ visible: false });
   };
 
+  const onReset = () => {
+    trackFloatingMana({
+      mana: {
+        w: 0,
+        u: 0,
+        b: 0,
+        r: 0,
+        g: 0,
+        c: 0,
+      },
+    });
+  };
+
+  const floatingMana = player.activeUtils?.floatingMana?.mana;
+  const visible = player.activeUtils?.floatingMana?.visible;
+
   return {
     initialPosition,
+    visible,
     setInitialPosition,
     floatingMana,
     onClose,
+    onReset,
   };
 };
 

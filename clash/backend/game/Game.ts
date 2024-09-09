@@ -1172,24 +1172,26 @@ export default class Game {
   }
 
   trackFloatingMana(playerId: string, payload: TrackFloatingManaPayload) {
-    const { floatingMana, visible } = payload;
-
     const player = this.getPlayerById(playerId);
 
-    if (typeof visible === 'boolean') {
-      if (!visible) {
-        delete player.activeUtils?.floatingMana;
-      } else if (!player.activeUtils?.floatingMana) {
-        player.activeUtils = { ...player.activeUtils, floatingMana: {} };
-      }
+    if (!player.activeUtils) {
+      player.activeUtils = {};
     }
 
-    if (floatingMana && player.activeUtils?.floatingMana) {
+    if (!player.activeUtils.floatingMana) {
       player.activeUtils.floatingMana = {
-        ...player.activeUtils.floatingMana,
-        ...floatingMana,
+        mana: {},
       };
     }
+
+    player.activeUtils.floatingMana = {
+      ...player.activeUtils.floatingMana,
+      ...payload,
+      mana: {
+        ...player.activeUtils.floatingMana.mana,
+        ...payload.mana,
+      },
+    };
 
     this.emitPlayerUpdate(this.getPlayerById(playerId));
   }

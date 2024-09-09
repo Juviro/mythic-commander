@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'antd';
 
 import { Player } from 'backend/database/gamestate.types';
 import DraggableModal from 'components/Game/DraggableModal/DraggableModal';
@@ -6,18 +7,21 @@ import ColoredPlayerName from 'components/GameComponents/ColoredPlayerName/Color
 import useFloatingMana from './useFloatingMana';
 import FloatingManaSymbols from './FloatingManaSymbols';
 
+import styles from './FloatingMana.module.css';
+
 interface Props {
   player: Player;
   isSelf?: boolean;
 }
 
 const FloatingManaModal = ({ player, isSelf }: Props) => {
-  const { initialPosition, setInitialPosition, floatingMana, onClose } = useFloatingMana({
-    player,
-    isSelf,
-  });
+  const { initialPosition, setInitialPosition, floatingMana, onClose, onReset, visible } =
+    useFloatingMana({
+      player,
+      isSelf,
+    });
 
-  if (!initialPosition || !floatingMana) return null;
+  if (!initialPosition || !visible) return null;
 
   return (
     <DraggableModal
@@ -36,7 +40,10 @@ const FloatingManaModal = ({ player, isSelf }: Props) => {
       }
       onClose={isSelf ? onClose : undefined}
     >
-      <FloatingManaSymbols canEdit={Boolean(isSelf)} floatingMana={floatingMana} />
+      <FloatingManaSymbols canEdit={Boolean(isSelf)} floatingMana={floatingMana!} />
+      <Button onClick={onReset} className={styles.reset_button} type="link">
+        Reset
+      </Button>
     </DraggableModal>
   );
 };

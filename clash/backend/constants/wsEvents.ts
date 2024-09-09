@@ -167,10 +167,7 @@ export interface SendMessagePayload {
   message: string;
 }
 
-export interface TrackFloatingManaPayload {
-  visible?: boolean;
-  floatingMana?: FloatingMana;
-}
+export type TrackFloatingManaPayload = Partial<FloatingMana>;
 
 interface RollDiceCommand {
   command: 'roll';

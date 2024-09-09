@@ -9,7 +9,7 @@ const GameUtils = () => {
   const { trackFloatingMana } = useGameActions();
   const { player } = useContext(GameStateContext);
 
-  const isTrackingFloatingMana = player?.activeUtils?.floatingMana;
+  const isTrackingFloatingMana = player?.activeUtils?.floatingMana?.visible;
 
   const items: MenuProps['items'] = [
     {

@@ -95,6 +95,23 @@ export const ZONES = {
 
 // ##################### Player #####################
 
+export interface FloatingManaValues {
+  w?: number;
+  u?: number;
+  b?: number;
+  r?: number;
+  g?: number;
+  c?: number;
+}
+export interface FloatingMana {
+  mana: FloatingManaValues;
+  visible?: boolean;
+}
+
+interface GameUtils {
+  floatingMana?: FloatingMana;
+}
+
 interface AdditionalPlayerInfo {
   isFurryFriend?: boolean;
 }
@@ -130,21 +147,6 @@ export interface TokenOption {
 
 export interface Resources {
   tokens: TokenOption[];
-}
-
-// ##################### Game Utils #####################
-
-export interface FloatingMana {
-  w?: number;
-  u?: number;
-  b?: number;
-  r?: number;
-  g?: number;
-  c?: number;
-}
-
-interface GameUtils {
-  floatingMana?: FloatingMana;
 }
 
 // ##################### GameState #####################
