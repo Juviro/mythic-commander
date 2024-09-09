@@ -44,7 +44,7 @@ import {
 import { User as DatabaseUser } from 'backend/database/getUser';
 import { GameLog, LOG_MESSAGES, LogMessage } from 'backend/constants/logMessages';
 import { getGameState, storeGameState } from 'backend/database/matchStore';
-import initMatch from 'backend/lobby/initMatch/initMatch';
+import initMatch, { sortInitialHand } from 'backend/lobby/initMatch/initMatch';
 import { randomizeArray } from 'utils/randomizeArray';
 import db from 'backend/database/db';
 import getPlaytestGamestate from 'backend/lobby/initMatch/getPlaytestGamestate';
@@ -378,7 +378,7 @@ export default class Game {
 
     const shuffledCards = randomizeArray(library.concat(hand)) as VisibleCard[];
 
-    const newHand = shuffledCards.splice(0, 7).sort((a, b) => a.manaValue - b.manaValue);
+    const newHand = shuffledCards.splice(0, 7).sort(sortInitialHand);
     player.zones.library = shuffledCards;
     player.zones.hand = newHand;
 

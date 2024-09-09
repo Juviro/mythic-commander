@@ -7,4 +7,5 @@ export const TIPS = [
   'Hold shift to disable the grid while dragging cards.',
   'You can press "o" or right-click your battlefield to organize your lands',
   'Track your floating many in the Game Utils',
+  'Long press the + or - buttons in the life counter to add or subtract 10 life points',
 ];

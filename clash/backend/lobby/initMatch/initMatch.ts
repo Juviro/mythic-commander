@@ -1,12 +1,25 @@
 import { getDecks, storeGameState } from 'backend/database/matchStore';
 import { Lobby } from 'backend/lobby/GameLobby.types';
-import { Card, GameState, Player } from 'backend/database/gamestate.types';
+import { Card, GameState, Player, VisibleCard } from 'backend/database/gamestate.types';
 import { randomizeArray } from 'utils/randomizeArray';
 import getInitialCards from './getInitialCards';
 import getTokens from './getTokens';
 
 const STARTING_LIFE = 40;
 
+export const sortInitialHand = (
+  a: Omit<VisibleCard, 'ownerId'>,
+  b: Omit<VisibleCard, 'ownerId'>
+) => {
+  const isLand = (card: Omit<VisibleCard, 'ownerId'>) => {
+    return card.type_line.split('//').at(0)?.includes('Land');
+  };
+
+  if (isLand(a) !== isLand(b)) {
+    return isLand(a) ? -1 : 1;
+  }
+  return a.manaValue - b.manaValue;
+};
 const initMatch = async (lobby: Lobby, shouldStoreGameState = true) => {
   const deckIds = lobby.players.map((player) => player.deck!.id);
   const decks = await getDecks(deckIds);
@@ -36,10 +49,7 @@ const initMatch = async (lobby: Lobby, shouldStoreGameState = true) => {
       ownerId: player.id,
     });
 
-    const hand = deck.cards
-      .slice(0, 7)
-      .sort((a, b) => a.manaValue - b.manaValue)
-      .map(addOwnerId);
+    const hand = deck.cards.slice(0, 7).sort(sortInitialHand).map(addOwnerId);
     const library = deck.cards.slice(7).map(addOwnerId);
 
     const commandZone = deck.commanders.map((commander) => ({
