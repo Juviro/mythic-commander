@@ -29,16 +29,11 @@ import {
 } from 'backend/constants/wsEvents';
 import { Phase, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
-import useLocalStorage from 'hooks/useLocalStorage';
-import {
-  DEFAULT_SETTINGS,
-  Settings,
-  SETTINGS_STORAGE_KEY,
-} from './InitSettings/InitSettings';
+import useSettings from './Menu/GameInfo/GuideModal/Settings/useSettings';
 
 const useGameActions = () => {
   const { socket } = useContext(SocketContext);
-  const [settings] = useLocalStorage<Settings>(SETTINGS_STORAGE_KEY, DEFAULT_SETTINGS);
+  const [settings] = useSettings();
 
   const onAcceptHand = (payload: AcceptHandPayload) => {
     socket?.emit(SOCKET_MSG_GAME.ACCEPT_HAND, payload);

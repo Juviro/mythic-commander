@@ -6,7 +6,7 @@ import GuideShortcuts from './GuideShortcuts';
 
 import styles from './GuideModal.module.css';
 import GuideCommands from './GuideCommands';
-import Settings from './Settings';
+import Settings from './Settings/Settings';
 
 interface Props {
   open: boolean;

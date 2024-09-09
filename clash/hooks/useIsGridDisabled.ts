@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'react';
-import {
-  DEFAULT_SETTINGS,
-  Settings,
-  SETTINGS_STORAGE_KEY,
-} from 'components/Game/InitSettings/InitSettings';
-import useLocalStorage from 'hooks/useLocalStorage';
+
+import useSettings from 'components/Game/Menu/GameInfo/GuideModal/Settings/useSettings';
 
 const useIsGridDisabled = () => {
   const [isKeyPressed, setIsKeyPressed] = useState(true);
-  const [settings] = useLocalStorage<Settings>(SETTINGS_STORAGE_KEY, DEFAULT_SETTINGS);
+  const [settings] = useSettings();
 
   useEffect(() => {
     const onDrag = (event: DragEvent) => {

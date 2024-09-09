@@ -1,20 +1,12 @@
 import React from 'react';
 
-import useLocalStorage from 'hooks/useLocalStorage';
-import {
-  Settings as SettingsType,
-  SETTINGS_STORAGE_KEY,
-  DEFAULT_SETTINGS,
-} from 'components/Game/InitSettings/InitSettings';
 import Setting from './Setting';
+import useSettings, { Settings as SettingsType } from './useSettings';
 
-import styles from './GuideModal.module.css';
+import styles from './Settings.module.css';
 
 const Settings = () => {
-  const [settings, setSettings] = useLocalStorage<SettingsType>(
-    SETTINGS_STORAGE_KEY,
-    DEFAULT_SETTINGS
-  );
+  const [settings, setSettings] = useSettings();
 
   const onChangeSetting = (key: keyof SettingsType) => (value: boolean) => {
     setSettings({ ...settings, [key]: value });
@@ -53,6 +45,11 @@ const Settings = () => {
         label="Changing commander damage also changes life total"
         checked={settings.commanderDamageChangesLife}
         onChange={onChangeSetting('commanderDamageChangesLife')}
+      />
+      <Setting
+        label="Display tip of the day"
+        checked={settings.displayTipOfTheDay}
+        onChange={onChangeSetting('displayTipOfTheDay')}
       />
     </div>
   );

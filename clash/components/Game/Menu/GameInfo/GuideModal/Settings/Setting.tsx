@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, ReactNode } from 'react';
 import { Space, Switch } from 'antd';
 
-import styles from './GuideModal.module.css';
+import styles from './Settings.module.css';
 
 interface Props extends PropsWithChildren {
   label: ReactNode;

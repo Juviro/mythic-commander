@@ -35,19 +35,10 @@
     width: 350px;
 }
 
+.shortcuts_label_small {
+    width: 250px;
+}
+
 .shortcuts_value {
     padding: 0 8px;
-}
-
-.setting {
-    padding: 16px;
-    cursor: pointer;
-}
-
-.setting .setting {
-    padding: 8px 0 0 16px;
-}
-
-.settings > .setting:nth-child(odd) {
-    background-color: var(--color-table-background);
 }

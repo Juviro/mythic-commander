@@ -1,17 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 
 import GameStateContext from 'components/Game/GameStateContext';
-import useLocalStorage from 'hooks/useLocalStorage';
 import useGameActions from 'components/Game/useGameActions';
-import {
-  DEFAULT_SETTINGS,
-  Settings,
-  SETTINGS_STORAGE_KEY,
-} from 'components/Game/InitSettings/InitSettings';
+import useSettings from '../GameInfo/GuideModal/Settings/useSettings';
 
 const useAutoUntapLands = () => {
   const { gameState, player } = useContext(GameStateContext);
-  const [settings] = useLocalStorage<Settings>(SETTINGS_STORAGE_KEY, DEFAULT_SETTINGS);
+  const [settings] = useSettings();
 
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 

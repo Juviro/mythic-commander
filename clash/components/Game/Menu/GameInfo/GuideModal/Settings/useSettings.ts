@@ -6,18 +6,20 @@ export interface Settings {
   autoUntapAll: boolean;
   useGrid: boolean;
   commanderDamageChangesLife: boolean;
+  displayTipOfTheDay: boolean;
 }
+
+export const SETTINGS_STORAGE_KEY = 'settings';
 
 export const DEFAULT_SETTINGS: Settings = {
   autoUntapLands: true,
   autoUntapAll: true,
   useGrid: true,
   commanderDamageChangesLife: true,
+  displayTipOfTheDay: true,
 };
 
-export const SETTINGS_STORAGE_KEY = 'settings';
-
-const InitSettings = () => {
+const useSettings = () => {
   const [settings, setSettings] = useLocalStorage<Settings>(
     SETTINGS_STORAGE_KEY,
     DEFAULT_SETTINGS
@@ -35,7 +37,7 @@ const InitSettings = () => {
     setSettings({ ...DEFAULT_SETTINGS, ...settings });
   }, []);
 
-  return null;
+  return [settings, setSettings] as const;
 };
 
-export default InitSettings;
+export default useSettings;

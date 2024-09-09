@@ -118,7 +118,7 @@ const useBattlefieldCardActions = ({ cardIds, player, isFaceDown }: Props) => {
 
   const copyItem = {
     key: 'create-copy',
-    label: 'Create Copy...',
+    label: 'Create Copy... [C]',
     children: createCopiesSubItems,
     icon: <ClashIcon id="ability-transform" size={16} />,
   };

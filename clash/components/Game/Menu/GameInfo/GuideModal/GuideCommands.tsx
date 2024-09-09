@@ -17,9 +17,17 @@ const GuideCommands = () => {
   return (
     <GuideDataTable
       items={COMMANDS}
+      smallLabels
       title="Chat Commands"
-      // eslint-disable-next-line max-len
-      description='You can execute a command in the chat by typing "/" followed by the command.'
+      description={
+        <div>
+          <div>
+            You can execute a command in the chat by typing &quot;/&quot; followed by the
+            command.
+          </div>
+          <div>Values in square brackets are optional parameters.</div>
+        </div>
+      }
     />
   );
 };

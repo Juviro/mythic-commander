@@ -24,34 +24,38 @@ const BASE_SHORTCUTS = [
 const GAME_SHORTCUTS = [
   {
     label: 'Untap all permanents',
-    value: 'u',
+    value: 'U',
   },
   {
     label: 'Tap / untap all lands',
-    value: 'a',
+    value: 'A',
   },
   {
     label: 'Draw card',
-    value: 'd',
+    value: 'D',
   },
   {
     label: 'Search library',
-    value: '[SHIFT] + s',
+    value: '[SHIFT] + S',
   },
   {
     label: 'Shuffle library',
-    value: 's',
+    value: 'S',
+  },
+  {
+    label: 'Organize Lands',
+    value: 'O',
   },
 ];
 
 const HOVERING_SHORTCUTS = [
   {
     label: 'Tap card / selection',
-    value: 't',
+    value: 'T',
   },
   {
     label: 'Flip card / selection',
-    value: 'f',
+    value: 'F',
   },
   {
     label: 'Clear selection',
