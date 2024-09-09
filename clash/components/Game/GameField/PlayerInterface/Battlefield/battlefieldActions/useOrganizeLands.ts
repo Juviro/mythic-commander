@@ -51,6 +51,14 @@ const sumLandColors = (land: VisibleBattlefieldCard) => {
 
 const sortLandsByColor = (lands: VisibleBattlefieldCard[]) => {
   return lands.sort((a, b) => {
+    const isLand = (card: VisibleBattlefieldCard) => {
+      return 'type_line' in card && card.type_line.includes('Land');
+    };
+
+    if (isLand(a) !== isLand(b)) {
+      return isLand(a) ? -1 : 1;
+    }
+
     if (!a.produced_mana || !b.produced_mana) {
       return a.produced_mana ? -1 : 1;
     }
@@ -74,9 +82,13 @@ const useOrganizeLands = ({ battlefieldRef, player }: Props) => {
     if (!battlefieldRef.current) return;
     const { factorX, factorY } = getRelativeToAbsoluteFactor(battlefieldRef.current!);
 
-    const lands = player.zones.battlefield.filter(
-      (card) => 'type_line' in card && card.type_line.includes('Land')
-    ) as VisibleBattlefieldCard[];
+    const lands = player.zones.battlefield.filter((card) => {
+      if ('type_line' in card && card.type_line.includes('Land')) return true;
+      if ('produced_mana' in card && card.produced_mana) {
+        return card.type_line.includes('Artifact');
+      }
+      return false;
+    }) as VisibleBattlefieldCard[];
     const sortedLands = sortLandsByColor(lands);
 
     const minColumnWidth = battlefieldCardWidth * PADDING_FACTOR;
