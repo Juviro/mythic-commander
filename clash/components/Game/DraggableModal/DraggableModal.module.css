@@ -21,7 +21,13 @@
     gap: 32px;
     font-size: 20px;
     padding: 16px;
-    background-color: #e5e5e5;
+    background-color: var(--color-layout-secondary);
+    color: var(--color-text);
+}
+
+.header__primary {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
 }
 
 .title {
@@ -29,7 +35,6 @@
     margin: 0;
     font-size: inherit;
     font-weight: 500;
-    color: var(--color-text);
 }
 
 .close_disabled {

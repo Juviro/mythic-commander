@@ -5,31 +5,44 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-
 import { CloseOutlined } from '@ant-design/icons';
 import { Tooltip } from 'antd';
 import classNames from 'classnames';
+import { XYCoord } from 'react-dnd';
+
 import styles from './DraggableModal.module.css';
 
 interface Props extends PropsWithChildren {
-  initialPosition?: { x: number; y: number };
+  initialPosition?: XYCoord;
   title?: ReactNode;
-  onMove?: (position: { x: number; y: number }) => void;
+  onMove?: (position: XYCoord) => void;
   onClose?: () => void;
   noCloseTooltip?: string;
+  headerColor?: 'primary' | 'default';
 }
 
 const DraggableModal = ({
   children,
   onMove,
   title,
-  initialPosition = { x: 300, y: 300 },
+  initialPosition,
   onClose,
   noCloseTooltip,
+  headerColor,
 }: Props) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
-  const [currentPosition, setCurrentPosition] = useState(initialPosition);
+  const [currentPosition, setCurrentPosition] = useState<XYCoord | null>(
+    initialPosition ?? null
+  );
+
+  useEffect(() => {
+    if (currentPosition) return;
+    setCurrentPosition({
+      x: window.innerWidth / 2 - 200,
+      y: 50,
+    });
+  }, []);
 
   const onMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
@@ -50,8 +63,8 @@ const DraggableModal = ({
     const dy = e.clientY - startPosition.y;
 
     setCurrentPosition({
-      x: currentPosition.x + dx,
-      y: currentPosition.y + dy,
+      x: currentPosition!.x + dx,
+      y: currentPosition!.y + dy,
     });
 
     setStartPosition({
@@ -72,8 +85,11 @@ const DraggableModal = ({
   }, [isDragging]);
 
   useEffect(() => {
+    if (!currentPosition) return;
     onMove?.(currentPosition);
   }, [currentPosition]);
+
+  if (!currentPosition) return null;
 
   const style = {
     '--x': `${currentPosition.x}px`,
@@ -82,7 +98,13 @@ const DraggableModal = ({
 
   return (
     <div className={styles.modal} style={style}>
-      <div className={styles.header} onMouseDown={onMouseDown} onMouseUp={onStop}>
+      <div
+        className={classNames(styles.header, {
+          [styles.header__primary]: headerColor === 'primary',
+        })}
+        onMouseDown={onMouseDown}
+        onMouseUp={onStop}
+      >
         {title && <h1 className={styles.title}>{title}</h1>}
         <Tooltip title={noCloseTooltip}>
           {onClose && (

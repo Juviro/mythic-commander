@@ -1,9 +1,11 @@
-import React, { useContext, useState } from 'react';
-import { Modal } from 'antd';
+import React, { useContext, useEffect, useState } from 'react';
 
 import useSettings from '../Menu/GameInfo/GuideModal/Settings/useSettings';
 import GameStateContext from '../GameStateContext';
 import { TIPS } from './tips';
+import DraggableModal from '../DraggableModal/DraggableModal';
+
+const DISPLAY_DURATION_S = 15;
 
 const TipOfTheDay = () => {
   const [settings] = useSettings();
@@ -11,28 +13,32 @@ const TipOfTheDay = () => {
 
   const [open, setOpen] = useState(settings.displayTipOfTheDay);
 
+  useEffect(() => {
+    if (!settings.displayTipOfTheDay) return;
+
+    setTimeout(() => {
+      setOpen(false);
+    }, DISPLAY_DURATION_S * 1000);
+  }, []);
+
   if (!isInitialized) return null;
   if (!player.mulligan.cardsAccepted) return null;
-  if (process.env.NODE_ENV === 'development') return null;
 
   const getRandomTip = () => {
     const randomIndex = Math.floor(Math.random() * TIPS.length);
     return TIPS[randomIndex];
   };
 
+  if (!open) return null;
+
   return (
-    <Modal
-      open={open}
-      closable
-      onCancel={() => setOpen(false)}
-      footer={null}
-      mask={false}
+    <DraggableModal
       title="Tip of the day"
-      destroyOnClose
-      style={{ top: 48 }}
+      headerColor="primary"
+      onClose={() => setOpen(false)}
     >
       {getRandomTip()}
-    </Modal>
+    </DraggableModal>
   );
 };
 
