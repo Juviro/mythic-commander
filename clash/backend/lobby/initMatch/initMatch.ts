@@ -103,6 +103,7 @@ const initMatch = async (lobby: Lobby, shouldStoreGameState = true) => {
     gameLog: [],
     resources,
     winner: null,
+    stack: { visible: false, cards: [] },
   };
 
   if (shouldStoreGameState) {

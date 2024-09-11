@@ -30,6 +30,7 @@ import {
   SetPlayerLifePayload,
   SetStopPointPayload,
   TapCardsPayload,
+  ToggleStackOpenPayload,
   TrackFloatingManaPayload,
   TurnCardsFaceDownPayload,
 } from '../constants/wsEvents';
@@ -208,8 +209,15 @@ const gameSocketActions = (io: Server) => {
       }
     );
 
-    socket.on(SOCKET_MSG_GAME.TRACK_FLOATING_MANA, (payload: TrackFloatingManaPayload) => {
-      currentGames[currentGameId].trackFloatingMana(user.id, payload);
+    socket.on(
+      SOCKET_MSG_GAME.TRACK_FLOATING_MANA,
+      (payload: TrackFloatingManaPayload) => {
+        currentGames[currentGameId].trackFloatingMana(user.id, payload);
+      }
+    );
+
+    socket.on(SOCKET_MSG_GAME.TOGGLE_STACK_OPEN, (payload: ToggleStackOpenPayload) => {
+      currentGames[currentGameId].toggleStackOpen(payload);
     });
 
     socket.on(SOCKET_MSG_GAME.END_TURN, () => {

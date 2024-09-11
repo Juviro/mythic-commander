@@ -2,7 +2,8 @@
     position: fixed;
     top: var(--top);
     left: var(--left);
-    z-index: 100;
+    /* above stack modal */
+    z-index: 1003;
     pointer-events: none;
     width: var(--size-card-width);
     aspect-ratio: var(--card-aspect-ratio);

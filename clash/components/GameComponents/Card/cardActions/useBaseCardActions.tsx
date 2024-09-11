@@ -1,7 +1,7 @@
 import { ReactNode, useContext } from 'react';
-import { ArrowRightOutlined, BookOutlined } from '@ant-design/icons';
+import { ArrowRightOutlined, BookOutlined, SwitcherOutlined } from '@ant-design/icons';
 
-import { Zone } from 'backend/database/gamestate.types';
+import { Zone, ZONES } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
 import useGameActions from 'components/Game/useGameActions';
 import ClashIcon from 'components/GameComponents/ClashIcon/ClashIcon';
@@ -24,13 +24,15 @@ const useBaseCardActions = ({
 }: Props) => {
   const { setRulesCardId } = useContext(CardPositionContext);
   const { player } = useContext(GameStateContext);
-  const { onTapCards, onFlipCards } = useGameActions();
+  const { onTapCards, onFlipCards, onMoveCard } = useGameActions();
 
   const moveCardActions = useMoveCardActions({
     zone,
     cardIds,
     player: player!,
   });
+
+  const moveOntoStack = () => onMoveCard(cardIds[0], ZONES.STACK, null);
 
   const flipCards = () => {
     if (!battlefieldPlayerId) return;
@@ -78,6 +80,13 @@ const useBaseCardActions = ({
     icon: <ArrowRightOutlined />,
   };
 
+  const putOntoStack = {
+    key: 'put-onto-stack',
+    label: 'Put onto Stack',
+    onClick: moveOntoStack,
+    icon: <SwitcherOutlined />,
+  };
+
   const rulesItem = {
     key: 'rules',
     label: 'Rules',
@@ -92,6 +101,7 @@ const useBaseCardActions = ({
     tapItem,
     flipItem,
     moveItem,
+    putOntoStack,
     rulesItem,
   };
 };

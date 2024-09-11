@@ -4,9 +4,10 @@ import { VisibleCard, Zone } from 'backend/database/gamestate.types';
 import { DndItemType, DndItemTypes, DropCard } from 'types/dnd.types';
 
 import classNames from 'classnames';
-import styles from './StackedCardList.module.css';
 import CardListHoverElement from './CardListHoverElement';
 import StackedCardListCard from './StackedCardListCard';
+
+import styles from './StackedCardList.module.css';
 
 interface Props {
   cards: VisibleCard[];
@@ -15,6 +16,7 @@ interface Props {
   color?: string;
   zone: Zone;
   cardDropType?: DndItemType;
+  stackVertically?: boolean;
 }
 
 const StackedCardList = ({
@@ -24,6 +26,7 @@ const StackedCardList = ({
   color,
   zone,
   cardDropType = DndItemTypes.LIST_CARD,
+  stackVertically,
 }: Props) => {
   const listRef = React.useRef<HTMLUListElement>(null);
   if (!cards.length) return null;
@@ -38,7 +41,13 @@ const StackedCardList = ({
 
   return (
     <div className={styles.wrapper} style={style}>
-      <ul className={classNames(styles.cards)} ref={listRef} onWheel={onWheel}>
+      <ul
+        className={classNames(styles.cards, {
+          [styles.cards__vertical_layout]: stackVertically,
+        })}
+        ref={listRef}
+        onWheel={onWheel}
+      >
         {cards.map((card, index) => (
           <React.Fragment key={card.clashId}>
             {onDrop && (
@@ -50,6 +59,7 @@ const StackedCardList = ({
               />
             )}
             <StackedCardListCard
+              verticalOffsetIndex={stackVertically ? index : undefined}
               card={card}
               draggable={draggable}
               zone={zone}

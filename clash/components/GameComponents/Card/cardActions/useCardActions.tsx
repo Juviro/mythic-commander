@@ -32,19 +32,29 @@ const useCardActions = ({
   canFlip,
   canTurnFaceDown,
 }: Props) => {
-  const { flipCards, tapCards, titleItem, tapItem, flipItem, moveItem, rulesItem } =
-    useBaseCardActions({
-      cardIds,
-      battlefieldPlayerId,
-      zone,
-      contextMenuTitle,
-    });
+  const {
+    flipCards,
+    tapCards,
+    titleItem,
+    tapItem,
+    flipItem,
+    moveItem,
+    putOntoStack,
+    rulesItem,
+  } = useBaseCardActions({
+    cardIds,
+    battlefieldPlayerId,
+    zone,
+    contextMenuTitle,
+  });
+
   const { addCounterItem, turnFacDownItem, rotateItem, peekItem, copyItem } =
     useBattlefieldCardActions({
       cardIds,
       player,
       isFaceDown,
     });
+
   const { handActions } = useHandCardActions(player!);
 
   const hideTitle = cardIds.length <= 1 && !contextMenuTitle;
@@ -78,10 +88,15 @@ const useCardActions = ({
   addItem(addCounterItem, zone !== ZONES.BATTLEFIELD || !battlefieldPlayerId, 'before');
   addItem(copyItem, !canCopy || zone !== ZONES.BATTLEFIELD, 'after');
 
-  addItem(moveItem, false);
+  addItem(moveItem, zone === ZONES.STACK);
+  addItem(putOntoStack, zone === ZONES.STACK || cardIds.length !== 1);
 
   addItem(handActions, zone !== ZONES.HAND, 'before');
-  addItem(rulesItem, cardIds.length !== 1 || isFaceDown, 'before');
+  addItem(
+    rulesItem,
+    cardIds.length !== 1 || isFaceDown,
+    zone === ZONES.STACK ? undefined : 'before'
+  );
 
   const filteredContextMenuItems: MenuProps['items'] = contextMenuItems;
 

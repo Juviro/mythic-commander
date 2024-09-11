@@ -12,6 +12,7 @@ import CardRules from './CardRules/CardRules';
 import GameDocumentTitle from './GameDocumentTitle/GameDocumentTitle';
 import TipOfTheDay from './TipOfTheDay/TipOfTheDay';
 import FloatingMana from './FloatingMana/FloatingMana';
+import Stack from './Stack/Stack';
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const Game = () => {
             <GameDocumentTitle />
             <TipOfTheDay />
             <FloatingMana />
+            <Stack />
           </DndProvider>
         </QueryClientProvider>
       </CardPositionContextProvider>

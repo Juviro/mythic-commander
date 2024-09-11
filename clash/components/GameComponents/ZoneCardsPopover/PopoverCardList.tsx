@@ -3,6 +3,7 @@ import React, { ReactNode } from 'react';
 import { VisibleCard, Zone } from 'backend/database/gamestate.types';
 import Dropzone from 'components/Game/Dropzone/Dropzone';
 import { DndItemType, DndItemTypes, DropCard } from 'types/dnd.types';
+import classNames from 'classnames';
 import StackedCardList from '../StackedCardList/StackedCardList';
 
 import styles from './ZoneCardsPopover.module.css';
@@ -16,6 +17,7 @@ interface Props {
   empty?: string;
   zone: Zone;
   cardDropType?: DndItemType;
+  stackVertically?: boolean;
 }
 
 const PopoverCardList = ({
@@ -27,6 +29,7 @@ const PopoverCardList = ({
   bottom,
   zone,
   cardDropType = DndItemTypes.LIST_CARD,
+  stackVertically,
 }: Props) => {
   return (
     <div className={styles.card_list_wrapper}>
@@ -41,9 +44,14 @@ const PopoverCardList = ({
         disabled={Boolean(cards.length)}
         accept={[cardDropType]}
       >
-        <div className={styles.cards_list}>
+        <div
+          className={classNames(styles.cards_list, {
+            [styles.cards_list__vertical_layout]: stackVertically,
+          })}
+        >
           {empty && <div className={styles.cards_list_empty}>{empty}</div>}
           <StackedCardList
+            stackVertically={stackVertically}
             cards={cards}
             draggable
             onDrop={onDrop}

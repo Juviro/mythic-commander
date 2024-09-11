@@ -82,8 +82,6 @@ interface Zones {
   battlefield: BattlefieldCard[];
 }
 
-export type Zone = keyof Zones;
-
 export const ZONES = {
   HAND: 'hand',
   LIBRARY: 'library',
@@ -91,7 +89,11 @@ export const ZONES = {
   GRAVEYARD: 'graveyard',
   COMMAND_ZONE: 'commandZone',
   BATTLEFIELD: 'battlefield',
+  STACK: 'stack',
 } as const;
+
+export type PlayerZone = keyof Zones;
+export type Zone = typeof ZONES[keyof typeof ZONES];
 
 // ##################### Player #####################
 
@@ -151,6 +153,11 @@ export interface Resources {
 
 // ##################### GameState #####################
 
+export interface Stack {
+  visible: boolean;
+  cards: VisibleCard[];
+}
+
 export interface GameState {
   hostId: string;
   gameId: string;
@@ -161,5 +168,6 @@ export interface GameState {
   gameLog: GameLog[];
   resources?: Resources;
   winner?: string | null;
+  stack: Stack;
   phaseStopByPlayerId?: string | null;
 }

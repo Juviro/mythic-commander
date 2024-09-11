@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { CSSProperties, useContext } from 'react';
 
 import useCardActions from 'components/GameComponents/Card/cardActions/useCardActions';
 import { VisibleCard, Zone } from 'backend/database/gamestate.types';
 import { DndItemType } from 'types/dnd.types';
 import GameStateContext from 'components/Game/GameStateContext';
+import classNames from 'classnames';
 import ContextMenu from '../ContextMenu/ContextMenu';
 import Card from '../Card/Card';
 
@@ -14,10 +15,22 @@ interface Props {
   draggable?: boolean;
   zone: Zone;
   cardDropType: DndItemType;
+  verticalOffsetIndex?: number;
 }
 
-const StackedCardListCard = ({ card, draggable, zone, cardDropType }: Props) => {
-  const { player } = useContext(GameStateContext);
+const StackedCardListCard = ({
+  card,
+  draggable,
+  zone,
+  cardDropType,
+  verticalOffsetIndex,
+}: Props) => {
+  const { player, getPlayerColor } = useContext(GameStateContext);
+
+  const style = {
+    '--player-color': getPlayerColor(card.ownerId),
+    '--vertical-offset-index': verticalOffsetIndex,
+  } as CSSProperties;
 
   const frontCardName = card.name.split(' //')[0];
   const { contextMenuItems } = useCardActions({
@@ -29,13 +42,19 @@ const StackedCardListCard = ({ card, draggable, zone, cardDropType }: Props) => 
 
   return (
     <ContextMenu items={contextMenuItems}>
-      <li className={styles.card}>
+      <li
+        className={classNames(styles.card, {
+          [styles.card__vertical_layout]: verticalOffsetIndex !== undefined,
+        })}
+        style={style}
+      >
         <Card
           card={card}
           draggable={draggable}
           dropType={cardDropType}
           noAnimation
-          zone="library"
+          noPreview
+          zone={zone}
         />
       </li>
     </ContextMenu>

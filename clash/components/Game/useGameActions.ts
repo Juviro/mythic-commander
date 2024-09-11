@@ -27,8 +27,9 @@ import {
   SetCommanderDamagePayload,
   SetStopPointPayload,
   TrackFloatingManaPayload,
+  ToggleStackOpenPayload,
 } from 'backend/constants/wsEvents';
-import { Phase, Zone } from 'backend/database/gamestate.types';
+import { Phase, PlayerZone, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
 import useSettings from './Menu/GameInfo/GuideModal/Settings/useSettings';
 
@@ -51,16 +52,17 @@ const useGameActions = () => {
   const onMoveCard = (
     clashId: string,
     toZone: Zone,
-    zonePlayerId: string,
+    zonePlayerId: string | null,
     details?: MoveCardDetails,
     faceDown?: boolean
   ) => {
     const payload: MoveCardPayload = {
       clashId,
       faceDown,
-      to: { zone: toZone, playerId: zonePlayerId },
+      to: { zone: toZone, playerId: zonePlayerId! },
       ...details,
     };
+
     socket?.emit(SOCKET_MSG_GAME.MOVE_CARD, payload);
   };
 
@@ -122,7 +124,7 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.MILL, payload);
   };
 
-  const onPeek = (playerId: string, zone: Zone, amount: number) => {
+  const onPeek = (playerId: string, zone: PlayerZone, amount: number) => {
     const payload: PeekPayload = { playerId, zone, amount };
     socket?.emit(SOCKET_MSG_GAME.PEEK, payload);
   };
@@ -142,6 +144,10 @@ const useGameActions = () => {
 
   const trackFloatingMana = (payload: TrackFloatingManaPayload) => {
     socket?.emit(SOCKET_MSG_GAME.TRACK_FLOATING_MANA, payload);
+  };
+
+  const toggleStackOverlay = (payload: ToggleStackOpenPayload) => {
+    socket?.emit(SOCKET_MSG_GAME.TOGGLE_STACK_OPEN, payload);
   };
 
   const onSendChatMessage = (message: SendMessagePayload) => {
@@ -220,6 +226,7 @@ const useGameActions = () => {
     onSearchLibrary,
     onShuffle,
     trackFloatingMana,
+    toggleStackOverlay,
     onSendChatMessage,
     onExecuteCommand,
     onSetCommanderTimesCasted,

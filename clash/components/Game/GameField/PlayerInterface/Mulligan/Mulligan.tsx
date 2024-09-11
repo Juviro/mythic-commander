@@ -5,6 +5,7 @@ import { Player, ZONES } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
 import PopoverCardList from 'components/GameComponents/ZoneCardsPopover/PopoverCardList';
 import { getCardinalNumberLabel } from 'utils/i18nUtils';
+import { DndItemTypes } from 'types/dnd.types';
 import useMulligan from './useMulligan';
 
 import styles from './Mulligan.module.css';
@@ -67,7 +68,7 @@ const Mulligan = ({ player, isSelf }: Props) => {
           onDrop={onMoveCard('library')}
           empty="Bottom of Library"
           zone={ZONES.HAND}
-          cardDropType="MULLIGAN_CARD"
+          cardDropType={DndItemTypes.MULLIGAN_CARD}
         />
         <PopoverCardList
           cards={toHand}

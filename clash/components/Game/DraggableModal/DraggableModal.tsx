@@ -7,6 +7,8 @@ import React, {
 } from 'react';
 
 import { CloseOutlined } from '@ant-design/icons';
+import { Tooltip } from 'antd';
+import classNames from 'classnames';
 import styles from './DraggableModal.module.css';
 
 interface Props extends PropsWithChildren {
@@ -14,6 +16,7 @@ interface Props extends PropsWithChildren {
   title?: ReactNode;
   onMove?: (position: { x: number; y: number }) => void;
   onClose?: () => void;
+  noCloseTooltip?: string;
 }
 
 const DraggableModal = ({
@@ -22,6 +25,7 @@ const DraggableModal = ({
   title,
   initialPosition = { x: 300, y: 300 },
   onClose,
+  noCloseTooltip,
 }: Props) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
@@ -80,7 +84,16 @@ const DraggableModal = ({
     <div className={styles.modal} style={style}>
       <div className={styles.header} onMouseDown={onMouseDown} onMouseUp={onStop}>
         {title && <h1 className={styles.title}>{title}</h1>}
-        {onClose && <CloseOutlined onClick={onClose} />}
+        <Tooltip title={noCloseTooltip}>
+          {onClose && (
+            <CloseOutlined
+              className={classNames({
+                [styles.close_disabled]: noCloseTooltip,
+              })}
+              onClick={noCloseTooltip ? undefined : onClose}
+            />
+          )}
+        </Tooltip>
       </div>
       <div className={styles.modal_content}>{children}</div>
     </div>

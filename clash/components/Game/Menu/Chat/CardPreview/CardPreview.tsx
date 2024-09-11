@@ -44,7 +44,7 @@ const CardPreview = () => {
 
   useEffect(() => {
     setDisplayedCardIndex(initialIndex);
-    const onScroll = (e: any) => {
+    const onScroll = (e: WheelEvent) => {
       const isMacTrackpad = e.deltaY % 1 === 0;
       if (isMacTrackpad && Date.now() - lastScroll.current < SCROLL_DELAY) return;
 
@@ -64,7 +64,7 @@ const CardPreview = () => {
     };
   }, [hoveredCard]);
 
-  if (!hoveredCard) return null;
+  if (!hoveredCard?.id) return null;
 
   const currentCard = cardPreviews[displayedCardIndex];
 

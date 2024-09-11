@@ -9,6 +9,7 @@ import {
   Phase,
   PHASES,
   Player,
+  PlayerZone,
   VisibleBattlefieldCard,
   VisibleCard,
   Zone,
@@ -38,6 +39,7 @@ import {
   SetPlayerLifePayload,
   SetStopPointPayload,
   TapCardsPayload,
+  ToggleStackOpenPayload,
   TrackFloatingManaPayload,
   TurnCardsFaceDownPayload,
 } from 'backend/constants/wsEvents';
@@ -76,6 +78,10 @@ export default class Game {
     this.gameState = gameState;
     this.isPlaytest = isPlaytest;
     this.deckId = deckId;
+
+    if (!this.gameState.stack) {
+      this.gameState.stack = { visible: false, cards: [] };
+    }
   }
 
   get id() {
@@ -99,13 +105,15 @@ export default class Game {
   }
 
   emitGameUpdate() {
-    const { activePlayerId, phase, turn, winner, phaseStopByPlayerId } = this.gameState;
+    const { activePlayerId, phase, turn, winner, phaseStopByPlayerId, stack } =
+      this.gameState;
     this.emitToAll(SOCKET_MSG_GAME.GAME_STATE, {
       activePlayerId,
       phase,
       turn,
       winner,
       phaseStopByPlayerId,
+      stack: Game.obfuscateStack(stack),
     });
     this.gameState.phaseStopByPlayerId = null;
   }
@@ -172,18 +180,19 @@ export default class Game {
 
     const playersToUpdate = new Set<string>([playerId]);
 
+    const playerZones = ['battlefield', 'hand', 'library', 'graveyard', 'exile'] as const;
     // clear own zones
-    ['battlefield', 'hand', 'library', 'graveyard', 'exile'].forEach((zoneKey) => {
-      const zone = player.zones[zoneKey as Zone];
+    playerZones.forEach((zoneKey) => {
+      const zone = player.zones[zoneKey];
       // give back cards to the owner
       (zone as BattlefieldCard[]).forEach((card) => {
         if (card.ownerId === player.id || card.isToken) return;
         const owner = this.getPlayerById(card.ownerId);
         if (owner.resigned) return;
-        owner.zones[zoneKey as Zone].push(card as VisibleCard);
+        owner.zones[zoneKey].push(card as VisibleCard);
         playersToUpdate.add(card.ownerId);
       });
-      player.zones[zoneKey as Zone] = [];
+      player.zones[zoneKey] = [];
     });
 
     player.zones.commandZone = player.commanders.map((commander) => ({
@@ -195,7 +204,7 @@ export default class Game {
     ['battlefield', 'hand'].forEach((zoneKey) => {
       this.gameState.players.forEach((otherPlayer) => {
         if (otherPlayer.id === player.id) return;
-        const zone = otherPlayer.zones[zoneKey as Zone];
+        const zone = otherPlayer.zones[zoneKey as PlayerZone];
         // @ts-ignore
         otherPlayer.zones[zoneKey as Zone] = zone.filter((card) => {
           if (card.ownerId !== player.id) return true;
@@ -272,6 +281,30 @@ export default class Game {
         battlefield,
         hand,
       },
+    };
+  }
+
+  static obfuscateStack(stack: GameState['stack']) {
+    if (!stack) return null;
+
+    return {
+      ...stack,
+      cards: stack.cards.map((card) => {
+        if (!(card as VisibleBattlefieldCard).faceDown) {
+          return card;
+        }
+
+        return {
+          ...card,
+          id: null,
+          name: '',
+          manaValue: undefined,
+          meta: null,
+          produced_mana: undefined,
+          type_line: undefined,
+          flippable: false,
+        };
+      }),
     };
   }
 
@@ -410,26 +443,59 @@ export default class Game {
 
   async moveCard(playerId: string, payload: MoveCardPayload) {
     const { clashId, to, position, index, faceDown } = payload;
-    const playersToUpdate = new Set<string>([to.playerId]);
+    const isMovingOntoStack = to.zone === 'stack';
+
+    if (isMovingOntoStack && !this.gameState.stack.visible) {
+      this.gameState.stack.visible = true;
+    }
+
+    const playersToUpdate = new Set<string>(isMovingOntoStack ? [] : [to.playerId]);
 
     let fromPlayer: Player;
     let fromZone: Zone;
     let cardToMove: VisibleCard;
+    let shouldEmitStackUpdate = false;
 
     let spliceIndex = -1;
 
     this.gameState.players.forEach((player) =>
-      Object.entries(player.zones).forEach(([zone, cards]) =>
-        (cards as Card[]).some((card, i) => {
+      Object.entries(player.zones).forEach(([zone, cards]) => {
+        return (cards as Card[]).some((card, i) => {
           if (card.clashId !== clashId) return false;
           fromPlayer = player;
           fromZone = zone as Zone;
           spliceIndex = i;
           cardToMove = cards.splice(i, 1)[0] as VisibleCard;
           return true;
-        })
-      )
+        });
+      })
     );
+
+    this.gameState.stack?.cards.forEach((card, i) => {
+      if (card.clashId !== clashId) return;
+      shouldEmitStackUpdate = true;
+      spliceIndex = i;
+      cardToMove = this.gameState.stack?.cards.splice(i, 1)[0] as VisibleCard;
+      fromZone = 'stack';
+    });
+
+    if (isMovingOntoStack) {
+      if (fromPlayer!) {
+        const player = this.getPlayerById(fromPlayer.id);
+        this.emitPlayerUpdate(player);
+      }
+
+      if (typeof index === 'number') {
+        const isMovingFromStack = fromZone! === 'stack';
+        const addIndex = spliceIndex < index && isMovingFromStack ? index - 1 : index;
+        this.gameState.stack?.cards.splice(addIndex, 0, cardToMove! as VisibleCard);
+      } else {
+        this.gameState.stack?.cards.push(cardToMove! as VisibleCard);
+      }
+
+      this.emitGameUpdate();
+      return;
+    }
 
     let newCard = { ...cardToMove!, position: Game.fixPosition(position) };
     const isCardFaceDown = faceDown ?? (cardToMove! as BattlefieldCard)?.faceDown;
@@ -467,11 +533,14 @@ export default class Game {
       delete (card as FaceDownCard).visibleTo;
     }
 
-    if (fromPlayer!.id !== to.playerId && !newCard.ownerId) {
-      newCard.ownerId = fromPlayer!.id;
+    if (fromPlayer!) {
+      if (fromPlayer.id !== to.playerId && !newCard.ownerId) {
+        newCard.ownerId = fromPlayer!.id;
+      }
+
+      playersToUpdate.add(fromPlayer!.id);
     }
 
-    playersToUpdate.add(fromPlayer!.id);
     let toPlayer = this.getPlayerById(to.playerId);
 
     if (to.zone === 'graveyard' || to.zone === 'exile') {
@@ -495,6 +564,10 @@ export default class Game {
       this.emitPlayerUpdate(player);
     });
 
+    if (shouldEmitStackUpdate) {
+      this.emitGameUpdate();
+    }
+
     const getLibraryPosition = () => {
       if (typeof index !== 'number' || to.zone !== 'library') return null;
       if (index === 0) return 'bottom';
@@ -516,22 +589,24 @@ export default class Game {
       return shouldRevealCardName ? cardToMove!.name : null;
     };
 
-    this.logAction({
-      playerId,
-      logKey: LOG_MESSAGES.MOVE_CARD,
-      payload: {
-        cardName: getCardName(),
-        from: {
-          zone: fromZone!,
-          playerId: fromPlayer!.id,
+    if (fromPlayer!) {
+      this.logAction({
+        playerId,
+        logKey: LOG_MESSAGES.MOVE_CARD,
+        payload: {
+          cardName: getCardName(),
+          from: {
+            zone: fromZone!,
+            playerId: fromPlayer!.id,
+          },
+          to: {
+            zone: to.zone,
+            playerId: toPlayer.id,
+            libraryPosition: getLibraryPosition(),
+          },
         },
-        to: {
-          zone: to.zone,
-          playerId: toPlayer.id,
-          libraryPosition: getLibraryPosition(),
-        },
-      },
-    });
+      });
+    }
   }
 
   moveCardGroup(payload: MoveCardsGroupPayload) {
@@ -1194,6 +1269,11 @@ export default class Game {
     };
 
     this.emitPlayerUpdate(this.getPlayerById(playerId));
+  }
+
+  toggleStackOpen({ visible }: ToggleStackOpenPayload) {
+    this.gameState.stack.visible = visible;
+    this.emitGameUpdate();
   }
 
   endTurn(playerId: string, force = false) {

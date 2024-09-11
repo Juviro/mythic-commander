@@ -29,6 +29,8 @@ const getZoneLabelFrom = (zone: string, playerId?: string | null) => {
       return 'the command zone';
     case 'library':
       return 'their library';
+    case 'stack':
+      return 'the stack';
     default:
       return zone;
   }

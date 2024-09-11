@@ -2,8 +2,13 @@
     display: flex;
     position: relative;
     padding: 12px 50px;
+    --size-card-width: 200px;
     overflow-y: hidden;
 }
+
+.wrapper:has(.cards__vertical_layout) {
+    padding-left: 0;
+    padding-right: 0;}
 
 
 .cards {
@@ -16,21 +21,47 @@
     overflow-x: scroll;
 }
 
+.cards__vertical_layout {
+    margin: 24px;
+    overflow: visible;
+    box-sizing: border-box;
+}
+
 .card {
     transition: transform 0.1s;
+    margin-top: calc(40px * var(--vertical-offset-index));
 }
 
 /* margin for all cards except the first one */
 .card ~ .card {
     margin-left: -130px;
 }
+.card ~ .card__vertical_layout {
+    margin-left: -170px;
+}
 
-.hover_element__is_over~.card {
+.hover_element__is_over ~ .card {
     transform: translateX(50px);
+}
+
+.cards__vertical_layout .hover_element__is_over ~ .card {
+    transform: translate(30px, 30px);
 }
 
 .card:has(~ .hover_element__is_over) {
     transform: translateX(-50px);
+}
+
+.cards__vertical_layout .card:has(~ .hover_element__is_over) {
+    transform: translate(-30px, -30px);
+}
+
+.cards__vertical_layout .card:nth-child(2) {
+    margin-left: 80px;
+}
+
+.cards__vertical_layout .card:nth-last-child(2) {
+    margin-right: 80px;
 }
 
 .hover_element {

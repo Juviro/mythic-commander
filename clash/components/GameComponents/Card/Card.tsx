@@ -21,6 +21,7 @@ interface Props {
   noAnimation?: boolean;
   dropType?: DndItemType;
   flipped?: boolean;
+  noPreview?: boolean;
 }
 
 const Card = ({
@@ -30,6 +31,7 @@ const Card = ({
   zone,
   noAnimation,
   flipped,
+  noPreview,
   dropType = DndItemTypes.CARD,
 }: Props) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -37,7 +39,7 @@ const Card = ({
 
   const [{ isDragging }, dragRef, preview] = useDrag({
     type: dropType,
-    item: card,
+    item: { ...card, noPreview },
     canDrag: Boolean(draggable),
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
@@ -53,7 +55,7 @@ const Card = ({
   const isCardKnown = 'name' in card;
 
   useEffect(() => {
-    if (dropType !== DndItemTypes.CARD) return;
+    if (dropType !== DndItemTypes.CARD || noPreview) return;
     preview(getEmptyImage(), { captureDraggingState: true });
   });
 

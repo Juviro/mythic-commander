@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { FloatingMana, Phase, Zone } from 'backend/database/gamestate.types';
+import { FloatingMana, Phase, PlayerZone } from 'backend/database/gamestate.types';
 import { PermanentCardType } from 'utils/cardTypes';
 
 export const SOCKET_MSG_GENERAL = {
@@ -52,6 +52,7 @@ export const SOCKET_MSG_GAME = {
   SEARCH_LIBRARY: 'search_library',
   SHUFFLE_LIBRARY: 'shuffle_library',
   TRACK_FLOATING_MANA: 'track_floating_mana',
+  TOGGLE_STACK_OPEN: 'toggle_stack_open',
   CREATE_TOKEN: 'create_token',
   COPY_CARD: 'copy_card',
 
@@ -69,13 +70,18 @@ export interface MoveCardDetails {
   index?: number;
 }
 
+type MoveCardTo =
+  | {
+      zone: PlayerZone;
+      playerId: string;
+    }
+  | {
+      zone: 'stack';
+    };
 export interface MoveCardPayload extends MoveCardDetails {
   clashId: string;
   faceDown?: boolean;
-  to: {
-    zone: Zone;
-    playerId: string;
-  };
+  to: MoveCardTo;
 }
 
 export interface MoveCardsGroupPayload {
@@ -148,7 +154,7 @@ export interface MillPayload {
 export interface PeekPayload {
   playerId: string;
   amount: number;
-  zone: Zone;
+  zone: PlayerZone;
 }
 
 export interface EndPeekPayload {
@@ -168,6 +174,10 @@ export interface SendMessagePayload {
 }
 
 export type TrackFloatingManaPayload = Partial<FloatingMana>;
+
+export interface ToggleStackOpenPayload {
+  visible: boolean;
+}
 
 interface RollDiceCommand {
   command: 'roll';
