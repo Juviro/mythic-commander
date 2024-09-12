@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 import useSettings from '../Menu/GameInfo/GuideModal/Settings/useSettings';
 import GameStateContext from '../GameStateContext';
@@ -21,13 +21,15 @@ const TipOfTheDay = () => {
     }, DISPLAY_DURATION_S * 1000);
   }, []);
 
-  if (!isInitialized) return null;
-  if (!player.mulligan.cardsAccepted) return null;
-
   const getRandomTip = () => {
     const randomIndex = Math.floor(Math.random() * TIPS.length);
     return TIPS[randomIndex];
   };
+
+  const tipOfTheDay = useMemo(getRandomTip, []);
+
+  if (!isInitialized) return null;
+  if (!player.mulligan.cardsAccepted) return null;
 
   if (!open) return null;
 
@@ -37,7 +39,7 @@ const TipOfTheDay = () => {
       headerColor="primary"
       onClose={() => setOpen(false)}
     >
-      {getRandomTip()}
+      {tipOfTheDay}
     </DraggableModal>
   );
 };
