@@ -13,3 +13,14 @@
   align-items: flex-end;
   height: 100%;
 }
+
+.popover_zone_icon {
+  width: 20px;
+  transform: translateY(2px);
+}
+
+.popover_zone_name {
+  margin-right: 16px;
+  display: flex;
+  align-items: center;
+}

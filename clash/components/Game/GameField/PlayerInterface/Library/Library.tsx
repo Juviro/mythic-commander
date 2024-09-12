@@ -8,10 +8,12 @@ import Dropzone from 'components/Game/Dropzone/Dropzone';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import GameStateContext from 'components/Game/GameStateContext';
 import LibraryExplorer from 'components/GameComponents/LibraryExplorer/LibraryExplorer';
+import { Popover } from 'antd';
 import CardStack from '../CardStack/CardStack';
 import useLibraryActions from './useLibraryActions';
 
 import styles from './Library.module.css';
+import ZonesOverviewPopover from './ZonesOverviewPopover';
 
 const MAX_DISPLAYED_CARDS = 10;
 
@@ -43,20 +45,26 @@ const Library = ({ player, isSelf }: Props) => {
     <div className={styles.wrapper} ref={libraryRef}>
       <LibraryExplorer player={player} libraryRef={libraryRef} />
       <ContextMenu items={items}>
-        <div
-          className={styles.inner}
-          onClick={isSelf && !isPeeking ? onDrawCard : undefined}
+        <Popover
+          mouseEnterDelay={0.3}
+          open
+          content={<ZonesOverviewPopover player={player} />}
         >
-          <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id} disabled={isPeeking}>
-            <CardStack
-              cards={cards}
-              noAnimation={noAnimation}
-              emptyImage={<LibraryImage />}
-              draggable={isSelf}
-              zone="library"
-            />
-          </Dropzone>
-        </div>
+          <div
+            className={styles.inner}
+            onClick={isSelf && !isPeeking ? onDrawCard : undefined}
+          >
+            <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id} disabled={isPeeking}>
+              <CardStack
+                cards={cards}
+                noAnimation={noAnimation}
+                emptyImage={<LibraryImage />}
+                draggable={isSelf}
+                zone="library"
+              />
+            </Dropzone>
+          </div>
+        </Popover>
       </ContextMenu>
     </div>
   );

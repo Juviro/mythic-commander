@@ -40,7 +40,7 @@ const ColoredPlayerName = ({
   };
 
   const style: CSSProperties = {
-    color: getColorVariable(id!),
+    color: getColorVariable(id),
     whiteSpace: 'nowrap',
   };
 

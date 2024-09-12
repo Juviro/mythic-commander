@@ -26,6 +26,7 @@ interface BaseGameState {
   battlefieldCardWidth: number;
   battlefieldCardHeight: number;
   stopPoint: Phase | null;
+  globalCssStyle: CSSProperties;
 }
 export interface InitializedGameState extends BaseGameState {
   gameState: GameState;
@@ -132,8 +133,25 @@ export const GameStateContextProvider = ({ children }: Props) => {
       {}
     ) ?? {};
 
+  const globalCssStyle = useMemo<CSSProperties>(() => {
+    if (!gameState?.players.length) return {};
+    const playerColors = gameState.players.reduce(
+      (acc, currentPlayer) => ({
+        ...acc,
+        [`--color-player-${currentPlayer.id}`]: currentPlayer.color,
+      }),
+      {}
+    );
+
+    return {
+      '--battlefield-card-width': `${battlefieldCardWidth}px`,
+      ...playerColors,
+    };
+  }, [gameState?.players.length]);
+
   const value: GameStateContextType = useMemo(() => {
     const baseState = {
+      globalCssStyle,
       getPlayerColor,
       stopPoint,
       playerNames,
@@ -142,6 +160,7 @@ export const GameStateContextProvider = ({ children }: Props) => {
       battlefieldCardWidth,
       battlefieldCardHeight: battlefieldCardWidth / CARD_ASPECT_RATIO,
     };
+
     if (!gameState || !player) {
       return {
         ...baseState,
@@ -158,22 +177,6 @@ export const GameStateContextProvider = ({ children }: Props) => {
       isInitialized: true,
     };
   }, [gameState, peekingCards, stopPoint]);
-
-  const globalCssStyle = useMemo<CSSProperties>(() => {
-    if (!gameState?.players.length) return {};
-    const playerColors = gameState.players.reduce(
-      (acc, currentPlayer) => ({
-        ...acc,
-        [`--color-player-${currentPlayer.id}`]: currentPlayer.color,
-      }),
-      {}
-    );
-
-    return {
-      '--battlefield-card-width': `${battlefieldCardWidth}px`,
-      ...playerColors,
-    };
-  }, [gameState?.players.length]);
 
   return (
     <GameStateContext.Provider value={value}>

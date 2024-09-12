@@ -34,7 +34,7 @@ const getInitialPosition = (element: HTMLDivElement) => {
   if (shouldOpenDown) {
     positionY = y + height;
   } else {
-    positionY = y - MODAL_HEIGHT - MODAL_MARGIN;
+    positionY = y - MODAL_HEIGHT - MODAL_MARGIN * 2;
   }
 
   if (positionX + MODAL_WIDTH + MODAL_MARGIN > window.innerWidth) {
