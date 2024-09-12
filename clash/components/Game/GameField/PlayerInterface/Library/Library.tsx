@@ -45,11 +45,7 @@ const Library = ({ player, isSelf }: Props) => {
     <div className={styles.wrapper} ref={libraryRef}>
       <LibraryExplorer player={player} libraryRef={libraryRef} />
       <ContextMenu items={items}>
-        <Popover
-          mouseEnterDelay={0.3}
-          open
-          content={<ZonesOverviewPopover player={player} />}
-        >
+        <Popover mouseEnterDelay={0.3} content={<ZonesOverviewPopover player={player} />}>
           <div
             className={styles.inner}
             onClick={isSelf && !isPeeking ? onDrawCard : undefined}
