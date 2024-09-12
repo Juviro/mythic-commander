@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import { Tooltip } from 'antd';
 
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import GraveyardImage from 'public/assets/icons/graveyard.svg';
@@ -7,12 +6,11 @@ import Dropzone from 'components/Game/Dropzone/Dropzone';
 import useGameActions from 'components/Game/useGameActions';
 import { DndItemTypes, DropCard, DropCardGroup } from 'types/dnd.types';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
-import { pluralizeCards } from 'utils/i18nUtils';
 import CardListModal from 'components/GameComponents/CardListModal/CardListModal';
 import CardStack from '../CardStack/CardStack';
+import useGraveyardActions from './useGraveyardActions';
 
 import styles from './Graveyard.module.css';
-import useGraveyardActions from './useGraveyardActions';
 
 const MAX_DISPLAYED_CARDS = 10;
 
@@ -42,35 +40,31 @@ const Graveyard = ({ player }: Props) => {
     cardIds: graveyard.map(({ clashId }) => clashId),
   });
 
-  const title = `Graveyard: ${pluralizeCards(graveyard.length, 'one')}`;
-
   return (
-    <Tooltip title={title} mouseEnterDelay={0.5}>
-      <ContextMenu items={graveyardActions}>
-        <div className={styles.wrapper} ref={elementRef}>
-          <CardListModal
-            player={player}
-            title="Graveyard"
-            cards={graveyard}
-            elementRef={elementRef}
-            zone={ZONES.GRAVEYARD}
-            resetPosition
+    <ContextMenu items={graveyardActions}>
+      <div className={styles.wrapper} ref={elementRef}>
+        <CardListModal
+          player={player}
+          title="Graveyard"
+          cards={graveyard}
+          elementRef={elementRef}
+          zone={ZONES.GRAVEYARD}
+          resetPosition
+        />
+        <Dropzone
+          onDrop={onDrop}
+          acceptFromPlayerId={player.id}
+          accept={[DndItemTypes.CARD, DndItemTypes.LIST_CARD, DndItemTypes.CARD_GROUP]}
+        >
+          <CardStack
+            cards={cards}
+            emptyImage={<GraveyardImage />}
+            draggable
+            zone="graveyard"
           />
-          <Dropzone
-            onDrop={onDrop}
-            acceptFromPlayerId={player.id}
-            accept={[DndItemTypes.CARD, DndItemTypes.LIST_CARD, DndItemTypes.CARD_GROUP]}
-          >
-            <CardStack
-              cards={cards}
-              emptyImage={<GraveyardImage />}
-              draggable
-              zone="graveyard"
-            />
-          </Dropzone>
-        </div>
-      </ContextMenu>
-    </Tooltip>
+        </Dropzone>
+      </div>
+    </ContextMenu>
   );
 };
 

@@ -4,6 +4,7 @@ import React, {
   useContext,
   useEffect,
   useLayoutEffect,
+  useRef,
   useState,
 } from 'react';
 
@@ -14,6 +15,10 @@ import { createPortal } from 'react-dom';
 import { CARD_MODAL_PORTAL_ROOT_ID } from 'components/Game/GameField/playerInterfacePortal';
 import { pluralizeCards } from 'utils/i18nUtils';
 import GameStateContext from 'components/Game/GameStateContext';
+import useShortcut from 'hooks/useShortcut';
+import SHORTCUTS from 'constants/shortcuts';
+import useClickedOutside from 'hooks/useClickedOutside';
+import { Checkbox } from 'antd';
 import StackedCardList from '../StackedCardList/StackedCardList';
 import ColoredPlayerName from '../ColoredPlayerName/ColoredPlayerName';
 
@@ -38,9 +43,9 @@ const getInitialPosition = (element: HTMLDivElement, numberOfCards: number) => {
 
   let positionY: number;
   if (shouldOpenDown) {
-    positionY = y + 10 + height;
+    positionY = y + 20 + height;
   } else {
-    positionY = y - MODAL_HEIGHT - 10;
+    positionY = y - MODAL_HEIGHT - 50;
   }
 
   return {
@@ -69,6 +74,16 @@ const CardListModal = ({
   const { player: self } = useContext(GameStateContext);
   const [isOpen, setIsOpen] = useState(false);
   const [currentPosition, setCurrentPosition] = useState<XYCoord | null>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [keepOpen, setKeepOpen] = useState(false);
+
+  useShortcut(SHORTCUTS.CANCEL, () => setIsOpen(false), {
+    disabled: !isOpen,
+  });
+
+  useClickedOutside(modalRef, () => setIsOpen(false), {
+    disabled: keepOpen,
+  });
 
   useEffect(() => {
     if (currentPosition || !elementRef.current) return;
@@ -87,6 +102,7 @@ const CardListModal = ({
 
     const onClick = (event: MouseEvent) => {
       event.preventDefault();
+
       setIsOpen(true);
     };
 
@@ -122,13 +138,17 @@ const CardListModal = ({
 
   return createPortal(
     <DraggableModal
+      modalRef={modalRef}
       title={displayedTitle}
-      subtitle={`(${pluralizeCards(cards.length, '1').trim()})`}
+      subtitle={`${pluralizeCards(cards.length, '1')}`}
       onClose={() => setIsOpen(false)}
       initialPosition={currentPosition}
       onMove={setCurrentPosition}
     >
       <StackedCardList cards={cards} draggable zone={zone} />
+      <Checkbox checked={keepOpen} onChange={(e) => setKeepOpen(e.target.checked)}>
+        Always visible
+      </Checkbox>
     </DraggableModal>,
     document.getElementById(CARD_MODAL_PORTAL_ROOT_ID)!
   );

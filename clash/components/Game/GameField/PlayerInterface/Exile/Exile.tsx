@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { Popover, Tooltip } from 'antd';
+import React, { useRef } from 'react';
 import { useDrop } from 'react-dnd';
 
 import { Player, ZONES } from 'backend/database/gamestate.types';
@@ -7,22 +6,20 @@ import ExileImage from 'public/assets/icons/exile.svg';
 import Dropzone from 'components/Game/Dropzone/Dropzone';
 import useGameActions from 'components/Game/useGameActions';
 import Card from 'components/GameComponents/Card/Card';
-import StackedCardList from 'components/GameComponents/StackedCardList/StackedCardList';
-import GameStateContext from 'components/Game/GameStateContext';
 import { DndItemTypes, DropCard, DropCardGroup } from 'types/dnd.types';
-
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
-import { pluralizeCards } from 'utils/i18nUtils';
-import styles from './Exile.module.css';
+import CardListModal from 'components/GameComponents/CardListModal/CardListModal';
 import useExileActions from './useExileActions';
+
+import styles from './Exile.module.css';
 
 interface Props {
   player: Player;
 }
 
 const Exile = ({ player }: Props) => {
+  const elementRef = useRef<HTMLDivElement>(null);
   const { onMoveCard } = useGameActions();
-  const { getPlayerColor } = useContext(GameStateContext);
 
   const [{ canDrop }] = useDrop({
     accept: [DndItemTypes.CARD, DndItemTypes.LIST_CARD, DndItemTypes.CARD_GROUP],
@@ -62,46 +59,33 @@ const Exile = ({ player }: Props) => {
     return <div />;
   }
 
-  const title = `Exile: ${pluralizeCards(cards.length, 'one')}`;
-
   return (
-    <Tooltip title={title} mouseEnterDelay={0.5}>
-      <ContextMenu items={exileActions}>
-        <Popover
-          trigger="click"
-          title={title}
-          content={
-            <StackedCardList
-              cards={cards}
-              draggable
-              color={getPlayerColor(player.id)}
-              zone={ZONES.EXILE}
-            />
-          }
+    <ContextMenu items={exileActions}>
+      <div className={styles.wrapper}>
+        <CardListModal
+          player={player}
+          title="Exile"
+          cards={cards}
+          elementRef={elementRef}
+          zone={ZONES.GRAVEYARD}
+          resetPosition
+        />
+        <Dropzone
+          onDrop={onDrop}
+          acceptFromPlayerId={player.id}
+          accept={[DndItemTypes.CARD, DndItemTypes.LIST_CARD, DndItemTypes.CARD_GROUP]}
         >
-          <div className={styles.wrapper}>
-            <Dropzone
-              onDrop={onDrop}
-              acceptFromPlayerId={player.id}
-              accept={[
-                DndItemTypes.CARD,
-                DndItemTypes.LIST_CARD,
-                DndItemTypes.CARD_GROUP,
-              ]}
-            >
-              <div className={styles.inner}>
-                <ExileImage />
-                {cards.map((card) => (
-                  <div key={card.clashId} className={styles.card}>
-                    <Card card={card} dynamicSize zone="exile" />
-                  </div>
-                ))}
+          <div className={styles.inner} ref={elementRef}>
+            <ExileImage />
+            {cards.map((card) => (
+              <div key={card.clashId} className={styles.card}>
+                <Card card={card} dynamicSize zone="exile" />
               </div>
-            </Dropzone>
+            ))}
           </div>
-        </Popover>
-      </ContextMenu>
-    </Tooltip>
+        </Dropzone>
+      </div>
+    </ContextMenu>
   );
 };
 

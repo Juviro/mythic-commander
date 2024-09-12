@@ -15,10 +15,10 @@ const useClickedOutside = (
       if (ref.current.contains(event.target)) return;
       callback();
     };
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mouseup', handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mouseup', handleClickOutside);
     };
   }, [ref.current, disabled]);
 };

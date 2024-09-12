@@ -2,6 +2,7 @@ import React, {
   CSSProperties,
   PropsWithChildren,
   ReactNode,
+  RefObject,
   useEffect,
   useState,
 } from 'react';
@@ -20,6 +21,7 @@ interface Props extends PropsWithChildren {
   onClose?: () => void;
   noCloseTooltip?: string;
   headerColor?: 'primary' | 'default';
+  modalRef?: RefObject<HTMLDivElement>;
 }
 
 const DraggableModal = ({
@@ -31,6 +33,7 @@ const DraggableModal = ({
   noCloseTooltip,
   headerColor,
   subtitle,
+  modalRef,
 }: Props) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
@@ -99,7 +102,7 @@ const DraggableModal = ({
   } as CSSProperties;
 
   return (
-    <div className={styles.modal} style={style} id="TODO:removeme">
+    <div className={styles.modal} style={style} ref={modalRef}>
       <div
         className={classNames(styles.header, {
           [styles.header__primary]: headerColor === 'primary',
