@@ -13,10 +13,3 @@
   align-items: flex-end;
   height: 100%;
 }
-
-.popover_wrapper {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}

@@ -55,6 +55,7 @@ export const getPeekSubItems = (
 
 const useLibraryActions = (player: Player) => {
   const { player: self } = useContext(GameStateContext);
+  const { peekingCards } = useContext(GameStateContext);
   const {
     onPeek,
     onMill,
@@ -88,11 +89,13 @@ const useLibraryActions = (player: Player) => {
     onMill(player.id, amount);
   };
 
+  const isPeeking = peekingCards?.zone === ZONES.LIBRARY;
+
   const items: MenuProps['items'] = [
     {
       key: 'search',
       label: 'Search Library... [Shift + S]',
-      disabled: !player.zones.library.length,
+      disabled: !player.zones.library.length || isPeeking,
       onClick: () => onSearchLibrary(player.id),
       icon: <SearchOutlined />,
     },
@@ -109,7 +112,7 @@ const useLibraryActions = (player: Player) => {
     {
       key: 'peek',
       label: 'Look at...',
-      disabled: !player.zones.library.length,
+      disabled: !player.zones.library.length || isPeeking,
       children: getPeekSubItems(
         onPeekCards,
         'peek',

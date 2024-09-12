@@ -6,7 +6,7 @@ import { DndItemType, DndItemTypes, DropCard } from 'types/dnd.types';
 import classNames from 'classnames';
 import StackedCardList from '../StackedCardList/StackedCardList';
 
-import styles from './ZoneCardsPopover.module.css';
+import styles from './LibraryExplorer.module.css';
 
 interface Props {
   cards: VisibleCard[];
@@ -20,7 +20,7 @@ interface Props {
   stackVertically?: boolean;
 }
 
-const PopoverCardList = ({
+const LibraryExplorerCardList = ({
   cards,
   title,
   titleRight,
@@ -65,4 +65,4 @@ const PopoverCardList = ({
   );
 };
 
-export default PopoverCardList;
+export default LibraryExplorerCardList;

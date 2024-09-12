@@ -3,7 +3,7 @@ import GameStateContext from 'components/Game/GameStateContext';
 import { useContext, useEffect, useState } from 'react';
 import { DropCard } from 'types/dnd.types';
 
-const usePopoverCards = () => {
+const useLibraryExplorer = () => {
   const { gameState, peekingCards, setPeekingCards } = useContext(GameStateContext);
   const { cards, isSearch } = peekingCards!;
   const [cardsToBottom, setCardsToBottom] = useState<VisibleCard[]>([]);
@@ -131,4 +131,4 @@ const usePopoverCards = () => {
   };
 };
 
-export default usePopoverCards;
+export default useLibraryExplorer;

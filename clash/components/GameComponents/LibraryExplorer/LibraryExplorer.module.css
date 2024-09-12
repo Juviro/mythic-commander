@@ -6,48 +6,6 @@
   height: 100%;
 }
 
-.content__minimized {
-  width: 30px;
-  height: 40px;
-  overflow: hidden;
-  opacity: 0;
-}
-
-.minimize_button {
-  position: absolute;
-  left: calc(100% - 48px);
-  bottom: calc(100% - 8px);
-  
-  cursor: pointer;
-  padding: 8px 8px 12px;
-  font-size: 24px;
-  height: 52px;
-  width: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: white;
-  transition: color 0.1s linear;
-}
-
-.minimize_button:hover {
-  color: var(--color-primary);
-}
-
-.minimize_button__minimized {
-  background: transparent;
-  left: 0;
-  top: 10px;
-  width: 100%;
-  height: 100%;
-  transform: rotate(180deg);
-  z-index: 1;
-}
-
-.minimized_title {
-  font-weight: bold;
-}
-
 .title {
   display: flex;
   justify-content: space-between;
@@ -59,7 +17,7 @@
 .card_list_wrapper {
   display: flex;
   flex-direction: column;
-  min-width: 302px;
+  min-width: 312px;
   gap: 8px;
 }
 

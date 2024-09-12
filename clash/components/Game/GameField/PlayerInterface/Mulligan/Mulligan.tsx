@@ -3,7 +3,7 @@ import { Modal } from 'antd';
 
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
-import PopoverCardList from 'components/GameComponents/ZoneCardsPopover/PopoverCardList';
+import LibraryExplorerCardList from 'components/GameComponents/LibraryExplorer/LibraryExplorerCardList';
 import { getCardinalNumberLabel } from 'utils/i18nUtils';
 import { DndItemTypes } from 'types/dnd.types';
 import useMulligan from './useMulligan';
@@ -49,6 +49,7 @@ const Mulligan = ({ player, isSelf }: Props) => {
           <div className={styles.modal_subtitle}>{subTitle}</div>
         </div>
       }
+      centered
       width="fit-content"
       style={{ '--player-color': getPlayerColor(player.id) } as React.CSSProperties}
       okText="Take Hand"
@@ -63,14 +64,14 @@ const Mulligan = ({ player, isSelf }: Props) => {
       }}
     >
       <div className={styles.content}>
-        <PopoverCardList
+        <LibraryExplorerCardList
           cards={toLibrary}
           onDrop={onMoveCard('library')}
           empty="Bottom of Library"
           zone={ZONES.HAND}
           cardDropType={DndItemTypes.MULLIGAN_CARD}
         />
-        <PopoverCardList
+        <LibraryExplorerCardList
           cards={toHand}
           onDrop={onMoveCard('hand')}
           // eslint-disable-next-line max-len

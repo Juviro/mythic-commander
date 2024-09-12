@@ -121,6 +121,7 @@ const CardListModal = ({
   if (!isOpen || !currentPosition) return null;
 
   let displayedTitle: ReactNode = title;
+
   if (player) {
     const isSelf = player.id === self!.id;
     displayedTitle = (

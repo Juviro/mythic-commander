@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { Tooltip } from 'antd';
+import React, { createRef, useContext } from 'react';
 import { DropCard } from 'types/dnd.types';
 
 import { Player, ZONES } from 'backend/database/gamestate.types';
@@ -8,8 +7,7 @@ import useGameActions from 'components/Game/useGameActions';
 import Dropzone from 'components/Game/Dropzone/Dropzone';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import GameStateContext from 'components/Game/GameStateContext';
-import ZoneCardsPopover from 'components/GameComponents/ZoneCardsPopover/ZoneCardsPopover';
-import { pluralizeCards } from 'utils/i18nUtils';
+import LibraryExplorer from 'components/GameComponents/LibraryExplorer/LibraryExplorer';
 import CardStack from '../CardStack/CardStack';
 import useLibraryActions from './useLibraryActions';
 
@@ -26,6 +24,7 @@ const Library = ({ player, isSelf }: Props) => {
   const { onMoveCard, onDrawCard } = useGameActions();
   const { peekingCards } = useContext(GameStateContext);
   const { library } = player.zones;
+  const libraryRef = createRef<HTMLDivElement>();
 
   const isPeeking =
     player.id === peekingCards?.playerId && peekingCards?.zone === ZONES.LIBRARY;
@@ -41,36 +40,25 @@ const Library = ({ player, isSelf }: Props) => {
   const noAnimation = !player.mulligan.cardsAccepted;
 
   return (
-    <Tooltip
-      title={`Library: ${pluralizeCards(library.length, 'one')}`}
-      open={isPeeking ? false : undefined}
-      mouseEnterDelay={0.5}
-    >
-      <div className={styles.wrapper}>
-        <div className={styles.popover_wrapper}>
-          <ZoneCardsPopover
-            cards={isPeeking ? peekingCards.cards : null}
-            zone={ZONES.LIBRARY}
-          />
+    <div className={styles.wrapper} ref={libraryRef}>
+      <LibraryExplorer player={player} libraryRef={libraryRef} />
+      <ContextMenu items={items}>
+        <div
+          className={styles.inner}
+          onClick={isSelf && !isPeeking ? onDrawCard : undefined}
+        >
+          <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id} disabled={isPeeking}>
+            <CardStack
+              cards={cards}
+              noAnimation={noAnimation}
+              emptyImage={<LibraryImage />}
+              draggable={isSelf}
+              zone="library"
+            />
+          </Dropzone>
         </div>
-        <ContextMenu items={items}>
-          <div
-            className={styles.inner}
-            onClick={isSelf && !isPeeking ? onDrawCard : undefined}
-          >
-            <Dropzone onDrop={onDrop} acceptFromPlayerId={player.id} disabled={isPeeking}>
-              <CardStack
-                cards={cards}
-                noAnimation={noAnimation}
-                emptyImage={<LibraryImage />}
-                draggable={isSelf}
-                zone="library"
-              />
-            </Dropzone>
-          </div>
-        </ContextMenu>
-      </div>
-    </Tooltip>
+      </ContextMenu>
+    </div>
   );
 };
 

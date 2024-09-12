@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import PopoverCardList from 'components/GameComponents/ZoneCardsPopover/PopoverCardList';
+import LibraryExplorerCardList from 'components/GameComponents/LibraryExplorer/LibraryExplorerCardList';
 import { ZONES } from 'backend/database/gamestate.types';
 import { DndItemTypes } from 'types/dnd.types';
 import DraggableModal from '../DraggableModal/DraggableModal';
@@ -25,7 +25,7 @@ const Stack = () => {
       }
       onClose={onClose}
     >
-      <PopoverCardList
+      <LibraryExplorerCardList
         stackVertically
         zone={ZONES.STACK}
         cards={gameState.stack.cards}
