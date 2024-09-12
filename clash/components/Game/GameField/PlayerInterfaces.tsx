@@ -5,9 +5,10 @@ import { Player } from 'backend/database/gamestate.types';
 import GameStateContext, { InitializedGameState } from '../GameStateContext';
 import Menu from '../Menu/Menu';
 import PlayerInterface from './PlayerInterface/PlayerInterface';
+import DragLayer from './DragLayer/DragLayer';
 
 import styles from './PlayerInterfaces.module.css';
-import DragLayer from './DragLayer/DragLayer';
+import { CARD_MODAL_PORTAL_ROOT_ID } from './playerInterfacePortal';
 
 const PlayerInterfaces = () => {
   const { gameState, player } = useContext(GameStateContext) as InitializedGameState;
@@ -48,6 +49,7 @@ const PlayerInterfaces = () => {
         </div>
         <Menu />
       </div>
+      <div id={CARD_MODAL_PORTAL_ROOT_ID} />
       <DragLayer />
     </>
   );

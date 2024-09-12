@@ -29,7 +29,6 @@ const StackedCardList = ({
   stackVertically,
 }: Props) => {
   const listRef = React.useRef<HTMLUListElement>(null);
-  if (!cards.length) return null;
 
   const style = color ? ({ '--player-color': color } as CSSProperties) : undefined;
 

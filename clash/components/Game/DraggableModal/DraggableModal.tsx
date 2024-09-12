@@ -15,6 +15,7 @@ import styles from './DraggableModal.module.css';
 interface Props extends PropsWithChildren {
   initialPosition?: XYCoord;
   title?: ReactNode;
+  subtitle?: ReactNode;
   onMove?: (position: XYCoord) => void;
   onClose?: () => void;
   noCloseTooltip?: string;
@@ -29,6 +30,7 @@ const DraggableModal = ({
   onClose,
   noCloseTooltip,
   headerColor,
+  subtitle,
 }: Props) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
@@ -97,7 +99,7 @@ const DraggableModal = ({
   } as CSSProperties;
 
   return (
-    <div className={styles.modal} style={style}>
+    <div className={styles.modal} style={style} id="TODO:removeme">
       <div
         className={classNames(styles.header, {
           [styles.header__primary]: headerColor === 'primary',
@@ -105,7 +107,12 @@ const DraggableModal = ({
         onMouseDown={onMouseDown}
         onMouseUp={onStop}
       >
-        {title && <h1 className={styles.title}>{title}</h1>}
+        {title && (
+          <div className={styles.title_wrapper}>
+            <h1 className={styles.title}>{title}</h1>
+            {subtitle && <h2 className={styles.subtitle}>{subtitle}</h2>}
+          </div>
+        )}
         <Tooltip title={noCloseTooltip}>
           {onClose && (
             <CloseOutlined

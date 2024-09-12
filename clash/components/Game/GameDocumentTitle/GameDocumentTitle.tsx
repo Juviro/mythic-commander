@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import Head from 'next/head';
+import { usePathname } from 'next/navigation';
 import GameStateContext from '../GameStateContext';
 
 const FALLBACK_TITLE = 'Game - Mythic-Commander';
 
 const GameDocumentTitle = () => {
+  const pathname = usePathname();
   const { gameState } = useContext(GameStateContext);
 
   const getTitle = () => {
@@ -16,8 +18,12 @@ const GameDocumentTitle = () => {
       .map((player) =>
         player.commanders.map(({ name }) => name.split(', ')[0]).join(' & ')
       )
-
       .join(' vs. ');
+
+    if (pathname?.includes('/playtest/')) {
+      return `Playtest - ${commanderNames}`;
+    }
+
     return commanderNames;
   };
 
