@@ -18,6 +18,7 @@ interface Props {
   zone: Zone;
   cardDropType?: DndItemType;
   stackVertically?: boolean;
+  large?: boolean;
 }
 
 const LibraryExplorerCardList = ({
@@ -30,11 +31,16 @@ const LibraryExplorerCardList = ({
   zone,
   cardDropType = DndItemTypes.LIST_CARD,
   stackVertically,
+  large,
 }: Props) => {
   return (
     <div className={styles.card_list_wrapper}>
       {(title || titleRight) && (
-        <h4 className={styles.title}>
+        <h4
+          className={classNames(styles.title, {
+            [styles.title__large]: large,
+          })}
+        >
           <span>{title}</span>
           {titleRight && <span>{titleRight}</span>}
         </h4>

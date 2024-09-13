@@ -4,12 +4,13 @@ import { Button, Checkbox, Input, Space } from 'antd';
 import GameStateContext from 'components/Game/GameStateContext';
 import { normalizeName } from 'utils/normalizeName';
 import useGameActions from 'components/Game/useGameActions';
-import { Zone } from 'backend/database/gamestate.types';
 import { hasAnyBasicLandType } from 'utils/cardTypes';
+import { ZONES } from 'backend/database/gamestate.types';
 import LibraryExplorerCardList from './LibraryExplorerCardList';
 import useLibraryExplorer from './useLibraryExplorer';
 
 import styles from './LibraryExplorer.module.css';
+import LibraryExplorerFilter from './LibraryExplorerFilter';
 
 const OrderLabel = () => (
   <span>
@@ -21,12 +22,12 @@ const OrderLabel = () => (
 
 interface Props {
   color?: string;
-  zone: Zone;
 }
 
-const LibraryExplorerContent = ({ color, zone }: Props) => {
+const LibraryExplorerContent = ({ color }: Props) => {
   const { peekingCards, setPeekingCards } = useContext(GameStateContext);
   const [landsOnly, setLandsOnly] = useState(false);
+  const [filteredItemKeys, setFilteredItemKeys] = useState<string[]>([]);
   const style = { '--player-color': color };
 
   const { onEndPeek } = useGameActions();
@@ -73,14 +74,18 @@ const LibraryExplorerContent = ({ color, zone }: Props) => {
     .filter((card) => {
       if (!landsOnly) return true;
       return hasAnyBasicLandType(card.type_line);
+    })
+    .filter((card) => {
+      if (!filteredItemKeys.length) return true;
+      return filteredItemKeys.some((key) => card.type_line.toLowerCase().includes(key));
     });
 
   return (
     <div className={styles.content} style={style as CSSProperties}>
       <LibraryExplorerCardList
-        zone={zone}
         cards={cardsToBottom}
         onDrop={onDropBottom}
+        zone={ZONES.LIBRARY}
         title="Bottom of Library"
         empty="Drag Cards here to put them on the Bottom of the Library"
         bottom={
@@ -101,10 +106,11 @@ const LibraryExplorerContent = ({ color, zone }: Props) => {
       />
       {isSearch && (
         <LibraryExplorerCardList
-          zone={zone}
           onDrop={onDropLibrary}
           cards={filteredCards}
           empty="No cards found"
+          large
+          zone={ZONES.LIBRARY}
           titleRight={<OrderLabel />}
           title={
             <Space size={16}>
@@ -121,16 +127,21 @@ const LibraryExplorerContent = ({ color, zone }: Props) => {
                 onChange={(e) => setLandsOnly(e.target.checked)}
                 style={{ fontWeight: 'normal' }}
               >
-                Only Lands with Basic Land Types
+                Has Basic Land Type
               </Checkbox>
+              <LibraryExplorerFilter
+                cards={cardsInLibrary}
+                filteredItemKeys={filteredItemKeys}
+                setFilteredItemKeys={setFilteredItemKeys}
+              />
             </Space>
           }
         />
       )}
       <LibraryExplorerCardList
-        zone={zone}
         cards={cardsToTop}
         onDrop={onDropTop}
+        zone={ZONES.LIBRARY}
         title="Top of Library"
         empty="Drag Cards here to put them on Top of the Library"
         titleRight={<OrderLabel />}

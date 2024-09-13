@@ -101,7 +101,7 @@ const LibraryExplorer = ({ player, libraryRef }: Props) => {
         </span>
       }
     >
-      <LibraryExplorerContent color={color} zone={ZONES.LIBRARY} />
+      <LibraryExplorerContent color={color} />
     </DraggableModal>,
     document.getElementById(CARD_MODAL_PORTAL_ROOT_ID)!
   );

@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { usePathname } from 'next/navigation';
 import GameStateContext from '../GameStateContext';
 
-const FALLBACK_TITLE = 'Game - Mythic-Commander';
+const FALLBACK_TITLE = 'Play - Mythic-Commander';
 
 const GameDocumentTitle = () => {
   const pathname = usePathname();

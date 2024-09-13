@@ -49,7 +49,6 @@ const Mulligan = ({ player, isSelf }: Props) => {
           <div className={styles.modal_subtitle}>{subTitle}</div>
         </div>
       }
-      centered
       width="fit-content"
       style={{ '--player-color': getPlayerColor(player.id) } as React.CSSProperties}
       okText="Take Hand"
