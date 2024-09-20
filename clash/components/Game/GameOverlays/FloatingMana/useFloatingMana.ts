@@ -2,7 +2,7 @@ import { useLayoutEffect, useState } from 'react';
 import { XYCoord } from 'react-dnd';
 
 import { Player } from 'backend/database/gamestate.types';
-import useGameActions from '../useGameActions';
+import useGameActions from 'components/Game/useGameActions';
 
 const INTIAL_POSITION_PADDING_X = 270;
 const INTIAL_POSITION_PADDING_Y = 15;

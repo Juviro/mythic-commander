@@ -3,12 +3,12 @@ import { useDrop } from 'react-dnd';
 
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import ExileImage from 'public/assets/icons/exile.svg';
-import Dropzone from 'components/Game/Dropzone/Dropzone';
 import useGameActions from 'components/Game/useGameActions';
 import Card from 'components/GameComponents/Card/Card';
 import { DndItemTypes, DropCard, DropCardGroup } from 'types/dnd.types';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import CardListModal from 'components/GameComponents/CardListModal/CardListModal';
+import Dropzone from 'components/GameComponents/Dropzone/Dropzone';
 import useExileActions from './useExileActions';
 
 import styles from './Exile.module.css';

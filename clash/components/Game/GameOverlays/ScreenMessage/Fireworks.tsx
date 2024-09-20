@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import FireworksJs, { FireworksHandlers } from '@fireworks-js/react';
 
-import GameStateContext from '../GameStateContext';
+import GameStateContext from 'components/Game/GameStateContext';
 
 const Fireworks = () => {
   const ref = useRef<FireworksHandlers>(null);

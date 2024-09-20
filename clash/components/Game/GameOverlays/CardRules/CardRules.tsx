@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Empty, List, Modal } from 'antd';
 
-import CardPositionContext from '../CardPositionContext';
+import CardPositionContext from 'components/Game/CardPositionContext';
 import useCardRules from './useCardRules';
 
 const CardRules = () => {

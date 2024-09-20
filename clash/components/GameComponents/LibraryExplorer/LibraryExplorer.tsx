@@ -4,10 +4,10 @@ import { createPortal } from 'react-dom';
 
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
-import DraggableModal from 'components/Game/DraggableModal/DraggableModal';
 import { CARD_MODAL_PORTAL_ROOT_ID } from 'components/Game/GameField/playerInterfacePortal';
 import LibraryExplorerContent from './LibraryExplorerContent';
 import ColoredPlayerName from '../ColoredPlayerName/ColoredPlayerName';
+import DraggableModal from '../DraggableModal/DraggableModal';
 
 const MODAL_HEIGHT = 450;
 const MODAL_WIDTH = 1500;

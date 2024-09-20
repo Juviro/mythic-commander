@@ -4,11 +4,11 @@ import { DropCard } from 'types/dnd.types';
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import LibraryImage from 'public/assets/icons/library.svg';
 import useGameActions from 'components/Game/useGameActions';
-import Dropzone from 'components/Game/Dropzone/Dropzone';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import GameStateContext from 'components/Game/GameStateContext';
 import LibraryExplorer from 'components/GameComponents/LibraryExplorer/LibraryExplorer';
 import { Popover } from 'antd';
+import Dropzone from 'components/GameComponents/Dropzone/Dropzone';
 import CardStack from '../CardStack/CardStack';
 import useLibraryActions from './useLibraryActions';
 

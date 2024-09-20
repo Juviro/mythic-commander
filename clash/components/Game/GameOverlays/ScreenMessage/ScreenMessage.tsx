@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
-import GameStateContext from '../GameStateContext';
-
+import GameStateContext from 'components/Game/GameStateContext';
 import styles from './ScreenMessage.module.css';
 
 const ScreenMessage = () => {

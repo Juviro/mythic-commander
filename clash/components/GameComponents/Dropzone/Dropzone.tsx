@@ -3,8 +3,8 @@ import { DropTargetMonitor, useDrop } from 'react-dnd';
 
 import classNames from 'classnames';
 import { DndItemType, DndItemTypes, DropCard, DropCardGroup } from 'types/dnd.types';
+import CardPositionContext from 'components/Game/CardPositionContext';
 import styles from './Dropzone.module.css';
-import CardPositionContext from '../CardPositionContext';
 
 interface Props {
   children: ReactNode;

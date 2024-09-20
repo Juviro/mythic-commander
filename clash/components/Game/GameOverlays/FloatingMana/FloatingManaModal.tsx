@@ -2,8 +2,8 @@ import React from 'react';
 import { Button } from 'antd';
 
 import { Player } from 'backend/database/gamestate.types';
-import DraggableModal from 'components/Game/DraggableModal/DraggableModal';
 import ColoredPlayerName from 'components/GameComponents/ColoredPlayerName/ColoredPlayerName';
+import DraggableModal from 'components/GameComponents/DraggableModal/DraggableModal';
 import useFloatingMana from './useFloatingMana';
 import FloatingManaSymbols from './FloatingManaSymbols';
 

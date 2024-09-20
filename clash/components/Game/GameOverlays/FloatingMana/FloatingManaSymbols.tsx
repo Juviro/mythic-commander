@@ -9,8 +9,8 @@ import ManaColorlessIcon from 'public/assets/mtgicons/c_colored.svg';
 
 import { FloatingManaValues } from 'backend/database/gamestate.types';
 import PlusMinus from 'components/lib/PlusMinus/PlusMinus';
-import useGameActions from '../useGameActions';
 
+import useGameActions from 'components/Game/useGameActions';
 import styles from './FloatingMana.module.css';
 
 const COLORS = [

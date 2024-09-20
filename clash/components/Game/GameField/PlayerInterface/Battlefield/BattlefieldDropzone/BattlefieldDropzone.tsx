@@ -1,9 +1,9 @@
 import React, { PropsWithChildren } from 'react';
 import { DropTargetMonitor } from 'react-dnd';
 
-import Dropzone from 'components/Game/Dropzone/Dropzone';
 import { Player } from 'backend/database/gamestate.types';
 import { DndItemTypes, DropCard, DropCardGroup } from 'types/dnd.types';
+import Dropzone from 'components/GameComponents/Dropzone/Dropzone';
 import useBattlefieldDropzone from './useBattlefieldDropzone';
 
 interface Props extends PropsWithChildren {

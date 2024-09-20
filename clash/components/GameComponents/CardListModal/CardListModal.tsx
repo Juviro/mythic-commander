@@ -9,7 +9,6 @@ import React, {
 } from 'react';
 
 import { Player, VisibleCard, Zone } from 'backend/database/gamestate.types';
-import DraggableModal from 'components/Game/DraggableModal/DraggableModal';
 import { XYCoord } from 'react-dnd';
 import { createPortal } from 'react-dom';
 import { CARD_MODAL_PORTAL_ROOT_ID } from 'components/Game/GameField/playerInterfacePortal';
@@ -21,6 +20,7 @@ import useClickedOutside from 'hooks/useClickedOutside';
 import { Checkbox } from 'antd';
 import StackedCardList from '../StackedCardList/StackedCardList';
 import ColoredPlayerName from '../ColoredPlayerName/ColoredPlayerName';
+import DraggableModal from '../DraggableModal/DraggableModal';
 
 const MODAL_HEIGHT = 420;
 const MODAL_MARGIN = 80;

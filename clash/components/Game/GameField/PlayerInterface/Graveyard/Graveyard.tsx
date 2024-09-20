@@ -2,11 +2,11 @@ import React, { useRef } from 'react';
 
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import GraveyardImage from 'public/assets/icons/graveyard.svg';
-import Dropzone from 'components/Game/Dropzone/Dropzone';
 import useGameActions from 'components/Game/useGameActions';
 import { DndItemTypes, DropCard, DropCardGroup } from 'types/dnd.types';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import CardListModal from 'components/GameComponents/CardListModal/CardListModal';
+import Dropzone from 'components/GameComponents/Dropzone/Dropzone';
 import CardStack from '../CardStack/CardStack';
 import useGraveyardActions from './useGraveyardActions';
 

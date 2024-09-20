@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 
-import useSettings from '../Menu/GameInfo/GuideModal/Settings/useSettings';
-import GameStateContext from '../GameStateContext';
+import DraggableModal from 'components/GameComponents/DraggableModal/DraggableModal';
+import useSettings from '../../Menu/GameInfo/GuideModal/Settings/useSettings';
+import GameStateContext from '../../GameStateContext';
 import { TIPS } from './tips';
-import DraggableModal from '../DraggableModal/DraggableModal';
 
 const DISPLAY_DURATION_S = 15;
 

@@ -1,12 +1,12 @@
 import React, { ReactNode } from 'react';
 
 import { VisibleCard, Zone } from 'backend/database/gamestate.types';
-import Dropzone from 'components/Game/Dropzone/Dropzone';
 import { DndItemType, DndItemTypes, DropCard } from 'types/dnd.types';
 import classNames from 'classnames';
 import StackedCardList from '../StackedCardList/StackedCardList';
 
 import styles from './LibraryExplorer.module.css';
+import Dropzone from '../Dropzone/Dropzone';
 
 interface Props {
   cards: VisibleCard[];

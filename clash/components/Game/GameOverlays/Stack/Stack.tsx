@@ -3,9 +3,9 @@ import React, { useContext } from 'react';
 import LibraryExplorerCardList from 'components/GameComponents/LibraryExplorer/LibraryExplorerCardList';
 import { ZONES } from 'backend/database/gamestate.types';
 import { DndItemTypes } from 'types/dnd.types';
-import DraggableModal from '../DraggableModal/DraggableModal';
+import DraggableModal from 'components/GameComponents/DraggableModal/DraggableModal';
 import useStack from './useStack';
-import GameStateContext from '../GameStateContext';
+import GameStateContext from '../../GameStateContext';
 
 const Stack = () => {
   const { isInitialized, gameState } = useContext(GameStateContext);

@@ -1,6 +1,11 @@
 import { useContext } from 'react';
 import { Input, MenuProps } from 'antd';
-import { ArrowRightOutlined, EyeOutlined, SearchOutlined } from '@ant-design/icons';
+import {
+  ArrowRightOutlined,
+  EyeOutlined,
+  GroupOutlined,
+  SearchOutlined,
+} from '@ant-design/icons';
 
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
@@ -63,6 +68,7 @@ const useLibraryActions = (player: Player) => {
     onPlayTopLibraryCardFaceDown,
     onShuffle,
     onDrawCard,
+    onRevealCards,
   } = useGameActions();
 
   const cardIds = player.zones.library.map((card) => card.clashId);
@@ -99,29 +105,45 @@ const useLibraryActions = (player: Player) => {
       onClick: () => onSearchLibrary(player.id),
       icon: <SearchOutlined />,
     },
-    {
-      key: 'play-face-down',
-      label: 'Play top card face down',
-      disabled: !player.zones.library.length,
-      onClick: () =>
-        onPlayTopLibraryCardFaceDown({
-          playerId: player.id,
-        }),
-      icon: <ClashIcon id="flip" size={16} />,
-    },
-    {
-      key: 'peek',
-      label: 'Look at...',
-      disabled: !player.zones.library.length || isPeeking,
-      children: getPeekSubItems(
-        onPeekCards,
-        'peek',
-        undefined,
-        player.zones.library.length
-      ),
-      icon: <EyeOutlined />,
-    },
   ];
+
+  if (isSelf) {
+    items.push(
+      {
+        key: 'play-face-down',
+        label: 'Play top card face down',
+        disabled: !player.zones.library.length,
+        onClick: () =>
+          onPlayTopLibraryCardFaceDown({
+            playerId: player.id,
+          }),
+        icon: <ClashIcon id="flip" size={16} />,
+      },
+      {
+        key: 'reveal',
+        label: 'Reveal cards...',
+        disabled: !player.zones.library.length || isPeeking,
+        onClick: () =>
+          onRevealCards({
+            zone: ZONES.LIBRARY,
+          }),
+        icon: <GroupOutlined />,
+      }
+    );
+  }
+
+  items.push({
+    key: 'peek',
+    label: 'Look at...',
+    disabled: !player.zones.library.length || isPeeking,
+    children: getPeekSubItems(
+      onPeekCards,
+      'peek',
+      undefined,
+      player.zones.library.length
+    ),
+    icon: <EyeOutlined />,
+  });
 
   if (isSelf) {
     const primaryActions = [

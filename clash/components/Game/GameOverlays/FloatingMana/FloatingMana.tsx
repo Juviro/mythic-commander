@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import GameStateContext from '../GameStateContext';
+
+import GameStateContext from 'components/Game/GameStateContext';
 import FloatingManaModal from './FloatingManaModal';
 
 const FloatingMana = () => {

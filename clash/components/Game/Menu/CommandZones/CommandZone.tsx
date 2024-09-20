@@ -3,10 +3,10 @@ import classNames from 'classnames';
 
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import Card from 'components/GameComponents/Card/Card';
-import Dropzone from 'components/Game/Dropzone/Dropzone';
 import useGameActions from 'components/Game/useGameActions';
 
 import { DropCard } from 'types/dnd.types';
+import Dropzone from 'components/GameComponents/Dropzone/Dropzone';
 import CommanderCasted from './CommanderCasted';
 
 import styles from './CommandZones.module.css';

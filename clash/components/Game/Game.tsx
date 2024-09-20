@@ -6,13 +6,9 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { GameStateContextProvider } from './GameStateContext';
 import GameField from './GameField/GameField';
 import { CardPositionContextProvider } from './CardPositionContext';
-import ScreenMessage from './ScreenMessage/ScreenMessage';
-import Fireworks from './ScreenMessage/Fireworks';
-import CardRules from './CardRules/CardRules';
+
 import GameDocumentTitle from './GameDocumentTitle/GameDocumentTitle';
-import TipOfTheDay from './TipOfTheDay/TipOfTheDay';
-import FloatingMana from './FloatingMana/FloatingMana';
-import Stack from './Stack/Stack';
+import GameOverlays from './GameOverlays/GameOverlays';
 
 const queryClient = new QueryClient();
 
@@ -23,13 +19,8 @@ const Game = () => {
         <QueryClientProvider client={queryClient}>
           <DndProvider backend={HTML5Backend}>
             <GameField />
-            <CardRules />
-            <ScreenMessage />
-            <Fireworks />
             <GameDocumentTitle />
-            <TipOfTheDay />
-            <FloatingMana />
-            <Stack />
+            <GameOverlays />
           </DndProvider>
         </QueryClientProvider>
       </CardPositionContextProvider>

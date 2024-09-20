@@ -1,7 +1,7 @@
 import { useContext, useMemo } from 'react';
 import { GameState, VisibleCard } from 'backend/database/gamestate.types';
 import { useQuery } from 'react-query';
-import GameStateContext from '../GameStateContext';
+import GameStateContext from '../../GameStateContext';
 
 const getFullCard = (cardId: string, gameState: GameState) => {
   let card: VisibleCard;

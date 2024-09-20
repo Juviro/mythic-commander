@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { XYCoord } from 'react-dnd';
 import { DropCard } from 'types/dnd.types';
 import { ZONES } from 'backend/database/gamestate.types';
-import useGameActions from '../useGameActions';
+import useGameActions from '../../useGameActions';
 
 const useStack = () => {
   const { toggleStackOverlay, onMoveCard } = useGameActions();
