@@ -19,6 +19,7 @@ interface Props {
   isFaceDown?: boolean;
   canTransform?: boolean;
   canTurnFaceDown?: boolean;
+  canFlip?: boolean;
 }
 
 const useCardActions = ({
@@ -31,6 +32,7 @@ const useCardActions = ({
   canCopy,
   canTransform,
   canTurnFaceDown,
+  canFlip,
 }: Props) => {
   const {
     transformCards,
@@ -48,7 +50,7 @@ const useCardActions = ({
     contextMenuTitle,
   });
 
-  const { addCounterItem, turnFacDownItem, rotateItem, peekItem, copyItem } =
+  const { addCounterItem, turnFacDownItem, flipItem, peekItem, copyItem } =
     useBattlefieldCardActions({
       cardIds,
       player,
@@ -84,7 +86,7 @@ const useCardActions = ({
   addItem(transformItem, zone !== ZONES.BATTLEFIELD || !canTransform);
   addItem(turnFacDownItem, zone !== ZONES.BATTLEFIELD || !canTurnFaceDown);
   addItem(peekItem, zone !== ZONES.BATTLEFIELD || !isFaceDown || cardIds.length !== 1);
-  addItem(rotateItem, zone !== ZONES.BATTLEFIELD);
+  addItem(flipItem, zone !== ZONES.BATTLEFIELD || !canFlip);
   addItem(addCounterItem, zone !== ZONES.BATTLEFIELD || !battlefieldPlayerId, 'before');
   addItem(copyItem, !canCopy || zone !== ZONES.BATTLEFIELD, 'after');
 

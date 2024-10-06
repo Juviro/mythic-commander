@@ -51,6 +51,7 @@ export interface VisibleCard extends HiddenCard {
   id: string;
   name: string;
   transformable?: boolean;
+  flippable?: boolean;
   layout?: LayoutType;
   meta?: CardMeta;
   manaValue: number;
@@ -78,6 +79,7 @@ export interface FaceDownCard
     Pick<VisibleBattlefieldCard, 'position' | 'counters' | 'tapped' | 'meta'> {
   faceDown: true;
   transformable?: false;
+  flippable?: false;
   transformed?: false;
   isToken?: false;
   visibleTo?: string[];

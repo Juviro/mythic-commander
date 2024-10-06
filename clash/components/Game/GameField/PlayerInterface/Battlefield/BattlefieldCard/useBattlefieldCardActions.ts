@@ -17,6 +17,7 @@ const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
     zone: ZONES.BATTLEFIELD,
     player,
     canTransform: card.transformable,
+    canFlip: card.flippable,
     canTurnFaceDown: !card.isToken,
     isFaceDown: card.faceDown,
     canCopy: !card.faceDown,

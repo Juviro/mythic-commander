@@ -43,9 +43,6 @@ const BattlefieldCard = ({ card, player, inSelection, inPreview }: Props) => {
   }
 
   let rotation = getCardRotation(card);
-  if ('rotateDeg' in card && card.rotateDeg) {
-    rotation += card.rotateDeg;
-  }
   if (card.tapped) {
     rotation += 90;
   }
@@ -69,6 +66,7 @@ const BattlefieldCard = ({ card, player, inSelection, inPreview }: Props) => {
           [styles.card__hovered]: isHovered,
           [styles.card__selected]: isSelected,
           [styles.card__rotation]: rotation,
+          [styles.card__flipped]: 'rotateDeg' in card && card.rotateDeg === 180,
         })}
         onContextMenu={inSelection ? undefined : (e) => e.stopPropagation()}
         data-card-id={inPreview ? `${card.clashId}-preview` : card.clashId}

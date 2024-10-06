@@ -42,6 +42,10 @@ export const getCardRotation = (card: VisibleCard | BattlefieldCard) => {
     return 0;
   }
 
+  if ('rotateDeg' in card && card.rotateDeg) {
+    return card.rotateDeg;
+  }
+
   if (card.layout === 'split') {
     return 90;
   }

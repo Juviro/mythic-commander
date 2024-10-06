@@ -8,6 +8,10 @@
     z-index: 100;
     user-select: none;
   }
+
+  .card__flipped {
+    transform-origin: 50% 40%;
+  }
     
   .card__rotation {
     transform: translate(-50%, -50%) rotate(var(--rotation));

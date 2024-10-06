@@ -23,7 +23,7 @@ import {
   ChatCommandPayload,
   PeekFaceDownPayload,
   PlayTopCardFaceDownPayload,
-  RotateCardsPayload,
+  FlipCardsPayload,
   SetCommanderDamagePayload,
   SetStopPointPayload,
   TrackFloatingManaPayload,
@@ -104,8 +104,8 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.TRANSFORM_CARDS, payload);
   };
 
-  const onRotateCards = (payload: RotateCardsPayload) => {
-    socket?.emit(SOCKET_MSG_GAME.ROTATE_CARDS, payload);
+  const onFlipCards = (payload: FlipCardsPayload) => {
+    socket?.emit(SOCKET_MSG_GAME.FLIP_CARDS, payload);
   };
 
   const onTurnFaceDown = (payload: TurnCardsFaceDownPayload) => {
@@ -221,7 +221,7 @@ const useGameActions = () => {
     copyCard,
     onTapCards,
     onTransformCards,
-    onRotateCards,
+    onFlipCards,
     onTurnFaceDown,
     onPlayTopLibraryCardFaceDown,
     onPeekFaceDown,

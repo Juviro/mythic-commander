@@ -15,7 +15,7 @@ interface Props {
 }
 
 const useBattlefieldCardActions = ({ cardIds, player, isFaceDown }: Props) => {
-  const { onAddCounters, copyCard, onTurnFaceDown, onPeekFaceDown, onRotateCards } =
+  const { onAddCounters, copyCard, onTurnFaceDown, onPeekFaceDown, onFlipCards } =
     useGameActions();
 
   const onAddCounter = (type: string) => (e?: MouseEvent) => {
@@ -64,10 +64,9 @@ const useBattlefieldCardActions = ({ cardIds, player, isFaceDown }: Props) => {
     });
   };
 
-  const rotateCards = (event: any) => {
-    onRotateCards({
+  const flipCards = () => {
+    onFlipCards({
       cardIds,
-      rotateLeft: event.domEvent.shiftKey,
       battlefieldPlayerId: player.id,
     });
   };
@@ -102,10 +101,10 @@ const useBattlefieldCardActions = ({ cardIds, player, isFaceDown }: Props) => {
     icon: <ClashIcon id="flip" size={16} />,
   };
 
-  const rotateItem = {
-    key: 'rotate',
-    label: 'Rotate 90°',
-    onClick: rotateCards,
+  const flipItem = {
+    key: 'flip',
+    label: 'Flip (180°)',
+    onClick: flipCards,
     icon: <EnterOutlined style={{ transform: 'rotate(180deg)' }} />,
   };
 
@@ -126,7 +125,7 @@ const useBattlefieldCardActions = ({ cardIds, player, isFaceDown }: Props) => {
   return {
     addCounterItem,
     turnFacDownItem,
-    rotateItem,
+    flipItem,
     peekItem,
     copyItem,
   };

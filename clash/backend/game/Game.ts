@@ -29,7 +29,7 @@ import {
   PeekFaceDownPayload,
   PeekPayload,
   RevealPayload,
-  RotateCardsPayload,
+  FlipCardsPayload,
   SOCKET_MSG_GAME,
   SOCKET_MSG_GENERAL,
   SearchLibraryPayload,
@@ -305,6 +305,7 @@ export default class Game {
           layout: undefined,
           type_line: undefined,
           transformable: false,
+          flippable: false,
         };
       }),
     };
@@ -754,6 +755,7 @@ export default class Game {
 
     const transformable =
       layout === 'transform' || layout === 'modal_dfc' || layout === 'double_faced_token';
+    const flippable = layout === 'flip';
 
     const token: BattlefieldCard = {
       clashId: uniqid(),
@@ -766,6 +768,7 @@ export default class Game {
       isToken: true,
       manaValue: 0,
       transformable,
+      flippable,
       position: Game.fixPosition(stackedPosition),
     };
 
@@ -881,16 +884,16 @@ export default class Game {
     this.emitPlayerUpdate(player);
   }
 
-  rotateCards(payload: RotateCardsPayload) {
-    const { cardIds, battlefieldPlayerId, rotateLeft } = payload;
+  flipCards(payload: FlipCardsPayload) {
+    const { cardIds, battlefieldPlayerId } = payload;
 
     const player = this.getPlayerById(battlefieldPlayerId);
 
     player.zones.battlefield.forEach((card) => {
       if (!cardIds.includes(card.clashId)) return;
       if (card.faceDown) return;
-      const delta = rotateLeft ? -90 : 90;
-      card.rotateDeg = (card.rotateDeg || 0) + delta;
+
+      card.rotateDeg = card.rotateDeg ? 0 : 180;
     });
 
     this.emitPlayerUpdate(player);

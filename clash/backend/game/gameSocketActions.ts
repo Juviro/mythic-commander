@@ -20,7 +20,7 @@ import {
   PeekPayload,
   PlayTopCardFaceDownPayload,
   RevealPayload,
-  RotateCardsPayload,
+  FlipCardsPayload,
   SOCKET_MSG_GAME,
   SOCKET_MSG_GENERAL,
   SearchLibraryPayload,
@@ -145,8 +145,8 @@ const gameSocketActions = (io: Server) => {
       currentGames[currentGameId].transformCards(payload);
     });
 
-    socket.on(SOCKET_MSG_GAME.ROTATE_CARDS, (payload: RotateCardsPayload) => {
-      currentGames[currentGameId].rotateCards(payload);
+    socket.on(SOCKET_MSG_GAME.FLIP_CARDS, (payload: FlipCardsPayload) => {
+      currentGames[currentGameId].flipCards(payload);
     });
 
     socket.on(SOCKET_MSG_GAME.TURN_FACE_DOWN, (payload: TurnCardsFaceDownPayload) => {
