@@ -5,6 +5,7 @@ import { getCountersLabel } from 'constants/counters';
 import { DeleteOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import useGameActions from 'components/Game/useGameActions';
 
+import LongPress from 'components/lib/LongPress/LongPress';
 import styles from './CardCounters.module.css';
 
 interface Props {
@@ -25,14 +26,22 @@ const CardCounterTooltip = ({ children, type, amount, clashId, hidden }: Props) 
     );
   }
 
-  const onClickPlusMins = (isMinus: boolean) => (e: MouseEvent) => {
-    e.stopPropagation();
-    onAddCounters({
-      cardIds: [clashId],
-      type,
-      amount: isMinus ? -1 : 1,
-    });
-  };
+  const onClickPlusMins =
+    (isMinus: boolean, newAmount = 1) =>
+    (e?: MouseEvent) => {
+      e?.stopPropagation();
+
+      let fixedAmount = newAmount;
+      if (isMinus && amount < newAmount) {
+        fixedAmount = amount;
+      }
+
+      onAddCounters({
+        cardIds: [clashId],
+        type,
+        amount: isMinus ? -fixedAmount : fixedAmount,
+      });
+    };
 
   const onDelete = (e: MouseEvent) => {
     e.stopPropagation();
@@ -62,15 +71,19 @@ const CardCounterTooltip = ({ children, type, amount, clashId, hidden }: Props) 
         <DeleteOutlined onClick={onDelete} />
       </div>
       <div className={styles.tooltip__input_wrapper}>
-        <MinusOutlined
-          onClick={onClickPlusMins(true)}
-          className={styles.tooltip_button_minus}
-        />
+        <LongPress
+          onLongPress={onClickPlusMins(true, 10)}
+          onPress={onClickPlusMins(true)}
+        >
+          <MinusOutlined className={styles.tooltip_button_minus} />
+        </LongPress>
         <span className={styles.tooltip__amount}>{amount}</span>
-        <PlusOutlined
-          onClick={onClickPlusMins(false)}
-          className={styles.tooltip_button_plus}
-        />
+        <LongPress
+          onLongPress={onClickPlusMins(false, 10)}
+          onPress={onClickPlusMins(false)}
+        >
+          <PlusOutlined className={styles.tooltip_button_plus} />
+        </LongPress>
       </div>
     </div>
   );

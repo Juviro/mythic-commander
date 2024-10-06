@@ -20,7 +20,14 @@ const ContextMenu = ({ children, items, placement = 'top', open }: Props) => {
       open={open}
       // We need to stop the propagation, otherwise useClickedOutside will not work
       // eslint-disable-next-line react/no-unstable-nested-components
-      dropdownRender={(menu) => <div onMouseUp={(e) => e.stopPropagation()}>{menu}</div>}
+      dropdownRender={(menu) => (
+        <div
+          onMouseUp={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+        >
+          {menu}
+        </div>
+      )}
     >
       {children}
     </Dropdown>
