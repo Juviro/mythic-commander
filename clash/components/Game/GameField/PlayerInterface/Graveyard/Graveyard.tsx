@@ -47,7 +47,7 @@ const Graveyard = ({ player }: Props) => {
           player={player}
           title="Graveyard"
           cards={graveyard}
-          elementRef={elementRef}
+          element={elementRef?.current}
           zone={ZONES.GRAVEYARD}
           resetPosition
         />

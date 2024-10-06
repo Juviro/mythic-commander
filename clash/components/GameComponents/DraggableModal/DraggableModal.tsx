@@ -22,11 +22,13 @@ interface Props extends PropsWithChildren {
   noCloseTooltip?: string;
   headerColor?: 'primary' | 'default';
   modalRef?: RefObject<HTMLDivElement>;
+  closable?: boolean;
 }
 
 const DraggableModal = ({
   children,
   onMove,
+  closable = true,
   title,
   initialPosition,
   onClose,
@@ -116,16 +118,18 @@ const DraggableModal = ({
             {subtitle && <h2 className={styles.subtitle}>{subtitle}</h2>}
           </div>
         )}
-        <Tooltip title={noCloseTooltip}>
-          {onClose && (
-            <CloseOutlined
-              className={classNames({
-                [styles.close_disabled]: noCloseTooltip,
-              })}
-              onClick={noCloseTooltip ? undefined : onClose}
-            />
-          )}
-        </Tooltip>
+        {closable && (
+          <Tooltip title={noCloseTooltip}>
+            {onClose && (
+              <CloseOutlined
+                className={classNames({
+                  [styles.close_disabled]: noCloseTooltip,
+                })}
+                onClick={noCloseTooltip ? undefined : onClose}
+              />
+            )}
+          </Tooltip>
+        )}
       </div>
       <div className={styles.modal_content}>{children}</div>
     </div>

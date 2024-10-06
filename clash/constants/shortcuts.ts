@@ -7,6 +7,7 @@ const SHORTCUTS = {
   DRAW: 'd',
   SHUFFLE: 's',
   SEARCH: 's',
+  REVEAL_CARDS: 'r',
   ORGANIZE_LANDS: 'o',
   CANCEL: 'Escape',
   SPACE: ' ',

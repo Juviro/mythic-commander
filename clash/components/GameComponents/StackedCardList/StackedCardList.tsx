@@ -1,4 +1,4 @@
-import React, { CSSProperties, WheelEvent } from 'react';
+import React, { CSSProperties, useEffect, useRef, WheelEvent } from 'react';
 
 import { VisibleCard, Zone } from 'backend/database/gamestate.types';
 import { DndItemType, DndItemTypes, DropCard } from 'types/dnd.types';
@@ -28,9 +28,17 @@ const StackedCardList = ({
   cardDropType = DndItemTypes.LIST_CARD,
   stackVertically,
 }: Props) => {
+  const numberOfCardsRef = useRef(cards.length);
   const listRef = React.useRef<HTMLUListElement>(null);
 
   const style = color ? ({ '--player-color': color } as CSSProperties) : undefined;
+
+  useEffect(() => {
+    if (numberOfCardsRef.current === cards.length || !listRef.current) return;
+
+    listRef.current.scrollLeft = listRef.current.scrollWidth;
+    numberOfCardsRef.current = cards.length;
+  }, [cards.length]);
 
   // Allow scrolling horizontally with the mouse wheel
   const onWheel = (e: WheelEvent) => {

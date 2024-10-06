@@ -1,6 +1,5 @@
 import React, {
   ReactNode,
-  RefObject,
   useContext,
   useEffect,
   useLayoutEffect,
@@ -25,7 +24,7 @@ import DraggableModal from '../DraggableModal/DraggableModal';
 const MODAL_HEIGHT = 420;
 const MODAL_MARGIN = 80;
 
-const getInitialPosition = (element: HTMLDivElement, numberOfCards: number) => {
+const getInitialPosition = (numberOfCards: number, element?: HTMLDivElement | null) => {
   if (!element) {
     return { x: 0, y: 0 };
   }
@@ -57,48 +56,56 @@ const getInitialPosition = (element: HTMLDivElement, numberOfCards: number) => {
 interface Props {
   title: string;
   cards: VisibleCard[];
-  elementRef: RefObject<HTMLDivElement>;
+  element?: HTMLDivElement | null;
   zone: Zone;
   player?: Player;
   resetPosition?: boolean;
+  open?: boolean;
+  closable?: boolean;
+  footer?: ReactNode;
 }
 
 const CardListModal = ({
   cards,
-  elementRef,
+  element,
   zone,
   title,
   resetPosition,
   player,
+  open,
+  closable = true,
+  footer,
 }: Props) => {
   const { player: self } = useContext(GameStateContext);
-  const [isOpen, setIsOpen] = useState(false);
+  const [internalIsOpen, setIsOpen] = useState(false);
   const [currentPosition, setCurrentPosition] = useState<XYCoord | null>(null);
-  const modalRef = useRef<HTMLDivElement>(null);
   const [keepOpen, setKeepOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const isOpen = open ?? internalIsOpen;
 
   useShortcut(SHORTCUTS.CANCEL, () => setIsOpen(false), {
-    disabled: !isOpen,
+    disabled: !isOpen || !closable,
   });
 
   useClickedOutside(modalRef, () => setIsOpen(false), {
-    disabled: keepOpen,
+    disabled: keepOpen || !closable,
   });
 
   useEffect(() => {
-    if (currentPosition || !elementRef.current) return;
+    if (currentPosition || !element) return;
 
-    setCurrentPosition(getInitialPosition(elementRef.current, cards.length));
-  }, [elementRef.current]);
+    setCurrentPosition(getInitialPosition(cards.length, element));
+  }, [element]);
 
   useEffect(() => {
     if (!resetPosition || isOpen) return;
 
-    setCurrentPosition(getInitialPosition(elementRef.current!, cards.length));
+    setCurrentPosition(getInitialPosition(cards.length, element));
   }, [resetPosition, isOpen]);
 
   useEffect(() => {
-    if (!elementRef.current) return undefined;
+    if (!element) return undefined;
 
     const onClick = (event: MouseEvent) => {
       event.preventDefault();
@@ -106,12 +113,12 @@ const CardListModal = ({
       setIsOpen(true);
     };
 
-    elementRef.current.addEventListener('click', onClick);
+    element.addEventListener('click', onClick);
 
     return () => {
-      elementRef.current?.removeEventListener('click', onClick);
+      element?.removeEventListener('click', onClick);
     };
-  }, [elementRef.current]);
+  }, [element]);
 
   useLayoutEffect(() => {
     if (cards.length) return;
@@ -140,6 +147,7 @@ const CardListModal = ({
   return createPortal(
     <DraggableModal
       modalRef={modalRef}
+      closable={closable}
       title={displayedTitle}
       subtitle={`${pluralizeCards(cards.length, '1')}`}
       onClose={() => setIsOpen(false)}
@@ -147,9 +155,12 @@ const CardListModal = ({
       onMove={setCurrentPosition}
     >
       <StackedCardList cards={cards} draggable zone={zone} />
-      <Checkbox checked={keepOpen} onChange={(e) => setKeepOpen(e.target.checked)}>
-        Always visible
-      </Checkbox>
+      {closable && (
+        <Checkbox checked={keepOpen} onChange={(e) => setKeepOpen(e.target.checked)}>
+          Always visible
+        </Checkbox>
+      )}
+      {footer}
     </DraggableModal>,
     document.getElementById(CARD_MODAL_PORTAL_ROOT_ID)!
   );

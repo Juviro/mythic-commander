@@ -43,6 +43,10 @@ const GAME_SHORTCUTS = [
     value: 'S',
   },
   {
+    label: 'Reveal cards',
+    value: 'R',
+  },
+  {
     label: 'Organize Lands',
     value: 'O',
   },

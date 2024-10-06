@@ -28,6 +28,7 @@ import {
   SetStopPointPayload,
   TrackFloatingManaPayload,
   ToggleStackOpenPayload,
+  RevealPayload,
 } from 'backend/constants/wsEvents';
 import { Phase, PlayerZone, Zone } from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
@@ -133,6 +134,10 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.END_PEEK, payload);
   };
 
+  const onRevealCards = (payload: RevealPayload) => {
+    socket?.emit(SOCKET_MSG_GAME.REVEAL_CARDS, payload);
+  };
+
   const onSearchLibrary = (playerId: string) => {
     const payload: SearchLibraryPayload = { playerId };
     socket?.emit(SOCKET_MSG_GAME.SEARCH_LIBRARY, payload);
@@ -223,6 +228,7 @@ const useGameActions = () => {
     onMill,
     onPeek,
     onEndPeek,
+    onRevealCards,
     onSearchLibrary,
     onShuffle,
     trackFloatingMana,

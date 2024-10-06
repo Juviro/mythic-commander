@@ -28,6 +28,7 @@ import {
   MoveCardsGroupPayload,
   PeekFaceDownPayload,
   PeekPayload,
+  RevealPayload,
   RotateCardsPayload,
   SOCKET_MSG_GAME,
   SOCKET_MSG_GENERAL,
@@ -458,7 +459,7 @@ export default class Game {
 
     let spliceIndex = -1;
 
-    this.gameState.players.forEach((player) =>
+    this.gameState.players.forEach((player) => {
       Object.entries(player.zones).forEach(([zone, cards]) => {
         return (cards as Card[]).some((card, i) => {
           if (card.clashId !== clashId) return false;
@@ -468,8 +469,21 @@ export default class Game {
           cardToMove = cards.splice(i, 1)[0] as VisibleCard;
           return true;
         });
-      })
-    );
+      });
+
+      if (player.revealedCards) {
+        player.revealedCards?.cards.forEach((card, i) => {
+          if (card.clashId !== clashId) return;
+          fromPlayer = player;
+          spliceIndex = i;
+          cardToMove = player.revealedCards!.cards.splice(i, 1)[0] as VisibleCard;
+        });
+        // close modal if last card is moved away
+        if (!player.revealedCards.cards.length) {
+          player.revealedCards = undefined;
+        }
+      }
+    });
 
     this.gameState.stack?.cards.forEach((card, i) => {
       if (card.clashId !== clashId) return;
@@ -1050,6 +1064,27 @@ export default class Game {
         shuffleLibrary,
       },
     });
+  }
+
+  revealCards(playerId: string, payload: RevealPayload) {
+    const { zone, amount = 1 } = payload;
+
+    const player = this.getPlayerById(playerId);
+    if (!player.revealedCards) {
+      player.revealedCards = {
+        zone,
+        cards: [],
+      };
+    }
+
+    player.revealedCards.zone = zone;
+
+    const revealedCards = (
+      amount ? player.zones[zone].splice(-amount) : []
+    ) as VisibleCard[];
+    player.revealedCards.cards.push(...revealedCards);
+
+    this.emitPlayerUpdate(player);
   }
 
   searchLibrary(searchingPlayerId: string, payload: SearchLibraryPayload) {

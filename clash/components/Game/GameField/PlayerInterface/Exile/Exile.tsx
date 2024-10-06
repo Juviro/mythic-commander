@@ -66,7 +66,7 @@ const Exile = ({ player }: Props) => {
           player={player}
           title="Exile"
           cards={cards}
-          elementRef={elementRef}
+          element={elementRef?.current}
           zone={ZONES.GRAVEYARD}
           resetPosition
         />

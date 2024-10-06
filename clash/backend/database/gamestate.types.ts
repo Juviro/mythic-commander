@@ -123,6 +123,11 @@ interface Mulligan {
   cardsAccepted: boolean;
 }
 
+interface RevealedCards {
+  zone: PlayerZone;
+  cards: VisibleCard[];
+}
+
 export interface Player {
   id: string;
   name: string;
@@ -134,6 +139,7 @@ export interface Player {
   mulligan: Mulligan;
   resigned?: boolean;
   activeUtils?: GameUtils;
+  revealedCards?: RevealedCards;
 }
 
 // ##################### Meta #####################

@@ -17,6 +17,8 @@ import ZonesOverviewPopover from './ZonesOverviewPopover';
 
 const MAX_DISPLAYED_CARDS = 10;
 
+export const getLibraryId = (playerId: string) => `library-${playerId}`;
+
 interface Props {
   player: Player;
   isSelf?: boolean;
@@ -42,7 +44,7 @@ const Library = ({ player, isSelf }: Props) => {
   const noAnimation = !player.mulligan.cardsAccepted;
 
   return (
-    <div className={styles.wrapper} ref={libraryRef}>
+    <div className={styles.wrapper} ref={libraryRef} id={getLibraryId(player.id)}>
       <LibraryExplorer player={player} libraryRef={libraryRef} />
       <ContextMenu items={items}>
         <Popover mouseEnterDelay={0.3} content={<ZonesOverviewPopover player={player} />}>

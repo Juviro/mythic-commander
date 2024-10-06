@@ -4,6 +4,7 @@
     padding: 12px 50px;
     --size-card-width: 200px;
     overflow-y: hidden;
+    max-width: 1000px;
 }
 
 .wrapper:has(.cards__vertical_layout) {

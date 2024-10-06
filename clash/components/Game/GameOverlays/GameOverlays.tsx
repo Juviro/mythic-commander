@@ -6,6 +6,7 @@ import TipOfTheDay from './TipOfTheDay/TipOfTheDay';
 import FloatingMana from './FloatingMana/FloatingMana';
 import Stack from './Stack/Stack';
 import CardRules from './CardRules/CardRules';
+import RevealedCards from './RevealedCards/RevealedCards';
 
 const GameOverlays = () => {
   return (
@@ -14,6 +15,7 @@ const GameOverlays = () => {
       <Fireworks />
       <TipOfTheDay />
       <FloatingMana />
+      <RevealedCards />
       <Stack />
       <CardRules />
     </>

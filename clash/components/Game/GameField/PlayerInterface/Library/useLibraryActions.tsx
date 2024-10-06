@@ -75,12 +75,19 @@ const useLibraryActions = (player: Player) => {
 
   const isSelf = player.id === self!.id;
 
+  const revealCards = () => {
+    onRevealCards({
+      zone: ZONES.LIBRARY,
+    });
+  };
+
   useShortcut(SHORTCUTS.DRAW, onDrawCard, { disabled: !isSelf });
   useShortcut(SHORTCUTS.SEARCH, () => onSearchLibrary(player.id), {
     disabled: !isSelf,
     modifierKeys: ['shift'],
   });
   useShortcut(SHORTCUTS.SHUFFLE, onShuffle, { disabled: !isSelf });
+  useShortcut(SHORTCUTS.REVEAL_CARDS, revealCards, { disabled: !isSelf });
 
   const moveCardActions = useMoveCardActions({
     cardIds,
@@ -123,10 +130,7 @@ const useLibraryActions = (player: Player) => {
         key: 'reveal',
         label: 'Reveal cards...',
         disabled: !player.zones.library.length || isPeeking,
-        onClick: () =>
-          onRevealCards({
-            zone: ZONES.LIBRARY,
-          }),
+        onClick: revealCards,
         icon: <GroupOutlined />,
       }
     );
