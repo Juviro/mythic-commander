@@ -33,6 +33,11 @@ const getInitialCardProps = async (
       Lore: 1,
     };
   }
+  if (card.type_line?.split('//')[0].includes('Class')) {
+    initialProps.counters = {
+      Generic: 1,
+    };
+  }
 
   if (card.card_faces?.[0].defense) {
     initialProps.counters = {
