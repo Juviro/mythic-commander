@@ -34,6 +34,7 @@ const FloatingManaModal = ({ player, isSelf }: Props) => {
     <DraggableModal
       onMove={setInitialPosition}
       initialPosition={initialPosition}
+      additionalClassName={styles.modal}
       title={
         <span>
           <ColoredPlayerName

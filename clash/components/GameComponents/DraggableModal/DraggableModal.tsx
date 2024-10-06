@@ -23,6 +23,7 @@ interface Props extends PropsWithChildren {
   headerColor?: 'primary' | 'default';
   modalRef?: RefObject<HTMLDivElement>;
   closable?: boolean;
+  additionalClassName?: string;
 }
 
 const DraggableModal = ({
@@ -36,6 +37,7 @@ const DraggableModal = ({
   headerColor,
   subtitle,
   modalRef,
+  additionalClassName,
 }: Props) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
@@ -104,7 +106,11 @@ const DraggableModal = ({
   } as CSSProperties;
 
   return (
-    <div className={styles.modal} style={style} ref={modalRef}>
+    <div
+      className={classNames(styles.modal, additionalClassName)}
+      style={style}
+      ref={modalRef}
+    >
       <div
         className={classNames(styles.header, {
           [styles.header__primary]: headerColor === 'primary',
