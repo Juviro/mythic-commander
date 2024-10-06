@@ -14,7 +14,7 @@ interface Props {
 
 const useBattlefieldShortcuts = ({ card, player, selectedCardIds, cardRef }: Props) => {
   const { onMoveCard, copyCard } = useGameActions();
-  const { tapCards, flipCards } = useBattlefieldCardActions({
+  const { tapCards, transformCards } = useBattlefieldCardActions({
     card,
     player,
     // hardcoded because it is not used for the functions we are calling
@@ -34,7 +34,7 @@ const useBattlefieldShortcuts = ({ card, player, selectedCardIds, cardRef }: Pro
     whenHovering: cardRef,
   });
 
-  useShortcut(SHORTCUTS.FLIP, flipCards, {
+  useShortcut(SHORTCUTS.TRANSFORM, transformCards, {
     disabled: Boolean(selectedCardIds?.length),
     whenHovering: cardRef,
   });

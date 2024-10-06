@@ -60,7 +60,7 @@
   animation: rotateAndScale 20s linear infinite;
 }
 
-:global(.flipped) .inner {
+:global(.transformed) .inner {
   align-self: flex-start;
   justify-self: flex-start;
 }

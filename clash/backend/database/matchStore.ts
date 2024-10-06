@@ -15,7 +15,7 @@ export interface InitMatchCard {
   name: string;
   amount: number;
   manaValue: number;
-  flippable: boolean;
+  transformable: boolean;
   type_line: string;
   produced_mana: string[];
   layout: LayoutType;
@@ -56,7 +56,7 @@ export const getDecks = async (deckIds: string[]): Promise<Deck[]> => {
                     'produced_mana', cards.produced_mana,
                     'all_parts', cards.all_parts,
                     'layout', cards.layout,
-                    'flippable', cards.layout = 'transform' 
+                    'transformable', cards.layout = 'transform' 
                                  OR cards.layout = 'modal_dfc' 
                                  OR cards.layout = 'double_faced_token'
                 )

@@ -1,11 +1,10 @@
 import React, { CSSProperties, useContext, useEffect, useRef, useState } from 'react';
+import classNames from 'classnames';
 
 import CardPositionContext from 'components/Game/CardPositionContext';
 import { getImageUrl } from 'utils/getImageUrl';
-
-import classNames from 'classnames';
 import { getCardRotation } from 'utils/cardTypes';
-import { VisibleCard } from 'backend/database/gamestate.types';
+
 import styles from './CardPreview.module.css';
 
 const SCROLL_DELAY = 500;
@@ -24,7 +23,7 @@ const CardPreview = () => {
       ]
     : [];
 
-  if (hoveredCard?.flippable) {
+  if (hoveredCard?.transformable) {
     cardPreviews.push({
       src: getImageUrl(hoveredCard.id, true),
       title: 'Back',
@@ -42,7 +41,7 @@ const CardPreview = () => {
 
   // Only rotate the card if we view the face that's on the battlefield
   const initialIndex =
-    hoveredCard && 'flipped' in hoveredCard && hoveredCard.flipped ? 1 : 0;
+    hoveredCard && 'transformed' in hoveredCard && hoveredCard.transformed ? 1 : 0;
 
   useEffect(() => {
     setDisplayedCardIndex(initialIndex);

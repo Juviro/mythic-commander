@@ -31,7 +31,7 @@ const MessageExecuteCommand = ({ payload, playerId }: Props) => {
       if (payload.numberOfCoins === 1) {
         return (
           <span>
-            flipped a coin and
+            transformed a coin and
             <b>{payload.numberOfWonFlips ? ' won ' : ' lost '}</b>
           </span>
         );
@@ -39,7 +39,7 @@ const MessageExecuteCommand = ({ payload, playerId }: Props) => {
 
       return (
         <span>
-          flipped
+          transformed
           <b>{` ${payload.numberOfCoins} coins `}</b>
           and won
           <b>{` ${pluralize(payload.numberOfWonFlips, 'time', 'times')}`}</b>

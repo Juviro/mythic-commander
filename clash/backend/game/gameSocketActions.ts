@@ -12,7 +12,7 @@ import {
   CreateTokenPayload,
   DiscardRandomCardPayload,
   EndPeekPayload,
-  FlipCardsPayload,
+  TransformCardsPayload,
   MillPayload,
   MoveCardPayload,
   MoveCardsGroupPayload,
@@ -141,8 +141,8 @@ const gameSocketActions = (io: Server) => {
       currentGames[currentGameId].tapCards(payload);
     });
 
-    socket.on(SOCKET_MSG_GAME.FLIP_CARDS, (payload: FlipCardsPayload) => {
-      currentGames[currentGameId].flipCards(payload);
+    socket.on(SOCKET_MSG_GAME.TRANSFORM_CARDS, (payload: TransformCardsPayload) => {
+      currentGames[currentGameId].transformCards(payload);
     });
 
     socket.on(SOCKET_MSG_GAME.ROTATE_CARDS, (payload: RotateCardsPayload) => {

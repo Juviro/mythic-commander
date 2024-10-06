@@ -4,7 +4,7 @@
   --size-card-width: calc(var(--size-card-base-width) * 0.5);
 }
 
-:global(.flipped) .wrapper {
+:global(.transformed) .wrapper {
   transform: rotate(180deg);
 }
 

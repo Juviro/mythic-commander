@@ -14,7 +14,7 @@
     display: inline;
 }
 
-:global(.flipped) .wrapper {
+:global(.transformed) .wrapper {
     transform: rotate(180deg);
 }
 

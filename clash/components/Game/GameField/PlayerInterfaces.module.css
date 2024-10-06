@@ -49,7 +49,7 @@
   flex-direction: column;
 }
 
-:global(.flipped) .interface_wrapper {
+:global(.transformed) .interface_wrapper {
   flex-direction: column-reverse;
 }
 
@@ -62,7 +62,7 @@
   grid-template-areas: 'graveyard library hand exile';
 }
 
-:global(.flipped) .interface {
+:global(.transformed) .interface {
   grid-template-columns: 6cqw auto 110px 110px;
   grid-template-areas: 'exile hand library graveyard';
 }

@@ -17,7 +17,7 @@ interface Props {
   contextMenuTitle?: ReactNode;
   canCopy?: boolean;
   isFaceDown?: boolean;
-  canFlip?: boolean;
+  canTransform?: boolean;
   canTurnFaceDown?: boolean;
 }
 
@@ -29,15 +29,15 @@ const useCardActions = ({
   player,
   isFaceDown,
   canCopy,
-  canFlip,
+  canTransform,
   canTurnFaceDown,
 }: Props) => {
   const {
-    flipCards,
+    transformCards,
     tapCards,
     titleItem,
     tapItem,
-    flipItem,
+    transformItem,
     moveItem,
     putOntoStack,
     rulesItem,
@@ -81,7 +81,7 @@ const useCardActions = ({
   addItem(titleItem, hideTitle, 'after');
   addItem(tapItem, zone !== ZONES.BATTLEFIELD);
 
-  addItem(flipItem, zone !== ZONES.BATTLEFIELD || !canFlip);
+  addItem(transformItem, zone !== ZONES.BATTLEFIELD || !canTransform);
   addItem(turnFacDownItem, zone !== ZONES.BATTLEFIELD || !canTurnFaceDown);
   addItem(peekItem, zone !== ZONES.BATTLEFIELD || !isFaceDown || cardIds.length !== 1);
   addItem(rotateItem, zone !== ZONES.BATTLEFIELD);
@@ -102,7 +102,7 @@ const useCardActions = ({
 
   return {
     tapCards,
-    flipCards,
+    transformCards,
     contextMenuItems: filteredContextMenuItems,
   };
 };

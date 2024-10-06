@@ -13,7 +13,7 @@ import {
   EndPeekPayload,
   MoveCardsGroupPayload,
   TapCardsPayload,
-  FlipCardsPayload,
+  TransformCardsPayload,
   MillPayload,
   AddCountersPayload,
   CreateTokenPayload,
@@ -100,8 +100,8 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.TAP_CARDS, payload);
   };
 
-  const onFlipCards = (payload: FlipCardsPayload) => {
-    socket?.emit(SOCKET_MSG_GAME.FLIP_CARDS, payload);
+  const onTransformCards = (payload: TransformCardsPayload) => {
+    socket?.emit(SOCKET_MSG_GAME.TRANSFORM_CARDS, payload);
   };
 
   const onRotateCards = (payload: RotateCardsPayload) => {
@@ -220,7 +220,7 @@ const useGameActions = () => {
     createToken,
     copyCard,
     onTapCards,
-    onFlipCards,
+    onTransformCards,
     onRotateCards,
     onTurnFaceDown,
     onPlayTopLibraryCardFaceDown,

@@ -10,7 +10,7 @@ const getclashCardProps = (card: InitMatchCard): Omit<VisibleCard, 'ownerId'> =>
   id: card.id,
   name: card.name,
   manaValue: card.manaValue,
-  flippable: card.flippable,
+  transformable: card.transformable,
   type_line: card.type_line,
   produced_mana: card.produced_mana,
   layout: card.layout,

@@ -50,7 +50,7 @@ export interface VisibleCard extends HiddenCard {
   clashId: string;
   id: string;
   name: string;
-  flippable?: boolean;
+  transformable?: boolean;
   layout?: LayoutType;
   meta?: CardMeta;
   manaValue: number;
@@ -60,7 +60,7 @@ export interface VisibleCard extends HiddenCard {
 
 export interface VisibleBattlefieldCard extends VisibleCard {
   tapped?: boolean;
-  flipped?: boolean;
+  transformed?: boolean;
   rotateDeg?: number;
   faceDown?: boolean;
   isToken?: boolean;
@@ -77,8 +77,8 @@ export interface FaceDownCard
   extends HiddenCard,
     Pick<VisibleBattlefieldCard, 'position' | 'counters' | 'tapped' | 'meta'> {
   faceDown: true;
-  flippable?: false;
-  flipped?: false;
+  transformable?: false;
+  transformed?: false;
   isToken?: false;
   visibleTo?: string[];
   // these values are only set when the card is face down and visible to you

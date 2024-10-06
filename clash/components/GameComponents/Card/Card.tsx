@@ -20,7 +20,7 @@ interface Props {
   zone?: Zone;
   noAnimation?: boolean;
   dropType?: DndItemType;
-  flipped?: boolean;
+  transformed?: boolean;
   noPreview?: boolean;
 }
 
@@ -30,7 +30,7 @@ const Card = ({
   dynamicSize,
   zone,
   noAnimation,
-  flipped,
+  transformed,
   noPreview,
   dropType = DndItemTypes.CARD,
 }: Props) => {
@@ -51,7 +51,7 @@ const Card = ({
   const hidden = !('id' in card) || !card.id || ('faceDown' in card && card.faceDown);
   const faceDown =
     ('faceDown' in card && card.faceDown) ||
-    (flipped && !(card as VisibleCard).flippable);
+    (transformed && !(card as VisibleCard).transformable);
   const isCardKnown = 'name' in card;
 
   useEffect(() => {
@@ -74,7 +74,9 @@ const Card = ({
       onMouseEnter={!isCardKnown ? undefined : () => setHoveredCard(card)}
       onMouseLeave={!isCardKnown ? undefined : () => setHoveredCard(null)}
     >
-      {!hidden && <img className={styles.image} src={getImageUrl(card.id!, flipped)} />}
+      {!hidden && (
+        <img className={styles.image} src={getImageUrl(card.id!, transformed)} />
+      )}
       {faceDown && <img className={styles.image} src="/assets/images/card_back.webp" />}
       <CardCounters card={card} />
       <CardVisibility card={card} />

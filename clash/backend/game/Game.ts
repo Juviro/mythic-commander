@@ -22,7 +22,7 @@ import {
   CreateTokenPayload,
   DiscardRandomCardPayload,
   EndPeekPayload,
-  FlipCardsPayload,
+  TransformCardsPayload,
   MillPayload,
   MoveCardPayload,
   MoveCardsGroupPayload,
@@ -304,7 +304,7 @@ export default class Game {
           produced_mana: undefined,
           layout: undefined,
           type_line: undefined,
-          flippable: false,
+          transformable: false,
         };
       }),
     };
@@ -541,7 +541,7 @@ export default class Game {
       }
       delete card.counters;
       delete card.tapped;
-      delete card.flipped;
+      delete card.transformed;
       delete card.rotateDeg;
       delete card.faceDown;
       delete card.position;
@@ -752,6 +752,9 @@ export default class Game {
       player.zones.battlefield
     );
 
+    const transformable =
+      layout === 'transform' || layout === 'modal_dfc' || layout === 'double_faced_token';
+
     const token: BattlefieldCard = {
       clashId: uniqid(),
       id: cardId,
@@ -762,7 +765,7 @@ export default class Game {
       ownerId: player.id,
       isToken: true,
       manaValue: 0,
-      flippable: name.includes('//'),
+      transformable,
       position: Game.fixPosition(stackedPosition),
     };
 
@@ -862,17 +865,17 @@ export default class Game {
     this.emitPlayerUpdate(player);
   }
 
-  flipCards(payload: FlipCardsPayload) {
-    const { cardIds, battlefieldPlayerId, flipped: overwriteFlipped } = payload;
+  transformCards(payload: TransformCardsPayload) {
+    const { cardIds, battlefieldPlayerId, transformed: overwriteTransformed } = payload;
 
     const player = this.getPlayerById(battlefieldPlayerId);
 
     player.zones.battlefield.forEach((card) => {
       if (!cardIds.includes(card.clashId)) return;
       if (card.faceDown) return;
-      if (!card.flippable) return;
+      if (!card.transformable) return;
 
-      card.flipped = overwriteFlipped ?? !card.flipped;
+      card.transformed = overwriteTransformed ?? !card.transformed;
     });
 
     this.emitPlayerUpdate(player);
@@ -894,22 +897,22 @@ export default class Game {
   }
 
   turnCardsFaceDown(playerId: string, payload: TurnCardsFaceDownPayload) {
-    const { cardIds, battlefieldPlayerId, faceDown: overwriteFlipped } = payload;
+    const { cardIds, battlefieldPlayerId, faceDown: overwriteTransformed } = payload;
 
     const player = this.getPlayerById(battlefieldPlayerId);
 
     const cardNames: string[] = [];
-    let faceDown = overwriteFlipped;
+    let faceDown = overwriteTransformed;
 
     player.zones.battlefield.forEach((card) => {
       if (!cardIds.includes(card.clashId)) return;
-      card.faceDown = overwriteFlipped ?? !card.faceDown;
+      card.faceDown = overwriteTransformed ?? !card.faceDown;
       faceDown = card.faceDown;
       card.clashId = uniqid();
       cardNames.push((card as VisibleBattlefieldCard).name);
       if (card.faceDown) {
         delete card.tapped;
-        delete card.flipped;
+        delete card.transformed;
         const playerIds = this.gameState.players.map((p) => p.id);
         (card as FaceDownCard).visibleTo = playerIds;
       }

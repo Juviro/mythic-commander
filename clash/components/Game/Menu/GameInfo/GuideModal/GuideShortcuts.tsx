@@ -58,7 +58,7 @@ const HOVERING_SHORTCUTS = [
     value: 'T',
   },
   {
-    label: 'Flip card / selection',
+    label: 'Transform card / selection',
     value: 'F',
   },
   {

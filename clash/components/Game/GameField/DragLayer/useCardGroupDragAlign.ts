@@ -31,12 +31,12 @@ const getPositionDelta = (
   gridSize: number,
   shouldFlip: boolean
 ) => {
-  const differencFromOffs3et = shouldFlip
+  const differencFromOffset = shouldFlip
     ? -differenceFromInitialOffset
     : differenceFromInitialOffset;
   const cardOffset = cardSize / 2 / factor;
   const topLeft = cardPosition - cardOffset;
-  const relativeChange = differencFromOffs3et / factor;
+  const relativeChange = differencFromOffset / factor;
 
   const transformed = topLeft + relativeChange;
   const snapped = isSnapDisabled ? transformed : getClosesGrid(transformed, gridSize);
@@ -54,7 +54,7 @@ const useCardGroupDragAlign = (
   const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
   const { snapChoords } = useContext(CardPositionContext);
 
-  const isInitiallyFlipped = Boolean(battlefieldElement.closest('.flipped'));
+  const isInitiallyFlipped = Boolean(battlefieldElement.closest('.transformed'));
 
   const { factorX, factorY } = getRelativeToAbsoluteFactor(battlefieldElement);
 

@@ -42,7 +42,7 @@ export const BattlefieldSelectionContextProvider = ({
 
   const { onTapCards } = useGameActions();
 
-  const { tapCards, flipCards } = useCardActions({
+  const { tapCards, transformCards } = useCardActions({
     cardIds: selectedCardIds,
     battlefieldPlayerId: player.id,
     zone: ZONES.BATTLEFIELD,
@@ -70,7 +70,7 @@ export const BattlefieldSelectionContextProvider = ({
     disabled: !isSelf,
   });
 
-  useShortcut(SHORTCUTS.FLIP, flipCards, {
+  useShortcut(SHORTCUTS.TRANSFORM, transformCards, {
     disabled,
   });
 

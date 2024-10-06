@@ -25,13 +25,13 @@
     border: 3px solid var(--color-primary);
   }
   
-  :global(.flipped) .card {
+  :global(.transformed) .card {
     top: calc((100 - var(--y)) * 1%);
     left: calc((100 - var(--x)) * 1%);
     transform-origin: 50% 40%;
   }
   
-  :global(.flipped) .card img {
+  :global(.transformed) .card img {
     transform: rotate(180deg);
   }
   

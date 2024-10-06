@@ -38,7 +38,7 @@ export const hasAnyBasicLandType = (typeLine: string) => {
 export const getCardRotation = (card: VisibleCard | BattlefieldCard) => {
   if (!('type_line' in card) || !card.type_line) return 0;
 
-  if ('flipped' in card && card.flipped) {
+  if ('transformed' in card && card.transformed) {
     return 0;
   }
 

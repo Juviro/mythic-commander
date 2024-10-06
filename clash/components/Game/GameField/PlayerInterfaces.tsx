@@ -38,7 +38,7 @@ const PlayerInterfaces = () => {
             key={opponent.id}
             style={{ gridArea: `player${index + 1}` }}
             className={classNames(styles.opponent, {
-              flipped: index < 2,
+              transformed: index < 2,
             })}
           >
             <PlayerInterface player={opponent} isFlipped={index < 2} />

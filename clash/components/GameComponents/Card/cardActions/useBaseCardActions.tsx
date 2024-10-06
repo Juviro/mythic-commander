@@ -24,7 +24,7 @@ const useBaseCardActions = ({
 }: Props) => {
   const { setRulesCardId } = useContext(CardPositionContext);
   const { player } = useContext(GameStateContext);
-  const { onTapCards, onFlipCards, onMoveCard } = useGameActions();
+  const { onTapCards, onTransformCards, onMoveCard } = useGameActions();
 
   const moveCardActions = useMoveCardActions({
     zone,
@@ -34,9 +34,9 @@ const useBaseCardActions = ({
 
   const moveOntoStack = () => onMoveCard(cardIds[0], ZONES.STACK, null);
 
-  const flipCards = () => {
+  const transformCards = () => {
     if (!battlefieldPlayerId) return;
-    onFlipCards({
+    onTransformCards({
       cardIds,
       battlefieldPlayerId,
     });
@@ -66,10 +66,10 @@ const useBaseCardActions = ({
     icon: <ClashIcon id="tap" size={16} />,
   };
 
-  const flipItem = {
-    key: 'flip',
-    label: 'Flip [F]',
-    onClick: flipCards,
+  const transformItem = {
+    key: 'transform',
+    label: 'Transform [F]',
+    onClick: transformCards,
     icon: <ClashIcon id="dfc-modal-back" size={16} />,
   };
 
@@ -95,11 +95,11 @@ const useBaseCardActions = ({
   };
 
   return {
-    flipCards,
+    transformCards,
     tapCards,
     titleItem,
     tapItem,
-    flipItem,
+    transformItem,
     moveItem,
     putOntoStack,
     rulesItem,

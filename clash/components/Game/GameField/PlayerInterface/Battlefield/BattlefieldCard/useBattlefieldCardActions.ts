@@ -11,12 +11,12 @@ interface Props {
 }
 
 const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
-  const { contextMenuItems, tapCards, flipCards } = useCardActions({
+  const { contextMenuItems, tapCards, transformCards } = useCardActions({
     cardIds: [card.clashId],
     battlefieldPlayerId: player.id,
     zone: ZONES.BATTLEFIELD,
     player,
-    canFlip: card.flippable,
+    canTransform: card.transformable,
     canTurnFaceDown: !card.isToken,
     isFaceDown: card.faceDown,
     canCopy: !card.faceDown,
@@ -45,7 +45,7 @@ const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
 
   return {
     tapCards,
-    flipCards,
+    transformCards,
     onClick,
     onMouseDown,
     onMouseMove,

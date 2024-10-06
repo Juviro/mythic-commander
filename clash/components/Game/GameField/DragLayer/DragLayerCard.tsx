@@ -22,7 +22,7 @@ const DragLayerCard = ({ item, currentOffset }: Props) => {
 
   const { cardToAlign, left, top, isSnapping } = useCardDragAlign(item, currentOffset);
 
-  const shouldFlip = Boolean(hoveredBattlefield.current?.element.closest('.flipped'));
+  const shouldFlip = Boolean(hoveredBattlefield.current?.element.closest('.transformed'));
 
   const style = {
     '--top': `${top}px`,
@@ -43,7 +43,11 @@ const DragLayerCard = ({ item, currentOffset }: Props) => {
           [styles.card__flipped]: shouldFlip,
         })}
       >
-        <Card card={{ ...item, tapped: false }} noAnimation flipped={item.flipped} />
+        <Card
+          card={{ ...item, tapped: false }}
+          noAnimation
+          transformed={item.transformed}
+        />
       </div>
       {isSnapping && (
         <div className={styles.shift_tooltip}>Hold Shift to disabled snapping</div>
