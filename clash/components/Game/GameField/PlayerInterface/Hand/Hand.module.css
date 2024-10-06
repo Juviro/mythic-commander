@@ -4,13 +4,17 @@
   justify-content: center;
   align-items: center;
   grid-area: hand;
-  --size-card-width: min(17cqw, 240px);
+  --size-card-width: min(10cqw, 240px);
   width: 100%;
   max-width: 1280px;
   margin: 0 auto 0;
   z-index: 1;
   border: 2px solid transparent;
   user-select: none;
+}
+
+.wrapper__is_self {
+  --size-card-width: min(17cqw, 240px);
 }
 
 .wrapper__can_drop {
