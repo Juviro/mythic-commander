@@ -307,7 +307,7 @@ const MTG_ICON_IDS = [
   'x',
   'y',
   'z',
-];
+] as const;
 
 export const GENERIC_ICON_IDS = [
   'draw',

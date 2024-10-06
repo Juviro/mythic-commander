@@ -65,7 +65,6 @@ const BattlefieldSelection = ({ children, isFlipped, player }: Props) => {
   useClickedOutside(wrapperRef, () => {
     setStartingPoint(null);
     setCurrentPoint(null);
-    setSelectedCardsIds([]);
   });
 
   const onMouseDown = (e: MouseEvent<HTMLDivElement>) => {
