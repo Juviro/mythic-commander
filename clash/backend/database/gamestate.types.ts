@@ -22,11 +22,36 @@ export interface CardMeta {
   isCardCopy?: boolean;
 }
 
+export type LayoutType =
+  | 'token'
+  | 'planar'
+  | 'split'
+  | 'mutate'
+  | 'saga'
+  | 'modal_dfc'
+  | 'transform'
+  | 'normal'
+  | 'scheme'
+  | 'adventure'
+  | 'case'
+  | 'meld'
+  | 'emblem'
+  | 'augment'
+  | 'leveler'
+  | 'prototype'
+  | 'double_faced_token'
+  | 'class'
+  | 'reversible_card'
+  | 'host'
+  | 'flip'
+  | 'vanguard';
+
 export interface VisibleCard extends HiddenCard {
   clashId: string;
   id: string;
   name: string;
   flippable?: boolean;
+  layout?: LayoutType;
   meta?: CardMeta;
   manaValue: number;
   type_line: string;

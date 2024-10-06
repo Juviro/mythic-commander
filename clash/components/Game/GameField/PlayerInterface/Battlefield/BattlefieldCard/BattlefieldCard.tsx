@@ -8,6 +8,7 @@ import {
 import Card from 'components/GameComponents/Card/Card';
 import GameStateContext from 'components/Game/GameStateContext';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
+import { getCardRotation } from 'utils/cardTypes';
 import BattlefieldSelectionContext from '../BattlefieldSelection/BattlefieldSelectionContext';
 
 import styles from './BattlefieldCard.module.css';
@@ -41,9 +42,9 @@ const BattlefieldCard = ({ card, player, inSelection, inPreview }: Props) => {
     return null;
   }
 
-  let rotation = 0;
+  let rotation = getCardRotation(card);
   if ('rotateDeg' in card && card.rotateDeg) {
-    rotation = card.rotateDeg;
+    rotation += card.rotateDeg;
   }
   if (card.tapped) {
     rotation += 90;

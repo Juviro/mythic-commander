@@ -1,5 +1,5 @@
 import { Lobby } from 'backend/lobby/GameLobby.types';
-import { GameState } from './gamestate.types';
+import { GameState, LayoutType } from './gamestate.types';
 import db from './db';
 
 interface Part {
@@ -18,6 +18,7 @@ export interface InitMatchCard {
   flippable: boolean;
   type_line: string;
   produced_mana: string[];
+  layout: LayoutType;
   all_parts: Part[];
 }
 
@@ -54,7 +55,10 @@ export const getDecks = async (deckIds: string[]): Promise<Deck[]> => {
                     'type_line', cards.type_line,
                     'produced_mana', cards.produced_mana,
                     'all_parts', cards.all_parts,
-                    'flippable', cards.card_faces IS NOT NULL
+                    'layout', cards.layout,
+                    'flippable', cards.layout = 'transform' 
+                                 OR cards.layout = 'modal_dfc' 
+                                 OR cards.layout = 'double_faced_token'
                 )
             ) as cards
         FROM

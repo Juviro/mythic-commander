@@ -38,7 +38,6 @@ const getInitialCardProps = async (
     initialProps.counters = {
       Defense: Number(card.card_faces[0].defense),
     };
-    initialProps.rotateDeg = 90;
   }
 
   return initialProps;

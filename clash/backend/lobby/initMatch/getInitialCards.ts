@@ -13,6 +13,7 @@ const getclashCardProps = (card: InitMatchCard): Omit<VisibleCard, 'ownerId'> =>
   flippable: card.flippable,
   type_line: card.type_line,
   produced_mana: card.produced_mana,
+  layout: card.layout,
   clashId: uniqid(),
   meta: {
     relatedCards: getCardMeta(card),

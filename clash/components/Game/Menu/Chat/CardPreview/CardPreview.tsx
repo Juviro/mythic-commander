@@ -4,6 +4,8 @@ import CardPositionContext from 'components/Game/CardPositionContext';
 import { getImageUrl } from 'utils/getImageUrl';
 
 import classNames from 'classnames';
+import { getCardRotation } from 'utils/cardTypes';
+import { VisibleCard } from 'backend/database/gamestate.types';
 import styles from './CardPreview.module.css';
 
 const SCROLL_DELAY = 500;
@@ -68,7 +70,7 @@ const CardPreview = () => {
 
   const currentCard = cardPreviews[displayedCardIndex];
 
-  const cardRotation = ('rotateDeg' in hoveredCard && hoveredCard.rotateDeg) ?? 0;
+  const cardRotation = hoveredCard ? getCardRotation(hoveredCard) : 0;
   const shouldRotateCard = cardRotation && displayedCardIndex === initialIndex;
   const style = {
     '--rotation': `${cardRotation}deg`,
