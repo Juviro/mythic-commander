@@ -128,7 +128,7 @@ const useLibraryActions = (player: Player) => {
       },
       {
         key: 'reveal',
-        label: 'Reveal cards...',
+        label: 'Reveal cards... [R]',
         disabled: !player.zones.library.length || isPeeking,
         onClick: revealCards,
         icon: <GroupOutlined />,

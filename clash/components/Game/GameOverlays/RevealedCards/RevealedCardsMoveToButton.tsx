@@ -1,6 +1,6 @@
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { Button, Dropdown } from 'antd';
-import { Player, ZONES } from 'backend/database/gamestate.types';
+import { Player } from 'backend/database/gamestate.types';
 import useMoveCardActions from 'components/GameComponents/Card/cardActions/useMoveCardActions';
 import React from 'react';
 
@@ -14,7 +14,6 @@ const RevealedCardsMoveToButton = ({ player }: Props) => {
   const moveCardActions = useMoveCardActions({
     cardIds,
     player,
-    zone: ZONES.BATTLEFIELD,
   });
 
   return (
