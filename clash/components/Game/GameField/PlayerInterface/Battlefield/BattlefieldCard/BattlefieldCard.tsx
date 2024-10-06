@@ -66,7 +66,7 @@ const BattlefieldCard = ({ card, player, inSelection, inPreview }: Props) => {
           [styles.card__hovered]: isHovered,
           [styles.card__selected]: isSelected,
           [styles.card__rotation]: rotation,
-          [styles.card__flipped]: 'rotateDeg' in card && card.rotateDeg === 180,
+          [styles.card__flipped]: 'flipped' in card && card.flipped,
         })}
         onContextMenu={inSelection ? undefined : (e) => e.stopPropagation()}
         data-card-id={inPreview ? `${card.clashId}-preview` : card.clashId}

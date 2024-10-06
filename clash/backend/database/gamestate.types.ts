@@ -62,7 +62,7 @@ export interface VisibleCard extends HiddenCard {
 export interface VisibleBattlefieldCard extends VisibleCard {
   tapped?: boolean;
   transformed?: boolean;
-  rotateDeg?: number;
+  flipped?: boolean;
   faceDown?: boolean;
   isToken?: boolean;
   position?: {

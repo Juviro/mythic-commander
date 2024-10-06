@@ -9,12 +9,18 @@ import styles from './CardPreview.module.css';
 
 const SCROLL_DELAY = 500;
 
+interface PreviewCard {
+  src: string;
+  title: string;
+  flipped?: boolean;
+}
+
 const CardPreview = () => {
   const { hoveredCard } = useContext(CardPositionContext);
   const [displayedCardIndex, setDisplayedCardIndex] = useState(0);
   const lastScroll = useRef(0);
 
-  const cardPreviews = hoveredCard?.id
+  const cardPreviews: PreviewCard[] = hoveredCard?.id
     ? [
         {
           src: getImageUrl(hoveredCard.id),
@@ -30,6 +36,14 @@ const CardPreview = () => {
     });
   }
 
+  if (hoveredCard && 'layout' in hoveredCard && hoveredCard.layout === 'flip') {
+    cardPreviews.push({
+      src: getImageUrl(hoveredCard.id),
+      title: 'Flipped',
+      flipped: true,
+    });
+  }
+
   if (hoveredCard?.meta?.relatedCards?.length) {
     hoveredCard.meta.relatedCards.forEach((relatedCard) => {
       cardPreviews.push({
@@ -39,9 +53,15 @@ const CardPreview = () => {
     });
   }
 
-  // Only rotate the card if we view the face that's on the battlefield
-  const initialIndex =
-    hoveredCard && 'transformed' in hoveredCard && hoveredCard.transformed ? 1 : 0;
+  const hasProperty = (property: 'flipped' | 'transformed') => {
+    // @ts-ignore
+    return hoveredCard && property in hoveredCard && hoveredCard[property];
+  };
+
+  let initialIndex = 0;
+  if (hasProperty('flipped') || hasProperty('transformed')) {
+    initialIndex = 1;
+  }
 
   useEffect(() => {
     setDisplayedCardIndex(initialIndex);
@@ -70,7 +90,9 @@ const CardPreview = () => {
   const currentCard = cardPreviews[displayedCardIndex];
 
   const cardRotation = hoveredCard ? getCardRotation(hoveredCard) : 0;
-  const shouldRotateCard = cardRotation && displayedCardIndex === initialIndex;
+  const shouldRotateCard =
+    !hasProperty('flipped') && cardRotation && displayedCardIndex === initialIndex;
+
   const style = {
     '--rotation': `${cardRotation}deg`,
   } as CSSProperties;
@@ -82,6 +104,7 @@ const CardPreview = () => {
           src={currentCard?.src}
           className={classNames(styles.image, {
             [styles.image__rotated]: shouldRotateCard,
+            [styles.image__flipped]: currentCard?.flipped,
           })}
           style={style}
         />

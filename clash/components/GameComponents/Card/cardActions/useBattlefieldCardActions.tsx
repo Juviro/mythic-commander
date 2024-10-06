@@ -1,5 +1,5 @@
 import { MouseEvent } from 'react';
-import { EnterOutlined, EyeOutlined } from '@ant-design/icons';
+import { SwapOutlined, EyeOutlined } from '@ant-design/icons';
 
 import { Player } from 'backend/database/gamestate.types';
 import useGameActions from 'components/Game/useGameActions';
@@ -105,7 +105,7 @@ const useBattlefieldCardActions = ({ cardIds, player, isFaceDown }: Props) => {
     key: 'flip',
     label: 'Flip (180°)',
     onClick: flipCards,
-    icon: <EnterOutlined style={{ transform: 'rotate(180deg)' }} />,
+    icon: <SwapOutlined style={{ transform: 'rotate(180deg)' }} />,
   };
 
   const peekItem = {

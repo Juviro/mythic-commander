@@ -35,6 +35,10 @@
     max-width: 70%;
 }
 
+.image__flipped {
+    transform: rotate(180deg);
+}
+
 .scroll_hint {
     color: white;
     display: flex;

@@ -543,7 +543,7 @@ export default class Game {
       delete card.counters;
       delete card.tapped;
       delete card.transformed;
-      delete card.rotateDeg;
+      delete card.flipped;
       delete card.faceDown;
       delete card.position;
       delete (card as FaceDownCard).visibleTo;
@@ -893,7 +893,7 @@ export default class Game {
       if (!cardIds.includes(card.clashId)) return;
       if (card.faceDown) return;
 
-      card.rotateDeg = card.rotateDeg ? 0 : 180;
+      card.flipped = !card.flipped;
     });
 
     this.emitPlayerUpdate(player);
