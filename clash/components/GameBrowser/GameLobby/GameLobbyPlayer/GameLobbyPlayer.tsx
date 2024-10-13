@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import { Card } from 'antd';
 
-import { Player } from 'backend/lobby/GameLobby.types';
-import DeckSelection from './DeckSelection';
+import { LobbyPlayer } from 'backend/lobby/GameLobby.types';
+import DeckSelection from './DeckSelection/DeckSelection';
 import PlayerReady from './PlayerReady';
 
 import styles from './GameLobbyPlayer.module.css';
 import ColorPicker from './ColorPicker/ColorPicker';
 
 interface Props {
-  player?: Player;
+  player?: LobbyPlayer;
   isSelf: boolean;
   isHost: boolean;
 }
@@ -26,10 +26,8 @@ const GameLobbyPlayer = ({ player, isSelf, isHost }: Props) => {
     <Card
       styles={{
         body: {
-          padding: '16px 24px 16px 16px',
-          minHeight: 66,
-          display: 'flex',
-          alignItems: 'center',
+          padding: '4px 24px 4px 16px',
+          minHeight: 108,
         },
       }}
       className={isSelf ? styles.card : ''}

@@ -1,13 +1,13 @@
 import React, { ChangeEvent, useContext } from 'react';
 import { CheckOutlined } from '@ant-design/icons';
 
-import { Player } from 'backend/lobby/GameLobby.types';
+import { LobbyPlayer } from 'backend/lobby/GameLobby.types';
 import GameBrowserContext from '../../GameBrowserContext';
 
 import styles from './PlayerReady.module.css';
 
 interface Props {
-  player: Player;
+  player: LobbyPlayer;
   isSelf: boolean;
 }
 

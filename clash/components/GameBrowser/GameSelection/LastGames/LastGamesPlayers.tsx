@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Lobby } from 'backend/lobby/GameLobby.types';
-import { getDeckImgSrc } from 'components/GameBrowser/GameLobby/GameLobbyPlayer/DeckLabel';
+import { getDeckImgUrl } from 'utils/getImageUrl';
 
 import styles from './LastGames.module.css';
 
@@ -16,7 +16,7 @@ const LastGamesPlayers = ({ players }: Props) => {
         {players.map((player) => (
           <li key={player.id} className={styles.player}>
             <img
-              src={getDeckImgSrc(player.deck!.imgSrc!)}
+              src={getDeckImgUrl(player.deck!.imgSrc!)}
               alt=""
               className={styles.player_image}
             />

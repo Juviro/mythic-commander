@@ -4,6 +4,7 @@
 
 .player {
   width: 100%;
+  min-height: 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -40,9 +41,11 @@
 
 .deck {
   width: 300px;
+  margin-left: -12px;
 }
 
 .empty {
   font-style: italic;
-  color: rgba(0, 0, 0, 0.58);
+  margin-top: 42px;
+  color: var(--color-text-secondary);
 }

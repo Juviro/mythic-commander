@@ -5,7 +5,7 @@ import uniqid from 'uniqid';
 import { User } from 'backend/database/getUser';
 import initMatch from './initMatch/initMatch';
 import { SOCKET_MSG_LOBBY } from '../constants/wsEvents';
-import { Deck, GameOptions, Lobby, Player } from './GameLobby.types';
+import { LobbyDeck, GameOptions, Lobby, LobbyPlayer } from './GameLobby.types';
 
 export const LOBBY_ROOM = 'lobby';
 
@@ -78,7 +78,7 @@ export class GameLobby {
     socket.join(id);
   }
 
-  updatePlayer(user: User, updatedValues: Partial<Player>) {
+  updatePlayer(user: User, updatedValues: Partial<LobbyPlayer>) {
     const lobby = this.openLobbies.find((l) =>
       l.players.some((player) => player.id === user.id)
     );
@@ -94,7 +94,7 @@ export class GameLobby {
     this.emitLobbiesUpdate();
   }
 
-  setDeck(deck: Deck, user: User) {
+  setDeck(deck: LobbyDeck, user: User) {
     this.updatePlayer(user, { deck });
   }
 

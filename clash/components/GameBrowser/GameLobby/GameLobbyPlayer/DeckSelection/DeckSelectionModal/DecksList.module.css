@@ -1,0 +1,158 @@
+.decks_wrapper {
+    height: 800px;
+    max-height: 70vh;
+    overflow: auto;
+    color: var(--color-text);
+    padding-right: 16px;
+
+    --image-width: 130px;
+    --image-height: 100px;
+}
+
+.deck__condensed {
+    --image-width: 70px;
+    --image-height: 75px;
+}
+
+.decks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+}
+
+.deck {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    padding: 12px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+
+.deck__clickable {
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.deck__clickable:hover {
+    background: var(--color-primary--transparent);
+}
+
+.deck__clickable:hover:not(.deck__condensed) .view_link {
+    opacity: 1;
+}
+
+.img_wrapper {
+    width: var(--image-width);
+    min-width: var(--image-width);
+    height: var(--image-height);
+    border-radius: 8px;
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.deck_info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+}
+
+.deck_name {
+    font-size: 16px;
+    width: 100%;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: calc(100% - 8px);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.view_link {
+    color: var(--color-primary);
+    opacity: 0;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+}
+
+.view_link svg {
+    transform: rotate(-45deg);
+    margin-left: 4px;
+}
+
+.mana_icons {
+    display: flex;
+    gap: 2px;
+}
+
+.mana_icon {
+    width: 16px;
+    height: 16px;
+}
+
+.commander_names {
+    display: flex;
+    flex-direction: column;
+}
+
+.commander_name {
+    color: var(--color-text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1;
+    max-width: calc(100% - 8px);
+}
+
+.owner_name {
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    font-style: italic;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.deck_status_tag ~ .deck_status_tag {
+    margin-top: 32px;
+}
+
+.deck_status_tag + .decks {
+    margin-top: 16px;
+}
+
+.deck_status_tag {
+    padding: 8px 16px;
+    display: none;
+    width: 100%;
+    font-size: 20px;
+    background: linear-gradient(90deg, var(--gradient-color) 0%, #fff 200%);
+}
+
+.deck_status_tag__active {
+    display: flex;
+    --gradient-color: var(--color-deck-active);
+}
+
+.deck_status_tag__draft {
+    display: flex;
+    --gradient-color: var(--color-deck-draft);
+}
+
+.deck_status_tag__archived {
+    display: flex;
+    --gradient-color: var(--color-deck-archived);
+}

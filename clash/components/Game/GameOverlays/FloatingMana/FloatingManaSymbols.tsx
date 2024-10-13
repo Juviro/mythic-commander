@@ -13,7 +13,7 @@ import PlusMinus from 'components/lib/PlusMinus/PlusMinus';
 import useGameActions from 'components/Game/useGameActions';
 import styles from './FloatingMana.module.css';
 
-const COLORS = [
+export const MANA_SYMBOLS = [
   {
     key: 'w',
     icon: <ManaWhiteIcon />,
@@ -59,7 +59,7 @@ const FloatingManaSymbols = ({ canEdit, floatingMana }: Props) => {
 
   return (
     <div className={styles.floating_mana}>
-      {COLORS.map(({ key, icon }) => (
+      {MANA_SYMBOLS.map(({ key, icon }) => (
         <div key={key} className={styles.mana}>
           {icon}
           <div className={styles.buttons}>

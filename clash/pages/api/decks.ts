@@ -3,6 +3,15 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import getUser from 'backend/database/getUser';
 import db from '../../backend/database/db';
 
+const unnestColorIdentity = (decksList: any[]) => {
+  return decksList.map((deck) => {
+    return {
+      ...deck,
+      colorIdentity: deck.colorIdentity && Array.from(new Set(deck.colorIdentity.flat())),
+    };
+  });
+};
+
 const decks = async (req: NextApiRequest, res: NextApiResponse) => {
   const { cookie } = req.headers;
   const user = await getUser(cookie);
@@ -14,13 +23,15 @@ const decks = async (req: NextApiRequest, res: NextApiResponse) => {
       decks."imgSrc",
       decks.name,
       decks.status,
-      commanders.name as "commanderName"
+      commanders.name as "commanderName",
+      commanders.color_identity as "colorIdentity"
     FROM 
       decks
     LEFT OUTER JOIN
       (
         SELECT 
-          STRING_AGG(name, ' & ') as name, 
+          STRING_AGG(name, ' & ') as name,
+          jsonb_agg(color_identity) as color_identity,
           "deckId" 
         FROM 
           "cardToDeck" 
@@ -50,6 +61,7 @@ const decks = async (req: NextApiRequest, res: NextApiResponse) => {
       decks."imgSrc",
       decks.name,
       commanders.name as "commanderName",
+      commanders.color_identity as "colorIdentity",
       users.username as "ownerName"
     FROM 
       decks
@@ -57,6 +69,7 @@ const decks = async (req: NextApiRequest, res: NextApiResponse) => {
       (
         SELECT 
           STRING_AGG(name, ' & ') as name, 
+          jsonb_agg(color_identity) as color_identity,
           "deckId" 
         FROM 
           "cardToDeck" 
@@ -88,8 +101,8 @@ const decks = async (req: NextApiRequest, res: NextApiResponse) => {
   );
 
   res.send({
-    ownDecks,
-    publicDecks,
+    ownDecks: unnestColorIdentity(ownDecks),
+    publicDecks: unnestColorIdentity(publicDecks),
   });
 };
 

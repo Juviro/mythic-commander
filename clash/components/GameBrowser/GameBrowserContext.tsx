@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 
-import { Deck, GameOptions, Lobby } from 'backend/lobby/GameLobby.types';
+import { LobbyDeck, GameOptions, Lobby } from 'backend/lobby/GameLobby.types';
 import { User } from 'backend/database/getUser';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
 import { SOCKET_MSG_LOBBY } from '../../backend/constants/wsEvents';
@@ -12,7 +12,7 @@ const GameBrowserContext = React.createContext<{
   onHostLobby: (gameOptions: GameOptions) => void;
   onJoinLobby: (id: string) => void;
   onLeaveLobby: () => void;
-  onSelectDeck: (deck: Deck) => void;
+  onSelectDeck: (deck: LobbyDeck) => void;
   onReady: (isReady: boolean) => void;
   onStartMatch: () => void;
   onSelectColor?: (color: string) => void;
@@ -63,7 +63,7 @@ export const GameBrowserContextProvider = ({ children }: Props) => {
     emit(SOCKET_MSG_LOBBY.LEAVE_LOBBY, currentLobby.id);
   };
 
-  const onSelectDeck = (deck: Deck) => {
+  const onSelectDeck = (deck: LobbyDeck) => {
     if (!currentLobby) return;
 
     emit(SOCKET_MSG_LOBBY.SELECT_DECK, JSON.stringify(deck));

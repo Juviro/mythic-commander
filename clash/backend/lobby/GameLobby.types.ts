@@ -1,19 +1,20 @@
 import { User } from 'backend/database/getUser';
 
-export interface Deck {
+export interface LobbyDeck {
   id: string;
   name?: string;
   imgSrc?: string;
   ownerName?: string;
-  commanderName: string;
+  commanderName?: string;
+  colorIdentity?: string[];
 }
 
-export type OwnDeck = Deck & {
+export type OwnDeck = LobbyDeck & {
   status: 'active' | 'draft' | 'archived';
 };
 
-export type Player = User & {
-  deck: Deck | null;
+export type LobbyPlayer = User & {
+  deck: LobbyDeck | null;
   isReady: boolean;
   color: string | null;
 };
@@ -21,7 +22,7 @@ export type Player = User & {
 export interface Lobby {
   id: string;
   name: string;
-  players: Player[];
+  players: LobbyPlayer[];
   maxNumberOfPlayers: number;
   hostId: string;
   gameLoading?: boolean;

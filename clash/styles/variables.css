@@ -28,6 +28,10 @@
     --color-selection-background: #00000033;
     --color-red: #d32f2f;
 
+    --color-deck-active: #81c784;
+    --color-deck-draft: #fff176;
+    --color-deck-archived: #64b5f6;
+
     --size-card-base-width: 248px;
     --size-card-width: var(--size-card-base-width);
     --size-card-base-padding: 4px;
