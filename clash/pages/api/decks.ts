@@ -14,7 +14,7 @@ const decks = async (req: NextApiRequest, res: NextApiResponse) => {
       decks."imgSrc",
       decks.name,
       decks.status,
-      commanders.name as "publicName"
+      commanders.name as "commanderName"
     FROM 
       decks
     LEFT OUTER JOIN
@@ -49,7 +49,7 @@ const decks = async (req: NextApiRequest, res: NextApiResponse) => {
       decks.id,
       decks."imgSrc",
       decks.name,
-      commanders.name as "publicName",
+      commanders.name as "commanderName",
       users.username as "ownerName"
     FROM 
       decks

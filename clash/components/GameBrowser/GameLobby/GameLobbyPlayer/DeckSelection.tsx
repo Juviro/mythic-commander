@@ -84,10 +84,8 @@ const DeckSelection = ({ canSelectDeck, playerId, deck, isReady }: Props) => {
     onSelectDeck({
       id: selectedDeck.id,
       imgSrc: selectedDeck.imgSrc,
-      name:
-        'publicName' in selectedDeck
-          ? (selectedDeck.publicName as string)
-          : selectedDeck.name,
+      commanderName: selectedDeck.commanderName,
+      name: selectedDeck.name,
       ownerName: selectedDeck.ownerName,
     });
   };
@@ -108,7 +106,7 @@ const DeckSelection = ({ canSelectDeck, playerId, deck, isReady }: Props) => {
   }
 
   if (!canSelectDeck) {
-    return <DeckLabel deck={deck as Deck} displayTooltip />;
+    return <DeckLabel deck={deck as Deck} />;
   }
 
   const disabled = isLoading || isReady;

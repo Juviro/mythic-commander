@@ -15,27 +15,26 @@ export const getDeckImgSrc = (imgSrc: string) => {
 
 interface Props {
   deck: Deck;
-  displayTooltip?: boolean;
   deckName?: string;
 }
 
-const DeckLabel = ({ deck, displayTooltip, deckName }: Props) => {
+const DeckLabel = ({ deck, deckName }: Props) => {
   const usedName = deckName || deck.name;
 
   return (
-    <div className={styles.wrapper}>
-      {deck?.imgSrc && (
-        <img src={getDeckImgSrc(deck.imgSrc)} alt="" className={styles.image} />
-      )}
-      <div className={styles.deck_name}>
-        <Tooltip title={usedName} open={displayTooltip ? undefined : false}>
-          <span className={styles.label}>{usedName}</span>
-        </Tooltip>
-        {deck.ownerName && (
-          <span className={styles.deck_owner}>{`by ${deck.ownerName}`}</span>
+    <Tooltip title={deck.commanderName}>
+      <div className={styles.wrapper}>
+        {deck?.imgSrc && (
+          <img src={getDeckImgSrc(deck.imgSrc)} alt="" className={styles.image} />
         )}
+        <div className={styles.deck_name}>
+          <span className={styles.label}>{usedName}</span>
+          {deck.ownerName && (
+            <span className={styles.deck_owner}>{`by ${deck.ownerName}`}</span>
+          )}
+        </div>
       </div>
-    </div>
+    </Tooltip>
   );
 };
 

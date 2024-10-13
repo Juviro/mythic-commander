@@ -5,10 +5,10 @@ export interface Deck {
   name?: string;
   imgSrc?: string;
   ownerName?: string;
+  commanderName: string;
 }
 
 export type OwnDeck = Deck & {
-  publicName: string;
   status: 'active' | 'draft' | 'archived';
 };
 
