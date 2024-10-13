@@ -22,7 +22,7 @@ const App = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <Suspense fallback={<SuspensePlaceholder />}>
-        <FadeIn>
+        <FadeIn style={{ height: '100%' }}>
           <Switch>
             <Route path="/404" exact component={NotFound} />
             <Route path="/login" component={LoginPage} />

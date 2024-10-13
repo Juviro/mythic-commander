@@ -13,6 +13,7 @@ const StyledIconWrapper = styled.div`
   padding: 8px;
   pointer-events: auto;
   z-index: 10;
+  display: flex;
   transition: all 0.3s;
 
   ${({ isOpen }) =>
