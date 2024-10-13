@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import { Card } from 'antd';
 
 import { LobbyPlayer } from 'backend/lobby/GameLobby.types';
+import GameBrowserContext from 'components/GameBrowser/GameBrowserContext';
 import DeckSelection from './DeckSelection/DeckSelection';
 import PlayerReady from './PlayerReady';
 
@@ -17,6 +18,7 @@ interface Props {
 
 const GameLobbyPlayer = ({ player, isSelf, isHost }: Props) => {
   const [imgError, setImgError] = useState(!player?.avatar);
+  const { onSelectDeck } = useContext(GameBrowserContext);
 
   const onImgError = () => {
     setImgError(true);
@@ -51,6 +53,7 @@ const GameLobbyPlayer = ({ player, isSelf, isHost }: Props) => {
               }`}</span>
               <div className={styles.deck}>
                 <DeckSelection
+                  onSelectDeck={onSelectDeck}
                   deck={player.deck}
                   canSelectDeck={isSelf}
                   isReady={player.isReady}

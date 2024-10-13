@@ -1,0 +1,19 @@
+.modal_title {
+    margin-top: 0;
+}
+
+.player {
+    display: flex;
+    gap: 16px;
+}
+
+.player_name {
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.info_text {
+    margin-top: 32px;
+    color: var(--text-secondary);
+    font-style: italic;
+}

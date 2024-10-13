@@ -4,6 +4,7 @@ import uniqid from 'uniqid';
 import getUser, { User } from 'backend/database/getUser';
 import { getGameState } from 'backend/database/matchStore';
 import getPlaytestGamestate from 'backend/lobby/initMatch/getPlaytestGamestate';
+import { RematchOptions } from 'backend/database/gamestate.types';
 import {
   AcceptHandPayload,
   AddCountersPayload,
@@ -93,6 +94,17 @@ const gameSocketActions = (io: Server) => {
     socket.on(SOCKET_MSG_GAME.RESTART_GAME, () => {
       currentGames[currentGameId].restartGame(user.id);
     });
+
+    socket.on(SOCKET_MSG_GAME.INITIATE_REMATCH, () => {
+      currentGames[currentGameId].initiateRematch();
+    });
+
+    socket.on(
+      SOCKET_MSG_GAME.UPDATE_REMATCH_OPTIONS,
+      (rematchOptions: RematchOptions) => {
+        currentGames[currentGameId].updateRematchOptions(user.id, rematchOptions);
+      }
+    );
 
     socket.on(SOCKET_MSG_GAME.RESIGN_GAME, () => {
       currentGames[currentGameId].resign(user.id);

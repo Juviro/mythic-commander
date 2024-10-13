@@ -11,24 +11,27 @@ interface Props {
   canSelectDeck: boolean;
   playerId: string;
   isReady: boolean;
+  onSelectDeck: (deck: LobbyDeck) => void;
 }
 
-const DeckSelection = ({ canSelectDeck, playerId, deck, isReady }: Props) => {
+const DeckSelection = ({
+  canSelectDeck,
+  playerId,
+  deck,
+  isReady,
+  onSelectDeck,
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { isLoading, ownDecks, publicDecks, onSelect } = useDeckSelection(
     playerId,
-    canSelectDeck
+    canSelectDeck,
+    onSelectDeck
   );
 
   if (!canSelectDeck && !deck) {
     return <span>No deck selected</span>;
   }
-
-  const onSelectDeck = (deckId: string) => {
-    onSelect(deckId);
-    setIsOpen(false);
-  };
 
   return (
     <>
@@ -65,7 +68,10 @@ const DeckSelection = ({ canSelectDeck, playerId, deck, isReady }: Props) => {
         <DeckSelectionModal
           ownDecks={ownDecks!}
           publicDecks={publicDecks!}
-          onSelect={onSelectDeck}
+          onSelect={(deckId: string) => {
+            onSelect(deckId);
+            setIsOpen(false);
+          }}
         />
       </Modal>
     </>

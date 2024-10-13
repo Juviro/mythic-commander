@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { GameLog } from 'backend/constants/logMessages';
+import { LobbyDeck } from 'backend/lobby/GameLobby.types';
 
 export const PHASES = ['beginning', 'main1', 'combat', 'main2', 'end'] as const;
 
@@ -155,6 +156,11 @@ interface RevealedCards {
   cards: VisibleCard[];
 }
 
+export interface RematchOptions {
+  isReady: boolean;
+  deck: LobbyDeck;
+}
+
 export interface Player {
   id: string;
   name: string;
@@ -167,6 +173,7 @@ export interface Player {
   resigned?: boolean;
   activeUtils?: GameUtils;
   revealedCards?: RevealedCards;
+  rematchOptions?: RematchOptions;
 }
 
 // ##################### Meta #####################
@@ -203,4 +210,5 @@ export interface GameState {
   winner?: string | null;
   stack: Stack;
   phaseStopByPlayerId?: string | null;
+  rematchModalOpen?: boolean;
 }

@@ -88,7 +88,7 @@ export const storeGameState = async (
   gameId: string,
   gameState: GameState,
   lobby?: Lobby
-): Promise<void> => {
+): Promise<any> => {
   const valueToStore: any = {
     id: gameId,
     state: gameState,
@@ -99,7 +99,7 @@ export const storeGameState = async (
     valueToStore.lobby = lobby;
   }
 
-  await db('gameStates').insert(valueToStore).onConflict('id').merge();
+  return db('gameStates').insert(valueToStore).onConflict('id').merge();
 };
 
 export const getGameState = async (

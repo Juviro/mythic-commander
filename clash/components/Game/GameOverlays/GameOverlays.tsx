@@ -7,6 +7,7 @@ import FloatingMana from './FloatingMana/FloatingMana';
 import Stack from './Stack/Stack';
 import CardRules from './CardRules/CardRules';
 import RevealedCards from './RevealedCards/RevealedCards';
+import Rematch from './Rematch/Rematch';
 
 const GameOverlays = () => {
   return (
@@ -18,6 +19,7 @@ const GameOverlays = () => {
       <RevealedCards />
       <Stack />
       <CardRules />
+      <Rematch />
     </>
   );
 };

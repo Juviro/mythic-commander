@@ -1,12 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Button } from 'antd';
 import classNames from 'classnames';
 
 import GameStateContext from 'components/Game/GameStateContext';
+import useGameActions from 'components/Game/useGameActions';
+
 import styles from './ScreenMessage.module.css';
 
 const ScreenMessage = () => {
   const { gameState, player: self } = useContext(GameStateContext);
+  const { onInitiateRematch } = useGameActions();
   const [message, setMessage] = useState('');
+  const [displayReplayButton, setDisplayReplayButton] = useState(false);
 
   const hasGameStarted = gameState?.players.every(
     (player) => player.mulligan.cardsAccepted
@@ -39,14 +44,21 @@ const ScreenMessage = () => {
   useEffect(() => {
     if (!gameState?.winner) {
       setMessage('');
+      setDisplayReplayButton(false);
       return;
     }
     const winnerName = gameState.winner === self.name ? 'You' : gameState.winner;
 
     setMessage(`${winnerName} won the Game!`);
+
+    setTimeout(() => {
+      setDisplayReplayButton(true);
+    }, 3000);
   }, [gameState?.winner]);
 
   if (!message) return null;
+
+  const isHost = self?.id === gameState?.hostId;
 
   return (
     <div className={styles.wrapper} key={message}>
@@ -57,6 +69,17 @@ const ScreenMessage = () => {
       >
         {message}
       </h1>
+      {isHost && (
+        <Button
+          type="primary"
+          onClick={onInitiateRematch}
+          className={classNames(styles.rematch_button, {
+            [styles.rematch_button__visible]: displayReplayButton,
+          })}
+        >
+          Rematch
+        </Button>
+      )}
     </div>
   );
 };

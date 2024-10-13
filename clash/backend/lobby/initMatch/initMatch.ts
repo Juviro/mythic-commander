@@ -104,6 +104,7 @@ const initMatch = async (lobby: Lobby, shouldStoreGameState = true) => {
     resources,
     winner: null,
     stack: { visible: false, cards: [] },
+    rematchModalOpen: false,
   };
 
   if (shouldStoreGameState) {

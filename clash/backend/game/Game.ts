@@ -10,6 +10,7 @@ import {
   PHASES,
   Player,
   PlayerZone,
+  RematchOptions,
   VisibleBattlefieldCard,
   VisibleCard,
   Zone,
@@ -52,6 +53,7 @@ import { randomizeArray } from 'utils/randomizeArray';
 import db from 'backend/database/db';
 import getPlaytestGamestate from 'backend/lobby/initMatch/getPlaytestGamestate';
 import { XYCoord } from 'react-dnd';
+import { LobbyDeck } from 'backend/lobby/GameLobby.types';
 import addLogEntry from './addLogEntry';
 import getInitialCardProps from './utils/getInitialCardProps';
 
@@ -105,15 +107,33 @@ export default class Game {
     }
   }
 
+  emitGameStateToAll() {
+    this.gameState.players.forEach(({ id }) => {
+      const user = this.users[id];
+      // might be undefined if player is not connected
+      if (!user) return;
+      this.emitGameState(user.socket, id);
+    });
+  }
+
   emitGameUpdate() {
-    const { activePlayerId, phase, turn, winner, phaseStopByPlayerId, stack } =
-      this.gameState;
+    const {
+      activePlayerId,
+      phase,
+      turn,
+      winner,
+      phaseStopByPlayerId,
+      stack,
+      rematchModalOpen,
+    } = this.gameState;
+
     this.emitToAll(SOCKET_MSG_GAME.GAME_STATE, {
       activePlayerId,
       phase,
       turn,
       winner,
       phaseStopByPlayerId,
+      rematchModalOpen,
       stack: Game.obfuscateStack(stack),
     });
     this.gameState.phaseStopByPlayerId = null;
@@ -167,12 +187,52 @@ export default class Game {
       this.gameState = newGameState;
     }
 
-    this.gameState.players.forEach(({ id }) => {
-      const user = this.users[id];
-      // might be undefined if player is not connected
-      if (!user) return;
-      this.emitGameState(user.socket, id);
+    this.emitGameStateToAll();
+  }
+
+  async initiateRematch() {
+    const { lobby } = await getGameState(this.gameState.gameId);
+
+    this.gameState.players.forEach((player) => {
+      const { deck } = lobby.players.find((p) => p.id === player.id)!;
+      player.rematchOptions = { isReady: false, deck: deck as LobbyDeck };
     });
+    this.gameState.rematchModalOpen = true;
+
+    this.emitGameStateToAll();
+  }
+
+  async updateRematchOptions(playerId: string, rematchOptions: RematchOptions) {
+    const player = this.getPlayerById(playerId);
+    player.rematchOptions = {
+      ...player.rematchOptions,
+      ...rematchOptions,
+    };
+
+    const allPlayersReady = this.gameState.players.every(
+      (p) => p.rematchOptions?.isReady
+    );
+
+    this.emitGameStateToAll();
+    if (!allPlayersReady) {
+      return;
+    }
+
+    this.gameState.rematchModalOpen = false;
+    const { lobby } = await getGameState(this.gameState.gameId);
+    const newlobby = {
+      ...lobby,
+      players: lobby.players.map((p) => {
+        const currentPlayer = this.gameState.players.find(({ id }) => id === p.id)!;
+        return {
+          ...p,
+          deck: currentPlayer.rematchOptions!.deck,
+        };
+      }),
+    };
+
+    await storeGameState(this.gameState.gameId, this.gameState, newlobby);
+    this.restartGame(this.gameState.hostId);
   }
 
   resign(playerId: string) {

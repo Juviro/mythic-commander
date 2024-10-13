@@ -30,7 +30,12 @@ import {
   ToggleStackOpenPayload,
   RevealPayload,
 } from 'backend/constants/wsEvents';
-import { Phase, PlayerZone, Zone } from 'backend/database/gamestate.types';
+import {
+  Phase,
+  PlayerZone,
+  RematchOptions,
+  Zone,
+} from 'backend/database/gamestate.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
 import useSettings from './Menu/GameInfo/GuideModal/Settings/useSettings';
 
@@ -205,6 +210,14 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.RESTART_GAME);
   };
 
+  const onInitiateRematch = () => {
+    socket?.emit(SOCKET_MSG_GAME.INITIATE_REMATCH);
+  };
+
+  const onSelectRematchDeck = (rematchOptions: Partial<RematchOptions>) => {
+    socket?.emit(SOCKET_MSG_GAME.UPDATE_REMATCH_OPTIONS, rematchOptions);
+  };
+
   const resignGame = () => {
     socket?.emit(SOCKET_MSG_GAME.RESIGN_GAME);
   };
@@ -242,6 +255,8 @@ const useGameActions = () => {
     setStopPoint,
     endTurn,
     restartGame,
+    onInitiateRematch,
+    onSelectRematchDeck,
     resignGame,
   };
 };

@@ -1,8 +1,8 @@
-import { LobbyDeck, OwnDeck } from 'backend/lobby/GameLobby.types';
-import GameBrowserContext from 'components/GameBrowser/GameBrowserContext';
-import useLocalStorage from 'hooks/useLocalStorage';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useQuery } from 'react-query';
+
+import { LobbyDeck, OwnDeck } from 'backend/lobby/GameLobby.types';
+import useLocalStorage from 'hooks/useLocalStorage';
 
 export interface DeckOptions {
   ownDecks: OwnDeck[];
@@ -14,8 +14,11 @@ const getDecks = async () => {
   return res.json();
 };
 
-const useDeckSelection = (playerId: string, canSelectDeck: boolean) => {
-  const { onSelectDeck } = useContext(GameBrowserContext);
+const useDeckSelection = (
+  playerId: string,
+  canSelectDeck: boolean,
+  onSelectDeck: (deck: LobbyDeck) => void
+) => {
   const [initialDeckId, setInitialDeckId] = useLocalStorage<string>('initial-deck');
 
   const { data, isLoading } = useQuery<DeckOptions>(`decks-${playerId}`, getDecks, {
