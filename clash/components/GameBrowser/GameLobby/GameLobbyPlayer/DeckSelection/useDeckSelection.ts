@@ -44,7 +44,6 @@ const useDeckSelection = (playerId: string, canSelectDeck: boolean) => {
 
   useEffect(() => {
     if (!data) return;
-    return;
 
     onSubmitSelection(initialDeckId);
   }, [Boolean(data)]);
