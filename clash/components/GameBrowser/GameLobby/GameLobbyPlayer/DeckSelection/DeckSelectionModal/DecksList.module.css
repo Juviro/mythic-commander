@@ -39,7 +39,11 @@
     background: var(--color-primary--transparent);
 }
 
-.deck__clickable:hover:not(.deck__condensed) .view_link {
+.deck__condensed .view_link {
+    display: none;
+}
+
+.deck__clickable .view_link {
     opacity: 1;
 }
 
