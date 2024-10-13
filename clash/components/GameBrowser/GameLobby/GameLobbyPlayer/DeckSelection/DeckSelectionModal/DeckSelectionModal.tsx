@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tabs } from 'antd';
 
+import useLocalStorage from 'hooks/useLocalStorage';
 import { DeckOptions } from '../useDeckSelection';
 import DecksList, { DecksGroups } from './DecksList';
 
@@ -9,6 +10,11 @@ interface Props extends DeckOptions {
 }
 
 const DeckSelectionModal = ({ ownDecks, publicDecks, onSelect }: Props) => {
+  const [initialTab, setInitialTab] = useLocalStorage<string>(
+    'deck-selection-tab',
+    'ownDecks'
+  );
+
   const ownDecksByStatus = ownDecks.reduce(
     (acc: DecksGroups, currentDeck) => ({
       ...acc,
@@ -38,7 +44,13 @@ const DeckSelectionModal = ({ ownDecks, publicDecks, onSelect }: Props) => {
     },
   ];
 
-  return <Tabs defaultActiveKey="ownDecks" items={items} />;
+  return (
+    <Tabs
+      items={items}
+      defaultActiveKey={initialTab}
+      onChange={(key) => setInitialTab(key)}
+    />
+  );
 };
 
 export default DeckSelectionModal;
