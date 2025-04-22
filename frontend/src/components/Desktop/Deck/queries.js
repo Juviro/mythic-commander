@@ -23,6 +23,7 @@ const CARD_FIELDS = `
       isModalDfcLand
       isTwoFaced
       produced_mana
+      game_changer
       
       oracleCard {
         _id

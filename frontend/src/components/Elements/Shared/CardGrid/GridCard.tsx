@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { useDrag } from 'react-dnd';
 
-import { primary } from 'constants/colors';
+import { primary, secondary } from 'constants/colors';
 import { ZoomInOutlined } from '@ant-design/icons';
 import { useToggle } from '../../../Hooks';
 import CardInfo from './CardInfo';
@@ -35,6 +35,7 @@ const StyledCardWrapper = styled.div<{ fixedSize: boolean }>`
   width: ${({ fixedSize }) => (fixedSize ? '220px' : '100%')};
   height: 100%;
   justify-content: space-between;
+  container-type: inline-size;
 `;
 
 const StyledImageWrapper = styled.div<{ isSelected: boolean; markAsDisabled?: boolean }>`
@@ -72,6 +73,22 @@ const StyledAmountWrapper = styled.div`
   align-self: flex-start;
   border-top-right-radius: 8px;
   border-bottom-left-radius: 8px;
+`;
+
+const StyledGameChanger = styled.div`
+  position: absolute;
+  font-size: 6cqw;
+  top: 20cqw;
+  left: 26cqw;
+  transform: rotate(45deg);
+  background-color: ${secondary};
+  opacity: 0.8;
+  padding: 2px;
+  color: white;
+  display: flex;
+  white-space: nowrap;
+  width: 100%;
+  justify-content: center;
 `;
 
 const GridCard = ({
@@ -164,6 +181,7 @@ const GridCard = ({
         {displayedAmount > 1 && (
           <StyledAmountWrapper>{`${displayedAmount}x`}</StyledAmountWrapper>
         )}
+        {card.game_changer && <StyledGameChanger>Game Changer</StyledGameChanger>}
         {Boolean(showMenu && actions.length && !isAnyCardSelected) && (
           <CardMenu
             card={card}

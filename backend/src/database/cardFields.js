@@ -255,6 +255,32 @@ export const CARD_FIELDS_ADDITION_15 = [
   },
 ];
 
+export const CARD_FIELDS_ADDITION_16 = [
+  {
+    key: 'game_changer',
+    type: 'boolean',
+  },
+  {
+    key: 'variation',
+    type: 'boolean',
+  },
+  {
+    key: 'textless',
+    type: 'boolean',
+  },
+  {
+    key: 'story_spotlight',
+    type: 'boolean',
+  },
+  {
+    key: 'object',
+    type: 'string',
+  },
+  {
+    key: 'image_status',
+    type: 'string',
+  },
+];
 export const ALL_CARD_FIELDS = [
   CARD_FIELDS_INITIAL,
   CARD_FIELDS_ADDITION_1,
@@ -272,4 +298,5 @@ export const ALL_CARD_FIELDS = [
   CARD_FIELDS_ADDITION_13,
   CARD_FIELDS_ADDITION_14,
   CARD_FIELDS_ADDITION_15,
+  CARD_FIELDS_ADDITION_16,
 ].flat();

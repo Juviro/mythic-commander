@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Space } from 'antd';
 import shimmer from 'components/Animations/shimmer';
 import UserContext from 'components/Provider/UserProvider';
@@ -21,7 +22,7 @@ const getQuickstats = (deck: UnifiedDeck, type: string) => {
       const has100Cards = sumCardAmount(deck.cards) === 100;
       return {
         type,
-        text: `${sumCardAmount(deck.cards)} cards`,
+        text: `${sumCardAmount(deck.cards)} Card${sumCardAmount(deck.cards) > 1 ? 's' : ''}`,
         status: has100Cards ? 'ok' : 'error',
       };
     }
@@ -34,7 +35,7 @@ const getQuickstats = (deck: UnifiedDeck, type: string) => {
       const cards = deck.cards.filter(({ owned }) => !owned);
       return {
         type,
-        text: `${numberOfUnownedCards} cards not collected`,
+        text: `${numberOfUnownedCards} Card${numberOfUnownedCards > 1 ? 's' : ''} Not Collected`,
         status: 'warning',
         cards,
       };
@@ -42,7 +43,7 @@ const getQuickstats = (deck: UnifiedDeck, type: string) => {
     case 'colorIdentity': {
       const commanders = deck.cards.filter(({ isCommander }) => isCommander);
       if (!commanders.length) {
-        return { type, text: 'No commander selected', status: 'warning' };
+        return { type, text: 'No Commander Selected', status: 'warning' };
       }
 
       const colorIdentityErrorCards = deck.cards.filter(
@@ -50,12 +51,12 @@ const getQuickstats = (deck: UnifiedDeck, type: string) => {
       );
 
       if (!colorIdentityErrorCards.length) {
-        return { type, text: 'Color identity', status: 'ok' };
+        return { type, text: 'Color Identity', status: 'ok' };
       }
 
       return {
         type,
-        text: `Color identity (${colorIdentityErrorCards.length})`,
+        text: `Color Identity (${colorIdentityErrorCards.length})`,
         status: 'error',
         cards: colorIdentityErrorCards,
       };
@@ -66,8 +67,8 @@ const getQuickstats = (deck: UnifiedDeck, type: string) => {
       return {
         type,
         text: illegalCards.length
-          ? `Commander legal (${illegalCards.length})`
-          : 'Card legality',
+          ? `Commander Legal (${illegalCards.length})`
+          : 'Card Legality',
         status: illegalCards.length ? 'error' : 'ok',
         cards: illegalCards,
       };

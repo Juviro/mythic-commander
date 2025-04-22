@@ -42,6 +42,7 @@ export type Card = {
   color_identity?: Maybe<Array<Maybe<Scalars['String']>>>;
   colors?: Maybe<Array<Maybe<Scalars['String']>>>;
   foil: Scalars['Boolean'];
+  game_changer: Scalars['Boolean'];
   id: Scalars['String'];
   image_uris?: Maybe<ImageUris>;
   imgKey: Scalars['String'];
