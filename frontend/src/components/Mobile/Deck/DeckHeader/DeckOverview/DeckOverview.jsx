@@ -4,6 +4,7 @@ import { Divider, Space, Typography } from 'antd';
 
 import DeckQuickstats from 'components/Elements/Shared/DeckQuickstats';
 import ValueLabel from 'components/Elements/Shared/ValueLabel';
+import BracketInfo from 'components/Elements/Shared/BracketInfo/BracketInfo';
 import DeckName from './DeckName';
 
 const StyledInfoBox = styled(Space)`
@@ -23,7 +24,10 @@ export default ({ deck }) => {
   return (
     <StyledInfoBox direction="vertical">
       <DeckName name={deck?.name} commander={commander} />
-      <DeckQuickstats deck={deck} />
+      <Space direction="vertical" size={16}>
+        <DeckQuickstats deck={deck} />
+        <BracketInfo deck={deck} />
+      </Space>
       <StyledDivider />
       <Space style={{ marginTop: 12 }}>
         <Typography.Text strong style={{ fontSize: 16 }}>

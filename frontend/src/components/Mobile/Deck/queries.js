@@ -16,6 +16,7 @@ const CARD_FIELDS = `
       mana_cost
       color_identity
       isTwoFaced
+      game_changer
       
       oracleCard {
         _id

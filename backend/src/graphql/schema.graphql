@@ -40,6 +40,7 @@ type Card {
   primary_variant: String
   collector_number: String!
   produced_mana: [String!]
+  game_changer: Boolean
 
   # Additional card fields
   imgKey: String!

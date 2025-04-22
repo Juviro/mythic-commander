@@ -10,7 +10,8 @@ const CARD_FIELDS = `
   scryfall_uri
   type_line
   isTwoFaced
-
+  game_changer
+  
   relatedCards {
     id
     name
