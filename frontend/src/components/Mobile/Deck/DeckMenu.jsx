@@ -4,11 +4,12 @@ import { Affix, Menu } from 'antd';
 import styled from 'styled-components';
 
 const StyledMenu = styled(Menu)`
+  width: 100%;
+
   & .ant-menu-item {
-    flex: 1;
     justify-content: center;
     display: flex;
-    padding: 0;
+    width: 33%;
   }
 `;
 

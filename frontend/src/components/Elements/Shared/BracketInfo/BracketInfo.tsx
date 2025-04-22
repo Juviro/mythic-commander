@@ -13,13 +13,14 @@ const getPossibleBrackets = (numberOfGameChangers: number) => {
     return '1-3';
   }
   if (numberOfGameChangers <= 3) {
-    return '3-4';
+    return '3';
   }
   return '4-5';
 };
 
 const BracketInfo = ({ deck }: BracketInfoProps) => {
   if (!deck) return null;
+
   const gameChangers = deck.cards.filter((card) => card.game_changer);
   const numberOfGameChangers = gameChangers.length;
   const bracket = getPossibleBrackets(numberOfGameChangers);

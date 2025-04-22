@@ -11,6 +11,7 @@ const CARD_FIELDS = `
   type_line
   isTwoFaced
   game_changer
+  
   relatedCards {
     id
     name
