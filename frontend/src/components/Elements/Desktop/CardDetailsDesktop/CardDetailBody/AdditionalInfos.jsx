@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Divider, Typography } from 'antd';
+import { Row, Col, Divider } from 'antd';
 
 import styled from 'styled-components';
 import CardLegal from 'components/Elements/Shared/CardLegal';
@@ -14,6 +14,8 @@ const StyledColumn = styled(Col)`
 `;
 
 export default ({ card, loading, isFlipped }) => {
+  const hasAdditionalInfos = card.reserved || card.game_changer;
+
   return (
     <Row style={{ width: '100%' }}>
       <StyledColumn span={9}>
@@ -38,13 +40,22 @@ export default ({ card, loading, isFlipped }) => {
       >
         <Divider>Related Cards</Divider>
         <RelatedCards card={card} loading={loading} />
-        {card.reserved && (
-          <>
-            <Divider>Reserved List</Divider>
-            <Typography.Text strong style={{ marginBottom: 16 }}>
-              This card is part of the reserved list
-            </Typography.Text>
-          </>
+        {hasAdditionalInfos && (
+          <div>
+            <Divider>Other</Divider>
+            <ul>
+              {card.reserved && (
+                <li>
+                  This card is part of the <b>Reserved List</b>
+                </li>
+              )}
+              {card.game_changer && (
+                <li>
+                  This card is a <b>Game Changer</b> in the Commander format
+                </li>
+              )}
+            </ul>
+          </div>
         )}
       </StyledColumn>
       <StyledColumn span={5}>

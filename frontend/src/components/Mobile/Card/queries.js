@@ -9,6 +9,7 @@ const CARD_FIELDS = `
   oracle_text
   isTwoFaced
   type_line
+  game_changer
   
   oracleCard {
     _id

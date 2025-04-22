@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 
 import { useParams } from 'react-router';
-import { Divider, Typography } from 'antd';
+import { Divider } from 'antd';
 
 import UserContext from 'components/Provider/UserProvider';
 import CardLegal from 'components/Elements/Shared/CardLegal';
@@ -81,6 +81,8 @@ export default ({ overwriteOracleId, defaultCardId }) => {
 
   const fullCard = { ...card, ...currentCard };
 
+  const hasAdditionalInfos = fullCard.reserved || fullCard.game_changer;
+
   return (
     <StyledWrapper>
       <CardImage card={fullCard} loading={loading} onFlipCard={setIsFlipped} />
@@ -120,13 +122,22 @@ export default ({ overwriteOracleId, defaultCardId }) => {
         </StyledRulesWrapper>
         <Divider>Resources</Divider>
         <CardLinks card={card} />
-        {card?.reserved && (
-          <>
-            <Divider>Reserved List</Divider>
-            <Typography.Text strong style={{ marginBottom: 16 }}>
-              This card is part of the reserved list
-            </Typography.Text>
-          </>
+        {hasAdditionalInfos && (
+          <div style={{ width: '100%' }}>
+            <Divider>Other</Divider>
+            <ul>
+              {card.reserved && (
+                <li>
+                  This card is part of the <b>Reserved List</b>
+                </li>
+              )}
+              {card.game_changer && (
+                <li>
+                  This card is a <b>Game Changer</b> in the Commander format
+                </li>
+              )}
+            </ul>
+          </div>
         )}
       </StyledBodyWrapper>
     </StyledWrapper>
