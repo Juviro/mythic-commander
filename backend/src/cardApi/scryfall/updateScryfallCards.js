@@ -94,12 +94,23 @@ export const updateScryfallCards = async (type, tableName) => {
       cardToInsert.collector_number = padCollectorNumber(card.collector_number);
       cardToInsert.normalized_name = normalizeName(card.name);
 
+      const result = await knex('cards')
+        .where('id', card.id)
+        .select('image_status')
+        .first();
+
+      const { image_status: currentImageStatus } = result ?? {
+        image_status: '',
+      };
+
       await knex.raw(
         knex(tableName).insert(cardToInsert).toString().replace(/\?/g, '\\?') +
           ON_DUPLICATE
       );
 
-      await storeCardImage(card);
+      const hasImageStatusChanged = currentImageStatus !== card.image_status;
+
+      await storeCardImage(card, hasImageStatusChanged);
     } catch (e) {
       // [ and ] are caught here, which are the first and last line of the json
     }
