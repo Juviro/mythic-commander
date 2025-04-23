@@ -1,33 +1,43 @@
+// Query to get all promo_types:
+// SELECT array_agg(DISTINCT unnest_promo) FROM (SELECT unnest(promo_types) as unnest_promo FROM cards) as unnested;
+
 export const VARIANTS = {
-  TEXTURED: 'Textured',
-  COMPLEAT: 'Compleat',
-  HALO_FOIL: 'Halo Foil',
+  BORDERLESS: 'Borderless',
   BOXTOPPER: 'Boxtopper',
   BUY_A_BOX: 'Buy-a-Box',
+  COMPLEAT: 'Compleat',
+  CONFETTI_FOIL: 'Confetti Foil',
+  DOUBLE_RAINBOW: 'Double Rainbow',
+  DRAGONSCALE_FOIL: 'Dragonscale Foil',
+  EMBOSSED: 'Embossed',
+  ETCHED_FOIL: 'Etched Foil',
+  EXTENDED_ART: 'Extended Art',
+  FIRST_PLACE_FOIL: 'First Place Foil',
+  FRACTUREFOIL: 'Fracture Foil',
+  FULL_ART: 'Full Art',
+  FUTURE_FRAME: 'Future Frame',
+  GALAXY_FOIL: 'Galaxy Foil',
+  GILDED: 'Gilded',
+  GLOSSY: 'Glossy',
+  HALO_FOIL: 'Halo Foil',
+  INVERTED: 'Inverted',
+  INVIBILE_INK: 'Invisible Ink',
+  JUDGE_GIFT: 'Judge Gift',
+  MAGNIFIED: 'Magnified',
+  MANA_FOIL: 'Mana Foil',
   NEON_INK: 'Neon Ink',
   OIL_SLICK: 'Oil Slick',
-  SERIALIZED: 'Serialized',
-  DOUBLE_RAINBOW: 'Double Rainbow',
-  GALAXY_FOIL: 'Galaxy Foil',
-  BORDERLESS: 'Borderless',
-  THICK: 'Thick',
-  FULL_ART: 'Full Art',
-  SHOWCASE: 'Showcase',
-  INVERTED: 'Inverted',
-  EXTENDED_ART: 'Extended Art',
-  ETCHED_FOIL: 'Etched Foil',
-  FUTURE_FRAME: 'Future Frame',
-  RETRO_FRAME: 'Retro Frame',
-  TEXTLESS: 'Textless',
-  CONFETTI_FOIL: 'Confetti Foil',
-  EMBOSSED: 'Embossed',
-  GILDED: 'Gilded',
-  INVIBILE_INK: 'Invisible Ink',
-  SURGE_FOIL: 'Surge Foil',
   RAISED_FOIL: 'Raised Foil',
   RAINBOW_FOIL: 'Rainbow Foil',
+  RETRO_FRAME: 'Retro Frame',
   RIPPLEFOIL: 'Ripple Foil',
-  FRACTUREFOIL: 'Fracture Foil',
+  SERIALIZED: 'Serialized',
+  SHOWCASE: 'Showcase',
+  SILVER_FOIL: 'Silver Foil',
+  SURGE_FOIL: 'Surge Foil',
+  TEXTLESS: 'Textless',
+  TEXTURED: 'Textured',
+  THICK: 'Thick',
 };
 
 const HIDDEN_VARIANTS = {
@@ -108,6 +118,27 @@ export const getCardVariants = ({
   }
   if (promo_types?.includes('doublerainbow')) {
     variants.push(VARIANTS.DOUBLE_RAINBOW);
+  }
+  if (promo_types?.includes('dragonscalefoil')) {
+    variants.push(VARIANTS.DRAGONSCALE_FOIL);
+  }
+  if (promo_types?.includes('firstplacefoil')) {
+    variants.push(VARIANTS.FIRST_PLACE_FOIL);
+  }
+  if (promo_types?.includes('glossy')) {
+    variants.push(VARIANTS.GLOSSY);
+  }
+  if (promo_types?.includes('judgegift')) {
+    variants.push(VARIANTS.JUDGE_GIFT);
+  }
+  if (promo_types?.includes('magnified')) {
+    variants.push(VARIANTS.MAGNIFIED);
+  }
+  if (promo_types?.includes('silverfoil')) {
+    variants.push(VARIANTS.SILVER_FOIL);
+  }
+  if (promo_types?.includes('manafoil')) {
+    variants.push(VARIANTS.MANA_FOIL);
   }
   if (border_color === 'borderless') {
     variants.push(VARIANTS.BORDERLESS);
