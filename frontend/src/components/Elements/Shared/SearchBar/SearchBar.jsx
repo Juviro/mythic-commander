@@ -1,19 +1,14 @@
-import React, { useRef, useContext, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Input, AutoComplete } from 'antd';
 import { withRouter } from 'react-router';
-import { useQuery } from '@apollo/client';
 
 import styled from 'styled-components';
-import { getOwnedCardNames } from '../../../../queries';
 import OptionGroupHeader from './OptionGroupHeader';
-import CardContext from '../../../Provider/CardProvider';
 import renderOption from './renderOption';
-import { filterAndSortByQuery } from '../../../../utils/cardFilter';
 import { useToggle, useBlurOnEsc, useShortcut } from '../../../Hooks';
 import getDynamicUrl from '../../../../utils/getDynamicUrl';
 import isMobile from '../../../../utils/isMobile';
-
-const MAX_RESULTS = 20;
+import useSearchSuggestions from './useSearchSuggestions';
 
 const StyledBackground = styled.div`
   top: 48px;
@@ -32,11 +27,11 @@ const StyledBackground = styled.div`
 const SearchBar = ({ history, transparent, style, hideLayover }) => {
   const inputEl = useRef(null);
   const [isOpen, toggleIsOpen] = useToggle(false);
-  const { cards } = useContext(CardContext);
-  const { data: ownedCardNamesData } = useQuery(getOwnedCardNames);
-  const ownedCardNames = ownedCardNamesData ? ownedCardNamesData.ownedCardNames : [];
 
   const [query, setQuery] = useState('');
+
+  const { searchSuggestions, totalResults, onSearchElement } =
+    useSearchSuggestions(query);
 
   const focusInput = () => inputEl.current?.focus();
   useShortcut('c', focusInput);
@@ -47,6 +42,7 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
   };
 
   const onSelect = (oracleId) => {
+    onSearchElement(oracleId);
     inputEl?.current?.blur();
     onSetSearch();
     toggleIsOpen(false);
@@ -55,13 +51,6 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
     const shouldReplace = history.location.pathname.match(/\/cards\/.+/) && isMobile();
     history[shouldReplace ? 'replace' : 'push'](getDynamicUrl(`/cards/${oracleId}`));
   };
-
-  const filteredCards = filterAndSortByQuery(cards, query);
-
-  const slicedCards = filteredCards.slice(0, MAX_RESULTS).map((card) => ({
-    ...card,
-    owned: ownedCardNames.includes(card.name),
-  }));
 
   const onShowAll = () => {
     setTimeout(() => window.scrollTo(0, 0), 100);
@@ -72,9 +61,13 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
   const dataSource = [
     {
       label: (
-        <OptionGroupHeader numberOfCards={filteredCards.length} onShowAll={onShowAll} />
+        <OptionGroupHeader
+          numberOfCards={totalResults}
+          onShowAll={onShowAll}
+          isLastSearched={!query.length}
+        />
       ),
-      options: slicedCards.map(renderOption(query)),
+      options: searchSuggestions.map(renderOption(query)),
     },
   ];
 
