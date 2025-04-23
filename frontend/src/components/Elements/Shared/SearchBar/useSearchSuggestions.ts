@@ -34,7 +34,8 @@ const useSearchSuggestions = (query: string) => {
 
   const onSearchElement = (oracleId: string) => {
     if (!oracleId) return;
-    setLastSearchedOracleIds([oracleId, ...lastSearchedOracleIds].slice(0, MAX_RESULTS));
+    const uniqueOracleIds = [...new Set([oracleId, ...lastSearchedOracleIds])];
+    setLastSearchedOracleIds(uniqueOracleIds.slice(0, MAX_RESULTS));
   };
 
   return {
