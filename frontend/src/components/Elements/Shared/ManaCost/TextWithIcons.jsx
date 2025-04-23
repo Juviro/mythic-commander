@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import ManaSymbol from './ManaSymbol';
 import ReplaceText from '../ReplaceText';
 
-const StyledWrapper = styled.div`
+export const StyledWrapper = styled.div`
   display: block;
   margin: 8px 0 16px;
 `;
