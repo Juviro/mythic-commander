@@ -47,6 +47,7 @@ const SearchBar = ({ history, transparent, style, hideLayover }) => {
   };
 
   const onSelect = (oracleId) => {
+    inputEl?.current?.blur();
     onSetSearch();
     toggleIsOpen(false);
     if (!oracleId) return;
