@@ -15,7 +15,7 @@ const BracketOverview = ({ gameChangers }: BracketOverviewProps) => {
           <li key={card.id}>{card.name}</li>
         ))}
       </ul>
-      <h2>Bracket Overview:</h2>
+      <h2>Bracket Definitions:</h2>
       <p>
         <b>Bracket 1: Exhibition</b>
         <br />
@@ -26,6 +26,7 @@ const BracketOverview = ({ gameChangers }: BracketOverviewProps) => {
           Tutors should be sparse.
         </span>
       </p>
+      <br />
       <p>
         <b>Bracket 2: Core</b>
         <br />
@@ -36,6 +37,7 @@ const BracketOverview = ({ gameChangers }: BracketOverviewProps) => {
           sparse.
         </span>
       </p>
+      <br />
       <p>
         <b>Bracket 3: Upgraded</b>
         <br />
@@ -46,6 +48,7 @@ const BracketOverview = ({ gameChangers }: BracketOverviewProps) => {
           You shouldn&apos;t expect to be chaining extra turns together.
         </span>
       </p>
+      <br />
       <p>
         <b>Bracket 4: Optimized</b>
         <br />
@@ -54,6 +57,7 @@ const BracketOverview = ({ gameChangers }: BracketOverviewProps) => {
           list.
         </span>
       </p>
+      <br />
       <p>
         <b>Bracket 5: cEDH</b>
         <br />

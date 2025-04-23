@@ -13,7 +13,7 @@ const getPossibleBrackets = (numberOfGameChangers: number) => {
     return '1-3';
   }
   if (numberOfGameChangers <= 3) {
-    return '3';
+    return '3-4';
   }
   return '4-5';
 };
@@ -35,7 +35,7 @@ const BracketInfo = ({ deck }: BracketInfoProps) => {
       <Typography.Text>
         {`Bracket `}
         <b>{bracket}</b>
-        <Hint text={<BracketOverview gameChangers={gameChangers} />} large />
+        <Hint text={<BracketOverview gameChangers={gameChangers} />} asModal />
       </Typography.Text>
     </Space>
   );

@@ -1,49 +1,51 @@
-import React from 'react';
-import { Tooltip } from 'antd';
+import React, { useState } from 'react';
+import { Tooltip, Modal } from 'antd';
 import styled from 'styled-components';
 import { InfoCircleOutlined } from '@ant-design/icons';
 
 import { primary } from 'constants/colors';
-import isMobile from 'utils/isMobile';
 
 const StyledIcon = styled(InfoCircleOutlined)`
   margin-left: 6px;
   font-size: 16px;
-  cursor: help;
+  cursor: help !important;
   color: ${primary};
 `;
 
 interface Props {
   text?: React.ReactNode;
-  large?: boolean;
+  asModal?: boolean;
+  modalTitle?: string;
 }
 
-const Hint = ({ text, large }: Props) => {
+const Hint = ({ text, asModal, modalTitle }: Props) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   if (!text) return null;
 
-  const isLargeMobile = isMobile() && large;
-
-  const getWidth = () => {
-    if (isLargeMobile) return '100vw';
-    if (large) return '500px';
-    return undefined;
-  };
-
-  const getOverlayStyle = () => {
-    if (isLargeMobile) return { left: 0 };
-    return undefined;
+  const handleClick = () => {
+    if (asModal) {
+      setIsModalVisible(true);
+    }
   };
 
   return (
-    <Tooltip
-      title={text}
-      overlayStyle={getOverlayStyle()}
-      overlayInnerStyle={{
-        width: getWidth(),
-      }}
-    >
-      <StyledIcon />
-    </Tooltip>
+    <>
+      <Tooltip title={text} open={asModal ? false : undefined}>
+        <StyledIcon onClick={handleClick} />
+      </Tooltip>
+      {asModal && (
+        <Modal
+          open={isModalVisible}
+          onCancel={() => setIsModalVisible(false)}
+          footer={null}
+          centered
+          title={modalTitle}
+        >
+          {text}
+        </Modal>
+      )}
+    </>
   );
 };
 
