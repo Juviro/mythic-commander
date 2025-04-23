@@ -47,7 +47,7 @@ const ChatMessage = ({ message }: Props) => {
   if (logKey === 'DRAW_CARD') {
     return <MessageDraw playerId={playerId} payload={payload} />;
   }
-  if (logKey === 'MOVE_CARD') {
+  if (logKey === 'MOVE_CARDS') {
     return <MessageMove playerId={playerId} payload={payload} />;
   }
   if (logKey === 'DISCARD_RANDOM_CARD') {
@@ -109,9 +109,14 @@ const ChatMessage = ({ message }: Props) => {
     return <MessageSetPhase payload={payload} />;
   }
 
-  return (
-    <div className={styles.message}>{`${logKey} ${JSON.stringify({ payload })}`}</div>
-  );
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  if (isDevelopment) {
+    return (
+      <div className={styles.message}>{`${logKey} ${JSON.stringify({ payload })}`}</div>
+    );
+  }
+
+  return null;
 };
 
 export default ChatMessage;

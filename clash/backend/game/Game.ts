@@ -418,7 +418,7 @@ export default class Game {
 
   logAction(log: LogMessage) {
     const { logKey, payload, playerId } = log;
-    if (logKey === 'MOVE_CARD' && payload.to.zone === payload.from.zone) return;
+    if (logKey === 'MOVE_CARDS' && payload.to.zone === payload.from.zone) return;
 
     const newLogEntry = {
       playerId,
@@ -668,9 +668,9 @@ export default class Game {
     if (fromPlayer!) {
       this.logAction({
         playerId,
-        logKey: LOG_MESSAGES.MOVE_CARD,
+        logKey: LOG_MESSAGES.MOVE_CARDS,
         payload: {
-          cardName: getCardName(),
+          cardNames: [getCardName()],
           from: {
             zone: fromZone!,
             playerId: fromPlayer!.id,

@@ -5,6 +5,7 @@ import { getCardinalNumberLabel } from 'utils/i18nUtils';
 import ColoredPlayerName from '../../../../../GameComponents/ColoredPlayerName/ColoredPlayerName';
 
 import styles from '../../Chat.module.css';
+import MultipleCardNames from './MessageHelper/MultipleCardNames';
 
 const getZoneLabelFrom = (zone: string, playerId?: string | null) => {
   if (playerId) {
@@ -133,7 +134,7 @@ const MessageMove = ({ payload, playerId }: Props) => {
       <ColoredPlayerName id={playerId} />
       <span>
         {` ${action} `}
-        <b>{payload.cardName ?? 'a card'}</b>
+        <MultipleCardNames cardNames={payload.cardNames} />
         {actionSuffix && <> {actionSuffix}</>}
       </span>
     </div>
