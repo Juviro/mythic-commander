@@ -24,15 +24,16 @@ const useSearchSuggestions = (query: string) => {
   }));
 
   const lastSearchedCards = useMemo(() => {
-    return lastSearchedOracleIds.map((oracleId) =>
-      cards.find((card) => card.oracle_id === oracleId)
-    );
+    return lastSearchedOracleIds
+      .map((oracleId) => cards.find((card) => card.oracle_id === oracleId))
+      .filter((card) => card);
   }, [lastSearchedOracleIds]);
 
   const searchSuggestions =
     query || !lastSearchedOracleIds?.length ? slicedCards : lastSearchedCards;
 
   const onSearchElement = (oracleId: string) => {
+    if (!oracleId) return;
     setLastSearchedOracleIds([oracleId, ...lastSearchedOracleIds].slice(0, MAX_RESULTS));
   };
 
