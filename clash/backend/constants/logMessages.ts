@@ -13,7 +13,7 @@ export const LOG_MESSAGES = {
   ACCEPT_HAND: 'ACCEPT_HAND',
   TAKE_MULLIGAN: 'TAKE_MULLIGAN',
   DRAW_CARD: 'DRAW_CARD',
-  MOVE_CARD: 'MOVE_CARD',
+  MOVE_CARDS: 'MOVE_CARDS',
   DISCARD_RANDOM_CARD: 'DISCARD_RANDOM_CARD',
   PEEK: 'PEEK',
   MILL: 'MILL',
@@ -46,7 +46,7 @@ interface MoveCardLocation {
 }
 
 export interface LogPayloadMoveZone {
-  cardName: string | null;
+  cardNames: (string | null)[];
   from: MoveCardLocation;
   to: MoveCardLocation;
 }
@@ -189,7 +189,7 @@ interface LogMessageDraw extends LogMessageWithPlayer {
 }
 
 interface LogMessageMove extends LogMessageWithPlayer {
-  logKey: 'MOVE_CARD';
+  logKey: 'MOVE_CARDS';
   payload: LogPayloadMoveZone;
 }
 

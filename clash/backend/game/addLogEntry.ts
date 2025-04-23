@@ -6,6 +6,7 @@ const {
   SET_LIFE,
   ADD_COUNTERS,
   SET_COMMANDER_DAMAGE,
+  MOVE_CARDS,
 } = LOG_MESSAGES;
 
 const GROUPABLE_LOG_KEYS = [
@@ -14,7 +15,12 @@ const GROUPABLE_LOG_KEYS = [
   SET_LIFE,
   ADD_COUNTERS,
   SET_COMMANDER_DAMAGE,
+  MOVE_CARDS,
 ] as string[];
+
+const simpleCompareObject = (obj1: Record<string, any>, obj2: Record<string, any>) => {
+  return JSON.stringify(obj1) === JSON.stringify(obj2);
+};
 
 const addLogEntry = (currentLog: GameLog[], newLog: GameLog) => {
   const lastLog = currentLog.at(-1);
@@ -51,6 +57,14 @@ const addLogEntry = (currentLog: GameLog[], newLog: GameLog) => {
     return [...currentLog, newLog];
   }
   if (
+    newLastLog.logKey === MOVE_CARDS &&
+    newLog.logKey === MOVE_CARDS &&
+    (!simpleCompareObject(newLastLog.payload.from, newLog.payload.from) ||
+      !simpleCompareObject(newLastLog.payload.to, newLog.payload.to))
+  ) {
+    return [...currentLog, newLog];
+  }
+  if (
     newLastLog.logKey === ADD_COUNTERS &&
     newLog.logKey === ADD_COUNTERS &&
     (newLastLog.payload.cardIds.join(',') !== newLog.payload.cardIds.join(',') ||
@@ -64,6 +78,9 @@ const addLogEntry = (currentLog: GameLog[], newLog: GameLog) => {
   }
   if ('total' in newLog.payload && 'total' in newLastLog.payload) {
     newLastLog.payload.total = newLog.payload.total;
+  }
+  if (newLastLog.logKey === MOVE_CARDS && newLog.logKey === MOVE_CARDS) {
+    newLastLog.payload.cardNames.push(...newLog.payload.cardNames);
   }
 
   return [...currentLog.slice(0, -1), newLastLog];
