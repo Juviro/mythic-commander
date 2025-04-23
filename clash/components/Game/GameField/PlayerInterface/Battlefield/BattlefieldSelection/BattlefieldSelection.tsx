@@ -83,7 +83,7 @@ const BattlefieldSelection = ({ children, isFlipped, player }: Props) => {
     if (!startingPoint) return;
     setStartingPoint(null);
     setCurrentPoint(null);
-    if (hoveredCardIds.length <= 1) return;
+    if (hoveredCardIds.length < 1) return;
     setSelectedCardsIds(hoveredCardIds);
   };
 
