@@ -153,7 +153,7 @@ const SelectionRectangle = ({
           })}
         >
           <div className={styles.selection_info}>
-            {`${pluralizeCards(selectedCardIds.length)} selected`}
+            {`${pluralizeCards(selectedCardIds.length, 'One')} selected`}
           </div>
           {selectedCards.map((card) => (
             <BattlefieldCard card={card} key={card.clashId} player={player} inSelection />
