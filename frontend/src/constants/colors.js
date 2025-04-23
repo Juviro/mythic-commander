@@ -105,12 +105,12 @@ export const manaSymbolColors = {
 };
 
 export const tagColors = [
-  // {
-  //   name: '???',
-  //   color: 'gold',
-  //   fill: '#d4b106',
-  //   background: '#fffbe6',
-  // },
+  {
+    name: 'Recursion',
+    color: 'gold',
+    fill: '#d4b106',
+    background: '#fffbe6',
+  },
   {
     name: 'Targeted Removal',
     color: 'volcano',
@@ -127,10 +127,6 @@ export const tagColors = [
     fill: '#d46b08',
     background: '#ffd591',
   },
-  // {
-  //   name: '???',
-  //   color: 'lime',
-  // },
   {
     name: 'Ramp',
     color: 'green',
