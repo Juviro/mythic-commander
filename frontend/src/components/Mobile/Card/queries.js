@@ -10,6 +10,7 @@ const CARD_FIELDS = `
   isTwoFaced
   type_line
   game_changer
+  mana_cost
   
   oracleCard {
     _id

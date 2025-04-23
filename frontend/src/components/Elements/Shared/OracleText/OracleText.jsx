@@ -10,7 +10,9 @@ export default ({ card, loading, isFlipped }) => {
   const isSplitCard = !canFlip && card.type_line?.includes('//');
 
   const [cardTypeFront, cardTypeBack] = card.type_line?.split(' // ') ?? [];
+  const [cardNameFront, cardNameBack] = card.name?.split(' // ') ?? [];
   const [frontText, backText] = card?.oracle_text?.split(/<\w+>/) ?? [];
+  const [manaCostFront, manaCostBack] = card.mana_cost?.split(' // ') ?? [];
 
   const cardLinesFront = frontText?.split('\n').filter(Boolean);
   const cardLinesBack = backText?.split('\n').filter(Boolean);
@@ -21,11 +23,21 @@ export default ({ card, loading, isFlipped }) => {
   return (
     <>
       {displayFront && (
-        <OracleTextFace cardType={cardTypeFront} cardLines={cardLinesFront} />
+        <OracleTextFace
+          cardType={cardTypeFront}
+          cardLines={cardLinesFront}
+          cardName={cardNameFront}
+          manaCost={manaCostFront}
+        />
       )}
       {displayFront && displayBack && <Divider />}
       {displayBack && (
-        <OracleTextFace cardType={cardTypeBack} cardLines={cardLinesBack} />
+        <OracleTextFace
+          cardType={cardTypeBack}
+          cardLines={cardLinesBack}
+          cardName={cardNameBack}
+          manaCost={manaCostBack}
+        />
       )}
     </>
   );
