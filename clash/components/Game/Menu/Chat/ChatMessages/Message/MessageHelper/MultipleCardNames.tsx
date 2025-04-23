@@ -22,8 +22,10 @@ const MultipleCardNames = ({ cardNames }: MultipleCardNamesProps) => {
 
   const tooltipContent = (
     <div>
-      {cardNameStrings.slice(2).map((cardName) => (
-        <div key={cardName}>{cardName}</div>
+      {cardNameStrings.slice(2).map((cardName, index) => (
+        // The items can't change while this is rendered
+        // eslint-disable-next-line react/no-array-index-key
+        <div key={index}>{cardName}</div>
       ))}
     </div>
   );
