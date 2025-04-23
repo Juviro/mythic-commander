@@ -6,7 +6,7 @@ import NumberField from '../../../../NumberField';
 import DamageFieldBackground from './DamageFieldBackground';
 import FullscreenModalContext from '../../../../../../Provider/FullscreenModalProvider';
 
-export default ({ onSubmit, damage, onCancel, player }) => {
+const DamageModal = ({ onSubmit, damage, onCancel, player }) => {
   const originName = player?.name ?? 'Infect';
   const [currentDamage, setCurrentDamage] = useState(damage);
   const { getContainer } = useContext(FullscreenModalContext);
@@ -20,10 +20,13 @@ export default ({ onSubmit, damage, onCancel, player }) => {
       open
       getContainer={getContainer}
       title={`Track Damage from ${originName}`}
-      onCancel={onCancel}
+      onCancel={onOk}
       onOk={onOk}
       styles={{
         body: { padding: 0 },
+      }}
+      cancelButtonProps={{
+        onClick: onCancel,
       }}
       style={{ maxWidth: 340 }}
     >
@@ -35,3 +38,5 @@ export default ({ onSubmit, damage, onCancel, player }) => {
     </Modal>
   );
 };
+
+export default DamageModal;
