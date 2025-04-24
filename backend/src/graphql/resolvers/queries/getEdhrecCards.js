@@ -1,5 +1,6 @@
 import db from '../../../database';
 import { normalizeName } from '../../../utils/normalizeName';
+import logger from '../../../logging/logger';
 
 const getUrl = (names, themeSuffix) => {
   const sanitizedNames = names
@@ -14,7 +15,7 @@ const getUrl = (names, themeSuffix) => {
     return `https://json.edhrec.com/pages/commanders/${sanitizedNames}.json`;
   }
 
-  return `https://json.edhrec.com/pages/commanders/${sanitizedNames}${themeSuffix}.json`;
+  return `https://json.edhrec.com/pages/commanders/${sanitizedNames}/${themeSuffix}.json`;
 };
 
 const formatCards = async (cards, userId) => {
@@ -78,11 +79,12 @@ const getCardList = (json, userId) => {
 };
 
 const getThemes = (json) => {
-  const { tribelinks } = json.panels;
+  const { taglinks } = json.panels;
+  if (!taglinks) return [];
 
-  return tribelinks?.map((theme) => ({
+  return taglinks?.map((theme) => ({
     title: theme.value,
-    urlSuffix: theme['href-suffix'],
+    urlSuffix: theme.slug,
     count: theme.count,
   }));
 };
@@ -90,17 +92,22 @@ const getThemes = (json) => {
 const getEdhrecCards = async (names, themeSuffix, userId) => {
   if (!names.length) return null;
 
-  const url = getUrl(names, themeSuffix);
+  try {
+    const url = getUrl(names, themeSuffix);
 
-  const json = await fetchCards(url);
+    const json = await fetchCards(url);
 
-  const cardLists = getCardList(json, userId);
-  const themes = getThemes(json);
+    const cardLists = getCardList(json, userId);
+    const themes = getThemes(json);
 
-  return {
-    cardLists,
-    themes,
-  };
+    return {
+      cardLists,
+      themes,
+    };
+  } catch (error) {
+    logger.error('Error fetching EDHREC cards:', error);
+    return null;
+  }
 };
 
 export default getEdhrecCards;
