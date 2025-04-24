@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { google } from 'googleapis';
+import logger from '../logging/logger';
 
 const SCOPES = ['https://www.googleapis.com/auth/drive.file'];
 const MAX_BACKUPS = 10;
@@ -46,17 +47,17 @@ const uploadDbBackupToDrive = async (fileName) => {
   const outdatedBackups = await getOutdatedBackups(drive);
 
   if (outdatedBackups.length) {
-    console.info(`Deleting ${outdatedBackups.length} outdated backup(s)`);
+    logger.info(`Deleting ${outdatedBackups.length} outdated backup(s)`);
     const promises = outdatedBackups.map(async (file) => {
       return drive.files.delete({ fileId: file.id });
     });
     await Promise.all(promises);
-    console.info('Successfully deleted outdated backup(s)');
+    logger.info('Successfully deleted outdated backup(s)');
   } else {
-    console.info('No outdated backups found');
+    logger.info('No outdated backups found');
   }
 
-  console.info('Uploading new backup to Google Drive');
+  logger.info('Uploading new backup to Google Drive');
 
   return new Promise((resolve, reject) => {
     drive.files

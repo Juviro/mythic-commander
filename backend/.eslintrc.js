@@ -11,7 +11,7 @@ module.exports = {
     'no-continue': 0,
     'no-await-in-loop': 0,
     'no-process-exit': 0,
-    'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
+    'no-console': "error",
     'import/no-nodejs-modules': 0,
     'import/prefer-default-export': 0,
     'import/no-namespace': 0,

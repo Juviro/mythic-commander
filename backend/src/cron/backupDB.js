@@ -33,29 +33,21 @@ const backupDB = async () => {
 
   const fileName = getFilename();
 
-  await new Promise((resolve, reject) => {
-    try {
-      execute(
-        `pg_dump -U ${username} -d ${database} -f ${fileName} -T "\\"cardPrices"\\"`
-      )
-        .then(async () => {
-          logger.info(`DB Backup to file ${fileName} completed`);
-          resolve();
-        })
-        .catch((err) => {
-          logger.error('Error backing up DB:', err);
-          reject();
-        });
-    } catch (e) {
-      logger.error('Error executing:', e);
-    }
-  });
+  try {
+    await execute(
+      `pg_dump -U ${username} -d ${database} -f ${fileName} -T "\\"cardPrices"\\"`
+    );
+    logger.info(`DB Backup to file ${fileName} completed`);
+  } catch (err) {
+    logger.error('Error backing up DB:', err);
+    throw err;
+  }
 
-  console.info('Successfully backed up DB');
-  console.info('Uploading backup to Google Drive');
+  logger.info('Successfully backed up DB');
+  logger.info('Uploading backup to Google Drive');
 
   await uploadDbBackupToDrive(fileName);
-  console.info('Successfully uploaded backup to Google Drive');
+  logger.info('Successfully uploaded backup to Google Drive');
 
   return true;
 };
