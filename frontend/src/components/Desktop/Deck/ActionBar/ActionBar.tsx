@@ -15,14 +15,19 @@ const StyledOuter = styled.div`
   bottom: 0;
   right: 0;
   left: 0;
-  background-color: white;
-  box-shadow: 0px -9px 10px -4px #9c9c9c;
+`;
+
+const StyledInner = styled.div`
+  width: 100%;
+  max-width: 1800px;
+  padding-left: 24px;
 `;
 
 const StyledWrapper = styled(Space)`
   padding: 12px 24px;
-  width: calc(100% - 15px);
-  max-width: 1800px;
+  box-shadow: rgb(0 0 0 / 70%) 0px 0px 10px 4px;
+  background: rgb(255 255 255 / 95%);
+  border-radius: 12px 12px 0 0;
 `;
 
 interface Props {
@@ -33,17 +38,19 @@ interface Props {
 export const ActionBar = ({ onAddCards, deck }: Props) => {
   return (
     <StyledOuter>
-      <StyledWrapper>
-        <AddCards
-          alignTop
-          isAdvanced={false}
-          onAddCards={onAddCards}
-          focusId="deck.cards"
-          placeholder="Add a card..."
-          containedCardNames={deck?.cards.map(({ name }) => name)}
-        />
-        <ActionButtons deck={deck} onAddCards={onAddCards} />
-      </StyledWrapper>
+      <StyledInner>
+        <StyledWrapper>
+          <AddCards
+            alignTop
+            isAdvanced={false}
+            onAddCards={onAddCards}
+            focusId="deck.cards"
+            placeholder="Add a card..."
+            containedCardNames={deck?.cards.map(({ name }) => name)}
+          />
+          <ActionButtons deck={deck} onAddCards={onAddCards} />
+        </StyledWrapper>
+      </StyledInner>
     </StyledOuter>
   );
 };
