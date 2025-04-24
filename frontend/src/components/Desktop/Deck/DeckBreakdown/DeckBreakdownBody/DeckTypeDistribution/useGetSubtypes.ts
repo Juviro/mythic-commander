@@ -21,13 +21,12 @@ const useGetSubtypes = (
   const { subTypesMap } = useContext(CardContext);
 
   const getMatchingSuperType = (subType: string, primaryTypes: string[]): CardType => {
-    // TODO: the name "Tribal" will be renamed in the future, see https://mtg.fandom.com/wiki/Tribal#Renaming
-    const isTribalSpell = primaryTypes.includes('Tribal');
+    const isKindredSpell = primaryTypes.includes('Kindred');
     // these types are merged as "Spell" in the subTypesMap, but we want to split them up
     const isInstantOrSorcery = primaryTypes.some((type) =>
       ['Instant', 'Sorcery'].includes(type)
     );
-    if (isTribalSpell || isInstantOrSorcery) {
+    if (isKindredSpell || isInstantOrSorcery) {
       return primaryTypes.at(-1) as CardType;
     }
 

@@ -14,12 +14,17 @@ export const getAllSets = async () => {
   }, {});
 };
 
+// The order of these elements matter for the subTypesMap:
+// Because there is now one sub type that can have two supertypes:
+// Equipement can be both Artifact and Planeswalker.
+// If Planeswalker was before Artifact, then all Equipment would be
+// categorized as Planeswalkers.
 const SUBTYPE_CATEGORIES = [
   'Creature',
   'Land',
   'Enchantment',
-  'Artifact',
   'Planeswalker',
+  'Artifact',
   'Spell',
 ];
 
