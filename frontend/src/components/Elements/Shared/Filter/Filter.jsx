@@ -231,8 +231,8 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
         <BooleanSelection
           onChange={onChangeOption('isGameChanger')}
           value={isGameChanger}
-          trueLabel="Yes"
-          falseLabel="No"
+          trueLabel="Game Changer"
+          falseLabel="Not Game Changer"
         />
       ),
     },
