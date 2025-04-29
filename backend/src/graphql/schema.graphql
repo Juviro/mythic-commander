@@ -170,6 +170,7 @@ input CardsOptionsInput {
   cardTypes: [String!]
   tags: [String!]
   isLegendary: String
+  isGameChanger: String
   isCommanderLegal: String
   isOwned: String
   text: String

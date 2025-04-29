@@ -76,6 +76,7 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
     isCommanderLegal,
     variants,
     displayAllVariants,
+    isGameChanger,
   } = options;
 
   const { user } = useContext(UserContext);
@@ -224,8 +225,19 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
       ),
     },
     {
-      title: 'Legality',
+      title: 'Game Changer',
       dividerAbove: true,
+      component: (
+        <BooleanSelection
+          onChange={onChangeOption('isGameChanger')}
+          value={isGameChanger}
+          trueLabel="Yes"
+          falseLabel="No"
+        />
+      ),
+    },
+    {
+      title: 'Legality',
       component: (
         <BooleanSelection
           onChange={onChangeOption('isCommanderLegal')}

@@ -181,6 +181,7 @@ export default async (
     variants,
     orderBy = 'name-asc',
     displayAllVariants,
+    isGameChanger,
   } = options;
 
   const [order, direction = 'asc'] = orderBy.split('-');
@@ -220,6 +221,8 @@ export default async (
       addOwnedClause(q, user.id, isOwned, tableName, sets, displayAllVariants);
     if (cmc) addRangeClause(q, cmc, 'cmc');
     if (power) addRangeClause(q, power, 'power');
+    if (isGameChanger === 'true') q.where('game_changer', true);
+    if (isGameChanger === 'false') q.where('game_changer', false);
     if (toughness) addRangeClause(q, toughness, 'toughness');
     if (rarity) addRarityClause(q, rarity);
     if (tags?.length) addTagsClause(q, tags);

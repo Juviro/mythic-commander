@@ -17,4 +17,5 @@ export default {
   isOwned: StringParam,
   variants: ArrayParam,
   displayAllVariants: BooleanParam,
+  isGameChanger: BooleanParam,
 };
