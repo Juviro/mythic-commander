@@ -4,6 +4,7 @@ import CustomSkeleton from 'components/Elements/Shared/CustomSkeleton';
 import FlippableCard from 'components/Elements/Shared/FlippableCard';
 import { UnifiedCard } from 'types/unifiedTypes';
 import { getImageUrl } from 'utils/cardImage';
+import { secondary } from 'constants/colors';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -14,6 +15,8 @@ const StyledWrapper = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 4%;
+  container-type: inline-size;
+  overflow: hidden;
 `;
 
 const StyledCard = styled.img`
@@ -21,6 +24,22 @@ const StyledCard = styled.img`
   height: auto;
   position: absolute;
   top: 0;
+`;
+
+const StyledGameChanger = styled.div`
+  position: absolute;
+  font-size: 6cqw;
+  top: 20cqw;
+  left: 26cqw;
+  transform: rotate(45deg);
+  background-color: ${secondary};
+  opacity: 0.8;
+  padding: 2px;
+  color: white;
+  display: flex;
+  white-space: nowrap;
+  width: 100%;
+  justify-content: center;
 `;
 
 interface Props {
@@ -43,6 +62,7 @@ const Card = (props: Props) => {
     <StyledWrapper>
       <CustomSkeleton.CardImage style={{ position: 'absolute', top: 0 }} />
       {!loading && cardComponent}
+      {card.game_changer && <StyledGameChanger>Game Changer</StyledGameChanger>}
     </StyledWrapper>
   );
 };

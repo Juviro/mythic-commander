@@ -15,6 +15,7 @@ export const cardSearch = gql`
         priceUsd
         priceEur
         isTwoFaced
+        game_changer
 
         oracleCard {
           _id

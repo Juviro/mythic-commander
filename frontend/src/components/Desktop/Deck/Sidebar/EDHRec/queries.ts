@@ -14,6 +14,7 @@ export const getEdhrecCards = gql`
           priceUsd
           priceEur
           owned
+          game_changer
         }
       }
       themes {

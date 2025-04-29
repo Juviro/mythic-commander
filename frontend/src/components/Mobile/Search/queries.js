@@ -13,7 +13,7 @@ export const cardSearch = gql`
         mana_cost
         oracle_id
         isTwoFaced
-
+        game_changer
         oracleCard {
           _id
           owned

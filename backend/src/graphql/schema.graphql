@@ -400,6 +400,7 @@ type EDHRecCard {
   priceEur: Float
   synergy: Float
   owned: Boolean!
+  game_changer: Boolean
 }
 
 type Set {

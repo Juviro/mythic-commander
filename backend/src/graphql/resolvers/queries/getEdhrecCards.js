@@ -27,6 +27,10 @@ const formatCards = async (cards, userId) => {
     )
     .andWhere('userId', userId);
 
+  const gameChangerCardIds = await db('cards')
+    .whereIn('game_changer', [true, 'true'])
+    .pluck('id');
+
   const promises = cards.map(({ url }) => {
     return fetch(`https://json.edhrec.com${url}`).then((res) =>
       res.json().catch(() => null)
@@ -50,6 +54,7 @@ const formatCards = async (cards, userId) => {
         priceUsd: prices?.tcgplayer?.price,
         priceEur: prices?.cardmarket?.price,
         synergy,
+        game_changer: gameChangerCardIds.includes(id),
       };
     })
     .sort((a, b) => (b.synergy || 0) - (a.synergy || 0));
