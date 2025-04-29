@@ -15,6 +15,7 @@ const StyledOuter = styled.div`
   bottom: 0;
   right: 0;
   left: 0;
+  pointer-events: none;
 `;
 
 const StyledInner = styled.div`
@@ -28,6 +29,7 @@ const StyledWrapper = styled(Space)`
   box-shadow: rgb(0 0 0 / 70%) 0px 0px 10px 4px;
   background: rgb(255 255 255 / 95%);
   border-radius: 12px 12px 0 0;
+  pointer-events: auto;
 `;
 
 interface Props {
