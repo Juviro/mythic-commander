@@ -56,6 +56,9 @@ export const getCardVariants = ({
   lang,
 }) => {
   const variants = [];
+  if (promo_types?.includes('serialized')) {
+    variants.push(VARIANTS.SERIALIZED);
+  }
   if (lang === 'ja') {
     variants.push(HIDDEN_VARIANTS.JAPANESE);
   }
@@ -112,9 +115,6 @@ export const getCardVariants = ({
   }
   if (promo_types?.includes('oilslick')) {
     variants.push(VARIANTS.OIL_SLICK);
-  }
-  if (promo_types?.includes('serialized')) {
-    variants.push(VARIANTS.SERIALIZED);
   }
   if (promo_types?.includes('doublerainbow')) {
     variants.push(VARIANTS.DOUBLE_RAINBOW);
