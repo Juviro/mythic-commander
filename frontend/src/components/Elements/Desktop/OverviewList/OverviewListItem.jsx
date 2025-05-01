@@ -2,13 +2,31 @@ import React from 'react';
 import { Card, Typography, Space } from 'antd';
 
 import ManaSymbol from 'components/Elements/Shared/ManaCost/ManaSymbol';
+import styled from 'styled-components';
 import Cover from './Cover';
 import formatDate from '../../../../utils/formatDate';
 
+const StyledInfo = styled.div`
+  gap: 8px;
+  flex-wrap: wrap;
+  display: flex;
+`;
+
+const StyledTitle = styled.div`
+  overflow: hidden;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+`;
+
 const Description = ({ list }) => (
   <Space direction="vertical" size={4}>
-    <Space size={8} align="center">
-      <Typography.Text>{`${list.numberOfCards} cards`}</Typography.Text>
+    <StyledInfo>
+      <Typography.Text
+        style={{ whiteSpace: 'nowrap' }}
+      >{`${list.numberOfCards} cards`}</Typography.Text>
       {list.colors && (
         <Space size={4} style={{ marginRight: 2 }}>
           {list.colors.map((color) => (
@@ -16,7 +34,7 @@ const Description = ({ list }) => (
           ))}
         </Space>
       )}
-    </Space>
+    </StyledInfo>
     <Space size={4} direction="row" style={{ fontStyle: 'italic', marginTop: 4 }}>
       <Typography.Text type="secondary">Last edit:</Typography.Text>
       <Typography.Text type="secondary">
@@ -29,7 +47,10 @@ const Description = ({ list }) => (
 export default ({ list, onClick }) => {
   return (
     <Card hoverable cover={<Cover list={list} />} onClick={() => onClick(list.id)}>
-      <Card.Meta title={list.name} description={<Description list={list} />} />
+      <Card.Meta
+        title={<StyledTitle>{list.name}</StyledTitle>}
+        description={<Description list={list} />}
+      />
     </Card>
   );
 };

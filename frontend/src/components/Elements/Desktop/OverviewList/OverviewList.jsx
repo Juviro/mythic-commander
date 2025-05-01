@@ -50,7 +50,7 @@ const OverviewList = ({
   loading,
   emptyText,
   noPadding = false,
-  initialLimit = 100,
+  initialLimit = 8,
 }) => {
   const [limit, setLimit] = useState(initialLimit);
 
@@ -66,8 +66,10 @@ const OverviewList = ({
     );
   }
 
-  const displayedList = lists?.slice(0, limit);
-  const hasMore = lists?.length > limit;
+  const displayedList = lists.slice(0, limit);
+  const hasMore = lists.length > limit;
+
+  const numberOfNotDisplayedCards = lists.length - displayedList.length;
 
   return (
     <>
@@ -78,8 +80,8 @@ const OverviewList = ({
       </StyledOverviewList>
       {hasMore && (
         <StyledButtonWrapper>
-          <Button onClick={() => setLimit(limit + 100)} type="primary">
-            Show more
+          <Button onClick={() => setLimit(limit + 100)} type="primary" ghost>
+            {`Load ${numberOfNotDisplayedCards} more`}
           </Button>
         </StyledButtonWrapper>
       )}

@@ -87,7 +87,7 @@ const Wants = ({ history }) => {
       />
       {deckListssByType.map(({ decks: decksByType, status }) => (
         <React.Fragment key={status}>
-          <Divider orientation="left">{status}</Divider>
+          <Divider orientation="left">{`${status} (${decksByType.length})`}</Divider>
           <OverviewList
             loading={loading}
             lists={decksByType}
