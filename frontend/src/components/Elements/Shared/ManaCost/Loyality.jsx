@@ -5,6 +5,9 @@ import { loyalities as loyalitiyIcons } from '../../../../assets/mtgIcons';
 
 const StyledWrapper = styled.span`
   position: relative;
+  display: flex;
+  width: fit-content;
+  align-items: center;
 `;
 
 const StyledIcon = styled.img`
@@ -29,12 +32,12 @@ const StyledText = styled(Typography.Text)`
 `;
 
 const getIcon = (symbol) => {
-  if (symbol.startsWith('+')) return { icon: loyalitiyIcons.up, offset: 2 };
-  if (symbol.startsWith('−')) return { icon: loyalitiyIcons.down, offset: -2 };
-  return { icon: loyalitiyIcons.neutral, offset: 0 };
+  if (symbol.startsWith('+')) return { icon: loyalitiyIcons.up, offset: 1 };
+  if (symbol.startsWith('−')) return { icon: loyalitiyIcons.down, offset: -3 };
+  return { icon: loyalitiyIcons.neutral, offset: -1 };
 };
 
-export default ({ symbol, size }) => {
+const Loyality = ({ symbol, size }) => {
   const { icon, offset } = getIcon(symbol);
   const amount = symbol.replace(':', '');
 
@@ -49,3 +52,5 @@ export default ({ symbol, size }) => {
     </StyledWrapper>
   );
 };
+
+export default Loyality;
