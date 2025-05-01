@@ -17,8 +17,8 @@ export default ({ card, loading, isFlipped }) => {
   const cardLinesFront = frontText?.split('\n').filter(Boolean);
   const cardLinesBack = backText?.split('\n').filter(Boolean);
 
-  const displayFront = isSplitCard || !isFlipped || !canFlip;
-  const displayBack = isSplitCard || isFlipped;
+  const displayFront = isSplitCard || !isFlipped || !canFlip || !cardNameBack;
+  const displayBack = (isSplitCard || isFlipped) && cardNameBack;
 
   return (
     <>
