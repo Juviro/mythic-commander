@@ -28,7 +28,7 @@ const StyledCover = styled.div`
 const StyledButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 24px;
+  margin: 24px 0;
   width: 100%;
 `;
 
