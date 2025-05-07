@@ -14,6 +14,7 @@ const CARD_FIELDS = `
     set_name
     color_identity
     isTwoFaced
+    game_changer
     
     oracleCard {
       _id
