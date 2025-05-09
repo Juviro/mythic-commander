@@ -25,6 +25,11 @@ const updatePrecons = async (forceUpdate = false) => {
         continue;
       }
       const deck = await getMoxfieldDeck(precon.publicId);
+
+      if (!deck) {
+        continue;
+      }
+
       await db('precons')
         .insert(stringifyArrays(deck))
         .onConflict('id')

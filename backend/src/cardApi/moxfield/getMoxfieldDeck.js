@@ -19,7 +19,7 @@ const formatDeck = (deck) => {
   const imgSrc = `/img/${firstCommanderId}_art_crop_front.avif`;
   const [_, name, releaseName] = deck.name.match(/([^(]+)\s+\((.*)\)/) ?? [];
   const formattedReleaseName = releaseName
-    ?.replace(/ Commander .* Decklist/, '')
+    ?.replace(/ (Commander|Precon).*Decklist/, '')
     .trim();
 
   const commanderName = Object.values(deck.boards.commanders.cards)
@@ -45,9 +45,13 @@ const getMoxfieldDeck = async (deckId) => {
   const url = `https://api2.moxfield.com/v3/decks/all/${deckId}`;
 
   const response = await fetch(url);
-  const data = await response.json();
+  const deck = await response.json();
 
-  return formatDeck(data);
+  if (deck.name.includes('Magic Online')) {
+    return null;
+  }
+
+  return formatDeck(deck);
 };
 
 export default getMoxfieldDeck;
