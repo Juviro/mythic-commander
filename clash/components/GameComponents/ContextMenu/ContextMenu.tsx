@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { Dropdown, DropdownProps, MenuProps } from 'antd';
+import styles from './ContextMenu.module.css';
 
 interface Props extends PropsWithChildren {
   items: MenuProps['items'] | null;
@@ -13,6 +14,7 @@ const ContextMenu = ({ children, items, placement = 'top', open }: Props) => {
 
   return (
     <Dropdown
+      overlayClassName={styles.menu}
       trigger={['contextMenu']}
       menu={{ items }}
       placement={placement}
