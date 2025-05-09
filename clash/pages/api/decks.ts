@@ -100,9 +100,18 @@ const decks = async (req: NextApiRequest, res: NextApiResponse) => {
     [user.id]
   );
 
+  const preconDecks = await db('precons').orderBy('createdAt', 'desc');
+  const preconDecksWithoutCards = preconDecks.map((deck) => {
+    return {
+      ...deck,
+      cards: undefined,
+    };
+  });
+
   res.send({
     ownDecks: unnestColorIdentity(ownDecks),
     publicDecks: unnestColorIdentity(publicDecks),
+    preconDecks: preconDecksWithoutCards,
   });
 };
 

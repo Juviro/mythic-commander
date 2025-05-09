@@ -12,6 +12,8 @@ const capitalizeFirstLetter = (string: string) => {
 };
 
 const DeckStatusTag = ({ status }: Props) => {
+  if (status === 'decks') return null;
+
   return (
     <div
       className={classNames(styles.deck_status_tag, {

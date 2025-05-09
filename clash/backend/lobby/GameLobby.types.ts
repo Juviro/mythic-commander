@@ -13,6 +13,11 @@ export type OwnDeck = LobbyDeck & {
   status: 'active' | 'draft' | 'archived';
 };
 
+export type PreconDeck = LobbyDeck & {
+  releaseName: string;
+  deckUrl: string;
+};
+
 export type LobbyPlayer = User & {
   deck: LobbyDeck | null;
   isReady: boolean;

@@ -9,7 +9,7 @@ interface Props extends DeckOptions {
   onSelect: (deckId: string) => void;
 }
 
-const DeckSelectionModal = ({ ownDecks, publicDecks, onSelect }: Props) => {
+const DeckSelectionModal = ({ ownDecks, publicDecks, preconDecks, onSelect }: Props) => {
   const [initialTab, setInitialTab] = useLocalStorage<string>(
     'deck-selection-tab',
     'ownDecks'
@@ -31,6 +31,14 @@ const DeckSelectionModal = ({ ownDecks, publicDecks, onSelect }: Props) => {
     decks: publicDecks,
   };
 
+  const preconsByRelease = preconDecks.reduce((acc: DecksGroups, currentDeck) => {
+    const currentRelease = acc[currentDeck.releaseName] || [];
+    return {
+      ...acc,
+      [currentDeck.releaseName]: [...currentRelease, currentDeck],
+    };
+  }, {});
+
   const items = [
     {
       key: 'ownDecks',
@@ -41,6 +49,11 @@ const DeckSelectionModal = ({ ownDecks, publicDecks, onSelect }: Props) => {
       key: 'publicDecks',
       label: 'Public Decks',
       children: <DecksList deckGroups={publicDecksGroup} onSelect={onSelect} />,
+    },
+    {
+      key: 'precons',
+      label: 'Precons',
+      children: <DecksList deckGroups={preconsByRelease} onSelect={onSelect} />,
     },
   ];
 

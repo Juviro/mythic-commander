@@ -23,7 +23,7 @@ const DeckSelection = ({
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { isLoading, ownDecks, publicDecks, onSelect } = useDeckSelection(
+  const { isLoading, ownDecks, publicDecks, preconDecks, onSelect } = useDeckSelection(
     playerId,
     canSelectDeck,
     onSelectDeck
@@ -68,6 +68,7 @@ const DeckSelection = ({
         <DeckSelectionModal
           ownDecks={ownDecks!}
           publicDecks={publicDecks!}
+          preconDecks={preconDecks!}
           onSelect={(deckId: string) => {
             onSelect(deckId);
             setIsOpen(false);
