@@ -83,6 +83,7 @@ const useOrganizeLands = ({ battlefieldRef, player }: Props) => {
     const { factorX, factorY } = getRelativeToAbsoluteFactor(battlefieldRef.current!);
 
     const lands = player.zones.battlefield.filter((card) => {
+      if (card.name === 'Treasure') return false;
       if ('type_line' in card && card.type_line.includes('Land')) return true;
       if ('produced_mana' in card && card.produced_mana) {
         return card.type_line.includes('Artifact');
