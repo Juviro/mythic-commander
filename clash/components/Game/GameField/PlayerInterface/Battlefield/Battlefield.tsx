@@ -15,6 +15,7 @@ import { BattlefieldSelectionContextProvider } from './BattlefieldSelection/Batt
 import styles from './Battlefield.module.css';
 import useBattlefieldActions from './battlefieldActions/useBattlefieldActions';
 import BattlefieldGrid from './BattlefieldGrid/BattlefieldGrid';
+import useAutoOrganizeLands from './battlefieldActions/useAutoOrganizeLands';
 
 interface Props {
   player: Player;
@@ -26,6 +27,7 @@ const Battlefield = ({ player, isFlipped, isSelf }: Props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const { contextMenuPosition } = useContext(CardPositionContext);
+  useAutoOrganizeLands({ player, battlefieldRef: wrapperRef });
 
   const { onTapCards } = useGameActions();
 

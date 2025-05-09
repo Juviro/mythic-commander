@@ -78,11 +78,8 @@ const useOrganizeLands = ({ battlefieldRef, player }: Props) => {
   const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
   const { onMoveCard } = useGameActions();
 
-  const organizeLands = () => {
-    if (!battlefieldRef.current) return;
-    const { factorX, factorY } = getRelativeToAbsoluteFactor(battlefieldRef.current!);
-
-    const lands = player.zones.battlefield.filter((card) => {
+  const getCardsToOrder = () => {
+    return player.zones.battlefield.filter((card) => {
       if (card.name === 'Treasure') return false;
       if ('type_line' in card && card.type_line.includes('Land')) return true;
       if ('produced_mana' in card && card.produced_mana) {
@@ -90,6 +87,13 @@ const useOrganizeLands = ({ battlefieldRef, player }: Props) => {
       }
       return false;
     }) as VisibleBattlefieldCard[];
+  };
+
+  const organizeLands = () => {
+    if (!battlefieldRef.current) return;
+    const { factorX, factorY } = getRelativeToAbsoluteFactor(battlefieldRef.current!);
+
+    const lands = getCardsToOrder();
     const sortedLands = sortLandsByColor(lands);
 
     const minColumnWidth = battlefieldCardWidth * PADDING_FACTOR;
@@ -163,7 +167,7 @@ const useOrganizeLands = ({ battlefieldRef, player }: Props) => {
     }
   };
 
-  return { organizeLands };
+  return { organizeLands, getCardsToOrder };
 };
 
 export default useOrganizeLands;
