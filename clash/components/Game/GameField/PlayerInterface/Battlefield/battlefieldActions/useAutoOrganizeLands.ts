@@ -19,7 +19,7 @@ const useAutoOrganizeLands = ({ battlefieldRef, player }: Props) => {
 
   const cardsToOrder = getCardsToOrder();
   const cardIds = cardsToOrder.map((card) => card.id);
-  const sortedCardIds = cardIds.toSorted().join(',');
+  const sortedCardIds = cardIds.sort().join(',');
 
   useEffect(() => {
     if (!settings.autoOrganizeLands || !isSelf) return;
