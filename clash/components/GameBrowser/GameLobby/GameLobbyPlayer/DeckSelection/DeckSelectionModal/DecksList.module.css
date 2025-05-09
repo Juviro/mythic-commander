@@ -140,23 +140,21 @@
 
 .deck_status_tag {
     padding: 8px 16px;
-    display: none;
+    display: flex;
     width: 100%;
     font-size: 20px;
+    --gradient-color: var(--color-primary--semi-light);
     background: linear-gradient(90deg, var(--gradient-color) 0%, #fff 200%);
 }
 
 .deck_status_tag__active {
-    display: flex;
     --gradient-color: var(--color-deck-active);
 }
 
 .deck_status_tag__draft {
-    display: flex;
     --gradient-color: var(--color-deck-draft);
 }
 
 .deck_status_tag__archived {
-    display: flex;
     --gradient-color: var(--color-deck-archived);
 }

@@ -1,0 +1,5 @@
+.menu :global(.ant-dropdown-menu-submenu-arrow) {
+  top: 7px;
+}
+
+

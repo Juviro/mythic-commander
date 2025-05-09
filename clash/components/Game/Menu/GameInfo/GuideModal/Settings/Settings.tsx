@@ -37,6 +37,11 @@ const Settings = () => {
         />
       </Setting>
       <Setting
+        label="Organize lands / mana rocks automatically"
+        checked={settings.autoOrganizeLands}
+        onChange={onChangeSetting('autoOrganizeLands')}
+      />
+      <Setting
         label="Snap cards to grid"
         checked={settings.useGrid}
         onChange={onChangeSetting('useGrid')}

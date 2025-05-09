@@ -7,9 +7,11 @@ import backupDB from './backupDB';
 import storeCardPrice from './storeCardPrice';
 import updateSets from '../cardApi/sets/updateSets';
 import deleteGameState from './deleteGameStates';
+import updatePrecons from './updatePrecons';
 
 const startCronjobs = () => {
   new CronJob('0 0 4 * * *', backupDB, null, true, 'Europe/Berlin');
+  new CronJob('0 30 4 * * *', updatePrecons, null, true, 'Europe/Berlin');
   new CronJob('0 0 5 * * *', deleteSessions, null, true, 'Europe/Berlin');
   new CronJob('0 30 5 * * *', deleteGameState, null, true, 'Europe/Berlin');
   new CronJob('0 0 6 * * *', updateCards, null, true, 'Europe/Berlin');

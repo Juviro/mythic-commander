@@ -15,6 +15,7 @@
     "update-card-images": "babel-node -r dotenv/config src/scripts/updateAllCardImages.js",
     "update-sets": "babel-node -r dotenv/config src/scripts/updateSetsManually.js",
     "backup-db": "babel-node -r dotenv/config src/scripts/backupDBManually.js",
+    "update-precons": "babel-node -r dotenv/config src/scripts/updatePreconsManually.js",
     "store-prices": "babel-node -r dotenv/config src/scripts/storeCardProceManually.js",
     "lint": "eslint '*/**/*.js'",
     "lint:fix": "eslint '*/**/*.js' --fix"

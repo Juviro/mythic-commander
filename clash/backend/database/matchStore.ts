@@ -30,7 +30,7 @@ interface Deck {
   cards: InitMatchCard[];
 }
 
-export const getDecks = async (deckIds: string[]): Promise<Deck[]> => {
+const loadMythicCommanderDecks = async (deckIds: string[]): Promise<Deck[]> => {
   const { rows: decks } = await db.raw(
     `
         SELECT 
@@ -82,6 +82,54 @@ export const getDecks = async (deckIds: string[]): Promise<Deck[]> => {
   );
 
   return decks;
+};
+
+const loadPreconDecks = async (deckIds: string[]): Promise<Deck[]> => {
+  const decks = await db('precons').whereIn('id', deckIds);
+
+  const formattedDecks = decks.map((deck) => {
+    const partialDeck = {
+      id: deck.id,
+      name: deck.name,
+      commanderIds: deck.commanders.map((commander: { id: string }) => commander.id),
+      cards: deck.cards,
+      commanders: deck.commanders,
+    };
+    return partialDeck;
+  });
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const deck of formattedDecks) {
+    const allCards = deck.cards.concat(deck.commanders);
+    const cardIds = allCards.map((card: { id: string }) => card.id);
+    // eslint-disable-next-line no-await-in-loop
+    const cards = await db('cards').whereIn('id', cardIds);
+    const formattedCards = cards.map((card) => ({
+      id: card.id,
+      manaValue: card.cmc,
+      amount: deck.cards.find((c: { id: string }) => c.id === card.id)?.amount || 1,
+      name: card.name,
+      type_line: card.type_line,
+      produced_mana: card.produced_mana,
+      all_parts: card.all_parts,
+      layout: card.layout as LayoutType,
+      flippable: card.layout === 'flip',
+      transformable:
+        card.layout === 'transform' ||
+        card.layout === 'modal_dfc' ||
+        card.layout === 'double_faced_token',
+    }));
+    deck.cards = formattedCards;
+  }
+
+  return formattedDecks;
+};
+
+export const getDecks = async (deckIds: string[]): Promise<Deck[]> => {
+  const mythicCommanderDecks = await loadMythicCommanderDecks(deckIds);
+  const preconDecks = await loadPreconDecks(deckIds);
+
+  return mythicCommanderDecks.concat(preconDecks);
 };
 
 export const storeGameState = async (

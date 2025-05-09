@@ -7,6 +7,7 @@ export interface Settings {
   useGrid: boolean;
   commanderDamageChangesLife: boolean;
   displayTipOfTheDay: boolean;
+  autoOrganizeLands: boolean;
 }
 
 export const SETTINGS_STORAGE_KEY = 'settings';
@@ -17,6 +18,7 @@ export const DEFAULT_SETTINGS: Settings = {
   useGrid: true,
   commanderDamageChangesLife: true,
   displayTipOfTheDay: true,
+  autoOrganizeLands: true,
 };
 
 const useSettings = () => {

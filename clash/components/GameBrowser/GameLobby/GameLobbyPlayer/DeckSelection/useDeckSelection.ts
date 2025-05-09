@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 
-import { LobbyDeck, OwnDeck } from 'backend/lobby/GameLobby.types';
+import { LobbyDeck, OwnDeck, PreconDeck } from 'backend/lobby/GameLobby.types';
 import useLocalStorage from 'hooks/useLocalStorage';
 
 export interface DeckOptions {
   ownDecks: OwnDeck[];
   publicDecks: LobbyDeck[];
+  preconDecks: PreconDeck[];
 }
 
 const getDecks = async () => {
@@ -28,9 +29,9 @@ const useDeckSelection = (
   });
 
   const onSubmitSelection = (deckId: string) => {
-    const allDecks: LobbyDeck[] | OwnDeck[] | undefined = data?.publicDecks.concat(
-      data?.ownDecks
-    );
+    const allDecks: LobbyDeck[] | OwnDeck[] | undefined = data?.publicDecks
+      .concat(data?.ownDecks)
+      .concat(data?.preconDecks);
     const selectedDeck = allDecks?.find((d) => d.id === deckId);
 
     if (!selectedDeck) return;
