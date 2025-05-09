@@ -49,14 +49,16 @@ const FloatingManaModal = ({ player, isSelf }: Props) => {
       onClose={isSelf ? onClose : undefined}
     >
       <FloatingManaSymbols canEdit={Boolean(isSelf)} floatingMana={floatingMana!} />
-      <Button
-        onClick={onReset}
-        className={styles.reset_button}
-        type="link"
-        disabled={!canReset}
-      >
-        Reset
-      </Button>
+      {isSelf && (
+        <Button
+          onClick={onReset}
+          className={styles.reset_button}
+          type="link"
+          disabled={!canReset}
+        >
+          Reset
+        </Button>
+      )}
     </DraggableModal>
   );
 };
