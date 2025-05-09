@@ -75,6 +75,10 @@
   border: 2px solid var(--player-color);
 }
 
+.tooltip {
+  pointer-events: none;
+}
+
 .commander_damage__buttons {
   position: relative;
   display: flex;
