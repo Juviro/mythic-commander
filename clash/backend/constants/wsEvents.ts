@@ -153,7 +153,6 @@ export interface PeekFaceDownPayload {
 
 export interface HoverCardPayload {
   clashId: string;
-  battlefieldPlayerId: string;
 }
 
 export interface MillPayload {

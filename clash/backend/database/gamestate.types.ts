@@ -200,7 +200,6 @@ export interface Stack {
 
 export interface HoveredCard {
   clashId: string;
-  battlefieldPlayerId: string;
   timestamp: number;
 }
 

@@ -219,10 +219,9 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.UPDATE_REMATCH_OPTIONS, rematchOptions);
   };
 
-  const onHoverCard = (clashId: string, battlefieldPlayerId: string) => {
+  const onHoverCard = (clashId: string) => {
     const payload: HoverCardPayload = {
       clashId,
-      battlefieldPlayerId,
     };
     socket?.emit(SOCKET_MSG_GAME.HOVER_CARD, payload);
   };

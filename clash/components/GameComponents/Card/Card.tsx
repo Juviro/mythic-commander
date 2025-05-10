@@ -1,14 +1,22 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { CSSProperties, useContext, useEffect, useRef } from 'react';
 import { useDrag } from 'react-dnd';
 import classNames from 'classnames';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 
-import { Card as CardType, VisibleCard, Zone } from 'backend/database/gamestate.types';
+import {
+  Card as CardType,
+  VisibleCard,
+  Zone,
+  ZONES,
+} from 'backend/database/gamestate.types';
 import { getImageUrl } from 'utils/getImageUrl';
 import { DndItemType, DndItemTypes } from 'types/dnd.types';
 import CardCounters from 'components/Game/GameField/PlayerInterface/Battlefield/BattlefieldCard/CardCounters/CardCounters';
 import CardVisibility from 'components/Game/GameField/PlayerInterface/Battlefield/BattlefieldCard/CardVisibility/CardVisibility';
 import CardPositionContext from 'components/Game/CardPositionContext';
+import useHoveredCards from 'components/Game/GameField/PlayerInterface/Battlefield/BattlefieldCard/useHoveredCards';
+import GameStateContext from 'components/Game/GameStateContext';
+import useGameActions from 'components/Game/useGameActions';
 import useAnimateCardPositionChange from './useAnimateCardPositionChange';
 
 import styles from './Card.module.css';
@@ -34,8 +42,11 @@ const Card = ({
   noPreview,
   dropType = DndItemTypes.CARD,
 }: Props) => {
+  const { getPlayerColor } = useContext(GameStateContext);
+  const { hoveringCard, hoveringPlayer } = useHoveredCards(card);
   const cardRef = useRef<HTMLDivElement | null>(null);
   const { setHoveredCard } = useContext(CardPositionContext);
+  const { onHoverCard } = useGameActions();
 
   const [{ isDragging }, dragRef, preview] = useDrag({
     type: dropType,
@@ -59,20 +70,41 @@ const Card = ({
     preview(getEmptyImage(), { captureDraggingState: true });
   });
 
+  const opacity = zone === ZONES.BATTLEFIELD ? 0.8 : 1;
+
+  const style = {
+    '--hovering-player-color': hoveringPlayer && getPlayerColor(hoveringPlayer, opacity),
+  } as CSSProperties;
+
+  const onMouseEnter = () => {
+    onHoverCard(card.clashId);
+    if (!isCardKnown) return;
+    setHoveredCard(card);
+  };
+
+  const onMouseLeave = () => {
+    if (!isCardKnown) return;
+    setHoveredCard(null);
+  };
+
   return (
     <div
       className={classNames(styles.card, 'card', {
         [styles.card__dynamic_size]: dynamicSize,
         [styles.card__draggable]: draggable,
         [styles.card__dragging]: isDragging,
+        [styles.card__hovered_by_enemy]: hoveringPlayer,
         card__dragging: isDragging,
       })}
+      style={style}
+      // Make sure that hovering the same cards twice re-plays the animation
+      key={hoveringCard?.timestamp}
       ref={(val) => {
         dragRef(val);
         cardRef.current = val!;
       }}
-      onMouseEnter={!isCardKnown ? undefined : () => setHoveredCard(card)}
-      onMouseLeave={!isCardKnown ? undefined : () => setHoveredCard(null)}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {!hidden && (
         <img className={styles.image} src={getImageUrl(card.id!, transformed)} />

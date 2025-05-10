@@ -2,9 +2,9 @@ import { useContext } from 'react';
 
 import GameStateContext from 'components/Game/GameStateContext';
 import useSettings from 'components/Game/Menu/GameInfo/GuideModal/Settings/useSettings';
-import { BattlefieldCard } from 'backend/database/gamestate.types';
+import { Card } from 'backend/database/gamestate.types';
 
-const useHoveredCards = (card: BattlefieldCard) => {
+const useHoveredCards = (card: Card) => {
   const { gameState, player: self } = useContext(GameStateContext);
   const [settings] = useSettings();
 

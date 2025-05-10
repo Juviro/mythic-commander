@@ -9,13 +9,11 @@ import Card from 'components/GameComponents/Card/Card';
 import GameStateContext from 'components/Game/GameStateContext';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import { getCardRotation } from 'utils/cardTypes';
-import useGameActions from 'components/Game/useGameActions';
 import BattlefieldSelectionContext from '../BattlefieldSelection/BattlefieldSelectionContext';
 
 import styles from './BattlefieldCard.module.css';
 import useBattlefieldCardActions from './useBattlefieldCardActions';
 import useBattlefieldShortcuts from './useBattlefieldShortcuts';
-import useHoveredCards from './useHoveredCards';
 
 interface Props {
   card: BattlefieldCardType;
@@ -27,9 +25,6 @@ interface Props {
 const BattlefieldCard = ({ card, player, inSelection, inPreview }: Props) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const { getPlayerColor } = useContext(GameStateContext);
-  const { hoveringCard, hoveringPlayer } = useHoveredCards(card);
-
-  const { onHoverCard } = useGameActions();
 
   const { hoveredCardIds, selectedCardIds } = useContext(BattlefieldSelectionContext);
 
@@ -57,7 +52,6 @@ const BattlefieldCard = ({ card, player, inSelection, inPreview }: Props) => {
     '--y': y,
     '--player-color': getPlayerColor(card.ownerId),
     '--rotation': `${rotation}deg`,
-    '--hovering-player-color': hoveringPlayer && getPlayerColor(hoveringPlayer, 0.6),
   } as CSSProperties;
 
   return (
@@ -65,15 +59,12 @@ const BattlefieldCard = ({ card, player, inSelection, inPreview }: Props) => {
       <div
         style={style}
         ref={cardRef}
-        // Make sure that hovering the same cards twice re-plays the animation
-        key={hoveringCard?.timestamp}
         onClick={onClick}
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
-        onMouseEnter={() => onHoverCard(card.clashId, player.id)}
         className={classNames(styles.card, 'battlefield_card', {
           [styles.card__hovered]: isHovered,
-          [styles.card__hovered_by_enemy]: hoveringPlayer,
+
           [styles.card__selected]: isSelected,
           [styles.card__rotation]: rotation,
           [styles.card__flipped]: 'flipped' in card && card.flipped,
