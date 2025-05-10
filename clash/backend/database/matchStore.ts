@@ -23,7 +23,7 @@ export interface InitMatchCard {
   all_parts: Part[];
 }
 
-interface Deck {
+export interface Deck {
   id: string;
   name: string;
   commanderIds: string[];

@@ -15,29 +15,29 @@ const DeckSelectionModal = ({ ownDecks, publicDecks, preconDecks, onSelect }: Pr
     'ownDecks'
   );
 
-  const ownDecksByStatus = ownDecks.reduce(
-    (acc: DecksGroups, currentDeck) => ({
-      ...acc,
-      [currentDeck.status]: [...acc[currentDeck.status], currentDeck],
-    }),
-    {
-      active: [],
-      draft: [],
-      archived: [],
-    }
-  );
-
-  const publicDecksGroup = {
-    decks: publicDecks,
+  const ownDecksByStatus: DecksGroups = {
+    active: { decks: [] },
+    draft: { decks: [] },
+    archived: { decks: [] },
   };
 
-  const preconsByRelease = preconDecks.reduce((acc: DecksGroups, currentDeck) => {
-    const currentRelease = acc[currentDeck.releaseName] || [];
-    return {
-      ...acc,
-      [currentDeck.releaseName]: [...currentRelease, currentDeck],
-    };
-  }, {});
+  ownDecks.forEach((deck) => {
+    if (ownDecksByStatus[deck.status]) {
+      ownDecksByStatus[deck.status].decks.push(deck);
+    }
+  });
+
+  const publicDecksGroup: DecksGroups = {
+    all: { decks: publicDecks },
+  };
+
+  const preconsBySet: DecksGroups = {};
+  preconDecks.forEach((deck) => {
+    if (!preconsBySet[deck.setName]) {
+      preconsBySet[deck.setName] = { decks: [], setImg: deck.setImg };
+    }
+    preconsBySet[deck.setName].decks.push(deck);
+  });
 
   const items = [
     {
@@ -53,7 +53,7 @@ const DeckSelectionModal = ({ ownDecks, publicDecks, preconDecks, onSelect }: Pr
     {
       key: 'precons',
       label: 'Precons',
-      children: <DecksList deckGroups={preconsByRelease} onSelect={onSelect} />,
+      children: <DecksList deckGroups={preconsBySet} onSelect={onSelect} />,
     },
   ];
 

@@ -7,15 +7,24 @@ export interface LobbyDeck {
   ownerName?: string;
   commanderName?: string;
   colorIdentity?: string[];
+  commanderIds?: string[];
 }
 
 export type OwnDeck = LobbyDeck & {
   status: 'active' | 'draft' | 'archived';
 };
 
+export type AlternativeCommander = {
+  id: string;
+  name: string;
+  isPartner: boolean;
+};
+
 export type PreconDeck = LobbyDeck & {
-  releaseName: string;
+  setName: string;
+  setImg: string;
   deckUrl: string;
+  alternativeCommanders?: AlternativeCommander[];
 };
 
 export type LobbyPlayer = User & {

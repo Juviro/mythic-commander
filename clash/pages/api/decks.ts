@@ -100,7 +100,10 @@ const decks = async (req: NextApiRequest, res: NextApiResponse) => {
     [user.id]
   );
 
-  const preconDecks = await db('precons').orderBy('createdAt', 'desc');
+  const preconDecks = await db('precons')
+    .innerJoin('sets', 'precons.set', 'sets.code')
+    .select('precons.*', 'sets.name as setName', 'sets.icon_svg_uri as setImg')
+    .orderBy('released_at', 'desc');
   const preconDecksWithoutCards = preconDecks.map((deck) => {
     return {
       ...deck,

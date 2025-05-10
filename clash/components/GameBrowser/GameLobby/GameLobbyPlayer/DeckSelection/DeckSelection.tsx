@@ -38,6 +38,7 @@ const DeckSelection = ({
       {deck ? (
         <DeckPreview
           condensed
+          displayCommanderSelection
           deck={deck}
           onClick={canSelectDeck && !isReady ? () => setIsOpen(true) : undefined}
         />

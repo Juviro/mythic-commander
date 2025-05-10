@@ -138,9 +138,16 @@
     margin-top: 16px;
 }
 
+.set_img {
+    width: 24px;
+    height: 24px;
+}
+
 .deck_status_tag {
     padding: 8px 16px;
     display: flex;
+    gap: 8px;
+    align-items: center;
     width: 100%;
     font-size: 20px;
     --gradient-color: var(--color-primary--semi-light);

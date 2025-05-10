@@ -9,11 +9,13 @@ import { getDeckImgUrl } from 'utils/getImageUrl';
 import ColorIdentity from './ColorIdentity';
 
 import styles from './DecksList.module.css';
+import CommanderSelection from './CommanderSelection';
 
 interface Props {
   deck: LobbyDeck;
   condensed?: boolean;
   onClick?: (deckId: string) => void;
+  displayCommanderSelection?: boolean;
 }
 
 const getDeckUrl = (deck: LobbyDeck) => {
@@ -23,7 +25,7 @@ const getDeckUrl = (deck: LobbyDeck) => {
 
   return `${process.env.NEXT_PUBLIC_MYTHIC_COMMANDER_URL}/decks/${deck.id}`;
 };
-const DeckPreview = ({ deck, onClick, condensed }: Props) => {
+const DeckPreview = ({ deck, onClick, condensed, displayCommanderSelection }: Props) => {
   return (
     <div
       className={classNames(styles.deck, {
@@ -54,18 +56,14 @@ const DeckPreview = ({ deck, onClick, condensed }: Props) => {
         <Tooltip title={deck.name}>
           <div className={styles.deck_name}>{deck.name}</div>
         </Tooltip>
-        <Tooltip title={deck.commanderName}>
-          <div className={styles.commander_names}>
-            {deck.commanderName?.split('& ').map((commander) => (
-              <div key={commander} className={styles.commander_name}>
-                {commander}
-              </div>
-            ))}
-          </div>
-        </Tooltip>
         {deck.ownerName && (
           <div className={styles.owner_name}>{`by ${deck.ownerName}`}</div>
         )}
+        <CommanderSelection
+          deck={deck}
+          key={deck.id}
+          displayCommanderSelection={displayCommanderSelection}
+        />
       </div>
     </div>
   );

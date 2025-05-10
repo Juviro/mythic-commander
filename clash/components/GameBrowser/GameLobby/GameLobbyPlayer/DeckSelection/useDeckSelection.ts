@@ -10,6 +10,12 @@ export interface DeckOptions {
   preconDecks: PreconDeck[];
 }
 
+export interface InitialDeck {
+  deckId: string;
+  // single id or comma separated ids
+  commanderId?: string;
+}
+
 const getDecks = async () => {
   const res = await fetch('/api/decks');
   return res.json();
@@ -20,7 +26,9 @@ const useDeckSelection = (
   canSelectDeck: boolean,
   onSelectDeck: (deck: LobbyDeck) => void
 ) => {
-  const [initialDeckId, setInitialDeckId] = useLocalStorage<string>('initial-deck');
+  const [initialDeck, setInitialDeck] = useLocalStorage<InitialDeck>(
+    'initial-deck-with-commanders'
+  );
 
   const { data, isLoading } = useQuery<DeckOptions>(`decks-${playerId}`, getDecks, {
     enabled: canSelectDeck,
@@ -28,28 +36,28 @@ const useDeckSelection = (
     staleTime: Infinity,
   });
 
-  const onSubmitSelection = (deckId: string) => {
+  const onSubmitSelection = (deckId: string, commanderIds?: string[]) => {
     const allDecks: LobbyDeck[] | OwnDeck[] | undefined = data?.publicDecks
       .concat(data?.ownDecks)
       .concat(data?.preconDecks);
+
     const selectedDeck = allDecks?.find((d) => d.id === deckId);
 
     if (!selectedDeck) return;
 
-    if (!selectedDeck) return;
-
-    onSelectDeck(selectedDeck);
+    onSelectDeck({ ...selectedDeck, commanderIds });
   };
 
   const onSelect = (deckId: string) => {
-    setInitialDeckId(deckId);
+    setInitialDeck({ deckId });
     onSubmitSelection(deckId);
   };
 
   useEffect(() => {
     if (!data) return;
 
-    onSubmitSelection(initialDeckId);
+    const commanderIds = initialDeck?.commanderId?.split(',');
+    onSubmitSelection(initialDeck?.deckId, commanderIds);
   }, [Boolean(data)]);
 
   return {

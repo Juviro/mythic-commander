@@ -18,9 +18,17 @@ const updatePrecons = async (forceUpdate = false) => {
     const existingPreconIds = await db('precons').pluck('id');
 
     let newPrecons = 0;
+    const preconNames = [];
 
     while (precons.length > 0) {
       const precon = precons.shift();
+
+      // Some precons are duplicated, so we need to skip them
+      if (preconNames.includes(precon.name)) {
+        continue;
+      }
+      preconNames.push(precon.name);
+
       if (!forceUpdate && existingPreconIds.includes(precon.publicId)) {
         continue;
       }
@@ -33,7 +41,8 @@ const updatePrecons = async (forceUpdate = false) => {
       await db('precons')
         .insert(stringifyArrays(deck))
         .onConflict('id')
-        .ignore();
+        .merge();
+
       newPrecons += 1;
     }
 

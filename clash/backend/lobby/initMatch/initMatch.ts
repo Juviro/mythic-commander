@@ -1,4 +1,4 @@
-import { getDecks, storeGameState } from 'backend/database/matchStore';
+import { Deck, getDecks, storeGameState } from 'backend/database/matchStore';
 import { Lobby } from 'backend/lobby/GameLobby.types';
 import { Card, GameState, Player, VisibleCard } from 'backend/database/gamestate.types';
 import { randomizeArray } from 'utils/randomizeArray';
@@ -24,10 +24,16 @@ const initMatch = async (lobby: Lobby, shouldStoreGameState = true) => {
   const deckIds = lobby.players.map((player) => player.deck!.id);
   const decks = await getDecks(deckIds);
 
+  const getCommanders = (deck: Deck) => {
+    const initialDeck = lobby.players.find((player) => player.deck!.id === deck.id)?.deck;
+    return initialDeck?.commanderIds || deck.commanderIds;
+  };
+
   const decksWithSpreadedCards = decks.map((deck) => {
+    const commanderIds = getCommanders(deck);
     const { cards, commanders, isFurryFriend } = getInitialCards(
       deck.cards,
-      deck.commanderIds
+      commanderIds
     );
 
     return {

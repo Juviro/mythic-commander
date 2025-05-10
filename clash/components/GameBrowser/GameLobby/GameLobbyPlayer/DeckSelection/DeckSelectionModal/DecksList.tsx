@@ -8,7 +8,10 @@ import DeckStatusTag from './DeckStatusTag';
 import styles from './DecksList.module.css';
 
 export interface DecksGroups {
-  [key: string]: LobbyDeck[];
+  [key: string]: {
+    decks: LobbyDeck[];
+    setImg?: string;
+  };
 }
 
 interface Props {
@@ -19,9 +22,9 @@ interface Props {
 const DecksList = ({ deckGroups, onSelect }: Props) => {
   return (
     <div className={styles.decks_wrapper}>
-      {Object.entries(deckGroups).map(([status, decks]) => (
+      {Object.entries(deckGroups).map(([status, { decks, setImg }]) => (
         <React.Fragment key={status}>
-          <DeckStatusTag status={status} />
+          <DeckStatusTag status={status} setImg={setImg} />
           <div className={styles.decks}>
             {decks.map((deck) => (
               <DeckPreview key={deck.id} deck={deck} onClick={onSelect} />
