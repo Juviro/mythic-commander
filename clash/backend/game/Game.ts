@@ -44,6 +44,7 @@ import {
   ToggleStackOpenPayload,
   TrackFloatingManaPayload,
   TurnCardsFaceDownPayload,
+  HoverCardPayload,
 } from 'backend/constants/wsEvents';
 import { User as DatabaseUser } from 'backend/database/getUser';
 import { GameLog, LOG_MESSAGES, LogMessage } from 'backend/constants/logMessages';
@@ -85,6 +86,9 @@ export default class Game {
     if (!this.gameState.stack) {
       this.gameState.stack = { visible: false, cards: [] };
     }
+    if (!this.gameState.hoveredCards) {
+      this.gameState.hoveredCards = {};
+    }
   }
 
   get id() {
@@ -125,6 +129,7 @@ export default class Game {
       phaseStopByPlayerId,
       stack,
       rematchModalOpen,
+      hoveredCards,
     } = this.gameState;
 
     this.emitToAll(SOCKET_MSG_GAME.GAME_STATE, {
@@ -134,6 +139,7 @@ export default class Game {
       winner,
       phaseStopByPlayerId,
       rematchModalOpen,
+      hoveredCards,
       stack: Game.obfuscateStack(stack),
     });
     this.gameState.phaseStopByPlayerId = null;
@@ -1378,6 +1384,14 @@ export default class Game {
 
   toggleStackOpen({ visible }: ToggleStackOpenPayload) {
     this.gameState.stack.visible = visible;
+    this.emitGameUpdate();
+  }
+
+  hoverCard(playerId: string, payload: HoverCardPayload) {
+    this.gameState.hoveredCards[playerId] = {
+      ...payload,
+      timestamp: Date.now(),
+    };
     this.emitGameUpdate();
   }
 

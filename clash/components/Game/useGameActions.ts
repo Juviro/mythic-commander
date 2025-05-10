@@ -29,6 +29,7 @@ import {
   TrackFloatingManaPayload,
   ToggleStackOpenPayload,
   RevealPayload,
+  HoverCardPayload,
 } from 'backend/constants/wsEvents';
 import {
   Phase,
@@ -218,6 +219,14 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.UPDATE_REMATCH_OPTIONS, rematchOptions);
   };
 
+  const onHoverCard = (clashId: string, battlefieldPlayerId: string) => {
+    const payload: HoverCardPayload = {
+      clashId,
+      battlefieldPlayerId,
+    };
+    socket?.emit(SOCKET_MSG_GAME.HOVER_CARD, payload);
+  };
+
   const resignGame = () => {
     socket?.emit(SOCKET_MSG_GAME.RESIGN_GAME);
   };
@@ -258,6 +267,7 @@ const useGameActions = () => {
     onInitiateRematch,
     onSelectRematchDeck,
     resignGame,
+    onHoverCard,
   };
 };
 

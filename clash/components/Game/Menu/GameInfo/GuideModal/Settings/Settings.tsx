@@ -56,6 +56,11 @@ const Settings = () => {
         checked={settings.displayTipOfTheDay}
         onChange={onChangeSetting('displayTipOfTheDay')}
       />
+      <Setting
+        label="Show cards hovered by enemy"
+        checked={settings.showEnemyHovering}
+        onChange={onChangeSetting('showEnemyHovering')}
+      />
     </div>
   );
 };

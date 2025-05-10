@@ -63,6 +63,8 @@ export const SOCKET_MSG_GAME = {
   SET_COMMANDER_TIMES_CASTED: 'set_commander_times_casted',
   SET_PLAYER_LIFE: 'set_player_life',
   SET_COMMANDER_DAMAGE: 'set_commander_damage',
+
+  HOVER_CARD: 'hover_card',
 };
 
 export interface AcceptHandPayload {
@@ -146,6 +148,11 @@ export interface PlayTopCardFaceDownPayload {
 
 export interface PeekFaceDownPayload {
   cardId: string;
+  battlefieldPlayerId: string;
+}
+
+export interface HoverCardPayload {
+  clashId: string;
   battlefieldPlayerId: string;
 }
 

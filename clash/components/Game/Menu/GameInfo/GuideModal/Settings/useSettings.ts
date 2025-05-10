@@ -8,6 +8,7 @@ export interface Settings {
   commanderDamageChangesLife: boolean;
   displayTipOfTheDay: boolean;
   autoOrganizeLands: boolean;
+  showEnemyHovering: boolean;
 }
 
 export const SETTINGS_STORAGE_KEY = 'settings';
@@ -19,6 +20,7 @@ export const DEFAULT_SETTINGS: Settings = {
   commanderDamageChangesLife: true,
   displayTipOfTheDay: true,
   autoOrganizeLands: true,
+  showEnemyHovering: true,
 };
 
 const useSettings = () => {

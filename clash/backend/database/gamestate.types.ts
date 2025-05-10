@@ -198,6 +198,12 @@ export interface Stack {
   cards: VisibleCard[];
 }
 
+export interface HoveredCard {
+  clashId: string;
+  battlefieldPlayerId: string;
+  timestamp: number;
+}
+
 export interface GameState {
   hostId: string;
   gameId: string;
@@ -209,6 +215,7 @@ export interface GameState {
   resources?: Resources;
   winner?: string | null;
   stack: Stack;
+  hoveredCards: { [playerId: string]: HoveredCard };
   phaseStopByPlayerId?: string | null;
   rematchModalOpen?: boolean;
 }

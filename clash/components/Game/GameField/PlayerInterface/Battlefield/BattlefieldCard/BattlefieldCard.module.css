@@ -25,6 +25,19 @@
     border: 3px dashed var(--color-primary);
   }
   
+  .card__hovered_by_enemy::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    box-shadow: 0 0 5px 5px var(--hovering-player-color);
+    animation: grow 1.3s;
+    opacity: 0;
+  }
+  
   .card__selected {
     border: 3px solid var(--color-primary);
   }
@@ -38,4 +51,20 @@
   :global(.transformed) .card img {
     transform: rotate(180deg);
   }
+
+
+  @keyframes grow {
+    0% {
+      box-shadow: 0 0 0px 0px var(--hovering-player-color);
+      opacity: 1;
+    }
+    80% {
+      box-shadow: 0 0 13px 13px var(--hovering-player-color);
+    }
+    100% {
+      box-shadow: 0 0 15px 15px var(--hovering-player-color);
+      opacity: 0;
+    }
+  }
+  
   

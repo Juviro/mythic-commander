@@ -19,7 +19,7 @@ interface PeekingCards {
   isSearch?: boolean;
 }
 interface BaseGameState {
-  getPlayerColor: (playerId?: string) => string | undefined;
+  getPlayerColor: (playerId?: string, opacity?: number) => string | undefined;
   playerNames: { [key: string]: string };
   peekingCards: PeekingCards | null;
   setPeekingCards: (peekingCards: PeekingCards | null) => void;
@@ -109,9 +109,14 @@ export const GameStateContextProvider = ({ children }: Props) => {
     setStopPoint(null);
   }, [gameState?.phaseStopByPlayerId]);
 
-  const getPlayerColor = (playerId?: string) => {
+  const getPlayerColor = (playerId?: string, opacity?: number) => {
     const player = gameState?.players.find(({ id }) => id === playerId);
-    return player?.color;
+    if (!opacity) return player?.color;
+
+    const opacityInHex = Math.round(Math.max(0, Math.min(1, opacity)) * 255)
+      .toString(16)
+      .padStart(2, '0');
+    return `${player?.color}${opacityInHex}`;
   };
 
   const player = gameState?.players.find(({ id }) => id === user?.id);

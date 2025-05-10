@@ -35,6 +35,7 @@ import {
   ToggleStackOpenPayload,
   TrackFloatingManaPayload,
   TurnCardsFaceDownPayload,
+  HoverCardPayload,
 } from '../constants/wsEvents';
 import Game from './Game';
 
@@ -247,6 +248,10 @@ const gameSocketActions = (io: Server) => {
 
     socket.on(SOCKET_MSG_GAME.SET_STOP_POINT, (payload: SetStopPointPayload) => {
       currentGames[currentGameId].setStopPoint(user.id, payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.HOVER_CARD, (payload: HoverCardPayload) => {
+      currentGames[currentGameId].hoverCard(user.id, payload);
     });
 
     socket.on('disconnect', () => {
