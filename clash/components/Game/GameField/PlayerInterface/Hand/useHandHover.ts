@@ -57,6 +57,15 @@ const useHandHover = ({ hand, wrapperRef, player }: Props) => {
   };
 
   const onMouseMove = (event: MouseEvent<HTMLDivElement>) => {
+    // Make sure the hovered cards does not change
+    // when the user is using the context menu
+    if (event.target instanceof Element) {
+      const antDropdown =
+        event.target.closest('.ant-dropdown') ||
+        event.target.closest('.ant-dropdown-menu-item');
+      if (antDropdown) return;
+    }
+
     const numberOfSegments = canDrop ? hand.length + 1 : hand.length;
 
     const { left, right, top } = getCardBounds();
