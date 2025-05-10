@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Button, Tooltip } from 'antd';
 
+import { ArrowRightOutlined } from '@ant-design/icons';
 import GameBrowserContext from '../GameBrowserContext';
 
 import styles from './GameLobbyFooter.module.css';
@@ -32,7 +33,15 @@ const GameLobbyFooter = () => {
 
   return (
     <div className={styles.wrapper}>
-      <Button type="primary" ghost href={decksUrl} target="_blank" rel="noreferrer">
+      <Button
+        type="primary"
+        ghost
+        href={decksUrl}
+        target="_blank"
+        rel="noreferrer"
+        icon={<ArrowRightOutlined />}
+        iconPosition="end"
+      >
         Your Decks
       </Button>
       <Tooltip title={tooltipText} open={tooltipText ? undefined : false}>
