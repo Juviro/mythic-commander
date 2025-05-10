@@ -33,7 +33,7 @@ const getOptions = (alternativeCommanders: AlternativeCommander[], deck: PreconD
   );
 
   const defaultCommander = {
-    id: 'default',
+    id: deck.commanders.map((commander) => commander.id).join(','),
     name: deck.commanderName,
   };
 

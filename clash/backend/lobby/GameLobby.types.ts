@@ -21,6 +21,10 @@ export type AlternativeCommander = {
 };
 
 export type PreconDeck = LobbyDeck & {
+  commanders: {
+    id: string;
+    name: string;
+  }[];
   setName: string;
   setImg: string;
   deckUrl: string;
