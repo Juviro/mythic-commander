@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { Tabs } from 'antd';
 import GameBrowserModal from '../GameBrowserModal/GameBrowserModal';
@@ -10,6 +10,15 @@ import styles from './GameSelection.module.css';
 
 const GameSelection = () => {
   const { openLobbies, onJoinLobby } = useContext(GameBrowserContext);
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  // This is a hack to prevent a weird animation of the tabs indicator on initial render
+  useEffect(() => {
+    setTimeout(() => {
+      setIsMounted(true);
+    }, 500);
+  }, []);
 
   const items = [
     {
@@ -27,7 +36,7 @@ const GameSelection = () => {
   return (
     <GameBrowserModal title="Game Browser">
       <div className={styles.wrapper}>
-        <Tabs defaultActiveKey={items[0].key} items={items} />
+        <Tabs defaultActiveKey={items[0].key} items={items} animated={isMounted} />
       </div>
     </GameBrowserModal>
   );
