@@ -66,7 +66,6 @@ export const GameStateContextProvider = ({ children }: Props) => {
         ...prev,
         ...msg,
       }));
-      setPeekingCards(null);
     });
 
     socket.on(SOCKET_MSG_GAME.UPDATE_PLAYER, (player: Player) => {
