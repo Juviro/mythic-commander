@@ -90,6 +90,10 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.DISCARD_RANDOM_CARD, { playerId });
   };
 
+  const onReturnRandomCardFromGraveyard = () => {
+    socket?.emit(SOCKET_MSG_GAME.RETURN_RANDOM_CARD_FROM_GRAVEYARD);
+  };
+
   const onAddCounters = (payload: AddCountersPayload) => {
     socket?.emit(SOCKET_MSG_GAME.ADD_COUNTER, payload);
   };
@@ -230,6 +234,14 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.RESIGN_GAME);
   };
 
+  const rollDice = () => {
+    socket?.emit(SOCKET_MSG_GAME.ROLL_PLANAR_DICE);
+  };
+
+  const planeswalk = () => {
+    socket?.emit(SOCKET_MSG_GAME.PLANESWALK);
+  };
+
   return {
     onAcceptHand,
     onTakeMulligan,
@@ -237,6 +249,7 @@ const useGameActions = () => {
     onMoveCard,
     onMoveCardsGroup,
     onDiscardRandomCard,
+    onReturnRandomCardFromGraveyard,
     onAddCounters,
     createToken,
     copyCard,
@@ -267,6 +280,8 @@ const useGameActions = () => {
     onSelectRematchDeck,
     resignGame,
     onHoverCard,
+    rollDice,
+    planeswalk,
   };
 };
 

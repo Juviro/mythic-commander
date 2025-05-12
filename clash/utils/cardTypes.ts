@@ -1,5 +1,9 @@
 /* eslint-disable import/no-cycle */
-import { BattlefieldCard, VisibleCard } from 'backend/database/gamestate.types';
+import {
+  ActivePlane,
+  BattlefieldCard,
+  VisibleCard,
+} from 'backend/database/gamestate.types';
 
 export type PermanentCardType =
   | 'Land'
@@ -9,7 +13,13 @@ export type PermanentCardType =
   | 'Enchantment'
   | 'Battle';
 
-type CardTypes = PermanentCardType | 'Instant' | 'Sorcery';
+type CardTypes =
+  | PermanentCardType
+  | 'Instant'
+  | 'Sorcery'
+  | 'Phenomenon'
+  | 'Room'
+  | 'Plane';
 
 type BasicLandTypes = 'Plains' | 'Island' | 'Swamp' | 'Mountain' | 'Forest' | 'Wastes';
 
@@ -35,7 +45,7 @@ export const hasAnyBasicLandType = (typeLine: string) => {
   return typeLine?.match(/Plains|Island|Swamp|Mountain|Forest|Wastes/) !== null;
 };
 
-export const getCardRotation = (card: VisibleCard | BattlefieldCard) => {
+export const getCardRotation = (card: VisibleCard | BattlefieldCard | ActivePlane) => {
   if (!('type_line' in card) || !card.type_line) return 0;
 
   if ('transformed' in card && card.transformed) {
@@ -46,11 +56,19 @@ export const getCardRotation = (card: VisibleCard | BattlefieldCard) => {
     return 180;
   }
 
-  if (card.layout === 'split') {
+  if ('layout' in card && card.layout === 'split') {
     return 90;
   }
 
   if (hasCardType(card.type_line, 'Battle')) {
+    return 90;
+  }
+
+  if (hasCardType(card.type_line, 'Plane')) {
+    return 90;
+  }
+
+  if (hasCardType(card.type_line, 'Phenomenon')) {
     return 90;
   }
 

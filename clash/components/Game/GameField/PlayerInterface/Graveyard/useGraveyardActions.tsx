@@ -2,7 +2,9 @@ import { ArrowRightOutlined } from '@ant-design/icons';
 import { MenuProps } from 'antd';
 import { Player, ZONES } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
+import useGameActions from 'components/Game/useGameActions';
 import useMoveCardActions from 'components/GameComponents/Card/cardActions/useMoveCardActions';
+import ClashIcon from 'components/GameComponents/ClashIcon/ClashIcon';
 import { useContext } from 'react';
 
 interface Props {
@@ -17,6 +19,7 @@ const useGraveyardActions = ({ cardIds, player }: Props) => {
     player,
     zone: ZONES.GRAVEYARD,
   });
+  const { onReturnRandomCardFromGraveyard } = useGameActions();
 
   const isSelf = player.id === self!.id;
 
@@ -29,6 +32,13 @@ const useGraveyardActions = ({ cardIds, player }: Props) => {
       disabled: !cardIds.length,
       children: moveCardActions,
       icon: <ArrowRightOutlined />,
+    },
+    {
+      key: 'return-random-card',
+      label: 'Return random card to hand',
+      disabled: !cardIds.length,
+      icon: <ClashIcon id="random_card" size={16} />,
+      onClick: () => onReturnRandomCardFromGraveyard(),
     },
   ];
 

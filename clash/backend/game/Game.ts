@@ -2,6 +2,7 @@ import uniqid from 'uniqid';
 import { Server, Socket } from 'socket.io';
 
 import {
+  ActivePlane,
   BattlefieldCard,
   Card,
   FaceDownCard,
@@ -55,6 +56,7 @@ import db from 'backend/database/db';
 import getPlaytestGamestate from 'backend/lobby/initMatch/getPlaytestGamestate';
 import { XYCoord } from 'react-dnd';
 import { LobbyDeck } from 'backend/lobby/GameLobby.types';
+import { DICE_ROLL_ANIMATION_DURATION } from 'components/Game/GameField/Planechase/PlanechaseDice';
 import addLogEntry from './addLogEntry';
 import getInitialCardProps from './utils/getInitialCardProps';
 
@@ -130,6 +132,7 @@ export default class Game {
       stack,
       rematchModalOpen,
       hoveredCards,
+      planechase,
     } = this.gameState;
 
     this.emitToAll(SOCKET_MSG_GAME.GAME_STATE, {
@@ -141,6 +144,7 @@ export default class Game {
       rematchModalOpen,
       hoveredCards,
       stack: Game.obfuscateStack(stack),
+      planechase,
     });
     this.gameState.phaseStopByPlayerId = null;
   }
@@ -408,6 +412,10 @@ export default class Game {
       x: position.x + index * 1,
       y: position.y + index * 2,
     };
+  }
+
+  static getRandomValue(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   obfuscateGameState(playerId: string): GameState {
@@ -1211,13 +1219,11 @@ export default class Game {
   executeCommand(playerId: string, { args, command }: ChatCommandPayload) {
     const player = this.getPlayerById(playerId);
 
-    const getRandomValue = (min: number, max: number) => {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    };
-
     if (command === 'flip') {
       const numberOfCoins = Math.min(Math.max(args.numberOfCoins, 1), 100);
-      const results = Array.from({ length: numberOfCoins }, () => getRandomValue(0, 1));
+      const results = Array.from({ length: numberOfCoins }, () =>
+        Game.getRandomValue(0, 1)
+      );
       const numberOfWonFlips = results.filter((result) => result === 1).length;
 
       this.logAction({
@@ -1237,7 +1243,7 @@ export default class Game {
       const numberOfDice = Math.min(Math.max(args.numberOfDice, 1), 20);
 
       const results = Array.from({ length: numberOfDice }, () =>
-        getRandomValue(1, sides)
+        Game.getRandomValue(1, sides)
       );
       this.logAction({
         playerId: player.id,
@@ -1416,6 +1422,9 @@ export default class Game {
 
     this.gameState.activePlayerId = alivePlayers[newActivePlayerIndex].id;
     this.gameState.phase = 'beginning';
+    if (this.gameState.planechase) {
+      this.gameState.planechase.diceRollCost = 0;
+    }
 
     this.emitGameUpdate();
 
@@ -1504,6 +1513,79 @@ export default class Game {
     const socket = this.users[playerId]?.socket;
     socket.emit(SOCKET_MSG_GAME.SET_STOP_POINT, {
       phase: this.requestedStopPoints[playerId],
+    });
+  }
+
+  rollPlanarDice(playerId: string) {
+    if (playerId !== this.gameState.activePlayerId || !this.gameState.planechase) {
+      return;
+    }
+
+    const getResult = () => {
+      const roll = Game.getRandomValue(1, 6);
+      if (roll === 1) return 'chaos';
+      if (roll === 6) return 'planeswalk';
+      return 'empty';
+    };
+
+    this.gameState.planechase.lastDiceResult = getResult();
+    this.gameState.planechase.diceRollCost += 1;
+    this.gameState.planechase.lastDiceRollTimestamp = Date.now();
+
+    this.emitGameUpdate();
+
+    // Make sure the log action is executed after the dice roll animation
+    setTimeout(() => {
+      this.logAction({
+        playerId,
+        logKey: LOG_MESSAGES.ROLL_PLANAR_DICE,
+        payload: {
+          result: this.gameState.planechase!.lastDiceResult,
+        },
+      });
+    }, DICE_ROLL_ANIMATION_DURATION);
+  }
+
+  planeswalk(playerId: string) {
+    if (playerId !== this.gameState.activePlayerId || !this.gameState.planechase) {
+      return;
+    }
+
+    // move active plane to bottom of the stack
+    // make active plane the next plane in the stack
+
+    this.gameState.planechase.activePlane =
+      this.gameState.planechase.planesDeck.pop() as ActivePlane;
+    this.gameState.planechase.planesDeck.unshift(this.gameState.planechase.activePlane);
+
+    this.emitGameUpdate();
+
+    this.logAction({
+      playerId,
+      logKey: LOG_MESSAGES.PLANESWALK,
+      payload: {
+        newPlaneName: this.gameState.planechase.activePlane.name,
+      },
+    });
+  }
+
+  returnRandomCardFromGraveyard(playerId: string) {
+    const player = this.getPlayerById(playerId);
+    const { graveyard, hand } = player.zones;
+
+    if (!graveyard.length) return;
+
+    const randomIndex = Math.floor(Math.random() * graveyard.length);
+    const card = graveyard.splice(randomIndex, 1)[0] as VisibleCard;
+    hand.push(card);
+
+    this.emitPlayerUpdate(player);
+    this.logAction({
+      playerId: player.id,
+      logKey: LOG_MESSAGES.RETURN_RANDOM_CARD_FROM_GRAVEYARD,
+      payload: {
+        cardName: card.name,
+      },
     });
   }
 }

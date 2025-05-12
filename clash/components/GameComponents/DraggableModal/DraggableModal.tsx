@@ -108,6 +108,7 @@ const DraggableModal = ({
   return (
     <div
       className={classNames(styles.modal, additionalClassName)}
+      onContextMenu={(e) => e.stopPropagation()}
       style={style}
       ref={modalRef}
     >

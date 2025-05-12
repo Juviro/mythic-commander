@@ -1,4 +1,9 @@
-import { BattlefieldCard, VisibleCard, Zone } from 'backend/database/gamestate.types';
+import {
+  ActivePlane,
+  BattlefieldCard,
+  VisibleCard,
+  Zone,
+} from 'backend/database/gamestate.types';
 import React, { PropsWithChildren, useMemo, useRef, useState } from 'react';
 
 export interface CardPosition {
@@ -32,6 +37,8 @@ interface Point {
   y: number;
 }
 
+type HoveredCard = VisibleCard | BattlefieldCard | ActivePlane | null;
+
 interface CardPositionContextValue {
   cardPositions: CardPositions;
   hoveredBattlefield: {
@@ -43,10 +50,8 @@ interface CardPositionContextValue {
   contextMenuPosition: {
     current: Point | null;
   };
-  hoveredCard: VisibleCard | BattlefieldCard | null;
-  setHoveredCard: React.Dispatch<
-    React.SetStateAction<VisibleCard | BattlefieldCard | null>
-  >;
+  hoveredCard: HoveredCard;
+  setHoveredCard: React.Dispatch<React.SetStateAction<HoveredCard>>;
   rulesCardId: string | null;
   setRulesCardId: React.Dispatch<React.SetStateAction<string | null>>;
 }
@@ -63,9 +68,7 @@ export const CardPositionContextProvider = ({ children }: PropsWithChildren) => 
   const snapChoords = useRef<SnapChoords>({ x: null, y: null });
   const contextMenuPosition = useRef<Point | null>(null);
 
-  const [hoveredCard, setHoveredCard] = useState<VisibleCard | BattlefieldCard | null>(
-    null
-  );
+  const [hoveredCard, setHoveredCard] = useState<HoveredCard>(null);
   const [rulesCardId, setRulesCardId] = useState<string | null>(null);
 
   const value = useMemo(() => {

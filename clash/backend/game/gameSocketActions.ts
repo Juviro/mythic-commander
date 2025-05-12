@@ -138,6 +138,10 @@ const gameSocketActions = (io: Server) => {
       }
     );
 
+    socket.on(SOCKET_MSG_GAME.RETURN_RANDOM_CARD_FROM_GRAVEYARD, () => {
+      currentGames[currentGameId].returnRandomCardFromGraveyard(user.id);
+    });
+
     socket.on(SOCKET_MSG_GAME.ADD_COUNTER, (payload: AddCountersPayload) => {
       currentGames[currentGameId].addCounters(user.id, payload);
     });
@@ -252,6 +256,14 @@ const gameSocketActions = (io: Server) => {
 
     socket.on(SOCKET_MSG_GAME.HOVER_CARD, (payload: HoverCardPayload) => {
       currentGames[currentGameId].hoverCard(user.id, payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.ROLL_PLANAR_DICE, () => {
+      currentGames[currentGameId].rollPlanarDice(user.id);
+    });
+
+    socket.on(SOCKET_MSG_GAME.PLANESWALK, () => {
+      currentGames[currentGameId].planeswalk(user.id);
     });
 
     socket.on('disconnect', () => {

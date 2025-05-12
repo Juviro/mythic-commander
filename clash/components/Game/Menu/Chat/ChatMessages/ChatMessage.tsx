@@ -27,6 +27,9 @@ import MessageAddCounters from './Message/MessageAddCounters';
 import MessagePeekFaceDown from './Message/MessagePeekFaceDown';
 import MessagePlayTopCardFaceDown from './Message/MessagePlayTopCardFaceDown';
 import MessageSetCommanderDamage from './Message/MessageSetCommanderDamage';
+import MessageRollPlanarDice from './Message/MessageRollPlanarDice';
+import MessagePlaneswalk from './Message/MessagePlaneswalk';
+import MessageReturnRandomCardFromGraveyard from './Message/MessageReturnRandomCardFromGraveyard';
 
 interface Props {
   message: GameLog;
@@ -107,6 +110,15 @@ const ChatMessage = ({ message }: Props) => {
   }
   if (logKey === 'SET_PHASE') {
     return <MessageSetPhase payload={payload} />;
+  }
+  if (logKey === 'ROLL_PLANAR_DICE') {
+    return <MessageRollPlanarDice playerId={playerId} payload={payload} />;
+  }
+  if (logKey === 'PLANESWALK') {
+    return <MessagePlaneswalk playerId={playerId} payload={payload} />;
+  }
+  if (logKey === 'RETURN_RANDOM_CARD_FROM_GRAVEYARD') {
+    return <MessageReturnRandomCardFromGraveyard playerId={playerId} payload={payload} />;
   }
 
   const isDevelopment = process.env.NODE_ENV === 'development';

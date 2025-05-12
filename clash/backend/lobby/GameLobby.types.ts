@@ -37,6 +37,11 @@ export type LobbyPlayer = User & {
   color: string | null;
 };
 
+export interface PlanechaseSet {
+  set: string;
+  setName: string;
+}
+
 export interface Lobby {
   id: string;
   name: string;
@@ -45,9 +50,11 @@ export interface Lobby {
   hostId: string;
   gameLoading?: boolean;
   gameReady?: boolean;
+  planechaseSets?: PlanechaseSet[];
 }
 
 export interface GameOptions {
   name: string;
   maxNumberOfPlayers: number;
+  planechaseSets?: PlanechaseSet[];
 }

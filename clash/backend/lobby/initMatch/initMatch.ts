@@ -1,4 +1,4 @@
-import { Deck, getDecks, storeGameState } from 'backend/database/matchStore';
+import { Deck, getDecks, getPlanes, storeGameState } from 'backend/database/matchStore';
 import { Lobby } from 'backend/lobby/GameLobby.types';
 import { Card, GameState, Player, VisibleCard } from 'backend/database/gamestate.types';
 import { randomizeArray } from 'utils/randomizeArray';
@@ -23,6 +23,7 @@ export const sortInitialHand = (
 const initMatch = async (lobby: Lobby, shouldStoreGameState = true) => {
   const deckIds = lobby.players.map((player) => player.deck!.id);
   const decks = await getDecks(deckIds);
+  const planes = await getPlanes(lobby.planechaseSets);
 
   const getCommanders = (deck: Deck) => {
     const initialDeck = lobby.players.find((player) => player.deck!.id === deck.id)?.deck;
@@ -99,6 +100,18 @@ const initMatch = async (lobby: Lobby, shouldStoreGameState = true) => {
 
   const resources = { tokens };
 
+  const [activePlane] = planes.splice(0, 1);
+
+  const planechase = activePlane
+    ? ({
+        planesDeck: planes,
+        activePlane,
+        diceRollCost: 0,
+        lastDiceResult: 'planeswalk',
+        lastDiceRollTimestamp: Date.now(),
+      } as const)
+    : undefined;
+
   const initialGameState: GameState = {
     hostId: lobby.hostId,
     gameId: lobby.id,
@@ -112,6 +125,7 @@ const initMatch = async (lobby: Lobby, shouldStoreGameState = true) => {
     stack: { visible: false, cards: [] },
     rematchModalOpen: false,
     hoveredCards: {},
+    planechase,
   };
 
   if (shouldStoreGameState) {

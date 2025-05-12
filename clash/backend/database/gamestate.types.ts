@@ -203,6 +203,24 @@ export interface HoveredCard {
   timestamp: number;
 }
 
+export interface ActivePlane {
+  id: string;
+  clashId: string;
+  name: string;
+  counters?: number;
+  type_line: string;
+}
+
+export type PlanarDiceResult = 'chaos' | 'planeswalk' | 'empty';
+
+export interface PlanechaseState {
+  planesDeck: { clashId: string }[];
+  activePlane: ActivePlane;
+  diceRollCost: number;
+  lastDiceResult: PlanarDiceResult;
+  lastDiceRollTimestamp: number;
+}
+
 export interface GameState {
   hostId: string;
   gameId: string;
@@ -217,4 +235,5 @@ export interface GameState {
   hoveredCards: { [playerId: string]: HoveredCard };
   phaseStopByPlayerId?: string | null;
   rematchModalOpen?: boolean;
+  planechase?: PlanechaseState;
 }

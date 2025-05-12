@@ -29,7 +29,7 @@ const CardPreview = () => {
       ]
     : [];
 
-  if (hoveredCard?.transformable) {
+  if (hoveredCard && 'transformable' in hoveredCard && hoveredCard.transformable) {
     cardPreviews.push({
       src: getImageUrl(hoveredCard.id, true),
       title: 'Back',
@@ -44,7 +44,7 @@ const CardPreview = () => {
     });
   }
 
-  if (hoveredCard?.meta?.relatedCards?.length) {
+  if (hoveredCard && 'meta' in hoveredCard && hoveredCard.meta?.relatedCards?.length) {
     hoveredCard.meta.relatedCards.forEach((relatedCard) => {
       cardPreviews.push({
         src: getImageUrl(relatedCard.id),

@@ -24,3 +24,14 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.planechase_checkbox  {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.planechase_option_checkbox {
+    margin: 0;
+}

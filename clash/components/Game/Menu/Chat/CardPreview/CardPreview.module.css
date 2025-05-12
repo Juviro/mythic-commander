@@ -18,6 +18,7 @@
     gap: 16px;
     justify-content: space-between;
     flex-direction: column;
+    container-type: inline-size;
 }
 
 .image {
@@ -31,8 +32,11 @@
 }
 
 .image__rotated {
-    transform: rotate(var(--rotation, 0deg));
+    transform: translateY(-10%) rotate(var(--rotation, 0deg));
     max-width: 70%;
+    height: calc(100%*(1 /(var(--card-aspect-ratio))));
+    max-height: 95cqw;
+    margin: auto;
 }
 
 .image__flipped {

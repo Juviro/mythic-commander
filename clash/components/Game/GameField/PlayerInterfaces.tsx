@@ -9,6 +9,7 @@ import DragLayer from './DragLayer/DragLayer';
 
 import styles from './PlayerInterfaces.module.css';
 import { CARD_MODAL_PORTAL_ROOT_ID } from './playerInterfacePortal';
+import Planechase from './Planechase/Planechase';
 
 const PlayerInterfaces = () => {
   const { gameState, player } = useContext(GameStateContext) as InitializedGameState;
@@ -49,6 +50,7 @@ const PlayerInterfaces = () => {
         </div>
         <Menu />
       </div>
+      <Planechase />
       <div id={CARD_MODAL_PORTAL_ROOT_ID} />
       <DragLayer />
     </>

@@ -1,5 +1,7 @@
-import { Lobby } from 'backend/lobby/GameLobby.types';
-import { GameState, LayoutType } from './gamestate.types';
+import uniqid from 'uniqid';
+import { Lobby, PlanechaseSet } from 'backend/lobby/GameLobby.types';
+import { randomizeArray } from 'utils/randomizeArray';
+import { ActivePlane, GameState, LayoutType } from './gamestate.types';
 import db from './db';
 
 interface Part {
@@ -130,6 +132,71 @@ export const getDecks = async (deckIds: string[]): Promise<Deck[]> => {
   const preconDecks = await loadPreconDecks(deckIds);
 
   return mythicCommanderDecks.concat(preconDecks);
+};
+
+const INVALID_PLANECHASE_NAMES = [
+  // allows selecting a plane out of five cards
+  'Interplanar Tunnel',
+  // allows a seconds plane to be active
+  'Spatial Merging',
+  // changes the turn order
+  'Time Distortion',
+];
+
+interface Plane {
+  id: string;
+  name: string;
+  type_line: string;
+}
+
+export const getPlanes = async (
+  planechaseSets?: PlanechaseSet[]
+): Promise<ActivePlane[]> => {
+  if (!planechaseSets) return [];
+
+  const setKeys = planechaseSets.map(({ set }) => set);
+
+  const { rows: planes } = await db.raw<{ rows: Plane[] }>(
+    `
+    SELECT 
+      DISTINCT ON (name) name, 
+      id, 
+      type_line 
+    FROM 
+      cards 
+    WHERE 
+      set = ANY (?) AND NOT (name = ANY (?))
+    AND 
+      (type_line ILIKE 'Plane %' OR type_line ILIKE 'Phenomenon')
+    `,
+    [setKeys, INVALID_PLANECHASE_NAMES]
+  );
+
+  const randomizedPlanes = randomizeArray(planes);
+
+  let numberOfPhenomena = 0;
+
+  // 2 Phenomena are guaranteed, then 1 for every 20 planes
+  const maxNumbersOfPhenomena = Math.max(2, Math.floor(planes.length / 20));
+
+  const planesWithMaxTwoPhenomena = randomizedPlanes
+    .filter((plane) => {
+      if (!plane.type_line.includes('Phenomena')) return true;
+
+      if (numberOfPhenomena >= maxNumbersOfPhenomena) return false;
+
+      numberOfPhenomena += 1;
+
+      return true;
+    })
+    .map((plane) => ({
+      id: plane.id,
+      clashId: uniqid(),
+      name: plane.name,
+      type_line: plane.type_line,
+    }));
+
+  return planesWithMaxTwoPhenomena;
 };
 
 export const storeGameState = async (

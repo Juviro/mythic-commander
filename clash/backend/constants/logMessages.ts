@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { Zone } from 'backend/database/gamestate.types';
+import { PlanarDiceResult, Zone } from 'backend/database/gamestate.types';
 import {
   SendMessagePayload,
   SetCommanderDamagePayload,
@@ -15,6 +15,7 @@ export const LOG_MESSAGES = {
   DRAW_CARD: 'DRAW_CARD',
   MOVE_CARDS: 'MOVE_CARDS',
   DISCARD_RANDOM_CARD: 'DISCARD_RANDOM_CARD',
+  RETURN_RANDOM_CARD_FROM_GRAVEYARD: 'RETURN_RANDOM_CARD_FROM_GRAVEYARD',
   PEEK: 'PEEK',
   MILL: 'MILL',
   END_PEEK: 'END_PEEK',
@@ -34,6 +35,9 @@ export const LOG_MESSAGES = {
   SET_COMMANDER_DAMAGE: 'SET_COMMANDER_DAMAGE',
   SET_PHASE: 'SET_PHASE',
   SET_ACTIVE_PLAYER: 'SET_ACTIVE_PLAYER',
+
+  ROLL_PLANAR_DICE: 'ROLL_PLANAR_DICE',
+  PLANESWALK: 'PLANESWALK',
 } as const;
 
 export type LogKey = typeof LOG_MESSAGES[keyof typeof LOG_MESSAGES];
@@ -52,6 +56,10 @@ export interface LogPayloadMoveZone {
 }
 
 export interface LogPayloadDiscardRandomCard {
+  cardName: string;
+}
+
+export interface LogPayloadReturnRandomCardFromGraveyard {
   cardName: string;
 }
 
@@ -162,6 +170,14 @@ export interface LogPayloadPlayTopCardFaceDown {
   libraryPlayerId: string;
 }
 
+export interface LogPayloadRollPlanarDice {
+  result: PlanarDiceResult;
+}
+
+export interface LogPayloadPlaneswalk {
+  newPlaneName: string;
+}
+
 // ############################### Messages ###############################
 
 interface LogMessageWithPlayer {
@@ -196,6 +212,11 @@ interface LogMessageMove extends LogMessageWithPlayer {
 interface LogMessageDiscardRandomCard extends LogMessageWithPlayer {
   logKey: 'DISCARD_RANDOM_CARD';
   payload: LogPayloadDiscardRandomCard;
+}
+
+export interface LogMessageReturnRandomCardFromGraveyard extends LogMessageWithPlayer {
+  logKey: 'RETURN_RANDOM_CARD_FROM_GRAVEYARD';
+  payload: LogPayloadReturnRandomCardFromGraveyard;
 }
 
 interface LogMill extends LogMessageWithPlayer {
@@ -288,6 +309,16 @@ interface LogMessagePlayTopCardFaceDown extends LogMessageWithPlayer {
   payload: LogPayloadPlayTopCardFaceDown;
 }
 
+interface LogMessageRollPlanarDice extends LogMessageWithPlayer {
+  logKey: 'ROLL_PLANAR_DICE';
+  payload: LogPayloadRollPlanarDice;
+}
+
+interface LogMessagePlaneswalk extends LogMessageWithPlayer {
+  logKey: 'PLANESWALK';
+  payload: LogPayloadPlaneswalk;
+}
+
 // ############################### Log ###############################
 
 export type LogMessage =
@@ -297,6 +328,7 @@ export type LogMessage =
   | LogMessageDraw
   | LogMessageMove
   | LogMessageDiscardRandomCard
+  | LogMessageReturnRandomCardFromGraveyard
   | LogMill
   | LogPeek
   | LogEndPeek
@@ -314,7 +346,9 @@ export type LogMessage =
   | LogMessageAddCounters
   | LogMessageTurnFaceDown
   | LogMessagePeekFaceDown
-  | LogMessagePlayTopCardFaceDown;
+  | LogMessagePlayTopCardFaceDown
+  | LogMessageRollPlanarDice
+  | LogMessagePlaneswalk;
 
 export type GameLog = {
   timestamp: number;

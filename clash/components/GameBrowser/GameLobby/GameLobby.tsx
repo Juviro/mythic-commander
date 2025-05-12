@@ -11,6 +11,7 @@ import PlayerHeader from './PlayerHeader';
 import GameLobbyFooter from './GameLobbyFooter';
 
 import styles from './GameLobby.module.css';
+import PlanechaseSetsInfo from './PlanechaseSetsInfo';
 
 const GameLobby = () => {
   const [isLeaving, setIsLeaving] = useState(false);
@@ -82,6 +83,7 @@ const GameLobby = () => {
               );
             })}
           </ul>
+          <PlanechaseSetsInfo lobby={lobby} />
         </div>
       </GameBrowserModal>
       <GameLobbyFooter />

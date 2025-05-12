@@ -99,7 +99,7 @@ const CardListModal = ({
   }, [element]);
 
   useEffect(() => {
-    if (!resetPosition || isOpen) return;
+    if (!resetPosition || isOpen || !element) return;
 
     setCurrentPosition(getInitialPosition(cards.length, element));
   }, [resetPosition, isOpen]);

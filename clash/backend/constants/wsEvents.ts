@@ -42,6 +42,7 @@ export const SOCKET_MSG_GAME = {
   MOVE_CARD: 'move_card',
   MOVE_CARDS_GROUP: 'move_cards_group',
   DISCARD_RANDOM_CARD: 'discard_random_card',
+  RETURN_RANDOM_CARD_FROM_GRAVEYARD: 'return_random_card_from_graveyard',
   ADD_COUNTER: 'add_counter',
   TAP_CARDS: 'tap_cards',
   TRANSFORM_CARDS: 'transform_cards',
@@ -65,6 +66,8 @@ export const SOCKET_MSG_GAME = {
   SET_COMMANDER_DAMAGE: 'set_commander_damage',
 
   HOVER_CARD: 'hover_card',
+  ROLL_PLANAR_DICE: 'roll_planar_dice',
+  PLANESWALK: 'planeswalk',
 };
 
 export interface AcceptHandPayload {

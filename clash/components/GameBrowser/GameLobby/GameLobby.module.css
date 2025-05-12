@@ -20,6 +20,23 @@
     list-style: none;
 }
 
+.planechase_sets {
+    margin-top: 16px;
+}
+
+.planechase_sets_label {
+    font-weight: 600;
+}
+
+.planechase_more_sets {
+    color: var(--color-primary);
+    cursor: help;
+}
+
+.planechase_more_and {
+    margin-left: -3px;
+}
+
 .start_overlay_visible {
     z-index: 1;
     position: absolute;

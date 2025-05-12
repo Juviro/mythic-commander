@@ -26,6 +26,7 @@ export class GameLobby {
       players: [{ ...user, deck: null, isReady: false, color: null }],
       hostId: user.id,
       maxNumberOfPlayers: lobbyOptions.maxNumberOfPlayers,
+      planechaseSets: lobbyOptions.planechaseSets,
     };
     this.openLobbies.push(lobby);
 
