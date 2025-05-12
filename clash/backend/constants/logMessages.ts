@@ -151,7 +151,7 @@ export interface LogPayloadAddCounters {
   amount: number;
   cardNames: string[];
   cardIds: string[];
-  battlefieldPlayerId: string;
+  battlefieldPlayerId: string | null;
   type: string;
 }
 

@@ -33,7 +33,7 @@ const MessageAddCounters = ({ payload, playerId }: Props) => {
             ? payload.cardNames[0]
             : `${payload.cardNames.length} cards`}
         </b>
-        {payload.battlefieldPlayerId !== playerId && (
+        {payload.battlefieldPlayerId && payload.battlefieldPlayerId !== playerId && (
           <>
             {` on `}
             <ColoredPlayerName id={payload.battlefieldPlayerId} addGenetiveSuffix />

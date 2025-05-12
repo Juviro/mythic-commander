@@ -792,7 +792,30 @@ export default class Game {
 
     const battlefieldPlayerId = this.gameState.players.find(({ zones }) =>
       zones.battlefield.some((card) => cardIds.includes(card.clashId))
-    )!.id;
+    )?.id;
+
+    // In this case, it might be a planechase counter
+    if (!battlefieldPlayerId) {
+      const isPlanechaseCounter =
+        this.gameState.planechase?.activePlane?.clashId === cardIds[0];
+      if (!isPlanechaseCounter) return;
+      this.gameState.planechase!.activePlane.counters ??= 0;
+      this.gameState.planechase!.activePlane.counters += amount;
+      this.emitGameUpdate(['planechase']);
+
+      this.logAction({
+        playerId,
+        logKey: LOG_MESSAGES.ADD_COUNTERS,
+        payload: {
+          cardNames: ['the active Plane'],
+          cardIds,
+          battlefieldPlayerId: null,
+          amount,
+          type,
+        },
+      });
+      return;
+    }
 
     const player = this.getPlayerById(battlefieldPlayerId);
 
@@ -1594,6 +1617,7 @@ export default class Game {
 
     const oldPlaneText = getOldPlaneText();
 
+    this.gameState.planechase.activePlane.counters = 0;
     this.gameState.planechase.activePlane =
       this.gameState.planechase.planesDeck.pop() as ActivePlane;
     this.gameState.planechase.planesDeck.unshift(this.gameState.planechase.activePlane);

@@ -38,6 +38,7 @@
 
 .counter_bubble {
     position: absolute;
+    color: white;
     line-height: 1;
     right: 8px;
     top: calc(var(--size-card-width) * 0.07);
