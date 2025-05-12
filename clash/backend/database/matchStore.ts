@@ -139,6 +139,8 @@ const INVALID_PLANECHASE_NAMES = [
   'Interplanar Tunnel',
   // allows a seconds plane to be active
   'Spatial Merging',
+  // allows a multiple planes to be active
+  "Norn's Seedcore",
   // changes the turn order
   'Time Distortion',
 ];
@@ -147,6 +149,7 @@ interface Plane {
   id: string;
   name: string;
   type_line: string;
+  oracle_text: string;
 }
 
 export const getPlanes = async (
@@ -161,7 +164,8 @@ export const getPlanes = async (
     SELECT 
       DISTINCT ON (name) name, 
       id, 
-      type_line 
+      type_line,
+      oracle_text
     FROM 
       cards 
     WHERE 
@@ -181,7 +185,7 @@ export const getPlanes = async (
 
   const planesWithMaxTwoPhenomena = randomizedPlanes
     .filter((plane) => {
-      if (!plane.type_line.includes('Phenomena')) return true;
+      if (!plane.type_line.includes('Phenomenon')) return true;
 
       if (numberOfPhenomena >= maxNumbersOfPhenomena) return false;
 
@@ -194,6 +198,7 @@ export const getPlanes = async (
       clashId: uniqid(),
       name: plane.name,
       type_line: plane.type_line,
+      oracle_text: plane.oracle_text,
     }));
 
   return planesWithMaxTwoPhenomena;

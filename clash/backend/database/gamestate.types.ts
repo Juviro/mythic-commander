@@ -209,6 +209,7 @@ export interface ActivePlane {
   name: string;
   counters?: number;
   type_line: string;
+  oracle_text: string;
 }
 
 export type PlanarDiceResult = 'chaos' | 'planeswalk' | 'empty';

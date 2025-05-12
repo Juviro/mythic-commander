@@ -176,6 +176,7 @@ export interface LogPayloadRollPlanarDice {
 
 export interface LogPayloadPlaneswalk {
   newPlaneName: string;
+  oldPlaneText?: string;
 }
 
 // ############################### Messages ###############################

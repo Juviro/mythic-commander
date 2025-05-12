@@ -144,7 +144,7 @@ export default class Game {
       rematchModalOpen,
       hoveredCards,
       stack: Game.obfuscateStack(stack),
-      planechase,
+      planechase: Game.obfuscatePlanechase(planechase),
     });
     this.gameState.phaseStopByPlayerId = null;
   }
@@ -381,6 +381,15 @@ export default class Game {
     };
   }
 
+  static obfuscatePlanechase(planechase: GameState['planechase']) {
+    if (!planechase) return undefined;
+
+    return {
+      ...planechase,
+      planesDeck: planechase.planesDeck.map(({ clashId }) => ({ clashId })),
+    };
+  }
+
   static getFirstAvailablePosition(
     initalPosition: XYCoord,
     battlefield: BattlefieldCard[]
@@ -423,7 +432,13 @@ export default class Game {
       return Game.obfuscatePlayer(player, playerId);
     });
 
-    return { ...this.gameState, players: obfuscatedPlayers };
+    const obfuscatedPlanechase = Game.obfuscatePlanechase(this.gameState.planechase);
+
+    return {
+      ...this.gameState,
+      players: obfuscatedPlayers,
+      planechase: obfuscatedPlanechase,
+    };
   }
 
   getPlayerById(playerId: string): Player {
@@ -1551,8 +1566,16 @@ export default class Game {
       return;
     }
 
-    // move active plane to bottom of the stack
-    // make active plane the next plane in the stack
+    const getOldPlaneText = () => {
+      const oldOracleText = this.gameState.planechase!.activePlane.oracle_text ?? '';
+      const oracleLines = oldOracleText.split('\n');
+      const oldPlaneText = oracleLines.find((line) =>
+        line.toLowerCase().startsWith('when you planeswalk away from')
+      );
+      return oldPlaneText;
+    };
+
+    const oldPlaneText = getOldPlaneText();
 
     this.gameState.planechase.activePlane =
       this.gameState.planechase.planesDeck.pop() as ActivePlane;
@@ -1565,6 +1588,7 @@ export default class Game {
       logKey: LOG_MESSAGES.PLANESWALK,
       payload: {
         newPlaneName: this.gameState.planechase.activePlane.name,
+        oldPlaneText,
       },
     });
   }
