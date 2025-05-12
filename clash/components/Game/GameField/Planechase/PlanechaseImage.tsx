@@ -19,7 +19,7 @@ const PlanechaseImage = ({ activePlane }: PlanechaseImageProps) => {
 
   //  Make sure the cards preview updates
   useEffect(() => {
-    if (!activePlane?.clashId) return;
+    if (!activePlane?.clashId || !lastPlane?.clashId) return;
     if (hoveredCard?.clashId !== lastPlane?.clashId) return;
 
     setHoveredCard(activePlane);

@@ -41,11 +41,13 @@ const Planechase = () => {
         [styles.one_player_layout]: gameState.players.length === 1,
         [styles.three_player_layout]: gameState.players.length === 3,
       })}
-      onMouseEnter={() => setHoveredCard(activePlane)}
-      onMouseLeave={() => setHoveredCard(null)}
     >
       <ContextMenu items={items}>
-        <div className={styles.inner}>
+        <div
+          className={styles.inner}
+          onMouseEnter={() => setHoveredCard(activePlane)}
+          onMouseLeave={() => setHoveredCard(null)}
+        >
           <PlanechaseImage activePlane={activePlane} />
           <div className={styles.content}>
             <div className={styles.header}>
