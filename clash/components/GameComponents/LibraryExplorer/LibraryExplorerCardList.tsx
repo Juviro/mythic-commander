@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import { VisibleCard, Zone } from 'backend/database/gamestate.types';
+import { HiddenCard, VisibleCard, Zone } from 'backend/database/gamestate.types';
 import { DndItemType, DndItemTypes, DropCard } from 'types/dnd.types';
 import classNames from 'classnames';
 import StackedCardList from '../StackedCardList/StackedCardList';
@@ -9,7 +9,7 @@ import styles from './LibraryExplorer.module.css';
 import Dropzone from '../Dropzone/Dropzone';
 
 interface Props {
-  cards: VisibleCard[];
+  cards: (VisibleCard | HiddenCard)[];
   onDrop: (card: DropCard, index: number) => void;
   title?: ReactNode;
   titleRight?: ReactNode;

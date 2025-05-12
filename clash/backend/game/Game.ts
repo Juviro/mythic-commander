@@ -122,7 +122,7 @@ export default class Game {
     });
   }
 
-  emitGameUpdate() {
+  emitGameUpdate(emittedFields?: (keyof GameState)[]) {
     const {
       activePlayerId,
       phase,
@@ -135,7 +135,7 @@ export default class Game {
       planechase,
     } = this.gameState;
 
-    this.emitToAll(SOCKET_MSG_GAME.GAME_STATE, {
+    const emittedGameState: Partial<GameState> = {
       activePlayerId,
       phase,
       turn,
@@ -145,7 +145,19 @@ export default class Game {
       hoveredCards,
       stack: Game.obfuscateStack(stack),
       planechase: Game.obfuscatePlanechase(planechase),
-    });
+    };
+
+    if (emittedFields) {
+      Object.keys(emittedGameState).forEach((key) => {
+        if (!emittedFields.includes(key as keyof GameState)) {
+          delete emittedGameState[key as keyof GameState];
+        }
+      });
+    }
+
+    this.emitToAll(SOCKET_MSG_GAME.GAME_STATE, emittedGameState);
+
+    // this only triggers a single display message
     this.gameState.phaseStopByPlayerId = null;
   }
 
@@ -356,7 +368,12 @@ export default class Game {
   }
 
   static obfuscateStack(stack: GameState['stack']) {
-    if (!stack) return null;
+    if (!stack) {
+      return {
+        visible: false,
+        cards: [],
+      };
+    }
 
     return {
       ...stack,
@@ -1405,7 +1422,7 @@ export default class Game {
 
   toggleStackOpen({ visible }: ToggleStackOpenPayload) {
     this.gameState.stack.visible = visible;
-    this.emitGameUpdate();
+    this.emitGameUpdate(['stack']);
   }
 
   hoverCard(playerId: string, payload: HoverCardPayload) {
@@ -1413,7 +1430,7 @@ export default class Game {
       ...payload,
       timestamp: Date.now(),
     };
-    this.emitGameUpdate();
+    this.emitGameUpdate(['hoveredCards']);
   }
 
   endTurn(playerId: string, force = false) {
@@ -1547,7 +1564,7 @@ export default class Game {
     this.gameState.planechase.diceRollCost += 1;
     this.gameState.planechase.lastDiceRollTimestamp = Date.now();
 
-    this.emitGameUpdate();
+    this.emitGameUpdate(['planechase']);
 
     // Make sure the log action is executed after the dice roll animation
     setTimeout(() => {
@@ -1581,7 +1598,7 @@ export default class Game {
       this.gameState.planechase.planesDeck.pop() as ActivePlane;
     this.gameState.planechase.planesDeck.unshift(this.gameState.planechase.activePlane);
 
-    this.emitGameUpdate();
+    this.emitGameUpdate(['planechase']);
 
     this.logAction({
       playerId,

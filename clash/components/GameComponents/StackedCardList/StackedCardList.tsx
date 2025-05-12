@@ -1,6 +1,6 @@
 import React, { CSSProperties, useEffect, useRef, WheelEvent } from 'react';
 
-import { VisibleCard, Zone } from 'backend/database/gamestate.types';
+import { HiddenCard, VisibleCard, Zone } from 'backend/database/gamestate.types';
 import { DndItemType, DndItemTypes, DropCard } from 'types/dnd.types';
 
 import classNames from 'classnames';
@@ -10,7 +10,7 @@ import StackedCardListCard from './StackedCardListCard';
 import styles from './StackedCardList.module.css';
 
 interface Props {
-  cards: VisibleCard[];
+  cards: (VisibleCard | HiddenCard)[];
   draggable?: boolean;
   onDrop?: (item: DropCard, index: number) => void;
   color?: string;

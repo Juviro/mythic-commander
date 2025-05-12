@@ -1,7 +1,7 @@
 import React, { CSSProperties, useContext } from 'react';
 
 import useCardActions from 'components/GameComponents/Card/cardActions/useCardActions';
-import { VisibleCard, Zone } from 'backend/database/gamestate.types';
+import { HiddenCard, VisibleCard, Zone } from 'backend/database/gamestate.types';
 import { DndItemType } from 'types/dnd.types';
 import GameStateContext from 'components/Game/GameStateContext';
 import classNames from 'classnames';
@@ -11,7 +11,7 @@ import Card from '../Card/Card';
 import styles from './StackedCardList.module.css';
 
 interface Props {
-  card: VisibleCard;
+  card: VisibleCard | HiddenCard;
   draggable?: boolean;
   zone: Zone;
   cardDropType: DndItemType;
@@ -32,7 +32,7 @@ const StackedCardListCard = ({
     '--vertical-offset-index': verticalOffsetIndex,
   } as CSSProperties;
 
-  const frontCardName = card.name.split(' //')[0];
+  const frontCardName = 'name' in card && card.name.split(' //')[0];
   const { contextMenuItems } = useCardActions({
     cardIds: [card.clashId],
     contextMenuTitle: frontCardName,

@@ -7,7 +7,7 @@ export const PHASES = ['beginning', 'main1', 'combat', 'main2', 'end'] as const;
 export type Phase = typeof PHASES[number];
 
 // ##################### Card #####################
-interface HiddenCard {
+export interface HiddenCard {
   clashId: string;
   ownerId: string;
 }
@@ -195,7 +195,7 @@ export interface Resources {
 
 export interface Stack {
   visible: boolean;
-  cards: VisibleCard[];
+  cards: (VisibleCard | HiddenCard)[];
 }
 
 export interface HoveredCard {
