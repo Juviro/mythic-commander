@@ -1,10 +1,10 @@
 import uniqid from 'uniqid';
 
 import { randomizeArray } from 'utils/randomizeArray';
-import { InitMatchCard } from 'backend/database/matchStore';
 import { VisibleCard } from 'backend/database/gamestate.types';
+import { InitMatchCard } from 'backend/database/matchStore.types';
 import { isCatOrDog } from './easterEggs';
-import getCardMeta from '../getCardMeta';
+import getRelatedCards from '../getRelatedCards';
 
 const getclashCardProps = (card: InitMatchCard): Omit<VisibleCard, 'ownerId'> => ({
   id: card.id,
@@ -17,7 +17,7 @@ const getclashCardProps = (card: InitMatchCard): Omit<VisibleCard, 'ownerId'> =>
   layout: card.layout,
   clashId: uniqid(),
   meta: {
-    relatedCards: getCardMeta(card),
+    relatedCards: getRelatedCards(card),
   },
 });
 

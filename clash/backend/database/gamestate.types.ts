@@ -210,6 +210,7 @@ export interface ActivePlane {
   counters?: number;
   type_line: string;
   oracle_text: string;
+  relatedCards?: RelatedCards[];
 }
 
 export type PlanarDiceResult = 'chaos' | 'planeswalk' | 'empty';

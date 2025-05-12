@@ -1,7 +1,7 @@
 import { RelatedCards } from 'backend/database/gamestate.types';
-import { InitMatchCard } from 'backend/database/matchStore';
+import { InitMatchCard, Plane } from 'backend/database/matchStore.types';
 
-const getCardMeta = (card: InitMatchCard) => {
+const getRelatedCards = (card: InitMatchCard | Plane) => {
   const relatedCards: (RelatedCards | null)[] = card.all_parts?.map(
     ({ component, type_line, name, id }) => {
       if (id === card.id) {
@@ -52,4 +52,4 @@ const getCardMeta = (card: InitMatchCard) => {
   return relatedCards?.filter(Boolean) as RelatedCards[];
 };
 
-export default getCardMeta;
+export default getRelatedCards;

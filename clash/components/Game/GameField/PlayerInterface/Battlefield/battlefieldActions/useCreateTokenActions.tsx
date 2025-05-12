@@ -47,13 +47,17 @@ const useCreateTokenActions = ({ cards, player, battlefieldRef }: Props) => {
 
   const allTokens = gameState?.resources?.tokens || [];
 
+  const planechaseTokens = gameState?.planechase?.activePlane?.relatedCards ?? [];
+
   const suggestedTokens = cards
     .map(({ meta }) => {
       return meta?.relatedCards ?? [];
     })
-    .flat();
+    .flat()
+    .concat(planechaseTokens);
+
   const uniqueSuggestedTokens = suggestedTokens.filter(
-    ({ id }, index, self) => self.findIndex((t) => t.id === id) === index
+    ({ name }, index, self) => self.findIndex((t) => t.name === name) === index
   );
 
   const suggestedTokenIds = uniqueSuggestedTokens.map(({ id }) => id);

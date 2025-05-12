@@ -1,36 +1,10 @@
 import uniqid from 'uniqid';
 import { Lobby, PlanechaseSet } from 'backend/lobby/GameLobby.types';
 import { randomizeArray } from 'utils/randomizeArray';
+import getRelatedCards from 'backend/lobby/getRelatedCards';
 import { ActivePlane, GameState, LayoutType } from './gamestate.types';
 import db from './db';
-
-interface Part {
-  id: string;
-  name: string;
-  component: string;
-  type_line: string;
-  produced_mana: string[];
-}
-
-export interface InitMatchCard {
-  id: string;
-  name: string;
-  amount: number;
-  manaValue: number;
-  transformable: boolean;
-  flippable: boolean;
-  type_line: string;
-  produced_mana: string[];
-  layout: LayoutType;
-  all_parts: Part[];
-}
-
-export interface Deck {
-  id: string;
-  name: string;
-  commanderIds: string[];
-  cards: InitMatchCard[];
-}
+import { Deck, Plane } from './matchStore.types';
 
 const loadMythicCommanderDecks = async (deckIds: string[]): Promise<Deck[]> => {
   const { rows: decks } = await db.raw(
@@ -145,13 +119,6 @@ const INVALID_PLANECHASE_NAMES = [
   'Time Distortion',
 ];
 
-interface Plane {
-  id: string;
-  name: string;
-  type_line: string;
-  oracle_text: string;
-}
-
 export const getPlanes = async (
   planechaseSets?: PlanechaseSet[]
 ): Promise<ActivePlane[]> => {
@@ -165,7 +132,8 @@ export const getPlanes = async (
       DISTINCT ON (name) name, 
       id, 
       type_line,
-      oracle_text
+      oracle_text,
+      all_parts
     FROM 
       cards 
     WHERE 
@@ -199,6 +167,7 @@ export const getPlanes = async (
       name: plane.name,
       type_line: plane.type_line,
       oracle_text: plane.oracle_text,
+      relatedCards: getRelatedCards(plane),
     }));
 
   return planesWithMaxTwoPhenomena;

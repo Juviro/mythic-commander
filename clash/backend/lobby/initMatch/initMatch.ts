@@ -1,7 +1,8 @@
-import { Deck, getDecks, getPlanes, storeGameState } from 'backend/database/matchStore';
+import { getDecks, getPlanes, storeGameState } from 'backend/database/matchStore';
 import { Lobby } from 'backend/lobby/GameLobby.types';
 import { Card, GameState, Player, VisibleCard } from 'backend/database/gamestate.types';
 import { randomizeArray } from 'utils/randomizeArray';
+import { Deck } from 'backend/database/matchStore.types';
 import getInitialCards from './getInitialCards';
 import getTokens from './getTokens';
 
