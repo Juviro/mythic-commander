@@ -1602,7 +1602,11 @@ export default class Game {
   }
 
   planeswalk(playerId: string) {
-    if (playerId !== this.gameState.activePlayerId || !this.gameState.planechase) {
+    if (
+      playerId !== this.gameState.activePlayerId ||
+      !this.gameState.planechase ||
+      !this.gameState.planechase.planesDeck.length
+    ) {
       return;
     }
 
