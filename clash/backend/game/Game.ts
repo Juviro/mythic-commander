@@ -207,6 +207,7 @@ export default class Game {
       const { gameState: newGameState } = await getGameState(this.gameState.gameId);
 
       this.gameState = newGameState;
+      this.requestedStopPoints = {};
     }
 
     this.emitGameStateToAll();
