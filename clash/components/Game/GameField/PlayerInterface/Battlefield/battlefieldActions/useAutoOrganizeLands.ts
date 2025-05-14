@@ -12,12 +12,11 @@ interface Props {
 
 const useAutoOrganizeLands = ({ battlefieldRef, player }: Props) => {
   const [settings] = useSettings();
-  const { organizeLands, getCardsToOrder } = useOrganizeLands({ player, battlefieldRef });
+  const { organizeLands, cardsToOrder } = useOrganizeLands({ player, battlefieldRef });
   const { player: self } = useContext(GameStateContext);
 
   const isSelf = player.id === self?.id;
 
-  const cardsToOrder = getCardsToOrder();
   const cardIds = cardsToOrder.map((card) => card.id);
   const sortedCardIds = cardIds.sort().join(',');
 

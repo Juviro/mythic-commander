@@ -1,4 +1,4 @@
-import { RefObject, useContext } from 'react';
+import { RefObject, useContext, useMemo } from 'react';
 
 import {
   BattlefieldCard,
@@ -49,12 +49,13 @@ const sumLandColors = (land: VisibleBattlefieldCard) => {
   }, 0);
 };
 
+const isLand = (card: BattlefieldCard) => {
+  const side = card.transformed ? 1 : 0;
+  return 'type_line' in card && card.type_line.split('//')?.at(side)?.includes('Land');
+};
+
 const sortLandsByColor = (lands: VisibleBattlefieldCard[]) => {
   return lands.sort((a, b) => {
-    const isLand = (card: VisibleBattlefieldCard) => {
-      return 'type_line' in card && card.type_line.includes('Land');
-    };
-
     if (isLand(a) !== isLand(b)) {
       return isLand(a) ? -1 : 1;
     }
@@ -78,23 +79,22 @@ const useOrganizeLands = ({ battlefieldRef, player }: Props) => {
   const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
   const { onMoveCard } = useGameActions();
 
-  const getCardsToOrder = () => {
+  const cardsToOrder = useMemo(() => {
     return player.zones.battlefield.filter((card) => {
       if (card.name === 'Treasure') return false;
-      if ('type_line' in card && card.type_line.includes('Land')) return true;
+      if (isLand(card)) return true;
       if ('produced_mana' in card && card.produced_mana) {
         return card.type_line.includes('Artifact');
       }
       return false;
     }) as VisibleBattlefieldCard[];
-  };
+  }, [player.zones.battlefield.length]);
 
   const organizeLands = () => {
     if (!battlefieldRef.current) return;
     const { factorX, factorY } = getRelativeToAbsoluteFactor(battlefieldRef.current!);
 
-    const lands = getCardsToOrder();
-    const sortedLands = sortLandsByColor(lands);
+    const sortedLands = sortLandsByColor(cardsToOrder);
 
     const minColumnWidth = battlefieldCardWidth * PADDING_FACTOR;
     const battlefieldWidth = battlefieldRef.current.clientWidth;
@@ -167,7 +167,7 @@ const useOrganizeLands = ({ battlefieldRef, player }: Props) => {
     }
   };
 
-  return { organizeLands, getCardsToOrder };
+  return { organizeLands, cardsToOrder };
 };
 
 export default useOrganizeLands;
