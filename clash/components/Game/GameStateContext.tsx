@@ -103,11 +103,6 @@ export const GameStateContextProvider = ({ children }: Props) => {
     });
   }, [socket]);
 
-  useEffect(() => {
-    if (gameState?.phaseStopByPlayerId !== user?.id) return;
-    setStopPoint(null);
-  }, [gameState?.phaseStopByPlayerId]);
-
   const getPlayerColor = (playerId?: string, opacity?: number) => {
     const player = gameState?.players.find(({ id }) => id === playerId);
     if (!opacity) return player?.color;
@@ -119,6 +114,13 @@ export const GameStateContextProvider = ({ children }: Props) => {
   };
 
   const player = gameState?.players.find(({ id }) => id === user?.id);
+
+  const hasUnacceptedMulligan = player?.mulligan?.cardsAccepted === false;
+
+  useEffect(() => {
+    if (!hasUnacceptedMulligan) return;
+    setStopPoint(null);
+  }, [hasUnacceptedMulligan]);
 
   const battlefieldCardWidth = useMemo(() => {
     if (!gameState?.players.length) return 0;
