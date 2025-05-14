@@ -25,7 +25,7 @@ export const SOCKET_MSG_GAME = {
   RESTART_GAME: 'restart_game',
   RESIGN_GAME: 'resign_game',
   INITIATE_REMATCH: 'initiate_rematch',
-  UPDATE_REMATCH_OPTIONS: 'UPDATE_REMATCH_OPTIONS',
+  UPDATE_REMATCH_OPTIONS: 'update_rematch_options',
 
   GAME_STATE: 'game_state',
   ACCEPT_HAND: 'ACCEPT_HAND',

@@ -32,7 +32,11 @@ const addLogEntry = (currentLog: GameLog[], newLog: GameLog) => {
     return [...currentLog, newLog];
   }
 
-  const newLastLog = { ...lastLog, payload: { ...lastLog.payload } } as GameLog;
+  const newLastLog = {
+    ...lastLog,
+    timestamp: Date.now(),
+    payload: { ...lastLog.payload },
+  } as GameLog;
 
   if (
     newLastLog.logKey === SET_LIFE &&

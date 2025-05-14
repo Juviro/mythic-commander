@@ -29,6 +29,8 @@ const ChatMessages = ({ enabledTypes }: Props) => {
 
   useEffect(scrollToBottom, [enabledTypes.length]);
 
+  const lastMessageTimestamp = log?.at(-1)?.timestamp;
+
   useEffect(() => {
     if (!parentRef.current) return;
 
@@ -40,7 +42,7 @@ const ChatMessages = ({ enabledTypes }: Props) => {
     if (diff < 2000) {
       scrollToBottom();
     }
-  }, [log.length]);
+  }, [lastMessageTimestamp]);
 
   return (
     <div ref={parentRef} className={styles.messages}>
