@@ -14,8 +14,17 @@
     min-width: 100px;
 }
 
+.planechase_selection_title {
+    margin: 16px 0  8px;
+    font-weight: bold;
+}
+
 .info_text {
     margin-top: 32px;
     color: var(--text-secondary);
     font-style: italic;
+}
+
+.form {
+    margin-top: 8px;
 }

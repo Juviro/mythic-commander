@@ -26,7 +26,7 @@ export const SOCKET_MSG_GAME = {
   RESIGN_GAME: 'resign_game',
   INITIATE_REMATCH: 'initiate_rematch',
   UPDATE_REMATCH_OPTIONS: 'update_rematch_options',
-
+  UPDATE_REMATCH_PLANECHASE_OPTIONS: 'update_rematch_planechase_options',
   GAME_STATE: 'game_state',
   ACCEPT_HAND: 'ACCEPT_HAND',
   TAKE_MULLIGAN: 'take_mulligan',

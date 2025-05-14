@@ -35,9 +35,10 @@ import {
 import {
   Phase,
   PlayerZone,
-  RematchOptions,
+  PlayerRematchOptions,
   Zone,
 } from 'backend/database/gamestate.types';
+import { PlanechaseSet } from 'backend/lobby/GameLobby.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
 import useSettings from './Menu/GameInfo/GuideModal/Settings/useSettings';
 
@@ -220,8 +221,12 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.INITIATE_REMATCH);
   };
 
-  const onSelectRematchDeck = (rematchOptions: Partial<RematchOptions>) => {
+  const onSelectRematchDeck = (rematchOptions: Partial<PlayerRematchOptions>) => {
     socket?.emit(SOCKET_MSG_GAME.UPDATE_REMATCH_OPTIONS, rematchOptions);
+  };
+
+  const onSetRematchPlanechaseOptions = (planechaseOptions: PlanechaseSet[]) => {
+    socket?.emit(SOCKET_MSG_GAME.UPDATE_REMATCH_PLANECHASE_OPTIONS, planechaseOptions);
   };
 
   const onHoverCard = (clashId: string) => {
@@ -283,6 +288,7 @@ const useGameActions = () => {
     restartGame,
     onInitiateRematch,
     onSelectRematchDeck,
+    onSetRematchPlanechaseOptions,
     resignGame,
     onHoverCard,
     rollDice,

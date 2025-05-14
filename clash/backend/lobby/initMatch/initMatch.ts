@@ -124,9 +124,12 @@ const initMatch = async (lobby: Lobby, shouldStoreGameState = true) => {
     resources,
     winner: null,
     stack: { visible: false, cards: [] },
-    rematchModalOpen: false,
     hoveredCards: {},
     planechase,
+    rematchOptions: {
+      isModalOpen: false,
+      planechaseOptions: lobby.planechaseSets || [],
+    },
   };
 
   if (shouldStoreGameState) {

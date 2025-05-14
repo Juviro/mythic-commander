@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { GameLog } from 'backend/constants/logMessages';
-import { LobbyDeck } from 'backend/lobby/GameLobby.types';
+import { LobbyDeck, PlanechaseSet } from 'backend/lobby/GameLobby.types';
 
 export const PHASES = ['beginning', 'main1', 'combat', 'main2', 'end'] as const;
 
@@ -156,7 +156,7 @@ interface RevealedCards {
   cards: VisibleCard[];
 }
 
-export interface RematchOptions {
+export interface PlayerRematchOptions {
   isReady: boolean;
   deck: LobbyDeck;
 }
@@ -173,7 +173,7 @@ export interface Player {
   resigned?: boolean;
   activeUtils?: GameUtils;
   revealedCards?: RevealedCards;
-  rematchOptions?: RematchOptions;
+  rematchOptions?: PlayerRematchOptions;
   playWithTopCardRevealed?: boolean;
 }
 
@@ -224,6 +224,11 @@ export interface PlanechaseState {
   lastDiceRollTimestamp: number;
 }
 
+export interface RematchOptions {
+  isModalOpen: boolean;
+  planechaseOptions?: PlanechaseSet[];
+}
+
 export interface GameState {
   hostId: string;
   gameId: string;
@@ -237,6 +242,6 @@ export interface GameState {
   stack: Stack;
   hoveredCards: { [playerId: string]: HoveredCard };
   phaseStopByPlayerId?: string | null;
-  rematchModalOpen?: boolean;
+  rematchOptions?: RematchOptions;
   planechase?: PlanechaseState;
 }

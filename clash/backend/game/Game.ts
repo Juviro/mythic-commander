@@ -11,7 +11,7 @@ import {
   PHASES,
   Player,
   PlayerZone,
-  RematchOptions,
+  PlayerRematchOptions,
   VisibleBattlefieldCard,
   VisibleCard,
   Zone,
@@ -56,7 +56,7 @@ import { randomizeArray } from 'utils/randomizeArray';
 import db from 'backend/database/db';
 import getPlaytestGamestate from 'backend/lobby/initMatch/getPlaytestGamestate';
 import { XYCoord } from 'react-dnd';
-import { LobbyDeck } from 'backend/lobby/GameLobby.types';
+import { LobbyDeck, PlanechaseSet } from 'backend/lobby/GameLobby.types';
 import { DICE_ROLL_ANIMATION_DURATION } from 'components/Game/GameField/Planechase/PlanechaseDice';
 import addLogEntry from './addLogEntry';
 import getInitialCardProps from './utils/getInitialCardProps';
@@ -91,6 +91,12 @@ export default class Game {
     }
     if (!this.gameState.hoveredCards) {
       this.gameState.hoveredCards = {};
+    }
+    if (!this.gameState.rematchOptions) {
+      this.gameState.rematchOptions = {
+        isModalOpen: false,
+        planechaseOptions: [],
+      };
     }
   }
 
@@ -131,7 +137,7 @@ export default class Game {
       winner,
       phaseStopByPlayerId,
       stack,
-      rematchModalOpen,
+      rematchOptions,
       hoveredCards,
       planechase,
     } = this.gameState;
@@ -142,7 +148,7 @@ export default class Game {
       turn,
       winner,
       phaseStopByPlayerId,
-      rematchModalOpen,
+      rematchOptions,
       hoveredCards,
       stack: Game.obfuscateStack(stack),
       planechase: Game.obfuscatePlanechase(planechase),
@@ -221,12 +227,12 @@ export default class Game {
       const { deck } = lobby.players.find((p) => p.id === player.id)!;
       player.rematchOptions = { isReady: false, deck: deck as LobbyDeck };
     });
-    this.gameState.rematchModalOpen = true;
+    this.gameState.rematchOptions!.isModalOpen = true;
 
     this.emitGameStateToAll();
   }
 
-  async updateRematchOptions(playerId: string, rematchOptions: RematchOptions) {
+  async updateRematchOptions(playerId: string, rematchOptions: PlayerRematchOptions) {
     const player = this.getPlayerById(playerId);
     player.rematchOptions = {
       ...player.rematchOptions,
@@ -242,7 +248,7 @@ export default class Game {
       return;
     }
 
-    this.gameState.rematchModalOpen = false;
+    this.gameState.rematchOptions!.isModalOpen = false;
     const { lobby } = await getGameState(this.gameState.gameId);
     const newlobby = {
       ...lobby,
@@ -257,6 +263,23 @@ export default class Game {
 
     await storeGameState(this.gameState.gameId, this.gameState, newlobby);
     this.restartGame(this.gameState.hostId);
+  }
+
+  async updateRematchPlanechaseOptions(
+    playerId: string,
+    planechaseOptions: PlanechaseSet[]
+  ) {
+    if (playerId !== this.gameState.hostId) return;
+
+    this.gameState.rematchOptions!.planechaseOptions = planechaseOptions;
+    const { lobby } = await getGameState(this.gameState.gameId);
+    const newlobby = {
+      ...lobby,
+      planechaseSets: planechaseOptions,
+    };
+
+    await storeGameState(this.gameState.gameId, this.gameState, newlobby);
+    this.emitGameStateToAll();
   }
 
   resign(playerId: string) {
