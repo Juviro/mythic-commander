@@ -30,6 +30,7 @@ import {
   ToggleStackOpenPayload,
   RevealPayload,
   HoverCardPayload,
+  SetPlayWithTopCardRevealedPayload,
 } from 'backend/constants/wsEvents';
 import {
   Phase,
@@ -242,6 +243,10 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.PLANESWALK);
   };
 
+  const onSetPlayWithTopCardRevealed = (payload: SetPlayWithTopCardRevealedPayload) => {
+    socket?.emit(SOCKET_MSG_GAME.SET_PLAY_WITH_TOP_CARD_REVEALED, payload);
+  };
+
   return {
     onAcceptHand,
     onTakeMulligan,
@@ -282,6 +287,7 @@ const useGameActions = () => {
     onHoverCard,
     rollDice,
     planeswalk,
+    onSetPlayWithTopCardRevealed,
   };
 };
 

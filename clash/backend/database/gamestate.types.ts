@@ -174,6 +174,7 @@ export interface Player {
   activeUtils?: GameUtils;
   revealedCards?: RevealedCards;
   rematchOptions?: RematchOptions;
+  playWithTopCardRevealed?: boolean;
 }
 
 // ##################### Meta #####################

@@ -46,6 +46,7 @@ import {
   TrackFloatingManaPayload,
   TurnCardsFaceDownPayload,
   HoverCardPayload,
+  SetPlayWithTopCardRevealedPayload,
 } from 'backend/constants/wsEvents';
 import { User as DatabaseUser } from 'backend/database/getUser';
 import { GameLog, LOG_MESSAGES, LogMessage } from 'backend/constants/logMessages';
@@ -356,6 +357,10 @@ export default class Game {
     }) as BattlefieldCard[];
 
     const library = player.zones.library.map(obfuscateCard);
+    if (player.playWithTopCardRevealed && player.zones.library.length > 0) {
+      library.pop();
+      library.push(player.zones.library[player.zones.library.length - 1]);
+    }
 
     return {
       ...player,
@@ -1657,5 +1662,16 @@ export default class Game {
         cardName: card.name,
       },
     });
+  }
+
+  setPlayWithTopCardRevealed(
+    playerId: string,
+    payload: SetPlayWithTopCardRevealedPayload
+  ) {
+    const player = this.getPlayerById(playerId);
+
+    player.playWithTopCardRevealed = payload.revealed;
+
+    this.emitPlayerUpdate(player);
   }
 }

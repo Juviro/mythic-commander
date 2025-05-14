@@ -68,6 +68,7 @@ export const SOCKET_MSG_GAME = {
   HOVER_CARD: 'hover_card',
   ROLL_PLANAR_DICE: 'roll_planar_dice',
   PLANESWALK: 'planeswalk',
+  SET_PLAY_WITH_TOP_CARD_REVEALED: 'set_play_with_top_card_revealed',
 };
 
 export interface AcceptHandPayload {
@@ -231,4 +232,8 @@ export interface SetPhasePayload {
 
 export interface SetStopPointPayload {
   phase: Phase;
+}
+
+export interface SetPlayWithTopCardRevealedPayload {
+  revealed: boolean;
 }

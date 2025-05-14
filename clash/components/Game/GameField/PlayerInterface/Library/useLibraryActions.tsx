@@ -69,6 +69,7 @@ const useLibraryActions = (player: Player) => {
     onShuffle,
     onDrawCard,
     onRevealCards,
+    onSetPlayWithTopCardRevealed,
   } = useGameActions();
 
   const cardIds = player.zones.library.map((card) => card.clashId);
@@ -132,6 +133,18 @@ const useLibraryActions = (player: Player) => {
         disabled: !player.zones.library.length || isPeeking,
         onClick: revealCards,
         icon: <GroupOutlined />,
+      },
+      {
+        key: 'play-with-top-revealed',
+        label: player.playWithTopCardRevealed
+          ? 'Stop playing with top card revealed'
+          : 'Play with top card revealed',
+        disabled: !player.zones.library.length,
+        onClick: () =>
+          onSetPlayWithTopCardRevealed({
+            revealed: !player.playWithTopCardRevealed,
+          }),
+        icon: <EyeOutlined />,
       }
     );
   }

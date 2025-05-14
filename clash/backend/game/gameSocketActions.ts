@@ -36,6 +36,7 @@ import {
   TrackFloatingManaPayload,
   TurnCardsFaceDownPayload,
   HoverCardPayload,
+  SetPlayWithTopCardRevealedPayload,
 } from '../constants/wsEvents';
 import Game from './Game';
 
@@ -265,6 +266,13 @@ const gameSocketActions = (io: Server) => {
     socket.on(SOCKET_MSG_GAME.PLANESWALK, () => {
       currentGames[currentGameId].planeswalk(user.id);
     });
+
+    socket.on(
+      SOCKET_MSG_GAME.SET_PLAY_WITH_TOP_CARD_REVEALED,
+      (payload: SetPlayWithTopCardRevealedPayload) => {
+        currentGames[currentGameId].setPlayWithTopCardRevealed(user.id, payload);
+      }
+    );
 
     socket.on('disconnect', () => {
       if (!currentGames[currentGameId]) return;
