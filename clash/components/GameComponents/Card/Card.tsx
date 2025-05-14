@@ -17,6 +17,7 @@ import CardPositionContext from 'components/Game/CardPositionContext';
 import useHoveredCards from 'components/Game/GameField/PlayerInterface/Battlefield/BattlefieldCard/useHoveredCards';
 import GameStateContext from 'components/Game/GameStateContext';
 import useGameActions from 'components/Game/useGameActions';
+import BackgroundFlash from 'components/lib/BackgroundFlash/BackgroundFlash';
 import useAnimateCardPositionChange from './useAnimateCardPositionChange';
 
 import styles from './Card.module.css';
@@ -93,12 +94,9 @@ const Card = ({
         [styles.card__dynamic_size]: dynamicSize,
         [styles.card__draggable]: draggable,
         [styles.card__dragging]: isDragging,
-        [styles.card__hovered_by_enemy]: hoveringPlayer,
         card__dragging: isDragging,
       })}
       style={style}
-      // Make sure that hovering the same cards twice re-plays the animation
-      key={hoveringCard?.timestamp}
       ref={(val) => {
         dragRef(val);
         cardRef.current = val!;
@@ -106,6 +104,10 @@ const Card = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
+      <BackgroundFlash
+        active={Boolean(hoveringPlayer)}
+        timestamp={hoveringCard?.timestamp ?? 0}
+      />
       {!hidden && (
         <img className={styles.image} src={getImageUrl(card.id!, transformed)} />
       )}
