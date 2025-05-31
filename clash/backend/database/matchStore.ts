@@ -172,6 +172,11 @@ export const getPlanes = async (
       relatedCards: getRelatedCards(plane),
     }));
 
+  // Deck may not start with a phenomenon. In that case, move it to the end of the array
+  while (planesWithMaxTwoPhenomena.at(0)?.type_line.includes('Phenomenon')) {
+    planesWithMaxTwoPhenomena.push(planesWithMaxTwoPhenomena.shift()!);
+  }
+
   return planesWithMaxTwoPhenomena;
 };
 
