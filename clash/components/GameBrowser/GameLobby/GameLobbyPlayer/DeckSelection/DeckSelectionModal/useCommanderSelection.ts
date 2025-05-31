@@ -53,7 +53,7 @@ const getOptions = (alternativeCommanders: AlternativeCommander[], deck: PreconD
 };
 
 const useCommanderSelection = (deck: LobbyDeck | PreconDeck) => {
-  const { onSelectDeck, currentLobby } = useContext(GameBrowserContext);
+  const { onSelectDeck, currentLobby, user: self } = useContext(GameBrowserContext);
 
   const [initialDeck, setInitialDeck] = useLocalStorage<InitialDeck>(
     'initial-deck-with-commanders'
@@ -65,14 +65,17 @@ const useCommanderSelection = (deck: LobbyDeck | PreconDeck) => {
   if (!alternativeCommanders) return { options: [] };
 
   const onSelect = (commanderId: string) => {
-    const currentDeck = currentLobby?.players.find(
-      (player) => player.id === currentLobby.hostId
-    )?.deck;
+    const currentDeck = currentLobby?.players.find((player) => player.id === self?.id)
+      ?.deck as PreconDeck;
 
     if (!currentDeck) return;
 
     const commanderIds = commanderId.split(',');
-    onSelectDeck({ ...currentDeck, commanderIds });
+    const commanderName = currentDeck.alternativeCommanders
+      ?.filter((commander) => commanderIds.includes(commander.id))
+      .map((commander) => commander.name)
+      .join(' & ');
+    onSelectDeck({ ...currentDeck, commanderIds, commanderName });
     setInitialDeck({ deckId: currentDeck.id, commanderId });
   };
 
