@@ -76,11 +76,12 @@
 }
 
 .zoomed_modal :global(.ant-modal-content) {
-    width: 700px;
+    width: 800px;
     max-width: 90vw;
     background: transparent;
     box-shadow: none;
     pointer-events: none;
+    z-index: 99999;
 }
 
 .zoomed_image {
