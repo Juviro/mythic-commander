@@ -10,9 +10,9 @@
     background-color: rgba(0,0,0,0.5);
 }
 
-:global(body):has(:global(.ant-modal-mask)) .wrapper {
+/* :global(body):has(:global(.ant-modal-mask)) .wrapper {
     display: none;
-}
+} */
 
 .inner {
     height: 100%;
