@@ -115,6 +115,8 @@ const INVALID_PLANECHASE_NAMES = [
   'Spatial Merging',
   // allows a multiple planes to be active
   "Norn's Seedcore",
+  // reveals other planes
+  'Pools of Becoming',
   // changes the turn order
   'Time Distortion',
 ];
