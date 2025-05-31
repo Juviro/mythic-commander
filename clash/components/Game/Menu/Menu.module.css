@@ -11,6 +11,8 @@
     display: flex;
     gap: 32px;
     flex-direction: column;
+    /* On top of planechase in 3-player layout */
+    z-index: 2;
     box-shadow: -8px -8px 20px -6px rgba(0, 0, 0, 0.6);
 }
 
