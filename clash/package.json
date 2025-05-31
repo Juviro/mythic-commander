@@ -2,6 +2,10 @@
   "name": "mtg-clash",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "20.14.0",
+    "yarn": "1.22.19"
+  },
   "scripts": {
     "dev": "next dev -p 1235",
     "build": "next build",

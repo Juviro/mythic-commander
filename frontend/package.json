@@ -2,6 +2,10 @@
   "name": "mtg-frontend",
   "version": "0.1.1",
   "private": true,
+  "engines": {
+    "node": "20.14.0",
+    "yarn": "1.22.19"
+  },
   "scripts": {
     "start": "PORT=1234 react-app-rewired start",
     "build": "react-app-rewired build",
