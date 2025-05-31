@@ -31,6 +31,7 @@ import MessageRollPlanarDice from './Message/MessageRollPlanarDice';
 import MessagePlaneswalk from './Message/MessagePlaneswalk';
 import MessageReturnRandomCardFromGraveyard from './Message/MessageReturnRandomCardFromGraveyard';
 import MessageUndo from './Message/MessageUndo';
+import MessageRevealHandCard from './Message/MessageRevealHandCard';
 
 interface Props {
   message: GameLog;
@@ -123,6 +124,9 @@ const ChatMessage = ({ message }: Props) => {
   }
   if (logKey === 'UNDO') {
     return <MessageUndo playerId={playerId} payload={payload} />;
+  }
+  if (logKey === 'REVEAL_CARDS_FROM_HAND') {
+    return <MessageRevealHandCard playerId={playerId} payload={payload} />;
   }
 
   const isDevelopment = process.env.NODE_ENV === 'development';

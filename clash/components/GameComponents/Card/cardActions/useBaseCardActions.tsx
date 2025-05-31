@@ -1,5 +1,10 @@
 import { ReactNode, useContext } from 'react';
-import { ArrowRightOutlined, BookOutlined, SwitcherOutlined } from '@ant-design/icons';
+import {
+  ArrowRightOutlined,
+  BookOutlined,
+  EyeOutlined,
+  SwitcherOutlined,
+} from '@ant-design/icons';
 
 import { Zone, ZONES } from 'backend/database/gamestate.types';
 import GameStateContext from 'components/Game/GameStateContext';
@@ -8,6 +13,7 @@ import ClashIcon from 'components/GameComponents/ClashIcon/ClashIcon';
 
 import CardPositionContext from 'components/Game/CardPositionContext';
 import useMoveCardActions from './useMoveCardActions';
+import useRevealCardsActions from './useRevealCardsActions';
 
 interface Props {
   cardIds: string[];
@@ -30,6 +36,10 @@ const useBaseCardActions = ({
     zone,
     cardIds,
     player: player!,
+  });
+
+  const revealCardsActions = useRevealCardsActions({
+    cardIds,
   });
 
   const moveOntoStack = () => onMoveCard(cardIds[0], ZONES.STACK, null);
@@ -94,6 +104,13 @@ const useBaseCardActions = ({
     icon: <BookOutlined />,
   };
 
+  const revealCardsItem = {
+    key: 'reveal-cards',
+    label: 'Reveal Cards to...',
+    children: revealCardsActions,
+    icon: <EyeOutlined />,
+  };
+
   return {
     transformCards,
     tapCards,
@@ -103,6 +120,7 @@ const useBaseCardActions = ({
     moveItem,
     putOntoStack,
     rulesItem,
+    revealCardsItem,
   };
 };
 

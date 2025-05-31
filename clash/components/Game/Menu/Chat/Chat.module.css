@@ -35,7 +35,8 @@
 }
 
 .message {
-  padding: 2px 0;
+  /* Leave space for the undo button */
+  padding: 2px 14px 2px 0px;
   display: flex;
   gap: 4px;
 }

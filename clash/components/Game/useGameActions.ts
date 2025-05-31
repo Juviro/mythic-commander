@@ -31,6 +31,7 @@ import {
   RevealPayload,
   HoverCardPayload,
   SetPlayWithTopCardRevealedPayload,
+  RevealCardsFromHandPayload,
 } from 'backend/constants/wsEvents';
 import {
   Phase,
@@ -148,6 +149,10 @@ const useGameActions = () => {
 
   const onRevealCards = (payload: RevealPayload) => {
     socket?.emit(SOCKET_MSG_GAME.REVEAL_CARDS, payload);
+  };
+
+  const onRevealCardsFromHand = (payload: RevealCardsFromHandPayload) => {
+    socket?.emit(SOCKET_MSG_GAME.REVEAL_CARDS_FROM_HAND, payload);
   };
 
   const onSearchLibrary = (playerId: string) => {
@@ -277,6 +282,7 @@ const useGameActions = () => {
     onPeek,
     onEndPeek,
     onRevealCards,
+    onRevealCardsFromHand,
     onSearchLibrary,
     onShuffle,
     trackFloatingMana,

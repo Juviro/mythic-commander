@@ -43,6 +43,7 @@ const useCardActions = ({
     moveItem,
     putOntoStack,
     rulesItem,
+    revealCardsItem,
   } = useBaseCardActions({
     cardIds,
     battlefieldPlayerId,
@@ -93,6 +94,7 @@ const useCardActions = ({
   addItem(moveItem, zone === ZONES.STACK);
   addItem(putOntoStack, zone === ZONES.STACK || cardIds.length !== 1);
 
+  addItem(revealCardsItem, zone !== ZONES.HAND);
   addItem(handActions, zone !== ZONES.HAND, 'before');
   addItem(
     rulesItem,

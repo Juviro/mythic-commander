@@ -32,6 +32,7 @@ import {
   PeekFaceDownPayload,
   PeekPayload,
   RevealPayload,
+  RevealCardsFromHandPayload,
   FlipCardsPayload,
   SOCKET_MSG_GAME,
   SOCKET_MSG_GENERAL,
@@ -357,8 +358,8 @@ export default class Game {
     }
 
     playersToUpdate.forEach((playerToUpdateId) => {
-      const playerToUpdate = this.getPlayerById(playerToUpdateId);
-      this.emitPlayerUpdate(playerToUpdate);
+      const updatedPlayer = this.getPlayerById(playerToUpdateId);
+      this.emitPlayerUpdate(updatedPlayer);
     });
 
     this.logAction({
@@ -371,7 +372,16 @@ export default class Game {
   // ##################### Utils #####################
 
   static obfuscatePlayer(player: Player, selfId: string): Player {
-    const obfuscateCard = ({ clashId, ownerId }: Card) => ({ clashId, ownerId });
+    const obfuscateCard = (card: Card) => {
+      if ((card as VisibleCard).visibleTo?.includes(selfId)) {
+        return card;
+      }
+
+      return {
+        clashId: card.clashId,
+        ownerId: card.ownerId,
+      };
+    };
 
     const isSelf = player.id === selfId;
     const hand = isSelf ? player.zones.hand : player.zones.hand.map(obfuscateCard);
@@ -789,8 +799,8 @@ export default class Game {
     }
 
     playersToUpdate.forEach((playerToUpdateId) => {
-      const player = this.getPlayerById(playerToUpdateId);
-      this.emitPlayerUpdate(player);
+      const updatedPlayer = this.getPlayerById(playerToUpdateId);
+      this.emitPlayerUpdate(updatedPlayer);
     });
 
     if (shouldEmitStackUpdate) {
@@ -1338,6 +1348,37 @@ export default class Game {
     player.revealedCards.cards.push(...revealedCards);
 
     this.emitPlayerUpdate(player);
+  }
+
+  revealCardsFromHand(playerId: string, payload: RevealCardsFromHandPayload) {
+    const { cardIds, toPlayerIds } = payload;
+    const player = this.getPlayerById(playerId);
+
+    const cardsToReveal = player.zones.hand.filter((card) =>
+      cardIds.includes(card.clashId)
+    ) as VisibleCard[];
+
+    cardsToReveal.forEach((card) => {
+      if (!card.visibleTo) {
+        card.visibleTo = [];
+      }
+      card.visibleTo.push(...toPlayerIds);
+      card.visibleTo = [...new Set(card.visibleTo)];
+    });
+
+    const didRevealAllCards = player.zones.hand.length === cardsToReveal.length;
+
+    this.emitPlayerUpdate(player);
+
+    this.logAction({
+      playerId: player.id,
+      logKey: LOG_MESSAGES.REVEAL_CARDS_FROM_HAND,
+      payload: {
+        amount: cardsToReveal.length,
+        toPlayerIds,
+        didRevealAllCards,
+      },
+    });
   }
 
   searchLibrary(searchingPlayerId: string, payload: SearchLibraryPayload) {

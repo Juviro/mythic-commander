@@ -54,6 +54,7 @@ export const SOCKET_MSG_GAME = {
   PEEK: 'peek_library',
   END_PEEK: 'end_peek',
   REVEAL_CARDS: 'reveal_cards',
+  REVEAL_CARDS_FROM_HAND: 'reveal_cards_from_hand',
   SEARCH_LIBRARY: 'search_library',
   SHUFFLE_LIBRARY: 'shuffle_library',
   TRACK_FLOATING_MANA: 'track_floating_mana',
@@ -175,6 +176,11 @@ export interface PeekPayload {
 export interface RevealPayload {
   zone: PlayerZone;
   amount?: number;
+}
+
+export interface RevealCardsFromHandPayload {
+  cardIds: string[];
+  toPlayerIds: string[];
 }
 
 export interface EndPeekPayload {

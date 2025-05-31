@@ -22,6 +22,7 @@ import {
   PeekPayload,
   PlayTopCardFaceDownPayload,
   RevealPayload,
+  RevealCardsFromHandPayload,
   FlipCardsPayload,
   SOCKET_MSG_GAME,
   SOCKET_MSG_GENERAL,
@@ -208,6 +209,13 @@ const gameSocketActions = (io: Server) => {
     socket.on(SOCKET_MSG_GAME.REVEAL_CARDS, (payload: RevealPayload) => {
       currentGames[currentGameId].revealCards(user.id, payload);
     });
+
+    socket.on(
+      SOCKET_MSG_GAME.REVEAL_CARDS_FROM_HAND,
+      (payload: RevealCardsFromHandPayload) => {
+        currentGames[currentGameId].revealCardsFromHand(user.id, payload);
+      }
+    );
 
     socket.on(SOCKET_MSG_GAME.SEARCH_LIBRARY, (payload: SearchLibraryPayload) => {
       currentGames[currentGameId].searchLibrary(user.id, payload);

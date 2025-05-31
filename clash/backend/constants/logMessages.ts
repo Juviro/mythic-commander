@@ -17,6 +17,7 @@ export const LOG_MESSAGES = {
   DISCARD_RANDOM_CARD: 'DISCARD_RANDOM_CARD',
   RETURN_RANDOM_CARD_FROM_GRAVEYARD: 'RETURN_RANDOM_CARD_FROM_GRAVEYARD',
   PEEK: 'PEEK',
+  REVEAL_CARDS_FROM_HAND: 'REVEAL_CARDS_FROM_HAND',
   MILL: 'MILL',
   END_PEEK: 'END_PEEK',
   SEARCH_LIBRARY: 'SEARCH_LIBRARY',
@@ -89,8 +90,8 @@ export interface LogPayloadMill {
 }
 
 export interface LogPayloadPeek {
-  amount: number;
   peekedPlayerId: string;
+  amount: number;
   zone: Zone;
 }
 
@@ -203,6 +204,12 @@ export interface LogPayloadUndo {
   numberOfUndos: number;
 }
 
+export interface LogPayloadRevealCardsFromHand {
+  amount: number;
+  toPlayerIds: string[];
+  didRevealAllCards?: boolean;
+}
+
 // ############################### Messages ###############################
 
 interface LogMessageWithPlayer {
@@ -244,14 +251,19 @@ export interface LogMessageReturnRandomCardFromGraveyard extends LogMessageWithP
   payload: LogPayloadReturnRandomCardFromGraveyard;
 }
 
-interface LogMill extends LogMessageWithPlayer {
-  logKey: 'MILL';
-  payload: LogPayloadMill;
-}
-
 interface LogPeek extends LogMessageWithPlayer {
   logKey: 'PEEK';
   payload: LogPayloadPeek;
+}
+
+interface LogMessageRevealCardsFromHand extends LogMessageWithPlayer {
+  logKey: 'REVEAL_CARDS_FROM_HAND';
+  payload: LogPayloadRevealCardsFromHand;
+}
+
+interface LogMill extends LogMessageWithPlayer {
+  logKey: 'MILL';
+  payload: LogPayloadMill;
 }
 
 interface LogEndPeek extends LogMessageWithPlayer {
@@ -359,8 +371,9 @@ export type LogMessage =
   | LogMessageMove
   | LogMessageDiscardRandomCard
   | LogMessageReturnRandomCardFromGraveyard
-  | LogMill
   | LogPeek
+  | LogMessageRevealCardsFromHand
+  | LogMill
   | LogEndPeek
   | LogSearchLibrary
   | LogShuffleLibrary
