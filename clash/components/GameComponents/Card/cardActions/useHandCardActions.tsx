@@ -33,6 +33,10 @@ const useHandCardActions = (player: Player) => {
         ...revealCardsItem,
         label: 'Reveal Hand to...',
         key: 'reveal-hand',
+        children: revealCardsItem.children.map((child) => ({
+          ...child,
+          key: `reveal-hand-${child.key}`,
+        })),
       },
     ],
   };
