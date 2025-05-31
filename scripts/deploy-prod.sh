@@ -6,13 +6,13 @@ echo -e "\e[44mSetting node version\e[0m"
 cd /opt/mtg && nvm install && nvm use
 
 echo -e "\e[44mBuilding Frontend\e[0m"
-cd /opt/mtg/frontend && yarn install --production=false --ignore-engines && rm -rf /opt/mtg/frontend/build/* && ./node_modules/.bin/react-scripts --max_old_space_size=4096 build
+cd /opt/mtg/frontend && yarn install && rm -rf /opt/mtg/frontend/build/* && ./node_modules/.bin/react-scripts --max_old_space_size=4096 build
 
 echo -e "\e[44mBuilding Backend\e[0m"
-cd /opt/mtg/backend && yarn install --production=false && yarn build
+cd /opt/mtg/backend && yarn install && yarn build
 
 echo -e "\e[44mBuilding Clash\e[0m"
-cd /opt/mtg/clash && yarn install --ignore-engines && yarn build
+cd /opt/mtg/clash && yarn install && yarn build
 
 echo -e "\e[44mCopying Schema\e[0m"
 cp /opt/mtg/backend/src/graphql/schema.graphql /opt/mtg/backend/dist/graphql/schema.graphql
