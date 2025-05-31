@@ -28,6 +28,10 @@
   transform: scale(1.1);
 }
 
+.message_wrapper:has(.divider) .undoButton {
+  top: 22px;
+}
+
 .messages {
   flex: 1;
   overflow: auto;
