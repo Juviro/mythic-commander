@@ -1,9 +1,11 @@
-import React from 'react';
-import { Tabs } from 'antd';
+import React, { useState } from 'react';
+import { Input, Tabs } from 'antd';
 
 import useLocalStorage from 'hooks/useLocalStorage';
 import { DeckOptions } from '../useDeckSelection';
 import DecksList, { DecksGroups } from './DecksList';
+
+import styles from './DeckSelectionModal.module.css';
 
 interface Props extends DeckOptions {
   onSelect: (deckId: string) => void;
@@ -14,6 +16,8 @@ const DeckSelectionModal = ({ ownDecks, publicDecks, preconDecks, onSelect }: Pr
     'deck-selection-tab',
     'ownDecks'
   );
+
+  const [search, setSearch] = useState('');
 
   const ownDecksByStatus: DecksGroups = {
     active: { decks: [] },
@@ -39,30 +43,66 @@ const DeckSelectionModal = ({ ownDecks, publicDecks, preconDecks, onSelect }: Pr
     preconsBySet[deck.setName].decks.push(deck);
   });
 
+  const filterDecks = (decksGroup: DecksGroups) => {
+    if (!search) {
+      return decksGroup;
+    }
+
+    return Object.keys(decksGroup).reduce((acc: DecksGroups, key: string) => {
+      acc[key].decks = decksGroup[key].decks.filter((deck) => {
+        if (key.toLowerCase().includes(search.toLowerCase())) {
+          return true;
+        }
+        const searchableFields = [deck.name, deck.commanderName];
+        return searchableFields.some((field) =>
+          field?.toLowerCase().includes(search.toLowerCase())
+        );
+      });
+
+      if (!acc[key].decks.length) {
+        delete acc[key];
+      }
+
+      return acc;
+    }, decksGroup);
+  };
+
   const items = [
     {
       key: 'ownDecks',
       label: 'Your Decks',
-      children: <DecksList deckGroups={ownDecksByStatus} onSelect={onSelect} />,
+      children: (
+        <DecksList deckGroups={filterDecks(ownDecksByStatus)} onSelect={onSelect} />
+      ),
     },
     {
       key: 'publicDecks',
       label: 'Public Decks',
-      children: <DecksList deckGroups={publicDecksGroup} onSelect={onSelect} />,
+      children: (
+        <DecksList deckGroups={filterDecks(publicDecksGroup)} onSelect={onSelect} />
+      ),
     },
     {
       key: 'precons',
       label: 'Precons',
-      children: <DecksList deckGroups={preconsBySet} onSelect={onSelect} />,
+      children: <DecksList deckGroups={filterDecks(preconsBySet)} onSelect={onSelect} />,
     },
   ];
 
   return (
-    <Tabs
-      items={items}
-      defaultActiveKey={initialTab}
-      onChange={(key) => setInitialTab(key)}
-    />
+    <div className={styles.wrapper}>
+      <Tabs
+        items={items}
+        defaultActiveKey={initialTab}
+        onChange={(key) => setInitialTab(key)}
+      />
+      <Input.Search
+        placeholder="Search"
+        className={styles.search}
+        allowClear
+        onChange={(e) => setSearch(e.target.value)}
+      />
+    </div>
   );
 };
 

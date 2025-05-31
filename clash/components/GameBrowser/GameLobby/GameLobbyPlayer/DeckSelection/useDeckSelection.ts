@@ -32,7 +32,7 @@ const useDeckSelection = (
 
   const { data, isLoading } = useQuery<DeckOptions>(`decks-${playerId}`, getDecks, {
     enabled: canSelectDeck,
-    refetchInterval: 5000,
+    refetchInterval: Infinity,
     staleTime: 5000,
   });
 
