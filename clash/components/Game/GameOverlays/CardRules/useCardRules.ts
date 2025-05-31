@@ -16,7 +16,15 @@ const getFullCard = (cardId: string, gameState: GameState) => {
     });
   });
 
-  return card!;
+  if (card!) {
+    return card;
+  }
+
+  if (gameState.planechase?.activePlane.clashId === cardId) {
+    return gameState.planechase.activePlane;
+  }
+
+  return null;
 };
 
 const fetchRules = async (cardId?: string) => {
