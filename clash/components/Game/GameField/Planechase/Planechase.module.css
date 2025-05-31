@@ -68,6 +68,30 @@
     animation: fade-away 1s ease-in-out;
 }
 
+.zoom_in_icon {
+    background: #30303066;
+    padding: 4px;
+    color: white;
+    border-radius: 50%;
+}
+
+.zoomed_modal :global(.ant-modal-content) {
+    width: 700px;
+    max-width: 90vw;
+    background: transparent;
+    box-shadow: none;
+    pointer-events: none;
+}
+
+.zoomed_image {
+    width: 66%;
+    transform: rotate(90deg) translateY(-50px);
+}
+
+.counter {
+    position: initial;
+}
+
 .dice_roll_cost {
     background-color: var(--color-generic-mana-cost-background);
     width: 2cqh;

@@ -12,9 +12,10 @@ interface Props {
   amount: number;
   isLabel?: boolean;
   clashId: string;
+  additionalClassName?: string;
 }
 
-const CardCounter = ({ amount, type, clashId, isLabel }: Props) => {
+const CardCounter = ({ amount, type, clashId, isLabel, additionalClassName }: Props) => {
   const lowerCaseType = type.toLowerCase();
   if (
     lowerCaseType === 'generic' ||
@@ -30,7 +31,13 @@ const CardCounter = ({ amount, type, clashId, isLabel }: Props) => {
 
     return (
       <CardCounterTooltip type={type} amount={amount} clashId={clashId}>
-        <div className={classNames(styles.counter_bubble, styles[colorClassName])}>
+        <div
+          className={classNames(
+            styles.counter_bubble,
+            additionalClassName,
+            styles[colorClassName]
+          )}
+        >
           <span>{amount}</span>
         </div>
       </CardCounterTooltip>
@@ -43,9 +50,14 @@ const CardCounter = ({ amount, type, clashId, isLabel }: Props) => {
     return (
       <CardCounterTooltip type={type} amount={amount} clashId={clashId}>
         <div
-          className={classNames(styles.counter_bubble, styles.counter_bubble__blue, {
-            [styles.counter_bubble__minus]: isMinus,
-          })}
+          className={classNames(
+            styles.counter_bubble,
+            styles.counter_bubble__blue,
+            additionalClassName,
+            {
+              [styles.counter_bubble__minus]: isMinus,
+            }
+          )}
         >
           {amount}
         </div>
@@ -55,7 +67,7 @@ const CardCounter = ({ amount, type, clashId, isLabel }: Props) => {
   if (lowerCaseType === 'loyalty') {
     return (
       <CardCounterTooltip type={type} amount={amount} clashId={clashId}>
-        <div className={classNames(styles.counter_loyalty)}>
+        <div className={classNames(styles.counter_loyalty, additionalClassName)}>
           <SVG
             src="/assets/mtgicons/counter-loyalty.svg"
             className={styles.counter_loyalty_icon}
@@ -73,7 +85,7 @@ const CardCounter = ({ amount, type, clashId, isLabel }: Props) => {
 
     return (
       <CardCounterTooltip type={type} amount={amount} clashId={clashId}>
-        <div className={styles.counter_icon_wrapper}>
+        <div className={classNames(styles.counter_icon_wrapper, additionalClassName)}>
           {amount > 1 && <span>{amount}</span>}
           <SVG
             src={`/assets/mtgicons/${namePrefix}-${type

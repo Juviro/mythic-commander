@@ -1,12 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import SVG from 'react-inlinesvg';
 import classNames from 'classnames';
-import { Tooltip } from 'antd';
+import { Modal, Space, Tooltip } from 'antd';
 
 import GameStateContext, { InitializedGameState } from 'components/Game/GameStateContext';
 import CardPositionContext from 'components/Game/CardPositionContext';
 import useGameActions from 'components/Game/useGameActions';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
+import { ZoomInOutlined } from '@ant-design/icons';
+import { getImageUrl } from 'utils/getImageUrl';
 import PlanechaseButton from './PlanechaseButton';
 import PlanechaseDice from './PlanechaseDice';
 import PlanechaseImage from './PlanechaseImage';
@@ -28,6 +30,7 @@ const Planechase = () => {
   const { setHoveredCard } = useContext(CardPositionContext);
   const { planeswalk } = useGameActions();
   const { items } = usePlanechaseActions();
+  const [isZoomed, setIsZoomed] = useState(false);
 
   if (!gameState.planechase) return null;
 
@@ -61,14 +64,21 @@ const Planechase = () => {
                   />
                 </div>
               </Tooltip>
-              {Boolean(activePlane.counters) && (
-                <CardCounter
-                  type="generic"
-                  amount={activePlane.counters!}
-                  isLabel
-                  clashId={activePlane.clashId}
+              <Space direction="vertical">
+                <ZoomInOutlined
+                  className={styles.zoom_in_icon}
+                  onClick={() => setIsZoomed(!isZoomed)}
                 />
-              )}
+                {Boolean(activePlane.counters) && (
+                  <CardCounter
+                    type="generic"
+                    amount={activePlane.counters!}
+                    isLabel
+                    clashId={activePlane.clashId}
+                    additionalClassName={styles.counter}
+                  />
+                )}
+              </Space>
               <PlanechaseDice
                 lastDiceResult={lastDiceResult}
                 lastDiceRollTimestamp={lastDiceRollTimestamp}
@@ -86,6 +96,21 @@ const Planechase = () => {
               </div>
             )}
           </div>
+          <Modal
+            open={isZoomed}
+            onCancel={() => setIsZoomed(false)}
+            footer={null}
+            className={styles.zoomed_modal}
+            closeIcon={null}
+          >
+            {/* eslint-disable-next-line max-len */}
+            {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+            <img
+              src={getImageUrl(activePlane.id)}
+              className={styles.zoomed_image}
+              onClick={() => setIsZoomed(false)}
+            />
+          </Modal>
         </div>
       </ContextMenu>
     </div>
