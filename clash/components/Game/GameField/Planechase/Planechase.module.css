@@ -86,6 +86,7 @@
 
 .zoomed_image {
     width: 66%;
+    border-radius: 16px;
     transform: rotate(90deg) translateY(-50px);
 }
 
