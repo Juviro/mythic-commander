@@ -32,8 +32,8 @@ const useDeckSelection = (
 
   const { data, isLoading } = useQuery<DeckOptions>(`decks-${playerId}`, getDecks, {
     enabled: canSelectDeck,
-    refetchInterval: Infinity,
-    staleTime: Infinity,
+    refetchInterval: 5000,
+    staleTime: 5000,
   });
 
   const onSubmitSelection = (deckId: string, commanderIds?: string[]) => {

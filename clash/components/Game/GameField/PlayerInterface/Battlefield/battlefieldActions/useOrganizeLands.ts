@@ -14,6 +14,7 @@ import {
 } from 'components/Game/GameField/DragLayer/useCardDragAlign';
 import { getRelativeToAbsoluteFactor } from 'components/Game/GameField/DragLayer/useCardGroupDragAlign';
 import useGameActions from 'components/Game/useGameActions';
+import { PermanentCardType } from 'utils/cardTypes';
 import {
   HORIZONTAL_GRID_SIZE,
   VERTICAL_GRID_SIZE,
@@ -49,15 +50,15 @@ const sumLandColors = (land: VisibleBattlefieldCard) => {
   }, 0);
 };
 
-const isLand = (card: BattlefieldCard) => {
+const isCardType = (card: BattlefieldCard, type: PermanentCardType) => {
   const side = card.transformed ? 1 : 0;
-  return 'type_line' in card && card.type_line.split('//')?.at(side)?.includes('Land');
+  return 'type_line' in card && card.type_line.split('//')?.at(side)?.includes(type);
 };
 
 const sortLandsByColor = (lands: VisibleBattlefieldCard[]) => {
   return lands.sort((a, b) => {
-    if (isLand(a) !== isLand(b)) {
-      return isLand(a) ? -1 : 1;
+    if (isCardType(a, 'Land') !== isCardType(b, 'Land')) {
+      return isCardType(a, 'Land') ? -1 : 1;
     }
 
     if (!a.produced_mana || !b.produced_mana) {
@@ -82,9 +83,10 @@ const useOrganizeLands = ({ battlefieldRef, player }: Props) => {
   const cardsToOrder = useMemo(() => {
     return player.zones.battlefield.filter((card) => {
       if (card.name === 'Treasure') return false;
-      if (isLand(card)) return true;
+      if (isCardType(card, 'Land')) return true;
+
       if ('produced_mana' in card && card.produced_mana) {
-        return card.type_line.includes('Artifact');
+        return isCardType(card, 'Artifact');
       }
       return false;
     }) as VisibleBattlefieldCard[];
