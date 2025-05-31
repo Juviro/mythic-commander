@@ -285,6 +285,10 @@ const gameSocketActions = (io: Server) => {
       }
     );
 
+    socket.on(SOCKET_MSG_GAME.UNDO, (undoId: string) => {
+      currentGames[currentGameId].undo(undoId, user.id);
+    });
+
     socket.on('disconnect', () => {
       if (!currentGames[currentGameId]) return;
       currentGames[currentGameId].storeGameState();

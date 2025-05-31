@@ -1,5 +1,6 @@
 import uniqid from 'uniqid';
 import { Server, Socket } from 'socket.io';
+import cloneDeep from 'lodash.clonedeep';
 
 import {
   ActivePlane,
@@ -49,7 +50,12 @@ import {
   SetPlayWithTopCardRevealedPayload,
 } from 'backend/constants/wsEvents';
 import { User as DatabaseUser } from 'backend/database/getUser';
-import { GameLog, LOG_MESSAGES, LogMessage } from 'backend/constants/logMessages';
+import {
+  GameLog,
+  LOG_MESSAGES,
+  LogMessage,
+  UNDOABLE_LOG_MESSAGES,
+} from 'backend/constants/logMessages';
 import { getGameState, storeGameState } from 'backend/database/matchStore';
 import initMatch, { sortInitialHand } from 'backend/lobby/initMatch/initMatch';
 import { randomizeArray } from 'utils/randomizeArray';
@@ -61,9 +67,20 @@ import { DICE_ROLL_ANIMATION_DURATION } from 'components/Game/GameField/Planecha
 import addLogEntry from './addLogEntry';
 import getInitialCardProps from './utils/getInitialCardProps';
 
+const MAX_UNDO_STATES = 10;
+
 interface User {
   name: string;
   socket: Socket;
+}
+interface RequestedStopPoints {
+  [playerId: string]: Phase;
+}
+
+interface UndoState {
+  undoId: string;
+  gameState: GameState;
+  requestedStopPoints: RequestedStopPoints;
 }
 
 /* eslint-disable no-param-reassign */
@@ -72,19 +89,25 @@ export default class Game {
 
   gameState: GameState;
 
+  previousGameState: GameState;
+
+  undoState: UndoState[] = [];
+
   isPlaytest: boolean;
 
   deckId: string;
 
   users: { [userId: string]: User } = {};
 
-  requestedStopPoints: { [playerId: string]: Phase } = {};
+  requestedStopPoints: RequestedStopPoints = {};
 
   constructor(gameState: GameState, server: Server, isPlaytest = false, deckId = '') {
     this.server = server;
     this.gameState = gameState;
     this.isPlaytest = isPlaytest;
     this.deckId = deckId;
+    this.undoState = [];
+    this.previousGameState = gameState;
 
     if (!this.gameState.stack) {
       this.gameState.stack = { visible: false, cards: [] };
@@ -283,6 +306,7 @@ export default class Game {
   }
 
   resign(playerId: string) {
+    this.previousGameState = cloneDeep(this.gameState);
     const player = this.getPlayerById(playerId);
     player.resigned = true;
 
@@ -491,16 +515,67 @@ export default class Game {
     return this.gameState.players.find(({ id }) => id === playerId) as Player;
   }
 
+  undo(undoId: string, playerId: string) {
+    const isHost = this.gameState.hostId === playerId;
+    if (!isHost) return;
+
+    const undoStateIndex = this.undoState.findIndex((state) => state.undoId === undoId);
+    if (undoStateIndex === -1) return;
+
+    const numberOfUndos = this.undoState.length - undoStateIndex;
+    this.gameState = this.undoState[undoStateIndex].gameState;
+    this.requestedStopPoints = this.undoState[undoStateIndex].requestedStopPoints;
+
+    this.undoState.splice(undoStateIndex, 1);
+
+    this.logAction({
+      playerId,
+      logKey: LOG_MESSAGES.UNDO,
+      payload: {
+        numberOfUndos,
+      },
+    });
+
+    this.emitGameStateToAll();
+    this.previousGameState = cloneDeep(this.gameState);
+  }
+
+  storeUndoState(logKey: LogMessage['logKey']) {
+    if (!UNDOABLE_LOG_MESSAGES.includes(logKey)) return undefined;
+
+    const undoId = uniqid();
+
+    if (this.undoState.length >= MAX_UNDO_STATES) {
+      this.undoState.shift();
+    }
+
+    this.undoState.push({
+      undoId,
+      gameState: cloneDeep(this.previousGameState),
+      requestedStopPoints: cloneDeep(this.requestedStopPoints),
+    });
+
+    const undoIds = this.undoState.map((state) => state.undoId);
+
+    this.emitToAll(SOCKET_MSG_GAME.AVAILABLE_UNDO_IDS, undoIds);
+
+    return undoId;
+  }
+
   logAction(log: LogMessage) {
     const { logKey, payload, playerId } = log;
     if (logKey === 'MOVE_CARDS' && payload.to.zone === payload.from.zone) return;
+
+    const undoId = this.storeUndoState(logKey);
 
     const newLogEntry = {
       playerId,
       timestamp: Date.now(),
       logKey,
       payload,
+      undoId,
     } as GameLog;
+
     const oldLogLength = this.gameState.gameLog.length;
     const newLog = addLogEntry(this.gameState.gameLog, newLogEntry);
 
@@ -566,6 +641,7 @@ export default class Game {
   }
 
   drawCard(playerId: string) {
+    this.previousGameState = cloneDeep(this.gameState);
     const player = this.getPlayerById(playerId);
     const card = player.zones.library.pop();
     if (!card) return;
@@ -580,6 +656,8 @@ export default class Game {
   }
 
   async moveCard(playerId: string, payload: MoveCardPayload) {
+    this.previousGameState = cloneDeep(this.gameState);
+
     const { clashId, to, position, index, faceDown } = payload;
     const isMovingOntoStack = to.zone === 'stack';
 
@@ -797,6 +875,7 @@ export default class Game {
   }
 
   discardRandomCard(payload: DiscardRandomCardPayload) {
+    this.previousGameState = cloneDeep(this.gameState);
     const { playerId } = payload;
     const player = this.getPlayerById(playerId);
 
@@ -817,6 +896,7 @@ export default class Game {
   }
 
   addCounters(playerId: string, payload: AddCountersPayload) {
+    this.previousGameState = cloneDeep(this.gameState);
     const { cardIds, amount, type } = payload;
 
     const battlefieldPlayerId = this.gameState.players.find(({ zones }) =>
@@ -899,6 +979,7 @@ export default class Game {
   }
 
   async createToken(playerId: string, payload: CreateTokenPayload) {
+    this.previousGameState = cloneDeep(this.gameState);
     const { cardId, battlefieldPlayerId, name, position = { x: 50, y: 50 } } = payload;
     const player = this.getPlayerById(battlefieldPlayerId);
 
@@ -945,6 +1026,7 @@ export default class Game {
   }
 
   async copyCard(playerId: string, payload: CopyCardPayload) {
+    this.previousGameState = cloneDeep(this.gameState);
     const { amount, battlefieldPlayerId, clashId } = payload;
 
     const player = this.getPlayerById(battlefieldPlayerId);
@@ -1058,6 +1140,7 @@ export default class Game {
   }
 
   turnCardsFaceDown(playerId: string, payload: TurnCardsFaceDownPayload) {
+    this.previousGameState = cloneDeep(this.gameState);
     const { cardIds, battlefieldPlayerId, faceDown: overwriteTransformed } = payload;
 
     const player = this.getPlayerById(battlefieldPlayerId);
@@ -1119,6 +1202,7 @@ export default class Game {
   }
 
   playTopCardFaceDown(executingPlayerId: string, libraryPlayerId: string) {
+    this.previousGameState = cloneDeep(this.gameState);
     const player = this.getPlayerById(libraryPlayerId);
 
     const card = player.zones.library.pop() as VisibleCard;
@@ -1141,6 +1225,7 @@ export default class Game {
   }
 
   mill(millingPlayerId: string, payload: MillPayload) {
+    this.previousGameState = cloneDeep(this.gameState);
     const { amount, playerId } = payload;
     const millingPlayer = this.getPlayerById(millingPlayerId);
     const player = this.getPlayerById(playerId);
@@ -1279,6 +1364,7 @@ export default class Game {
   }
 
   shuffleLibrary(playerId: string) {
+    this.previousGameState = cloneDeep(this.gameState);
     const player = this.getPlayerById(playerId);
     player.zones.library = randomizeArray(player.zones.library);
 
@@ -1486,6 +1572,7 @@ export default class Game {
   }
 
   endTurn(playerId: string, force = false) {
+    this.previousGameState = cloneDeep(this.gameState);
     const player = this.getPlayerById(playerId);
     const { players, activePlayerId } = this.gameState;
     if (!force) {
@@ -1554,6 +1641,7 @@ export default class Game {
   }
 
   setPhase(playerId: string, payload: SetPhasePayload) {
+    this.previousGameState = cloneDeep(this.gameState);
     const player = this.getPlayerById(playerId);
 
     this.gameState.phase = payload.phase;
@@ -1601,6 +1689,7 @@ export default class Game {
   }
 
   rollPlanarDice(playerId: string) {
+    this.previousGameState = cloneDeep(this.gameState);
     if (playerId !== this.gameState.activePlayerId || !this.gameState.planechase) {
       return;
     }
@@ -1631,6 +1720,7 @@ export default class Game {
   }
 
   planeswalk(playerId: string) {
+    this.previousGameState = cloneDeep(this.gameState);
     if (
       playerId !== this.gameState.activePlayerId ||
       !this.gameState.planechase ||
@@ -1668,6 +1758,7 @@ export default class Game {
   }
 
   returnRandomCardFromGraveyard(playerId: string) {
+    this.previousGameState = cloneDeep(this.gameState);
     const player = this.getPlayerById(playerId);
     const { graveyard, hand } = player.zones;
 

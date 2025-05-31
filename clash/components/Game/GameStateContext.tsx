@@ -27,6 +27,7 @@ interface BaseGameState {
   battlefieldCardHeight: number;
   stopPoint: Phase | null;
   globalCssStyle: CSSProperties;
+  availableUndoIds: string[];
 }
 export interface InitializedGameState extends BaseGameState {
   gameState: GameState;
@@ -55,6 +56,7 @@ interface Props {
 export const GameStateContextProvider = ({ children }: Props) => {
   const { socket, user } = useContext(SocketContext);
   const [gameState, setGameState] = useState<GameState | null>(null);
+  const [availableUndoIds, setAvailableUndoIds] = useState<string[]>([]);
   const [peekingCards, setPeekingCards] = useState<PeekingCards | null>(null);
   const [stopPoint, setStopPoint] = useState<Phase | null>(null);
 
@@ -80,6 +82,10 @@ export const GameStateContextProvider = ({ children }: Props) => {
 
     socket.on(SOCKET_MSG_GAME.PEEK, (peek: PeekingCards) => {
       setPeekingCards(peek);
+    });
+
+    socket.on(SOCKET_MSG_GAME.AVAILABLE_UNDO_IDS, (undoIds: string[]) => {
+      setAvailableUndoIds(undoIds);
     });
 
     socket.on(SOCKET_MSG_GAME.SET_STOP_POINT, ({ phase }: { phase: Phase }) => {
@@ -165,6 +171,7 @@ export const GameStateContextProvider = ({ children }: Props) => {
       setPeekingCards,
       battlefieldCardWidth,
       battlefieldCardHeight: battlefieldCardWidth / CARD_ASPECT_RATIO,
+      availableUndoIds,
     };
 
     if (!gameState || !player) {
@@ -182,7 +189,7 @@ export const GameStateContextProvider = ({ children }: Props) => {
       player,
       isInitialized: true,
     };
-  }, [gameState, peekingCards, stopPoint]);
+  }, [gameState, peekingCards, stopPoint, availableUndoIds]);
 
   return (
     <GameStateContext.Provider value={value}>

@@ -38,7 +38,27 @@ export const LOG_MESSAGES = {
 
   ROLL_PLANAR_DICE: 'ROLL_PLANAR_DICE',
   PLANESWALK: 'PLANESWALK',
+  UNDO: 'UNDO',
 } as const;
+
+export const UNDOABLE_LOG_MESSAGES: typeof LOG_MESSAGES[keyof typeof LOG_MESSAGES][] = [
+  LOG_MESSAGES.PLAYER_DEFEATED,
+  LOG_MESSAGES.DRAW_CARD,
+  LOG_MESSAGES.MOVE_CARDS,
+  LOG_MESSAGES.DISCARD_RANDOM_CARD,
+  LOG_MESSAGES.RETURN_RANDOM_CARD_FROM_GRAVEYARD,
+  LOG_MESSAGES.MILL,
+  LOG_MESSAGES.SHUFFLE_LIBRARY,
+  LOG_MESSAGES.CREATE_TOKEN,
+  LOG_MESSAGES.COPY_CARD,
+  LOG_MESSAGES.ADD_COUNTERS,
+  LOG_MESSAGES.TURN_FACE_DOWN,
+  LOG_MESSAGES.PLAY_TOP_CARD_FACE_DOWN,
+  LOG_MESSAGES.SET_PHASE,
+  LOG_MESSAGES.SET_ACTIVE_PLAYER,
+  LOG_MESSAGES.ROLL_PLANAR_DICE,
+  LOG_MESSAGES.PLANESWALK,
+];
 
 export type LogKey = typeof LOG_MESSAGES[keyof typeof LOG_MESSAGES];
 
@@ -177,6 +197,10 @@ export interface LogPayloadRollPlanarDice {
 export interface LogPayloadPlaneswalk {
   newPlaneName: string;
   oldPlaneText?: string;
+}
+
+export interface LogPayloadUndo {
+  numberOfUndos: number;
 }
 
 // ############################### Messages ###############################
@@ -320,6 +344,11 @@ interface LogMessagePlaneswalk extends LogMessageWithPlayer {
   payload: LogPayloadPlaneswalk;
 }
 
+interface LogMessageUndo extends LogMessageWithPlayer {
+  logKey: 'UNDO';
+  payload: LogPayloadUndo;
+}
+
 // ############################### Log ###############################
 
 export type LogMessage =
@@ -349,9 +378,11 @@ export type LogMessage =
   | LogMessagePeekFaceDown
   | LogMessagePlayTopCardFaceDown
   | LogMessageRollPlanarDice
-  | LogMessagePlaneswalk;
+  | LogMessagePlaneswalk
+  | LogMessageUndo;
 
 export type GameLog = {
   timestamp: number;
   overwritesPreviousLog?: boolean;
+  undoId?: string;
 } & LogMessage;

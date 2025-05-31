@@ -69,6 +69,8 @@ export const SOCKET_MSG_GAME = {
   ROLL_PLANAR_DICE: 'roll_planar_dice',
   PLANESWALK: 'planeswalk',
   SET_PLAY_WITH_TOP_CARD_REVEALED: 'set_play_with_top_card_revealed',
+  AVAILABLE_UNDO_IDS: 'available_undo_ids',
+  UNDO: 'undo',
 };
 
 export interface AcceptHandPayload {

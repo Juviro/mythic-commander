@@ -7,6 +7,7 @@ const {
   ADD_COUNTERS,
   SET_COMMANDER_DAMAGE,
   MOVE_CARDS,
+  UNDO,
 } = LOG_MESSAGES;
 
 const GROUPABLE_LOG_KEYS = [
@@ -16,6 +17,7 @@ const GROUPABLE_LOG_KEYS = [
   ADD_COUNTERS,
   SET_COMMANDER_DAMAGE,
   MOVE_CARDS,
+  UNDO,
 ] as string[];
 
 const simpleCompareObject = (obj1: Record<string, any>, obj2: Record<string, any>) => {
@@ -82,6 +84,11 @@ const addLogEntry = (currentLog: GameLog[], newLog: GameLog) => {
   }
   if ('total' in newLog.payload && 'total' in newLastLog.payload) {
     newLastLog.payload.total = newLog.payload.total;
+  }
+  if ('numberOfUndos' in newLog.payload && 'numberOfUndos' in newLastLog.payload) {
+    console.log('newLastLog.payload', newLastLog.payload.numberOfUndos);
+    console.log('newLog.payload', newLog.payload.numberOfUndos);
+    newLastLog.payload.numberOfUndos += newLog.payload.numberOfUndos;
   }
   if (newLastLog.logKey === MOVE_CARDS && newLog.logKey === MOVE_CARDS) {
     newLastLog.payload.cardNames.push(...newLog.payload.cardNames);

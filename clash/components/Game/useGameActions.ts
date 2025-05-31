@@ -252,6 +252,10 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.SET_PLAY_WITH_TOP_CARD_REVEALED, payload);
   };
 
+  const undo = (undoId: string) => {
+    socket?.emit(SOCKET_MSG_GAME.UNDO, undoId);
+  };
+
   return {
     onAcceptHand,
     onTakeMulligan,
@@ -294,6 +298,7 @@ const useGameActions = () => {
     rollDice,
     planeswalk,
     onSetPlayWithTopCardRevealed,
+    undo,
   };
 };
 

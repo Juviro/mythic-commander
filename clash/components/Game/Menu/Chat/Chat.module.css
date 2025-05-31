@@ -12,6 +12,22 @@
   margin-bottom: 16px;
 }
 
+.message_wrapper {
+  position: relative;
+}
+
+.undoButton {
+  position: absolute;
+  top: 4px;
+  right: 0;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+.undoButton:hover {
+  transform: scale(1.1);
+}
+
 .messages {
   flex: 1;
   overflow: auto;
