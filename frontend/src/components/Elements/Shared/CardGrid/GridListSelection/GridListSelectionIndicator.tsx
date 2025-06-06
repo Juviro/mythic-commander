@@ -35,7 +35,7 @@ const calcPosition = (type: string) => {
 };
 
 const GridListSelectionIndicator = ({ type }: Props) => {
-  const [position, setPosition] = useState(calcPosition(type));
+  const [position, setPosition] = useState(() => calcPosition(type));
 
   const debouncedCalcPosition = debounce(() => {
     setPosition(calcPosition(type));

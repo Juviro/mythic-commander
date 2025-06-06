@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import sumCardAmount from 'utils/sumCardAmount';
 import DeckProvider from 'components/Desktop/Deck/DeckProvider';
@@ -43,29 +43,43 @@ interface Props {
 
 const GridListSelection = ({ cardLists }: Props) => {
   const { isSidebarOpen } = useContext(DeckProvider);
-  const [visible, setVisible] = React.useState(false);
-  const [blockedUntil, setBlockedUntil] = React.useState(0);
-  const [firstVisibleTitle, setFirstVisibleTitle] = React.useState(
-    cardLists?.[0]?.type ?? ''
-  );
+  const [visible, setVisible] = useState(false);
+  const [blockedUntil, setBlockedUntil] = useState(0);
+  const [firstVisibleTitle, setFirstVisibleTitle] = useState(cardLists?.[0]?.type ?? '');
 
   useEffect(() => {
     const onScroll = () => {
-      if (blockedUntil && blockedUntil !== window.pageYOffset) {
+      if (blockedUntil && blockedUntil !== window.scrollY) {
         return;
       }
       setBlockedUntil(0);
       setVisible(document.documentElement.scrollTop > 100);
 
+      // if we are fully scrolled down, we should show the last title
+      if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) {
+        setFirstVisibleTitle(cardLists?.[cardLists.length - 1]?.type ?? '');
+        return;
+      }
+
       const newFirstVisibleTitle = cardLists?.find(({ key }) => {
         const bottom = document.getElementById(key)?.getBoundingClientRect().bottom;
         return bottom - NAVBAR_HEIGHT - 32 > 0;
       });
+
       setFirstVisibleTitle(newFirstVisibleTitle?.type ?? '');
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
 
-    return () => window.removeEventListener('scroll', onScroll);
+    const onScrollEnd = () => {
+      setBlockedUntil(0);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scrollend', onScrollEnd, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('scrollend', onScrollEnd);
+    };
   }, [setVisible, setFirstVisibleTitle, cardLists, blockedUntil]);
 
   if (!(cardLists?.length > 1)) return null;
