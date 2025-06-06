@@ -32,7 +32,9 @@ const AddTagMenu = ({
 }: Props) => {
   const [currentTags, setCurrentTags] = useState(initialTags ?? []);
 
-  const existingTags = [...new Set(allTags.concat(DEFAULT_TAGS))];
+  const existingTags = [...new Set(allTags.concat(DEFAULT_TAGS))].sort((a, b) =>
+    a.localeCompare(b)
+  );
 
   const onSave = () => {
     passedOnSave(currentTags);
