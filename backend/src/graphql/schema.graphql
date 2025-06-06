@@ -388,21 +388,12 @@ type EDHRecTheme {
 }
 
 type EDHRecCategory {
-  cards: [EDHRecCard!]
+  cards: [Card!]
   title: String!
   key: String!
 }
 
-type EDHRecCard {
-  id: String!
-  imgKey: String!
-  name: String!
-  priceUsd: Float
-  priceEur: Float
-  synergy: Float
-  owned: Boolean!
-  game_changer: Boolean
-}
+################################# Sets #################################
 
 type Set {
   code: String!

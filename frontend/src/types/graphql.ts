@@ -42,7 +42,7 @@ export type Card = {
   color_identity?: Maybe<Array<Maybe<Scalars['String']>>>;
   colors?: Maybe<Array<Maybe<Scalars['String']>>>;
   foil: Scalars['Boolean'];
-  game_changer: Scalars['Boolean'];
+  game_changer?: Maybe<Scalars['Boolean']>;
   id: Scalars['String'];
   image_uris?: Maybe<ImageUris>;
   imgKey: Scalars['String'];
@@ -90,6 +90,7 @@ export type CardsOptionsInput = {
   colors?: InputMaybe<Scalars['String']>;
   displayAllVariants?: InputMaybe<Scalars['Boolean']>;
   isCommanderLegal?: InputMaybe<Scalars['String']>;
+  isGameChanger?: InputMaybe<Scalars['String']>;
   isLegendary?: InputMaybe<Scalars['String']>;
   isOwned?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
@@ -195,20 +196,9 @@ export enum DeckStatus {
   Draft = 'draft',
 }
 
-export type EdhRecCard = {
-  __typename?: 'EDHRecCard';
-  id: Scalars['String'];
-  imgKey: Scalars['String'];
-  name: Scalars['String'];
-  owned: Scalars['Boolean'];
-  priceEur?: Maybe<Scalars['Float']>;
-  priceUsd?: Maybe<Scalars['Float']>;
-  synergy?: Maybe<Scalars['Float']>;
-};
-
 export type EdhRecCategory = {
   __typename?: 'EDHRecCategory';
-  cards?: Maybe<Array<EdhRecCard>>;
+  cards?: Maybe<Array<Card>>;
   key: Scalars['String'];
   title: Scalars['String'];
 };

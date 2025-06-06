@@ -10,11 +10,12 @@ export const getEdhrecCards = gql`
           id
           imgKey
           name
-          synergy
           priceUsd
           priceEur
-          owned
           game_changer
+          oracleCard {
+            owned
+          }
         }
       }
       themes {

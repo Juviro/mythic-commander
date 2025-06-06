@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import CardGrid from 'components/Elements/Shared/CardGrid/CardGrid';
 import { EdhRecCategory } from 'types/graphql';
-import { UnifiedDeck } from 'types/unifiedTypes';
+import { UnifiedCard, UnifiedDeck } from 'types/unifiedTypes';
 import { Divider, Space } from 'antd';
 import scrollIntoView from 'utils/scrollIntoView';
+import { unifySingleCard } from 'utils/unifyCardFormat';
 import { CategorySelection } from './CategorySelection';
 
 interface Props {
@@ -63,8 +64,7 @@ export const CardLists = ({ loading, lists, deck }: Props) => {
           hidePagination
           loading={loading}
           markAsDisabled={alreadyInDeck}
-          // @ts-ignore TODO: adequately type this
-          cards={currentCategory.cards}
+          cards={currentCategory.cards.map(unifySingleCard) as unknown as UnifiedCard[]}
           dragProps={{
             canDrag: true,
             listId: 'EDHREC',

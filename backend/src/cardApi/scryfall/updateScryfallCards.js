@@ -93,6 +93,7 @@ export const updateScryfallCards = async (type, tableName) => {
       cardToInsert.primary_variant = cardToInsert.variants?.[0] ?? null;
       cardToInsert.collector_number = padCollectorNumber(card.collector_number);
       cardToInsert.normalized_name = normalizeName(card.name);
+      cardToInsert.front_name = card.name.split(' // ').at(0);
 
       const result = await knex('cards')
         .where('id', card.id)

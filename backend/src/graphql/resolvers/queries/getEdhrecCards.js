@@ -19,45 +19,36 @@ const getUrl = (names, themeSuffix) => {
 };
 
 const formatCards = async (cards, userId) => {
-  const ownedCards = await db('collection')
-    .leftJoin('cards', 'cards.id', 'collection.id')
-    .whereIn(
-      'name',
-      cards.map((card) => card.name)
-    )
-    .andWhere('userId', userId);
+  const cardNames = cards.map(({ name }) => name);
 
-  const gameChangerCardIds = await db('cards')
-    .whereIn('game_changer', [true, 'true'])
-    .pluck('id');
+  const fullCards = await db('distinctCards').whereIn('front_name', cardNames);
 
-  const promises = cards.map(({ url }) => {
-    return fetch(`https://json.edhrec.com${url}`).then((res) =>
-      res.json().catch(() => null)
-    );
-  });
+  const cardsMap = fullCards.reduce((acc, card) => {
+    acc[card.front_name] = card;
+    return acc;
+  }, {});
 
-  const fullCards = await Promise.all(promises);
+  const ownedOracleIds = await db('collection')
+    .leftJoin('cards', 'collection.id', 'cards.id')
+    .where('userId', userId)
+    .pluck('oracle_id');
 
-  return fullCards
-    .filter(Boolean)
-    .map(({ prices, name, synergy, image_uris, id }) => {
-      const [_, imgKey, __] = image_uris?.[0]?.match(
-        /front\/(\w\/\w)\/(.*)\./
-      ) ?? [null, '', name];
+  const ownedCardsMap = ownedOracleIds.reduce((acc, oracleId) => {
+    acc[oracleId] = true;
+    return acc;
+  }, {});
 
+  const allCards = cardNames
+    .map((name) => {
+      const card = cardsMap[name];
       return {
-        id,
-        imgKey,
-        name,
-        owned: ownedCards.some((card) => card.name === name),
-        priceUsd: prices?.tcgplayer?.price,
-        priceEur: prices?.cardmarket?.price,
-        synergy,
-        game_changer: gameChangerCardIds.includes(id),
+        ...card,
+        owned: ownedCardsMap[card.oracle_id],
       };
     })
-    .sort((a, b) => (b.synergy || 0) - (a.synergy || 0));
+    .filter(({ id }) => id);
+
+  return allCards;
 };
 
 const fetchCards = async (url) => {

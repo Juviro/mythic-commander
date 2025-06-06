@@ -281,6 +281,14 @@ export const CARD_FIELDS_ADDITION_16 = [
     type: 'string',
   },
 ];
+
+export const CARD_FIELDS_ADDITION_17 = [
+  {
+    key: 'front_name',
+    type: 'string',
+  },
+];
+
 export const ALL_CARD_FIELDS = [
   CARD_FIELDS_INITIAL,
   CARD_FIELDS_ADDITION_1,
@@ -299,4 +307,5 @@ export const ALL_CARD_FIELDS = [
   CARD_FIELDS_ADDITION_14,
   CARD_FIELDS_ADDITION_15,
   CARD_FIELDS_ADDITION_16,
+  CARD_FIELDS_ADDITION_17,
 ].flat();
