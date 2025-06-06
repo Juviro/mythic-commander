@@ -75,18 +75,16 @@ const AddToDeck = ({
       disabled={isLoading}
       showSearch={!isMobile()}
       filterOption={(input, { name }) => name.toLowerCase().includes(input.toLowerCase())}
-      options={selectOptions.map(({ id, name, imgSrc }) => ({
-        label: (
-          <>
-            <StyledDeckThumbnail src={imgSrc} />
-            <Typography.Text type={id === NEW_LIST_DUMMY_ID ? 'secondary' : 'primary'}>
-              {name}
-            </Typography.Text>
-          </>
-        ),
-        value: id,
-      }))}
-    />
+    >
+      {selectOptions.map(({ id, name, imgSrc }) => (
+        <Select.Option value={id} key={id} name={name}>
+          <StyledDeckThumbnail src={imgSrc} />
+          <Typography.Text type={id === NEW_LIST_DUMMY_ID ? 'secondary' : 'primary'}>
+            {name}
+          </Typography.Text>
+        </Select.Option>
+      ))}
+    </Select>
   );
 };
 
