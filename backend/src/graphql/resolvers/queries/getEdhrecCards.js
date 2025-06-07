@@ -21,10 +21,13 @@ const getUrl = (names, themeSuffix) => {
 const formatCards = async (cards, userId) => {
   const cardNames = cards.map(({ name }) => name);
 
-  const fullCards = await db('distinctCards').whereIn('front_name', cardNames);
+  const fullCards = await db('distinctCards')
+    .whereIn('front_name', cardNames)
+    .orWhereIn('name', cardNames);
 
   const cardsMap = fullCards.reduce((acc, card) => {
     acc[card.front_name] = card;
+    acc[card.name] = card;
     return acc;
   }, {});
 
@@ -41,12 +44,16 @@ const formatCards = async (cards, userId) => {
   const allCards = cardNames
     .map((name) => {
       const card = cardsMap[name];
+      if (!card) {
+        return null;
+      }
+
       return {
         ...card,
         owned: ownedCardsMap[card.oracle_id],
       };
     })
-    .filter(({ id }) => id);
+    .filter((card) => card?.id);
 
   return allCards;
 };
