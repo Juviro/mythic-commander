@@ -11,6 +11,7 @@ import OverviewList from 'components/Elements/Desktop/OverviewList';
 import useDocumentTitle from 'components/Hooks/useDocumentTitle';
 import Externalicon from 'components/Elements/Shared/ExternalIcon/Externalicon';
 import SendFriendRequestButton from 'components/Elements/Shared/FriendsList/SendFriendRequestButton';
+import getDynamicUrl from 'utils/getDynamicUrl';
 
 const StyledLink = styled(Link)`
   display: flex;
@@ -24,8 +25,6 @@ const UserPage = () => {
     decks,
     wantsLists,
     loading,
-    onOpenDeck,
-    onOpenWantsList,
     isCollectionPublic,
     username: actualUsername,
     userId,
@@ -65,7 +64,7 @@ const UserPage = () => {
           initialLimit={4}
           loading={loading}
           lists={decks}
-          onClick={onOpenDeck}
+          getHref={(id) => getDynamicUrl(`/decks/${id}`)}
           emptyText={"This user doesn't have any public decks."}
         />
         <Divider orientation="left">
@@ -76,7 +75,7 @@ const UserPage = () => {
           loading={loading}
           initialLimit={4}
           lists={wantsLists}
-          onClick={onOpenWantsList}
+          getHref={(id) => getDynamicUrl(`/wants/${id}`)}
           emptyText={"This user doesn't have any public wants lists."}
         />
       </PageCard>

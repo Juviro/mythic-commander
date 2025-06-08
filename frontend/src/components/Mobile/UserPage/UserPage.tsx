@@ -11,6 +11,7 @@ import SendFriendRequestButton from 'components/Elements/Shared/FriendsList/Send
 import Externalicon from 'components/Elements/Shared/ExternalIcon/Externalicon';
 import { LoadingOutlined } from '@ant-design/icons';
 import Flex from 'components/Elements/Shared/Flex';
+import getDynamicUrl from 'utils/getDynamicUrl';
 
 const StyledLink = styled(Link)`
   display: flex;
@@ -39,8 +40,6 @@ const UserPage = () => {
     decks,
     wantsLists,
     loading,
-    onOpenDeck,
-    onOpenWantsList,
     isCollectionPublic,
     username: actualUsername,
     userId,
@@ -76,7 +75,7 @@ const UserPage = () => {
         elements={decks ?? []}
         header={decks?.length ? `Decks (${decks?.length})` : 'Decks'}
         initialLimit={4}
-        onClick={onOpenDeck}
+        getHref={(id) => getDynamicUrl(`/decks/${id}`)}
         emptyText={"This user doesn't have any public decks."}
       />
       <OverviewList
@@ -84,7 +83,7 @@ const UserPage = () => {
         elements={wantsLists ?? []}
         header={wantsLists?.length ? `Wants (${wantsLists?.length})` : 'Wants'}
         initialLimit={4}
-        onClick={onOpenWantsList}
+        getHref={(id) => getDynamicUrl(`/wants/${id}`)}
         emptyText={"This user doesn't have any public wants lists."}
       />
     </StyledWrapper>

@@ -3,8 +3,17 @@ import { Card, Typography, Space } from 'antd';
 
 import ManaSymbol from 'components/Elements/Shared/ManaCost/ManaSymbol';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import Cover from './Cover';
 import formatDate from '../../../../utils/formatDate';
+
+const StyledLink = styled(Link)`
+  text-decoration: unset;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 
 const StyledInfo = styled.div`
   gap: 8px;
@@ -12,7 +21,7 @@ const StyledInfo = styled.div`
   display: flex;
 `;
 
-const StyledTitle = styled.div`
+const StyledTitle = styled(Typography.Text)`
   overflow: hidden;
   white-space: normal;
   display: -webkit-box;
@@ -44,13 +53,15 @@ const Description = ({ list }) => (
   </Space>
 );
 
-export default ({ list, onClick }) => {
+export default ({ list, getHref }) => {
   return (
-    <Card hoverable cover={<Cover list={list} />} onClick={() => onClick(list.id)}>
-      <Card.Meta
-        title={<StyledTitle>{list.name}</StyledTitle>}
-        description={<Description list={list} />}
-      />
-    </Card>
+    <StyledLink to={getHref?.(list.id)}>
+      <Card hoverable cover={<Cover list={list} />}>
+        <Card.Meta
+          title={<StyledTitle>{list.name}</StyledTitle>}
+          description={<Description list={list} />}
+        />
+      </Card>
+    </StyledLink>
   );
 };

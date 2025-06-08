@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Typography } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
 
 import { UnifiedWantsList } from 'types/unifiedTypes';
@@ -9,7 +8,7 @@ import getDynamicUrl from '../../../../utils/getDynamicUrl';
 
 import LinkDeck from './LinkDeck';
 
-const StyledDeckWrapper = styled.div`
+const StyledDeckWrapper = styled.a`
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -18,12 +17,17 @@ const StyledDeckWrapper = styled.div`
 const StyledLink = styled.span<{ large: boolean }>`
   margin-top: 8px;
   font-size: ${({ large }) => (large ? 18 : 14)}px;
+  max-width: ${({ large }) => (large ? 210 : 120)}px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const DeckPreview = styled.img<{ large: boolean }>`
   width: ${({ large }) => (large ? 210 : 120)}px;
   height: ${({ large }) => (large ? 153 : 88)}px;
   border-radius: 4px;
+  text-decoration: underline;
 `;
 
 interface Props extends RouteComponentProps {
@@ -32,33 +36,16 @@ interface Props extends RouteComponentProps {
   canEdit?: boolean;
 }
 
-const WantsListDeckLink = ({ wantsList, history, large, canEdit }: Props) => {
+const WantsListDeckLink = ({ wantsList, large, canEdit }: Props) => {
   const deck = wantsList && wantsList.deck;
-
-  const onClickDeck = () => {
-    if (!deck) return;
-    history.push(getDynamicUrl(`/decks/${deck.id}`));
-  };
 
   if (!deck && !canEdit) return null;
   if (!deck) return <LinkDeck wantsList={wantsList} large={large} />;
 
   return (
-    <StyledDeckWrapper>
-      <DeckPreview
-        src={addBaseUrlToImg(deck.imgSrc)}
-        large={large}
-        onClick={onClickDeck}
-      />
-      <StyledLink large={large}>
-        <Typography.Link
-          ellipsis
-          style={{ maxWidth: large ? 210 : 120 }}
-          onClick={onClickDeck}
-        >
-          {deck.name}
-        </Typography.Link>
-      </StyledLink>
+    <StyledDeckWrapper href={getDynamicUrl(`/decks/${deck.id}`)}>
+      <DeckPreview src={addBaseUrlToImg(deck.imgSrc)} large={large} />
+      <StyledLink large={large}>{deck.name}</StyledLink>
     </StyledDeckWrapper>
   );
 };

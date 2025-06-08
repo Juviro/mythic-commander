@@ -10,6 +10,7 @@ import OverviewList, {
   OverviewListHeader,
 } from 'components/Elements/Desktop/OverviewList';
 import { Divider } from 'antd';
+import getDynamicUrl from 'utils/getDynamicUrl';
 import { wantsListsDesktop as getWantsLists, createWantsListDesktop } from './queries';
 
 const Wants = ({ history }) => {
@@ -95,14 +96,14 @@ const Wants = ({ history }) => {
       <OverviewList
         loading={loading}
         lists={unlinkedLists}
-        onClick={onOpenWantsList}
+        getHref={(id) => getDynamicUrl(`/wants/${id}`)}
         emptyText="No Wants Lists found"
       />
       <Divider orientation="left">Linked to Decks</Divider>
       <OverviewList
         loading={loading}
         lists={linkedLists}
-        onClick={onOpenWantsList}
+        getHref={(id) => getDynamicUrl(`/wants/${id}`)}
         emptyText="No Linked Wants Lists found"
       />
     </PageLayout>

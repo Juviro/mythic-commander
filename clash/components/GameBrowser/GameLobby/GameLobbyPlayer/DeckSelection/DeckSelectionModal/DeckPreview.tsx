@@ -25,6 +25,7 @@ const getDeckUrl = (deck: LobbyDeck) => {
 
   return `${process.env.NEXT_PUBLIC_MYTHIC_COMMANDER_URL}/decks/${deck.id}`;
 };
+
 const DeckPreview = ({ deck, onClick, condensed, displayCommanderSelection }: Props) => {
   return (
     <div

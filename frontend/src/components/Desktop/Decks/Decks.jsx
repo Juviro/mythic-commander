@@ -10,10 +10,11 @@ import PageLayout from 'components/Elements/Desktop/PageLayout';
 import OverviewList, {
   OverviewListHeader,
 } from 'components/Elements/Desktop/OverviewList';
+import getDynamicUrl from 'utils/getDynamicUrl';
 import { getDecksDesktop, createDeckDesktop } from './queries';
 import useGroupByDeckType from '../../../hooks/useGroupByDeckType';
 
-const Wants = ({ history }) => {
+const Decks = ({ history }) => {
   const { data, loading } = useQuery(getDecksDesktop, {
     fetchPolicy: 'network-only',
   });
@@ -91,7 +92,7 @@ const Wants = ({ history }) => {
           <OverviewList
             loading={loading}
             lists={decksByType}
-            onClick={onOpenDeck}
+            getHref={(id) => getDynamicUrl(`/decks/${id}`)}
             emptyText={`You don't have any ${status} decks yet`}
           />
         </React.Fragment>
@@ -100,4 +101,4 @@ const Wants = ({ history }) => {
   );
 };
 
-export default withRouter(Wants);
+export default withRouter(Decks);

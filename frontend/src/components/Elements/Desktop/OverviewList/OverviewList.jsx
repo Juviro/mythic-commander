@@ -46,11 +46,11 @@ const LoadingPlaceholder = () => {
 
 const OverviewList = ({
   lists,
-  onClick,
   loading,
   emptyText,
   noPadding = false,
   initialLimit = 8,
+  getHref,
 }) => {
   const [limit, setLimit] = useState(initialLimit);
 
@@ -75,7 +75,7 @@ const OverviewList = ({
     <>
       <StyledOverviewList noPadding={noPadding}>
         {displayedList.map((list) => (
-          <OverviewListItem list={list} onClick={onClick} key={list.id} />
+          <OverviewListItem list={list} key={list.id} getHref={getHref} />
         ))}
       </StyledOverviewList>
       {hasMore && (
