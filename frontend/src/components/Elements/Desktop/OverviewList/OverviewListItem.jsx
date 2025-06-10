@@ -14,6 +14,7 @@ const StyledLink = styled(Link)`
 
   &:hover {
     text-decoration: underline;
+    text-decoration-color: rgba(0, 0, 0, 0.88);
   }
 `;
 
