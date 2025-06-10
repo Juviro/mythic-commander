@@ -4,8 +4,10 @@ import { Card, Typography, Space } from 'antd';
 import ManaSymbol from 'components/Elements/Shared/ManaCost/ManaSymbol';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { primary } from 'constants/colors';
 import Cover from './Cover';
 import formatDate from '../../../../utils/formatDate';
+import DeckVisibility from './DeckVisibility';
 
 const StyledLink = styled(Link)`
   text-decoration: unset;
@@ -28,6 +30,15 @@ const StyledTitle = styled(Typography.Text)`
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
+`;
+
+const StyledVisibilityWrapper = styled.span`
+  margin-right: 8px;
+  color: ${primary};
+
+  &:empty {
+    display: none;
+  }
 `;
 
 const Description = ({ list }) => (
@@ -58,7 +69,14 @@ export default ({ list, getHref }) => {
     <StyledLink to={getHref?.(list.id)}>
       <Card hoverable cover={<Cover list={list} />}>
         <Card.Meta
-          title={<StyledTitle>{list.name}</StyledTitle>}
+          title={
+            <StyledTitle>
+              <StyledVisibilityWrapper>
+                <DeckVisibility visibility={list.visibility} />
+              </StyledVisibilityWrapper>
+              {list.name}
+            </StyledTitle>
+          }
           description={<Description list={list} />}
         />
       </Card>

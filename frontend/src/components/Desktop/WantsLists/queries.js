@@ -7,6 +7,7 @@ const WANTS_LIST_FIELDS = `
     createdAt
     cardPreviews
     numberOfCards
+    visibility
     deck {
       id
       name

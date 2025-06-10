@@ -7,7 +7,7 @@ import UserContext from 'components/Provider/UserProvider';
 import Flex from '../Flex';
 import CopyableText from '../CopyableText';
 
-const VISIBILITY_OPTIONS = [
+export const VISIBILITY_OPTIONS = [
   {
     title: 'Only you',
     value: 'private',
@@ -23,7 +23,9 @@ const VISIBILITY_OPTIONS = [
     value: 'public',
     icon: <GlobalOutlined />,
   },
-];
+] as const;
+
+export type Visibility = (typeof VISIBILITY_OPTIONS)[number]['value'];
 
 const ChangeVisibilityModal = ({
   style,

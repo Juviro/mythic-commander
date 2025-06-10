@@ -11,6 +11,7 @@ export const getDecksDesktop = gql`
       status
       colors
       numberOfCards
+      visibility
     }
   }
 `;

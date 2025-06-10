@@ -53,6 +53,7 @@ const Decks = ({ history }) => {
     });
     onOpenDeck(id);
   };
+
   const decks = data ? data.decks : [];
   const filteredDecks = decks.filter(({ name }) =>
     name.toLowerCase().includes(search.toLowerCase())
@@ -66,10 +67,6 @@ const Decks = ({ history }) => {
     onOpenDeck(firstDeck.id);
   };
 
-  const onOpenTokenView = () => {
-    history.push(`/proxy?type=tokens`);
-  };
-
   return (
     <PageLayout>
       <OverviewListHeader
@@ -81,7 +78,7 @@ const Decks = ({ history }) => {
         title="Your Decks"
         onEnter={onOpenFirstDeck}
         extra={
-          <Button onClick={onOpenTokenView} ghost type="primary">
+          <Button href="/proxy?type=tokens" target="_blank" ghost type="primary">
             Token Finder
           </Button>
         }
