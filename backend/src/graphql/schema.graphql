@@ -214,15 +214,15 @@ type DeckCard {
 ################################# Land Suggestion #################################
 
 input LandsSuggestionInput {
-  numberOfLands: Int!
-  onwnedLandsOnly: Boolean!
-  minNumberOfBasics: Int!
+  numberOfLands: Int
+  onwnedLandsOnly: Boolean
+  minNumberOfBasics: Int
 }
 
 type LandsSuggestionCard {
   id: String!
-  amount: Int!
-  selected: Boolean!
+  amount: Int
+  selected: Boolean
 }
 
 type LandsSuggestionGroup {
@@ -418,7 +418,7 @@ type Query {
 
   deck(id: String!): Deck
   decks: [Deck!]!
-  landsSuggestion(deckId: String! options: LandsSuggestionInput!): LandsSuggestionResponse!
+  landsSuggestion(deckId: String! options: LandsSuggestionInput): LandsSuggestionResponse!
 
   collection: Collection!
   paginatedCollection(
