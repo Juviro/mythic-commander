@@ -1,5 +1,5 @@
-import db from '../../../database';
-import { throwAuthError } from '../../../auth/authenticateUser';
+import db from '../../../../database';
+import { throwAuthError } from '../../../../auth/authenticateUser';
 import { getTokenName } from './tokens';
 
 const tokenFinder = async (userId) => {
@@ -9,7 +9,7 @@ const tokenFinder = async (userId) => {
     `
     SELECT 
         cards.all_parts
-    FROM 
+    FROM  
         decks
     LEFT JOIN
         "cardToDeck"

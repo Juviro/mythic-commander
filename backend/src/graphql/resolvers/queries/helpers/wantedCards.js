@@ -1,5 +1,5 @@
-import { isCollectionPublic } from '../../../auth/authenticateUser';
-import { getImageKey } from './Card/helper';
+import { isCollectionPublic } from '../../../../auth/authenticateUser';
+import { getImageKey } from '../Card/helper';
 
 const getCollection = async (db, userId) => {
   const oracleIds = await db('collectionWithOracle')

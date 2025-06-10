@@ -1,9 +1,9 @@
-import db from '../../../database';
+import db from '../../../../database';
 import {
   canAccessWantsList,
   canAccessDeck,
-} from '../../../auth/authenticateUser';
-import { getImageKey } from './Card/helper';
+} from '../../../../auth/authenticateUser';
+import { getImageKey } from '../Card/helper';
 import tokenFinder from './tokenFinder';
 
 const addImgKey = (card) => ({

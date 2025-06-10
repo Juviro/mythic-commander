@@ -1,4 +1,4 @@
-import { normalizeName } from '../../../utils/normalizeName';
+import { normalizeName } from '../../../../utils/normalizeName';
 
 const getColorProps = (colorString) => {
   const [filteredColors] = colorString.match(/(w|u|b|r|g)+$/) || [''];

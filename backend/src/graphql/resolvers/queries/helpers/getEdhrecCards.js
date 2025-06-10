@@ -1,6 +1,6 @@
-import db from '../../../database';
-import { normalizeName } from '../../../utils/normalizeName';
-import logger from '../../../logging/logger';
+import db from '../../../../database';
+import { normalizeName } from '../../../../utils/normalizeName';
+import logger from '../../../../logging/logger';
 
 const getUrl = (names, themeSuffix) => {
   const sanitizedNames = names

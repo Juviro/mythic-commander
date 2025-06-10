@@ -1,20 +1,20 @@
-import { getCachedCards } from './getCachedCards';
-import cardSearch from './cardSearch';
-import proxies from './proxies';
+import { getCachedCards } from './helpers/getCachedCards';
+import cardSearch from './helpers/cardSearch';
+import proxies from './helpers/proxies';
 import unifyCardFormat from '../unifyCardFormat';
-import paginatedCollection from './paginatedCollection';
+import paginatedCollection from './helpers/paginatedCollection';
 import {
   canAccessDeck,
   canAccessWantsList,
   isCollectionPublic,
   throwAuthError,
 } from '../../../auth/authenticateUser';
-import wantedCards from './wantedCards';
-import tokenFinder from './tokenFinder';
-import getEdhrecCards from './getEdhrecCards';
+import wantedCards from './helpers/wantedCards';
+import tokenFinder from './helpers/tokenFinder';
+import getEdhrecCards from './helpers/getEdhrecCards';
 import getLandsSuggestion from './LandsSuggestion/getLandsSuggestion';
-import tokens from './tokens';
-import collectionBySet from './collectionBySet';
+import tokens from './helpers/tokens';
+import collectionBySet from './helpers/collectionBySet';
 import { VARIANTS } from './Card/cardVariants';
 import searchUsers from './Friends/searchUsers';
 import getFriends from './Friends/getFriends';

@@ -1,4 +1,4 @@
-import { getImageKey } from './Card/helper';
+import { getImageKey } from '../Card/helper';
 
 export const getCachedCards = async (db) => {
   const cards = await db('distinctCards');

@@ -1,5 +1,5 @@
-import db from '../../../database';
-import { getImageKey } from './Card/helper';
+import db from '../../../../database';
+import { getImageKey } from '../Card/helper';
 
 const KEY_WORDS = [
   'Flying',
