@@ -1,17 +1,30 @@
 import { useEffect, useState } from 'react';
-import { UnifiedCard } from 'types/unifiedTypes';
+import { GridCard as GridCardType } from './cardgrid.types';
 
-export const useSelectCards = (cards: UnifiedCard[]) => {
-  const [selectedCardIds, setSelectedCardIds] = useState([]);
+interface Props {
+  cards: GridCardType[];
+  initialSelection: string[];
+  onSelectCards: (cardIds: string[]) => void;
+}
+
+export const useSelectCards = ({
+  cards,
+  initialSelection = [],
+  onSelectCards,
+}: Props) => {
+  const [selectedCardIds, setSelectedCardIds] = useState(initialSelection);
 
   const canSelectAll = selectedCardIds?.length !== cards?.length;
 
   const onSelectCard = (cardId: string) => {
+    let newSelectedCardIds = [...selectedCardIds];
     if (selectedCardIds.includes(cardId)) {
-      setSelectedCardIds(selectedCardIds.filter((id) => id !== cardId));
+      newSelectedCardIds = selectedCardIds.filter((id) => id !== cardId);
     } else {
-      setSelectedCardIds([...selectedCardIds, cardId]);
+      newSelectedCardIds = [...selectedCardIds, cardId];
     }
+    setSelectedCardIds(newSelectedCardIds);
+    onSelectCards?.(newSelectedCardIds);
   };
 
   const onClearSelection = () => {

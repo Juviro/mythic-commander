@@ -5,13 +5,14 @@ import { useMutation } from '@apollo/client';
 import AddTagsPopover from 'components/Elements/Shared/Tags/AddTagsPopover';
 import { MutationAddTagsToCardsArgs } from 'types/graphql';
 import { useParams } from 'react-router';
-import { UnifiedCard, UnifiedDeckCard } from 'types/unifiedTypes';
+import { UnifiedDeckCard } from 'types/unifiedTypes';
 import { addTagsToCards } from './queries';
+import { GridCard as GridCardType } from '../cardgrid.types';
 
 interface Props {
   allTags: string[];
   cardIds: string[];
-  allCards: UnifiedCard[];
+  allCards: GridCardType[];
   onClearSelection: () => void;
 }
 

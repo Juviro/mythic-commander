@@ -256,6 +256,16 @@ const resolver = {
   cardVariants: () => {
     return Object.values(VARIANTS).sort((a, b) => a.localeCompare(b));
   },
+
+  async landCycleFavorites(_, __, { user: { id: userId }, db }) {
+    if (!userId) return [];
+
+    const favorites = await db('landCycleFavorites')
+      .where({ userId })
+      .select('landCycleId');
+
+    return favorites.map(({ landCycleId }) => landCycleId);
+  },
 };
 
 export default resolver;

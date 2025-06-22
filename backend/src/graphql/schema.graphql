@@ -215,19 +215,23 @@ type DeckCard {
 
 input LandsSuggestionInput {
   numberOfLands: Int
-  onwnedLandsOnly: Boolean
+  ownedLandsOnly: Boolean
   minNumberOfBasics: Int
 }
 
 type LandsSuggestionCard {
   id: String!
+  name: String!
   amount: Int
   selected: Boolean
+  owned: Boolean
+  gameChanger: Boolean
 }
 
 type LandsSuggestionGroup {
-  title: String!
-  cards: [LandsSuggestionCard!]!
+  name: String!
+  id: String!
+  lands: [LandsSuggestionCard!]!
 }
 
 type LandsSuggestionResponse {
@@ -469,6 +473,8 @@ type Query {
   friends: [Friend]!
   searchUsers(search: String!): [Friend!]
   userPage(username: String!): UserPage!
+
+  landCycleFavorites: [String!]!
 }
 
 ################################# Mutations #################################
@@ -496,6 +502,7 @@ type Mutation {
   duplicateDeck(deckId: String!): String!
   changeDeckVisibility(deckId: String!, visibility: Visibility!): Deck!
   changeDeckStatus(deckId: String!, status: DeckStatus!): Deck!
+  setLandsForDeck(deckId: String!, lands: [LandInput!]!): Deck!
 
   addTagsToCards(
     deckId: String!
@@ -567,6 +574,10 @@ type Mutation {
 
   ########## Card Update ##########
   updateCardImages(cardId: String!): Boolean
+
+  ########## Land Cycle Favorites ##########
+  addLandCycleFavorite(landCycleId: String!): Boolean!
+  removeLandCycleFavorite(landCycleId: String!): Boolean!
 }
 
 ################################# Move Card #################################
@@ -592,6 +603,11 @@ type MoveCardReturnType {
 input EditDeckFieldsInput {
   name: String
   imgSrc: String
+}
+
+input LandInput {
+  id: String!
+  amount: Int!
 }
 
 input CardInputType {

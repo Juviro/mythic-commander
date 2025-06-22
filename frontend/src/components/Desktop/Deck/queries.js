@@ -111,3 +111,11 @@ export const deleteFromDeckDesktop = gql`
     }
   }
 `;
+
+export const setLandsForDeck = gql`
+  mutation setLandsForDeck($deckId: String!, $lands: [LandInput!]!) {
+    setLandsForDeck(deckId: $deckId, lands: $lands) {
+      ${DECK_FIELDS}
+    }
+  }
+`;

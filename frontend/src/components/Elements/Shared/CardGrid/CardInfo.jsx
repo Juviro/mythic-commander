@@ -6,7 +6,13 @@ import OwnedBadge from 'components/Elements/Shared/OwnedBadge';
 import PriceLabel from 'components/Elements/Shared/PriceLabel';
 import { highlightText } from 'utils/highlightText';
 
-export default ({ card, loading = false, search, minimal = false }) => {
+export default ({
+  card,
+  loading = false,
+  search,
+  minimal = false,
+  hidePrices = false,
+}) => {
   if (loading) return null;
 
   return (
@@ -17,7 +23,7 @@ export default ({ card, loading = false, search, minimal = false }) => {
         </Typography.Text>
         {card.owned && !minimal && <OwnedBadge style={{ fontSize: 14 }} />}
       </Flex>
-      {!minimal && <PriceLabel card={card} />}
+      {!minimal && !hidePrices && <PriceLabel card={card} />}
     </Flex>
   );
 };

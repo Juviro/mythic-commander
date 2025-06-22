@@ -14,10 +14,10 @@ import isMobile from 'utils/isMobile';
 import { buttonHoverBackground } from 'constants/colors';
 import UserContext from 'components/Provider/UserProvider';
 import AddTagsButton from 'components/Elements/Shared/CardGrid/SelectionMenu/AddTagsButton';
-import { UnifiedCard } from 'types/unifiedTypes';
 import { getProxyUrl } from 'utils/getProxyUrl';
 import DesktopTooltip from '../../../Desktop/DesktopTooltip';
 import Menu from '../../Menu';
+import { GridCard as GridCardType } from '../cardgrid.types';
 
 const StyledWrapper = styled.div`
   position: fixed;
@@ -58,7 +58,7 @@ interface Props {
   canSelectAll: boolean;
   smallSelectionMenu?: boolean;
   allTags?: string[];
-  allCards: UnifiedCard[];
+  allCards: GridCardType[];
 }
 
 export const SelectionMenu = ({

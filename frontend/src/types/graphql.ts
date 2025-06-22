@@ -281,21 +281,25 @@ export type LtPlayer = {
 
 export type LandsSuggestionCard = {
   __typename?: 'LandsSuggestionCard';
-  amount: Scalars['Int'];
+  amount?: Maybe<Scalars['Int']>;
   id: Scalars['String'];
-  selected: Scalars['Boolean'];
+  name: Scalars['String'];
+  owned?: Maybe<Scalars['Boolean']>;
+  selected?: Maybe<Scalars['Boolean']>;
 };
 
 export type LandsSuggestionGroup = {
   __typename?: 'LandsSuggestionGroup';
-  cards: Array<LandsSuggestionCard>;
-  title: Scalars['String'];
+  id: Scalars['String'];
+  isFavorite?: Maybe<Scalars['Boolean']>;
+  lands: Array<LandsSuggestionCard>;
+  name: Scalars['String'];
 };
 
 export type LandsSuggestionInput = {
-  minNumberOfBasics: Scalars['Int'];
-  numberOfLands: Scalars['Int'];
-  onwnedLandsOnly: Scalars['Boolean'];
+  minNumberOfBasics?: InputMaybe<Scalars['Int']>;
+  numberOfLands?: InputMaybe<Scalars['Int']>;
+  ownedLandsOnly?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type LandsSuggestionResponse = {
@@ -339,6 +343,7 @@ export type Mutation = {
   acceptFriendRequest: Scalars['Boolean'];
   addCardsToDeck: Deck;
   addCardsToWantsList: Array<WantsListCard>;
+  addLandCycleFavorite: Scalars['Boolean'];
   addTagsToCards: Array<DeckCard>;
   addToCollection: Array<CollectionCard>;
   changeCollection?: Maybe<CollectionCard>;
@@ -366,6 +371,7 @@ export type Mutation = {
   logout?: Maybe<Scalars['Boolean']>;
   moveCard: MoveCardReturnType;
   removeFriend?: Maybe<Scalars['Boolean']>;
+  removeLandCycleFavorite: Scalars['Boolean'];
   sendFriendRequest: Scalars['Boolean'];
   setCommander: Deck;
   setDefaultTags?: Maybe<Scalars['Boolean']>;
@@ -389,6 +395,10 @@ export type MutationAddCardsToWantsListArgs = {
   cards: Array<CardInputType>;
   wantsListId: Scalars['String'];
   wantsListName?: InputMaybe<Scalars['String']>;
+};
+
+export type MutationAddLandCycleFavoriteArgs = {
+  landCycleId: Scalars['String'];
 };
 
 export type MutationAddTagsToCardsArgs = {
@@ -514,6 +524,10 @@ export type MutationMoveCardArgs = {
 
 export type MutationRemoveFriendArgs = {
   userId: Scalars['String'];
+};
+
+export type MutationRemoveLandCycleFavoriteArgs = {
+  landCycleId: Scalars['String'];
 };
 
 export type MutationSendFriendRequestArgs = {
@@ -686,7 +700,7 @@ export type QueryEdhrecCardsArgs = {
 
 export type QueryLandsSuggestionArgs = {
   deckId: Scalars['String'];
-  options: LandsSuggestionInput;
+  options?: InputMaybe<LandsSuggestionInput>;
 };
 
 export type QueryPaginatedCollectionArgs = {
