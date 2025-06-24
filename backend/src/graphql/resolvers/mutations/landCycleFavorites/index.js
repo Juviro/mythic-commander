@@ -1,5 +1,5 @@
-import addLandCycleFavorite from './addLandCycleFavorite.js';
-import removeLandCycleFavorite from './removeLandCycleFavorite.js';
+import addLandCycleFavorite from './addLandCycleFavorite';
+import removeLandCycleFavorite from './removeLandCycleFavorite';
 
 export default {
   addLandCycleFavorite,
