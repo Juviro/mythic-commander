@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { EditOutlined, LoadingOutlined, DeleteOutlined } from '@ant-design/icons';
 
-import { UnifiedCard } from 'types/unifiedTypes';
 import { MenuItem } from 'components/Elements/Shared/ContextMenu/ContextMenu';
 import { useSelectCards } from 'components/Elements/Shared/CardGrid/useSelectCards';
 import isMobile from 'utils/isMobile';
@@ -18,6 +17,7 @@ import { SelectionMenu } from './SelectionMenu/SelectionMenu';
 import useCardDetailNavigation from './useCardDetailNavigation';
 import GridListSelection from './GridListSelection/GridListSelection';
 import scrollIntoView from '../../../../utils/scrollIntoView';
+import { GridCard as GridCardType } from './cardgrid.types';
 
 export const GRID_CARD_WIDTH = 220;
 
@@ -36,7 +36,7 @@ export const StyledCardGridWrapper = styled.div<{ cardsPerRow?: number }>`
 export interface DragProps {
   canDrag: boolean;
   listId?: string;
-  onSuccessfullDrop?: (card: UnifiedCard) => void;
+  onSuccessfullDrop?: (card: GridCardType) => void;
 }
 
 export interface CardList {
@@ -44,25 +44,26 @@ export interface CardList {
   key: string;
   color?: string;
   type?: string;
-  cards: UnifiedCard[];
+  cards: GridCardType[];
   additionalElements?: React.ReactNode;
   additionalActions?: MenuItem[];
+  onChangeAmount?: (cardId: string, amount: number) => void;
 }
 
 interface Props {
-  cards?: UnifiedCard[];
+  cards?: GridCardType[];
   loading?: boolean;
   error?: string;
   title?: string;
   numberOfCards?: number;
   search?: string;
   actions?: MenuItem[];
-  onEditCard?: (card: UnifiedCard) => void;
-  markAsDisabled?: (card: UnifiedCard) => boolean;
-  onOpenDetails?: (card: UnifiedCard) => void;
-  onMoveCards?: (cards: UnifiedCard[]) => void;
-  onCopyCardsTo?: (cards: UnifiedCard[]) => void;
-  onDeleteCards?: (cards: UnifiedCard[]) => void;
+  onEditCard?: (card: GridCardType) => void;
+  markAsDisabled?: (card: GridCardType) => boolean;
+  onOpenDetails?: (card: GridCardType) => void;
+  onMoveCards?: (cards: GridCardType[]) => void;
+  onCopyCardsTo?: (cards: GridCardType[]) => void;
+  onDeleteCards?: (cards: GridCardType[]) => void;
   onSetTags?: (cardId: string, tags: string[]) => void;
   hidePagination?: boolean;
   dragProps?: DragProps;
@@ -70,10 +71,14 @@ interface Props {
   cardLists?: CardList[];
   disableSelection?: boolean;
   minimal?: boolean;
-  onZoomIn?: (card: UnifiedCard) => void;
-  onClickCard?: (card: UnifiedCard) => void;
+  onZoomIn?: (card: GridCardType) => void;
+  onClickCard?: (card: GridCardType) => void;
   smallSelectionMenu?: boolean;
   allTags?: string[];
+  hidePrices?: boolean;
+  initialSelection?: string[];
+  onSelectCards?: (cardIds: string[]) => void;
+  hideSelectionNavigation?: boolean;
 }
 
 type PropsWithRouterProps = RouteComponentProps & Props;
@@ -103,15 +108,19 @@ const CardGrid = ({
   minimal,
   smallSelectionMenu,
   allTags,
+  hidePrices,
+  initialSelection,
+  hideSelectionNavigation,
+  onSelectCards,
 }: PropsWithRouterProps) => {
   const [detailCardIndex, setDetailCardIndex] = useState<number | null>(null);
   const detailCard = cards?.[detailCardIndex];
   const { selectedCardIds, onSelectCard, onClearSelection, onSelectAll, canSelectAll } =
-    useSelectCards(cards);
+    useSelectCards({ cards, initialSelection, onSelectCards });
 
   const cardRefs = useRef<Record<string, HTMLDivElement>>({});
 
-  const setDetailCard = (card: UnifiedCard) => {
+  const setDetailCard = (card: GridCardType) => {
     const cardIndex = cards.findIndex(({ id }) => id === card.id);
     setDetailCardIndex(cardIndex);
   };
@@ -166,7 +175,7 @@ const CardGrid = ({
     actions.push({
       title: 'Delete',
       Icon: DeleteOutlined,
-      onClick: (card: UnifiedCard) => onDeleteCards([card]),
+      onClick: (card: GridCardType) => onDeleteCards([card]),
     });
   }
 
@@ -224,19 +233,21 @@ const CardGrid = ({
 
   return (
     <>
-      <SelectionMenu
-        allTags={allTags}
-        allCards={cards}
-        onClearSelection={onClearSelection}
-        selectedCardIds={selectedCardIds}
-        onMoveCards={onMoveSelectedCards}
-        onDeleteCards={onDeleteSelectedCards}
-        onCopyCardsTo={onCopySelectedCardsTo}
-        onSelectAll={onSelectAll}
-        canSelectAll={canSelectAll}
-        smallSelectionMenu={smallSelectionMenu}
-      />
-      {!isMobile() && <GridListSelection cardLists={cardLists} />}
+      {!hideSelectionNavigation && (
+        <SelectionMenu
+          allTags={allTags}
+          allCards={cards}
+          onClearSelection={onClearSelection}
+          selectedCardIds={selectedCardIds}
+          onMoveCards={onMoveSelectedCards}
+          onDeleteCards={onDeleteSelectedCards}
+          onCopyCardsTo={onCopySelectedCardsTo}
+          onSelectAll={onSelectAll}
+          canSelectAll={canSelectAll}
+          smallSelectionMenu={smallSelectionMenu}
+        />
+      )}
+      {!isMobile() && !minimal && <GridListSelection cardLists={cardLists} />}
       <Flex
         direction="row"
         justify="space-between"
@@ -249,12 +260,17 @@ const CardGrid = ({
       </Flex>
       {cardLists.map((list: CardList, index) => (
         <React.Fragment key={list.key}>
-          {Boolean(index) && <Divider />}
-          {list.title && <Typography.Title level={4}>{list.title}</Typography.Title>}
+          {Boolean(index) && <Divider style={{ marginBottom: '0px !important' }} />}
+          {list.title && (
+            <Typography.Title level={4} style={{ marginTop: 0 }}>
+              {list.title}
+            </Typography.Title>
+          )}
           <StyledCardGridWrapper cardsPerRow={cardsPerRow} id={list.key}>
             {list.cards?.map((card) => (
               <GridCard
                 card={card}
+                onChangeAmount={list.onChangeAmount}
                 onClick={onClickCard}
                 dragProps={dragProps}
                 key={card.id}
@@ -264,6 +280,7 @@ const CardGrid = ({
                 actions={[...actions, ...(list.additionalActions ?? [])]}
                 search={search}
                 minimal={minimal}
+                hidePrices={hidePrices}
                 disableSelection={disableSelection || minimal}
                 fixedSize={!cardsPerRow}
                 allTags={allTags}

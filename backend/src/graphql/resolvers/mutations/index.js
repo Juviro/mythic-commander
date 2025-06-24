@@ -7,6 +7,7 @@ import updateCards from './updateCards';
 import user from './user';
 import wantsList from './wantsList';
 import friends from './friends';
+import landCycleFavorites from './landCycleFavorites';
 
 export default {
   ...collection,
@@ -18,4 +19,5 @@ export default {
   ...user,
   ...wantsList,
   ...friends,
+  ...landCycleFavorites,
 };

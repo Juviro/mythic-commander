@@ -3,8 +3,8 @@ import { Spin, Empty } from 'antd';
 import styled from 'styled-components';
 
 import Flex from 'components/Elements/Shared/Flex';
+import PlusMinus from 'components/Elements/Shared/PlusMinus/PlusMinus';
 import { getImageUrl } from '../../../utils/cardImage';
-import CardMenu from './CardMenu';
 import shimmer from '../../Animations/shimmer';
 
 const StyledWrapper = styled.section`
@@ -50,7 +50,7 @@ export default ({ cards, loading, onRemoveCard, onSetAmount }) => {
     <StyledWrapper>
       {cards.map(({ id, imgKey, amount }) => (
         <StyledCardWrapper key={id}>
-          <CardMenu
+          <PlusMinus
             amount={amount}
             onSetAmount={(newAmount) => onSetAmount(id, newAmount)}
             onRemoveCard={() => onRemoveCard(id)}

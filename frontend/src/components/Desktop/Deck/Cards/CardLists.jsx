@@ -11,11 +11,17 @@ import Flex from 'components/Elements/Shared/Flex';
 import CardGrid from 'components/Elements/Shared/CardGrid';
 import CommanderPicker from 'components/Elements/Shared/CommanderPicker';
 import { deleteFromDeckDesktop, editDeckCardDesktop, getDeckDesktop } from '../queries';
+import LandSuggestion from '../LandSuggestion/LandSuggestion';
 
 const StyledSubtitle = styled.span`
   font-size: 12px;
   height: 16px;
   color: ${lightText};
+`;
+
+const StyledLandWrapper = styled.span`
+  display: inline-flex;
+  align-items: center;
 `;
 
 const CardLists = ({ loading, cardsByType, deck, numberOfModalDfcLands }) => {
@@ -111,14 +117,30 @@ const CardLists = ({ loading, cardsByType, deck, numberOfModalDfcLands }) => {
       if (isCommander) return '';
 
       const amount = sumCardAmount(cards);
-      if (type !== 'Lands' || !numberOfModalDfcLands) return `(${amount})`;
+      let label = `(${amount})`;
 
-      return `(${amount} + ${numberOfModalDfcLands} MDFC)`;
+      if (type !== 'Lands') return label;
+
+      if (numberOfModalDfcLands > 0) {
+        label = `(${amount} + ${numberOfModalDfcLands} MDFC)`;
+      }
+
+      const hasCommander = deck.cards.some((card) => card.isCommander);
+
+      return (
+        <StyledLandWrapper>
+          <span>{label}</span>
+          {hasCommander && <LandSuggestion deck={deck} />}
+        </StyledLandWrapper>
+      );
     };
 
     const title = (
       <Flex direction="column" style={{ color: titleColor ?? 'black' }}>
-        <span>{`${getListHeading()} ${getAmountLabel()}`}</span>
+        <span>
+          {getListHeading()}
+          {getAmountLabel()}
+        </span>
         <StyledSubtitle>
           {cards.length && deck.canEdit ? `${valueLabelUsd} | ${valueLabelEur}` : ''}
         </StyledSubtitle>

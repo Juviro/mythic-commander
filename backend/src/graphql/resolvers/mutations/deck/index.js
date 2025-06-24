@@ -9,6 +9,7 @@ import editDeck from './editDeck';
 import editDeckCard from './editDeckCard';
 import moveCard from './moveCard';
 import setCommander from './setCommander';
+import setLandsForDeck from './setLandsForDeck';
 
 export default {
   addCardsToDeck,
@@ -22,4 +23,5 @@ export default {
   editDeckCard,
   moveCard,
   setCommander,
+  setLandsForDeck,
 };

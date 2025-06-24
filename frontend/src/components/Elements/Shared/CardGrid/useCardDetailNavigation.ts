@@ -1,11 +1,11 @@
 import { useShortcut } from 'components/Hooks';
-import { UnifiedCard } from 'types/unifiedTypes';
 import { Pagination } from './usePagination';
+import { GridCard as GridCardType } from './cardgrid.types';
 
 interface Props {
   detailCardIndex: number | null;
   setDetailCardIndex: (index: number) => void;
-  cards?: UnifiedCard[];
+  cards?: GridCardType[];
   pagination: Pagination;
 }
 

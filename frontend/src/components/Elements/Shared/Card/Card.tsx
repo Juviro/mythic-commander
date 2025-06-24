@@ -5,6 +5,7 @@ import FlippableCard from 'components/Elements/Shared/FlippableCard';
 import { UnifiedCard } from 'types/unifiedTypes';
 import { getImageUrl } from 'utils/cardImage';
 import { secondary } from 'constants/colors';
+import { LandsSuggestionCard } from 'types/graphql';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -44,7 +45,7 @@ const StyledGameChanger = styled.div`
 
 interface Props {
   loading?: boolean;
-  card?: UnifiedCard;
+  card?: UnifiedCard | LandsSuggestionCard;
   hideFlipIcon?: boolean;
   onFlipCard?: (isFlipped: boolean) => void;
 }
@@ -52,17 +53,20 @@ interface Props {
 const Card = (props: Props) => {
   const { loading, card } = props;
 
-  const cardComponent = card.isTwoFaced ? (
-    <FlippableCard {...props} />
-  ) : (
-    <StyledCard src={getImageUrl(card.id, card.imgKey, 'normal')} alt={card.name} />
-  );
+  const cardComponent =
+    'isTwoFaced' in card && card.isTwoFaced ? (
+      <FlippableCard {...props} card={card as UnifiedCard} />
+    ) : (
+      <StyledCard src={getImageUrl(card.id, null, 'normal')} alt={card.name} />
+    );
 
   return (
     <StyledWrapper>
       <CustomSkeleton.CardImage style={{ position: 'absolute', top: 0 }} />
       {!loading && cardComponent}
-      {card.game_changer && <StyledGameChanger>Game Changer</StyledGameChanger>}
+      {'game_changer' in card && card.game_changer && (
+        <StyledGameChanger>Game Changer</StyledGameChanger>
+      )}
     </StyledWrapper>
   );
 };

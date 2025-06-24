@@ -86,8 +86,6 @@ const addLogEntry = (currentLog: GameLog[], newLog: GameLog) => {
     newLastLog.payload.total = newLog.payload.total;
   }
   if ('numberOfUndos' in newLog.payload && 'numberOfUndos' in newLastLog.payload) {
-    console.log('newLastLog.payload', newLastLog.payload.numberOfUndos);
-    console.log('newLog.payload', newLog.payload.numberOfUndos);
     newLastLog.payload.numberOfUndos += newLog.payload.numberOfUndos;
   }
   if (newLastLog.logKey === MOVE_CARDS && newLog.logKey === MOVE_CARDS) {

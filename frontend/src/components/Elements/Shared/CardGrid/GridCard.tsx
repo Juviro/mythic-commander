@@ -4,6 +4,7 @@ import { useDrag } from 'react-dnd';
 
 import { primary } from 'constants/colors';
 import { ZoomInOutlined } from '@ant-design/icons';
+import { UnifiedDeckCard } from 'types/unifiedTypes';
 import { useToggle } from '../../../Hooks';
 import CardInfo from './CardInfo';
 import Card from '../Card';
@@ -11,6 +12,8 @@ import { CardMenu } from './CardMenu';
 import { SelectButton } from './SelectButton';
 import { Tags } from './Tags/Tags';
 import CardButton from '../CardButton';
+import { GridCard as GridCardType } from './cardgrid.types';
+import PlusMinus from '../PlusMinus/PlusMinus';
 
 export const StyledCenterWrapper = styled.div<{ fixedSize: boolean }>`
   width: 100%;
@@ -74,6 +77,12 @@ const StyledAmountWrapper = styled.div`
   border-bottom-left-radius: 8px;
 `;
 
+interface Props {
+  card: GridCardType;
+  onChangeAmount?: (cardId: string, amount: number) => void;
+  [key: string]: any;
+}
+
 const GridCard = ({
   card,
   onOpenDetails,
@@ -92,14 +101,28 @@ const GridCard = ({
   onSetTags,
   allTags,
   cardRef,
-}) => {
+  hidePrices,
+  onChangeAmount,
+}: Props) => {
   const { canDrag = false, listId, onSuccessfullDrop } = dragProps ?? {};
-  const displayedAmount = card.amount || card.totalAmount;
+  const getDisplayedAmount = () => {
+    if ('amount' in card) {
+      return card.amount;
+    }
+    if ('totalAmount' in card) {
+      return card.totalAmount;
+    }
+    return 0;
+  };
+
+  const amount = 'amount' in card ? card.amount : 1;
+
+  const displayedAmount = getDisplayedAmount();
   const [showMenu, toggleShowMenu] = useToggle();
 
   const [, dragRef] = useDrag({
     type: 'CARD',
-    item: { type: 'CARD', id: card.id, name: card.name, listId, amount: card.amount },
+    item: { type: 'CARD', id: card.id, name: card.name, listId, amount },
     canDrag,
     end: (_, monitor) => {
       if (monitor.didDrop() && onSuccessfullDrop) {
@@ -161,12 +184,12 @@ const GridCard = ({
           />
         )}
         <Card card={card} onFlipCard={() => toggleShowMenu(false)} />
-        {displayedAmount > 1 && (
+        {displayedAmount > 1 && !onChangeAmount && (
           <StyledAmountWrapper>{`${displayedAmount}x`}</StyledAmountWrapper>
         )}
         {Boolean(showMenu && actions.length && !isAnyCardSelected) && (
           <CardMenu
-            card={card}
+            card={card as UnifiedDeckCard}
             actions={actions}
             onOpenDetails={onOpenDetails}
             onClose={() => toggleShowMenu(false)}
@@ -180,9 +203,17 @@ const GridCard = ({
             isAnyCardSelected={isAnyCardSelected}
           />
         )}
+        {onChangeAmount && isSelected && (
+          <PlusMinus
+            amount={displayedAmount}
+            onSetAmount={(newAmount) => onChangeAmount(card.id, newAmount)}
+          />
+        )}
       </StyledImageWrapper>
-      <CardInfo card={card} search={search} minimal={minimal} />
-      {allTags && <Tags onSetTags={onSetTags} card={card} allTags={allTags} />}
+      <CardInfo card={card} search={search} minimal={minimal} hidePrices={hidePrices} />
+      {allTags && (
+        <Tags onSetTags={onSetTags} card={card as UnifiedDeckCard} allTags={allTags} />
+      )}
     </StyledCardWrapper>
   );
 };

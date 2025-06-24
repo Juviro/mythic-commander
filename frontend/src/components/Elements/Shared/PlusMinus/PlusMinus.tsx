@@ -1,7 +1,7 @@
 import { CloseOutlined } from '@ant-design/icons';
 import React from 'react';
 import styled from 'styled-components';
-import { primary } from '../../../constants/colors';
+import { primary } from 'constants/colors';
 
 const StyledRemoveButton = styled(CloseOutlined)`
   font-size: 50px;
@@ -45,6 +45,9 @@ const StyledMenuIcon = styled.span`
 `;
 
 const StyledMenu = styled.div`
+  position: absolute;
+  top: 0;
+  z-index: 100;
   width: 100%;
   height: 100%;
   color: white;
@@ -66,19 +69,24 @@ const StyledMenu = styled.div`
 interface Props {
   amount: number;
   onSetAmount: (amount: number) => void;
-  onRemoveCard: () => void;
+  onRemoveCard?: () => void;
 }
 
-const CardMenu = ({ amount, onSetAmount, onRemoveCard }: Props) => {
+const PlusMinus = ({ amount, onSetAmount, onRemoveCard }: Props) => {
+  const onClick = (type: 'minus' | 'plus') => (e: React.MouseEvent<HTMLSpanElement>) => {
+    e.stopPropagation();
+    onSetAmount(type === 'minus' ? amount - 1 : amount + 1);
+  };
+
   return (
     <StyledMenu>
-      <StyledRemoveButton onClick={onRemoveCard} />
+      {onRemoveCard && <StyledRemoveButton onClick={onRemoveCard} />}
       <StyledAmountWrapper>
-        <StyledMenuIcon onClick={() => onSetAmount(amount - 1)} style={{ left: 20 }}>
+        <StyledMenuIcon onClick={onClick('minus')} style={{ left: 20 }}>
           -
         </StyledMenuIcon>
         <StyledAmount defaultHidden={amount === 1}>{amount}</StyledAmount>
-        <StyledMenuIcon onClick={() => onSetAmount(amount + 1)} style={{ right: 20 }}>
+        <StyledMenuIcon onClick={onClick('plus')} style={{ right: 20 }}>
           +
         </StyledMenuIcon>
       </StyledAmountWrapper>
@@ -86,4 +94,4 @@ const CardMenu = ({ amount, onSetAmount, onRemoveCard }: Props) => {
   );
 };
 
-export default CardMenu;
+export default PlusMinus;
