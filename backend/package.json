@@ -21,10 +21,12 @@
     "backup-db": "babel-node -r dotenv/config src/scripts/backupDBManually.js",
     "update-precons": "babel-node -r dotenv/config src/scripts/updatePreconsManually.js",
     "store-prices": "babel-node -r dotenv/config src/scripts/storeCardProceManually.js",
+    "store-scryfall-tags": "babel-node -r dotenv/config src/scripts/storeScryfallTagsManually.js",
     "lint": "eslint '*/**/*.js'",
     "lint:fix": "eslint '*/**/*.js' --fix"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.8",
     "@babel/polyfill": "^7.12.1",
     "@getvim/execute": "1.0.0",
     "@google/genai": "^1.6.0",

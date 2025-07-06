@@ -8,6 +8,7 @@ import storeCardPrice from './storeCardPrice';
 import updateSets from '../cardApi/sets/updateSets';
 import deleteGameState from './deleteGameStates';
 import updatePrecons from './updatePrecons';
+import updateScryfallTags from '../cardApi/scryfallTags/updateScryfallTags';
 
 const startCronjobs = () => {
   new CronJob('0 0 4 * * *', backupDB, null, true, 'Europe/Berlin');
@@ -17,6 +18,7 @@ const startCronjobs = () => {
   new CronJob('0 0 6 * * *', updateCards, null, true, 'Europe/Berlin');
   new CronJob('0 30 6 * * *', updateSets, null, true, 'Europe/Berlin');
   new CronJob('0 0 7 * * *', collectionSnapshot, null, true, 'Europe/Berlin');
+  new CronJob('0 30 7 * * *', updateScryfallTags, null, true, 'Europe/Berlin');
   new CronJob('0 0 8 * * *', storeCardPrice, null, true, 'Europe/Berlin');
 };
 startCronjobs();

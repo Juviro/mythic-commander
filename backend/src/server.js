@@ -3,6 +3,7 @@ import { ApolloServer } from 'apollo-server-koa';
 import schema from './graphql';
 import db from './database';
 import logger from './logging/logger';
+import updateScryfallTags from './cardApi/scryfallTags/updateScryfallTags';
 
 export default new ApolloServer({
   schema,
