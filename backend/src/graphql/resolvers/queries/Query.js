@@ -71,7 +71,9 @@ const resolver = {
   },
 
   async priceDevelopment(_, { cardId, currency }, { db }) {
-    const { entries } = await db('cardPrices').where({ id: cardId }).first();
+    const result = await db('cardPrices').where({ id: cardId }).first();
+    if (!result) return [];
+    const { entries } = result;
 
     let hasData = false;
 
@@ -93,6 +95,10 @@ const resolver = {
 
   edhrecCards(_, { names, themeSuffix }, { user: { id: userId } }) {
     return getEdhrecCards(names, themeSuffix, userId);
+  },
+  scryfallTags: async (_, __, { db }) => {
+    const tags = await db('scryfallTags');
+    return tags;
   },
 
   landsSuggestion(_, { deckId, options }, { user: { id: userId } }) {

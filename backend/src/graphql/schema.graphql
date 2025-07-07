@@ -62,6 +62,8 @@ type OracleCard {
   minPriceEur: Float!
   allSets: [Card!]!
 
+  scryfallTags: [ScryfallTag!]!
+
   owned: Boolean!
   totalAmount: Int!
   reserved: Boolean!
@@ -73,6 +75,14 @@ type OracleCard {
   containingDecks: [Deck!]!
   containingWantsLists: [ContainingList!]!
   friendsCollection: [FriendsCollection!]!
+}
+
+type ScryfallTag {
+  id: String!
+  name: String!
+  slug: String!
+  description: String
+  taggingCount: Int!
 }
 
 type FriendsCollection {
@@ -182,6 +192,7 @@ input CardsOptionsInput {
   orderBy: String
   variants: [String]
   displayAllVariants: Boolean
+  scryfallTags: [String!]
 }
 
 ################################# Deck #################################
@@ -469,6 +480,7 @@ type Query {
   edhrecCards(names: [String!]!, themeSuffix: String): EDHRecData
 
   cardVariants: [String!]!
+  scryfallTags: [ScryfallTag!]!
 
   friends: [Friend]!
   searchUsers(search: String!): [Friend!]

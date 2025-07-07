@@ -17,6 +17,7 @@ import Flex from '../Flex';
 import AddTagsInput from '../Tags/AddTagsInput';
 import VariantSelection from './SelectFilter/VariantSelection';
 import Hint from '../Hint';
+import ScryfallTagSelection from './SelectFilter/ScryfallTagSelection';
 
 const SytledFilterWrapper = styled.div`
   width: 100%;
@@ -77,6 +78,7 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
     variants,
     displayAllVariants,
     isGameChanger,
+    scryfallTags,
   } = options;
 
   const { user } = useContext(UserContext);
@@ -267,6 +269,17 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
           placeholder='e.g. "Ramp"'
           onChange={onChangeOption('tags')}
           value={tags ?? []}
+        />
+      ),
+    },
+    {
+      title: 'Scryfall Tag',
+      component: (
+        <ScryfallTagSelection
+          size={size}
+          placeholder='e.g. "affinity"'
+          onChange={onChangeOption('scryfallTags')}
+          value={scryfallTags ?? []}
         />
       ),
     },

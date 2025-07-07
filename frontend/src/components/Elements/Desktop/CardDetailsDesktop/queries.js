@@ -26,6 +26,13 @@ const CARD_FIELDS = `
     totalAmount
     isCommanderLegal
     reserved
+    scryfallTags {
+      id
+      name
+      slug
+      description
+      taggingCount
+    }
     allSets {
       id
       set

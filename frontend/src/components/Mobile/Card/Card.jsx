@@ -6,14 +6,14 @@ import { useParams } from 'react-router';
 import { Divider } from 'antd';
 
 import UserContext from 'components/Provider/UserProvider';
-import CardLegal from 'components/Elements/Shared/CardLegal';
 import CardSetOverview from 'components/Elements/Shared/CardSetOverview';
 import IncludedDecks from 'components/Elements/Shared/IncludedDecks';
 import IncludedWants from 'components/Elements/Shared/IncludedWants';
 import CardLinks from 'components/Elements/Shared/CardLinks';
-import CardRules from 'components/Elements/Shared/CardRules';
 import OracleText from 'components/Elements/Shared/OracleText/OracleText';
 import FriendsCollection from 'components/Elements/Shared/FriendsCollection/FriendsCollection';
+import ScryfallTagList from 'components/Elements/Shared/ScryfallTagList/ScryfallTagList';
+import OtherInfo from 'components/Elements/Desktop/CardDetailsDesktop/CardDetailBody/AdditionalInfos/OtherInfo';
 import CardImage from './CardImage';
 import CardOwned from './CardOwned';
 import { getCardByOracleId } from './queries';
@@ -31,24 +31,11 @@ const StyledBodyWrapper = styled.div`
   width: 100%;
   display: flex;
   z-index: 1;
-  padding: 10px 5vw;
+  padding: 10px 5vw 32px;
   align-items: center;
   flex-direction: column;
   justify-content: center;
   background-color: white;
-`;
-
-const StyledRulesWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  flex-wrap: wrap;
-  gap: 16px;
-
-  @media (min-width: 600px) {
-    justify-content: space-around;
-  }
 `;
 
 export default ({ overwriteOracleId, defaultCardId }) => {
@@ -81,8 +68,6 @@ export default ({ overwriteOracleId, defaultCardId }) => {
 
   const fullCard = { ...card, ...currentCard };
 
-  const hasAdditionalInfos = fullCard.reserved || fullCard.game_changer;
-
   return (
     <StyledWrapper>
       <CardImage card={fullCard} loading={loading} onFlipCard={setIsFlipped} />
@@ -114,31 +99,13 @@ export default ({ overwriteOracleId, defaultCardId }) => {
             />
           </>
         )}
-        <Divider>Oracle Text & Rules</Divider>
+        <Divider>Oracle Text</Divider>
         <OracleText card={fullCard} loading={loading} isFlipped={isFlipped} />
-        <StyledRulesWrapper>
-          <CardRules card={card} loading={loading} />
-          <CardLegal card={card} />
-        </StyledRulesWrapper>
+        <OtherInfo card={card} loading={loading} />
         <Divider>Resources</Divider>
         <CardLinks card={card} />
-        {hasAdditionalInfos && (
-          <div style={{ width: '100%' }}>
-            <Divider>Other</Divider>
-            <ul>
-              {card.reserved && (
-                <li>
-                  This card is part of the <b>Reserved List</b>
-                </li>
-              )}
-              {card.game_changer && (
-                <li>
-                  This card is a <b>Game Changer</b> in the Commander format
-                </li>
-              )}
-            </ul>
-          </div>
-        )}
+        <Divider>Scryfall Tags</Divider>
+        <ScryfallTagList card={card} loading={loading} />
       </StyledBodyWrapper>
     </StyledWrapper>
   );

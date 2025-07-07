@@ -6,7 +6,6 @@ import isMobile from 'utils/isMobile';
 
 const StyledRulesWrapper = styled.div`
   width: 100%;
-  max-width: 250px;
   height: 32px;
   flex: 1;
 `;
@@ -61,6 +60,7 @@ export default ({ card = {}, loading }) => {
           onClick={() => setIsOpen(true)}
           disabled={!hasRules}
           loading={displayAsLoading}
+          style={{ width: '100%' }}
         >
           {buttonText}
         </Button>

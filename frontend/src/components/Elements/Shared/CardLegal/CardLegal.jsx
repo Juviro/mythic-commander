@@ -4,11 +4,6 @@ import { Skeleton, Typography } from 'antd';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 const StyledWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  margin-left: 16px;
   color: ${({ isLegal }) => (isLegal ? 'green' : 'red')};
 `;
 

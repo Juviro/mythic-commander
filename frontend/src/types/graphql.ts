@@ -279,9 +279,15 @@ export type LtPlayer = {
   name: Scalars['String'];
 };
 
+export type LandInput = {
+  amount: Scalars['Int'];
+  id: Scalars['String'];
+};
+
 export type LandsSuggestionCard = {
   __typename?: 'LandsSuggestionCard';
   amount?: Maybe<Scalars['Int']>;
+  gameChanger?: Maybe<Scalars['Boolean']>;
   id: Scalars['String'];
   name: Scalars['String'];
   owned?: Maybe<Scalars['Boolean']>;
@@ -291,7 +297,6 @@ export type LandsSuggestionCard = {
 export type LandsSuggestionGroup = {
   __typename?: 'LandsSuggestionGroup';
   id: Scalars['String'];
-  isFavorite?: Maybe<Scalars['Boolean']>;
   lands: Array<LandsSuggestionCard>;
   name: Scalars['String'];
 };
@@ -375,6 +380,7 @@ export type Mutation = {
   sendFriendRequest: Scalars['Boolean'];
   setCommander: Deck;
   setDefaultTags?: Maybe<Scalars['Boolean']>;
+  setLandsForDeck: Deck;
   setUsername: User;
   unlinkWantsList: WantsList;
   updateCardImages?: Maybe<Scalars['Boolean']>;
@@ -544,6 +550,11 @@ export type MutationSetDefaultTagsArgs = {
   tags: Array<Scalars['String']>;
 };
 
+export type MutationSetLandsForDeckArgs = {
+  deckId: Scalars['String'];
+  lands: Array<LandInput>;
+};
+
 export type MutationSetUsernameArgs = {
   username: Scalars['String'];
 };
@@ -575,6 +586,7 @@ export type OracleCard = {
   owned: Scalars['Boolean'];
   primaryTypes: Array<Scalars['String']>;
   reserved: Scalars['Boolean'];
+  scryfallTags: Array<ScryfallTag>;
   subTypes: Array<Scalars['String']>;
   sumPriceEur?: Maybe<Scalars['Float']>;
   sumPriceUsd?: Maybe<Scalars['Float']>;
@@ -645,6 +657,7 @@ export type Query = {
   decks: Array<Deck>;
   edhrecCards?: Maybe<EdhRecData>;
   friends: Array<Maybe<Friend>>;
+  landCycleFavorites: Array<Scalars['String']>;
   landsSuggestion: LandsSuggestionResponse;
   ltPlayers?: Maybe<Array<LtPlayer>>;
   numberOfCachedCards: Scalars['Int'];
@@ -653,6 +666,7 @@ export type Query = {
   priceDevelopment: Array<PriceDevelopment>;
   proxies: Array<ProxyCard>;
   publicCollection?: Maybe<Array<CollectionCard>>;
+  scryfallTags: Array<ScryfallTag>;
   searchUsers?: Maybe<Array<Friend>>;
   tokenFinder: Array<Card>;
   tokens: Array<Token>;
@@ -745,6 +759,15 @@ export type QueryWantsListArgs = {
 
 export type QueryWantsListsArgs = {
   deckId?: InputMaybe<Scalars['String']>;
+};
+
+export type ScryfallTag = {
+  __typename?: 'ScryfallTag';
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  name: Scalars['String'];
+  slug: Scalars['String'];
+  taggingCount: Scalars['Int'];
 };
 
 export type Set = {

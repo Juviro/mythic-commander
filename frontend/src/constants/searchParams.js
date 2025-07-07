@@ -18,4 +18,5 @@ export default {
   variants: ArrayParam,
   displayAllVariants: BooleanParam,
   isGameChanger: StringParam,
+  scryfallTags: ArrayParam,
 };
