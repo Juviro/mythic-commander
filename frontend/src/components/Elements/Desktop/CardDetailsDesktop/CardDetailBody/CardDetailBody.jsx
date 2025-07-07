@@ -4,7 +4,7 @@ import UserContext from 'components/Provider/UserProvider';
 import PriceDevelopment from 'components/Elements/Shared/PriceDevelopment';
 import DecksAndWants from './DecksAndWants';
 import PreviewAndSets from './PreviewAndSets';
-import AdditionalInfos from './AdditionalInfos';
+import AdditionalInfos from './AdditionalInfos/AdditionalInfos';
 import CardTitle from './CardTitle';
 import { useToggle } from '../../../../Hooks';
 import UpdateCardImage from './UpdateCardImage';

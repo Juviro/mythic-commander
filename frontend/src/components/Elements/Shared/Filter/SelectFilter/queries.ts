@@ -5,3 +5,11 @@ export const cardVariants = gql`
     cardVariants
   }
 `;
+
+export const scryfallTags = gql`
+  query scryfallTags {
+    scryfallTags {
+      slug
+    }
+  }
+`;

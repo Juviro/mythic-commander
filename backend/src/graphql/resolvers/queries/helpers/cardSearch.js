@@ -106,6 +106,19 @@ const addTagsClause = (q, tags) => {
   q.whereRaw(`tags && ARRAY[${placeholder}]::text[]`, tags);
 };
 
+const addScryfallTagsClause = (q, scryfallTagSlugs, tableName) => {
+  const placeholder = scryfallTagSlugs.map(() => '?').join(',');
+  q.whereRaw(
+    `"${tableName}".oracle_id IN (
+      SELECT "oracleId" 
+      FROM "scryfallTagToOracleId" 
+      LEFT JOIN "scryfallTags"
+        ON "scryfallTagToOracleId"."tagId" = "scryfallTags"."id" 
+      WHERE "scryfallTags"."slug" IN (${placeholder}))`,
+    scryfallTagSlugs
+  );
+};
+
 const addVariantClause = (q, variants) => {
   const placeholder = variants.map(() => '?');
   q.whereRaw(`variants && ARRAY[${placeholder}]::text[]`, variants);
@@ -182,6 +195,7 @@ export default async (
     orderBy = 'name-asc',
     displayAllVariants,
     isGameChanger,
+    scryfallTags,
   } = options;
 
   const [order, direction = 'asc'] = orderBy.split('-');
@@ -226,6 +240,7 @@ export default async (
     if (toughness) addRangeClause(q, toughness, 'toughness');
     if (rarity) addRarityClause(q, rarity);
     if (tags?.length) addTagsClause(q, tags);
+    if (scryfallTags?.length) addScryfallTagsClause(q, scryfallTags, tableName);
     if (variants?.length) addVariantClause(q, variants);
   };
 

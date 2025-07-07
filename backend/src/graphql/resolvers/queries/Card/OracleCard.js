@@ -144,6 +144,15 @@ const resolver = {
     return getSumPrice('eur', sumPriceEur, oracle_id, userId, db);
   },
 
+  async scryfallTags(card, _, { db }) {
+    const tags = await db('scryfallTagToOracleId')
+      .leftJoin('scryfallTags', {
+        'scryfallTagToOracleId.tagId': 'scryfallTags.id',
+      })
+      .where({ oracleId: card.oracle_id });
+    return tags;
+  },
+
   isCommanderLegal({ legalities }) {
     return legalities.commander === 'legal';
   },

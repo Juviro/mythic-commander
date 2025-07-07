@@ -22,6 +22,12 @@ export const cardSearch = gql`
           owned
           primaryTypes
           subTypes
+          scryfallTags {
+            id
+            name
+            slug
+            description
+          }
         }
       }
     }
