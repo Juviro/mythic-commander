@@ -49,18 +49,6 @@ const updateScryfallTags = async () => {
   );
 };
 
-const test = async () => {
-  try {
-    await updateScryfallTags();
-  } catch (error) {
-    console.error(
-      '########################### Error fetching Scryfall tags:',
-      error
-    );
-  }
-};
-test();
-
 export default async () => {
   try {
     await updateScryfallTags();

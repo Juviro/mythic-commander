@@ -10,9 +10,26 @@ export const getScryfallTagsQuery = gql`
         name
         slug
         description
+        category
         taggingCount
       }
       total
+    }
+  }
+`;
+
+export const getScryfallTagCount = gql`
+  query FetchTag(
+    $type: TagType!
+    $slug: String!
+    $page: Int = 1
+    $descendants: Boolean = false
+  ) {
+    tag: tagBySlug(type: $type, slug: $slug, aliasing: true) {
+      id
+      taggings(page: $page, descendants: $descendants) {
+        total
+      }
     }
   }
 `;

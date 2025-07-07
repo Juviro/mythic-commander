@@ -1,5 +1,5 @@
 import getApolloClient from './getApolloClient';
-import { getScryfallTagsQuery } from './queries';
+import { getScryfallTagCount, getScryfallTagsQuery } from './queries';
 
 const fetchPage = async (apolloClient, page) => {
   const { data } = await apolloClient.query({
@@ -24,7 +24,23 @@ const getAllScryfallTags = async () => {
     page += 1;
   }
 
-  return tags;
+  const tagsWithCountPromises = tags.map(async (tag) => {
+    if (tag.taggingCount || !tag.category) return tag;
+
+    const { data } = await apolloClient.query({
+      query: getScryfallTagCount,
+      variables: {
+        type: 'ORACLE_CARD_TAG',
+        slug: tag.slug,
+        page: 1,
+        descendants: false,
+      },
+    });
+    return { ...tag, taggingCount: data.tag.taggings.total };
+  });
+
+  const tagsWithCount = await Promise.all(tagsWithCountPromises);
+  return tagsWithCount.map(({ category: _category, ...rest }) => rest);
 };
 
 export default getAllScryfallTags;
