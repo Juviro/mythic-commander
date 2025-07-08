@@ -33,7 +33,7 @@ const getAllScryfallTags = async () => {
         type: 'ORACLE_CARD_TAG',
         slug: tag.slug,
         page: 1,
-        descendants: false,
+        descendants: true,
       },
     });
     return { ...tag, taggingCount: data.tag.taggings.total };

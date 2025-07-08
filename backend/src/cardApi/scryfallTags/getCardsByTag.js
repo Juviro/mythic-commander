@@ -8,7 +8,7 @@ const fetchPage = async (apolloClient, slug, page) => {
       type: 'ORACLE_CARD_TAG',
       slug,
       page,
-      descendants: false,
+      descendants: true,
     },
   });
 

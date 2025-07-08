@@ -36,6 +36,10 @@ const updateScryfallTags = async () => {
     return;
   }
 
+  logger.info(
+    `Updating ${tagsWithChangedCount.length} tags with changed count`
+  );
+
   for (const tag of tagsWithChangedCount) {
     logger.info(`Storing tag "${tag.name}" with ${tag.taggingCount} cards`);
     const cards = await getCardsByTag(tag);
