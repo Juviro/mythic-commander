@@ -35,6 +35,7 @@ const DeckStatus = ({ status, deckId, deckName, canEdit }: Props) => {
 
   const onSelectStatus = async (e: React.MouseEvent, newStatus: string) => {
     e.stopPropagation();
+    e.preventDefault();
 
     message(
       `Updated status of <b>${deckName}</b> to <b>${capitalizeFirstLetter(newStatus)}</b>`
