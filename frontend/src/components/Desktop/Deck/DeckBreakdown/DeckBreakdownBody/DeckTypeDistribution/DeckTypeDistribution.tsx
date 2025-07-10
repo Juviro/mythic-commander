@@ -38,7 +38,7 @@ export const DeckTypeDistribution = ({ deck }: Props) => {
             label={({ name }) => name}
             data={cardsbyTypeWithAmount}
             dataKey="amount"
-            valueKey="type"
+            key="type"
             outerRadius={80}
             isAnimationActive={false}
             labelLine={false}

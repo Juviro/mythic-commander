@@ -34,6 +34,9 @@ const tickFormatter =
     tickFormatter: _tickFormatter,
     ...props
   }) => {
+    if (index > data.length - 1) {
+      return null;
+    }
     const { tag, amount } = data[index];
     const color = getTagColor(tag);
 
