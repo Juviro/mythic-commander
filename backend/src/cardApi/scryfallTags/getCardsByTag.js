@@ -12,23 +12,25 @@ const fetchPage = async (apolloClient, slug, page) => {
     },
   });
 
-  return {
-    description: data.tag.description,
-    ...data.tag.taggings,
-  };
+  return data.tag.taggings;
 };
 
-const getCardsByTag = async (tag) => {
-  const { slug, id, taggingCount } = tag;
-  if (taggingCount === 0) return [];
+const getCardsByTag = async (tag, currentScryfallCount) => {
+  const { slug, id } = tag;
   const apolloClient = await getApolloClient();
 
   const cards = [];
 
   let page = 1;
+  let taggingCount = 0;
   while (true) {
     const { total, results } = await fetchPage(apolloClient, slug, page);
     cards.push(...results);
+    taggingCount = total;
+
+    if (total === currentScryfallCount) {
+      return { taggingCount, cards: [] };
+    }
 
     if (cards.length >= total) break;
     page += 1;
@@ -39,7 +41,7 @@ const getCardsByTag = async (tag) => {
     oracleId: card.oracleId,
   }));
 
-  return formattedCards;
+  return { taggingCount, cards: formattedCards };
 };
 
 export default getCardsByTag;

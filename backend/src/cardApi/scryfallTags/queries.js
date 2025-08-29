@@ -23,7 +23,7 @@ export const getScryfallTagCount = gql`
     $type: TagType!
     $slug: String!
     $page: Int = 1
-    $descendants: Boolean = false
+    $descendants: Boolean
   ) {
     tag: tagBySlug(type: $type, slug: $slug, aliasing: true) {
       id

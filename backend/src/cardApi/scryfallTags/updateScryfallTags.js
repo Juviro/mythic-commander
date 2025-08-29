@@ -7,7 +7,7 @@ import {
   updateTags,
 } from './scryfallTagsDb';
 
-const getScryfallTagsWithChangedCount = async (scryfallTags) => {
+const getCurrentScryfallCounts = async () => {
   const currentScryfallTags = await getScryfallTags();
 
   const countMap = currentScryfallTags.reduce((acc, tag) => {
@@ -15,41 +15,41 @@ const getScryfallTagsWithChangedCount = async (scryfallTags) => {
     return acc;
   }, {});
 
-  const tagsWithChangedCount = scryfallTags.filter((tag) => {
-    return tag.taggingCount && countMap[tag.id] !== tag.taggingCount;
-  });
-
-  return tagsWithChangedCount;
+  return countMap;
 };
 
 const updateScryfallTags = async () => {
   logger.info('Updating scryfall tags');
-  const scryfallTags = await getAllScryfallTags();
-  logger.info(`Fetched ${scryfallTags.length} scryfall tags`);
+  const tags = await getAllScryfallTags();
 
-  const tagsWithChangedCount = await getScryfallTagsWithChangedCount(
-    scryfallTags
-  );
+  logger.info(`Fetched ${tags.length} tags`);
 
-  if (!tagsWithChangedCount.length) {
-    logger.info('No tags with changed count');
-    return;
+  const currentScryfallCounts = await getCurrentScryfallCounts();
+
+  let tagsWithUpdatedCount = 0;
+
+  // TODO: instead of loggin each tag separately, count the number of updated and skipped tags + cards. Log that in the catch as well, also display the last step there
+
+  for (const tag of tags) {
+    logger.info(`Storing tag "${tag.name}"`);
+    const { cards, taggingCount } = await getCardsByTag(
+      tag,
+      currentScryfallCounts[tag.id]
+    );
+
+    if (cards.length) {
+      logger.info(`Updating tags for "${tag.name}" with ${cards.length} cards`);
+      await storeScryfallTag({ ...tag, taggingCount });
+      await updateTags(cards);
+      tagsWithUpdatedCount += 1;
+      logger.info(`Stored tag "${tag.name}" with ${taggingCount} cards`);
+    } else {
+      logger.info(`Skipping tag "${tag.name}"`);
+    }
   }
 
   logger.info(
-    `Updating ${tagsWithChangedCount.length} tags with changed count`
-  );
-
-  for (const tag of tagsWithChangedCount) {
-    logger.info(`Storing tag "${tag.name}" with ${tag.taggingCount} cards`);
-    const cards = await getCardsByTag(tag);
-    await storeScryfallTag(tag);
-    await updateTags(cards);
-    logger.info(`Stored tag "${tag.name}" with ${cards.length} cards`);
-  }
-
-  logger.info(
-    `Finished updating scryfall tags, ${tagsWithChangedCount.length} tags updated`
+    `Finished updating scryfall tags, ${tagsWithUpdatedCount} tags updated`
   );
 };
 
