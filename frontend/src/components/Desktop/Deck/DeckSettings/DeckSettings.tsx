@@ -23,6 +23,10 @@ export const DeckSettings = ({ view, setView }: Props) => {
             key: 'tags',
             label: 'Group by Tag',
           },
+          {
+            key: 'color',
+            label: 'Group by Color',
+          },
         ]}
       />
     </Flex>

@@ -23,7 +23,7 @@ import { DeckSettings } from './DeckSettings/DeckSettings';
 import { DeckContextProvider } from './DeckProvider';
 import Header from './Header/Header';
 
-export type View = 'type' | 'tags';
+export type View = 'type' | 'tags' | 'color';
 
 export default () => {
   const { id } = useParams<{ id: string }>();

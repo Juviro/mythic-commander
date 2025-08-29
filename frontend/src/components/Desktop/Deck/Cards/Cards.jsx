@@ -3,6 +3,7 @@ import React from 'react';
 import getCardsByTag from 'utils/getCardsByTag';
 import { getTagColor } from 'utils/tags';
 import getCardsByType from '../../../../utils/getCardsByType';
+import getCardsByColor from '../../../../utils/getCardsByColor';
 import CardLists from './CardLists';
 import { sortByCmc, sortByName } from '../../../../utils/cardFilter';
 import Dropzone from '../../../Elements/Desktop/Dropzone';
@@ -20,6 +21,12 @@ export default ({ deck, loading, onAddCards, view }) => {
       const { cardsByType } = getCardsByType(sortedCards);
 
       return cardsByType;
+    }
+
+    if (view === 'color') {
+      const { cardsByColor } = getCardsByColor(sortedCards);
+
+      return cardsByColor;
     }
 
     const cardsByTag = getCardsByTag(sortedCards);
