@@ -1,15 +1,12 @@
 import React from 'react';
-import GoogleLogin from 'react-google-login';
 import styled from 'styled-components';
 import { useMutation } from '@apollo/client';
 import message from 'utils/message';
 import { useHistory } from 'react-router';
 import Cookies from 'js-cookie';
+import { GoogleLogin } from '@react-oauth/google';
 
 import { login } from './queries';
-
-const CLIENT_ID =
-  '985753697547-184gkcavnrc8f4flq1tdjra30amuchgo.apps.googleusercontent.com';
 
 const LoginWrapper = styled.div`
   display: flex;
@@ -28,7 +25,7 @@ export default () => {
 
   const onSuccess = async (response) => {
     const { data } = await mutate({
-      variables: { token: response.tokenId },
+      variables: { token: response.credential },
     });
 
     const { session, user } = data.login;
@@ -51,12 +48,7 @@ export default () => {
 
   return (
     <LoginWrapper>
-      <GoogleLogin
-        clientId={CLIENT_ID}
-        onSuccess={onSuccess}
-        onFailure={onError}
-        cookiePolicy="single_host_origin"
-      />
+      <GoogleLogin onSuccess={onSuccess} onError={onError} />
     </LoginWrapper>
   );
 };
