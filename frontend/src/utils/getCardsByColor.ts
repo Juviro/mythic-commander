@@ -27,7 +27,10 @@ const getCardsByColor = (cards: UnifiedDeckCard[]) => {
         return acc;
       }
       const colorNames = card.color_identity?.map(getColorName).join(', ');
-      if (!colorNames) return acc;
+      if (!colorNames) {
+        acc.Colorless.push(card);
+        return acc;
+      }
       acc[colorNames] = acc[colorNames] || [];
       acc[colorNames].push(card);
 
@@ -35,8 +38,16 @@ const getCardsByColor = (cards: UnifiedDeckCard[]) => {
     },
     {
       Lands: [],
+      Colorless: [],
     }
   );
+
+  if (!cardsByColor.Colorless.length) {
+    delete cardsByColor.Colorless;
+  }
+  if (!cardsByColor.Lands.length) {
+    delete cardsByColor.Lands;
+  }
 
   cardsByColor.Lands = cardsByColor.Lands.sort((a, b) => {
     const aNrOfColors = a.color_identity?.length;
@@ -59,7 +70,10 @@ const getCardsByColor = (cards: UnifiedDeckCard[]) => {
       return a.type === 'Lands' ? 1 : -1;
     }
 
-    const getNumberOfColors = (color: string) => color.split(',').length;
+    const getNumberOfColors = (color: string) => {
+      if (color === 'Colorless') return 0;
+      return color.split(',').length;
+    };
     const aLength = getNumberOfColors(a.type);
     const bLength = getNumberOfColors(b.type);
 
