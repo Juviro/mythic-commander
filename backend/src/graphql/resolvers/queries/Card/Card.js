@@ -147,7 +147,7 @@ const resolver = {
       return true;
     }
 
-    return type_line.match(/Legendary.*(Creature|Vehicle|Spacecraft)/);
+    return Boolean(type_line.match(/Legendary.*(Creature|Vehicle|Spacecraft)/));
   },
   isModalDfcLand(card) {
     const { layout, type_line } = card;
