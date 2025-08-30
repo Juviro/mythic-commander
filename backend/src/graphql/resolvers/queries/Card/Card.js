@@ -139,7 +139,7 @@ const resolver = {
   },
   canBeCommander(card) {
     const { oracle_text, type_line } = card.card_faces?.[0] ?? card;
-    if (!type_line || !type_line.startsWith('Legendary')) {
+    if (!type_line?.startsWith('Legendary')) {
       return false;
     }
 
@@ -147,7 +147,7 @@ const resolver = {
       return true;
     }
 
-    return type_line.includes('Creature');
+    return type_line.match(/Legendary.*(Creature|Vehicle|Spacecraft)/);
   },
   isModalDfcLand(card) {
     const { layout, type_line } = card;

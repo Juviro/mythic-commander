@@ -45,12 +45,15 @@ const getAlternativeCommanders = (deck) => {
 
     if (parseColorIdentity(card.color_identity) !== colorIdentity) return false;
 
-    const isLegendaryCreature = card.type_line?.match(/Legendary.*Creature/);
+    const isLegendaryCommander = card.type_line?.match(
+      /Legendary.*(Creature|Vehicle|Spacecraft)/
+    );
+
     const canBeCommander = card.oracle_text
       ?.toLowerCase()
       .includes('can be your commander');
 
-    return isLegendaryCreature || canBeCommander || hasPartner;
+    return isLegendaryCommander || canBeCommander || hasPartner;
   });
 
   return alternativeCommanders.map((card) => ({
