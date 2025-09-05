@@ -81,6 +81,8 @@ export interface AcceptHandPayload {
 export interface MoveCardDetails {
   position?: { x: number; y: number };
   index?: number;
+  faceDown?: boolean;
+  skipUpdate?: boolean;
 }
 
 type MoveCardTo =
@@ -95,6 +97,7 @@ export interface MoveCardPayload extends MoveCardDetails {
   clashId: string;
   faceDown?: boolean;
   to: MoveCardTo;
+  skipUpdate?: boolean;
 }
 
 export interface MoveCardsGroupPayload {

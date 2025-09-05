@@ -668,7 +668,7 @@ export default class Game {
   async moveCard(playerId: string, payload: MoveCardPayload) {
     this.previousGameState = cloneDeep(this.gameState);
 
-    const { clashId, to, position, index, faceDown } = payload;
+    const { clashId, to, position, index, faceDown, skipUpdate } = payload;
     const isMovingOntoStack = to.zone === 'stack';
 
     if (isMovingOntoStack && !this.gameState.stack.visible) {
@@ -798,13 +798,15 @@ export default class Game {
       }
     }
 
-    playersToUpdate.forEach((playerToUpdateId) => {
-      const updatedPlayer = this.getPlayerById(playerToUpdateId);
-      this.emitPlayerUpdate(updatedPlayer);
-    });
+    if (!skipUpdate) {
+      playersToUpdate.forEach((playerToUpdateId) => {
+        const updatedPlayer = this.getPlayerById(playerToUpdateId);
+        this.emitPlayerUpdate(updatedPlayer);
+      });
 
-    if (shouldEmitStackUpdate) {
-      this.emitGameUpdate();
+      if (shouldEmitStackUpdate) {
+        this.emitGameUpdate();
+      }
     }
 
     const getLibraryPosition = () => {

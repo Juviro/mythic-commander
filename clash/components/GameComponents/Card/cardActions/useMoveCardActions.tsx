@@ -47,15 +47,10 @@ const useMoveCardActions = ({ zone, cardIds, player }: Props) => {
 
   const onMoveToBattlefield = (faceDown: boolean) => () => {
     cardIds.forEach((cardId, index) => {
-      onMoveCard(
-        cardId,
-        ZONES.BATTLEFIELD,
-        player!.id,
-        {
-          position: { x: 50 + index, y: 50 + index },
-        },
-        faceDown
-      );
+      onMoveCard(cardId, ZONES.BATTLEFIELD, player!.id, {
+        position: { x: 50 + index, y: 50 + index },
+        faceDown,
+      });
     });
   };
 

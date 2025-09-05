@@ -63,12 +63,10 @@ const useGameActions = () => {
     clashId: string,
     toZone: Zone,
     zonePlayerId: string | null,
-    details?: MoveCardDetails,
-    faceDown?: boolean
+    details?: MoveCardDetails
   ) => {
     const payload: MoveCardPayload = {
       clashId,
-      faceDown,
       to: { zone: toZone, playerId: zonePlayerId! },
       ...details,
     };

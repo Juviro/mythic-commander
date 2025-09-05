@@ -35,8 +35,10 @@ const BattlefieldSelection = ({ children, isFlipped, player }: Props) => {
   );
 
   const onDeleteSelectedCards = () => {
-    selectedCardIds.forEach((cardId) => {
-      onMoveCard(cardId, ZONES.GRAVEYARD, player.id);
+    selectedCardIds.forEach((cardId, index) => {
+      onMoveCard(cardId, ZONES.GRAVEYARD, player.id, {
+        skipUpdate: index !== selectedCardIds.length - 1,
+      });
     });
   };
 
