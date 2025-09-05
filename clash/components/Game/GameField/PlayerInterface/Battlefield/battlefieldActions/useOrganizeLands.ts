@@ -83,6 +83,7 @@ const useOrganizeLands = ({ battlefieldRef, player }: Props) => {
   const cardsToOrder = useMemo(() => {
     return player.zones.battlefield.filter((card) => {
       if (card.name === 'Treasure') return false;
+      if (isCardType(card, 'Creature')) return false;
       if (isCardType(card, 'Land')) return true;
 
       if ('produced_mana' in card && card.produced_mana) {
