@@ -9,22 +9,25 @@ import useCommanderSelection from './useCommanderSelection';
 interface CommanderSelectionProps {
   deck: LobbyDeck | PreconDeck;
   displayCommanderSelection?: boolean;
+  displayInOneLine?: boolean;
 }
 
 const CommanderSelection = ({
   deck,
   displayCommanderSelection,
+  displayInOneLine = false,
 }: CommanderSelectionProps) => {
   const { options, onSelect, defaultValue } = useCommanderSelection(deck);
 
   if (options.length <= 1 || !displayCommanderSelection) {
+    const CommanderWrapperElement = displayInOneLine ? 'span' : 'div';
     return (
       <Tooltip title={deck.commanderName}>
         <div className={styles.commander_names}>
           {deck.commanderName?.split('& ').map((commander) => (
-            <div key={commander} className={styles.commander_name}>
+            <CommanderWrapperElement key={commander} className={styles.commander_name}>
               {commander}
-            </div>
+            </CommanderWrapperElement>
           ))}
         </div>
       </Tooltip>

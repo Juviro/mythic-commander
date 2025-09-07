@@ -64,6 +64,7 @@ const DeckPreview = ({ deck, onClick, condensed, displayCommanderSelection }: Pr
           deck={deck}
           key={deck.id}
           displayCommanderSelection={displayCommanderSelection}
+          displayInOneLine={Boolean(deck.ownerName)}
         />
       </div>
     </div>
