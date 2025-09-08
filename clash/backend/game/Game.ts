@@ -62,11 +62,18 @@ import initMatch, { sortInitialHand } from 'backend/lobby/initMatch/initMatch';
 import { randomizeArray } from 'utils/randomizeArray';
 import db from 'backend/database/db';
 import getPlaytestGamestate from 'backend/lobby/initMatch/getPlaytestGamestate';
-import { XYCoord } from 'react-dnd';
 import { LobbyDeck, PlanechaseSet } from 'backend/lobby/GameLobby.types';
 import { DICE_ROLL_ANIMATION_DURATION } from 'components/Game/GameField/Planechase/PlanechaseDice';
 import addLogEntry from './addLogEntry';
 import getInitialCardProps from './utils/getInitialCardProps';
+import * as SocketAPI from './socket';
+import {
+  obfuscatePlayer,
+  obfuscatePlanechase,
+  getFirstAvailablePosition,
+  fixPosition,
+  getRandomValue,
+} from './utils/gameUtils';
 
 const MAX_UNDO_STATES = 10;
 
@@ -131,86 +138,27 @@ export default class Game {
   // ##################### Socket #####################
 
   emitToAll(msg: string, data: any) {
-    this.server.to(this.id).emit(msg, data);
+    SocketAPI.emitToAll(this, msg, data);
   }
 
   emitGameState(socket: Socket, playerId: string) {
-    socket.emit(SOCKET_MSG_GAME.GAME_STATE, this.obfuscateGameState(playerId));
-
-    if (this.requestedStopPoints[playerId]) {
-      socket.emit(SOCKET_MSG_GAME.SET_STOP_POINT, {
-        phase: this.requestedStopPoints[playerId],
-      });
-    }
+    SocketAPI.emitGameState(this, socket, playerId);
   }
 
   emitGameStateToAll() {
-    this.gameState.players.forEach(({ id }) => {
-      const user = this.users[id];
-      // might be undefined if player is not connected
-      if (!user) return;
-      this.emitGameState(user.socket, id);
-    });
+    SocketAPI.emitGameStateToAll(this);
   }
 
   emitGameUpdate(emittedFields?: (keyof GameState)[]) {
-    const {
-      activePlayerId,
-      phase,
-      turn,
-      winner,
-      phaseStopByPlayerId,
-      stack,
-      rematchOptions,
-      hoveredCards,
-      planechase,
-    } = this.gameState;
-
-    const emittedGameState: Partial<GameState> = {
-      activePlayerId,
-      phase,
-      turn,
-      winner,
-      phaseStopByPlayerId,
-      rematchOptions,
-      hoveredCards,
-      stack: Game.obfuscateStack(stack),
-      planechase: Game.obfuscatePlanechase(planechase),
-    };
-
-    if (emittedFields) {
-      Object.keys(emittedGameState).forEach((key) => {
-        if (!emittedFields.includes(key as keyof GameState)) {
-          delete emittedGameState[key as keyof GameState];
-        }
-      });
-    }
-
-    this.emitToAll(SOCKET_MSG_GAME.GAME_STATE, emittedGameState);
-
-    // this only triggers a single display message
-    this.gameState.phaseStopByPlayerId = null;
+    SocketAPI.emitGameUpdate(this, emittedFields);
   }
 
   emitPlayerUpdate(player: Player) {
-    this.gameState.players.forEach(({ id: playerId }) => {
-      const obfuscatedGameState = Game.obfuscatePlayer(player, playerId);
-      // might be undefined if player is not connected
-      const socketId = this.users[playerId]?.socket.id;
-      if (!socketId) return;
-
-      this.server.to(socketId).emit(SOCKET_MSG_GAME.UPDATE_PLAYER, obfuscatedGameState);
-    });
+    SocketAPI.emitPlayerUpdate(this, player);
   }
 
   join(socket: Socket, user: DatabaseUser) {
-    this.users[user.id] = {
-      name: user.username,
-      socket,
-    };
-
-    socket.join(this.id);
-    this.emitGameState(socket, user.id);
+    SocketAPI.join(this, socket, { id: user.id, username: user.username });
   }
 
   // ##################### Game #####################
@@ -371,148 +319,12 @@ export default class Game {
 
   // ##################### Utils #####################
 
-  static obfuscatePlayer(player: Player, selfId: string): Player {
-    const obfuscateCard = (card: Card) => {
-      if ((card as VisibleCard).visibleTo?.includes(selfId)) {
-        return card;
-      }
-
-      return {
-        clashId: card.clashId,
-        ownerId: card.ownerId,
-      };
-    };
-
-    const isSelf = player.id === selfId;
-    const hand = isSelf ? player.zones.hand : player.zones.hand.map(obfuscateCard);
-    const battlefield = player.zones.battlefield.map((card) => {
-      const isFaceDownCard = (c: BattlefieldCard): c is FaceDownCard => {
-        return Boolean(c.faceDown);
-      };
-
-      if (!isFaceDownCard(card)) return card;
-
-      const baseProps = {
-        clashId: card.clashId,
-        faceDown: true,
-        position: card.position,
-        tapped: card.tapped,
-        counters: card.counters,
-        ownerId: card.ownerId,
-        visibleTo: card.visibleTo,
-      };
-
-      if (!card.visibleTo?.includes(selfId)) {
-        return baseProps;
-      }
-
-      return {
-        ...baseProps,
-        id: card.id,
-        name: card.name,
-      };
-    }) as BattlefieldCard[];
-
-    const library = player.zones.library.map(obfuscateCard);
-    if (player.playWithTopCardRevealed && player.zones.library.length > 0) {
-      library.pop();
-      library.push(player.zones.library[player.zones.library.length - 1]);
-    }
-
-    return {
-      ...player,
-      zones: {
-        ...player.zones,
-        library,
-        battlefield,
-        hand,
-      },
-    };
-  }
-
-  static obfuscateStack(stack: GameState['stack']) {
-    if (!stack) {
-      return {
-        visible: false,
-        cards: [],
-      };
-    }
-
-    return {
-      ...stack,
-      cards: stack.cards.map((card) => {
-        if (!(card as VisibleBattlefieldCard).faceDown) {
-          return card;
-        }
-
-        return {
-          ...card,
-          id: null,
-          name: '',
-          manaValue: undefined,
-          meta: null,
-          produced_mana: undefined,
-          layout: undefined,
-          type_line: undefined,
-          transformable: false,
-          flippable: false,
-        };
-      }),
-    };
-  }
-
-  static obfuscatePlanechase(planechase: GameState['planechase']) {
-    if (!planechase) return undefined;
-
-    return {
-      ...planechase,
-      planesDeck: planechase.planesDeck.map(({ clashId }) => ({ clashId })),
-    };
-  }
-
-  static getFirstAvailablePosition(
-    initalPosition: XYCoord,
-    battlefield: BattlefieldCard[]
-  ) {
-    const doesCardExistAtPosition = (newPosition: XYCoord) => {
-      return battlefield.some(
-        (card) => card.position?.x === newPosition.x && card.position?.y === newPosition.y
-      );
-    };
-
-    let stackedPosition = initalPosition;
-    while (doesCardExistAtPosition(stackedPosition)) {
-      stackedPosition = Game.getStackedPosition(stackedPosition);
-    }
-    return stackedPosition;
-  }
-
-  static fixPosition(position?: { x: number; y: number }) {
-    if (!position) return position;
-
-    return {
-      x: Math.max(0, Math.min(100, position.x)),
-      y: Math.max(0, Math.min(100, position.y)),
-    };
-  }
-
-  static getStackedPosition(position: XYCoord, index = 1) {
-    return {
-      x: position.x + index * 1,
-      y: position.y + index * 2,
-    };
-  }
-
-  static getRandomValue(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
   obfuscateGameState(playerId: string): GameState {
     const obfuscatedPlayers = this.gameState.players.map((player) => {
-      return Game.obfuscatePlayer(player, playerId);
+      return obfuscatePlayer(player, playerId);
     });
 
-    const obfuscatedPlanechase = Game.obfuscatePlanechase(this.gameState.planechase);
+    const obfuscatedPlanechase = obfuscatePlanechase(this.gameState.planechase);
 
     return {
       ...this.gameState,
@@ -736,7 +548,7 @@ export default class Game {
       return;
     }
 
-    let newCard = { ...cardToMove!, position: Game.fixPosition(position) };
+    let newCard = { ...cardToMove!, position: fixPosition(position) };
     const isCardFaceDown = faceDown ?? (cardToMove! as BattlefieldCard)?.faceDown;
 
     if (faceDown !== undefined) {
@@ -871,7 +683,7 @@ export default class Game {
     const updatedCards = cardsToMove.map((card) => {
       return {
         ...card,
-        position: Game.fixPosition({
+        position: fixPosition({
           x: card.position!.x + delta.x,
           y: card.position!.y + delta.y,
         }),
@@ -999,10 +811,7 @@ export default class Game {
       .where({ id: cardId })
       .first();
 
-    const stackedPosition = Game.getFirstAvailablePosition(
-      position,
-      player.zones.battlefield
-    );
+    const stackedPosition = getFirstAvailablePosition(position, player.zones.battlefield);
 
     const transformable =
       layout === 'transform' || layout === 'modal_dfc' || layout === 'double_faced_token';
@@ -1020,7 +829,7 @@ export default class Game {
       manaValue: 0,
       transformable,
       flippable,
-      position: Game.fixPosition(stackedPosition),
+      position: fixPosition(stackedPosition),
     };
 
     player.zones.battlefield.push(token);
@@ -1049,7 +858,7 @@ export default class Game {
     for (let i = 0; i < amount; i += 1) {
       if (originalCard.faceDown) return;
 
-      const newPosition = Game.getFirstAvailablePosition(
+      const newPosition = getFirstAvailablePosition(
         originalCard.position!,
         player.zones.battlefield
       );
@@ -1068,7 +877,7 @@ export default class Game {
           ...originalCard.meta,
           isCardCopy: !originalCard.isToken || originalCard.meta?.isCardCopy,
         },
-        position: Game.fixPosition(newPosition),
+        position: fixPosition(newPosition),
         isToken: true,
         ...additionalProps,
       };
@@ -1434,9 +1243,7 @@ export default class Game {
 
     if (command === 'flip') {
       const numberOfCoins = Math.min(Math.max(args.numberOfCoins, 1), 100);
-      const results = Array.from({ length: numberOfCoins }, () =>
-        Game.getRandomValue(0, 1)
-      );
+      const results = Array.from({ length: numberOfCoins }, () => getRandomValue(0, 1));
       const numberOfWonFlips = results.filter((result) => result === 1).length;
 
       this.logAction({
@@ -1456,7 +1263,7 @@ export default class Game {
       const numberOfDice = Math.min(Math.max(args.numberOfDice, 1), 20);
 
       const results = Array.from({ length: numberOfDice }, () =>
-        Game.getRandomValue(1, sides)
+        getRandomValue(1, sides)
       );
       this.logAction({
         playerId: player.id,
@@ -1738,7 +1545,7 @@ export default class Game {
     }
 
     const getResult = () => {
-      const roll = Game.getRandomValue(1, 6);
+      const roll = getRandomValue(1, 6);
       if (roll === 1) return 'chaos';
       if (roll === 6) return 'planeswalk';
       return 'empty';
