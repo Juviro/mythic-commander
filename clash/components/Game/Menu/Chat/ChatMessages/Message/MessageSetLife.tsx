@@ -16,8 +16,9 @@ const MessageSetLife = ({ payload, playerId }: Props) => {
 
   if (payload.previousTotal === payload.total) return null;
 
-  const targetPlayer = gameState!.players.find((p) => p.id === payload.forPlayerId)!
-    .name!;
+  const targetPlayer = gameState!.players.find(
+    (p) => p.id === payload.forPlayerId
+  )!.name!;
 
   const didSetOwnLife = payload.forPlayerId === playerId;
 

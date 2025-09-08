@@ -21,7 +21,7 @@ type ModifierKey = 'alt' | 'control' | 'meta' | 'shift';
 
 interface Options {
   disabled?: boolean;
-  whenHovering?: RefObject<HTMLElement>;
+  whenHovering?: RefObject<Element | null>;
   modifierKeys?: ModifierKey[];
 }
 

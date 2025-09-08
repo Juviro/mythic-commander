@@ -21,7 +21,7 @@ interface Props extends PropsWithChildren {
   onClose?: () => void;
   noCloseTooltip?: string;
   headerColor?: 'primary' | 'default';
-  modalRef?: RefObject<HTMLDivElement>;
+  modalRef?: RefObject<HTMLDivElement | null>;
   closable?: boolean;
   additionalClassName?: string;
 }

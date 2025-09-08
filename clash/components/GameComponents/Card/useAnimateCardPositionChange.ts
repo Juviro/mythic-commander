@@ -9,7 +9,7 @@ import CardPositionContext, {
 const ANIMATION_THRESHOLD = 10;
 
 const storeCardPosition = (
-  cardRef: React.RefObject<HTMLDivElement>,
+  cardRef: React.RefObject<HTMLDivElement | null>,
   card: Card,
   isVisible: boolean,
   cardPositions: CardPositions,
@@ -31,7 +31,7 @@ const storeCardPosition = (
 
 const animateDirectPositionChange = (
   storedPosition: CardPosition,
-  cardRef: React.RefObject<HTMLDivElement>
+  cardRef: React.RefObject<HTMLDivElement | null>
 ) => {
   const { width, x, y } = cardRef.current!.getBoundingClientRect();
   let deltaX = storedPosition.x - x;
@@ -84,7 +84,7 @@ const animateDirectPositionChange = (
 
 const animateArcPositionChange = (
   storedPosition: CardPosition,
-  cardRef: React.RefObject<HTMLDivElement>,
+  cardRef: React.RefObject<HTMLDivElement | null>,
   isVisible?: boolean
 ) => {
   const { width, x } = cardRef.current!.getBoundingClientRect();
@@ -141,7 +141,7 @@ const animateArcPositionChange = (
 };
 
 const animateCardPositionChange = async (
-  cardRef: React.RefObject<HTMLDivElement>,
+  cardRef: React.RefObject<HTMLDivElement | null>,
   card: Card,
   cardPositions: CardPositions,
   isVisible: boolean,
@@ -168,7 +168,7 @@ const animateCardPositionChange = async (
 
 interface Props {
   card: Card;
-  cardRef: React.RefObject<HTMLDivElement>;
+  cardRef: React.RefObject<HTMLDivElement | null>;
   zone?: Zone;
   noAnimation?: boolean;
 }

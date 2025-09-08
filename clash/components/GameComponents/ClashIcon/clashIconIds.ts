@@ -324,7 +324,7 @@ export const GENERIC_ICON_IDS = [
   'random_card',
 ] as const;
 
-type MtgIconId = typeof MTG_ICON_IDS[number];
-export type GenericIconId = typeof GENERIC_ICON_IDS[number];
+type MtgIconId = (typeof MTG_ICON_IDS)[number];
+export type GenericIconId = (typeof GENERIC_ICON_IDS)[number];
 
 export type IconId = MtgIconId | GenericIconId;

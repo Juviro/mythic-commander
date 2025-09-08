@@ -2,8 +2,8 @@ import { useContext, useEffect } from 'react';
 import BattlefieldSelectionContext from './BattlefieldSelectionContext';
 
 const useSelection = (
-  wrapperRef: React.RefObject<HTMLDivElement>,
-  rectRef: React.RefObject<HTMLDivElement>
+  wrapperRef: React.RefObject<HTMLDivElement | null>,
+  rectRef: React.RefObject<HTMLDivElement | null>
 ) => {
   const { setHoveredCardIds } = useContext(BattlefieldSelectionContext);
 

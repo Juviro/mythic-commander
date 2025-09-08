@@ -7,7 +7,7 @@ import { DndItemTypes, DropCard, DropCardGroup } from 'types/dnd.types';
 
 interface Props {
   hand: Card[];
-  wrapperRef: React.RefObject<HTMLDivElement>;
+  wrapperRef: React.RefObject<HTMLDivElement | null>;
   player: Player;
 }
 

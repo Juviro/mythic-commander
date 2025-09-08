@@ -5,7 +5,7 @@ interface Options {
 }
 
 const useClickedOutside = (
-  ref: React.RefObject<HTMLElement>,
+  ref: React.RefObject<Element | null>,
   callback: () => void,
   { disabled }: Options = {}
 ) => {

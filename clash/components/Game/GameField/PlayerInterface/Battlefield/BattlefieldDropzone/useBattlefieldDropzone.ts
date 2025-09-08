@@ -10,7 +10,7 @@ import { DropCard, DropCardGroup } from 'types/dnd.types';
 interface Props {
   player: Player;
   isFlipped: boolean;
-  wrapperRef: RefObject<HTMLDivElement>;
+  wrapperRef: RefObject<HTMLDivElement | null>;
 }
 
 export const getRelativePosition = (

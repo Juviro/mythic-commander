@@ -26,7 +26,7 @@ const MIN_BATTLEFIELD_PADDING = 100;
 
 interface Props {
   player: Player;
-  battlefieldRef: RefObject<HTMLDivElement>;
+  battlefieldRef: RefObject<HTMLDivElement | null>;
 }
 
 const getColumnWidth = (minColumnWidth: number, battlefieldWidth: number) => {

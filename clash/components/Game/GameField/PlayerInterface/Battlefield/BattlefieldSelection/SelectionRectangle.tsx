@@ -51,7 +51,7 @@ export const getRectangle = (cards: Element[]) => {
 
 interface Props {
   selectedCardIds: string[];
-  wrapperRef: RefObject<HTMLDivElement>;
+  wrapperRef: RefObject<HTMLDivElement | null>;
   isFlipped: boolean;
   player: Player;
 }
@@ -137,7 +137,11 @@ const SelectionRectangle = ({
       onContextMenu={(e) => e.stopPropagation()}
       className={styles.selection_rectangle_wrapper}
     >
-      <div ref={preview} />
+      <div
+        ref={(node) => {
+          if (node) preview(node);
+        }}
+      />
       <ContextMenu items={contextMenuItems}>
         <div
           ref={(val) => {

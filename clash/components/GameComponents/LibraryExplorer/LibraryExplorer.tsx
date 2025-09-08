@@ -55,7 +55,7 @@ const getInitialPosition = (element: HTMLDivElement) => {
 
 interface Props {
   player: Player;
-  libraryRef: RefObject<HTMLDivElement>;
+  libraryRef: RefObject<HTMLDivElement | null>;
 }
 
 const LibraryExplorer = ({ player, libraryRef }: Props) => {

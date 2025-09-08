@@ -9,7 +9,7 @@ interface Props {
   card: BattlefieldCard;
   player: Player;
   selectedCardIds?: string[];
-  cardRef: RefObject<HTMLDivElement>;
+  cardRef: RefObject<HTMLDivElement | null>;
 }
 
 const useBattlefieldShortcuts = ({ card, player, selectedCardIds, cardRef }: Props) => {

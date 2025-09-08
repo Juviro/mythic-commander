@@ -10,7 +10,7 @@ const MIN_SIZE = 10;
 interface Props {
   startingPoint: XYCoord;
   currentPoint: XYCoord;
-  wrapperRef: React.RefObject<HTMLDivElement>;
+  wrapperRef: React.RefObject<HTMLDivElement | null>;
 }
 
 const DragRectange = ({ currentPoint, startingPoint, wrapperRef }: Props) => {

@@ -6,7 +6,7 @@ import GameStateContext from 'components/Game/GameStateContext';
 import useOrganizeLands from './useOrganizeLands';
 
 interface Props {
-  battlefieldRef: RefObject<HTMLDivElement>;
+  battlefieldRef: RefObject<HTMLDivElement | null>;
   player: Player;
 }
 

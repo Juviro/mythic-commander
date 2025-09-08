@@ -15,7 +15,7 @@ import useCreateTokenActions from './useCreateTokenActions';
 interface Props {
   cards: BattlefieldCard[];
   player: Player;
-  battlefieldRef: RefObject<HTMLDivElement>;
+  battlefieldRef: RefObject<HTMLDivElement | null>;
 }
 
 const useBattlefieldActions = ({ cards, player, battlefieldRef }: Props) => {

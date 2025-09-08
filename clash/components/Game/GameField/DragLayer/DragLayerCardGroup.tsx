@@ -14,8 +14,8 @@ import styles from './DragLayerCardGroup.module.css';
 import useCardGroupDragAlign from './useCardGroupDragAlign';
 
 const setRectangle = (
-  wrapperRef: RefObject<HTMLDivElement>,
-  rectRef: RefObject<HTMLDivElement>,
+  wrapperRef: RefObject<HTMLDivElement | null>,
+  rectRef: RefObject<HTMLDivElement | null>,
   cards: BattlefieldCardType[]
 ) => {
   const cardElements = cards

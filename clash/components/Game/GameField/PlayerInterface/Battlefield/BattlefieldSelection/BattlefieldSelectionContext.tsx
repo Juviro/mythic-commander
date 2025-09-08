@@ -20,7 +20,7 @@ interface ContextValue {
   selectedCardIds: string[];
   setSelectedCardsIds: (ids: string[]) => void;
   toggleCardSelection: (id: string) => void;
-  selectionRectangleRef: RefObject<HTMLDivElement>;
+  selectionRectangleRef: RefObject<HTMLDivElement | null>;
 }
 
 // @ts-ignore

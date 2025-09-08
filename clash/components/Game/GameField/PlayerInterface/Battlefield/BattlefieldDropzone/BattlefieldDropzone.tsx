@@ -9,7 +9,7 @@ import useBattlefieldDropzone from './useBattlefieldDropzone';
 interface Props extends PropsWithChildren {
   player: Player;
   isFlipped: boolean;
-  wrapperRef: React.RefObject<HTMLDivElement>;
+  wrapperRef: React.RefObject<HTMLDivElement | null>;
 }
 
 const BattlefieldDropzone = ({ children, player, wrapperRef, isFlipped }: Props) => {

@@ -29,7 +29,9 @@ const CardListHoverElement = ({ onDrop, index, numberOfElements, accept }: Props
 
   return (
     <div
-      ref={dropRef}
+      ref={(node) => {
+        if (node) dropRef(node);
+      }}
       style={style}
       className={classNames(styles.hover_element, {
         [styles.hover_element__is_over]: isOver,

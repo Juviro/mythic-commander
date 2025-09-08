@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useRef } from 'react';
 
 interface Props {
-  children: ReactElement;
+  children: ReactElement<any>;
   onLongPress: () => void;
   onPress: () => void;
 }
@@ -9,7 +9,7 @@ interface Props {
 const LongPress = ({ onLongPress, onPress, children }: Props) => {
   const timeout = useRef<number | null>(null);
   const isLongPress = useRef<boolean>(false);
-  const longPressCallback = useRef<() => void>();
+  const longPressCallback = useRef<() => void>(() => {});
 
   longPressCallback.current = onLongPress;
 
@@ -36,7 +36,7 @@ const LongPress = ({ onLongPress, onPress, children }: Props) => {
     };
   }, []);
 
-  return React.cloneElement(children, {
+  return React.cloneElement(children as any, {
     onMouseDown,
     onMouseUp,
     onTouchStart: onMouseDown,

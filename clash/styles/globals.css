@@ -43,3 +43,7 @@ a {
 .ant-dropdown-menu-submenu .anticon {
   font-size: 16px !important;
 }
+
+.ant-dropdown-menu-item-icon {
+  width: 14px;
+}
