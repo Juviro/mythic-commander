@@ -31,5 +31,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.ID_RSA_KEY }}
         port: ${{ secrets.PORT }}
-        script: cd /opt/mtg && git pull && yarn deploy-prod
+        script: cd /opt/mtg && git stash && git pull && yarn deploy-prod
 
