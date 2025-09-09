@@ -5,7 +5,6 @@ const SHORTCUTS = {
   TRANSFORM: 'f',
   COPY: 'c',
   DRAW: 'd',
-  SHUFFLE: 's',
   SEARCH: 's',
   REVEAL_CARDS: 'r',
   ORGANIZE_LANDS: 'o',

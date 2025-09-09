@@ -83,11 +83,14 @@ const useLibraryActions = (player: Player) => {
   };
 
   useShortcut(SHORTCUTS.DRAW, onDrawCard, { disabled: !isSelf });
+  // legacy support - search used to have a shift modifier
   useShortcut(SHORTCUTS.SEARCH, () => onSearchLibrary(player.id), {
     disabled: !isSelf,
     modifierKeys: ['shift'],
   });
-  useShortcut(SHORTCUTS.SHUFFLE, onShuffle, { disabled: !isSelf });
+  useShortcut(SHORTCUTS.SEARCH, () => onSearchLibrary(player.id), {
+    disabled: !isSelf,
+  });
   useShortcut(SHORTCUTS.REVEAL_CARDS, revealCards, { disabled: !isSelf });
 
   const moveCardActions = useMoveCardActions({
@@ -108,7 +111,7 @@ const useLibraryActions = (player: Player) => {
   const items: MenuProps['items'] = [
     {
       key: 'search',
-      label: 'Search Library... [Shift + S]',
+      label: 'Search Library... [S]',
       disabled: !player.zones.library.length || isPeeking,
       onClick: () => onSearchLibrary(player.id),
       icon: <SearchOutlined />,
@@ -173,7 +176,7 @@ const useLibraryActions = (player: Player) => {
       },
       {
         key: 'shuffle',
-        label: 'Shuffle [S]',
+        label: 'Shuffle',
         disabled: !player.zones.library.length,
         onClick: onShuffle,
         icon: <ClashIcon id="shuffle" size={16} />,

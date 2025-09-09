@@ -36,10 +36,6 @@ const GAME_SHORTCUTS = [
   },
   {
     label: 'Search library',
-    value: '[SHIFT] + S',
-  },
-  {
-    label: 'Shuffle library',
     value: 'S',
   },
   {
