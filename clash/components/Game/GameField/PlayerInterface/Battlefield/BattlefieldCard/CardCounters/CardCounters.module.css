@@ -58,11 +58,6 @@
     background: radial-gradient(circle at 30% 30%, #00ff00, #000);
 }
 
-.counter_bubble__yellow {
-    background: radial-gradient(circle at 30% 30%, #ffff00, #000);
-    color: black;
-}
-
 .counter_bubble__red {
     background: radial-gradient(circle at 30% 30%, #ff0000, #000);
 }
@@ -160,4 +155,23 @@
 .tooltip_button_plus {
     cursor: pointer;
     padding: 0 8px 0 12px;
+}
+
+.lore {
+    background: url('/assets/icons/chapter.webp') no-repeat center center;
+    background-size: contain;
+    color: var(--color-text);
+    font-size: 18px;
+    font-family: Times New Roman;
+    
+    position: absolute;
+    bottom: 32px;
+    right: 16px;
+    width: 28px;
+    height: 28px;
+    padding-left: 1px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

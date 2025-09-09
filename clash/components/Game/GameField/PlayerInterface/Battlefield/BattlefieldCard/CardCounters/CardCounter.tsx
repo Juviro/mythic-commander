@@ -6,6 +6,7 @@ import { getCountersLabel, getIconType } from 'constants/counters';
 import classNames from 'classnames';
 import styles from './CardCounters.module.css';
 import CardCounterTooltip from './CardCounterTooltip';
+import getRomanNumeral from './getRomanNumeral';
 
 interface Props {
   type: string;
@@ -20,13 +21,11 @@ const CardCounter = ({ amount, type, clashId, isLabel, additionalClassName }: Pr
   if (
     lowerCaseType === 'generic' ||
     lowerCaseType === 'amount' ||
-    lowerCaseType === 'lore' ||
     lowerCaseType === 'defense'
   ) {
     const colors = {
       generic: 'green',
       amount: 'orange',
-      lore: 'yellow',
       defense: 'red',
     };
     const colorClassName = `counter_bubble__${colors[lowerCaseType]}`;
@@ -41,6 +40,16 @@ const CardCounter = ({ amount, type, clashId, isLabel, additionalClassName }: Pr
           )}
         >
           <span>{amount}</span>
+        </div>
+      </CardCounterTooltip>
+    );
+  }
+
+  if (lowerCaseType === 'lore') {
+    return (
+      <CardCounterTooltip type={type} amount={amount} clashId={clashId}>
+        <div className={classNames(additionalClassName, styles.lore)}>
+          {getRomanNumeral(amount)}
         </div>
       </CardCounterTooltip>
     );

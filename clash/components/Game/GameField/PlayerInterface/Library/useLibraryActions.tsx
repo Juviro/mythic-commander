@@ -83,6 +83,15 @@ const useLibraryActions = (player: Player) => {
     });
   };
 
+  const onExileTopCard = (amount: number) => {
+    const cardsToExile = player.zones.library.slice(-amount);
+    cardsToExile.forEach((card, index) => {
+      onMoveCard(card.clashId, ZONES.EXILE, player.id, {
+        skipUpdate: index !== amount - 1,
+      });
+    });
+  };
+
   useShortcut(SHORTCUTS.DRAW, onDrawCard, { disabled: !isSelf });
   // legacy support - search used to have a shift modifier
   useShortcut(SHORTCUTS.SEARCH, () => onSearchLibrary(player.id), {
@@ -111,15 +120,6 @@ const useLibraryActions = (player: Player) => {
   };
   const onMillCards = (amount: number) => {
     onMill(player.id, amount);
-  };
-  
-  const onExileTopCard = (amount: number) => {
-    const cardsToExile = player.zones.library.slice(-amount);
-    cardsToExile.forEach((card, index) => {
-      onMoveCard(card.clashId, ZONES.EXILE, player.id, {
-        skipUpdate: index !== amount - 1,
-      });
-    });
   };
 
   const isPeeking = peekingCards?.zone === ZONES.LIBRARY;
