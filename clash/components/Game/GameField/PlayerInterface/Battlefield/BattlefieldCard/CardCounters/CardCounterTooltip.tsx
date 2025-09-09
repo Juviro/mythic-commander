@@ -92,10 +92,7 @@ const CardCounterTooltip = ({ children, type, amount, clashId, hidden }: Props) 
     <Tooltip
       title={tooltipContent}
       arrow={false}
-      overlayInnerStyle={{
-        background: 'white',
-        color: 'inherit',
-      }}
+      styles={{ body: { background: 'white', color: 'inherit' } }}
     >
       {children}
     </Tooltip>

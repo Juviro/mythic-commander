@@ -19,11 +19,13 @@ const CardCounter = ({ amount, type, clashId, isLabel, additionalClassName }: Pr
   const lowerCaseType = type.toLowerCase();
   if (
     lowerCaseType === 'generic' ||
+    lowerCaseType === 'amount' ||
     lowerCaseType === 'lore' ||
     lowerCaseType === 'defense'
   ) {
     const colors = {
       generic: 'green',
+      amount: 'orange',
       lore: 'yellow',
       defense: 'red',
     };

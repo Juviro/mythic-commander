@@ -4,6 +4,10 @@ export const DEFAULT_COUNTERS = [
     label: 'Generic',
   },
   {
+    type: 'amount',
+    label: 'Amount',
+  },
+  {
     type: 'p1/p1',
     label: '+1 / +1',
   },
