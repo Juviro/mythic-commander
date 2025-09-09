@@ -6,6 +6,8 @@ const SHORTCUTS = {
   COPY: 'c',
   DRAW: 'd',
   SEARCH: 's',
+  MILL_CARD: 'm',
+  EXILE_TOP_CARD: 'e',
   REVEAL_CARDS: 'r',
   ORGANIZE_LANDS: 'o',
   CANCEL: 'Escape',

@@ -8,6 +8,7 @@ const {
   SET_COMMANDER_DAMAGE,
   MOVE_CARDS,
   UNDO,
+  MILL,
 } = LOG_MESSAGES;
 
 const GROUPABLE_LOG_KEYS = [
@@ -18,6 +19,7 @@ const GROUPABLE_LOG_KEYS = [
   SET_COMMANDER_DAMAGE,
   MOVE_CARDS,
   UNDO,
+  MILL,
 ] as string[];
 
 const simpleCompareObject = (obj1: Record<string, any>, obj2: Record<string, any>) => {
@@ -78,7 +80,14 @@ const addLogEntry = (currentLog: GameLog[], newLog: GameLog) => {
   ) {
     return [...currentLog, newLog];
   }
-
+  if (
+    newLastLog.logKey === MILL &&
+    newLog.logKey === MILL &&
+    newLastLog.payload.peekedPlayerId !== newLog.payload.peekedPlayerId
+  ) {
+    return [...currentLog, newLog];
+  }
+  
   if ('amount' in newLog.payload && 'amount' in newLastLog.payload) {
     newLastLog.payload.amount += newLog.payload.amount;
   }

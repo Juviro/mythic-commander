@@ -64,6 +64,7 @@ const useLibraryActions = (player: Player) => {
   const {
     onPeek,
     onMill,
+    onMoveCard,
     onSearchLibrary,
     onPlayTopLibraryCardFaceDown,
     onShuffle,
@@ -92,6 +93,12 @@ const useLibraryActions = (player: Player) => {
     disabled: !isSelf,
   });
   useShortcut(SHORTCUTS.REVEAL_CARDS, revealCards, { disabled: !isSelf });
+  useShortcut(SHORTCUTS.MILL_CARD, () => onMill(player.id, 1), {
+    disabled: !isSelf,
+  });
+  useShortcut(SHORTCUTS.EXILE_TOP_CARD, () => onExileTopCard(1), {
+    disabled: !isSelf,
+  });
 
   const moveCardActions = useMoveCardActions({
     cardIds,
@@ -104,6 +111,15 @@ const useLibraryActions = (player: Player) => {
   };
   const onMillCards = (amount: number) => {
     onMill(player.id, amount);
+  };
+  
+  const onExileTopCard = (amount: number) => {
+    const cardsToExile = player.zones.library.slice(-amount);
+    cardsToExile.forEach((card, index) => {
+      onMoveCard(card.clashId, ZONES.EXILE, player.id, {
+        skipUpdate: index !== amount - 1,
+      });
+    });
   };
 
   const isPeeking = peekingCards?.zone === ZONES.LIBRARY;
@@ -187,7 +203,7 @@ const useLibraryActions = (player: Player) => {
     const secondaryActions = [
       {
         key: 'mill',
-        label: 'Mill cards...',
+        label: `Mill cards... [${SHORTCUTS.MILL_CARD.toUpperCase()}]`,
         disabled: !player.zones.library.length,
         children: getPeekSubItems(
           onMillCards,
@@ -196,6 +212,18 @@ const useLibraryActions = (player: Player) => {
           player.zones.library.length
         ),
         icon: <ClashIcon id="graveyard" size={16} />,
+      },
+      {
+        key: 'exile-top-card',
+        label: `Exile top card... [${SHORTCUTS.EXILE_TOP_CARD.toUpperCase()}]`,
+        disabled: !player.zones.library.length,
+        children: getPeekSubItems(
+          onExileTopCard,
+          'exile-top-card',
+          undefined,
+          player.zones.library.length
+        ),
+        icon: <ClashIcon id="exile" size={16} />,
       },
       {
         key: 'move',
