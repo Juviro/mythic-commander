@@ -32,6 +32,7 @@ import {
   HoverCardPayload,
   SetPlayWithTopCardRevealedPayload,
   RevealCardsFromHandPayload,
+  SendEmotePayload,
 } from 'backend/constants/wsEvents';
 import {
   Phase,
@@ -41,6 +42,7 @@ import {
 } from 'backend/database/gamestate.types';
 import { PlanechaseSet } from 'backend/lobby/GameLobby.types';
 import SocketContext from 'components/SocketContext/SocketContextProvider';
+import { EmoteId } from 'components/lib/Emote/emoteIds';
 import useSettings from './Menu/GameInfo/GuideModal/Settings/useSettings';
 
 const useGameActions = () => {
@@ -188,6 +190,11 @@ const useGameActions = () => {
     socket?.emit(SOCKET_MSG_GAME.SET_PLAYER_LIFE, payload);
   };
 
+  const onSendEmote = (emote: EmoteId) => {
+    const payload: SendEmotePayload = { emote };
+    socket?.emit(SOCKET_MSG_GAME.SEND_EMOTE, payload);
+  };
+
   const setCommanderDamage = (
     total: number,
     commanderId: string,
@@ -303,6 +310,7 @@ const useGameActions = () => {
     planeswalk,
     onSetPlayWithTopCardRevealed,
     undo,
+    onSendEmote,
   };
 };
 

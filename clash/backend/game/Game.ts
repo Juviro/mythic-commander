@@ -49,6 +49,7 @@ import {
   TurnCardsFaceDownPayload,
   HoverCardPayload,
   SetPlayWithTopCardRevealedPayload,
+  SendEmotePayload,
 } from 'backend/constants/wsEvents';
 import { User as DatabaseUser } from 'backend/database/getUser';
 import {
@@ -1227,6 +1228,15 @@ export default class Game {
       logKey: LOG_MESSAGES.SHUFFLE_LIBRARY,
       payload: {},
     });
+  }
+
+  sendEmote(playerId: string, payload: SendEmotePayload) {
+    const player = this.getPlayerById(playerId);
+    player.emote = {
+      emote: payload.emote,
+      timestamp: Date.now(),
+    };
+    this.emitPlayerUpdate(player);
   }
 
   sendChatMessage(playerId: string, { message }: SendMessagePayload) {

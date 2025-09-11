@@ -1,0 +1,32 @@
+.emote_overlay {
+    position: absolute;
+    bottom: 140%;
+    left: 16px;
+    right: 16px;
+    background: white;
+    border-radius: 16px;
+    display: grid;
+    padding: 8px;
+    grid-auto-flow: column dense;
+    grid-template-rows: 1fr 1fr;
+    gap: 16px;
+    overflow: auto;
+    z-index: 2;
+}
+
+.emote_container {
+    display: flex;
+    width: 120px;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 8px;
+    transition: background 0.2s;
+    border-radius: 8px;
+}
+
+.emote_container:hover {
+    background: var(--color-primary--light);
+}

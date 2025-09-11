@@ -32,15 +32,19 @@
   }
 }
 
+.exile {
+  grid-area: exile;
+}
+
 .wrapper {
   aspect-ratio: 1 / 1;
   border-radius: 4px;
   align-self: flex-end;
-  margin: 16px 0;
+  margin-bottom: 16px;
   color: var(--color-icon-light);
   border: 3px solid var(--player-color);
   max-width: 120px;
-  width: 70%;
+  width: 100%;
   justify-self: flex-end;
   cursor: pointer;
 }

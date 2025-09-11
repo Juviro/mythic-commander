@@ -9,6 +9,8 @@ import Graveyard from './Graveyard/Graveyard';
 import Battlefield from './Battlefield/Battlefield';
 import Exile from './Exile/Exile';
 import Mulligan from './Mulligan/Mulligan';
+import EmoteSelection from './EmoteSelection/EmoteSelection';
+import PlayerEmote from './PlayerEmote/PlayerEmote';
 
 interface Props {
   player: Player;
@@ -31,6 +33,8 @@ const PlayerInterface = ({ player, isSelf, isFlipped }: Props) => {
         ) : (
           <Mulligan player={player} isSelf={isSelf} />
         )}
+        {isSelf && <EmoteSelection />}
+        <PlayerEmote player={player} />
         <Exile player={player} />
         <div />
       </div>

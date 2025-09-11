@@ -54,17 +54,22 @@
 }
 
 .interface {
+  position: relative;
   width: 100%;
   padding: 0 16px;
   display: grid;
   container: interface / inline-size;
   grid-template-columns: 110px 110px auto 6cqw;
-  grid-template-areas: 'graveyard library hand exile';
+  grid-template-areas: 
+    'graveyard library hand emote'
+    'graveyard library hand exile';
 }
 
 :global(.transformed) .interface {
   grid-template-columns: 6cqw auto 110px 110px;
-  grid-template-areas: 'exile hand library graveyard';
+  grid-template-areas: 
+    'exile hand library graveyard'
+    'emote hand library graveyard';
 }
 
 

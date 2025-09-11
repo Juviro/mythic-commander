@@ -9,6 +9,7 @@ import { DndItemTypes, DropCard, DropCardGroup } from 'types/dnd.types';
 import ContextMenu from 'components/GameComponents/ContextMenu/ContextMenu';
 import CardListModal from 'components/GameComponents/CardListModal/CardListModal';
 import Dropzone from 'components/GameComponents/Dropzone/Dropzone';
+import classNames from 'classnames';
 import useExileActions from './useExileActions';
 
 import styles from './Exile.module.css';
@@ -56,12 +57,12 @@ const Exile = ({ player }: Props) => {
   if (!hasCards && !canDrop) {
     // it's important to always render something,
     // otherwise chrome will crash for some reason
-    return <div />;
+    return <div className={styles.exile} />;
   }
 
   return (
     <ContextMenu items={exileActions}>
-      <div className={styles.wrapper}>
+      <div className={classNames(styles.wrapper, styles.exile)}>
         <CardListModal
           player={player}
           title="Exile"

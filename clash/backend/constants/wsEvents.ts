@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-cycle
 import { FloatingMana, Phase, PlayerZone } from 'backend/database/gamestate.types';
+import { EmoteId } from 'components/lib/Emote/emoteIds';
 import { PermanentCardType } from 'utils/cardTypes';
 
 export const SOCKET_MSG_GENERAL = {
@@ -37,6 +38,7 @@ export const SOCKET_MSG_GAME = {
   END_TURN: 'end_turn',
   SET_PHASE: 'set_phase',
   SET_STOP_POINT: 'set_stop_point',
+  SEND_EMOTE: 'send_emote',
 
   DRAW_CARD: 'draw_card',
   MOVE_CARD: 'move_card',
@@ -247,4 +249,8 @@ export interface SetStopPointPayload {
 
 export interface SetPlayWithTopCardRevealedPayload {
   revealed: boolean;
+}
+
+export interface SendEmotePayload {
+  emote: EmoteId;
 }

@@ -39,6 +39,7 @@ import {
   TurnCardsFaceDownPayload,
   HoverCardPayload,
   SetPlayWithTopCardRevealedPayload,
+  SendEmotePayload,
 } from '../constants/wsEvents';
 import Game from './Game';
 
@@ -223,6 +224,10 @@ const gameSocketActions = (io: Server) => {
 
     socket.on(SOCKET_MSG_GAME.SHUFFLE_LIBRARY, () => {
       currentGames[currentGameId].shuffleLibrary(user.id);
+    });
+
+    socket.on(SOCKET_MSG_GAME.SEND_EMOTE, (payload: SendEmotePayload) => {
+      currentGames[currentGameId].sendEmote(user.id, payload);
     });
 
     socket.on(SOCKET_MSG_GAME.SEND_CHAT_MESSAGE, (message: SendMessagePayload) => {

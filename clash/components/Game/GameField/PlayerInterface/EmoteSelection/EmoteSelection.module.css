@@ -1,0 +1,31 @@
+.emote_selection_wrapper {
+    position: relative;
+    grid-area: emote;
+}
+
+.emote_selection {
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+    position: absolute;
+    transform: translateY(-60%);
+}
+
+.emote_animated {
+    display: none;
+    aspect-ratio: 1;
+}
+
+.emote_selection:hover .emote_animated {
+    display: block;
+}
+
+.emote_static {
+    width: 100%;
+    height: 100%;
+}
+
+.emote_selection:hover .emote_static {
+    display: none;
+}

@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { GameLog } from 'backend/constants/logMessages';
 import { LobbyDeck, PlanechaseSet } from 'backend/lobby/GameLobby.types';
+import { EmoteId } from 'components/lib/Emote/emoteIds';
 
 export const PHASES = ['beginning', 'main1', 'combat', 'main2', 'end'] as const;
 
@@ -162,6 +163,11 @@ export interface PlayerRematchOptions {
   deck: LobbyDeck;
 }
 
+interface Emote {
+  emote: EmoteId;
+  timestamp: number;
+}
+
 export interface Player {
   id: string;
   name: string;
@@ -176,6 +182,7 @@ export interface Player {
   revealedCards?: RevealedCards;
   rematchOptions?: PlayerRematchOptions;
   playWithTopCardRevealed?: boolean;
+  emote?: Emote;
 }
 
 // ##################### Meta #####################
