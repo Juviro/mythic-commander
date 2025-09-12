@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, WheelEvent } from 'react';
 
 import { EmoteId, EMOTES } from 'components/lib/Emote/emoteIds';
 import Emote from 'components/lib/Emote/Emote';
@@ -25,8 +25,14 @@ const EmoteOverlay = ({ onClose }: Props) => {
     onSendEmote(emote);
   };
 
+  // Allow scrolling horizontally with the mouse wheel
+  const onWheel = (e: WheelEvent<HTMLDivElement>) => {
+    if (!wrapperRef.current || !e.deltaY) return;
+    wrapperRef.current.scrollLeft += e.deltaY;
+  };
+
   return (
-    <div className={styles.emote_overlay} ref={wrapperRef}>
+    <div className={styles.emote_overlay} ref={wrapperRef} onWheel={onWheel}>
       {Object.entries(EMOTES).map(([emote, name]) => (
         <button
           key={emote}
@@ -34,7 +40,7 @@ const EmoteOverlay = ({ onClose }: Props) => {
           className={styles.emote_container}
           onClick={() => onEmoteClick(emote as EmoteId)}
         >
-          <Emote id={emote as EmoteId} />
+          <Emote id={emote as EmoteId} additionalClassName={styles.emote} />
           <div>{name}</div>
         </button>
       ))}

@@ -1,6 +1,9 @@
 .emote_selection_wrapper {
     position: relative;
     grid-area: emote;
+    max-width: 120px;
+    justify-self: flex-end;
+    width: 100%;
 }
 
 .emote_selection {

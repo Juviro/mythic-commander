@@ -4,7 +4,7 @@
     left: 16px;
     right: 16px;
     background: white;
-    border-radius: 16px;
+    border-radius: 12px;
     display: grid;
     padding: 8px;
     grid-auto-flow: column dense;
@@ -16,9 +16,10 @@
 
 .emote_container {
     display: flex;
-    width: 120px;
+    justify-content: space-between;
     flex-direction: column;
     align-items: center;
+    width: 120px;
     cursor: pointer;
     border: none;
     background: none;
@@ -29,4 +30,8 @@
 
 .emote_container:hover {
     background: var(--color-primary--light);
+}
+
+.emote {
+    min-height: 104px;
 }
