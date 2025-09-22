@@ -1,8 +1,8 @@
 .emote_overlay {
     position: absolute;
     bottom: 140%;
-    left: 16px;
     right: 16px;
+    width: calc(100% - 32px);
     background: white;
     border-radius: 12px;
     display: grid;
@@ -12,6 +12,7 @@
     gap: 16px;
     overflow: auto;
     z-index: 2;
+    max-width: fit-content;
 }
 
 .emote_container {
