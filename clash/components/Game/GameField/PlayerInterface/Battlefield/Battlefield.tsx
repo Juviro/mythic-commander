@@ -69,6 +69,7 @@ const Battlefield = ({ player, isFlipped, isSelf }: Props) => {
               player={player}
               isFlipped={isFlipped}
               wrapperRef={wrapperRef}
+              id={`battlefield-dropzone-${player.id}`}
             >
               <BattlefieldGrid />
               {cards.map((card) => (

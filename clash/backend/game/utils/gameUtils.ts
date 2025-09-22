@@ -18,6 +18,7 @@ export const obfuscatePlayer = (player: Player, selfId: string): Player => {
     return {
       clashId: card.clashId,
       ownerId: card.ownerId,
+      attachedCardIds: card.attachedCardIds,
     } as Card;
   };
 
@@ -38,6 +39,7 @@ export const obfuscatePlayer = (player: Player, selfId: string): Player => {
       counters: card.counters,
       ownerId: card.ownerId,
       visibleTo: card.visibleTo,
+      attachedCardIds: card.attachedCardIds,
     } as FaceDownCard;
 
     if (!card.visibleTo?.includes(selfId)) {
@@ -110,16 +112,23 @@ export const obfuscatePlanechase = (
   } as NonNullable<GameState['planechase']>;
 };
 
-export const getStackedPosition = (position: XYCoord, index = 1): XYCoord => {
+export const getStackedPosition = (position: XYCoord, index = 1, direction: 'up' | 'down'): XYCoord => {
+  if (direction === 'up') {
+    return {
+      x: position.x - index * 2,
+      y: position.y - index * 4,
+    };
+  }
   return {
-    x: position.x + index * 1,
-    y: position.y + index * 2,
+    x: position.x + index * 2,
+    y: position.y + index * 4,
   };
 };
 
 export const getFirstAvailablePosition = (
   initalPosition: XYCoord,
-  battlefield: BattlefieldCard[]
+  battlefield: BattlefieldCard[],
+  direction: 'up' | 'down' = 'down'
 ): XYCoord => {
   const doesCardExistAtPosition = (newPosition: XYCoord) => {
     return battlefield.some(
@@ -129,7 +138,7 @@ export const getFirstAvailablePosition = (
 
   let stackedPosition = initalPosition;
   while (doesCardExistAtPosition(stackedPosition)) {
-    stackedPosition = getStackedPosition(stackedPosition);
+    stackedPosition = getStackedPosition(stackedPosition, 1, direction);
   }
   return stackedPosition;
 };

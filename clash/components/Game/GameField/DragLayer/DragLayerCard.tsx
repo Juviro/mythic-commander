@@ -10,6 +10,7 @@ import GameStateContext from 'components/Game/GameStateContext';
 import useCardDragAlign from './useCardDragAlign';
 
 import styles from './DragLayerCard.module.css';
+import { createPortal } from 'react-dom';
 
 interface Props {
   item: VisibleBattlefieldCard;
@@ -31,13 +32,23 @@ const DragLayerCard = ({ item, currentOffset }: Props) => {
     '--size-card-width': `${battlefieldCardWidth}px`,
   } as CSSProperties;
 
-  return (
+  const getAttachText = () => {
+    if (cardToAlign!.position === 'topLeft') return 'Attach below';
+    return 'Attach above';
+  };
+
+  const component = (
     <div
       style={style}
       className={classNames(styles.card_wrapper, {
         [styles.card_wrapper__stacked_behind]: cardToAlign?.position === 'topLeft',
       })}
     >
+      {cardToAlign && (
+        <div className={classNames(styles.card_to_align, styles.card_tooltip)}>
+          {getAttachText()}
+        </div>
+      )}
       <div
         className={classNames(styles.card, {
           [styles.card__flipped]: shouldFlip,
@@ -49,11 +60,22 @@ const DragLayerCard = ({ item, currentOffset }: Props) => {
           transformed={item.transformed}
         />
       </div>
-      {isSnapping && (
-        <div className={styles.shift_tooltip}>Hold Shift to disabled snapping</div>
+      {isSnapping && !cardToAlign && (
+        <div className={classNames(styles.shift_tooltip, styles.card_tooltip)}>Hold Shift to disabled snapping</div>
       )}
     </div>
   );
+
+  if (!hoveredBattlefield.current?.playerId) {
+    return component;
+  }
+
+  const dropzone = document.getElementById(`battlefield-dropzone-${hoveredBattlefield.current.playerId}`);
+  if (!dropzone) {
+    return component;
+  }
+
+  return createPortal(component, dropzone!);
 };
 
 export default DragLayerCard;

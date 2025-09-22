@@ -80,11 +80,17 @@ export interface AcceptHandPayload {
   cardIdsToLibrary: string[];
 }
 
+export interface AttachedCard {
+  clashId: string;
+  order: "above" | "below";
+}
+
 export interface MoveCardDetails {
   position?: { x: number; y: number };
   index?: number;
   faceDown?: boolean;
   skipUpdate?: boolean;
+  attachTo?: AttachedCard;
 }
 
 type MoveCardTo =

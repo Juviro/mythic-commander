@@ -54,6 +54,7 @@ const BattlefieldCard = ({ card, player, inSelection, inPreview }: Props) => {
     '--rotation': `${rotation}deg`,
   } as CSSProperties;
 
+  console.log('card', card)
   return (
     <ContextMenu items={isSelected ? null : contextMenuItems} placement="bottomLeft">
       <div

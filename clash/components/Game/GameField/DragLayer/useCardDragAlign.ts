@@ -11,6 +11,7 @@ import {
   HORIZONTAL_GRID_SIZE,
   VERTICAL_GRID_SIZE,
 } from '../PlayerInterface/Battlefield/BattlefieldGrid/BattlefieldGrid';
+import { AttachedCard } from 'backend/constants/wsEvents';
 
 const MIN_DISTANCE_STACK = 40;
 export const STACK_DISTANCE_X = 15;
@@ -172,12 +173,16 @@ const useCardDragAlign = (item: Card, currentOffset: XYCoord | null) => {
     const cardX = left + battlefieldCardWidth / 2;
     const cardY = top + battlefieldCardHeight / 2;
 
-    const placeBehindOthers = cardToAlign?.position === 'topLeft';
+    const getAttachTo = () => {
+      if (!cardToAlign) return undefined;
+      const order = cardToAlign.position === 'topLeft' ? 'below' : 'above';
+      return { clashId: cardToAlign.element.getAttribute('data-card-id')!, order } as AttachedCard;
+    };
 
     snapChoords.current = {
       x: cardX,
       y: cardY,
-      placeBehindOthers,
+      attachTo: getAttachTo(),
     };
   }, [top, left]);
 

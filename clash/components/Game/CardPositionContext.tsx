@@ -1,3 +1,4 @@
+import { AttachedCard } from 'backend/constants/wsEvents';
 import {
   ActivePlane,
   BattlefieldCard,
@@ -29,7 +30,7 @@ export interface SnapChoords {
   y?: number | null;
   groupX?: number;
   groupY?: number;
-  placeBehindOthers?: boolean;
+  attachTo?: AttachedCard;
 }
 
 interface Point {

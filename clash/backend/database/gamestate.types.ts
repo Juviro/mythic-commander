@@ -11,6 +11,7 @@ export type Phase = typeof PHASES[number];
 export interface HiddenCard {
   clashId: string;
   ownerId: string;
+  attachedCardIds?: string[];
 }
 
 export interface RelatedCards {

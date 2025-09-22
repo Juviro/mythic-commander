@@ -13,6 +13,22 @@
     z-index: -1;
 }
 
+.card_to_align {
+    position: absolute;
+    top: -20px;
+    white-space: nowrap;
+    min-width: 100%;
+}
+
+.card_tooltip {
+    font-style: italic;
+    color: var(--color-text-light);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 2px;
+    font-size: 12px;
+    text-align: center;
+}
+
 .card {
     /* same as battlefield card */
     --size-card-padding: 2px;
@@ -31,11 +47,5 @@
     top: 10%;
     left: 10%;
     right: 10%;
-    padding: 2px;
-    color: var(--color-text-light);
-    text-align: center;
-    font-size: 12px;
     opacity: 0.8;
-    font-style: italic;
-    background: rgba(0, 0, 0, 0.8);
 }

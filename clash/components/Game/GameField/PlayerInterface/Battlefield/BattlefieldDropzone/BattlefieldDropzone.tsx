@@ -10,9 +10,10 @@ interface Props extends PropsWithChildren {
   player: Player;
   isFlipped: boolean;
   wrapperRef: React.RefObject<HTMLDivElement | null>;
+  id?: string;
 }
 
-const BattlefieldDropzone = ({ children, player, wrapperRef, isFlipped }: Props) => {
+const BattlefieldDropzone = ({ children, player, wrapperRef, isFlipped, id }: Props) => {
   const { moveCardGroup, moveSingleCard } = useBattlefieldDropzone({
     wrapperRef,
     isFlipped,
@@ -29,6 +30,7 @@ const BattlefieldDropzone = ({ children, player, wrapperRef, isFlipped }: Props)
 
   return (
     <Dropzone
+      id={id}
       noIsOverStyle
       onDrop={onDrop}
       playerId={player.id}

@@ -118,9 +118,12 @@ const useBattlefieldDropzone = ({ player, wrapperRef, isFlipped }: Props) => {
 
     const position = { x: posX, y: posY };
 
+    console.log('snapChoords?.current', snapChoords?.current)
+
     onMoveCard(clashId, ZONES.BATTLEFIELD, player.id, {
       position,
-      index: snapChoords?.current?.placeBehindOthers ? 0 : undefined,
+      index: snapChoords?.current?.attachTo?.order === 'below' ? 0 : undefined,
+      attachTo: snapChoords?.current?.attachTo,
     });
   };
 

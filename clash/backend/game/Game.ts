@@ -74,6 +74,7 @@ import {
   getFirstAvailablePosition,
   fixPosition,
   getRandomValue,
+  getStackedPosition,
 } from './utils/gameUtils';
 
 const MAX_UNDO_STATES = 10;
@@ -481,12 +482,13 @@ export default class Game {
   async moveCard(playerId: string, payload: MoveCardPayload) {
     this.previousGameState = cloneDeep(this.gameState);
 
-    const { clashId, to, position, index, faceDown, skipUpdate } = payload;
+    const { clashId, to, position, index, faceDown, skipUpdate, attachTo } = payload;
     const isMovingOntoStack = to.zone === 'stack';
 
     if (isMovingOntoStack && !this.gameState.stack.visible) {
       this.gameState.stack.visible = true;
     }
+
 
     const playersToUpdate = new Set<string>(isMovingOntoStack ? [] : [to.playerId]);
 
@@ -494,18 +496,23 @@ export default class Game {
     let fromZone: Zone;
     let cardToMove: VisibleCard;
     let shouldEmitStackUpdate = false;
+    let attachToCard: VisibleCard;
 
     let spliceIndex = -1;
 
     this.gameState.players.forEach((player) => {
       Object.entries(player.zones).forEach(([zone, cards]) => {
-        return (cards as Card[]).some((card, i) => {
-          if (card.clashId !== clashId) return false;
+        (cards as Card[]).forEach((card, i) => {
+          if (attachTo && card.clashId === attachTo.clashId) {
+            attachToCard = card as VisibleCard;
+            return;
+          }
+          if (card.clashId !== clashId) return;
+
           fromPlayer = player;
           fromZone = zone as Zone;
           spliceIndex = i;
           cardToMove = cards.splice(i, 1)[0] as VisibleCard;
-          return true;
         });
       });
 
@@ -523,6 +530,7 @@ export default class Game {
       }
     });
 
+
     this.gameState.stack?.cards.forEach((card, i) => {
       if (card.clashId !== clashId) return;
       shouldEmitStackUpdate = true;
@@ -530,6 +538,7 @@ export default class Game {
       cardToMove = this.gameState.stack?.cards.splice(i, 1)[0] as VisibleCard;
       fromZone = 'stack';
     });
+    
 
     if (isMovingOntoStack) {
       if (fromPlayer!) {
@@ -549,6 +558,35 @@ export default class Game {
       return;
     }
 
+
+    let toPlayer = this.getPlayerById(to.playerId);
+
+
+    if (attachTo && attachToCard!) {
+      const currentAttachedCardIds = cardToMove!.attachedCardIds || [];
+      const currentAttachedCardIdsOfAttachTo = attachToCard.attachedCardIds || [];
+      let newAttachedCardIds = [];
+
+      if (attachTo.order === 'above') {
+        cardToMove!.attachedCardIds = [...currentAttachedCardIds, attachTo.clashId, ...currentAttachedCardIdsOfAttachTo];
+        newAttachedCardIds = cardToMove!.attachedCardIds;
+      } else {
+        attachToCard.attachedCardIds = [...currentAttachedCardIdsOfAttachTo, cardToMove!.clashId, ...currentAttachedCardIds];
+        newAttachedCardIds = attachToCard.attachedCardIds;
+      }
+
+      // Make sure the stacking order is correct
+      const cardsToAddAtEnd: BattlefieldCard[] = [];
+      toPlayer.zones.battlefield.filter((card) => {
+        if (newAttachedCardIds.includes(card.clashId)) {
+          cardsToAddAtEnd.push(card);
+          return false;
+        }
+        return true;
+      })
+      toPlayer.zones.battlefield.push(...cardsToAddAtEnd);
+    }
+
     let newCard = { ...cardToMove!, position: fixPosition(position) };
     const isCardFaceDown = faceDown ?? (cardToMove! as BattlefieldCard)?.faceDown;
 
@@ -563,6 +601,15 @@ export default class Game {
           : [playerId];
         (newCard as unknown as FaceDownCard).visibleTo = visibleTo;
       }
+    }
+
+
+
+    if (to.zone === 'battlefield' && fromZone! === 'battlefield' && newCard.attachedCardIds?.length) {
+      toPlayer.zones.battlefield.forEach((card, index) => {
+        if (!newCard.attachedCardIds?.includes(card.clashId)) return;
+        card.position = getStackedPosition(newCard.position!, index + 1, "up");
+      });
     }
 
     if (to.zone === 'battlefield' && fromZone! !== 'battlefield' && !isCardFaceDown) {
@@ -582,6 +629,7 @@ export default class Game {
       delete card.flipped;
       delete card.faceDown;
       delete card.position;
+      delete card.attachedCardIds;
       delete (card as FaceDownCard).visibleTo;
     }
 
@@ -593,7 +641,6 @@ export default class Game {
       playersToUpdate.add(fromPlayer!.id);
     }
 
-    let toPlayer = this.getPlayerById(to.playerId);
 
     if (to.zone === 'graveyard' || to.zone === 'exile') {
       toPlayer = this.getPlayerById(newCard.ownerId);
