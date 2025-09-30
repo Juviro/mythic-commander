@@ -78,7 +78,7 @@ const sortByAmount = (ownedKey) => (a, b) => {
 };
 
 const sortByName = (a, b) => {
-  return a.set_name > b.set_name ? 1 : -1;
+  return a.set_name.localeCompare(b.set_name);
 };
 
 const baseColumns = [

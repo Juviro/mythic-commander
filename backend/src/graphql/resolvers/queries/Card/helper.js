@@ -54,7 +54,9 @@ export const getAllSets = async (oracle_id, db, userId = '') => {
       LEFT JOIN "secretLair"
 	  	  ON "secretLair".id = cards.secret_lair_id
       WHERE cards.oracle_id = ? 
-      AND 'paper' = ANY(games);
+      AND 'paper' = ANY(games)
+      ORDER BY 
+      	cards.set_name, cards.id;
       `,
     [userId, oracle_id]
   );
