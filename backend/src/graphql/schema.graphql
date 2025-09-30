@@ -33,6 +33,7 @@ type Card {
   colors: [String]
   color_identity: [String]
   set_name: String!
+  secret_lair_id: String
   mana_cost: String
   foil: Boolean!
   nonfoil: Boolean!
@@ -191,8 +192,14 @@ input CardsOptionsInput {
   sets: [String!]
   orderBy: String
   variants: [String]
+  secretLairs: [String!]
   displayAllVariants: Boolean
   scryfallTags: [String!]
+}
+
+type SecretLair {
+  id: String!
+  name: String!
 }
 
 ################################# Deck #################################
@@ -481,6 +488,7 @@ type Query {
 
   cardVariants: [String!]!
   scryfallTags: [ScryfallTag!]!
+  secretLairs: [SecretLair!]!
 
   friends: [Friend]!
   searchUsers(search: String!): [Friend!]

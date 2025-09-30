@@ -13,3 +13,12 @@ export const scryfallTags = gql`
     }
   }
 `;
+
+export const secretLairs = gql`
+  query secretLairs {
+    secretLairs {
+      id
+      name
+    }
+  }
+`;

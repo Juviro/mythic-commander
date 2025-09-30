@@ -18,6 +18,7 @@ import AddTagsInput from '../Tags/AddTagsInput';
 import VariantSelection from './SelectFilter/VariantSelection';
 import Hint from '../Hint';
 import ScryfallTagSelection from './SelectFilter/ScryfallTagSelection';
+import SecretLairSelection from './SelectFilter/SecretLairSelection';
 
 const SytledFilterWrapper = styled.div`
   width: 100%;
@@ -76,6 +77,7 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
     isOwned,
     isCommanderLegal,
     variants,
+    secretLairs,
     displayAllVariants,
     isGameChanger,
     scryfallTags,
@@ -291,6 +293,17 @@ const Filter = ({ onSearch, autoFocus, options, onChangeOption, size = 'small' }
           onSearch={onSearch}
           onChangeOption={onChangeOption('variants')}
           value={variants}
+        />
+      ),
+    },
+    {
+      title: 'Secret Lair',
+      component: (
+        <SecretLairSelection
+          size={size}
+          onSearch={onSearch}
+          onChangeOption={onChangeOption('secretLairs')}
+          value={secretLairs}
         />
       ),
     },

@@ -102,6 +102,7 @@ const CardSets = ({
     const [currentValue, setMethod] = cardAlreadyOwned
       ? [editedMap, setEditedMap]
       : [addedMap, setAddedMap];
+
     setMethod({
       ...currentValue,
       [cardId]: {

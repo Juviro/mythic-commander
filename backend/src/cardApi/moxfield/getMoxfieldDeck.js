@@ -64,11 +64,11 @@ const getAlternativeCommanders = (deck) => {
   }));
 };
 
-const formatDeck = (deck) => {
+const formatDeck = (deck, useOriginalName = false) => {
   const commanders = getCards(deck, 'commanders');
   const firstCommanderId = commanders[0]?.id;
   const imgSrc = `/img/${firstCommanderId}_art_crop_front.avif`;
-  const name = deck.name.replace(/\s\(.*/, '');
+  const name = useOriginalName ? deck.name : deck.name.replace(/\s\(.*/, '');
 
   const commanderName = Object.values(deck.boards.commanders.cards)
     .map((commander) => commander.card.name)
@@ -92,7 +92,8 @@ const formatDeck = (deck) => {
   };
 };
 
-const getMoxfieldDeck = async (deckId) => {
+const getMoxfieldDeck = async (deckId, options) => {
+  const { useOriginalName = false } = options || {};
   const url = `https://api2.moxfield.com/v3/decks/all/${deckId}`;
 
   const response = await fetch(url);
@@ -102,7 +103,7 @@ const getMoxfieldDeck = async (deckId) => {
     return null;
   }
 
-  return formatDeck(deck);
+  return formatDeck(deck, useOriginalName);
 };
 
 export default getMoxfieldDeck;

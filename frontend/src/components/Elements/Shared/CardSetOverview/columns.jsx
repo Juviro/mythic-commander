@@ -19,7 +19,9 @@ const StyledPriceWrapper = styled.div`
 `;
 
 const renderSet = (card) => {
-  return <Set setKey={card.set} name={card.set_name} />;
+  return (
+    <Set setKey={card.set} secretLairId={card.secret_lair_id} name={card.set_name} />
+  );
 };
 
 const renderPrice = (currency) => (cardPrice) => {

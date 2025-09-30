@@ -22,6 +22,7 @@
     "update-precons": "babel-node -r dotenv/config src/scripts/updatePreconsManually.js",
     "store-prices": "babel-node -r dotenv/config src/scripts/storeCardProceManually.js",
     "store-scryfall-tags": "babel-node -r dotenv/config src/scripts/storeScryfallTagsManually.js",
+    "update-secret-lairs": "babel-node -r dotenv/config src/scripts/updateSecretLairsManually.js",
     "lint": "eslint '*/**/*.js'",
     "lint:fix": "eslint '*/**/*.js' --fix"
   },

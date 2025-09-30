@@ -66,6 +66,7 @@ export type Card = {
   relatedCards?: Maybe<Array<Card>>;
   rulings_uri: Scalars['String'];
   scryfall_uri?: Maybe<Scalars['String']>;
+  secret_lair_id?: Maybe<Scalars['String']>;
   set: Scalars['String'];
   set_name: Scalars['String'];
   type_line: Scalars['String'];
@@ -97,6 +98,7 @@ export type CardsOptionsInput = {
   orderBy?: InputMaybe<Scalars['String']>;
   power?: InputMaybe<Scalars['String']>;
   rarity?: InputMaybe<Scalars['String']>;
+  scryfallTags?: InputMaybe<Array<Scalars['String']>>;
   sets?: InputMaybe<Array<Scalars['String']>>;
   subTypes?: InputMaybe<Array<Scalars['String']>>;
   tags?: InputMaybe<Array<Scalars['String']>>;
@@ -668,6 +670,7 @@ export type Query = {
   publicCollection?: Maybe<Array<CollectionCard>>;
   scryfallTags: Array<ScryfallTag>;
   searchUsers?: Maybe<Array<Friend>>;
+  secretLairs: Array<SecretLair>;
   tokenFinder: Array<Card>;
   tokens: Array<Token>;
   user?: Maybe<User>;
@@ -768,6 +771,12 @@ export type ScryfallTag = {
   name: Scalars['String'];
   slug: Scalars['String'];
   taggingCount: Scalars['Int'];
+};
+
+export type SecretLair = {
+  __typename?: 'SecretLair';
+  id: Scalars['String'];
+  name: Scalars['String'];
 };
 
 export type Set = {

@@ -263,6 +263,11 @@ const resolver = {
     return Object.values(VARIANTS).sort((a, b) => a.localeCompare(b));
   },
 
+  secretLairs: async (_, __, { db }) => {
+    const secretLairs = await db('secretLair');
+    return secretLairs;
+  },
+
   async landCycleFavorites(_, __, { user: { id: userId }, db }) {
     if (!userId) return [];
 

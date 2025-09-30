@@ -16,6 +16,7 @@ export default {
   isCommanderLegal: StringParam,
   isOwned: StringParam,
   variants: ArrayParam,
+  secretLairs: ArrayParam,
   displayAllVariants: BooleanParam,
   isGameChanger: StringParam,
   scryfallTags: ArrayParam,

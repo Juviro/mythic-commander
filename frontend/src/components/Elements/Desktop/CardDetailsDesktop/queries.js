@@ -40,6 +40,7 @@ const CARD_FIELDS = `
       amountOwned
       amountOwnedFoil
       set_name
+      secret_lair_id
       foil
       nonfoil
       isTwoFaced

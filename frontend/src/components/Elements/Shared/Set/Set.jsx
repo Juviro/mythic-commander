@@ -33,11 +33,12 @@ const StylesSetNameOnly = styled.span`
   text-overflow: ellipsis;
 `;
 
-export default ({ setKey, name: overwriteName }) => {
+export default ({ setKey, name: overwriteName, secretLairId }) => {
   const { sets } = useContext(CardContext);
   const { name, icon_svg_uri } = sets[setKey] || {};
   const setName = overwriteName || name;
-  const to = getDynamicUrl(`/search?sets=${setKey}`);
+  const urlSuffix = secretLairId ? `&secretLairs=${secretLairId}` : '';
+  const to = getDynamicUrl(`/search?sets=${setKey}${urlSuffix}`);
 
   const [, setNameOnly, variant] = setName.match(/([^(]+)(\(.*\))?/);
 

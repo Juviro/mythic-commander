@@ -42,13 +42,17 @@ export const getAllSets = async (oracle_id, db, userId = '') => {
   const { rows: cards } = await db.raw(
     `
       SELECT 
-        cards.*, 
+        cards.*,
+        "secretLair".name as "secretLairName", 
+        "secretLair".id as "secretLairId",
         coalesce(collection.amount,0) as "amountOwned", 
         coalesce(collection."amountFoil",0) as "amountOwnedFoil" 
       FROM cards 
       LEFT JOIN collection
         ON collection.id = cards.id
         AND collection."userId" = ?
+      LEFT JOIN "secretLair"
+	  	  ON "secretLair".id = cards.secret_lair_id
       WHERE cards.oracle_id = ? 
       AND 'paper' = ANY(games);
       `,
@@ -58,6 +62,13 @@ export const getAllSets = async (oracle_id, db, userId = '') => {
   const sortedCards = cards.sort(sortSets);
 
   return sortedCards.map((card) => {
+    if (card.secretLairName) {
+      return {
+        ...card,
+        set_name: `Secret Lair: ${card.secretLairName}`,
+        secret_lair_id: card.secretLairId,
+      };
+    }
     const cardsWithSameSet = sortedCards.filter(({ set }) => set === card.set);
 
     if (cardsWithSameSet.length === 1) return card;

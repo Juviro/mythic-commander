@@ -133,6 +133,11 @@ const addVariantClause = (q, variants) => {
   ]);
 };
 
+const addSecretLairClause = (q, secretLairs) => {
+  const placeholder = secretLairs.map(() => '?');
+  q.whereRaw(`secret_lair_id IN (${placeholder})`, secretLairs);
+};
+
 export const addNameClause = (q, name) => {
   const normalizedName = normalizeName(name);
   const searchPattern = normalizedName.split(' ').join('%');
@@ -192,6 +197,7 @@ export default async (
     rarity,
     tags,
     variants,
+    secretLairs,
     orderBy = 'name-asc',
     displayAllVariants,
     isGameChanger,
@@ -201,7 +207,7 @@ export default async (
   const [order, direction = 'asc'] = orderBy.split('-');
 
   let tableName = 'distinctCards';
-  if (variants?.length || displayAllVariants) {
+  if (variants?.length || displayAllVariants || secretLairs?.length) {
     tableName = 'cards';
   } else if (sets?.length) {
     tableName = 'distinctCardsPerSet';
@@ -242,6 +248,7 @@ export default async (
     if (tags?.length) addTagsClause(q, tags);
     if (scryfallTags?.length) addScryfallTagsClause(q, scryfallTags, tableName);
     if (variants?.length) addVariantClause(q, variants);
+    if (secretLairs?.length) addSecretLairClause(q, secretLairs);
   };
 
   const cardQuery = db(tableName)
