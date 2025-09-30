@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 import Emote from 'components/lib/Emote/Emote';
-import styles from './EmoteSelection.module.css';
-import EmoteOverlay from './EmoteOverlay';
 import { EMOTES } from 'components/lib/Emote/emoteIds';
 import usePreloadImages from 'hooks/usePreloadImages';
+import styles from './EmoteSelection.module.css';
+import EmoteOverlay from './EmoteOverlay';
 
 const EmoteSelection = () => {
   const [isOpen, setIsOpen] = useState(false);
