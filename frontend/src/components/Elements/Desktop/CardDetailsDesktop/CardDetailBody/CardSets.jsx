@@ -6,6 +6,7 @@ import { message, Typography } from 'antd';
 import UserContext from 'components/Provider/UserProvider';
 import CardSetOverview from 'components/Elements/Shared/CardSetOverview';
 import EditIcon from 'components/Elements/Shared/EditIcon';
+import { getEditableAmountInputId } from 'components/Elements/Shared/EditableAmount/EditableAmount';
 import { changeCollection, cardDetailsDesktop } from '../queries';
 import { useToggle, useShortcut } from '../../../../Hooks';
 
@@ -21,7 +22,7 @@ const StyledTitleWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export default ({
+const CardSets = ({
   card,
   loading,
   selectedCardId,
@@ -85,6 +86,14 @@ export default ({
     toggleIsEditing();
   };
 
+  useEffect(() => {
+    if (!isEditing) return;
+
+    const inputId = getEditableAmountInputId(card, 'amountOwned');
+    const input = document.getElementById(inputId);
+    input?.focus();
+  }, [isEditing]);
+
   const onChangeAmount = (newAmount, cardId, amountKey) => {
     const cardAlreadyOwned = card.allSets.some(
       ({ id, amountOwned, amountOwnedFoil }) =>
@@ -129,3 +138,5 @@ export default ({
     </StyledWrapper>
   );
 };
+
+export default CardSets;
