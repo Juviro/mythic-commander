@@ -48,6 +48,7 @@ const CARD_FIELDS = `
       amountOwned
       amountOwnedFoil
       set_name
+      secret_lair_id
       nonfoil
       prices {
         usd
