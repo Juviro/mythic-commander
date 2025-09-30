@@ -3,9 +3,14 @@ import React, { useState } from 'react';
 import Emote from 'components/lib/Emote/Emote';
 import styles from './EmoteSelection.module.css';
 import EmoteOverlay from './EmoteOverlay';
+import { EMOTES } from 'components/lib/Emote/emoteIds';
+import usePreloadImages from 'hooks/usePreloadImages';
 
 const EmoteSelection = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const emoteUrls = Object.keys(EMOTES).map((emote) => `/assets/emotes/${emote}.gif`);
+  usePreloadImages(emoteUrls);
 
   return (
     <>
