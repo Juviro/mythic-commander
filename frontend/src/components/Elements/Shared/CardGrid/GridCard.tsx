@@ -187,7 +187,7 @@ const GridCard = ({
         {displayedAmount > 1 && !onChangeAmount && (
           <StyledAmountWrapper>{`${displayedAmount}x`}</StyledAmountWrapper>
         )}
-        {Boolean(showMenu && actions.length && !isAnyCardSelected) && (
+        {Boolean(showMenu && actions.length) && (
           <CardMenu
             card={card as UnifiedDeckCard}
             actions={actions}
