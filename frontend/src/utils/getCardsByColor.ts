@@ -67,6 +67,9 @@ const getCardsByColor = (cards: UnifiedDeckCard[]) => {
 
   const sortedCardsByColor = cardsByColorList.sort((a, b) => {
     if (a.type === 'Lands' || b.type === 'Lands') {
+      if (a.type === 'Lands' && b.type === 'Lands') {
+        return 0;
+      }
       return a.type === 'Lands' ? 1 : -1;
     }
 
@@ -74,6 +77,7 @@ const getCardsByColor = (cards: UnifiedDeckCard[]) => {
       if (color === 'Colorless') return 0;
       return color.split(',').length;
     };
+
     const aLength = getNumberOfColors(a.type);
     const bLength = getNumberOfColors(b.type);
 
