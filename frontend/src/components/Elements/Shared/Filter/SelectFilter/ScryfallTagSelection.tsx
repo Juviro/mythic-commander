@@ -19,7 +19,11 @@ const ScryfallTagSelection = ({
   size,
 }: ScryfallTagSelectionProps) => {
   const { data } = useQuery<Query>(scryfallTags);
-  const options = data?.scryfallTags.map(({ slug }) => slug);
+  const options = data?.scryfallTags.map(({ slug, description }) => ({
+    value: slug,
+    name: slug,
+    tooltip: description,
+  }));
 
   return (
     <MultiSelectFilter

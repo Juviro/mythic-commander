@@ -10,6 +10,7 @@ export const scryfallTags = gql`
   query scryfallTags {
     scryfallTags {
       slug
+      description
     }
   }
 `;

@@ -1,10 +1,15 @@
 import React from 'react';
-
-import { Select, Typography, Tag } from 'antd';
+import styled from 'styled-components';
+import { Select, Typography, Tag, Tooltip } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+
 import SubmittableSelect from 'components/Elements/Desktop/SubmittableSelect/SubmittableSelect';
 import CustomSkeleton from '../../CustomSkeleton';
 import isMobile from '../../../../../utils/isMobile';
+
+const StyledOptionWrapper = styled.div`
+  width: 100%;
+`;
 
 const getUnifiedOptions = (options, isGrouped) => {
   const unifyOptions = (option) => {
@@ -27,12 +32,30 @@ const getUnifiedOptions = (options, isGrouped) => {
   });
 };
 
+const getInnerContent = (option, getPrefix) => {
+  const innerContent = (
+    <>
+      {getPrefix && getPrefix(option.value)}
+      {option.name}
+    </>
+  );
+
+  if (!option.tooltip) {
+    return innerContent;
+  }
+
+  return (
+    <Tooltip title={option.tooltip}>
+      <StyledOptionWrapper>{innerContent}</StyledOptionWrapper>
+    </Tooltip>
+  );
+};
+
 const renderOptions = (options, getPrefix, isGrouped) => {
   if (!isGrouped) {
     return options.map((option) => (
       <Select.Option key={option.name} value={option.value}>
-        {getPrefix && getPrefix(option.value)}
-        {option.name}
+        {getInnerContent(option, getPrefix)}
       </Select.Option>
     ));
   }
@@ -41,8 +64,7 @@ const renderOptions = (options, getPrefix, isGrouped) => {
     <Select.OptGroup key={optionGroup.label} label={optionGroup.label}>
       {optionGroup.options.map((option) => (
         <Select.Option key={option.name} value={option.value}>
-          {getPrefix && getPrefix(option.value)}
-          {option.name}
+          {getInnerContent(option, getPrefix)}
         </Select.Option>
       ))}
     </Select.OptGroup>
