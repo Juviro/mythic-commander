@@ -5,10 +5,17 @@ import {
 } from 'backend/lobby/GameLobby.types';
 import GameBrowserContext from 'components/GameBrowser/GameBrowserContext';
 import useLocalStorage from 'hooks/useLocalStorage';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { InitialDeck } from '../useDeckSelection';
 
 const getOptions = (alternativeCommanders: AlternativeCommander[], deck: PreconDeck) => {
+  // When the user selects an alternative commander, the deck is updated as well.
+  // Since we don't have the original commander names in the deck object anymore, 
+  // we need to store the initial, unchanged value.
+  const originalCommanderNames = useMemo(() => {
+    return deck.commanderName
+  }, []);
+
   if (!alternativeCommanders) return [];
 
   const { commanders, partners } = alternativeCommanders.reduce(
@@ -34,11 +41,11 @@ const getOptions = (alternativeCommanders: AlternativeCommander[], deck: PreconD
 
   const defaultCommander = {
     id: deck.commanders.map((commander) => commander.id).join(','),
-    name: deck.commanderName,
+    name: originalCommanderNames,
   };
-
+  
   const options = [defaultCommander, ...commanders];
-
+  
   if (partners.length > 0) {
     options.push({
       id: partners.map((partner) => partner.id).join(','),
