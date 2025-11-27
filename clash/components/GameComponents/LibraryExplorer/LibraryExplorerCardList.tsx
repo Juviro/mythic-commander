@@ -19,6 +19,7 @@ interface Props {
   cardDropType?: DndItemType;
   stackVertically?: boolean;
   large?: boolean;
+  displayPopoverPreview?: boolean;
 }
 
 const LibraryExplorerCardList = ({
@@ -32,6 +33,7 @@ const LibraryExplorerCardList = ({
   cardDropType = DndItemTypes.LIST_CARD,
   stackVertically,
   large,
+  displayPopoverPreview,
 }: Props) => {
   return (
     <div className={styles.card_list_wrapper}>
@@ -63,6 +65,7 @@ const LibraryExplorerCardList = ({
             onDrop={onDrop}
             zone={zone}
             cardDropType={cardDropType}
+            displayPopoverPreview={displayPopoverPreview}
           />
         </div>
       </Dropzone>

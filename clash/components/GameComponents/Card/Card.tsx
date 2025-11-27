@@ -30,7 +30,8 @@ interface Props {
   noAnimation?: boolean;
   dropType?: DndItemType;
   transformed?: boolean;
-  noPreview?: boolean;
+  noDragPreview?: boolean;
+  preventPreview?: boolean;
 }
 
 const Card = ({
@@ -40,7 +41,8 @@ const Card = ({
   zone,
   noAnimation,
   transformed,
-  noPreview,
+  noDragPreview,
+  preventPreview,
   dropType = DndItemTypes.CARD,
 }: Props) => {
   const { getPlayerColor } = useContext(GameStateContext);
@@ -51,7 +53,7 @@ const Card = ({
 
   const [{ isDragging }, dragRef, preview] = useDrag({
     type: dropType,
-    item: { ...card, noPreview },
+    item: { ...card, noDragPreview },
     canDrag: Boolean(draggable),
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
@@ -67,7 +69,7 @@ const Card = ({
   const isCardKnown = 'name' in card;
 
   useEffect(() => {
-    if (dropType !== DndItemTypes.CARD || noPreview) return;
+    if (dropType !== DndItemTypes.CARD || noDragPreview) return;
     preview(getEmptyImage(), { captureDraggingState: true });
   });
 
@@ -78,12 +80,14 @@ const Card = ({
   } as CSSProperties;
 
   const onMouseEnter = () => {
+    if (preventPreview) return;
     onHoverCard(card.clashId);
     if (!isCardKnown) return;
     setHoveredCard(card);
   };
 
   const onMouseLeave = () => {
+    if (preventPreview) return;
     if (!isCardKnown) return;
     setHoveredCard(null);
   };

@@ -29,7 +29,9 @@ const CardRules = () => {
       {rules?.length ? (
         <ul className={styles.rules_list}>
           {rules?.map((rule) => (
-            <li key={rule} className={styles.rule}>{rule}</li>
+            <li key={rule} className={styles.rule}>
+              {rule}
+            </li>
           ))}
         </ul>
       ) : (

@@ -79,3 +79,14 @@
 body:has(:global(.card__dragging)) .hover_element {
     pointer-events: auto;
 }
+
+.card_preview_container {
+    padding: 0 !important;
+    border-radius: 4% !important;
+    overflow: hidden;
+}
+
+.card_preview {
+    max-height: calc(100vh - 500px);
+    height: 700px;
+}

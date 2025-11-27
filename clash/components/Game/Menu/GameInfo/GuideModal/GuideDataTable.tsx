@@ -14,7 +14,9 @@ const GuideDataTable = ({ items, title, description, smallLabels }: Props) => {
   return (
     <>
       {title && <h2 className={styles.guide_title}>{title}</h2>}
-      {description && <div className={styles.shortcuts_table_description}>{description}</div>}
+      {description && (
+        <div className={styles.shortcuts_table_description}>{description}</div>
+      )}
       <table className={styles.shortcuts_table}>
         <tbody>
           {items.map(({ label, value }) => (

@@ -1,10 +1,12 @@
 import React, { CSSProperties, useContext } from 'react';
+import { Popover } from 'antd';
+import classNames from 'classnames';
 
 import useCardActions from 'components/GameComponents/Card/cardActions/useCardActions';
 import { HiddenCard, VisibleCard, Zone } from 'backend/database/gamestate.types';
 import { DndItemType } from 'types/dnd.types';
 import GameStateContext from 'components/Game/GameStateContext';
-import classNames from 'classnames';
+import { getImageUrl } from 'utils/getImageUrl';
 import ContextMenu from '../ContextMenu/ContextMenu';
 import Card from '../Card/Card';
 
@@ -16,6 +18,7 @@ interface Props {
   zone: Zone;
   cardDropType: DndItemType;
   verticalOffsetIndex?: number;
+  displayPopoverPreview?: boolean;
 }
 
 const StackedCardListCard = ({
@@ -24,6 +27,7 @@ const StackedCardListCard = ({
   zone,
   cardDropType,
   verticalOffsetIndex,
+  displayPopoverPreview,
 }: Props) => {
   const { player, getPlayerColor } = useContext(GameStateContext);
 
@@ -42,21 +46,37 @@ const StackedCardListCard = ({
 
   return (
     <ContextMenu items={contextMenuItems}>
-      <li
-        className={classNames(styles.card, {
-          [styles.card__vertical_layout]: verticalOffsetIndex !== undefined,
-        })}
-        style={style}
+      <Popover
+        content={
+          <img
+            src={getImageUrl((card as VisibleCard).id)}
+            className={styles.card_preview}
+          />
+        }
+        classNames={{
+          container: styles.card_preview_container,
+        }}
+        mouseEnterDelay={0}
+        mouseLeaveDelay={0}
+        open={displayPopoverPreview ? undefined : false}
       >
-        <Card
-          card={card}
-          draggable={draggable}
-          dropType={cardDropType}
-          noAnimation
-          noPreview
-          zone={zone}
-        />
-      </li>
+        <li
+          className={classNames(styles.card, {
+            [styles.card__vertical_layout]: verticalOffsetIndex !== undefined,
+          })}
+          style={style}
+        >
+          <Card
+            card={card}
+            draggable={draggable}
+            dropType={cardDropType}
+            noAnimation
+            noDragPreview
+            zone={zone}
+            preventPreview={displayPopoverPreview}
+          />
+        </li>
+      </Popover>
     </ContextMenu>
   );
 };

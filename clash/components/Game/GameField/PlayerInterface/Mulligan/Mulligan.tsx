@@ -69,6 +69,7 @@ const Mulligan = ({ player, isSelf }: Props) => {
           empty="Bottom of Library"
           zone={ZONES.HAND}
           cardDropType={DndItemTypes.MULLIGAN_CARD}
+          displayPopoverPreview
         />
         <LibraryExplorerCardList
           cards={toHand}
@@ -77,6 +78,7 @@ const Mulligan = ({ player, isSelf }: Props) => {
           empty="Your Hand is empty! Drag Cards here to that you want to put into your Hand"
           zone={ZONES.HAND}
           cardDropType="MULLIGAN_CARD"
+          displayPopoverPreview
         />
       </div>
     </Modal>

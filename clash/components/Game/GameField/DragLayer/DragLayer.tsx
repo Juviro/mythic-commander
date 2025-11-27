@@ -7,7 +7,7 @@ import CardPositionContext from 'components/Game/CardPositionContext';
 import DragLayerCard from './DragLayerCard';
 import DragLayerCardGroup from './DragLayerCardGroup';
 
-type DropType = (VisibleBattlefieldCard & { noPreview?: boolean }) | DropCardGroup;
+type DropType = (VisibleBattlefieldCard & { noDragPreview?: boolean }) | DropCardGroup;
 
 const DragLayer = () => {
   const { snapChoords } = useContext(CardPositionContext);
@@ -21,7 +21,7 @@ const DragLayer = () => {
       differenceFromInitialOffset: monitor.getDifferenceFromInitialOffset(),
     }));
 
-  const isPreview = item && 'noPreview' in item && item.noPreview;
+  const isPreview = item && 'noDragPreview' in item && item.noDragPreview;
 
   // list cards don't snap to the grid, so we need to reset the snap coords
   useEffect(() => {

@@ -8,14 +8,11 @@ import useLocalStorage from 'hooks/useLocalStorage';
 import { useContext, useMemo } from 'react';
 import { InitialDeck } from '../useDeckSelection';
 
-const getOptions = (alternativeCommanders: AlternativeCommander[], deck: PreconDeck) => {
-  // When the user selects an alternative commander, the deck is updated as well.
-  // Since we don't have the original commander names in the deck object anymore, 
-  // we need to store the initial, unchanged value.
-  const originalCommanderNames = useMemo(() => {
-    return deck.commanderName
-  }, []);
-
+const getOptions = (
+  alternativeCommanders: AlternativeCommander[],
+  deck: PreconDeck,
+  originalCommanderNames?: string
+) => {
   if (!alternativeCommanders) return [];
 
   const { commanders, partners } = alternativeCommanders.reduce(
@@ -43,9 +40,9 @@ const getOptions = (alternativeCommanders: AlternativeCommander[], deck: PreconD
     id: deck.commanders.map((commander) => commander.id).join(','),
     name: originalCommanderNames,
   };
-  
+
   const options = [defaultCommander, ...commanders];
-  
+
   if (partners.length > 0) {
     options.push({
       id: partners.map((partner) => partner.id).join(','),
@@ -61,6 +58,13 @@ const getOptions = (alternativeCommanders: AlternativeCommander[], deck: PreconD
 
 const useCommanderSelection = (deck: LobbyDeck | PreconDeck) => {
   const { onSelectDeck, currentLobby, user: self } = useContext(GameBrowserContext);
+
+  // When the user selects an alternative commander, the deck is updated as well.
+  // Since we don't have the original commander names in the deck object anymore,
+  // we need to store the initial, unchanged value.
+  const originalCommanderNames = useMemo(() => {
+    return deck.commanderName;
+  }, []);
 
   const [initialDeck, setInitialDeck] = useLocalStorage<InitialDeck>(
     'initial-deck-with-commanders'
@@ -86,7 +90,7 @@ const useCommanderSelection = (deck: LobbyDeck | PreconDeck) => {
     setInitialDeck({ deckId: currentDeck.id, commanderId });
   };
 
-  const options = getOptions(alternativeCommanders, deck);
+  const options = getOptions(alternativeCommanders, deck, originalCommanderNames);
 
   return {
     options,

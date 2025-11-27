@@ -17,6 +17,7 @@ interface Props {
   zone: Zone;
   cardDropType?: DndItemType;
   stackVertically?: boolean;
+  displayPopoverPreview?: boolean;
 }
 
 const StackedCardList = ({
@@ -27,6 +28,7 @@ const StackedCardList = ({
   zone,
   cardDropType = DndItemTypes.LIST_CARD,
   stackVertically,
+  displayPopoverPreview,
 }: Props) => {
   const numberOfCardsRef = useRef(cards.length);
   const listRef = React.useRef<HTMLUListElement>(null);
@@ -71,6 +73,7 @@ const StackedCardList = ({
               draggable={draggable}
               zone={zone}
               cardDropType={cardDropType}
+              displayPopoverPreview={displayPopoverPreview}
             />
           </React.Fragment>
         ))}
