@@ -21,6 +21,7 @@ const CommanderSelection = ({
 
   if (options.length <= 1 || !displayCommanderSelection) {
     const CommanderWrapperElement = displayInOneLine ? 'span' : 'div';
+
     return (
       <Tooltip title={deck.commanderName}>
         <div className={styles.commander_names}>
@@ -35,18 +36,19 @@ const CommanderSelection = ({
   }
 
   return (
-    <Select
-      options={[
-        {
-          label: 'Pick your Commander',
-          options,
-        },
-      ]}
-      popupMatchSelectWidth={false}
-      defaultValue={defaultValue}
-      onChange={onSelect}
-      onClick={(e) => e.stopPropagation()}
-    />
+    <div onClick={(e) => e.stopPropagation()} className={styles.commander_selection}>
+      <Select
+        options={[
+          {
+            label: 'Pick your Commander',
+            options,
+          },
+        ]}
+        popupMatchSelectWidth={false}
+        defaultValue={defaultValue}
+        onChange={onSelect}
+      />
+    </div>
   );
 };
 

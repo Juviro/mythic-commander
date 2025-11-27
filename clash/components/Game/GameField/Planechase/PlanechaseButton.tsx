@@ -21,7 +21,7 @@ const PlanechaseButton = ({
   disabled,
 }: PlanechaseButtonProps) => {
   return (
-    <Tooltip title={tooltip} overlayClassName={styles.tooltip} placement="right">
+    <Tooltip title={tooltip} classNames={{ root: styles.tooltip }} placement="right">
       <Button
         size="small"
         type="primary"

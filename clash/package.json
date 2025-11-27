@@ -20,7 +20,7 @@
     "@ant-design/icons": "5.4.0",
     "@fireworks-js/react": "^2.10.7",
     "@tanstack/react-virtual": "3.0.0-beta.68",
-    "antd": "5.27.3",
+    "antd": "6.0.0",
     "classnames": "2.5.1",
     "knex": "2.3.0",
     "lodash.clonedeep": "^4.5.0",

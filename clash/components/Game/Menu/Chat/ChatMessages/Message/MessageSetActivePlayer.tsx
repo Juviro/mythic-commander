@@ -13,7 +13,7 @@ interface Props {
 const MessageSetActivePlayer = ({ payload: { activePlayerId } }: Props) => {
   return (
     <div className={styles.message}>
-      <Divider orientation="left" className={styles.divider}>
+      <Divider titlePlacement="left" className={styles.divider}>
         {`It's `}
         <ColoredPlayerName id={activePlayerId} addGenetiveSuffix />
         {` turn `}

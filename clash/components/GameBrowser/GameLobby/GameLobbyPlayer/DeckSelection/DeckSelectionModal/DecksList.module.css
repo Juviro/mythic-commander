@@ -160,3 +160,7 @@
 .deck_status_tag__archived {
     --gradient-color: var(--color-deck-archived);
 }
+
+.commander_selection {
+    display: contents;
+}

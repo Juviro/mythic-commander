@@ -55,7 +55,7 @@ const GuideModal = ({ open, onClose }: Props) => {
     >
       <Tabs
         items={items}
-        tabPosition="left"
+        tabPlacement="start"
         className={styles.tabs}
         onChange={setCurrentTab}
       />

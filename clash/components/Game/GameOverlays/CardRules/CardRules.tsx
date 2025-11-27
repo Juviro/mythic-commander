@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
-import { Empty, List, Modal } from 'antd';
+import { Empty, Modal } from 'antd';
 
 import CardPositionContext from 'components/Game/CardPositionContext';
 import useCardRules from './useCardRules';
+
+import styles from './CardRules.module.css';
 
 const CardRules = () => {
   const { rulesCardId, setRulesCardId } = useContext(CardPositionContext);
@@ -25,15 +27,11 @@ const CardRules = () => {
       loading={isLoading}
     >
       {rules?.length ? (
-        <List
-          size="small"
-          dataSource={rules ?? []}
-          renderItem={(rule) => (
-            <List.Item>
-              <span>{rule}</span>
-            </List.Item>
-          )}
-        />
+        <ul className={styles.rules_list}>
+          {rules?.map((rule) => (
+            <li key={rule} className={styles.rule}>{rule}</li>
+          ))}
+        </ul>
       ) : (
         <Empty description="This card does not have any rules info" />
       )}

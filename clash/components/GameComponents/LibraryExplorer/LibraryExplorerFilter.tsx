@@ -103,7 +103,7 @@ const LibraryExplorerFilter = ({
     <Dropdown
       menu={{ items }}
       trigger={['click']}
-      overlayClassName={styles.filter_dropdown}
+      classNames={{ root: styles.filter_dropdown }}
     >
       <Badge count={filteredItemKeys.length}>
         <Button className={styles.filter_button} icon={<FilterOutlined />}>

@@ -84,7 +84,7 @@ const PlanechaseSelection = ({
       </Form.Item>
       {isLoading && isActive && <LoadingOutlined />}
       <AnimatedHeightChange isActive={isActive}>
-        <Space direction="vertical" size={0}>
+        <Space orientation="vertical" size={0}>
           {data?.map((option) => (
             <Form.Item
               key={option.set_name}

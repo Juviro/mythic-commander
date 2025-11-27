@@ -47,7 +47,7 @@ const CommanderDamage = ({ player }: Props) => {
             } as CSSProperties
           }
         >
-          <Tooltip title={commander.name} overlayClassName={styles.tooltip}>
+          <Tooltip title={commander.name} classNames={{ root: styles.tooltip }}>
             <img
               className={styles.commander_damage__img}
               src={getImageUrl(commander.id, false, 'art_crop')}

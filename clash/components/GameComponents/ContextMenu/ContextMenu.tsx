@@ -14,15 +14,15 @@ const ContextMenu = ({ children, items, placement = 'top', open }: Props) => {
 
   return (
     <Dropdown
-      overlayClassName={styles.menu}
+      classNames={{ root: styles.menu }}
       trigger={['contextMenu']}
       menu={{ items }}
       placement={placement}
-      destroyPopupOnHide
+      destroyOnHidden
       open={open}
       // We need to stop the propagation, otherwise useClickedOutside will not work
       // eslint-disable-next-line react/no-unstable-nested-components
-      dropdownRender={(menu) => (
+      popupRender={(menu) => (
         <div
           onMouseUp={(e) => e.stopPropagation()}
           onMouseDown={(e) => e.stopPropagation()}

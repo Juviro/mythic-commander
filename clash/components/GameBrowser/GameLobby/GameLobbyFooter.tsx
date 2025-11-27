@@ -40,7 +40,7 @@ const GameLobbyFooter = () => {
         target="_blank"
         rel="noreferrer"
         icon={<ArrowRightOutlined />}
-        iconPosition="end"
+        iconPlacement="end"
       >
         Your Decks
       </Button>

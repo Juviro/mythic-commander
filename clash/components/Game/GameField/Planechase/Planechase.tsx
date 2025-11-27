@@ -64,7 +64,7 @@ const Planechase = () => {
                   />
                 </div>
               </Tooltip>
-              <Space direction="vertical">
+              <Space orientation="vertical">
                 <ZoomInOutlined
                   className={styles.zoom_in_icon}
                   onClick={() => setIsZoomed(!isZoomed)}

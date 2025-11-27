@@ -25,7 +25,7 @@ const PlanechaseSetsInfo = ({ lobby }: PlanechaseSetsInfoProps) => {
       {hasTooManySets && (
         <Tooltip
           title={
-            <Space direction="vertical" size={0}>
+            <Space orientation="vertical" size={0}>
               {lobby.planechaseSets.slice(MAX_SETS_TO_SHOW).map((set) => (
                 <div key={set.setName}>{set.setName}</div>
               ))}
