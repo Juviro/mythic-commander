@@ -1,1 +1,0 @@
-JIRA: https://mythic-commander.atlassian.net/jira/software/projects/CLS/boards/3

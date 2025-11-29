@@ -42,6 +42,7 @@ const nextConfig = {
 
     return config;
   },
+  outputFileTracingRoot: "/",
 };
 
 module.exports = nextConfig;
