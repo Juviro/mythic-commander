@@ -1,8 +1,14 @@
 import { useContext } from 'react';
 
-import { BattlefieldCard, Player, ZONES } from 'backend/database/gamestate.types';
+import {
+  BattlefieldCard,
+  Player,
+  VisibleBattlefieldCard,
+  ZONES,
+} from 'backend/database/gamestate.types';
 import useCardActions from 'components/GameComponents/Card/cardActions/useCardActions';
 import BattlefieldSelectionContext from '../BattlefieldSelection/BattlefieldSelectionContext';
+import { isCardAutoOrderable } from '../battlefieldActions/useOrganizeLands';
 
 interface Props {
   card: BattlefieldCard;
@@ -11,6 +17,12 @@ interface Props {
 }
 
 const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
+  const getIsAutoOrderingDisabled = () => {
+    if (!isCardAutoOrderable(card as VisibleBattlefieldCard)) return undefined;
+
+    return 'disableAutoOrdering' in card && card.disableAutoOrdering;
+  };
+
   const { contextMenuItems, tapCards, transformCards } = useCardActions({
     cardIds: [card.clashId],
     battlefieldPlayerId: player.id,
@@ -20,6 +32,8 @@ const useBattlefieldCardActions = ({ card, player, isSelected }: Props) => {
     canFlip: card.flippable,
     canTurnFaceDown: !card.isToken,
     isFaceDown: card.faceDown,
+    isAutoOrderingDisabled: getIsAutoOrderingDisabled(),
+    isAutoUntapDisabled: Boolean((card as VisibleBattlefieldCard).disableAutoUntap),
     canCopy: !card.faceDown,
   });
 

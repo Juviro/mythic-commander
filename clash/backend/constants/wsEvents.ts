@@ -63,6 +63,7 @@ export const SOCKET_MSG_GAME = {
   TOGGLE_STACK_OPEN: 'toggle_stack_open',
   CREATE_TOKEN: 'create_token',
   COPY_CARD: 'copy_card',
+  TOGGLE_CARD_FLAG: 'toggle_card_flag',
 
   SET_COMMANDER_TIMES_CASTED: 'set_commander_times_casted',
   SET_PLAYER_LIFE: 'set_player_life',
@@ -153,6 +154,12 @@ export interface TurnCardsFaceDownPayload {
   cardIds: string[];
   faceDown?: boolean;
   battlefieldPlayerId: string;
+}
+export interface ToggleCardFlagPayload {
+  cardIds: string[];
+  battlefieldPlayerId: string;
+  flag: 'disableAutoOrdering' | 'disableAutoUntap';
+  value?: boolean; // if omitted, toggle
 }
 export interface PlayTopCardFaceDownPayload {
   playerId: string;

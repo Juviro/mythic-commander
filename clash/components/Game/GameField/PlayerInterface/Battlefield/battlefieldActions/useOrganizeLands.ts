@@ -1,4 +1,4 @@
-import { RefObject, useContext, useMemo } from 'react';
+import { RefObject, useContext } from 'react';
 
 import {
   BattlefieldCard,
@@ -76,22 +76,25 @@ const sortLandsByColor = (lands: VisibleBattlefieldCard[]) => {
   });
 };
 
+export const isCardAutoOrderable = (card: VisibleBattlefieldCard) => {
+  if ('disableAutoOrdering' in card && card.disableAutoOrdering) return false;
+  if (card.name === 'Treasure') return false;
+  if (isCardType(card, 'Creature')) return false;
+  if (isCardType(card, 'Land')) return true;
+
+  if ('produced_mana' in card && card.produced_mana) {
+    return isCardType(card, 'Artifact');
+  }
+  return false;
+};
+
 const useOrganizeLands = ({ battlefieldRef, player }: Props) => {
   const { battlefieldCardWidth, battlefieldCardHeight } = useContext(GameStateContext);
   const { onMoveCard } = useGameActions();
 
-  const cardsToOrder = useMemo(() => {
-    return player.zones.battlefield.filter((card) => {
-      if (card.name === 'Treasure') return false;
-      if (isCardType(card, 'Creature')) return false;
-      if (isCardType(card, 'Land')) return true;
-
-      if ('produced_mana' in card && card.produced_mana) {
-        return isCardType(card, 'Artifact');
-      }
-      return false;
-    }) as VisibleBattlefieldCard[];
-  }, [player.zones.battlefield.length]);
+  const cardsToOrder = player.zones.battlefield.filter((card) => {
+    return isCardAutoOrderable(card as VisibleBattlefieldCard);
+  }) as VisibleBattlefieldCard[];
 
   const organizeLands = () => {
     if (!battlefieldRef.current) return;

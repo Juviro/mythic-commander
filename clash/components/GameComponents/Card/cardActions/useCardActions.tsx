@@ -17,6 +17,8 @@ interface Props {
   contextMenuTitle?: ReactNode;
   canCopy?: boolean;
   isFaceDown?: boolean;
+  isAutoOrderingDisabled?: boolean;
+  isAutoUntapDisabled?: boolean;
   canTransform?: boolean;
   canTurnFaceDown?: boolean;
   canFlip?: boolean;
@@ -29,6 +31,8 @@ const useCardActions = ({
   contextMenuTitle,
   player,
   isFaceDown,
+  isAutoOrderingDisabled,
+  isAutoUntapDisabled,
   canCopy,
   canTransform,
   canTurnFaceDown,
@@ -51,12 +55,21 @@ const useCardActions = ({
     contextMenuTitle,
   });
 
-  const { addCounterItem, turnFacDownItem, flipItem, peekItem, copyItem } =
-    useBattlefieldCardActions({
-      cardIds,
-      player,
-      isFaceDown,
-    });
+  const {
+    addCounterItem,
+    turnFacDownItem,
+    flipItem,
+    toggleAutoOrderingItem,
+    toggleAutoUntapItem,
+    peekItem,
+    copyItem,
+  } = useBattlefieldCardActions({
+    cardIds,
+    player,
+    isFaceDown,
+    isAutoOrderingDisabled,
+    isAutoUntapDisabled,
+  });
 
   const { handActions } = useHandCardActions(player!);
 
@@ -88,6 +101,17 @@ const useCardActions = ({
   addItem(turnFacDownItem, zone !== ZONES.BATTLEFIELD || !canTurnFaceDown);
   addItem(peekItem, zone !== ZONES.BATTLEFIELD || !isFaceDown || cardIds.length !== 1);
   addItem(flipItem, zone !== ZONES.BATTLEFIELD || !canFlip);
+  addItem(
+    toggleAutoUntapItem,
+    zone !== ZONES.BATTLEFIELD || cardIds.length !== 1,
+    'before'
+  );
+  addItem(
+    toggleAutoOrderingItem,
+    zone !== ZONES.BATTLEFIELD ||
+      cardIds.length !== 1 ||
+      typeof isAutoOrderingDisabled !== 'boolean'
+  );
   addItem(addCounterItem, zone !== ZONES.BATTLEFIELD || !battlefieldPlayerId, 'before');
   addItem(copyItem, !canCopy || zone !== ZONES.BATTLEFIELD, 'after');
 
@@ -102,12 +126,10 @@ const useCardActions = ({
     zone === ZONES.STACK ? undefined : 'before'
   );
 
-  const filteredContextMenuItems: MenuProps['items'] = contextMenuItems;
-
   return {
     tapCards,
     transformCards,
-    contextMenuItems: filteredContextMenuItems,
+    contextMenuItems,
   };
 };
 

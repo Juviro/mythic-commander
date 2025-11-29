@@ -40,6 +40,7 @@ import {
   HoverCardPayload,
   SetPlayWithTopCardRevealedPayload,
   SendEmotePayload,
+  ToggleCardFlagPayload,
 } from '../constants/wsEvents';
 import Game from './Game';
 
@@ -182,6 +183,10 @@ const gameSocketActions = (io: Server) => {
 
     socket.on(SOCKET_MSG_GAME.TURN_FACE_DOWN, (payload: TurnCardsFaceDownPayload) => {
       currentGames[currentGameId].turnCardsFaceDown(user.id, payload);
+    });
+
+    socket.on(SOCKET_MSG_GAME.TOGGLE_CARD_FLAG, (payload: ToggleCardFlagPayload) => {
+      currentGames[currentGameId].toggleCardFlag(payload);
     });
 
     socket.on(SOCKET_MSG_GAME.PEEK_FACE_DOWN, (payload: PeekFaceDownPayload) => {

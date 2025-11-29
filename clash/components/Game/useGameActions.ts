@@ -33,6 +33,7 @@ import {
   SetPlayWithTopCardRevealedPayload,
   RevealCardsFromHandPayload,
   SendEmotePayload,
+  ToggleCardFlagPayload,
 } from 'backend/constants/wsEvents';
 import {
   Phase,
@@ -123,6 +124,10 @@ const useGameActions = () => {
 
   const onTurnFaceDown = (payload: TurnCardsFaceDownPayload) => {
     socket?.emit(SOCKET_MSG_GAME.TURN_FACE_DOWN, payload);
+  };
+
+  const onToggleCardFlag = (payload: ToggleCardFlagPayload) => {
+    socket?.emit(SOCKET_MSG_GAME.TOGGLE_CARD_FLAG, payload);
   };
 
   const onPlayTopLibraryCardFaceDown = (payload: PlayTopCardFaceDownPayload) => {
@@ -281,6 +286,7 @@ const useGameActions = () => {
     onTransformCards,
     onFlipCards,
     onTurnFaceDown,
+    onToggleCardFlag,
     onPlayTopLibraryCardFaceDown,
     onPeekFaceDown,
     onMill,

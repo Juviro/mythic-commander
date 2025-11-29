@@ -68,6 +68,8 @@ export interface VisibleBattlefieldCard extends VisibleCard {
   flipped?: boolean;
   faceDown?: boolean;
   isToken?: boolean;
+  disableAutoOrdering?: boolean;
+  disableAutoUntap?: boolean;
   position?: {
     x: number;
     y: number;

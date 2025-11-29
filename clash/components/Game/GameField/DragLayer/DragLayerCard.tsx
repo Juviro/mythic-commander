@@ -50,7 +50,7 @@ const DragLayerCard = ({ item, currentOffset }: Props) => {
         />
       </div>
       {isSnapping && (
-        <div className={styles.shift_tooltip}>Hold Shift to disabled snapping</div>
+        <div className={styles.shift_tooltip}>Hold Shift to disable snapping</div>
       )}
     </div>
   );

@@ -910,6 +910,7 @@ export default class Game {
     if (type) {
       cardIds = [];
       player.zones.battlefield.forEach((card) => {
+        if ('disableAutoUntap' in card && card.disableAutoUntap) return;
         const supertype = (card as VisibleCard).type_line;
         if (type !== 'All' && !supertype.includes(type)) return;
         cardIds!.push(card.clashId);
@@ -924,6 +925,7 @@ export default class Game {
 
     player.zones.battlefield.forEach((card) => {
       if (!cardIds!.includes(card.clashId)) return;
+      if (cardIds!.length > 1 && 'disableAutoUntap' in card && card.disableAutoUntap) return;
       card.tapped = tapped;
     });
 
@@ -956,6 +958,26 @@ export default class Game {
       if (card.faceDown) return;
 
       card.flipped = !card.flipped;
+    });
+
+    this.emitPlayerUpdate(player);
+  }
+
+  toggleCardFlag(payload: {
+    cardIds: string[];
+    battlefieldPlayerId: string;
+    flag: 'disableAutoOrdering' | 'disableAutoUntap';
+    value?: boolean;
+  }) {
+    const { cardIds, battlefieldPlayerId, flag, value } = payload;
+    const player = this.getPlayerById(battlefieldPlayerId);
+
+    player.zones.battlefield.forEach((card) => {
+      if (!cardIds.includes(card.clashId)) return;
+      const visibleCard = card as VisibleBattlefieldCard;
+      const nextValue =
+        typeof value === 'boolean' ? value : !Boolean((visibleCard as any)[flag]);
+      (visibleCard as VisibleBattlefieldCard)[flag] = nextValue;
     });
 
     this.emitPlayerUpdate(player);

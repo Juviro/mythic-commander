@@ -1,5 +1,10 @@
 import { MouseEvent } from 'react';
-import { SwapOutlined, EyeOutlined } from '@ant-design/icons';
+import {
+  SwapOutlined,
+  EyeOutlined,
+  LockOutlined,
+  UnlockOutlined,
+} from '@ant-design/icons';
 
 import { Player } from 'backend/database/gamestate.types';
 import useGameActions from 'components/Game/useGameActions';
@@ -12,11 +17,25 @@ interface Props {
   cardIds: string[];
   player: Player;
   isFaceDown?: boolean;
+  isAutoOrderingDisabled?: boolean;
+  isAutoUntapDisabled?: boolean;
 }
 
-const useBattlefieldCardActions = ({ cardIds, player, isFaceDown }: Props) => {
-  const { onAddCounters, copyCard, onTurnFaceDown, onPeekFaceDown, onFlipCards } =
-    useGameActions();
+const useBattlefieldCardActions = ({
+  cardIds,
+  player,
+  isFaceDown,
+  isAutoOrderingDisabled,
+  isAutoUntapDisabled,
+}: Props) => {
+  const {
+    onAddCounters,
+    copyCard,
+    onTurnFaceDown,
+    onPeekFaceDown,
+    onFlipCards,
+    onToggleCardFlag,
+  } = useGameActions();
 
   const onAddCounter = (type: string) => (e?: MouseEvent) => {
     e?.stopPropagation();
@@ -78,6 +97,22 @@ const useBattlefieldCardActions = ({ cardIds, player, isFaceDown }: Props) => {
     });
   };
 
+  const toggleAutoOrdering = () => {
+    onToggleCardFlag({
+      cardIds,
+      battlefieldPlayerId: player.id,
+      flag: 'disableAutoOrdering',
+    });
+  };
+
+  const toggleAutoUntap = () => {
+    onToggleCardFlag({
+      cardIds,
+      battlefieldPlayerId: player.id,
+      flag: 'disableAutoUntap',
+    });
+  };
+
   const createCopiesSubItems = getPeekSubItems(createCopies, 'create-copy', (index) => {
     if (!index) return '1 Copy';
     return `${index + 1} Copies`;
@@ -108,6 +143,20 @@ const useBattlefieldCardActions = ({ cardIds, player, isFaceDown }: Props) => {
     icon: <SwapOutlined style={{ transform: 'rotate(180deg)' }} />,
   };
 
+  const toggleAutoOrderingItem = {
+    key: 'toggle-auto-ordering',
+    label: isAutoOrderingDisabled ? 'Enable Auto Ordering' : 'Disable Auto Ordering',
+    onClick: toggleAutoOrdering,
+    icon: isAutoOrderingDisabled ? <LockOutlined /> : <UnlockOutlined />,
+  };
+
+  const toggleAutoUntapItem = {
+    key: 'toggle-auto-untap',
+    label: isAutoUntapDisabled ? 'Enable Auto Untap' : 'Disable Auto Untap',
+    onClick: toggleAutoUntap,
+    icon: isAutoUntapDisabled ? <LockOutlined /> : <UnlockOutlined />,
+  };
+
   const peekItem = {
     key: 'peek-face-down',
     label: 'Peek at face down card',
@@ -126,6 +175,8 @@ const useBattlefieldCardActions = ({ cardIds, player, isFaceDown }: Props) => {
     addCounterItem,
     turnFacDownItem,
     flipItem,
+    toggleAutoOrderingItem,
+    toggleAutoUntapItem,
     peekItem,
     copyItem,
   };
